@@ -17,3 +17,5 @@ jobs:
           cache: maven
       - name: Maven verify
         run: mvn --batch-mode --no-transfer-progress verify
+      - name: JavaFX graphical startup smoke test
+        run: xvfb-run -a mvn --batch-mode --no-transfer-progress -Dtest=CodeTraceAppSmokeTest -Dcodetrace.guiSmoke=true test
