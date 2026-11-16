@@ -29,10 +29,12 @@
 .split-pane { -fx-padding: 0; -fx-background-color: #b9c5cd; }
 .split-pane-divider { -fx-background-color: #9caebd; -fx-padding: 2; }
 .tab-pane { -fx-background-color: #ffffff; }
-.source-preview {
-    -fx-font-family: "Consolas";
-    -fx-font-size: 14px;
-    -fx-control-inner-background: #ffffff;
-}
+.typing-editor, .typing-scroll { -fx-background-color: white; }
+.typing-scroll > .viewport { -fx-background-color: white; }
+.typing-surface { -fx-background-color: white; }
 .statusbar { -fx-border-color: #b8c5cd transparent transparent transparent; }
 .statusbar .label { -fx-text-fill: #455c6f; -fx-font-size: 11px; }
+.progress-info { -fx-text-fill: #304b60; }
+.typing-progress { -fx-pref-height: 9px; -fx-max-width: 160px; }
+.typing-progress .track { -fx-background-color: #d3dce3; -fx-background-radius: 0; }
+.typing-progress .bar { -fx-background-color: #4a6076; -fx-background-radius: 0; }
