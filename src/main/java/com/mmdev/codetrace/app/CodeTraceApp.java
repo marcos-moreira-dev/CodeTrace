@@ -8,6 +8,7 @@ import com.mmdev.codetrace.reference.TextPreview;
 import com.mmdev.codetrace.ui.ReferenceTree;
 import com.mmdev.codetrace.ui.TypingEditor;
 import com.mmdev.codetrace.ui.PreferencesWindow;
+import com.mmdev.codetrace.ui.MarkdownPracticePane;
 import com.mmdev.codetrace.workspace.VirtualWorkspace;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -294,7 +295,10 @@ public final class CodeTraceApp extends Application {
                 updateTitle();
                 refreshMetrics();
             }, file.getFileName().toString(), settings.fontFamily(), settings.fontSize());
-            Tab tab = new Tab(file.getFileName().toString(), editor);
+            boolean markdown = relative.toLowerCase().endsWith(".md")
+                    || relative.toLowerCase().endsWith(".markdown");
+            Tab tab = new Tab(file.getFileName().toString(),
+                    markdown ? new MarkdownPracticePane(editor) : editor);
             tab.setOnClosed(event -> openedTabs.remove(relative));
             openedTabs.put(relative, tab);
             tabs.getTabs().add(tab);
@@ -389,8 +393,16 @@ public final class CodeTraceApp extends Application {
 
     private TypingEditor selectedEditor() {
         Tab selected = tabs.getSelectionModel().getSelectedItem();
-        return selected != null && selected.getContent() instanceof TypingEditor editor
-                ? editor : null;
+        if (selected == null) {
+            return null;
+        }
+        if (selected.getContent() instanceof TypingEditor editor) {
+            return editor;
+        }
+        if (selected.getContent() instanceof MarkdownPracticePane markdown) {
+            return markdown.editor();
+        }
+        return null;
     }
 
     private void openSession() {
@@ -532,6 +544,8 @@ public final class CodeTraceApp extends Application {
         for (Tab tab : tabs.getTabs()) {
             if (tab.getContent() instanceof TypingEditor editor) {
                 editor.setFontSettings(next.fontFamily(), next.fontSize());
+            } else if (tab.getContent() instanceof MarkdownPracticePane pane) {
+                pane.editor().setFontSettings(next.fontFamily(), next.fontSize());
             }
         }
     }

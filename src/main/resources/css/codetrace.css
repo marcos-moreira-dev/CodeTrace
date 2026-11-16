@@ -38,3 +38,8 @@
 .typing-progress { -fx-pref-height: 9px; -fx-max-width: 160px; }
 .typing-progress .track { -fx-background-color: #d3dce3; -fx-background-radius: 0; }
 .typing-progress .bar { -fx-background-color: #4a6076; -fx-background-radius: 0; }
+
+.markdown-controls {
+    -fx-background-color: #eef1f3;
+    -fx-border-color: transparent transparent #c5d0d8 transparent;
+}
