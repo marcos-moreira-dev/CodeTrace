@@ -7,6 +7,7 @@ import com.mmdev.codetrace.reference.ReferenceFingerprint;
 import com.mmdev.codetrace.reference.TextPreview;
 import com.mmdev.codetrace.ui.ReferenceTree;
 import com.mmdev.codetrace.ui.TypingEditor;
+import com.mmdev.codetrace.ui.PreferencesWindow;
 import com.mmdev.codetrace.workspace.VirtualWorkspace;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -69,6 +70,8 @@ public final class CodeTraceApp extends Application {
     private long catalogueGeneration;
     private Path reference;
     private Path sessionFile;
+    private AppSettings settings = AppSettings.load();
+    private CheckMenuItem explorerToggle;
     private boolean dirty;
     private boolean concentration;
     private double explorerRatio = 0.26;
@@ -96,9 +99,9 @@ public final class CodeTraceApp extends Application {
         Menu fileMenu = new Menu("Archivo", null,
                 openReference, openSession, save, saveAs, quit);
 
-        CheckMenuItem showExplorer = new CheckMenuItem("Explorador");
-        showExplorer.setSelected(true);
-        showExplorer.selectedProperty().addListener((observed, oldValue, visible) -> {
+        explorerToggle = new CheckMenuItem("Explorador");
+        explorerToggle.setSelected(settings.showExplorer());
+        explorerToggle.selectedProperty().addListener((observed, oldValue, visible) -> {
             if (visible && !split.getItems().contains(sidebar)) {
                 split.getItems().add(0, sidebar);
                 split.setDividerPositions(explorerRatio);
@@ -115,7 +118,7 @@ public final class CodeTraceApp extends Application {
                 KeyCombination.SHORTCUT_DOWN, KeyCombination.SHIFT_DOWN));
         focus.selectedProperty().addListener((observed, before, enabled) -> {
             concentration = enabled;
-            showExplorer.setSelected(!enabled);
+            explorerToggle.setSelected(!enabled);
             if (top.getChildren().size() > 1) {
                 top.getChildren().get(1).setVisible(!enabled);
                 top.getChildren().get(1).setManaged(!enabled);
@@ -128,15 +131,20 @@ public final class CodeTraceApp extends Application {
                 (observed, oldValue, enabled) -> stage.setFullScreen(enabled));
         stage.fullScreenProperty().addListener(
                 (observed, oldValue, enabled) -> fullscreen.setSelected(enabled));
-        Menu viewMenu = new Menu("Ver", null, showExplorer, focus, fullscreen);
+        Menu viewMenu = new Menu("Ver", null, explorerToggle, focus, fullscreen);
 
         skipImportsMenu.setOnAction(event -> skipImports());
         Menu practiceMenu = new Menu("Práctica", null, skipImportsMenu);
         MenuItem about = new MenuItem("Acerca de CodeTrace");
         about.setOnAction(event -> showAbout());
         Menu helpMenu = new Menu("Ayuda", null, about);
+        MenuItem preferences = new MenuItem("Preferencias...");
+        preferences.setOnAction(event -> PreferencesWindow.open(
+                stage, settings, this::applySettings));
+        Menu toolsMenu = new Menu("Herramientas", null, preferences);
 
-        MenuBar menu = new MenuBar(fileMenu, practiceMenu, viewMenu, helpMenu);
+        MenuBar menu = new MenuBar(
+                fileMenu, practiceMenu, viewMenu, toolsMenu, helpMenu);
         Button openButton = new Button("Abrir referencia");
         openButton.setOnAction(event -> chooseReference());
         Button saveButton = new Button("Guardar");
@@ -155,7 +163,11 @@ public final class CodeTraceApp extends Application {
         VBox.setVgrow(tree, Priority.ALWAYS);
         tree.setWorkspace(workspace);
         split.getItems().addAll(sidebar, tabs);
-        split.setDividerPositions(explorerRatio);
+        if (!settings.showExplorer()) {
+            split.getItems().remove(sidebar);
+        } else {
+            split.setDividerPositions(explorerRatio);
+        }
         root.setCenter(split);
 
         fileInfo.getStyleClass().add("progress-info");
@@ -281,7 +293,7 @@ public final class CodeTraceApp extends Application {
                 dirty = true;
                 updateTitle();
                 refreshMetrics();
-            });
+            }, settings.fontFamily(), settings.fontSize());
             Tab tab = new Tab(file.getFileName().toString(), editor);
             tab.setOnClosed(event -> openedTabs.remove(relative));
             openedTabs.put(relative, tab);
@@ -341,6 +353,7 @@ public final class CodeTraceApp extends Application {
             int omitted = editor.skipJavaImports();
             setStatus(omitted == 0 ? "No hay imports pendientes"
                     : omitted + " caracteres omitidos");
+            editor.focusEditor();
         }
     }
 
@@ -510,11 +523,24 @@ public final class CodeTraceApp extends Application {
         return answer == ButtonType.NO;
     }
 
+    private void applySettings(AppSettings next) {
+        settings = next;
+        settings.save();
+        if (!concentration) {
+            explorerToggle.setSelected(next.showExplorer());
+        }
+        for (Tab tab : tabs.getTabs()) {
+            if (tab.getContent() instanceof TypingEditor editor) {
+                editor.setFontSettings(next.fontFamily(), next.fontSize());
+            }
+        }
+    }
+
     private void showAbout() {
         Alert dialog = new Alert(Alert.AlertType.INFORMATION);
         dialog.initOwner(stage);
         dialog.setTitle("Acerca de CodeTrace");
-        dialog.setHeaderText("CodeTrace · 0.1.0");
+        dialog.setHeaderText("CodeTrace · 0.2.0");
         dialog.setContentText("Herramienta de escritorio para practicar la "
                 + "reconstrucción manual de proyectos de software.\n\n"
                 + "La práctica fortalece la familiaridad y la confianza "

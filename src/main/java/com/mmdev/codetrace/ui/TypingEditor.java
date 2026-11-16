@@ -33,11 +33,15 @@ public final class TypingEditor extends BorderPane {
     private final ScrollPane scroll = new ScrollPane(surface);
     private final Runnable onChange;
     private long firstKeyNanos;
-    private double fontSize = 16;
+    private double fontSize;
+    private String fontFamily;
 
-    public TypingEditor(TypingSession session, Runnable onChange) {
+    public TypingEditor(TypingSession session, Runnable onChange,
+                        String fontFamily, int fontSize) {
         this.session = session;
         this.onChange = onChange;
+        this.fontFamily = fontFamily;
+        this.fontSize = fontSize;
         getStyleClass().add("typing-editor");
         surface.getStyleClass().add("typing-surface");
         surface.setFocusTraversable(true);
@@ -51,6 +55,12 @@ public final class TypingEditor extends BorderPane {
         addEventFilter(KeyEvent.KEY_TYPED, this::handleTyped);
         render();
         Platform.runLater(surface::requestFocus);
+    }
+
+    public void setFontSettings(String family, int size) {
+        fontFamily = family;
+        fontSize = size;
+        render();
     }
 
     public TypingSession session() {
@@ -201,6 +211,7 @@ public final class TypingEditor extends BorderPane {
                 Text cursor = styledText("│", CARET);
                 cursor.setMouseTransparent(true);
                 output.add(cursor);
+                segmentStart = index;
             }
             if (index == session.size()) {
                 break;
@@ -250,7 +261,7 @@ public final class TypingEditor extends BorderPane {
     private Text styledText(String value, Color color) {
         Text text = new Text(value);
         text.setFill(color);
-        text.setFont(Font.font("Consolas", fontSize));
+        text.setFont(Font.font(fontFamily, fontSize));
         return text;
     }
 
