@@ -23,11 +23,11 @@ function Note([string]$message) {
     Write-Host $message
     $script:summary.Add($message)
 }
-function Temurin21([string]$home) {
-    if ([string]::IsNullOrWhiteSpace($home)) { return $false }
-    $home = $home.Trim('"')
-    if (-not (Test-Path -LiteralPath (Join-Path $home "bin\javac.exe"))) { return $false }
-    $release = Join-Path $home "release"
+function Temurin21([string]$candidateHome) {
+    if ([string]::IsNullOrWhiteSpace($candidateHome)) { return $false }
+    $candidateHome = $candidateHome.Trim('"')
+    if (-not (Test-Path -LiteralPath (Join-Path $candidateHome "bin\javac.exe"))) { return $false }
+    $release = Join-Path $candidateHome "release"
     if (-not (Test-Path -LiteralPath $release)) { return $false }
     $data = [System.IO.File]::ReadAllText($release)
     return ($data -match '(?m)^JAVA_VERSION="21(\.|")' -and
