@@ -2,6 +2,7 @@ package com.mmdev.codetrace.app;
 
 import com.mmdev.codetrace.practice.TypingSession;
 import com.mmdev.codetrace.progress.SessionArchive;
+import com.mmdev.codetrace.reference.ReferenceCatalogue;
 import com.mmdev.codetrace.reference.ReferenceFingerprint;
 import com.mmdev.codetrace.reference.TextPreview;
 import com.mmdev.codetrace.ui.ReferenceTree;
@@ -14,6 +15,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import javafx.application.Application;
+import javafx.concurrent.Task;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -49,6 +51,7 @@ public final class CodeTraceApp extends Application {
     private final Map<String, Tab> openedTabs = new HashMap<>();
     private final Label status = new Label("Listo");
     private final Label fileInfo = new Label();
+    private final Label projectInfo = new Label();
     private final ProgressBar fileProgress = new ProgressBar(0);
     private final SplitPane split = new SplitPane();
     private final ReferenceTree tree = new ReferenceTree(
@@ -62,6 +65,8 @@ public final class CodeTraceApp extends Application {
     private VirtualWorkspace workspace = new VirtualWorkspace();
     private Map<String, TypingSession> sessions = new LinkedHashMap<>();
     private Map<String, String> hashes = new LinkedHashMap<>();
+    private ReferenceCatalogue.Snapshot catalogue;
+    private long catalogueGeneration;
     private Path reference;
     private Path sessionFile;
     private boolean dirty;
@@ -158,7 +163,7 @@ public final class CodeTraceApp extends Application {
         fileProgress.setPrefWidth(160);
         fileProgress.setVisible(false);
         HBox.setHgrow(status, Priority.ALWAYS);
-        HBox footer = new HBox(12, status, fileInfo, fileProgress);
+        HBox footer = new HBox(12, status, fileInfo, projectInfo, fileProgress);
         footer.setPadding(new Insets(5, 10, 5, 10));
         footer.getStyleClass().add("statusbar");
         root.setBottom(footer);
@@ -196,6 +201,7 @@ public final class CodeTraceApp extends Application {
             workspace = new VirtualWorkspace();
             sessions = new LinkedHashMap<>();
             hashes = new LinkedHashMap<>();
+            catalogue = null;
             sessionFile = null;
             dirty = false;
             tabs.getTabs().clear();
@@ -203,6 +209,7 @@ public final class CodeTraceApp extends Application {
             reference = chosen.toPath().toAbsolutePath().normalize();
             tree.setWorkspace(workspace);
             tree.open(reference);
+            indexReference();
             refreshButton.setDisable(false);
             setStatus("Referencia: " + reference);
             updateTitle();
@@ -219,6 +226,7 @@ public final class CodeTraceApp extends Application {
             return;
         }
         tree.refreshTree();
+        indexReference();
         int changes = 0;
         for (var pair : hashes.entrySet()) {
             Path source = reference.resolve(pair.getKey());
@@ -343,13 +351,21 @@ public final class CodeTraceApp extends Application {
         skipImportsMenu.setDisable(!hasEditor || !selectedJavaFile());
         if (!hasEditor) {
             fileInfo.setText("");
+        } else {
+            TypingSession typing = editor.session();
+            fileInfo.setText(typing.correctCount() + " correctos · "
+                    + editor.correctCpm() + " CPM");
+        }
+        if (catalogue == null) {
+            projectInfo.setText("");
             fileProgress.setVisible(false);
             return;
         }
-        TypingSession typing = editor.session();
-        fileInfo.setText("Archivo · " + typing.correctCount() + " correctos · "
-                + editor.correctCpm() + " CPM");
-        fileProgress.setProgress(editor.progress());
+        long total = catalogue.expectedUnits();
+        long resolved = catalogue.resolvedUnits(workspace, sessions, hashes);
+        double ratio = total == 0 ? 1.0 : (double) resolved / total;
+        projectInfo.setText("Proyecto · " + Math.round(ratio * 100) + " %");
+        fileProgress.setProgress(ratio);
         fileProgress.setVisible(true);
     }
 
@@ -434,6 +450,36 @@ public final class CodeTraceApp extends Application {
             showFailure("No se pudo guardar la sesión", failure.getMessage());
             return false;
         }
+    }
+
+    private void indexReference() {
+        if (reference == null) {
+            return;
+        }
+        Path root = reference;
+        long generation = ++catalogueGeneration;
+        catalogue = null;
+        refreshMetrics();
+        Task<ReferenceCatalogue.Snapshot> scan = new Task<>() {
+            @Override
+            protected ReferenceCatalogue.Snapshot call() throws Exception {
+                return ReferenceCatalogue.scan(root);
+            }
+        };
+        scan.setOnSucceeded(event -> {
+            if (generation == catalogueGeneration && root.equals(reference)) {
+                catalogue = scan.getValue();
+                refreshMetrics();
+            }
+        });
+        scan.setOnFailed(event -> {
+            if (generation == catalogueGeneration) {
+                setStatus("No se pudo analizar la referencia.");
+            }
+        });
+        Thread worker = new Thread(scan, "codetrace-reference-index");
+        worker.setDaemon(true);
+        worker.start();
     }
 
     private FileChooser sessionChooser(String title) {
