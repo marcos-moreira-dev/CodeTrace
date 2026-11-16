@@ -2,42 +2,42 @@
 
 **Transcripción de código y reconstrucción virtual de proyectos de software.**
 
-CodeTrace es una aplicación JavaFX para practicar manualmente la creación de estructuras de archivos y la escritura de código sobre una referencia existente. Busca favorecer soltura, familiaridad y confianza en las tareas cotidianas del desarrollo de software. No es un curso, un asistente de inteligencia artificial ni un compilador.
+CodeTrace es una herramienta de escritorio para practicar la creación de estructuras y la escritura de código sobre una referencia existente. No es un curso, un asistente de IA ni un IDE completo.
 
-## Implementado — 0.2.0-SNAPSHOT
+## Ejecutar en Windows 11
 
-- Selección de carpeta de referencia **de solo lectura** y explorador con entradas pendientes.
-- Creación, renombrado, copia, movimiento y eliminación de elementos **virtuales** mediante menú contextual (crear archivos en la carpeta padre y escribir su nombre).
-- Transcripción directamente sobre la plantilla, con verde para aciertos y rojo para errores **sin bloquear el avance**; navegación de cursor, Retroceso y Supr.
-- Soporte en el motor para caracteres Unicode compuestos, saltos de línea y omisiones voluntarias de imports Java.
-- Guardar/abrir sesiones binarias **`.ctrace`**, con escrituras temporales y recuperación del proyecto virtual y la mecanografía. El código original no se modifica.
-- Catálogo de referencias y cálculos de **SHA-256 por archivo**; progreso global calculado en segundo plano sobre los archivos de texto compatibles.
-- Interfaz clara de escritorio: panel de proyecto, pestañas, área central amplia, pantalla completa, modo concentración, barra de progreso y preferencias persistentes de fuente y tamaño.
-- Pruebas JUnit del dominio y GitHub Actions con **Eclipse Temurin 21**, compilación y prueba de inicio gráfico mediante Xvfb.
+Requisitos: **Eclipse Temurin JDK 21** y **Apache Maven** (mvn.cmd en PATH).
 
-### Limitaciones de esta versión
+Para **probar todo y generar un ZIP de retroalimentación**, ejecuta el archivo:
 
-Todavía falta el resaltado de sintaxis por lenguaje, el visor Markdown renderizado, la consola de comandos, los iconos definitivos, la gestión avanzada de selección/deshacer y una verificación visual manual en Windows 11. La transcripción actual es por posiciones de la plantilla, por lo que el algoritmo de alineación de errores aún puede mejorarse. Solo se admiten vistas de texto UTF-8 acotadas a 2 MiB; los binarios no se transcriben.
+    scripts\diagnostico.bat
 
-## Tecnología
+El script comprueba Java y Maven, construye y prueba el proyecto, abre CodeTrace y, cuando cierras la aplicación, genera el ZIP y lo selecciona en el Explorador de archivos. Captura únicamente la ventana de CodeTrace cuando Windows lo permita. Lee [Pruebas en Windows](scripts/README.md) para los detalles y las opciones.
 
-- **JDK: Eclipse Temurin 21**, como SDK del proyecto.
-- **JavaFX 21.0.13**.
-- **Maven** y JUnit 5.
-- Namespace: **`com.mmdev.codetrace`**.
+Para trabajar normalmente desde IntelliJ IDEA: importar pom.xml como Maven, seleccionar el SDK **Eclipse Temurin 21**, configurar Maven Toolchains y ejecutar mvn javafx:run. El pom.xml exige **Temurin 21** como toolchain; Maven puede usar ~/.m2/toolchains.xml o un archivo específico con la opción -t.
 
-En IntelliJ IDEA, importa `pom.xml` como Maven y establece Project SDK = **Eclipse Temurin 21**. Después ejecuta:
+## Implementado (versión de desarrollo 0.2)
 
-```powershell
-java -version
-mvn -version
-mvn clean verify
-mvn javafx:run
-```
+- Referencia de solo lectura, árbol con creación/copia/movimiento/eliminación **virtual**.
+- Editor de transcripción sobre plantilla; aciertos verdes, errores rojos y avance sin bloqueo.
+- Persistencia binaria en sesiones *.ctrace, progreso y hashes SHA-256.
+- Resaltado inicial por adaptadores de Java, Python, TypeScript, C/C++ y Markdown.
+- Vista Markdown alternable entre fuente y renderizado en una misma pestaña.
+- Preferencias de fuente, pantalla completa y modo concentración.
+- Pruebas JUnit, CI con Temurin 21 y prueba de inicio JavaFX en pantalla virtual.
 
-## Documentación
+### Todavía pendiente de pulir
+
+Selección/deshacer avanzados, alineación flexible de errores, recursos gráficos definitivos, consola integrada y pruebas manuales completas de UX con teclado latinoamericano. Los archivos de texto UTF-8 grandes o binarios no se transcriben en esta versión.
+
+## Organización
+
+Los paquetes nacen de necesidades del producto: referencia, espacio virtual, transcripción, sesiones, lenguajes, interfaz y aplicación. No se introducen patrones de diseño sin necesidad.
 
 - [Contrato de producto](docs/PRODUCTO.md)
-- [Arquitectura y estado técnico](docs/ARQUITECTURA.md)
+- [Arquitectura](docs/ARQUITECTURA.md)
+- [Diagnóstico de Windows](scripts/README.md)
 
-La licencia está pendiente de escoger. No se debe asumir una licencia abierta sin un archivo `LICENSE`.
+Paquete base: com.mmdev.codetrace. Java 21 / JavaFX 21 / Maven.
+
+La licencia todavía no ha sido decidida.

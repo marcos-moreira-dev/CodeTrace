@@ -9,13 +9,38 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Eclipse Temurin JDK 21
+      - name: Eclipse Temurin JDK 21 and Maven toolchain
         uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: '21'
+          mvn-toolchain-vendor: temurin
           cache: maven
       - name: Maven verify
         run: mvn --batch-mode --no-transfer-progress verify
       - name: JavaFX graphical startup smoke test
         run: xvfb-run -a mvn --batch-mode --no-transfer-progress -Dtest=CodeTraceAppSmokeTest -Dcodetrace.guiSmoke=true test
+
+  windows-diagnostics:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Eclipse Temurin JDK 21 and Maven toolchain
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+          mvn-toolchain-vendor: temurin
+          cache: maven
+      - name: Execute Windows diagnostic batch file
+        shell: pwsh
+        run: |
+          & .\scripts\diagnostico.bat -NoApp -NoExplorer
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Preserve Windows diagnostic ZIP
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: codetrace-windows-diagnostic
+          path: reports/CodeTrace-feedback-*.zip
+          if-no-files-found: warn
