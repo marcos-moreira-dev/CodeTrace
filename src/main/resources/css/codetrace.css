@@ -1,0 +1,38 @@
+.root {
+    -fx-font-family: "Segoe UI";
+    -fx-font-size: 12px;
+    -fx-base: #f5f6f7;
+    -fx-background-color: #f5f6f7;
+}
+.menu-bar, .tool-bar, .statusbar {
+    -fx-background-color: #e7edf1;
+    -fx-border-color: transparent transparent #bbc6cd transparent;
+}
+.tool-bar { -fx-padding: 6 8; -fx-spacing: 6; }
+.button {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #a9b8c4;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+    -fx-padding: 6 11;
+}
+.button:hover { -fx-background-color: #e5eff6; -fx-border-color: #4a6076; }
+.button:disabled { -fx-opacity: 0.48; }
+.sidebar { -fx-background-color: #eef1f3; }
+.sidebar-title {
+    -fx-font-weight: bold;
+    -fx-text-fill: #34495a;
+    -fx-padding: 10 12;
+}
+.tree-view { -fx-background-color: #eef1f3; }
+.tree-cell:selected { -fx-background-color: #c9dbe8; -fx-text-fill: #263747; }
+.split-pane { -fx-padding: 0; -fx-background-color: #b9c5cd; }
+.split-pane-divider { -fx-background-color: #9caebd; -fx-padding: 2; }
+.tab-pane { -fx-background-color: #ffffff; }
+.source-preview {
+    -fx-font-family: "Consolas";
+    -fx-font-size: 14px;
+    -fx-control-inner-background: #ffffff;
+}
+.statusbar { -fx-border-color: #b8c5cd transparent transparent transparent; }
+.statusbar .label { -fx-text-fill: #455c6f; -fx-font-size: 11px; }
