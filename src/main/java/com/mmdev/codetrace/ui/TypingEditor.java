@@ -1,6 +1,8 @@
 package com.mmdev.codetrace.ui;
 
 import com.mmdev.codetrace.practice.TypingSession;
+import com.mmdev.codetrace.languages.LanguageRegistry;
+import com.mmdev.codetrace.languages.LanguageSupport;
 import java.text.BreakIterator;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +31,7 @@ public final class TypingEditor extends BorderPane {
     private static final Color CARET = Color.web("#245E94");
 
     private final TypingSession session;
+    private final Color[] syntaxColors;
     private final TextFlow surface = new TextFlow();
     private final ScrollPane scroll = new ScrollPane(surface);
     private final Runnable onChange;
@@ -37,8 +40,9 @@ public final class TypingEditor extends BorderPane {
     private String fontFamily;
 
     public TypingEditor(TypingSession session, Runnable onChange,
-                        String fontFamily, int fontSize) {
+                        String filename, String fontFamily, int fontSize) {
         this.session = session;
+        this.syntaxColors = syntaxColors(session, filename);
         this.onChange = onChange;
         this.fontFamily = fontFamily;
         this.fontSize = fontSize;
@@ -202,7 +206,7 @@ public final class TypingEditor extends BorderPane {
     private void render() {
         List<Text> output = new ArrayList<>();
         StringBuilder segment = new StringBuilder();
-        TypingSession.State style = null;
+        Color style = null;
         int segmentStart = 0;
         for (int index = 0; index <= session.size(); index++) {
             if (index == session.caret()) {
@@ -217,9 +221,15 @@ public final class TypingEditor extends BorderPane {
                 break;
             }
             TypingSession.Cell cell = session.cell(index);
-            if (style != cell.state()) {
+            Color currentColor = switch (cell.state()) {
+                case CORRECT -> CORRECT;
+                case INCORRECT -> INCORRECT;
+                case SKIPPED -> SKIPPED;
+                case PENDING -> syntaxColors[index];
+            };
+            if (style != currentColor) {
                 flush(output, segment, style, segmentStart);
-                style = cell.state();
+                style = currentColor;
                 segmentStart = index;
             }
             // Keep reference line breaks even when a wrong character is typed there.
@@ -232,16 +242,10 @@ public final class TypingEditor extends BorderPane {
     }
 
     private void flush(List<Text> output, StringBuilder chars,
-                       TypingSession.State state, int start) {
+                       Color color, int start) {
         if (chars.isEmpty()) {
             return;
         }
-        Color color = switch (state) {
-            case CORRECT -> CORRECT;
-            case INCORRECT -> INCORRECT;
-            case SKIPPED -> SKIPPED;
-            case PENDING -> PENDING;
-        };
         String displayed = chars.toString();
         Text view = styledText(displayed, color);
         view.setOnMousePressed(event -> {
@@ -256,6 +260,40 @@ public final class TypingEditor extends BorderPane {
         });
         output.add(view);
         chars.setLength(0);
+    }
+
+    private static Color[] syntaxColors(TypingSession session, String filename) {
+        String source = session.expectedText();
+        Color[] result = new Color[session.size()];
+        java.util.Arrays.fill(result, PENDING);
+        int[] characterSlots = new int[source.length() + 1];
+        int offset = 0;
+        for (int index = 0; index < session.size(); index++) {
+            String unit = session.cell(index).expected();
+            for (int j = 0; j < unit.length(); j++) {
+                characterSlots[offset + j] = index;
+            }
+            offset += unit.length();
+        }
+        characterSlots[source.length()] = session.size();
+        LanguageSupport support = LanguageRegistry.forFile(filename);
+        for (LanguageSupport.Token token : support.highlight(source)) {
+            if (token.start() == token.end()) {
+                continue;
+            }
+            int first = characterSlots[token.start()];
+            int lastExclusive = characterSlots[token.end() - 1] + 1;
+            Color tint = switch (token.kind()) {
+                case KEYWORD -> Color.web("#315F91");
+                case COMMENT -> Color.web("#647F75");
+                case STRING -> Color.web("#267A65");
+                case NUMBER -> Color.web("#9D732F");
+                case ANNOTATION -> Color.web("#7B61A5");
+                case HEADING -> Color.web("#315F91");
+            };
+            java.util.Arrays.fill(result, first, lastExclusive, tint);
+        }
+        return result;
     }
 
     private Text styledText(String value, Color color) {

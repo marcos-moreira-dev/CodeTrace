@@ -293,7 +293,7 @@ public final class CodeTraceApp extends Application {
                 dirty = true;
                 updateTitle();
                 refreshMetrics();
-            }, settings.fontFamily(), settings.fontSize());
+            }, file.getFileName().toString(), settings.fontFamily(), settings.fontSize());
             Tab tab = new Tab(file.getFileName().toString(), editor);
             tab.setOnClosed(event -> openedTabs.remove(relative));
             openedTabs.put(relative, tab);
