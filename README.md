@@ -21,15 +21,17 @@ Para trabajar normalmente desde IntelliJ IDEA: importar pom.xml como Maven, sele
 - Referencia de solo lectura, árbol con creación/copia/movimiento/eliminación **virtual**.
 - **Plantilla inmutable y selección por línea:** al hacer clic en una fila se resalta completa y el cursor pasa a su inicio. Escribir solo marca la posición original con verde (correcto) o rojo (incorrecto, subrayado), sin sustituir caracteres ni desplazar la referencia. El documento se muestra con líneas virtualizadas.
 - **Control horizontal del tamaño tipográfico** en la barra inferior (10 a 36 pt, rueda del ratón y botones −/+), sincronizado con Preferencias.
+- Opacidad de caracteres pendientes ajustable con un Spinner en Preferencias → Editor (20–100 %); los caracteres correctos o incorrectos permanecen completamente visibles.
 - Persistencia binaria en sesiones *.ctrace, progreso y hashes SHA-256.
+- **Explorador con marcadores de estado**: círculo gris si falta recrearlo, visto verde cuando existe en el proyecto virtual. Botones para contraer/expandir carpetas. Menú contextual sobre carpetas para medir el progreso de esa rama o de todo el proyecto.
 - **Doble clic sobre cualquier archivo de texto compatible**: la plantilla se abre directamente. Al escribir, se crea el recorrido virtual necesario, sin alterar la referencia ni impedir la creación manual desde el explorador.
-- **Progreso configurable por categorías** desde Práctica → Contabilizar en progreso. Solo el código fuente cuenta inicialmente; configuración, documentación y otros textos son opcionales.
+- **Progreso configurable por categorías** desde el botón **Filtro** de la barra inferior. Solo el código fuente cuenta inicialmente; Markdown, configuración y otros textos son optativos. El porcentaje muestra tres decimales y solo contabiliza caracteres correctos, nunca los imports omitidos.
 - Iconografía transversal de carpetas y lenguajes con Ikonli/Devicons y Feather; controles desplegables con el mismo estilo rectangular.
 - Resaltado inicial por adaptadores de Java, Python, TypeScript, C/C++ y Markdown.
 - Vista Markdown alternable entre fuente y renderizado en una misma pestaña.
 - Preferencias rediseñadas con navegación lateral Editor/Ventana/Sonido, vista previa de tipografía, pantalla completa y modo concentración.
 - Scrollbars verticales y horizontales con estilo compartido, compacto y rectangular en toda la aplicación.
-- Galería compacta **Símbolos**: copiar llaves, corchetes, arroba y otros caracteres; pista de teclado latinoamericano o estadounidense. Copiar no suma estadísticas ni introduce texto en la práctica.
+- Galería compacta **Símbolos**: copia llaves, corchetes, arroba y más; informa la combinación de teclado y devuelve el foco a la transcripción. **Ctrl+V** pega exactamente un carácter en la posición actual sin modificar la referencia. Copiar por sí solo no aumenta estadísticas; el pegado correcto sí cuenta.
 - Dos sonidos opcionales de escritura (acierto/error) suministrados por el usuario. La carga convierte y amplifica los WAV originalmente muy silenciosos. Se activan únicamente desde **Herramientas → Preferencias → Sonido**, donde también se pueden probar. Desactivados de manera predeterminada.
 - Pruebas JUnit, CI con Temurin 21 y prueba de inicio JavaFX en pantalla virtual.
 

@@ -37,6 +37,7 @@ import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.Separator;
@@ -66,6 +67,7 @@ public final class CodeTraceApp extends Application {
     private final Label fileInfo = new Label();
     private final Label projectInfo = new Label();
     private final ProgressBar fileProgress = new ProgressBar(0);
+    private final MenuButton progressFilter = new MenuButton("Filtro");
     private final SplitPane split = new SplitPane();
     private final ReferenceTree tree = new ReferenceTree(
             this::openForPractice, this::onWorkspaceChanged, this::setStatus);
@@ -157,13 +159,7 @@ public final class CodeTraceApp extends Application {
         Menu viewMenu = new Menu("Ver", null, explorerToggle, focus, fullscreen);
 
         skipImportsMenu.setOnAction(event -> skipImports());
-        Menu progressMenu = new Menu("Contabilizar en progreso");
-        addProgressOption(progressMenu, "Código fuente", ProgressScope.Category.SOURCE);
-        addProgressOption(progressMenu, "Configuración", ProgressScope.Category.CONFIGURATION);
-        addProgressOption(progressMenu, "Documentación", ProgressScope.Category.DOCUMENTATION);
-        addProgressOption(progressMenu, "Otros textos", ProgressScope.Category.OTHER_TEXT);
-        Menu practiceMenu = new Menu("Práctica", null, skipImportsMenu,
-                new javafx.scene.control.SeparatorMenuItem(), progressMenu);
+        Menu practiceMenu = new Menu("Práctica", null, skipImportsMenu);
         MenuItem about = new MenuItem("Acerca de CodeTrace");
         about.setOnAction(event -> showAbout());
         Menu helpMenu = new Menu("Ayuda", null, about);
@@ -217,11 +213,20 @@ public final class CodeTraceApp extends Application {
         fileProgress.setPrefWidth(160);
         fileProgress.setVisible(false);
         fileProgress.managedProperty().bind(fileProgress.visibleProperty());
+        status.setMaxWidth(Double.MAX_VALUE);
         HBox.setHgrow(status, Priority.ALWAYS);
+        progressFilter.getStyleClass().add("status-progress-filter");
+        progressFilter.setTooltip(new Tooltip(
+                "Seleccionar tipos de archivo incluidos en el progreso"));
+        addProgressOption(progressFilter, "Código fuente", ProgressScope.Category.SOURCE);
+        addProgressOption(progressFilter, "Configuración", ProgressScope.Category.CONFIGURATION);
+        addProgressOption(progressFilter, "Documentación / Markdown",
+                ProgressScope.Category.DOCUMENTATION);
+        addProgressOption(progressFilter, "Otros textos", ProgressScope.Category.OTHER_TEXT);
         zoom = new EditorZoomControl(settings.fontSize(), this::setEditorZoom);
         zoom.setId("editor-font-zoom");
         HBox footer = new HBox(9, status, fileInfo, projectInfo, fileProgress,
-                new Separator(Orientation.VERTICAL), zoom);
+                progressFilter, new Separator(Orientation.VERTICAL), zoom);
         footer.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
         footer.setMinHeight(34);
         status.setMinWidth(80);
@@ -354,6 +359,7 @@ public final class CodeTraceApp extends Application {
                         }
                     });
             editor.setOnNotice(this::setStatus);
+            editor.setTemplateOpacity(settings.templateOpacity());
             boolean markdown = relative.toLowerCase().endsWith(".md")
                     || relative.toLowerCase().endsWith(".markdown");
             Tab tab = new Tab(file.getFileName().toString(),
@@ -465,7 +471,8 @@ public final class CodeTraceApp extends Application {
                 : "Progreso: " + progressFolder);
     }
 
-    private void addProgressOption(Menu menu, String title, ProgressScope.Category category) {
+    private void addProgressOption(MenuButton menu, String title,
+                                   ProgressScope.Category category) {
         CheckMenuItem option = new CheckMenuItem(title);
         option.setSelected(progressScope.includes(category));
         option.setOnAction(event -> {
@@ -627,7 +634,8 @@ public final class CodeTraceApp extends Application {
             return;
         }
         settings = new AppSettings(settings.fontFamily(), size,
-                settings.showExplorer(), settings.keyboardLayout(), settings.typingSounds());
+                settings.showExplorer(), settings.keyboardLayout(), settings.typingSounds(),
+                settings.templateOpacity());
         settings.save();
         for (Tab tab : tabs.getTabs()) {
             if (tab.getContent() instanceof TypingEditor editor) {
@@ -640,7 +648,8 @@ public final class CodeTraceApp extends Application {
 
     private void applySettings(AppSettings next) {
         settings = new AppSettings(next.fontFamily(), next.fontSize(),
-                next.showExplorer(), settings.keyboardLayout(), next.typingSounds());
+                next.showExplorer(), settings.keyboardLayout(), next.typingSounds(),
+                next.templateOpacity());
         settings.save();
         zoom.setValue(next.fontSize());
         if (!concentration) {
@@ -649,8 +658,10 @@ public final class CodeTraceApp extends Application {
         for (Tab tab : tabs.getTabs()) {
             if (tab.getContent() instanceof TypingEditor editor) {
                 editor.setFontSettings(next.fontFamily(), next.fontSize());
+                editor.setTemplateOpacity(next.templateOpacity());
             } else if (tab.getContent() instanceof MarkdownPracticePane pane) {
                 pane.editor().setFontSettings(next.fontFamily(), next.fontSize());
+                pane.editor().setTemplateOpacity(next.templateOpacity());
             }
         }
     }

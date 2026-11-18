@@ -30,6 +30,9 @@ import com.mmdev.codetrace.practice.TypingSession;
 import com.mmdev.codetrace.ui.EditorZoomControl;
 import javafx.scene.control.CustomMenuItem;
 import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.control.Spinner;
+import com.mmdev.codetrace.ui.ReferenceTree;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -104,6 +107,9 @@ class CodeTraceAppSmokeTest {
                 assertNotNull(preferences.getScene().getRoot().lookup(".prefs-navigation"));
                 assertNotNull(preferences.getScene().getRoot().lookup(".prefs-content"));
                 assertNotNull(preferences.getScene().getRoot().lookup(".prefs-actions"));
+                assertTrue(preferences.getScene().getRoot()
+                        .lookup(".prefs-opacity-spinner") instanceof Spinner<?>);
+                assertNotNull(preferences.getScene().getRoot().lookup(".prefs-font-choice"));
                 preferences.close();
                 TypingEditor editor = (TypingEditor) tabPane.getTabs().getFirst().getContent();
                 Event.fireEvent(editor, new KeyEvent(KeyEvent.KEY_TYPED,
@@ -140,6 +146,30 @@ class CodeTraceAppSmokeTest {
                 second.selectLine(1);
                 assertEquals(6, second.session().caret());
                 assertEquals("beta", second.visibleLineText(1));
+
+                // Ctrl+V of ONE symbol writes into the existing reference slot
+                // without shifting the source glyph or changing lines.
+                int last = editor.session().size() - 1;
+                editor.session().moveCaret(last);
+                ClipboardContent copiedSymbol = new ClipboardContent();
+                copiedSymbol.putString("}");
+                Clipboard.getSystemClipboard().setContent(copiedSymbol);
+                Event.fireEvent(editor, new KeyEvent(KeyEvent.KEY_PRESSED,
+                        "", "", KeyCode.V, false, true, false, false));
+                assertEquals(TypingSession.State.CORRECT, editor.session().state(last));
+                assertEquals(editor.session().size(), editor.session().caret());
+                assertEquals(untouched, editor.visibleLineText(0));
+
+                // The tree has bounded expansion/collapse and explicit virtual
+                // created/uncreated markers.
+                ReferenceTree fileTree = (ReferenceTree) stage.getScene()
+                        .getRoot().lookup(".tree-view");
+                assertNotNull(fileTree);
+                fileTree.open(root);
+                fileTree.collapseAll();
+                fileTree.expandAll();
+                assertTrue(fileTree.getRoot().isExpanded());
+                assertNotNull(stage.getScene().getRoot().lookup(".status-progress-filter"));
                 Files.delete(file);
                 Files.delete(src);
                 Files.delete(root);

@@ -45,6 +45,7 @@ public final class TypingEditor extends BorderPane {
     private final Runnable onChange;
     private final Consumer<Boolean> onTypedCharacter;
     private double fontSize;
+    private double pendingOpacity = 0.70;
     private String fontFamily;
     private long firstKeyNanos;
     private boolean synchronizingLine;
@@ -134,6 +135,15 @@ public final class TypingEditor extends BorderPane {
         session.moveCaret(target.first());
         synchronizeLine(true);
         lines.requestFocus();
+    }
+
+    /** Apply only to pending source characters, never to correctly typed tiles. */
+    public void setTemplateOpacity(int percent) {
+        if (percent < 20 || percent > 100) {
+            throw new IllegalArgumentException("Opacity out of range");
+        }
+        pendingOpacity = percent / 100.0;
+        lines.refresh();
     }
 
     public void setFontSettings(String family, int size) {
@@ -369,6 +379,8 @@ public final class TypingEditor extends BorderPane {
             Text glyph = new Text(visible);
             glyph.setFont(font);
             glyph.setMouseTransparent(true);
+            glyph.setOpacity(cell.state() == TypingSession.State.PENDING
+                    ? pendingOpacity : 1.0);
             glyph.setFill(switch (cell.state()) {
                 case CORRECT -> CORRECT;
                 case INCORRECT -> INCORRECT;

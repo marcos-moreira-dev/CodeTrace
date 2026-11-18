@@ -45,3 +45,13 @@ CodeTrace propone una práctica tranquila de reconstrucción manual de software,
 - La toolbar contiene operaciones de práctica frecuentes, **no** un interruptor de sonido. Sonidos de acierto/error y su prueba manual pertenecen a Herramientas → Preferencias → Sonido.
 - Preferencias tiene navegación lateral constante, contenido organizado por tarea, tipografía y espaciado coherentes, muestra de código para seleccionar fuentes y acciones estándar Aceptar/Cancelar/Aplicar.
 - Ningún estilo o microcopy debe revelar detalles de implementación o introducir elementos puramente decorativos.
+
+## UX/UI: controles de progreso y preparación (noviembre 2026)
+- En la esquina del encabezado Proyecto aparecen los botones de contraer y expandir. La expansión es limitada en proyectos enormes para no congelar JavaFX.
+- Cada archivo o carpeta de referencia se distingue con estado **○ pendiente** o **✓ creado virtualmente**. El visto significa existencia de la estructura virtual, no que se haya terminado su mecanografía.
+- El menú contextual de carpetas permite que el progreso global mida todo el proyecto o solamente los archivos de una carpeta y sus descendientes. El ámbito por carpeta es una selección temporal del workspace.
+- El botón **Filtro** junto al progreso controla qué categorías de texto se tienen en cuenta; Markdown/documentación, archivos de configuración y otros textos están desactivados inicialmente.
+- El porcentaje global tiene tres decimales y se calcula solo a partir de caracteres escritos correctamente. Los fragmentos omitidos y los errores no aportan progreso, aunque su estado se conserva en la sesión.
+- El Spinner de opacidad de Preferencias afecta únicamente a los caracteres pendientes de la plantilla. Debe mantenerse el contraste de los aciertos y los errores.
+- El selector de tipografía muestra junto al nombre una muestra de la misma fuente. El control transversal de tamaño continúa en el extremo derecho de la barra inferior.
+- **Símbolos** copia el carácter; **Ctrl+V** en la superficie de práctica lo coloca en el próximo espacio de la plantilla. La selección de línea existente no debe reiniciar el cursor. Se rechaza el pegado de bloques largos para conservar el ejercicio de mecanografía.

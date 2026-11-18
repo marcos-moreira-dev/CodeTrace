@@ -14,6 +14,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Slider;
+import javafx.scene.control.Spinner;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -21,6 +22,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
@@ -90,6 +92,8 @@ public final class PreferencesWindow {
                 FXCollections.observableArrayList(Font.getFamilies()));
         families.getStyleClass().add("prefs-font-choice");
         families.setMaxWidth(Double.MAX_VALUE);
+        families.setCellFactory(list -> new FontFamilyCell());
+        families.setButtonCell(new FontFamilyCell());
         families.setValue(current.fontFamily());
         if (families.getValue() == null
                 || !families.getItems().contains(families.getValue())) {
@@ -106,6 +110,17 @@ public final class PreferencesWindow {
         Label sizeValue = new Label(current.fontSize() + " pt");
         sizeValue.getStyleClass().add("prefs-size-value");
         sizeValue.setMinWidth(44);
+
+        Spinner<Integer> opacity = new Spinner<>(20, 100, current.templateOpacity(), 5);
+        opacity.getStyleClass().add("prefs-opacity-spinner");
+        opacity.setEditable(false);
+        opacity.setPrefWidth(110);
+        opacity.setTooltip(new Tooltip(
+                "Transparencia visual de los caracteres pendientes; los aciertos y errores permanecen nítidos."));
+        Label opacityUnit = new Label("%");
+        opacityUnit.getStyleClass().add("prefs-size-value");
+        HBox opacityRow = new HBox(9, opacity, opacityUnit);
+        opacityRow.setAlignment(Pos.CENTER_LEFT);
 
         Label preview = new Label("public class Main {\n    int valor = 21;\n}");
         preview.getStyleClass().add("prefs-code-preview");
@@ -126,6 +141,7 @@ public final class PreferencesWindow {
         editorPanel.getChildren().addAll(
                 field("Fuente de código", families),
                 field("Tamaño de letra", new HBox(10, size, sizeValue)),
+                field("Opacidad de la plantilla", opacityRow),
                 groupHeading("Vista previa"), preview);
 
         CheckBox explorer = new CheckBox("Mostrar explorador de proyectos");
@@ -168,7 +184,8 @@ public final class PreferencesWindow {
         Runnable apply = () -> onApply.accept(new AppSettings(
                 families.getValue() == null ? current.fontFamily() : families.getValue(),
                 (int) Math.round(size.getValue()),
-                explorer.isSelected(), current.keyboardLayout(), sounds.isSelected()));
+                explorer.isSelected(), current.keyboardLayout(), sounds.isSelected(),
+                opacity.getValue()));
         Button accept = new Button("Aceptar");
         accept.setDefaultButton(true);
         accept.setOnAction(event -> {
@@ -190,6 +207,31 @@ public final class PreferencesWindow {
                 .getResource("/css/codetrace.css").toExternalForm());
         dialog.setScene(scene);
         return dialog;
+    }
+
+    /**
+     * A single list-cell component for the opened catalogue and selected value.
+     * The sample uses the actual installed family instead of an approximation.
+     */
+    private static final class FontFamilyCell extends ListCell<String> {
+        @Override
+        protected void updateItem(String family, boolean empty) {
+            super.updateItem(family, empty);
+            setText(null);
+            if (empty || family == null) {
+                setGraphic(null);
+                return;
+            }
+            Label name = new Label(family);
+            name.setMinWidth(160);
+            name.setMaxWidth(160);
+            name.getStyleClass().add("font-family-name");
+            Text sample = new Text("Aa 123");
+            sample.setFont(Font.font(family, 15));
+            HBox row = new HBox(9, name, sample);
+            row.setAlignment(Pos.CENTER_LEFT);
+            setGraphic(row);
+        }
     }
 
     private static VBox section(String title) {

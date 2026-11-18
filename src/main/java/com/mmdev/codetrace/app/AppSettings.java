@@ -4,11 +4,20 @@ import java.util.prefs.Preferences;
 
 /** Window-level preferences are separate from each .ctrace training session. */
 public record AppSettings(String fontFamily, int fontSize, boolean showExplorer,
-                          String keyboardLayout, boolean typingSounds) {
+                          String keyboardLayout, boolean typingSounds,
+                          int templateOpacity) {
     private static final Preferences STORE =
             Preferences.userNodeForPackage(AppSettings.class);
 
+    public AppSettings(String fontFamily, int fontSize, boolean showExplorer,
+                       String keyboardLayout, boolean typingSounds) {
+        this(fontFamily, fontSize, showExplorer, keyboardLayout, typingSounds, 70);
+    }
+
     public AppSettings {
+        if (templateOpacity < 20 || templateOpacity > 100) {
+            throw new IllegalArgumentException("Template opacity must be 20–100 percent");
+        }
         if (fontFamily == null || fontFamily.isBlank()) {
             throw new IllegalArgumentException("Font family is required");
         }
@@ -29,11 +38,13 @@ public record AppSettings(String fontFamily, int fontSize, boolean showExplorer,
         }
         return new AppSettings(family, size,
                 STORE.getBoolean("explorer.visible", true),
-                layout, STORE.getBoolean("practice.typingSounds", false));
+                layout, STORE.getBoolean("practice.typingSounds", false),
+                Math.max(20, Math.min(100, STORE.getInt("editor.opacity", 70))));
     }
 
     public AppSettings withLayout(String layout) {
-        return new AppSettings(fontFamily, fontSize, showExplorer, layout, typingSounds);
+        return new AppSettings(fontFamily, fontSize, showExplorer, layout,
+                typingSounds, templateOpacity);
     }
 
     public void save() {
@@ -42,5 +53,6 @@ public record AppSettings(String fontFamily, int fontSize, boolean showExplorer,
         STORE.putBoolean("explorer.visible", showExplorer);
         STORE.put("keyboard.layout", keyboardLayout);
         STORE.putBoolean("practice.typingSounds", typingSounds);
+        STORE.putInt("editor.opacity", templateOpacity);
     }
 }

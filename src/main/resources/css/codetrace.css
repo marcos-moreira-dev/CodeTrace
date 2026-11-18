@@ -521,3 +521,51 @@
 .virtual-pending {
     -fx-text-fill: #a2adb5;
 }
+
+/* Scope controls belong beside the progress indicator, not in the main toolbar. */
+.status-progress-filter {
+    -fx-background-color: #e7edf1;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+    -fx-border-color: #b9c7d0;
+    -fx-padding: 3px 6px;
+    -fx-font-size: 11px;
+    -fx-min-height: 24px;
+}
+.status-progress-filter:hover {
+    -fx-background-color: #dce8ee;
+    -fx-border-color: #819aac;
+}
+.status-progress-filter .arrow {
+    -fx-background-color: #4a6076;
+}
+
+/* Translucency is a persistent preference, not a toolbar action. */
+.prefs-opacity-spinner {
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+    -fx-border-color: #a9b8c4;
+    -fx-background-color: #fff;
+}
+.prefs-opacity-spinner .text-field,
+.prefs-opacity-spinner .increment-arrow-button,
+.prefs-opacity-spinner .decrement-arrow-button {
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+}
+.prefs-opacity-spinner .increment-arrow-button,
+.prefs-opacity-spinner .decrement-arrow-button {
+    -fx-background-color: #e7edf1;
+}
+.prefs-opacity-spinner .increment-arrow,
+.prefs-opacity-spinner .decrement-arrow {
+    -fx-background-color: #4a6076;
+}
+.prefs-font-choice {
+    -fx-min-height: 33px;
+}
+.prefs-font-choice .list-cell .font-family-name {
+    -fx-text-fill: #30485e;
+    -fx-font-family: "Segoe UI";
+    -fx-font-size: 12px;
+}
