@@ -34,6 +34,8 @@ import com.mmdev.codetrace.practice.TypingSession;
 import com.mmdev.codetrace.ui.EditorZoomControl;
 import javafx.scene.control.CustomMenuItem;
 import javafx.scene.control.MenuButton;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.SplitPane;
 import javafx.scene.control.CheckBox;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
@@ -205,7 +207,38 @@ class CodeTraceAppSmokeTest {
                 ReferenceTree fileTree = (ReferenceTree) stage.getScene()
                         .getRoot().lookup(".tree-view");
                 assertNotNull(fileTree);
+                // Menus must permit constructing a real reference directory
+                // before the virtual file, with no implicit disk creation.
+                Path nested = Files.createDirectory(src.resolve("ejemplos"));
+                Path nestedFile = nested.resolve("Demo.java");
+                Files.writeString(nestedFile, "class Demo {}");
                 fileTree.open(root);
+                Method menuFor = ReferenceTree.class.getDeclaredMethod(
+                        "contextFor", Path.class);
+                menuFor.setAccessible(true);
+                ContextMenu rootMenu = (ContextMenu) menuFor.invoke(fileTree, root);
+                assertTrue(rootMenu.getItems().stream().anyMatch(
+                        item -> item.getText().equals("Crear subcarpeta...")));
+                assertTrue(rootMenu.getItems().stream().anyMatch(
+                        item -> item.getText().equals("Crear archivo...")));
+                ContextMenu folderMenu = (ContextMenu) menuFor.invoke(fileTree, nested);
+                assertTrue(folderMenu.getItems().stream().anyMatch(
+                        item -> item.getText().equals("Crear esta carpeta")));
+                assertTrue(folderMenu.getItems().stream().anyMatch(
+                        item -> item.getText().equals("Crear subcarpeta...")));
+                folderMenu.getItems().stream()
+                        .filter(item -> item.getText().equals("Crear esta carpeta"))
+                        .findFirst().orElseThrow().fire();
+                assertTrue(virtual.exists("src/ejemplos"));
+                ContextMenu fileMenu = (ContextMenu) menuFor.invoke(fileTree, nestedFile);
+                assertTrue(fileMenu.getItems().stream().anyMatch(
+                        item -> item.getText().equals("Crear este archivo")));
+                fileMenu.getItems().stream()
+                        .filter(item -> item.getText().equals("Crear este archivo"))
+                        .findFirst().orElseThrow().fire();
+                assertTrue(virtual.exists("src/ejemplos/Demo.java"));
+                assertFalse(Files.size(nestedFile) == 0,
+                        "The real source must never be modified by virtual creation");
                 fileTree.collapseAll();
                 fileTree.expandAll();
                 assertTrue(fileTree.getRoot().isExpanded());
@@ -214,12 +247,23 @@ class CodeTraceAppSmokeTest {
                 assertNotNull(console);
                 console.setProject(root);
                 console.setPresets(java.util.List.of());
-                console.setVisible(true);
+                Method toggleConsole = CodeTraceApp.class.getDeclaredMethod(
+                        "setConsoleVisible", boolean.class);
+                toggleConsole.setAccessible(true);
+                toggleConsole.invoke(application, true);
+                SplitPane workspaceLayout = (SplitPane) stage.getScene()
+                        .getRoot().lookup(".workspace-split");
+                assertNotNull(workspaceLayout);
+                assertEquals(Orientation.VERTICAL, workspaceLayout.getOrientation());
+                assertEquals(2, workspaceLayout.getItems().size(),
+                        "Console must occupy a resizable SplitPane, not a fixed VBox");
+                assertTrue(workspaceLayout.getItems().contains(console));
                 assertTrue(stage.getScene().getRoot()
                         .lookup(".console-empty-state").isVisible());
                 assertTrue(stage.getScene().getRoot()
                         .lookup(".console-configure").isVisible());
-                console.setVisible(false);
+                toggleConsole.invoke(application, false);
+                assertEquals(1, workspaceLayout.getItems().size());
                 assertNotNull(stage.getScene().getRoot().lookup(".turbo-toggle"));
                 MenuButton filter = (MenuButton) stage.getScene().getRoot()
                         .lookup(".status-progress-filter");
@@ -243,6 +287,8 @@ class CodeTraceAppSmokeTest {
                 }
                 assertNotNull(stage.getScene().getRoot().lookup(".tree-activity"));
                 assertNotNull(stage.getScene().getRoot().lookup(".tree-scope-checkbox"));
+                Files.delete(nestedFile);
+                Files.delete(nested);
                 Files.delete(file);
                 Files.delete(src);
                 Files.delete(root);

@@ -756,3 +756,17 @@
     -fx-padding: 6px 12px;
 }
 .console-configure:hover { -fx-background-color: #d6e6f0; }
+
+/* The editor and terminal share a vertical draggable divider. */
+.workspace-split {
+    -fx-background-color: #d7e0e6;
+    -fx-padding: 0;
+}
+.workspace-split > .split-pane-divider {
+    -fx-background-color: #a7b9c7;
+    -fx-padding: 3px 0;
+}
+.workspace-split > .split-pane-divider:hover,
+.workspace-split > .split-pane-divider:pressed {
+    -fx-background-color: #547c99;
+}

@@ -55,3 +55,9 @@ CodeTrace propone una práctica tranquila de reconstrucción manual de software,
 - El Spinner de opacidad de Preferencias afecta únicamente a los caracteres pendientes de la plantilla. Debe mantenerse el contraste de los aciertos y los errores.
 - El selector de tipografía muestra junto al nombre una muestra de la misma fuente. El control transversal de tamaño continúa en el extremo derecho de la barra inferior.
 - **Símbolos** copia el carácter; **Ctrl+V** en la superficie de práctica lo coloca en el próximo espacio de la plantilla. La selección de línea existente no debe reiniciar el cursor. Se rechaza el pegado de bloques largos para conservar el ejercicio de mecanografía.
+
+## Reconstrucción virtual y paneles redimensionables (noviembre 2026)
+- Una carpeta de referencia pendiente tiene la acción «Crear esta carpeta»; el menú de cualquier carpeta también muestra «Crear subcarpeta...» y «Crear archivo...». Crear descendientes exige haber creado antes el padre virtual; el mensaje explica ese orden.
+- Un archivo de referencia pendiente tiene «Crear este archivo». Los elementos que no existan en el árbol de referencia se rechazan con diálogo legible, sin escribir archivos en disco.
+- Las carpetas muestran «(N archivos)»; N incluye archivos de todas sus subcarpetas. El tooltip aclara esa semántica.
+- La consola se aloja en un segundo SplitPane vertical; el usuario redimensiona el área del editor y la consola arrastrando un divisor horizontal. Cerrarla devuelve todo el espacio al editor.

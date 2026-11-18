@@ -83,6 +83,8 @@ public final class CodeTraceApp extends Application {
     private final ProgressBar fileProgress = new ProgressBar(0);
     private final MenuButton progressFilter = new MenuButton("Filtro");
     private final SplitPane split = new SplitPane();
+    private final SplitPane workspaceSplit = new SplitPane();
+    private double consoleDivider = 0.73;
     private final ReferenceTree tree = new ReferenceTree(
             this::openForPractice, this::onWorkspaceChanged, this::setStatus);
     private final VBox sidebar = new VBox();
@@ -312,9 +314,10 @@ public final class CodeTraceApp extends Application {
         } else {
             split.setDividerPositions(explorerRatio);
         }
-        VBox workspaceArea = new VBox(split, consolePane);
-        VBox.setVgrow(split, Priority.ALWAYS);
-        root.setCenter(workspaceArea);
+        workspaceSplit.setOrientation(Orientation.VERTICAL);
+        workspaceSplit.getStyleClass().add("workspace-split");
+        workspaceSplit.getItems().add(split);
+        root.setCenter(workspaceSplit);
 
         fileInfo.getStyleClass().add("progress-info");
         fileProgress.getStyleClass().add("typing-progress");
@@ -368,7 +371,21 @@ public final class CodeTraceApp extends Application {
     }
 
     private void setConsoleVisible(boolean visible) {
-        consolePane.setVisible(visible);
+        if (visible && !workspaceSplit.getItems().contains(consolePane)) {
+            consolePane.setVisible(true);
+            workspaceSplit.getItems().add(consolePane);
+            javafx.application.Platform.runLater(() -> {
+                if (workspaceSplit.getItems().size() == 2) {
+                    workspaceSplit.setDividerPositions(consoleDivider);
+                }
+            });
+        } else if (!visible && workspaceSplit.getItems().contains(consolePane)) {
+            if (!workspaceSplit.getDividers().isEmpty()) {
+                consoleDivider = workspaceSplit.getDividerPositions()[0];
+            }
+            workspaceSplit.getItems().remove(consolePane);
+            consolePane.setVisible(false);
+        }
         if (showConsole != null) showConsole.setSelected(visible);
     }
 

@@ -76,8 +76,10 @@ public final class ReferenceTree extends TreeView<Path> {
                 }
                 String relative = relative(path);
                 boolean created = workspace.exists(relative);
-                setText(name(path) + (isFolder(path) && index != null
-                        ? " (" + index.recursiveFiles(relative) + ")" : ""));
+                long fileCount = isFolder(path) && index != null
+                        ? index.recursiveFiles(relative) : -1L;
+                setText(name(path) + (fileCount < 0 ? ""
+                        : " (" + fileCount + (fileCount == 1 ? " archivo)" : " archivos)")));
                 Label badge = new Label(created ? "✓" : "○");
                 badge.getStyleClass().addAll("virtual-state",
                         created ? "virtual-created" : "virtual-pending");
@@ -88,8 +90,14 @@ public final class ReferenceTree extends TreeView<Path> {
                 graphic.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
                 setGraphic(graphic);
                 setTextFill(created ? Color.web("#263747") : Color.web("#85929C"));
-                setTooltip(new Tooltip(created
-                        ? "Estructura virtual creada" : "Pendiente de recrear"));
+                String status = created
+                        ? "Creado en el proyecto virtual" : "Pendiente de recrear";
+                if (fileCount >= 0) {
+                    status += "\n" + fileCount + (fileCount == 1
+                            ? " archivo de referencia, incluidas subcarpetas"
+                            : " archivos de referencia, incluidas subcarpetas");
+                }
+                setTooltip(new Tooltip(status));
                 setContextMenu(contextFor(path));
             }
         });
@@ -303,27 +311,49 @@ public final class ReferenceTree extends TreeView<Path> {
     private ContextMenu contextFor(Path path) {
         String relative = relative(path);
         boolean created = workspace.exists(relative);
+        boolean folder = isFolder(path);
         List<MenuItem> actions = new ArrayList<>();
-        if (isFolder(path)) {
+
+        if (folder) {
+            if (!created && !relative.isEmpty()) {
+                MenuItem createThis = new MenuItem("Crear esta carpeta");
+                createThis.setOnAction(event -> recreateKnown(relative, true));
+                actions.add(createThis);
+                actions.add(new javafx.scene.control.SeparatorMenuItem());
+            }
+            // Always show the creation actions. If the parent hasn't been
+            // reconstructed yet, the message explains the required order.
+            MenuItem newFolder = new MenuItem("Crear subcarpeta...");
+            newFolder.setOnAction(event -> create(relative, true));
+            MenuItem newFile = new MenuItem("Crear archivo...");
+            newFile.setOnAction(event -> create(relative, false));
+            actions.addAll(List.of(newFolder, newFile));
+            if (created && clipboard != null) {
+                MenuItem paste = new MenuItem("Pegar");
+                paste.setOnAction(event -> paste(relative));
+                actions.add(paste);
+            }
+            actions.add(new javafx.scene.control.SeparatorMenuItem());
             MenuItem scope = new MenuItem(relative.isEmpty()
                     ? "Progreso: todo el proyecto"
                     : "Progreso: solo esta carpeta");
             scope.setOnAction(event -> onProgressFolder.accept(relative));
             actions.add(scope);
+        } else if (!created) {
+            // A pending source file must be creatable directly via right click.
+            MenuItem createThis = new MenuItem("Crear este archivo");
+            createThis.setOnAction(event -> recreateKnown(relative, false));
+            actions.add(createThis);
+        } else {
+            // File can be opened without having been created; creation is
+            // explicit, never a side effect of opening or typing.
+            MenuItem open = new MenuItem("Abrir referencia");
+            open.setOnAction(event -> onOpen.accept(path));
+            actions.add(open);
         }
-        if (created && isFolder(path)) {
-            MenuItem folder = new MenuItem("Nueva carpeta...");
-            folder.setOnAction(event -> create(relative, true));
-            MenuItem file = new MenuItem("Nuevo archivo...");
-            file.setOnAction(event -> create(relative, false));
-            actions.addAll(List.of(folder, file));
-            if (clipboard != null) {
-                MenuItem paste = new MenuItem("Pegar");
-                paste.setOnAction(event -> paste(relative));
-                actions.add(paste);
-            }
-        }
+
         if (created && !relative.isEmpty()) {
+            actions.add(new javafx.scene.control.SeparatorMenuItem());
             MenuItem rename = new MenuItem("Cambiar nombre...");
             rename.setOnAction(event -> rename(relative));
             MenuItem copy = new MenuItem("Copiar");
@@ -340,39 +370,68 @@ public final class ReferenceTree extends TreeView<Path> {
             delete.setOnAction(event -> delete(relative));
             actions.addAll(List.of(rename, copy, move, delete));
         }
-        return actions.isEmpty() ? null : new ContextMenu(actions.toArray(MenuItem[]::new));
+        return new ContextMenu(actions.toArray(MenuItem[]::new));
     }
 
     private void create(String parent, boolean directory) {
-        String value = prompt(directory ? "Nueva carpeta" : "Nuevo archivo", "");
-        if (value == null) {
+        if (!workspace.exists(parent)) {
+            missingParent(parent);
             return;
         }
+        String value = prompt(directory ? "Crear subcarpeta" : "Crear archivo", "");
+        if (value == null) return;
         if (!validName(value)) {
-            onStatus.accept("Nombre de archivo o carpeta no válido.");
+            ProductDialogs.error(getScene() == null ? null : getScene().getWindow(),
+                    "Nombre no válido", "Introduce un nombre de archivo o carpeta válido.");
             return;
         }
-        String target = child(parent, value);
-        // This is reconstruction, not a free file editor.
-        // The selected name must match an existing entry in the source tree.
-        if (index == null || !(directory ? index.hasDirectory(target)
-                                            : index.hasFile(target))) {
+        recreateKnown(child(parent, value), directory);
+    }
+
+    /**
+     * Rebuild precisely one real reference node. Explicit parent reconstruction
+     * is required; this operation never creates ancestor directories implicitly.
+     */
+    private void recreateKnown(String relative, boolean directory) {
+        String parent = parentOf(relative);
+        if (!workspace.exists(parent)) {
+            missingParent(parent);
+            return;
+        }
+        if (workspace.exists(relative)) {
+            ProductDialogs.error(getScene() == null ? null : getScene().getWindow(),
+                    "Elemento existente", "El elemento ya existe en el proyecto virtual: "
+                            + relative);
+            return;
+        }
+        boolean validReference = index == null
+                ? (directory ? Files.isDirectory(referenceRoot.resolve(relative))
+                        : Files.isRegularFile(referenceRoot.resolve(relative)))
+                : (directory ? index.hasDirectory(relative) : index.hasFile(relative));
+        if (!validReference) {
             ProductDialogs.error(getScene() == null ? null : getScene().getWindow(),
                     "Elemento fuera de la referencia",
                     "Solo puedes recrear archivos y carpetas que existan en "
-                    + "el repositorio de práctica.\n\nElemento solicitado: " + target);
+                    + "el repositorio de práctica.\n\nElemento solicitado: " + relative);
             return;
         }
         try {
-            if (directory) {
-                workspace.createDirectory(target);
-            } else {
-                workspace.createFile(target);
-            }
-            changed(new Change(Operation.CREATE, "", target));
+            if (directory) workspace.createDirectory(relative);
+            else workspace.createFile(relative);
+            changed(new Change(Operation.CREATE, "", relative));
+            onStatus.accept((directory ? "Carpeta creada: " : "Archivo creado: ") + relative);
         } catch (IllegalArgumentException problem) {
-            onStatus.accept(problem.getMessage());
+            ProductDialogs.error(getScene() == null ? null : getScene().getWindow(),
+                    "No se pudo crear", problem.getMessage());
         }
+    }
+
+    private void missingParent(String relative) {
+        ProductDialogs.error(getScene() == null ? null : getScene().getWindow(),
+                "Primero crea la carpeta",
+                "Esta carpeta todavía no existe en el proyecto virtual: "
+                + relative + "\n\nHaz clic derecho sobre ella y selecciona "
+                + "«Crear esta carpeta». Después podrás crear sus archivos y subcarpetas.");
     }
 
     private void rename(String oldPath) {

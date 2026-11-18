@@ -45,7 +45,7 @@ public final class CommandConsolePane extends BorderPane {
         getStyleClass().add("command-console-pane");
         setPrefHeight(195);
         setMinHeight(116);
-        setMaxHeight(280);
+        setMaxHeight(Double.MAX_VALUE);
         setVisible(false);
         managedProperty().bind(visibleProperty());
 
