@@ -36,20 +36,21 @@ CodeTrace no pretende sustituir un IDE ni compilar o evaluar automáticamente la
 | Imágenes externas HTTPS en Markdown | Implementado con opt-in | Verificar conexión, CSP, error sin internet y comportamiento al desactivarlas |
 | Pestañas de imágenes PNG/JPEG/GIF/BMP/WebP y SVG seguro | Implementado, visual pendiente | Escalado, imagen grande y pestañas cerradas |
 | Pestañas de audio/video con play, pausa, stop y desplazamiento | Parcial | Validar MP3/WAV/MP4; manejar códecs no disponibles y liberación de recursos |
-| FFmpeg integrado y autocontenido para formatos adicionales | Pendiente | Elegir distribución, plataformas y licencias; conversión aislada y cancelable, sin tocar originales |
+| FFmpeg para formatos adicionales | Fallback implementado, binario no incluido | Probar conversión, cancelación, temporales y códecs reales; revisar licencias antes de incluir FFmpeg |
 | Símbolos y miniteclado LATAM/US orientativo | Implementado | Confirmar diferencias de distribución en Windows y ajustar teclas especiales |
 | Comandos del proyecto y consola inferior redimensionable | Implementado, auditoría pendiente | Revisar historial, ergonomía y salidas extensas, Windows/PowerShell/sh |
 | Biblioteca de práctica interna por 12 lenguajes | Base implementada | Completar temarios; Java y TypeScript: patrones, estructuras y algoritmos nativos |
 | Iconos de archivo y diálogos con identidad CodeTrace | Implementado, auditoría pendiente | Corregir formatos faltantes; revisar consistencia, resoluciones y selección |
-| Paquetes instalables y actualización del producto | Pendiente | Diseñar jpackage/ZIP y prueba Windows sin entorno de desarrollo |
+| Paquetes instalables y actualización del producto | Script jpackage + ZIP implementado, validación pendiente | Comprobar el artefacto de CI y ejecutar en Windows limpio sin JDK/Maven; instalador EXE con WiX sin validar |
 | Auditoría funcional, producto, UX/UI y accesibilidad | Pendiente | Ejecutar matriz de aceptación completa y corregir hallazgos |
 
 ## Secuencia recomendada de cierre
 
 ### Fase 1 — Estabilización de exploración (prioridad máxima)
+- Ejecutar la matriz documentada en [QA-WINDOWS](QA-WINDOWS.md), sin confundir CI verde con validación visual.
 - Probar imágenes Markdown locales y externas con el repositorio real del usuario.
 - Verificar SVG, imágenes, audio y video; limpiar recursos al cerrar pestañas o cambiar de proyecto.
-- Resolver formatos multimedia importantes mediante FFmpeg solo tras acordar empaquetado seguro.
+- Verificar el fallback FFmpeg local, su cancelación, y la opción de empaquetado con licencia auditada.
 
 ### Fase 2 — Reglas y sesiones
 - Auditar las interacciones de alcance: proyecto, carpeta, exclusiones y categorías, sin duplicación de controles.
