@@ -45,6 +45,8 @@ import javafx.scene.control.Spinner;
 import com.mmdev.codetrace.ui.ReferenceTree;
 import com.mmdev.codetrace.ui.ReconstructionStateIcons;
 import com.mmdev.codetrace.ui.FileTypeIcons;
+import com.mmdev.codetrace.ui.AudioSpectrumPane;
+import com.mmdev.codetrace.ui.ProjectSearchWindow;
 import com.mmdev.codetrace.ui.ReferenceMediaPane;
 import com.mmdev.codetrace.practice.ReconstructionStatus;
 import com.mmdev.codetrace.practice.PracticeMode;
@@ -123,6 +125,24 @@ class CodeTraceAppSmokeTest {
                 assertNotNull(selectedMedia.lookup(".media-zoom-viewport"));
                 assertNotNull(stage.getScene().getRoot().lookup(".media-zoom-control"));
                 assertTrue(tabPane.getSelectionModel().getSelectedItem().isClosable());
+                // Spectrum rendering does not require an audio device.
+                AudioSpectrumPane spectrum = new AudioSpectrumPane();
+                spectrum.resize(520, 170);
+                spectrum.layout();
+                spectrum.accept(new float[] {-38f, -21f, -44f});
+                spectrum.clear();
+                spectrum.dispose();
+                ProjectSearchWindow find = new ProjectSearchWindow(stage,
+                        () -> root, () -> "src/Main.java", hit -> {});
+                find.show(ProjectSearchWindow.Scope.FILE);
+                Field searchStageField = ProjectSearchWindow.class
+                        .getDeclaredField("stage");
+                searchStageField.setAccessible(true);
+                Stage searchStage = (Stage) searchStageField.get(find);
+                assertTrue(searchStage.isShowing());
+                assertFalse(searchStage.getIcons().isEmpty(),
+                        "Find should show the CodeTrace titlebar icon");
+                searchStage.close();
                 tabPane.getSelectionModel().selectFirst();
                 var zoom = stage.getScene().getRoot().lookup(".status-zoom-control");
                 assertNotNull(zoom, "The zoom belongs to the status bar");
@@ -202,6 +222,17 @@ class CodeTraceAppSmokeTest {
                         "Opening the reference must not create virtual paths");
                 Field modeField = CodeTraceApp.class.getDeclaredField("practiceMode");
                 modeField.setAccessible(true);
+                Field autoCreate = CodeTraceApp.class.getDeclaredField("autoCreateCheck");
+                autoCreate.setAccessible(true);
+                CheckBox auto = (CheckBox) autoCreate.get(application);
+                assertNotNull(auto, "Auto creation belongs to practice rules");
+                Method selectMode = CodeTraceApp.class.getDeclaredMethod(
+                        "selectPracticeMode", PracticeMode.class);
+                selectMode.setAccessible(true);
+                selectMode.invoke(application, PracticeMode.DIRECT);
+                assertTrue(auto.isSelected());
+                selectMode.invoke(application, PracticeMode.RECONSTRUCTION);
+                assertFalse(auto.isSelected());
                 assertEquals(PracticeMode.RECONSTRUCTION, modeField.get(application));
                 assertEquals(0, editor.session().correctCount());
                 assertEquals(0, editor.session().caret());
