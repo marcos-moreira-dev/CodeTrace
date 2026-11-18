@@ -647,7 +647,10 @@ public final class CodeTraceApp extends Application {
             Tab tab = new Tab(file.getFileName().toString(),
                     markdown ? new MarkdownPracticePane(editor, file, reference) : editor);
             tab.setGraphic(FileTypeIcons.forPath(file, false));
-            tab.setOnClosed(event -> openedTabs.remove(relative));
+            tab.setOnClosed(event -> {
+                openedTabs.remove(relative);
+                if (tab.getContent() instanceof MarkdownPracticePane preview) preview.dispose();
+            });
             openedTabs.put(relative, tab);
             tabs.getTabs().add(tab);
             tabs.getSelectionModel().select(tab);
@@ -683,6 +686,7 @@ public final class CodeTraceApp extends Application {
     private void clearOpenTabs() {
         for (Tab tab : tabs.getTabs()) {
             if (tab.getContent() instanceof ReferenceMediaPane media) media.dispose();
+            if (tab.getContent() instanceof MarkdownPracticePane preview) preview.dispose();
         }
         tabs.getTabs().clear();
         openedTabs.clear();
