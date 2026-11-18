@@ -2,6 +2,10 @@ name: Windows portable package
 
 on:
   workflow_dispatch:
+  push:
+    paths:
+      - "scripts/package-windows.ps1"
+      - ".github/workflows/package-windows.yml"
   pull_request:
     paths:
       - "src/**"
