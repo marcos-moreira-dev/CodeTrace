@@ -1,6 +1,8 @@
 package com.mmdev.codetrace.app;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -15,6 +17,10 @@ import java.util.concurrent.atomic.AtomicReference;
 import javafx.application.Platform;
 import javafx.scene.control.Button;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.Slider;
+import javafx.geometry.Orientation;
+import javafx.stage.Window;
+import com.mmdev.codetrace.ui.PreferencesWindow;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.event.Event;
@@ -80,7 +86,25 @@ class CodeTraceAppSmokeTest {
                 tabsField.setAccessible(true);
                 TabPane tabPane = (TabPane) tabsField.get(application);
                 assertEquals(1, tabPane.getTabs().size());
-                assertNotNull(stage.getScene().getRoot().lookup(".editor-zoom-control"));
+                var zoom = stage.getScene().getRoot().lookup(".status-zoom-control");
+                assertNotNull(zoom, "The zoom belongs to the status bar");
+                assertSame(stage.getScene().getRoot().lookup(".statusbar"),
+                        zoom.getParent());
+                Slider fontSlider = (Slider) zoom.lookup(".slider");
+                assertNotNull(fontSlider);
+                assertEquals(Orientation.HORIZONTAL, fontSlider.getOrientation());
+                assertNull(stage.getScene().getRoot().lookup(".sound-toggle"),
+                        "Sound control is in Preferences, not the main toolbar");
+
+                Stage preferences = PreferencesWindow.create(stage, AppSettings.load(),
+                        next -> {}, correct -> true);
+                preferences.show();
+                preferences.getScene().getRoot().applyCss();
+                preferences.getScene().getRoot().layout();
+                assertNotNull(preferences.getScene().getRoot().lookup(".prefs-navigation"));
+                assertNotNull(preferences.getScene().getRoot().lookup(".prefs-content"));
+                assertNotNull(preferences.getScene().getRoot().lookup(".prefs-actions"));
+                preferences.close();
                 TypingEditor editor = (TypingEditor) tabPane.getTabs().getFirst().getContent();
                 Event.fireEvent(editor, new KeyEvent(KeyEvent.KEY_TYPED,
                         "c", "c", KeyCode.UNDEFINED, false, false, false, false));

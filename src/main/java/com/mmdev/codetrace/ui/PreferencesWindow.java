@@ -11,19 +11,25 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Slider;
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import org.kordamp.ikonli.javafx.FontIcon;
 
-/** Traditional settings dialog, with only controls that already do something. */
+/**
+ * Desktop Preferences: persistent navigation on the left, functional settings
+ * on the right, and conventional Apply/Cancel/OK actions.
+ */
 public final class PreferencesWindow {
     private PreferencesWindow() {
     }
@@ -31,99 +37,181 @@ public final class PreferencesWindow {
     public static void open(Window owner, AppSettings current,
                             Consumer<AppSettings> onApply,
                             Function<Boolean, Boolean> previewSound) {
+        create(owner, current, onApply, previewSound).showAndWait();
+    }
+
+    /** Allows GUI smoke tests to inspect the scene before opening the modal. */
+    public static Stage create(Window owner, AppSettings current,
+                               Consumer<AppSettings> onApply,
+                               Function<Boolean, Boolean> previewSound) {
         Stage dialog = new Stage();
         dialog.initOwner(owner);
         dialog.initModality(Modality.WINDOW_MODAL);
         dialog.setTitle("Preferencias — CodeTrace");
-        dialog.setMinWidth(540);
-        dialog.setMinHeight(340);
+        dialog.setMinWidth(630);
+        dialog.setMinHeight(440);
 
-        ListView<String> categories = new ListView<>(
+        BorderPane root = new BorderPane();
+        root.getStyleClass().add("prefs-root");
+        Label heading = new Label("Preferencias");
+        heading.getStyleClass().add("prefs-window-heading");
+        HBox header = new HBox(heading);
+        header.getStyleClass().add("prefs-header");
+        header.setAlignment(Pos.CENTER_LEFT);
+        root.setTop(header);
+
+        ListView<String> navigation = new ListView<>(
                 FXCollections.observableArrayList("Editor", "Ventana", "Sonido"));
-        categories.setPrefWidth(155);
-        categories.setMaxWidth(155);
-        categories.getSelectionModel().selectFirst();
+        navigation.getStyleClass().add("prefs-navigation");
+        navigation.setPrefWidth(168);
+        navigation.setMinWidth(168);
+        navigation.setMaxWidth(168);
+        navigation.setCellFactory(list -> new ListCell<>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                setText(empty ? null : item);
+                if (empty || item == null) {
+                    setGraphic(null);
+                } else {
+                    FontIcon icon = new FontIcon(switch (item) {
+                        case "Editor" -> "fth-type";
+                        case "Ventana" -> "fth-layout";
+                        default -> "fth-volume-2";
+                    });
+                    icon.setIconSize(16);
+                    icon.setIconColor(javafx.scene.paint.Color.web("#4A6076"));
+                    setGraphic(icon);
+                }
+            }
+        });
 
         ComboBox<String> families = new ComboBox<>(
                 FXCollections.observableArrayList(Font.getFamilies()));
-        families.setEditable(false);
+        families.getStyleClass().add("prefs-font-choice");
         families.setMaxWidth(Double.MAX_VALUE);
-        families.getSelectionModel().select(current.fontFamily());
-        if (families.getValue() == null) {
-            families.getSelectionModel().select("Consolas");
+        families.setValue(current.fontFamily());
+        if (families.getValue() == null
+                || !families.getItems().contains(families.getValue())) {
+            families.setValue("Consolas");
         }
+
         Slider size = new Slider(10, 36, current.fontSize());
+        size.setMajorTickUnit(1);
+        size.setMinorTickCount(0);
         size.setBlockIncrement(1);
-        size.setMajorTickUnit(2);
         size.setSnapToTicks(true);
-        Label sizeValue = new Label(Integer.toString(current.fontSize()));
-        size.valueProperty().addListener((observable, before, value) ->
-                sizeValue.setText(Integer.toString((int) Math.round(value.doubleValue()))));
-
-        GridPane editor = new GridPane();
-        editor.setPadding(new Insets(20));
-        editor.setHgap(14);
-        editor.setVgap(20);
-        editor.add(new Label("Fuente"), 0, 0);
-        editor.add(families, 1, 0);
-        editor.add(new Label("Tamaño"), 0, 1);
-        HBox sizeRow = new HBox(12, size, sizeValue);
-        sizeRow.setAlignment(Pos.CENTER_LEFT);
+        size.setMinWidth(120);
         HBox.setHgrow(size, Priority.ALWAYS);
-        editor.add(sizeRow, 1, 1);
+        Label sizeValue = new Label(current.fontSize() + " pt");
+        sizeValue.getStyleClass().add("prefs-size-value");
+        sizeValue.setMinWidth(44);
 
-        CheckBox sounds = new CheckBox("Sonidos de aciertos y errores");
+        Label preview = new Label("public class Main {\n    int valor = 21;\n}");
+        preview.getStyleClass().add("prefs-code-preview");
+        preview.setWrapText(false);
+        preview.setMaxWidth(Double.MAX_VALUE);
+        preview.setMinHeight(Region.USE_PREF_SIZE);
+        Runnable updatePreview = () -> {
+            String family = families.getValue() == null ? "Consolas" : families.getValue();
+            int points = (int) Math.round(size.getValue());
+            preview.setFont(Font.font(family, points));
+            sizeValue.setText(points + " pt");
+        };
+        size.valueProperty().addListener((obs, previous, value) -> updatePreview.run());
+        families.valueProperty().addListener((obs, previous, value) -> updatePreview.run());
+        updatePreview.run();
+
+        VBox editorPanel = section("Editor");
+        editorPanel.getChildren().addAll(
+                field("Fuente de código", families),
+                field("Tamaño de letra", new HBox(10, size, sizeValue)),
+                groupHeading("Vista previa"), preview);
+
+        CheckBox explorer = new CheckBox("Mostrar explorador de proyectos");
+        explorer.setSelected(current.showExplorer());
+        VBox windowPanel = section("Ventana");
+        windowPanel.getChildren().addAll(groupHeading("Paneles"), explorer);
+
+        CheckBox sounds = new CheckBox("Reproducir sonidos al escribir");
         sounds.setSelected(current.typingSounds());
         Button sampleCorrect = new Button("Probar acierto");
         Button sampleError = new Button("Probar error");
         Label sampleStatus = new Label();
+        sampleStatus.getStyleClass().add("prefs-feedback");
         sampleStatus.setWrapText(true);
+        sampleStatus.setMinHeight(24);
+        sampleStatus.setMaxWidth(Double.MAX_VALUE);
         sampleCorrect.setOnAction(event -> sampleStatus.setText(
                 previewSound.apply(true) ? "Reproducción solicitada."
                         : "No se pudo reproducir el sonido."));
         sampleError.setOnAction(event -> sampleStatus.setText(
                 previewSound.apply(false) ? "Reproducción solicitada."
                         : "No se pudo reproducir el sonido."));
-        HBox previews = new HBox(8, sampleCorrect, sampleError);
-        VBox soundsSettings = new VBox(13, sounds, previews, sampleStatus);
-        soundsSettings.setPadding(new Insets(20));
+        HBox previews = new HBox(9, sampleCorrect, sampleError);
+        VBox soundPanel = section("Sonido");
+        soundPanel.getChildren().addAll(
+                groupHeading("Mecanografía"), sounds,
+                groupHeading("Escuchar muestras"), previews, sampleStatus);
 
-        CheckBox explorer = new CheckBox("Mostrar explorador de proyectos");
-        explorer.setSelected(current.showExplorer());
-        VBox windowSettings = new VBox(explorer);
-        windowSettings.setPadding(new Insets(20));
-
-        BorderPane layout = new BorderPane();
-        layout.setLeft(categories);
-        layout.setCenter(editor);
-        categories.getSelectionModel().selectedItemProperty().addListener(
-                (observable, before, selected) ->
-                        layout.setCenter("Ventana".equals(selected) ? windowSettings
-                                : "Sonido".equals(selected) ? soundsSettings : editor));
+        BorderPane sectionContent = new BorderPane();
+        sectionContent.getStyleClass().add("prefs-content");
+        sectionContent.setCenter(editorPanel);
+        navigation.getSelectionModel().selectedItemProperty().addListener(
+                (obs, previous, selected) -> sectionContent.setCenter(
+                        "Ventana".equals(selected) ? windowPanel
+                                : "Sonido".equals(selected) ? soundPanel : editorPanel));
+        navigation.getSelectionModel().selectFirst();
+        root.setLeft(navigation);
+        root.setCenter(sectionContent);
 
         Runnable apply = () -> onApply.accept(new AppSettings(
                 families.getValue() == null ? current.fontFamily() : families.getValue(),
-                (int) Math.round(size.getValue()), explorer.isSelected(),
-                current.keyboardLayout(), sounds.isSelected()));
-        Button applyButton = new Button("Aplicar");
-        applyButton.setOnAction(event -> apply.run());
-        Button cancel = new Button("Cancelar");
-        cancel.setOnAction(event -> dialog.close());
+                (int) Math.round(size.getValue()),
+                explorer.isSelected(), current.keyboardLayout(), sounds.isSelected()));
         Button accept = new Button("Aceptar");
         accept.setDefaultButton(true);
         accept.setOnAction(event -> {
             apply.run();
             dialog.close();
         });
-        HBox buttons = new HBox(8, accept, cancel, applyButton);
+        Button cancel = new Button("Cancelar");
+        cancel.setCancelButton(true);
+        cancel.setOnAction(event -> dialog.close());
+        Button applyButton = new Button("Aplicar");
+        applyButton.setOnAction(event -> apply.run());
+        HBox buttons = new HBox(9, accept, cancel, applyButton);
         buttons.setAlignment(Pos.CENTER_RIGHT);
-        buttons.setPadding(new Insets(12));
-        layout.setBottom(buttons);
+        buttons.getStyleClass().add("prefs-actions");
+        root.setBottom(buttons);
 
-        Scene scene = new Scene(layout, 650, 380);
+        Scene scene = new Scene(root, 740, 490);
         scene.getStylesheets().add(PreferencesWindow.class
                 .getResource("/css/codetrace.css").toExternalForm());
         dialog.setScene(scene);
-        dialog.showAndWait();
+        return dialog;
+    }
+
+    private static VBox section(String title) {
+        Label heading = new Label(title);
+        heading.getStyleClass().add("prefs-section-heading");
+        VBox panel = new VBox(16, heading);
+        panel.getStyleClass().add("prefs-section");
+        panel.setFillWidth(true);
+        return panel;
+    }
+
+    private static Label groupHeading(String title) {
+        Label heading = new Label(title);
+        heading.getStyleClass().add("prefs-group-heading");
+        return heading;
+    }
+
+    private static VBox field(String title, javafx.scene.Node control) {
+        Label name = new Label(title);
+        name.getStyleClass().add("prefs-field-label");
+        VBox wrapper = new VBox(7, name, control);
+        wrapper.setFillWidth(true);
+        return wrapper;
     }
 }

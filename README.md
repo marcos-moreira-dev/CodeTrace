@@ -20,16 +20,17 @@ Para trabajar normalmente desde IntelliJ IDEA: importar pom.xml como Maven, sele
 
 - Referencia de solo lectura, árbol con creación/copia/movimiento/eliminación **virtual**.
 - **Plantilla inmutable y selección por línea:** al hacer clic en una fila se resalta completa y el cursor pasa a su inicio. Escribir solo marca la posición original con verde (correcto) o rojo (incorrecto, subrayado), sin sustituir caracteres ni desplazar la referencia. El documento se muestra con líneas virtualizadas.
-- **Control vertical del tamaño tipográfico** en el borde derecho del editor (deslizador de 10 a 36 pt, rueda del ratón y botones A+/A−). El tamaño sigue sincronizado con Preferencias.
+- **Control horizontal del tamaño tipográfico** en la barra inferior (10 a 36 pt, rueda del ratón y botones −/+), sincronizado con Preferencias.
 - Persistencia binaria en sesiones *.ctrace, progreso y hashes SHA-256.
 - **Doble clic sobre cualquier archivo de texto compatible**: la plantilla se abre directamente. Al escribir, se crea el recorrido virtual necesario, sin alterar la referencia ni impedir la creación manual desde el explorador.
 - **Progreso configurable por categorías** desde Práctica → Contabilizar en progreso. Solo el código fuente cuenta inicialmente; configuración, documentación y otros textos son opcionales.
 - Iconografía transversal de carpetas y lenguajes con Ikonli/Devicons y Feather; controles desplegables con el mismo estilo rectangular.
 - Resaltado inicial por adaptadores de Java, Python, TypeScript, C/C++ y Markdown.
 - Vista Markdown alternable entre fuente y renderizado en una misma pestaña.
-- Preferencias de fuente, pantalla completa y modo concentración.
+- Preferencias rediseñadas con navegación lateral Editor/Ventana/Sonido, vista previa de tipografía, pantalla completa y modo concentración.
+- Scrollbars verticales y horizontales con estilo compartido, compacto y rectangular en toda la aplicación.
 - Galería compacta **Símbolos**: copiar llaves, corchetes, arroba y otros caracteres; pista de teclado latinoamericano o estadounidense. Copiar no suma estadísticas ni introduce texto en la práctica.
-- Dos sonidos opcionales de escritura (acierto/error) suministrados por el usuario. La carga convierte y amplifica los WAV originalmente muy silenciosos. Se activan desde el botón **Sonido** de la barra superior o en **Herramientas → Preferencias → Sonido**, donde también se pueden probar. Desactivados de manera predeterminada.
+- Dos sonidos opcionales de escritura (acierto/error) suministrados por el usuario. La carga convierte y amplifica los WAV originalmente muy silenciosos. Se activan únicamente desde **Herramientas → Preferencias → Sonido**, donde también se pueden probar. Desactivados de manera predeterminada.
 - Pruebas JUnit, CI con Temurin 21 y prueba de inicio JavaFX en pantalla virtual.
 
 ### Todavía pendiente de pulir

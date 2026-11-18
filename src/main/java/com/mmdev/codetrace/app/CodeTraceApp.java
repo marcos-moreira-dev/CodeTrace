@@ -32,9 +32,6 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ToggleButton;
-import javafx.scene.control.Tooltip;
-import org.kordamp.ikonli.javafx.FontIcon;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.Label;
@@ -92,7 +89,6 @@ public final class CodeTraceApp extends Application {
     private CheckMenuItem explorerToggle;
     private SymbolPalette symbols;
     private EditorZoomControl zoom;
-    private ToggleButton soundToggle;
     private boolean soundProblemReported;
     private final TypingSounds typingSounds = new TypingSounds();
     private boolean dirty;
@@ -146,6 +142,10 @@ public final class CodeTraceApp extends Application {
                 top.getChildren().get(1).setVisible(!enabled);
                 top.getChildren().get(1).setManaged(!enabled);
             }
+            if (zoom != null) {
+                zoom.setVisible(!enabled);
+                zoom.setManaged(!enabled);
+            }
         });
 
         CheckMenuItem fullscreen = new CheckMenuItem("Pantalla completa");
@@ -187,23 +187,10 @@ public final class CodeTraceApp extends Application {
             settings = settings.withLayout(next.name());
             settings.save();
         });
-        soundToggle = new ToggleButton("Sonido", new FontIcon("fth-volume-2"));
-        soundToggle.getStyleClass().addAll("toolbar-action", "sound-toggle");
-        soundToggle.setTooltip(new Tooltip("Activar o desactivar sonido de teclas"));
-        soundToggle.setSelected(settings.typingSounds());
-        soundToggle.setOnAction(event -> {
-            settings = new AppSettings(settings.fontFamily(), settings.fontSize(),
-                    settings.showExplorer(), settings.keyboardLayout(),
-                    soundToggle.isSelected());
-            settings.save();
-            if (soundToggle.isSelected() && !typingSounds.preview(true)) {
-                setStatus("No se pudo reproducir el sonido; revisa el dispositivo de audio.");
-            }
-        });
         ToolBar toolbar = new ToolBar(openButton, saveButton,
                 new Separator(Orientation.VERTICAL), refreshButton,
                 new Separator(Orientation.VERTICAL), skipImportsButton,
-                new Separator(Orientation.VERTICAL), symbols, soundToggle);
+                new Separator(Orientation.VERTICAL), symbols);
         top.getChildren().addAll(menu, toolbar);
         root.setTop(top);
 
@@ -220,8 +207,6 @@ public final class CodeTraceApp extends Application {
             split.setDividerPositions(explorerRatio);
         }
         root.setCenter(split);
-        zoom = new EditorZoomControl(settings.fontSize(), this::setEditorZoom);
-        root.setRight(zoom);
 
         fileInfo.getStyleClass().add("progress-info");
         fileProgress.getStyleClass().add("typing-progress");
@@ -229,8 +214,14 @@ public final class CodeTraceApp extends Application {
         fileProgress.setVisible(false);
         fileProgress.managedProperty().bind(fileProgress.visibleProperty());
         HBox.setHgrow(status, Priority.ALWAYS);
-        HBox footer = new HBox(12, status, fileInfo, projectInfo, fileProgress);
-        footer.setPadding(new Insets(5, 10, 5, 10));
+        zoom = new EditorZoomControl(settings.fontSize(), this::setEditorZoom);
+        zoom.setId("editor-font-zoom");
+        HBox footer = new HBox(9, status, fileInfo, projectInfo, fileProgress,
+                new Separator(Orientation.VERTICAL), zoom);
+        footer.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
+        footer.setMinHeight(34);
+        status.setMinWidth(80);
+        footer.setPadding(new Insets(4, 9, 4, 9));
         footer.getStyleClass().add("statusbar");
         root.setBottom(footer);
 
@@ -629,7 +620,6 @@ public final class CodeTraceApp extends Application {
         settings = new AppSettings(next.fontFamily(), next.fontSize(),
                 next.showExplorer(), settings.keyboardLayout(), next.typingSounds());
         settings.save();
-        soundToggle.setSelected(next.typingSounds());
         zoom.setValue(next.fontSize());
         if (!concentration) {
             explorerToggle.setSelected(next.showExplorer());

@@ -237,44 +237,6 @@
 .typing-lines .list-cell:empty { -fx-background-color: #ffffff; }
 .typing-line-flow { -fx-background-color: transparent; }
 
-/* Shared vertical font-size slider at the right of the editor workspace. */
-.editor-zoom-control {
-    -fx-background-color: #e8edf1;
-    -fx-border-color: transparent transparent transparent #b7c6d0;
-    -fx-padding: 11px 2px;
-}
-.editor-zoom-control .slider .track {
-    -fx-background-color: #b8c6d0;
-    -fx-background-radius: 0;
-    -fx-pref-width: 5px;
-}
-.editor-zoom-control .slider .thumb {
-    -fx-background-color: #4a6076;
-    -fx-background-radius: 2px;
-    -fx-border-radius: 2px;
-    -fx-min-width: 13px;
-    -fx-min-height: 13px;
-}
-.editor-zoom-control .zoom-step {
-    -fx-font-size: 10px;
-    -fx-min-width: 32px;
-    -fx-padding: 4px 1px;
-}
-
-.sound-toggle {
-    -fx-background-color: #ffffff;
-    -fx-border-color: #a9b8c4;
-    -fx-background-radius: 0;
-    -fx-border-radius: 0;
-}
-.sound-toggle:selected {
-    -fx-background-color: #d7e8db;
-    -fx-border-color: #5b9370;
-}
-.sound-toggle:selected:hover {
-    -fx-background-color: #c9dfcf;
-}
-
 /* Reference-image tracing: soft rectangular highlights BEHIND fixed glyphs. */
 .typing-line-glyphs {
     -fx-alignment: center-left;
@@ -305,4 +267,219 @@
 .trace-end-caret {
     -fx-border-color: #cad8e6 #cad8e6 #3f84c4 #cad8e6;
     -fx-border-width: 1px 1px 2px 1px;
+}
+
+
+/* Status bar: compact horizontal font-size adjustment. */
+.statusbar {
+    -fx-min-height: 34px;
+    -fx-alignment: center-left;
+}
+.statusbar > .separator:vertical {
+    -fx-padding: 0 3px;
+}
+.statusbar > .separator:vertical .line {
+    -fx-border-color: #bac8d2;
+    -fx-border-width: 0 0 0 1px;
+}
+.status-zoom-control {
+    -fx-alignment: center-right;
+    -fx-spacing: 5px;
+    -fx-padding: 0 1px 0 4px;
+}
+.status-zoom-control .zoom-step {
+    -fx-min-width: 23px;
+    -fx-pref-width: 23px;
+    -fx-min-height: 23px;
+    -fx-pref-height: 23px;
+    -fx-padding: 1px 0;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+.status-zoom-control .zoom-step:hover {
+    -fx-background-color: #d5e2ea;
+    -fx-border-color: #a3b6c4;
+}
+.status-zoom-control .zoom-value {
+    -fx-font-size: 11px;
+    -fx-text-fill: #344f63;
+}
+.status-zoom-control .slider .track,
+.prefs-root .slider .track {
+    -fx-background-color: #b8c7d2;
+    -fx-background-radius: 0;
+    -fx-background-insets: 0;
+    -fx-pref-height: 4px;
+}
+.status-zoom-control .slider .thumb,
+.prefs-root .slider .thumb {
+    -fx-background-color: #4a6076;
+    -fx-background-radius: 1px;
+    -fx-border-color: #435d73;
+    -fx-border-radius: 1px;
+    -fx-border-width: 1px;
+}
+.status-zoom-control .slider .thumb:hover,
+.prefs-root .slider .thumb:hover {
+    -fx-background-color: #315d83;
+}
+
+/* Shared functional scrollbars: visible when needed, thin and square. */
+.scroll-bar:vertical {
+    -fx-pref-width: 11px;
+    -fx-min-width: 11px;
+}
+.scroll-bar:horizontal {
+    -fx-pref-height: 11px;
+    -fx-min-height: 11px;
+}
+.scroll-bar .track,
+.scroll-bar .track-background {
+    -fx-background-color: #edf2f5;
+    -fx-background-radius: 0;
+    -fx-border-color: transparent;
+}
+.scroll-bar .thumb {
+    -fx-background-color: #a3b4c1;
+    -fx-background-radius: 1px;
+    -fx-background-insets: 1px;
+    -fx-border-color: transparent;
+}
+.scroll-bar .thumb:hover,
+.scroll-bar .thumb:pressed {
+    -fx-background-color: #607d93;
+}
+.scroll-bar .increment-button,
+.scroll-bar .decrement-button {
+    -fx-background-color: #e2e9ee;
+    -fx-background-radius: 0;
+    -fx-padding: 2px;
+}
+.scroll-bar .increment-button:hover,
+.scroll-bar .decrement-button:hover {
+    -fx-background-color: #d2e0e9;
+}
+.scroll-bar .increment-arrow,
+.scroll-bar .decrement-arrow {
+    -fx-background-color: #71899b;
+    -fx-padding: 3px;
+}
+.corner {
+    -fx-background-color: #edf2f5;
+}
+
+/* Preferences: one coherent desktop window with navigable categories. */
+.prefs-root {
+    -fx-background-color: #f5f6f7;
+}
+.prefs-header {
+    -fx-background-color: #e7edf1;
+    -fx-border-color: transparent transparent #b8c6d0 transparent;
+    -fx-padding: 17px 23px;
+}
+.prefs-window-heading {
+    -fx-font-size: 19px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #30485e;
+}
+.prefs-navigation {
+    -fx-background-color: #edf1f4;
+    -fx-control-inner-background: #edf1f4;
+    -fx-border-color: transparent #bac7d0 transparent transparent;
+    -fx-border-width: 0 1px 0 0;
+    -fx-background-insets: 0;
+    -fx-padding: 8px 0;
+}
+.prefs-navigation .list-cell {
+    -fx-background-color: #edf1f4;
+    -fx-text-fill: #425a6d;
+    -fx-padding: 12px 15px;
+    -fx-font-size: 13px;
+    -fx-graphic-text-gap: 11px;
+    -fx-border-color: transparent;
+}
+.prefs-navigation .list-cell:filled:hover {
+    -fx-background-color: #e0eaf0;
+}
+.prefs-navigation .list-cell:filled:selected,
+.prefs-navigation:focused .list-cell:filled:selected {
+    -fx-background-color: #d2e1eb;
+    -fx-text-fill: #263e51;
+    -fx-font-weight: bold;
+    -fx-border-color: transparent transparent transparent #4a6076;
+    -fx-border-width: 0 0 0 3px;
+    -fx-padding: 12px 15px 12px 12px;
+}
+.prefs-navigation .list-cell:empty {
+    -fx-background-color: #edf1f4;
+}
+.prefs-content {
+    -fx-background-color: #ffffff;
+}
+.prefs-section {
+    -fx-background-color: #ffffff;
+    -fx-padding: 23px 30px 24px 30px;
+    -fx-spacing: 15px;
+}
+.prefs-section-heading {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #344f65;
+}
+.prefs-group-heading {
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #4a6076;
+}
+.prefs-field-label {
+    -fx-text-fill: #465f72;
+    -fx-font-size: 12px;
+}
+.prefs-size-value {
+    -fx-text-fill: #4a6076;
+    -fx-font-size: 12px;
+    -fx-alignment: center-right;
+}
+.prefs-code-preview {
+    -fx-background-color: #f3f6f8;
+    -fx-border-color: #ced9e1;
+    -fx-border-radius: 0;
+    -fx-background-radius: 0;
+    -fx-padding: 15px 17px;
+    -fx-text-fill: #355c7a;
+}
+.prefs-actions {
+    -fx-padding: 12px 18px;
+    -fx-background-color: #e7edf1;
+    -fx-border-color: #b8c6d0 transparent transparent transparent;
+}
+.prefs-actions .button {
+    -fx-min-width: 88px;
+    -fx-pref-height: 31px;
+}
+.prefs-actions .button:default {
+    -fx-background-color: #4a6076;
+    -fx-border-color: #40596f;
+    -fx-text-fill: #ffffff;
+}
+.prefs-actions .button:default:hover {
+    -fx-background-color: #36536e;
+}
+.prefs-feedback {
+    -fx-text-fill: #536a7b;
+    -fx-font-size: 12px;
+}
+.prefs-root .check-box {
+    -fx-text-fill: #354f61;
+}
+.prefs-root .check-box .box {
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+    -fx-background-color: #ffffff;
+    -fx-border-color: #91a7b7;
+}
+.prefs-root .check-box:selected .mark {
+    -fx-background-color: #4a6076;
 }

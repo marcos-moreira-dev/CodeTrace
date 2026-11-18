@@ -37,3 +37,11 @@ CodeTrace propone una práctica tranquila de reconstrucción manual de software,
 - Los caracteres pendientes permanecen sin fondo coloreado. El cursor se distingue por un subrayado azul fino y la línea actual sigue seleccionada discretamente.
 - El fondo se aplica también a espacios: el usuario debe distinguir los aciertos y errores de espacios, llaves, puntuación y letras, sin sustituir su glifo.
 - El tamaño de letra y la fuente mantienen dimensiones fijas por estado; un error nunca desplaza los símbolos siguientes.
+
+
+## Auditoría UX/UI: composición de escritorio (noviembre 2026)
+- Control global de tamaño del texto: **Slider horizontal dentro de la barra de estado**, con botones discretos y valor en puntos. Se eliminó el riel vertical que robaba espacio al editor.
+- Los scrollbars mantienen funcionalidad vertical/horizontal, pero adoptan un acabado estrecho y rectangular compartido por todos los paneles, incluidos árbol, editor, listas y preferencias.
+- La toolbar contiene operaciones de práctica frecuentes, **no** un interruptor de sonido. Sonidos de acierto/error y su prueba manual pertenecen a Herramientas → Preferencias → Sonido.
+- Preferencias tiene navegación lateral constante, contenido organizado por tarea, tipografía y espaciado coherentes, muestra de código para seleccionar fuentes y acciones estándar Aceptar/Cancelar/Aplicar.
+- Ningún estilo o microcopy debe revelar detalles de implementación o introducir elementos puramente decorativos.

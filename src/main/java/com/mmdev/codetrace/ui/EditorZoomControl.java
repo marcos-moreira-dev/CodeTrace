@@ -4,53 +4,88 @@ import java.util.function.IntConsumer;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.Tooltip;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.HBox;
 
-/** Reusable, narrow desktop zoom rail with mouse-wheel and drag support. */
-public final class EditorZoomControl extends VBox {
-    private final Slider slider = new Slider(10, 36, 16);
+/**
+ * Compact, reusable font-size control for the status bar.
+ * Only interaction with this control changes the global editor font size.
+ */
+public final class EditorZoomControl extends HBox {
+    private static final int MIN_SIZE = 10;
+    private static final int MAX_SIZE = 36;
+
+    private final Slider slider = new Slider(MIN_SIZE, MAX_SIZE, 16);
+    private final Label value = new Label();
     private final IntConsumer onChanged;
+    private boolean updating;
 
     public EditorZoomControl(int initialSize, IntConsumer onChanged) {
         this.onChanged = onChanged;
-        getStyleClass().add("editor-zoom-control");
-        setAlignment(Pos.CENTER);
-        setSpacing(9);
-        setMinWidth(39);
-        setPrefWidth(39);
-        Button increase = new Button("A+");
-        Button decrease = new Button("A−");
-        increase.getStyleClass().add("zoom-step");
+        getStyleClass().add("status-zoom-control");
+        setAlignment(Pos.CENTER_RIGHT);
+        setSpacing(5);
+
+        Button decrease = new Button("−");
+        Button increase = new Button("+");
         decrease.getStyleClass().add("zoom-step");
-        increase.setTooltip(new Tooltip("Aumentar tamaño de letra"));
+        increase.getStyleClass().add("zoom-step");
         decrease.setTooltip(new Tooltip("Reducir tamaño de letra"));
-        increase.setOnAction(event -> setValue((int) Math.round(slider.getValue()) + 1));
-        decrease.setOnAction(event -> setValue((int) Math.round(slider.getValue()) - 1));
-        slider.setOrientation(Orientation.VERTICAL);
-        slider.setMinHeight(155);
-        slider.setPrefHeight(210);
-        slider.setMaxHeight(Double.MAX_VALUE);
+        increase.setTooltip(new Tooltip("Aumentar tamaño de letra"));
+        decrease.setOnAction(event -> setFromUser((int) Math.round(slider.getValue()) - 1));
+        increase.setOnAction(event -> setFromUser((int) Math.round(slider.getValue()) + 1));
+
+        slider.setOrientation(Orientation.HORIZONTAL);
+        slider.setMinWidth(92);
+        slider.setPrefWidth(112);
+        slider.setMaxWidth(112);
+        slider.setMajorTickUnit(1);
+        slider.setMinorTickCount(0);
         slider.setSnapToTicks(true);
-        slider.setMajorTickUnit(2);
         slider.setBlockIncrement(1);
-        slider.setTooltip(new Tooltip("Tamaño de letra"));
-        slider.valueProperty().addListener((observed, previous, current) ->
-                onChanged.accept((int) Math.round(current.doubleValue())));
+        slider.setTooltip(new Tooltip("Tamaño de fuente del editor"));
+        slider.valueProperty().addListener((obs, oldValue, newValue) -> {
+            int size = (int) Math.round(newValue.doubleValue());
+            value.setText(size + " pt");
+            if (!updating && (int) Math.round(oldValue.doubleValue()) != size) {
+                onChanged.accept(size);
+            }
+        });
         slider.setOnScroll(event -> {
-            setValue((int) Math.round(slider.getValue()) + (event.getDeltaY() > 0 ? 1 : -1));
+            setFromUser((int) Math.round(slider.getValue())
+                    + (event.getDeltaY() > 0 ? 1 : -1));
             event.consume();
         });
-        getChildren().addAll(increase, slider, decrease);
+        value.getStyleClass().add("zoom-value");
+        value.setMinWidth(40);
+        value.setAlignment(Pos.CENTER_RIGHT);
+        getChildren().addAll(decrease, slider, increase, value);
         setValue(initialSize);
     }
 
+    /** Synchronization from Preferences must not invoke onChanged again. */
     public void setValue(int pointSize) {
-        slider.setValue(Math.max(10, Math.min(36, pointSize)));
+        updating = true;
+        try {
+            int clamped = Math.max(MIN_SIZE, Math.min(MAX_SIZE, pointSize));
+            slider.setValue(clamped);
+            value.setText(clamped + " pt");
+        } finally {
+            updating = false;
+        }
     }
 
-    public int value() {
-        return (int) Math.round(slider.getValue());
+    private void setFromUser(int pointSize) {
+        int size = Math.max(MIN_SIZE, Math.min(MAX_SIZE, pointSize));
+        if (value().equals(size + " pt")) {
+            return;
+        }
+        slider.setValue(size);
+    }
+
+    public String value() {
+        return value.getText();
     }
 }
