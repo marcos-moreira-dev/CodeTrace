@@ -89,6 +89,50 @@ public class Demo {
 '@
 [IO.File]::WriteAllText((Join-Path $sourceFolder "Demo.java"), $sampleJava,
     [Text.UTF8Encoding]::new($false))
+# Deterministic import graph fixtures for several programming languages.
+$demoJava = Join-Path $sourceFolder "demo"
+$web = Join-Path $fixture "web"
+$css = Join-Path $fixture "styles"
+$python = Join-Path $fixture "python"
+$native = Join-Path $fixture "native"
+$include = Join-Path $fixture "include"
+New-Item -ItemType Directory -Force -Path $demoJava,$web,$css,$python,$native,$include | Out-Null
+[IO.File]::WriteAllText((Join-Path $demoJava "A.java"), @'
+package demo;
+import demo.B;
+public class A { B dato; }
+'@, [Text.UTF8Encoding]::new($false))
+[IO.File]::WriteAllText((Join-Path $demoJava "B.java"), @'
+package demo;
+public class B { }
+'@, [Text.UTF8Encoding]::new($false))
+[IO.File]::WriteAllText((Join-Path $web "main.ts"), @'
+import { sumar } from "./util";
+console.log(sumar(2, 3));
+'@, [Text.UTF8Encoding]::new($false))
+[IO.File]::WriteAllText((Join-Path $web "util.ts"), @'
+export const sumar = (a: number, b: number) => a + b;
+'@, [Text.UTF8Encoding]::new($false))
+[IO.File]::WriteAllText((Join-Path $python "app.py"), @'
+import helper
+print(helper.mcd(48, 18))
+'@, [Text.UTF8Encoding]::new($false))
+[IO.File]::WriteAllText((Join-Path $python "helper.py"), @'
+def mcd(a: int, b: int) -> int:
+    return a if b == 0 else mcd(b, a % b)
+'@, [Text.UTF8Encoding]::new($false))
+[IO.File]::WriteAllText((Join-Path $native "app.c"), @'
+#include "demo.h"
+int main(void) { return valor(); }
+'@, [Text.UTF8Encoding]::new($false))
+[IO.File]::WriteAllText((Join-Path $include "demo.h"), @'
+static inline int valor(void) { return 42; }
+'@, [Text.UTF8Encoding]::new($false))
+[IO.File]::WriteAllText((Join-Path $css "theme.css"), @'
+/* Comentario verde */
+.root { -fx-font-size: 12px; -fx-base: #f5f6f7; }
+'@, [Text.UTF8Encoding]::new($false))
+
 [IO.File]::WriteAllText((Join-Path $fixture "config.json"),
     '{"demo":"CodeTrace","version":1,"objetivo":"buscar en proyecto"}',
     [Text.UTF8Encoding]::new($false))
@@ -128,4 +172,4 @@ if ($ffmpeg) {
     Write-Warning "FFmpeg no está en PATH; se generaron los ejemplos de imagen y Markdown."
 }
 Write-Host "Fixtures de CodeTrace: $fixture"
-Write-Host "Abre esa carpeta como proyecto de referencia para revisar imágenes, iconos y multimedia."
+Write-Host "Abre esa carpeta como referencia: colores CSS, grafo de imports, imágenes y multimedia."
