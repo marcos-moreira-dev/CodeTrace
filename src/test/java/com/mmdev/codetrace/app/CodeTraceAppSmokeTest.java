@@ -45,6 +45,7 @@ import javafx.scene.control.Spinner;
 import com.mmdev.codetrace.ui.ReferenceTree;
 import com.mmdev.codetrace.ui.ReconstructionStateIcons;
 import com.mmdev.codetrace.ui.FileTypeIcons;
+import com.mmdev.codetrace.ui.ReferenceMediaPane;
 import com.mmdev.codetrace.practice.ReconstructionStatus;
 import com.mmdev.codetrace.practice.PracticeMode;
 import javafx.scene.layout.StackPane;
@@ -105,6 +106,16 @@ class CodeTraceAppSmokeTest {
                 tabsField.setAccessible(true);
                 TabPane tabPane = (TabPane) tabsField.get(application);
                 assertEquals(1, tabPane.getTabs().size());
+                Path imageFile = src.resolve("image.png");
+                Files.write(imageFile, java.util.Base64.getDecoder().decode(
+                        "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQIHWP4"
+                        + "z8DwHwAFgAI/ScLttAAAAABJRU5ErkJggg=="));
+                open.invoke(application, imageFile);
+                assertEquals(2, tabPane.getTabs().size());
+                assertTrue(tabPane.getSelectionModel().getSelectedItem().getContent()
+                        instanceof ReferenceMediaPane);
+                assertTrue(tabPane.getSelectionModel().getSelectedItem().isClosable());
+                tabPane.getSelectionModel().selectFirst();
                 var zoom = stage.getScene().getRoot().lookup(".status-zoom-control");
                 assertNotNull(zoom, "The zoom belongs to the status bar");
                 assertSame(stage.getScene().getRoot().lookup(".statusbar"),
@@ -382,6 +393,7 @@ class CodeTraceAppSmokeTest {
                 }
                 assertNotNull(stage.getScene().getRoot().lookup(".tree-activity"));
                 assertNotNull(stage.getScene().getRoot().lookup(".tree-scope-checkbox"));
+                Files.delete(imageFile);
                 Files.delete(directFile);
                 Files.delete(nestedFile);
                 Files.delete(nested);

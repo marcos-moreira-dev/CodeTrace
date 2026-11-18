@@ -13,6 +13,7 @@ import com.mmdev.codetrace.ui.ReferenceTree;
 import com.mmdev.codetrace.ui.TypingEditor;
 import com.mmdev.codetrace.ui.PreferencesWindow;
 import com.mmdev.codetrace.ui.MarkdownPracticePane;
+import com.mmdev.codetrace.ui.ReferenceMediaPane;
 import com.mmdev.codetrace.ui.ProductDialogs;
 import com.mmdev.codetrace.ui.ToolbarIcons;
 import com.mmdev.codetrace.ui.SymbolPalette;
@@ -503,8 +504,7 @@ public final class CodeTraceApp extends Application {
         progressFolder = "";
         sessionFile = null;
         dirty = false;
-        tabs.getTabs().clear();
-        openedTabs.clear();
+        clearOpenTabs();
         reference = folder;
         selectPracticeMode(PracticeMode.forProject(reference));
         tree.setWorkspace(workspace);
@@ -552,7 +552,9 @@ public final class CodeTraceApp extends Application {
         }
         String relative = relative(file);
         if (!com.mmdev.codetrace.reference.PracticeEligibility.supports(file)) {
-            setStatus("Archivo de referencia · no requiere mecanografía.");
+            if (ReferenceMediaPane.kindFor(file) != ReferenceMediaPane.Kind.UNSUPPORTED)
+                openMediaReference(file, relative);
+            else setStatus("Archivo de referencia · no requiere mecanografía.");
             return;
         }
         try {
@@ -642,6 +644,34 @@ public final class CodeTraceApp extends Application {
         }
     }
 
+    private void openMediaReference(Path file, String relative) {
+        Tab existing = openedTabs.get(relative);
+        if (existing != null) {
+            tabs.getSelectionModel().select(existing);
+            return;
+        }
+        ReferenceMediaPane media = new ReferenceMediaPane(file, reference);
+        Tab tab = new Tab(file.getFileName().toString(), media);
+        tab.setGraphic(FileTypeIcons.forPath(file, false));
+        tab.setOnClosed(event -> {
+            openedTabs.remove(relative);
+            media.dispose();
+        });
+        openedTabs.put(relative, tab);
+        tabs.getTabs().add(tab);
+        tabs.getSelectionModel().select(tab);
+        setStatus("Vista previa · solo lectura: " + relative);
+        refreshMetrics();
+    }
+
+    private void clearOpenTabs() {
+        for (Tab tab : tabs.getTabs()) {
+            if (tab.getContent() instanceof ReferenceMediaPane media) media.dispose();
+        }
+        tabs.getTabs().clear();
+        openedTabs.clear();
+    }
+
     private void focusSelectedPracticeTab(Tab tab) {
         if (tabs.getSelectionModel().getSelectedItem() != tab) return;
         TypingEditor editor = editorIn(tab);
@@ -673,8 +703,7 @@ public final class CodeTraceApp extends Application {
         }
         // A newly created file unlocks its existing, open preview immediately.
         if (change.operation() != ReferenceTree.Operation.CREATE) {
-            tabs.getTabs().clear();
-            openedTabs.clear();
+            clearOpenTabs();
         } else {
             // After a file is created via its context menu, allow immediate
             // typing in the existing preview without another mouse click.
@@ -926,8 +955,7 @@ public final class CodeTraceApp extends Application {
             hashes = new LinkedHashMap<>(data.referenceHashes());
             sessionFile = selected.toPath();
             dirty = false;
-            tabs.getTabs().clear();
-            openedTabs.clear();
+            clearOpenTabs();
             tree.setWorkspace(workspace);
             tree.open(reference);
             refreshReconstructionStatuses();
