@@ -5,6 +5,7 @@
 
 #include <algorithm>
 #include <iostream>
+#include <iterator>
 #include <vector>
 int main() {
     const std::vector<int> numeros = {2, 4, 8, 12, 16};

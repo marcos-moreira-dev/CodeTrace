@@ -48,8 +48,7 @@ cuando el lenguaje los justifica.
 La primera ampliación Kotlin contiene **16 ejercicios** equivalentes a
 Java/TypeScript: sintaxis, contratos, persona, excepciones, lambdas, callbacks,
 lista, pila, cola circular, búsqueda binaria, inserción, Euclides, Factory,
-Strategy y Observer. La biblioteca total tiene **68 referencias** en 13 packs
-antes de futuras ampliaciones.
+Strategy y Observer. La biblioteca total tiene **108 referencias** en 13 packs: Java, Kotlin y TypeScript (16 cada uno), y diez lenguajes adicionales (seis cada uno). Las ampliaciones no intentan imponer estructuras orientadas a objetos en CMD o shell.
 
 Compilar clases sin \`main\` es una comprobación perfectamente válida. Kotlin
 usa \`kotlinc\`; no necesita Gradle ni Android Studio para estos ejemplos.

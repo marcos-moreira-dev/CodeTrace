@@ -103,3 +103,12 @@ CodeTrace no pretende sustituir un IDE ni compilar o evaluar automáticamente la
 - `scripts/diagnostico.bat` ejecuta diagnósticos y abre la aplicación para la prueba de aceptación.
 - GitHub Actions ejecuta pruebas unitarias y arranque gráfico básico; **no sustituye** la inspección de las imágenes y códecs reales en Windows.
 - No dar por terminada ninguna capacidad visual solo por haber compilado; vincular cada incidencia a una captura/reproducción y repetir la prueba tras corregirla.
+
+## Ampliación de biblioteca por lenguajes (18-nov-2026)
+
+- 13 paquetes y 108 ejercicios con versiones fijas y comandos de CLI en **cada archivo**.
+- Java 21, Kotlin 2.2 y TypeScript 5.9: 16 ejercicios cada uno.
+- Los otros diez lenguajes: seis ejercicios cada uno, con estructuras, algoritmos y flujos según corresponda.
+- El propósito es equivalencia **temática**, no forzar Observer o clases en shell/CMD.
+- Matriz de compatibilidad y comandos: [LENGUAJES-Y-COMANDOS](LENGUAJES-Y-COMANDOS.md).
+- Validación integral con compiladores externos todavía pendiente; la prueba de Maven comprueba estructura y comentarios y compila Java 21.

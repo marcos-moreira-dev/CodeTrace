@@ -21,7 +21,8 @@ class BuiltInLibraryTest {
         assertEquals(13, library.packs().stream().map(BuiltInLibrary.Pack::id)
                 .collect(Collectors.toSet()).size());
         for (var pack : library.packs()) {
-            assertTrue(library.size(pack) >= 2, pack.name());
+            assertEquals(java.util.Set.of("java21", "kotlin", "typescript")
+                    .contains(pack.id()) ? 16 : 6, library.size(pack), pack.name());
             Path root = library.open(pack);
             for (String relative : library.entries(pack)) {
                 Path file = root.resolve(relative);
