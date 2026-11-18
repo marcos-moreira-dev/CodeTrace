@@ -13,6 +13,10 @@ on:
       - "scripts/package-windows.ps1"
       - ".github/workflows/package-windows.yml"
 
+concurrency:
+  group: package-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   package:
     runs-on: windows-latest
