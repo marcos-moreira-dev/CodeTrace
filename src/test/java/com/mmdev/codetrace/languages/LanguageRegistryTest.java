@@ -9,6 +9,9 @@ class LanguageRegistryTest {
         assertEquals("Java", LanguageRegistry.forFile("Main.java").name());
         assertEquals("Python", LanguageRegistry.forFile("script.PY").name());
         assertEquals("TypeScript", LanguageRegistry.forFile("service.ts").name());
+        assertEquals("TypeScript", LanguageRegistry.forFile("Component.tsx").name());
+        assertEquals("JavaScript", LanguageRegistry.forFile("index.js").name());
+        assertEquals("JavaScript", LanguageRegistry.forFile("Component.jsx").name());
         assertEquals("C/C++", LanguageRegistry.forFile("main.cpp").name());
         assertEquals("Markdown", LanguageRegistry.forFile("README.md").name());
         assertEquals("Go", LanguageRegistry.forFile("main.go").name());
@@ -35,6 +38,20 @@ class LanguageRegistryTest {
         assertTrue(matches.stream().anyMatch(t ->
                 t.kind() == LanguageSupport.Kind.KEYWORD
                 && source.substring(t.start(), t.end()).equals("public")));
+    }
+
+    @Test
+    void highlightsTypeScriptTypeSyntaxAndNarrowing() {
+        String source = "interface Producto { precio: number }\n"
+                + "type Resultado = string | undefined;\n"
+                + "const esProducto = (valor: unknown): valor is Producto => true;";
+        var tokens = LanguageRegistry.forFile("modelo.ts").highlight(source);
+        for (String word : java.util.List.of("interface", "number", "type",
+                "string", "undefined", "unknown", "is")) {
+            assertTrue(tokens.stream().anyMatch(token ->
+                    token.kind() == LanguageSupport.Kind.KEYWORD &&
+                    source.substring(token.start(), token.end()).equals(word)), word);
+        }
     }
 
     @Test

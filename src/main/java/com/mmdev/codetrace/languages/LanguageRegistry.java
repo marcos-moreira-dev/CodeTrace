@@ -31,10 +31,20 @@ public final class LanguageRegistry {
     private static final List<LanguageSupport> SUPPORTS = List.of(
             new RegexSupport("Java", List.of(".java"), javaPattern()),
             new RegexSupport("Python", List.of(".py", ".pyw"), pythonPattern()),
-            new RegexSupport("TypeScript", List.of(".ts", ".tsx", ".js", ".jsx"),
+            new RegexSupport("TypeScript", List.of(".ts", ".tsx"),
                     cStylePattern("interface|type|let|const|var|function|class|export|import|"
-                            + "from|async|await|return|new|if|else|switch|case|for|while|"
-                            + "try|catch|throw|extends|implements|readonly|private|public")),
+                            + "from|as|async|await|return|new|if|else|switch|case|default|"
+                            + "for|of|in|while|do|try|catch|finally|throw|extends|implements|"
+                            + "readonly|private|protected|public|static|abstract|override|"
+                            + "declare|namespace|module|enum|keyof|infer|typeof|instanceof|"
+                            + "satisfies|is|asserts|void|string|number|boolean|bigint|symbol|"
+                            + "unknown|never|any|undefined|null|true|false|this|super")),
+            new RegexSupport("JavaScript", List.of(".js", ".jsx"),
+                    cStylePattern("let|const|var|function|class|export|import|from|as|"
+                            + "async|await|return|new|if|else|switch|case|default|"
+                            + "for|of|in|while|do|try|catch|finally|throw|extends|"
+                            + "instanceof|typeof|delete|void|yield|this|super|"
+                            + "true|false|null|undefined")),
             new RegexSupport("C/C++", List.of(".c", ".h", ".cpp", ".hpp", ".cc", ".hh"),
                     cStylePattern("int|void|char|short|long|float|double|bool|struct|class|"
                             + "enum|union|typedef|const|static|extern|return|if|else|for|"
