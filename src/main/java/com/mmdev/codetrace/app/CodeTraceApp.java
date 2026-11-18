@@ -578,12 +578,17 @@ public final class CodeTraceApp extends Application {
                         && !virtualFileExists(relative)
                         && (!typed.isEmpty() || current.skippedCount() > 0)) {
                     workspace.ensureFile(relative);
-                    tree.refreshTree();
+                    // Existing reference nodes already appear in the tree.
+                    // Refresh just their visual status: no recursive rebuild
+                    // or loss of scrolling/focus on the first typed character.
                     refreshReconstructionStatuses();
                 }
-                if (virtualFileExists(relative)
-                        && !workspace.text(relative).equals(typed)) {
-                    workspace.setText(relative, typed);
+                if (virtualFileExists(relative)) {
+                    if (!workspace.text(relative).equals(typed)) {
+                        workspace.setText(relative, typed);
+                    }
+                    // Skips, errors and corrections also change session data,
+                    // even if the concatenated typed characters are unchanged.
                     dirty = true;
                     updateTitle();
                 }

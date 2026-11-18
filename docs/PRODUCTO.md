@@ -48,7 +48,7 @@ CodeTrace propone una práctica tranquila de reconstrucción manual de software,
 
 ## UX/UI: controles de progreso y preparación (noviembre 2026)
 - En la esquina del encabezado Proyecto aparecen los botones de contraer y expandir. La expansión es limitada en proyectos enormes para no congelar JavaFX.
-- Cada archivo o carpeta de referencia se distingue con estado **○ pendiente** o **✓ creado virtualmente**. El visto significa existencia de la estructura virtual, no que se haya terminado su mecanografía.
+- Cada archivo o carpeta tiene estado vectorial **pendiente**, **creado/incompleto** o **terminado**. El nombre pendiente se presenta en cursiva; los caracteres de texto no se utilizan como iconos.
 - El menú contextual de carpetas permite que el progreso global mida todo el proyecto o solamente los archivos de una carpeta y sus descendientes. El ámbito por carpeta es una selección temporal del workspace.
 - El botón **Filtro** junto al progreso controla qué categorías de texto se tienen en cuenta; Markdown/documentación, archivos de configuración y otros textos están desactivados inicialmente.
 - El porcentaje global tiene tres decimales y se calcula solo a partir de caracteres escritos correctamente. Los fragmentos omitidos y los errores no aportan progreso, aunque su estado se conserva en la sesión.
@@ -69,9 +69,9 @@ CodeTrace propone una práctica tranquila de reconstrucción manual de software,
 - La opacidad deja de ser un cuadro numérico y pasa a Slider horizontal de 20 % a 100 % con valor porcentual legible.
 
 ## Estados de reconstrucción: iconos vectoriales (noviembre de 2026)
-- El estado **creado** usa `fth-check-circle`, verde técnico, 15 px; el estado **pendiente** usa `fth-circle`, gris azulado, 15 px. Ambos proceden de Ikonli/Feather y nunca son caracteres Unicode dentro de Labels.
+- El estado **creado/incompleto** usa `fth-check-circle` ámbar; **terminado**, el mismo icono en verde técnico; **pendiente**, `fth-circle` gris azulado. Tamaño 15 px; todos proceden de Ikonli/Feather, no de caracteres Unicode en Labels.
 - Contenedor fijo de 18 × 18 px entre el ícono de tipo y el nombre, con estilos `reconstruction-state-icon`, `state-created` y `state-pending`. Así el indicador no cambia a puntos suspensivos cuando el árbol se estrecha.
-- El significado sigue siendo **archivo/carpeta recreado virtualmente**, no código transcrito correctamente.
+- El color diferencia la creación virtual de la transcripción completada: ámbar indica creación, verde indica todas las posiciones correctamente escritas.
 
 ## Modalidad de reconstrucción y estados (noviembre de 2026)
 - Dos modalidades del mismo motor: «Reconstrucción manual» exige creación explícita; «Transcripción directa» hace la creación virtual necesaria en el primer carácter escrito y no toca los archivos reales.
