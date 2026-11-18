@@ -539,13 +539,7 @@ public final class TypingEditor extends BorderPane {
             if (token.start() == token.end()) continue;
             int first = units[token.start()];
             int last = units[token.end() - 1] + 1;
-            Color tint = switch (token.kind()) {
-                case KEYWORD, HEADING -> KEYWORD;
-                case COMMENT -> Color.web("#647F75");
-                case STRING -> Color.web("#267A65");
-                case NUMBER -> Color.web("#9D732F");
-                case ANNOTATION -> Color.web("#7B61A5");
-            };
+            Color tint = SyntaxPalette.color(token.kind());
             Arrays.fill(colors, first, last, tint);
         }
         return colors;
