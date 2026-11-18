@@ -47,6 +47,45 @@
 
 Para cada caso anota PASS / FAIL / N/A, captura, versión de Windows, escala DPI, archivo mínimo que reproduce el defecto y ZIP de diagnóstico. No cerrar incidencias visuales solo porque Maven verify esté verde.
 
+
+## Iteración UX de navegación y búsqueda
+
+En el explorador, selecciona una carpeta y marca/desmarca "Excluir del progreso".
+La exclusión se mantiene por proyecto, no oculta archivos y se hereda por subcarpetas.
+"Solo" sigue siendo un ámbito temporal; no equivale a excluir carpetas.
+Escribe en "Buscar archivo o carpeta" para filtrar nombres y mostrar antecesores.
+Borra el campo para regresar a la estructura original.
+
+En imágenes, SVG, WebP y vídeos, la zona inferior cambia de "16 pt" a "100 %".
+Usa Ctrl+rueda, +/− y arrastre con clic izquierdo para ampliar y panear. El
+doble clic restablece 100 %. Abre un código: debe reaparecer el zoom tipográfico.
+
+Comprueba el menú "Pestañas" y el menú contextual del tab: cerrar actual,
+cerrar las demás y cerrar todas; las sesiones .ctrace no se borran.
+En Preferencias > Comandos, pulsa Nuevo, Agregar/Actualizar comando y luego
+Aplicar: estos dos últimos pasos son diferentes deliberadamente.
+
+En Herramientas > Buscar, prueba Ctrl+F (archivo) y Ctrl+Shift+F (proyecto).
+Busca "CodeTrace" (literal), "sumar" (solo Demo.java) y
+"int\s+total" como expresión regular. Abre un resultado; debe
+resaltarse sin avanzar ni modificar la mecanografía. F3/Shift+F3 navega.
+La búsqueda global incluye config.json, aunque no sea un ejercicio de escritura.
+
+| ID | Prueba | Resultado requerido |
+|---|---|---|
+| NAV-01 | Filtrar nombres en el explorador | Antecesores visibles, sin leer contenidos |
+| NAV-02 | Excluir carpeta seleccionada | Persiste, no oculta archivos; herencia indicada |
+| NAV-03 | Cambiar "Solo" y "Excluir" | Estados independientes |
+| NAV-04 | Cerrar las demás y todas las pestañas | Recursos multimedia liberados, sesión conservada |
+| NAV-05 | Cambiar entre código, imagen y vídeo | Zoom tipográfico vs multimedia contextual |
+| NAV-06 | Ctrl+rueda y arrastrar una imagen grande | Zoom 25–400 %, paneo, restablecimiento |
+| FIND-01 | Buscar en archivo actual | Rutas, líneas y columnas correctas |
+| FIND-02 | Buscar en todo el proyecto | Ignora binarios y carpetas generadas |
+| FIND-03 | Búsqueda literal, palabra completa, mayúsculas y regex | Coincidencias verificables |
+| FIND-04 | Navegar a coincidencia en Java/Markdown/JSON | Resalta sin mover el cursor de transcripción |
+| FIND-05 | Interrumpir búsqueda, cambiar de proyecto | No muestra resultados obsoletos |
+| CMD-02 | Editar comando y Aplicar cambios | Persistencia explícita y UI consistente |
+
 ## Empaquetado y FFmpeg
 
 CodeTrace usa directamente los formatos admitidos por JavaFX. Si no puede reproducirlos, puede convertirlos temporalmente con FFmpeg, sin editar el repositorio.
