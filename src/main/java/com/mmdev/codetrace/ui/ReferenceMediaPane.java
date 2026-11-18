@@ -217,14 +217,16 @@ public final class ReferenceMediaPane extends BorderPane {
     }
 
     private void unsupportedMedia(Path original, boolean converted) {
-        if (disposed || recovering) return;
-        if (!converted) {
-            recovering = true;
-            convertAndPlay(original);
+        if (disposed) return;
+        if (converted) {
+            releasePlayer();
+            message("No se puede reproducir este medio con los códecs disponibles.");
             return;
         }
-        releasePlayer();
-        message("No se puede reproducir este medio con los códecs disponibles.");
+        if (!recovering) {
+            recovering = true;
+            convertAndPlay(original);
+        }
     }
 
     private void releasePlayer() {
