@@ -170,3 +170,93 @@
     -fx-pref-width: 17px;
     -fx-alignment: center;
 }
+
+/* The tab strip is a shared desktop control, not the default rounded Modena skin. */
+.tab-pane {
+    -fx-background-color: #ffffff;
+    -fx-border-color: transparent;
+}
+.tab-pane .tab-header-area {
+    -fx-padding: 0 0 0 0;
+}
+.tab-pane .tab-header-background {
+    -fx-background-color: #e8edf1;
+    -fx-border-color: transparent transparent #b6c5cf transparent;
+}
+.tab-pane .tab {
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+    -fx-background-color: #e3eaf0;
+    -fx-border-color: transparent #c4ced7 transparent transparent;
+    -fx-padding: 6px 12px;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
+.tab-pane .tab:hover { -fx-background-color: #d4e2eb; }
+.tab-pane .tab:selected {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #4a6076 #c4ced7 transparent transparent;
+    -fx-border-width: 2px 1px 0 0;
+}
+.tab-pane .tab .tab-label {
+    -fx-text-fill: #4b6274;
+    -fx-font-size: 12px;
+}
+.tab-pane .tab:selected .tab-label {
+    -fx-text-fill: #243e54;
+    -fx-font-weight: bold;
+}
+.tab-pane .tab .tab-close-button {
+    -fx-background-color: #768a9a;
+    -fx-background-radius: 0;
+}
+.tab-pane .tab .tab-close-button:hover { -fx-background-color: #b63e41; }
+
+/* Immutable source lines; ListView virtualizes long documents. */
+.typing-lines {
+    -fx-background-color: #ffffff;
+    -fx-border-color: transparent;
+    -fx-padding: 0;
+}
+.typing-lines .list-cell {
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #81909b;
+    -fx-border-color: transparent;
+    -fx-padding: 1px 12px 1px 17px;
+}
+.typing-lines .list-cell:filled:selected,
+.typing-lines:focused .list-cell:filled:selected {
+    -fx-background-color: #e7f0f6;
+    -fx-border-color: transparent transparent transparent #4a6076;
+    -fx-border-width: 0 0 0 3px;
+    -fx-padding: 1px 12px 1px 14px;
+}
+.typing-lines .list-cell:filled:hover:!selected {
+    -fx-background-color: #f4f8fa;
+}
+.typing-lines .list-cell:empty { -fx-background-color: #ffffff; }
+.typing-line-flow { -fx-background-color: transparent; }
+
+/* Shared vertical font-size slider at the right of the editor workspace. */
+.editor-zoom-control {
+    -fx-background-color: #e8edf1;
+    -fx-border-color: transparent transparent transparent #b7c6d0;
+    -fx-padding: 11px 2px;
+}
+.editor-zoom-control .slider .track {
+    -fx-background-color: #b8c6d0;
+    -fx-background-radius: 0;
+    -fx-pref-width: 5px;
+}
+.editor-zoom-control .slider .thumb {
+    -fx-background-color: #4a6076;
+    -fx-background-radius: 2px;
+    -fx-border-radius: 2px;
+    -fx-min-width: 13px;
+    -fx-min-height: 13px;
+}
+.editor-zoom-control .zoom-step {
+    -fx-font-size: 10px;
+    -fx-min-width: 32px;
+    -fx-padding: 4px 1px;
+}

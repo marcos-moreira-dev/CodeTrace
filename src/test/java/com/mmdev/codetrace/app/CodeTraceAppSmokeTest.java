@@ -20,6 +20,8 @@ import javafx.scene.input.KeyEvent;
 import javafx.event.Event;
 import com.mmdev.codetrace.ui.TypingEditor;
 import com.mmdev.codetrace.workspace.VirtualWorkspace;
+import com.mmdev.codetrace.practice.TypingSession;
+import com.mmdev.codetrace.ui.EditorZoomControl;
 import javafx.scene.control.CustomMenuItem;
 import javafx.scene.input.Clipboard;
 import javafx.scene.layout.FlowPane;
@@ -76,6 +78,7 @@ class CodeTraceAppSmokeTest {
                 tabsField.setAccessible(true);
                 TabPane tabPane = (TabPane) tabsField.get(application);
                 assertEquals(1, tabPane.getTabs().size());
+                assertNotNull(stage.getScene().getRoot().lookup(".editor-zoom-control"));
                 TypingEditor editor = (TypingEditor) tabPane.getTabs().getFirst().getContent();
                 Event.fireEvent(editor, new KeyEvent(KeyEvent.KEY_TYPED,
                         "c", "c", KeyCode.UNDEFINED, false, false, false, false));
@@ -84,6 +87,22 @@ class CodeTraceAppSmokeTest {
                 VirtualWorkspace virtual = (VirtualWorkspace) workspaceField.get(application);
                 assertTrue(virtual.exists("src/Main.java"));
                 assertEquals("c", virtual.text("src/Main.java"));
+                String untouched = editor.visibleLineText(0);
+                Event.fireEvent(editor, new KeyEvent(KeyEvent.KEY_TYPED,
+                        "x", "x", KeyCode.UNDEFINED, false, false, false, false));
+                assertEquals(untouched, editor.visibleLineText(0),
+                        "Wrong input must never replace the visible source");
+                assertEquals(TypingSession.State.INCORRECT, editor.session().state(1));
+                editor.selectLine(0);
+                assertEquals(0, editor.session().caret());
+                assertEquals(0, editor.activeLineNumber());
+
+                TypingEditor second = new TypingEditor(
+                        new TypingSession("alpha\nbeta"), () -> {},
+                        "Example.java", "Consolas", 16, matched -> {});
+                second.selectLine(1);
+                assertEquals(6, second.session().caret());
+                assertEquals("beta", second.visibleLineText(1));
                 Files.delete(file);
                 Files.delete(src);
                 Files.delete(root);

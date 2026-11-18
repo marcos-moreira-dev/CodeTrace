@@ -14,6 +14,7 @@ import com.mmdev.codetrace.ui.ProductDialogs;
 import com.mmdev.codetrace.ui.ToolbarIcons;
 import com.mmdev.codetrace.ui.SymbolPalette;
 import com.mmdev.codetrace.ui.FileTypeIcons;
+import com.mmdev.codetrace.ui.EditorZoomControl;
 import com.mmdev.codetrace.symbols.SymbolCatalog.Layout;
 import com.mmdev.codetrace.sound.TypingSounds;
 import com.mmdev.codetrace.workspace.VirtualWorkspace;
@@ -87,6 +88,7 @@ public final class CodeTraceApp extends Application {
     private AppSettings settings = AppSettings.load();
     private CheckMenuItem explorerToggle;
     private SymbolPalette symbols;
+    private EditorZoomControl zoom;
     private final TypingSounds typingSounds = new TypingSounds();
     private boolean dirty;
     private boolean concentration;
@@ -200,6 +202,8 @@ public final class CodeTraceApp extends Application {
             split.setDividerPositions(explorerRatio);
         }
         root.setCenter(split);
+        zoom = new EditorZoomControl(settings.fontSize(), this::setEditorZoom);
+        root.setRight(zoom);
 
         fileInfo.getStyleClass().add("progress-info");
         fileProgress.getStyleClass().add("typing-progress");
@@ -585,10 +589,27 @@ public final class CodeTraceApp extends Application {
         return answer == ButtonType.NO;
     }
 
+    private void setEditorZoom(int size) {
+        if (size == settings.fontSize()) {
+            return;
+        }
+        settings = new AppSettings(settings.fontFamily(), size,
+                settings.showExplorer(), settings.keyboardLayout(), settings.typingSounds());
+        settings.save();
+        for (Tab tab : tabs.getTabs()) {
+            if (tab.getContent() instanceof TypingEditor editor) {
+                editor.setFontSettings(settings.fontFamily(), size);
+            } else if (tab.getContent() instanceof MarkdownPracticePane markdown) {
+                markdown.editor().setFontSettings(settings.fontFamily(), size);
+            }
+        }
+    }
+
     private void applySettings(AppSettings next) {
         settings = new AppSettings(next.fontFamily(), next.fontSize(),
                 next.showExplorer(), settings.keyboardLayout(), next.typingSounds());
         settings.save();
+        zoom.setValue(next.fontSize());
         if (!concentration) {
             explorerToggle.setSelected(next.showExplorer());
         }
