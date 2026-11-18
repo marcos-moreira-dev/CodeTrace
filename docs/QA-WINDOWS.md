@@ -4,10 +4,11 @@
 
 ## Preparación
 
-1. Ejecuta scripts\diagnostico.bat para generar el ZIP técnico.
-2. Abre un repositorio de muestra con README.md, una subcarpeta assets, archivos .bat y .cmd, código Java y TypeScript, un SVG y archivos multimedia.
-3. Conserva los hashes SHA-256 de los archivos originales antes y después.
-4. Repite con una sesión .ctrace nueva y con otra restaurada.
+1. Ejecuta scripts\crear-fixtures-preview.ps1 desde PowerShell y abre target\qa-preview como proyecto de referencia. Si FFmpeg está disponible, generará vídeos y audios pequeños además de imágenes y README de prueba.
+2. Ejecuta scripts\diagnostico.bat para generar el ZIP técnico.
+3. Alternativamente, abre un repositorio de muestra con README.md, una subcarpeta assets, archivos .bat y .cmd, código Java y TypeScript, un SVG y archivos multimedia.
+4. Conserva los hashes SHA-256 de los archivos originales antes y después.
+5. Repite con una sesión .ctrace nueva y con otra restaurada.
 
 ## Matriz por validar
 
