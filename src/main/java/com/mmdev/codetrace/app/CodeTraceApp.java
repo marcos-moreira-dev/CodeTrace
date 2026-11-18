@@ -80,6 +80,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
@@ -381,7 +382,8 @@ public final class CodeTraceApp extends Application {
         HBox searchRow = new HBox(4, explorerSearch, clearSearch);
         HBox.setHgrow(explorerSearch, Priority.ALWAYS);
         searchRow.getStyleClass().add("tree-search-row");
-        HBox optionsRow = new HBox(13, onlySelectedFolder, excludeSelectedFolder);
+        FlowPane optionsRow = new FlowPane(13, 5,
+                onlySelectedFolder, excludeSelectedFolder);
         optionsRow.getStyleClass().add("tree-options-row");
         sidebar.getChildren().addAll(header, searchRow, optionsRow, tree);
         tree.setOnProgressFolder(this::setProgressFolder);
