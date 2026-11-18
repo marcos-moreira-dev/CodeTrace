@@ -4,7 +4,7 @@ import java.util.List;
 
 /** Syntax decoration only. Transcription and project rules are language-neutral. */
 public interface LanguageSupport {
-    enum Kind { KEYWORD, COMMENT, STRING, NUMBER, ANNOTATION, HEADING }
+    enum Kind { KEYWORD, TYPE, CALL, MEMBER, PROPERTY, SELECTOR, TAG, COLOR, COMMENT, STRING, NUMBER, ANNOTATION, HEADING }
 
     record Token(int start, int end, Kind kind) {
         public Token {
