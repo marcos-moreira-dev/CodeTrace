@@ -1,34 +1,165 @@
 package com.mmdev.codetrace.ui;
 
-import javafx.scene.control.TextArea;
+import com.mmdev.codetrace.languages.LanguageRegistry;
+import com.mmdev.codetrace.languages.LanguageSupport;
+import java.util.ArrayList;
+import java.util.List;
+import javafx.collections.FXCollections;
+import javafx.geometry.Pos;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
+import javafx.scene.control.MenuItem;
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 
-/** Read-only text reference for configuration and other non-practice files. */
+/**
+ * Read-only colored reference. Virtualized rows avoid creating one node for
+ * every character in large CSS/JSON/XML/config files.
+ */
 public final class ReferenceTextPane extends BorderPane {
-    private final TextArea text = new TextArea();
+    public record Span(String text, LanguageSupport.Kind kind) {}
+    public record SourceLine(int number, String source, List<Span> spans) {}
+
+    private final ListView<SourceLine> lines = new ListView<>();
+    private final String original;
+    private int selectedMatchLine = -1;
+    private int selectedMatchStart = -1;
+    private int selectedMatchEnd = -1;
 
     public ReferenceTextPane(String source) {
-        getStyleClass().add("reference-text-pane");
-        text.setEditable(false);
-        text.setWrapText(false);
-        text.setText(source);
-        text.getStyleClass().add("reference-text-content");
-        setCenter(text);
+        this(source, "reference.txt");
     }
 
-    /** Navigate without touching a TypingSession or the original source. */
-    public void showSearchMatch(int line, int column, int length) {
-        String source = text.getText();
-        int start = 0;
-        int row = 1;
-        while (row < line && start < source.length()) {
-            int next = source.indexOf('\n', start);
-            if (next < 0) break;
-            start = next + 1;
-            row++;
+    public ReferenceTextPane(String source, String filename) {
+        original = source == null ? "" : source;
+        getStyleClass().add("reference-text-pane");
+        lines.getStyleClass().add("reference-colored-lines");
+        lines.setItems(FXCollections.observableArrayList(segment(original, filename)));
+        lines.setCellFactory(view -> new ListCell<>() {
+            @Override protected void updateItem(SourceLine line, boolean empty) {
+                super.updateItem(line, empty);
+                setText(null);
+                if (empty || line == null) {
+                    setGraphic(null);
+                    return;
+                }
+                Label number = new Label(Integer.toString(line.number()));
+                number.getStyleClass().add("reference-line-number");
+                number.setPrefWidth(49);
+                number.setAlignment(Pos.CENTER_RIGHT);
+                TextFlow flow = new TextFlow();
+                flow.getStyleClass().add("reference-text-flow");
+                int offset = 0;
+                for (Span span : line.spans()) {
+                    int end = offset + span.text().length();
+                    if (line.number() == selectedMatchLine
+                            && selectedMatchStart < end && selectedMatchEnd > offset) {
+                        int first = Math.max(0, selectedMatchStart - offset);
+                        int last = Math.min(span.text().length(), selectedMatchEnd - offset);
+                        addColoredText(flow, span.text().substring(0, first), span.kind(), false);
+                        addColoredText(flow, span.text().substring(first, last), span.kind(), true);
+                        addColoredText(flow, span.text().substring(last), span.kind(), false);
+                    } else {
+                        addColoredText(flow, span.text(), span.kind(), false);
+                    }
+                    offset = end;
+                }
+                if (line.spans().isEmpty()) addColoredText(flow, " ", null, false);
+                HBox row = new HBox(12, number, flow);
+                row.setAlignment(Pos.CENTER_LEFT);
+                row.getStyleClass().add("reference-text-row");
+                setGraphic(row);
+            }
+        });
+        MenuItem copyLine = new MenuItem("Copiar línea");
+        copyLine.setOnAction(event -> {
+            SourceLine row = lines.getSelectionModel().getSelectedItem();
+            if (row != null) copy(row.source());
+        });
+        MenuItem copyAll = new MenuItem("Copiar texto completo");
+        copyAll.setOnAction(event -> copy(original));
+        lines.setContextMenu(new ContextMenu(copyLine, copyAll));
+        setCenter(lines);
+    }
+
+    private static void copy(String text) {
+        ClipboardContent content = new ClipboardContent();
+        content.putString(text);
+        Clipboard.getSystemClipboard().setContent(content);
+    }
+
+    private static void addColoredText(TextFlow flow, String content,
+                                       LanguageSupport.Kind kind, boolean selected) {
+        if (content.isEmpty()) return;
+        Text text = new Text(content);
+        text.setFont(Font.font("Consolas", 12));
+        text.setFill(selected ? Color.web("#BE6423")
+                : kind == null ? Color.web("#273947") : SyntaxPalette.color(kind));
+        if (selected) {
+            text.setUnderline(true);
+            text.setStyle("-fx-font-weight: bold;");
         }
-        int position = Math.min(source.length(), start + Math.max(0, column - 1));
-        text.selectRange(position, Math.min(source.length(), position + length));
-        text.requestFocus();
+        flow.getChildren().add(text);
+    }
+
+    /**
+     * Pure line segmentation from UTF-16 token offsets. Multi-line comments
+     * remain colored as they cross line boundaries.
+     */
+    public static List<SourceLine> segment(String source, String filename) {
+        String text = source == null ? "" : source;
+        List<LanguageSupport.Token> tokens = LanguageRegistry.forFile(filename)
+                .highlight(text);
+        List<SourceLine> rows = new ArrayList<>();
+        int cursor = 0;
+        int tokenCursor = 0;
+        int number = 1;
+        while (cursor <= text.length()) {
+            int newLine = text.indexOf('\n', cursor);
+            int rawEnd = newLine < 0 ? text.length() : newLine;
+            int end = rawEnd > cursor && text.charAt(rawEnd - 1) == '\r'
+                    ? rawEnd - 1 : rawEnd;
+            List<Span> spans = new ArrayList<>();
+            int pos = cursor;
+            while (tokenCursor < tokens.size() && tokens.get(tokenCursor).end() <= cursor)
+                tokenCursor++;
+            int candidate = tokenCursor;
+            while (candidate < tokens.size() && tokens.get(candidate).start() < end) {
+                LanguageSupport.Token token = tokens.get(candidate);
+                int start = Math.max(pos, token.start());
+                int finish = Math.min(end, token.end());
+                if (start > pos) spans.add(new Span(text.substring(pos, start), null));
+                if (finish > start)
+                    spans.add(new Span(text.substring(start, finish), token.kind()));
+                pos = Math.max(pos, finish);
+                candidate++;
+            }
+            if (pos < end) spans.add(new Span(text.substring(pos, end), null));
+            rows.add(new SourceLine(number++, text.substring(cursor, end),
+                    List.copyOf(spans)));
+            if (newLine < 0) break;
+            cursor = newLine + 1;
+        }
+        return List.copyOf(rows);
+    }
+
+    /** Search navigation selects a colored line without editing its contents. */
+    public void showSearchMatch(int line, int column, int length) {
+        if (line < 1 || line > lines.getItems().size()) return;
+        selectedMatchLine = line;
+        selectedMatchStart = Math.max(0, column - 1);
+        selectedMatchEnd = selectedMatchStart + Math.max(1, length);
+        lines.getSelectionModel().select(line - 1);
+        lines.scrollTo(Math.max(0, line - 3));
+        lines.refresh();
+        lines.requestFocus();
     }
 }
