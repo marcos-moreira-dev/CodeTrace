@@ -696,3 +696,39 @@
     -fx-font-family: Consolas, monospace;
     -fx-font-size: 12px;
 }
+
+/* Bundled practice library: compact desktop picker, no rounded surfaces. */
+.practice-library-panel {
+    -fx-background-color: #f8fafb;
+    -fx-padding: 18px 20px;
+    -fx-spacing: 12px;
+}
+.practice-library-list {
+    -fx-background-color: #fff;
+    -fx-border-color: #b7c5d0;
+    -fx-border-radius: 0;
+    -fx-background-radius: 0;
+    -fx-control-inner-background: #fff;
+}
+.practice-library-list .list-cell {
+    -fx-background-color: #fff;
+    -fx-padding: 9px 12px;
+    -fx-min-height: 34px;
+}
+.practice-library-list .list-cell:filled:hover {
+    -fx-background-color: #e8f1f6;
+}
+.practice-library-list .list-cell:filled:selected,
+.practice-library-list:focused .list-cell:filled:selected {
+    -fx-background-color: #d9e8f2;
+    -fx-border-color: transparent transparent transparent #4a6076;
+    -fx-border-width: 0 0 0 3px;
+}
+.practice-library-list .library-pack-title {
+    -fx-text-fill: #29465c;
+    -fx-font-size: 12.5px;
+}
+.practice-library-list .library-pack-count {
+    -fx-text-fill: #607a8e;
+    -fx-font-size: 11px;
+}

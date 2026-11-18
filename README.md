@@ -29,6 +29,7 @@ Para trabajar normalmente desde IntelliJ IDEA: importar pom.xml como Maven, sele
 - Iconografía transversal de carpetas y lenguajes con Ikonli/Devicons y Feather; controles desplegables con el mismo estilo rectangular.
 - Resaltado inicial para Java, Python, JavaScript/TypeScript, C, C++, Go, Ruby, C#, PowerShell, Shell (.sh/.bash/.zsh), CMD (.bat/.cmd) y Markdown.
 - **Modo Turbo opcional**: omite signos de puntuación consecutivos al mecanografiar. Las omisiones no cuentan como aciertos ni modifican la referencia.
+- **Biblioteca de práctica interna**: Práctica → Biblioteca de práctica. Incluye 44 plantillas de código cortas en 12 packs (Java 21, TypeScript, JavaScript, Python, C, C++, C#, Go, Ruby, PowerShell, Shell y CMD). Java y TypeScript incorporan además estructuras de datos nativas, algoritmos y patrones de diseño. Funciona offline, no requiere descargar un repositorio ni un compilador para transcribir.
 - **Consola plegable** desde Ver → Consola, Alt+F12 o la toolbar. Permite ejecutar explícitamente comandos preconfigurados, leer la salida y detenerlos.
 - **Comandos por proyecto** desde Herramientas → Preferencias → Comandos: múltiples perfiles con nombre, intérprete, instrucción y directorio relativo de trabajo.
 - Vista Markdown alternable entre fuente y renderizado en una misma pestaña.
@@ -72,3 +73,20 @@ y pueden modificar archivos reales. El código que escribiste en la
 reconstrucción virtual no se materializa ni se utiliza para ejecutarlos.
 Trabaja con una copia del repositorio si vas a probar comandos destructivos
 o de despliegue. La ejecución no influye en el porcentaje de mecanografía.
+
+## Biblioteca integrada
+
+Abre **Práctica → Biblioteca de práctica...**, selecciona un lenguaje y pulsa
+**Abrir práctica**. CodeTrace cargará el pack y abrirá el primer archivo. Puedes
+seguir con los demás desde el árbol de referencia; la creación virtual, la
+opacidad, el modo Turbo, los filtros y las estadísticas funcionan igual que en
+los repositorios externos. El contenido original siempre permanece inmutable.
+
+Las plantillas se empaquetan dentro del JAR y, al abrirse, se materializan
+de forma determinista en `~/.codetrace/practice-library/v1/`. No hay conexión,
+plugin o descarga de terceros. **Guarda tu progreso en una sesión `.ctrace`**
+para continuarlo después. Los packs se basan en ejemplos originales de
+mecanografía y no en ejercicios evaluados automáticamente.
+
+La biblioteca es una fuente de texto de referencia: no compila ni ejecuta
+los ejemplos y no necesita compilar para que puedas practicar.

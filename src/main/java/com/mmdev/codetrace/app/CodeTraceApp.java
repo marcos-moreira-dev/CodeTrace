@@ -17,6 +17,8 @@ import com.mmdev.codetrace.ui.FileTypeIcons;
 import com.mmdev.codetrace.ui.EditorZoomControl;
 import com.mmdev.codetrace.ui.CommandConsolePane;
 import com.mmdev.codetrace.commands.ProjectCommandStore;
+import com.mmdev.codetrace.library.BuiltInLibrary;
+import com.mmdev.codetrace.ui.PracticeLibraryDialog;
 import com.mmdev.codetrace.symbols.SymbolCatalog.Layout;
 import com.mmdev.codetrace.sound.TypingSounds;
 import com.mmdev.codetrace.workspace.VirtualWorkspace;
@@ -191,7 +193,11 @@ public final class CodeTraceApp extends Application {
         turboMenu = new CheckMenuItem("Modo Turbo · omitir símbolos");
         turboMenu.setSelected(settings.turboMode());
         turboMenu.setOnAction(event -> setTurboMode(turboMenu.isSelected()));
-        Menu practiceMenu = new Menu("Práctica", null, skipImportsMenu, turboMenu);
+        MenuItem bundledLibrary = new MenuItem("Biblioteca de práctica...");
+        bundledLibrary.setOnAction(event -> openPracticeLibrary());
+        Menu practiceMenu = new Menu("Práctica", null,
+                skipImportsMenu, turboMenu,
+                new javafx.scene.control.SeparatorMenuItem(), bundledLibrary);
         MenuItem about = new MenuItem("Acerca de CodeTrace");
         about.setOnAction(event -> showAbout());
         Menu helpMenu = new Menu("Ayuda", null, about);
@@ -371,9 +377,7 @@ public final class CodeTraceApp extends Application {
     }
 
     private void chooseReference() {
-        if (!confirmDiscard()) {
-            return;
-        }
+        if (!confirmDiscard()) return;
         DirectoryChooser chooser = new DirectoryChooser();
         chooser.setTitle("Seleccionar carpeta de referencia");
         if (reference != null && Files.isDirectory(reference)) {
@@ -381,26 +385,66 @@ public final class CodeTraceApp extends Application {
         }
         java.io.File chosen = chooser.showDialog(stage);
         if (chosen != null) {
-            workspace = new VirtualWorkspace();
-            sessions = new LinkedHashMap<>();
-            hashes = new LinkedHashMap<>();
-            catalogue = null;
-            progressFolder = "";
-            sessionFile = null;
-            dirty = false;
-            tabs.getTabs().clear();
-            openedTabs.clear();
-            reference = chosen.toPath().toAbsolutePath().normalize();
-            tree.setWorkspace(workspace);
-            tree.open(reference);
-            consolePane.setProject(reference);
-            refreshCommandPresets();
-            indexReference();
-            refreshButton.setDisable(false);
-            setStatus("Referencia: " + reference);
-            updateTitle();
-            refreshMetrics();
+            activateReference(chosen.toPath().toAbsolutePath().normalize());
         }
+    }
+
+    private void openPracticeLibrary() {
+        final BuiltInLibrary library;
+        try {
+            library = new BuiltInLibrary();
+        } catch (IOException error) {
+            showFailure("Biblioteca de práctica", error.getMessage());
+            return;
+        }
+        var selection = PracticeLibraryDialog.choose(stage, library);
+        if (selection.isEmpty() || !confirmDiscard()) return;
+        BuiltInLibrary.Pack selectedPack = selection.get();
+        setStatus("Abriendo biblioteca " + selectedPack.name() + "...");
+        Task<Path> prepare = new Task<>() {
+            @Override
+            protected Path call() throws Exception {
+                return library.open(selectedPack);
+            }
+        };
+        prepare.setOnSucceeded(event -> {
+            Path root = prepare.getValue();
+            activateReference(root);
+            // An immediately open template makes the built-in library useful
+            // without an extra file-picker step or an external download.
+            String first = library.entries(selectedPack).getFirst();
+            openForPractice(root.resolve(first));
+            setStatus("Biblioteca de práctica · " + selectedPack.name());
+        });
+        prepare.setOnFailed(event -> showFailure("Biblioteca de práctica",
+                "No se pudo preparar la biblioteca interna: "
+                        + prepare.getException().getMessage()));
+        Thread loader = new Thread(prepare, "codetrace-practice-library-loader");
+        loader.setDaemon(true);
+        loader.start();
+    }
+
+    /** Shared reference activation for an external folder or bundled pack. */
+    private void activateReference(Path folder) {
+        workspace = new VirtualWorkspace();
+        sessions = new LinkedHashMap<>();
+        hashes = new LinkedHashMap<>();
+        catalogue = null;
+        progressFolder = "";
+        sessionFile = null;
+        dirty = false;
+        tabs.getTabs().clear();
+        openedTabs.clear();
+        reference = folder;
+        tree.setWorkspace(workspace);
+        tree.open(reference);
+        consolePane.setProject(reference);
+        refreshCommandPresets();
+        indexReference();
+        refreshButton.setDisable(false);
+        setStatus("Referencia: " + reference);
+        updateTitle();
+        refreshMetrics();
     }
 
     private void refreshReference() {
