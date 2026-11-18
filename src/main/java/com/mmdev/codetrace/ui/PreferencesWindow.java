@@ -131,10 +131,12 @@ public final class PreferencesWindow {
             String family = families.getValue() == null ? "Consolas" : families.getValue();
             int points = (int) Math.round(size.getValue());
             preview.setFont(Font.font(family, points));
+            preview.setOpacity(opacity.getValue() / 100.0);
             sizeValue.setText(points + " pt");
         };
         size.valueProperty().addListener((obs, previous, value) -> updatePreview.run());
         families.valueProperty().addListener((obs, previous, value) -> updatePreview.run());
+        opacity.valueProperty().addListener((obs, previous, value) -> updatePreview.run());
         updatePreview.run();
 
         VBox editorPanel = section("Editor");
