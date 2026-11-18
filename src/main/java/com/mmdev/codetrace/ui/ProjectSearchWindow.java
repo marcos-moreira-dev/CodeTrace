@@ -14,7 +14,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
@@ -55,6 +54,7 @@ public final class ProjectSearchWindow {
         this.navigate = navigate;
         stage.initOwner(owner);
         stage.setTitle("Buscar — CodeTrace");
+        WindowBranding.apply(stage);
         stage.setMinWidth(590);
         stage.setMinHeight(340);
         scope.getItems().setAll("Archivo actual", "Todo el proyecto");
@@ -78,17 +78,13 @@ public final class ProjectSearchWindow {
         header.getStyleClass().add("search-window-header");
 
         results.setPlaceholder(new Label("Sin coincidencias por mostrar."));
-        results.setCellFactory(view -> new ListCell<>() {
-            @Override protected void updateItem(Hit hit, boolean empty) {
-                super.updateItem(hit, empty);
-                if (empty || hit == null) {
-                    setText(null);
-                    return;
-                }
-                setText(hit.relative() + ":" + hit.line() + ":" + hit.column()
-                        + "  " + hit.excerpt());
-            }
-        });
+        results.getStyleClass().add("search-results-list");
+        results.setCellFactory(view -> new RecordListCell<>(hit ->
+                new RecordListCell.Content(
+                        Path.of(hit.relative()).getFileName().toString(),
+                        hit.relative() + " · línea " + hit.line()
+                                + ", columna " + hit.column(),
+                        hit.excerpt(), "fth-search")));
         results.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) navigateSelected();
         });
