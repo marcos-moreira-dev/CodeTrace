@@ -2,6 +2,13 @@ package com.mmdev.codetrace.media;
 
 import static org.junit.jupiter.api.Assertions.*;
 import java.io.IOException;
+import java.io.ByteArrayInputStream;
+import javax.sound.sampled.AudioFileFormat;
+import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import java.util.concurrent.TimeUnit;
+import org.junit.jupiter.api.Assumptions;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -53,5 +60,49 @@ class MediaTranscoderTest {
         MediaTranscoder.deleteTemporary(preview);
         assertFalse(Files.exists(preview));
         MediaTranscoder.deleteTemporary(null);
+    }
+
+    @Test void transcodesAnActualAudioSampleWhenFfmpegIsInstalled() throws Exception {
+        // Optional integration exercise: runs on hosts with a local FFmpeg.
+        boolean available;
+        try {
+            Process check = new ProcessBuilder(MediaTranscoder.executable(), "-version")
+                    .redirectError(ProcessBuilder.Redirect.DISCARD)
+                    .redirectOutput(ProcessBuilder.Redirect.DISCARD).start();
+            available = check.waitFor(5, TimeUnit.SECONDS) && check.exitValue() == 0;
+            if (check.isAlive()) check.destroyForcibly();
+        } catch (IOException problem) {
+            available = false;
+        }
+        Assumptions.assumeTrue(available, "FFmpeg not installed on CI host");
+
+        Path wav = temp.resolve("silence.wav");
+        AudioFormat format = new AudioFormat(8000, 16, 1, true, false);
+        byte[] pcm = new byte[8000]; // Half a second of silence.
+        try (AudioInputStream samples = new AudioInputStream(
+                new ByteArrayInputStream(pcm), format, pcm.length / 2)) {
+            assertTrue(AudioSystem.write(samples, AudioFileFormat.Type.WAVE,
+                    wav.toFile()) > 0);
+        }
+        Path flac = temp.resolve("source.flac");
+        Process makeFlac = new ProcessBuilder(MediaTranscoder.executable(),
+                "-hide_banner", "-loglevel", "error", "-y",
+                "-i", wav.toString(), flac.toString())
+                .redirectError(ProcessBuilder.Redirect.DISCARD)
+                .redirectOutput(ProcessBuilder.Redirect.DISCARD).start();
+        assertTrue(makeFlac.waitFor(20, TimeUnit.SECONDS));
+        assertEquals(0, makeFlac.exitValue());
+        byte[] before = Files.readAllBytes(flac);
+
+        Path mp3 = MediaTranscoder.transcode(flac,
+                MediaTranscoder.Output.AUDIO, () -> false);
+        try {
+            assertTrue(Files.size(mp3) > 0);
+            assertArrayEquals(before, Files.readAllBytes(flac),
+                    "The source must remain byte-for-byte immutable");
+        } finally {
+            MediaTranscoder.deleteTemporary(mp3);
+        }
+        assertFalse(Files.exists(mp3));
     }
 }
