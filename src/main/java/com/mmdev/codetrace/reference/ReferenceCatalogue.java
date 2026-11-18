@@ -34,17 +34,40 @@ public final class ReferenceCatalogue {
         }
 
         public long expectedUnits() {
-            return files.values().stream().filter(FileInfo::typeable)
-                    .mapToLong(info -> Math.max(1, info.typeableUnits())).sum();
+            return expectedUnits(new ProgressScope(true, true, true, true));
+        }
+
+        public long expectedUnits(ProgressScope scope) {
+            return files.entrySet().stream()
+                    .filter(pair -> pair.getValue().typeable()
+                            && scope.includes(ProgressScope.classify(pair.getKey())))
+                    .mapToLong(pair -> Math.max(1, pair.getValue().typeableUnits()))
+                    .sum();
+        }
+
+        public long includedFileCount(ProgressScope scope) {
+            return files.entrySet().stream()
+                    .filter(pair -> pair.getValue().typeable()
+                            && scope.includes(ProgressScope.classify(pair.getKey())))
+                    .count();
         }
 
         public long resolvedUnits(VirtualWorkspace workspace,
                                   Map<String, TypingSession> typing,
                                   Map<String, String> originalHashes) {
+            return resolvedUnits(workspace, typing, originalHashes,
+                    new ProgressScope(true, true, true, true));
+        }
+
+        public long resolvedUnits(VirtualWorkspace workspace,
+                                  Map<String, TypingSession> typing,
+                                  Map<String, String> originalHashes,
+                                  ProgressScope scope) {
             long result = 0;
             for (var pair : files.entrySet()) {
                 FileInfo info = pair.getValue();
-                if (!info.typeable()) {
+                if (!info.typeable()
+                        || !scope.includes(ProgressScope.classify(pair.getKey()))) {
                     continue;
                 }
                 String path = pair.getKey();

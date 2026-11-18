@@ -3,6 +3,7 @@ package com.mmdev.codetrace.app;
 import com.mmdev.codetrace.practice.TypingSession;
 import com.mmdev.codetrace.progress.SessionArchive;
 import com.mmdev.codetrace.reference.ReferenceCatalogue;
+import com.mmdev.codetrace.reference.ProgressScope;
 import com.mmdev.codetrace.reference.ReferenceFingerprint;
 import com.mmdev.codetrace.reference.TextPreview;
 import com.mmdev.codetrace.ui.ReferenceTree;
@@ -78,6 +79,7 @@ public final class CodeTraceApp extends Application {
     private Map<String, TypingSession> sessions = new LinkedHashMap<>();
     private Map<String, String> hashes = new LinkedHashMap<>();
     private ReferenceCatalogue.Snapshot catalogue;
+    private ProgressScope progressScope = ProgressScope.load();
     private long catalogueGeneration;
     private Path reference;
     private Path sessionFile;
@@ -147,7 +149,13 @@ public final class CodeTraceApp extends Application {
         Menu viewMenu = new Menu("Ver", null, explorerToggle, focus, fullscreen);
 
         skipImportsMenu.setOnAction(event -> skipImports());
-        Menu practiceMenu = new Menu("Práctica", null, skipImportsMenu);
+        Menu progressMenu = new Menu("Contabilizar en progreso");
+        addProgressOption(progressMenu, "Código fuente", ProgressScope.Category.SOURCE);
+        addProgressOption(progressMenu, "Configuración", ProgressScope.Category.CONFIGURATION);
+        addProgressOption(progressMenu, "Documentación", ProgressScope.Category.DOCUMENTATION);
+        addProgressOption(progressMenu, "Otros textos", ProgressScope.Category.OTHER_TEXT);
+        Menu practiceMenu = new Menu("Práctica", null, skipImportsMenu,
+                new javafx.scene.control.SeparatorMenuItem(), progressMenu);
         MenuItem about = new MenuItem("Acerca de CodeTrace");
         about.setOnAction(event -> showAbout());
         Menu helpMenu = new Menu("Ayuda", null, about);
@@ -408,12 +416,25 @@ public final class CodeTraceApp extends Application {
             fileProgress.setVisible(false);
             return;
         }
-        long total = catalogue.expectedUnits();
-        long resolved = catalogue.resolvedUnits(workspace, sessions, hashes);
-        double ratio = total == 0 ? 1.0 : (double) resolved / total;
-        projectInfo.setText("Proyecto · " + Math.round(ratio * 100) + " %");
+        long total = catalogue.expectedUnits(progressScope);
+        long resolved = catalogue.resolvedUnits(workspace, sessions, hashes, progressScope);
+        double ratio = total == 0 ? 0.0 : (double) resolved / total;
+        long count = catalogue.includedFileCount(progressScope);
+        projectInfo.setText(count == 0 ? "Proyecto · sin archivos incluidos"
+                : "Proyecto · " + Math.round(ratio * 100) + " %");
         fileProgress.setProgress(ratio);
         fileProgress.setVisible(true);
+    }
+
+    private void addProgressOption(Menu menu, String title, ProgressScope.Category category) {
+        CheckMenuItem option = new CheckMenuItem(title);
+        option.setSelected(progressScope.includes(category));
+        option.setOnAction(event -> {
+            progressScope = progressScope.with(category, option.isSelected());
+            progressScope.save();
+            refreshMetrics();
+        });
+        menu.getItems().add(option);
     }
 
     private boolean selectedJavaFile() {

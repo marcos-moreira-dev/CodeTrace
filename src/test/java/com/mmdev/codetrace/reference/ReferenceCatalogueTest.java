@@ -39,6 +39,22 @@ class ReferenceCatalogueTest {
     }
 
     @Test
+    void onlySourceFilesCountUnlessOtherCategoriesAreEnabled() throws Exception {
+        Files.writeString(folder.resolve("App.java"), "abc");
+        Files.writeString(folder.resolve("README.md"), "mucho texto");
+        Files.writeString(folder.resolve("pom.xml"), "<project/>");
+        var index = ReferenceCatalogue.scan(folder);
+        var codeOnly = ProgressScope.defaults();
+        assertEquals(3, index.expectedUnits(codeOnly));
+        assertEquals(1, index.includedFileCount(codeOnly));
+        var codeAndConfig = codeOnly.with(ProgressScope.Category.CONFIGURATION, true);
+        assertEquals(3 + "<project/>".length(), index.expectedUnits(codeAndConfig));
+        assertEquals(2, index.includedFileCount(codeAndConfig));
+        assertEquals(3, index.includedFileCount(
+                new ProgressScope(true, true, true, false)));
+    }
+
+    @Test
     void emptyTextFileCompletesWhenCreated() throws Exception {
         Files.writeString(folder.resolve("empty.txt"), "");
         var index = ReferenceCatalogue.scan(folder);
