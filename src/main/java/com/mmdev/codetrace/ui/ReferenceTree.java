@@ -85,18 +85,16 @@ public final class ReferenceTree extends TreeView<Path> {
                 // TreeCell's overrun-prone text layout. Long folder names can
                 // scroll horizontally without turning the icon into "...".
                 setText(null);
-                Label badge = new Label(created ? "✓" : "○");
-                badge.getStyleClass().addAll("virtual-state",
-                        created ? "virtual-created" : "virtual-pending");
-                badge.setTooltip(new Tooltip(created
-                        ? "Creado en el proyecto virtual" : "Pendiente de recrear"));
+                // A real Feather vector icon is kept in a fixed-size
+                // container. No "✓" / "○" text labels can collapse into "...".
+                var badge = ReconstructionStateIcons.forCreated(created);
                 Label nameLabel = new Label(name(path));
                 nameLabel.getStyleClass().add("reference-name");
                 nameLabel.setTextFill(created ? Color.web("#263747")
                         : Color.web("#667784"));
                 nameLabel.setMinWidth(javafx.scene.layout.Region.USE_PREF_SIZE);
                 HBox graphic = new HBox(6,
-                        FileTypeIcons.forPath(path, isFolder(path)), nameLabel, badge);
+                        FileTypeIcons.forPath(path, isFolder(path)), badge, nameLabel);
                 graphic.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
                 graphic.getStyleClass().add("reference-tree-row");
                 if (fileCount >= 0) {

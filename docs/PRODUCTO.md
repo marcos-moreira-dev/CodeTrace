@@ -67,3 +67,8 @@ CodeTrace propone una práctica tranquila de reconstrucción manual de software,
 - Solo se ofrecen operaciones de creación y consulta: los archivos creados permanecen como hitos. El menú de archivo incluye «Mostrar en el Explorador», que revela su referencia real en Windows; otros sistemas abren la carpeta contenedora.
 - Al abrir o volver a seleccionar una pestaña, la práctica recibe el foco del teclado mediante el pulso siguiente de JavaFX. Nunca se crea automáticamente un archivo, que sigue siendo requisito para mecanografiar.
 - La opacidad deja de ser un cuadro numérico y pasa a Slider horizontal de 20 % a 100 % con valor porcentual legible.
+
+## Estados de reconstrucción: iconos vectoriales (noviembre de 2026)
+- El estado **creado** usa `fth-check-circle`, verde técnico, 15 px; el estado **pendiente** usa `fth-circle`, gris azulado, 15 px. Ambos proceden de Ikonli/Feather y nunca son caracteres Unicode dentro de Labels.
+- Contenedor fijo de 18 × 18 px entre el ícono de tipo y el nombre, con estilos `reconstruction-state-icon`, `state-created` y `state-pending`. Así el indicador no cambia a puntos suspensivos cuando el árbol se estrecha.
+- El significado sigue siendo **archivo/carpeta recreado virtualmente**, no código transcrito correctamente.

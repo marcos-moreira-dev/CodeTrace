@@ -41,6 +41,9 @@ import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.control.Spinner;
 import com.mmdev.codetrace.ui.ReferenceTree;
+import com.mmdev.codetrace.ui.ReconstructionStateIcons;
+import javafx.scene.layout.StackPane;
+import org.kordamp.ikonli.javafx.FontIcon;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -212,6 +215,16 @@ class CodeTraceAppSmokeTest {
                 ReferenceTree fileTree = (ReferenceTree) stage.getScene()
                         .getRoot().lookup(".tree-view");
                 assertNotNull(fileTree);
+                // Regression: the virtual status must be a real vector icon,
+                // not a Label whose text can collapse into an ellipsis.
+                StackPane createdBadge = ReconstructionStateIcons.forCreated(true);
+                StackPane pendingBadge = ReconstructionStateIcons.forCreated(false);
+                assertTrue(createdBadge.getChildren().getFirst() instanceof FontIcon);
+                assertTrue(pendingBadge.getChildren().getFirst() instanceof FontIcon);
+                assertEquals(18.0, createdBadge.getMinWidth());
+                assertEquals(18.0, pendingBadge.getMinWidth());
+                assertTrue(createdBadge.getStyleClass().contains("state-created"));
+                assertTrue(pendingBadge.getStyleClass().contains("state-pending"));
                 // Menus must permit constructing a real reference directory
                 // before the virtual file, with no implicit disk creation.
                 Path nested = Files.createDirectory(src.resolve("ejemplos"));
