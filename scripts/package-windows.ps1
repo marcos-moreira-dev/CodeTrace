@@ -26,7 +26,7 @@ $target = Join-Path $root "target"
 $input = Join-Path $target "package-input"
 $dist = Join-Path $root "dist"
 New-Item -ItemType Directory -Force -Path $target | Out-Null
-$toolchains = Join-Path $target "package-toolchains.xml"
+$toolchains = Join-Path $env:TEMP ("codetrace-toolchains-" + [guid]::NewGuid().ToString("N") + ".xml")
 $escapedJdk = [Security.SecurityElement]::Escape($jdk)
 $xml = @"
 <?xml version="1.0" encoding="UTF-8"?>
@@ -85,4 +85,5 @@ if ($Installer) {
     & $jpackage --type exe --app-image $portable --name CodeTrace --dest $dist
     if ($LASTEXITCODE -ne 0) { throw "No se creó el instalador EXE; verifica WiX." }
 }
+Remove-Item -LiteralPath $toolchains -Force -ErrorAction SilentlyContinue
 Write-Host "Prueba CodeTrace.exe en un equipo Windows limpio antes de distribuir."
