@@ -55,12 +55,37 @@ class ReferenceCatalogueTest {
     }
 
     @Test
+    void scopedProgressCountsOnlyCorrectlyTypedCharactersInSelectedFolder()
+            throws Exception {
+        Files.createDirectory(folder.resolve("src"));
+        Files.createDirectory(folder.resolve("tests"));
+        Files.writeString(folder.resolve("src/A.java"), "abcd");
+        Files.writeString(folder.resolve("tests/B.java"), "123456");
+        var index = ReferenceCatalogue.scan(folder);
+        var scope = ProgressScope.defaults();
+        assertEquals(4, index.expectedUnits(scope, "src"));
+        assertEquals(6, index.expectedUnits(scope, "tests"));
+        assertEquals(10, index.expectedUnits(scope, ""));
+        assertEquals(1, index.includedFileCount(scope, "src"));
+
+        var virtual = new VirtualWorkspace();
+        virtual.ensureFile("src/A.java");
+        var typing = new TypingSession("abcd");
+        typing.type("abXd");
+        var hashes = Map.of("src/A.java", index.files().get("src/A.java").sha256());
+        assertEquals(3, index.resolvedUnits(virtual,
+                Map.of("src/A.java", typing), hashes, scope, "src"));
+        assertEquals(0, index.resolvedUnits(virtual,
+                Map.of("src/A.java", typing), hashes, scope, "tests"));
+    }
+
+    @Test
     void emptyTextFileCompletesWhenCreated() throws Exception {
         Files.writeString(folder.resolve("empty.txt"), "");
         var index = ReferenceCatalogue.scan(folder);
-        assertEquals(1, index.expectedUnits());
+        assertEquals(0, index.expectedUnits());
         VirtualWorkspace virtual = new VirtualWorkspace();
         virtual.createFile("empty.txt");
-        assertEquals(1, index.resolvedUnits(virtual, Map.of(), Map.of()));
+        assertEquals(0, index.resolvedUnits(virtual, Map.of(), Map.of()));
     }
 }

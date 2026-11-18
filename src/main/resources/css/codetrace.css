@@ -483,3 +483,41 @@
 .prefs-root .check-box:selected .mark {
     -fx-background-color: #4a6076;
 }
+
+/* Explorer header: clear structure actions and compact virtual status. */
+.project-tree-header {
+    -fx-background-color: #edf1f4;
+    -fx-border-color: transparent transparent #c3cdd5 transparent;
+    -fx-padding: 4px 7px 4px 6px;
+    -fx-spacing: 4px;
+}
+.project-tree-header .sidebar-title {
+    -fx-padding: 4px 6px;
+}
+.project-tree-header .tree-header-action {
+    -fx-min-width: 24px;
+    -fx-pref-width: 24px;
+    -fx-min-height: 24px;
+    -fx-pref-height: 24px;
+    -fx-padding: 0;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+.project-tree-header .tree-header-action:hover {
+    -fx-background-color: #d4e1ea;
+    -fx-border-color: #adc0cc;
+}
+.virtual-state {
+    -fx-font-size: 11px;
+    -fx-min-width: 13px;
+    -fx-pref-width: 13px;
+    -fx-alignment: center;
+}
+.virtual-created {
+    -fx-text-fill: #29834b;
+}
+.virtual-pending {
+    -fx-text-fill: #a2adb5;
+}

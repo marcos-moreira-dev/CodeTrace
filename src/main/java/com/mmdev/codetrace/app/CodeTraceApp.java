@@ -438,14 +438,31 @@ public final class CodeTraceApp extends Application {
             fileProgress.setVisible(false);
             return;
         }
-        long total = catalogue.expectedUnits(progressScope);
-        long resolved = catalogue.resolvedUnits(workspace, sessions, hashes, progressScope);
+        long total = catalogue.expectedUnits(progressScope, progressFolder);
+        long resolved = catalogue.resolvedUnits(
+                workspace, sessions, hashes, progressScope, progressFolder);
         double ratio = total == 0 ? 0.0 : (double) resolved / total;
-        long count = catalogue.includedFileCount(progressScope);
-        projectInfo.setText(count == 0 ? "Proyecto · sin archivos incluidos"
-                : "Proyecto · " + Math.round(ratio * 100) + " %");
+        long count = catalogue.includedFileCount(progressScope, progressFolder);
+        String area = progressFolder.isEmpty() ? "Proyecto" : "Carpeta";
+        projectInfo.setText(count == 0 || total == 0
+                ? area + " · sin código contabilizable"
+                : String.format(java.util.Locale.ROOT, "%s · %.3f %%",
+                        area, ratio * 100.0));
+        projectInfo.setTooltip(new Tooltip(
+                (progressFolder.isEmpty() ? "Todo el proyecto" : progressFolder)
+                        + "\n" + resolved + " / " + total
+                        + " caracteres correctos\n"
+                        + count + " archivos incluidos"));
         fileProgress.setProgress(ratio);
-        fileProgress.setVisible(true);
+        fileProgress.setVisible(count > 0 && total > 0);
+    }
+
+    private void setProgressFolder(String folder) {
+        progressFolder = folder == null ? "" : folder;
+        refreshMetrics();
+        setStatus(progressFolder.isEmpty()
+                ? "Progreso: todo el proyecto"
+                : "Progreso: " + progressFolder);
     }
 
     private void addProgressOption(Menu menu, String title, ProgressScope.Category category) {

@@ -38,18 +38,32 @@ public final class ReferenceCatalogue {
         }
 
         public long expectedUnits(ProgressScope scope) {
+            return expectedUnits(scope, "");
+        }
+
+        public long expectedUnits(ProgressScope scope, String folder) {
             return files.entrySet().stream()
                     .filter(pair -> pair.getValue().typeable()
+                            && inFolder(pair.getKey(), folder)
                             && scope.includes(ProgressScope.classify(pair.getKey())))
-                    .mapToLong(pair -> Math.max(1, pair.getValue().typeableUnits()))
+                    .mapToLong(pair -> pair.getValue().typeableUnits())
                     .sum();
         }
 
         public long includedFileCount(ProgressScope scope) {
+            return includedFileCount(scope, "");
+        }
+
+        public long includedFileCount(ProgressScope scope, String folder) {
             return files.entrySet().stream()
                     .filter(pair -> pair.getValue().typeable()
+                            && inFolder(pair.getKey(), folder)
                             && scope.includes(ProgressScope.classify(pair.getKey())))
                     .count();
+        }
+
+        private static boolean inFolder(String path, String folder) {
+            return folder == null || folder.isEmpty() || path.startsWith(folder + "/");
         }
 
         public long resolvedUnits(VirtualWorkspace workspace,
@@ -63,10 +77,17 @@ public final class ReferenceCatalogue {
                                   Map<String, TypingSession> typing,
                                   Map<String, String> originalHashes,
                                   ProgressScope scope) {
+            return resolvedUnits(workspace, typing, originalHashes, scope, "");
+        }
+
+        public long resolvedUnits(VirtualWorkspace workspace,
+                                  Map<String, TypingSession> typing,
+                                  Map<String, String> originalHashes,
+                                  ProgressScope scope, String folder) {
             long result = 0;
             for (var pair : files.entrySet()) {
                 FileInfo info = pair.getValue();
-                if (!info.typeable()
+                if (!info.typeable() || !inFolder(pair.getKey(), folder)
                         || !scope.includes(ProgressScope.classify(pair.getKey()))) {
                     continue;
                 }
@@ -75,14 +96,11 @@ public final class ReferenceCatalogue {
                 if (virtual == null || virtual.kind() != VirtualWorkspace.Kind.FILE) {
                     continue;
                 }
-                // A zero-length source is complete when its virtual file exists.
-                if (info.typeableUnits() == 0) {
-                    result++;
-                    continue;
-                }
+                // Empty files contain no typed characters and add no progress.
+                if (info.typeableUnits() == 0) continue;
                 TypingSession session = typing.get(path);
                 if (session != null && info.sha256().equals(originalHashes.get(path))) {
-                    result += Math.min(info.typeableUnits(), session.resolvedCount());
+                    result += Math.min(info.typeableUnits(), session.correctCount());
                 }
             }
             return result;

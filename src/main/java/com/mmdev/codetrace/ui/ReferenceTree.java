@@ -4,6 +4,7 @@ import com.mmdev.codetrace.workspace.VirtualWorkspace;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -11,6 +12,9 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Consumer;
+import javafx.scene.control.Tooltip;
+import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
 import java.util.stream.Stream;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
@@ -38,6 +42,7 @@ public final class ReferenceTree extends TreeView<Path> {
     private Path referenceRoot;
     private String clipboard;
     private boolean cut;
+    private Consumer<String> onProgressFolder = folder -> {};
 
     public ReferenceTree(Consumer<Path> onOpen, Consumer<Change> onChange,
                          Consumer<String> onStatus) {
@@ -52,14 +57,25 @@ public final class ReferenceTree extends TreeView<Path> {
                 if (empty || path == null || referenceRoot == null) {
                     setText(null);
                     setGraphic(null);
+                    setTooltip(null);
                     setContextMenu(null);
                     return;
                 }
                 String relative = relative(path);
                 boolean created = workspace.exists(relative);
                 setText(name(path));
-                setGraphic(FileTypeIcons.forPath(path, isFolder(path)));
+                Label badge = new Label(created ? "✓" : "○");
+                badge.getStyleClass().addAll("virtual-state",
+                        created ? "virtual-created" : "virtual-pending");
+                badge.setTooltip(new Tooltip(created
+                        ? "Creado en el proyecto virtual" : "Pendiente de crear"));
+                HBox graphic = new HBox(5, FileTypeIcons.forPath(path, isFolder(path)),
+                        badge);
+                graphic.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
+                setGraphic(graphic);
                 setTextFill(created ? Color.web("#263747") : Color.web("#85929C"));
+                setTooltip(new Tooltip(created
+                        ? "Estructura virtual creada" : "Pendiente de recrear"));
                 setContextMenu(contextFor(path));
             }
         });
@@ -70,6 +86,50 @@ public final class ReferenceTree extends TreeView<Path> {
                 onOpen.accept(selected.getValue());
             }
         });
+    }
+
+    public void setOnProgressFolder(Consumer<String> listener) {
+        onProgressFolder = listener == null ? folder -> {} : listener;
+    }
+
+    /** Collapse all expanded branches, keeping the root's first level visible. */
+    public void collapseAll() {
+        TreeItem<Path> root = getRoot();
+        if (root == null) return;
+        collapseExpanded(root);
+        root.setExpanded(true);
+    }
+
+    private void collapseExpanded(TreeItem<Path> node) {
+        if (!node.isExpanded()) return;
+        for (TreeItem<Path> child : node.getChildren()) {
+            collapseExpanded(child);
+        }
+        node.setExpanded(false);
+    }
+
+    /**
+     * Bounded expansion to avoid freezing the UI on giant repositories.
+     * Recursively expands up to 500 nodes and reports when the limit is reached.
+     */
+    public void expandAll() {
+        if (getRoot() == null) return;
+        ArrayDeque<TreeItem<Path>> queue = new ArrayDeque<>();
+        queue.add(getRoot());
+        int count = 0;
+        while (!queue.isEmpty() && count < 500) {
+            TreeItem<Path> node = queue.removeFirst();
+            node.setExpanded(true);
+            count++;
+            if (!node.isLeaf()) {
+                for (TreeItem<Path> child : node.getChildren()) {
+                    if (!child.isLeaf()) queue.add(child);
+                }
+            }
+        }
+        if (!queue.isEmpty()) {
+            onStatus.accept("Expansión limitada para proteger el rendimiento.");
+        }
     }
 
     public void setWorkspace(VirtualWorkspace newWorkspace) {
@@ -157,6 +217,13 @@ public final class ReferenceTree extends TreeView<Path> {
         String relative = relative(path);
         boolean created = workspace.exists(relative);
         List<MenuItem> actions = new ArrayList<>();
+        if (isFolder(path)) {
+            MenuItem scope = new MenuItem(relative.isEmpty()
+                    ? "Progreso: todo el proyecto"
+                    : "Progreso: solo esta carpeta");
+            scope.setOnAction(event -> onProgressFolder.accept(relative));
+            actions.add(scope);
+        }
         if (created && isFolder(path)) {
             MenuItem folder = new MenuItem("Nueva carpeta...");
             folder.setOnAction(event -> create(relative, true));
