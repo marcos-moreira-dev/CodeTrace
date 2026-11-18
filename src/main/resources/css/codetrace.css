@@ -899,3 +899,51 @@
 }
 .reference-text-content { -fx-font-family: "Consolas";
     -fx-font-size: 12px; -fx-background-color: #fff; }
+
+
+/* Consistent shared result rows: commands, file/project Find and future records. */
+.record-list-cell { -fx-padding: 0; -fx-background-color: white; }
+.record-list-cell:filled .record-list-row {
+    -fx-padding: 8 10;
+    -fx-alignment: center-left;
+}
+.record-list-cell:filled:hover:!selected { -fx-background-color: #eff5f9; }
+.record-list-cell:filled:selected {
+    -fx-background-color: #d5e4ee;
+    -fx-border-color: transparent transparent transparent #426b8c;
+    -fx-border-width: 0 0 0 3;
+}
+.record-list-row .ikonli-font-icon { -fx-icon-color: #56748d; }
+.record-list-title {
+    -fx-font-family: "Segoe UI"; -fx-font-size: 12px;
+    -fx-font-weight: bold; -fx-text-fill: #29465c;
+}
+.record-list-subtitle {
+    -fx-font-family: "Segoe UI"; -fx-font-size: 10px;
+    -fx-text-fill: #627a8e;
+}
+.record-list-description {
+    -fx-font-family: "Consolas"; -fx-font-size: 11px;
+    -fx-text-fill: #455d6d;
+}
+.search-results-list .record-list-row { -fx-min-height: 58px; }
+.command-preset-list .record-list-row { -fx-min-height: 43px; }
+.search-results-list .list-cell:filled { -fx-font-family: "Segoe UI"; }
+
+/* Airier explorer toolbar, with a borderless close/clear affordance. */
+.project-tree-header { -fx-padding: 7 9 4 11; }
+.tree-search-row { -fx-padding: 6 10 7 10; }
+.tree-search-clear {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-font-size: 17px;
+    -fx-text-fill: #657c8e;
+    -fx-min-width: 26px;
+    -fx-pref-width: 26px;
+}
+.tree-search-clear:hover {
+    -fx-background-color: #d9e6ee;
+    -fx-border-color: transparent;
+    -fx-text-fill: #2b526c;
+}
+.tree-options-row { -fx-padding: 2 10 8 11; }
