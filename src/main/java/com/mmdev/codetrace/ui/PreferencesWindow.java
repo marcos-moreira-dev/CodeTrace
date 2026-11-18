@@ -226,8 +226,11 @@ public final class PreferencesWindow {
             name.setMinWidth(160);
             name.setMaxWidth(160);
             name.getStyleClass().add("font-family-name");
-            Text sample = new Text("Aa 123");
-            sample.setFont(Font.font(family, 15));
+            Label sample = new Label(family);
+            sample.setFont(Font.font(family, 14));
+            sample.setMaxWidth(170);
+            sample.setTooltip(new Tooltip(family));
+            sample.getStyleClass().add("font-family-preview");
             HBox row = new HBox(9, name, sample);
             row.setAlignment(Pos.CENTER_LEFT);
             setGraphic(row);
