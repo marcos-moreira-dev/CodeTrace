@@ -81,4 +81,39 @@ class TypingSessionTest {
         assertEquals(1, session.correctCount());
         assertEquals(TypingSession.State.PENDING, session.state(1));
     }
+
+    @Test
+    void separateCombiningMarkCompletesTheFinalReferenceGrapheme() {
+        TypingSession session = new TypingSession("í");
+        session.type("i");
+        assertEquals(1, session.caret());
+        assertEquals(1, session.incorrectCount());
+        // Some LATAM keyboards/IME environments commit the accent separately.
+        session.type("\u0301");
+        assertEquals(1, session.size());
+        assertEquals(1, session.caret());
+        assertEquals(1, session.correctCount());
+        assertEquals(0, session.incorrectCount());
+        assertTrue(session.finishedExercise());
+    }
+
+    @Test
+    void onlyDeliberateSkipsCanFinishWithoutInflatingTheProgress() {
+        TypingSession session = new TypingSession("{}");
+        session.skip(0, session.size());
+        assertTrue(session.finishedExercise());
+        assertEquals(0, session.correctCount());
+        assertEquals(2, session.skippedCount());
+        session.undoSkip(1, 2);
+        assertFalse(session.finishedExercise());
+        assertEquals(0, session.correctCount());
+    }
+
+    @Test
+    void trailingStructuralNewlineCanBeLeftUntypedAfterSkips() {
+        TypingSession session = new TypingSession("import X;\n");
+        session.skip(0, "import X;".length());
+        assertTrue(session.finishedExercise());
+        assertEquals(0, session.correctCount());
+    }
 }
