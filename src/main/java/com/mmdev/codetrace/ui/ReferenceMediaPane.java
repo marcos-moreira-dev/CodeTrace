@@ -18,6 +18,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
+import javafx.scene.control.Tooltip;
+import javafx.scene.layout.VBox;
+import org.kordamp.ikonli.javafx.FontIcon;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -35,6 +38,7 @@ import javafx.util.Duration;
 public final class ReferenceMediaPane extends BorderPane {
     public enum Kind { IMAGE, SVG, AUDIO, VIDEO, UNSUPPORTED }
     private MediaPlayer player;
+    private AudioSpectrumPane spectrum;
     private Task<Path> conversion;
     private Task<MarkdownRenderer.RenderedPage> imagePreparation;
     private WebView webImage;
@@ -217,52 +221,121 @@ public final class ReferenceMediaPane extends BorderPane {
             Media media = new Media(file.toUri().toString());
             player = new MediaPlayer(media);
             player.setAutoPlay(false);
+            MediaPlayer active = player;
             if (kindFor(original) == Kind.VIDEO) {
-                MediaView screen = new MediaView(player);
+                MediaView screen = new MediaView(active);
                 screen.setPreserveRatio(true);
                 screen.fitWidthProperty().bind(widthProperty().subtract(35));
                 screen.fitHeightProperty().bind(heightProperty().subtract(90));
                 installViewport(screen);
             } else {
+                releaseViewport();
                 Label fileName = new Label(original.getFileName().toString());
                 fileName.getStyleClass().add("media-audio-title");
-                StackPane cover = new StackPane(fileName);
+                Label kind = new Label("Audio de referencia · solo lectura");
+                kind.getStyleClass().add("media-audio-subtitle");
+                spectrum = new AudioSpectrumPane();
+                VBox audio = new VBox(10, fileName, kind, spectrum);
+                audio.getStyleClass().add("media-audio-panel");
+                audio.setAlignment(Pos.CENTER);
+                spectrum.prefWidthProperty().bind(audio.widthProperty().subtract(40));
+                StackPane cover = new StackPane(audio);
                 cover.getStyleClass().add("media-canvas");
+                cover.setPadding(new Insets(24));
                 setCenter(cover);
+                active.setAudioSpectrumNumBands(40);
+                active.setAudioSpectrumInterval(0.1);
+                active.setAudioSpectrumThreshold(-60);
+                AudioSpectrumPane currentSpectrum = spectrum;
+                active.setAudioSpectrumListener((time, duration, mags, phases) -> {
+                    if (!disposed && player == active) currentSpectrum.accept(mags);
+                });
             }
-            Button play = new Button("Reproducir");
-            Button stop = new Button("Detener");
-            MediaPlayer active = player;
-            play.setOnAction(event -> {
+
+            Button playPause = new Button();
+            playPause.getStyleClass().addAll("media-icon-button", "media-play-toggle");
+            Button stop = new Button();
+            stop.getStyleClass().add("media-icon-button");
+            playPause.setGraphic(new FontIcon("fth-play"));
+            stop.setGraphic(new FontIcon("fth-square"));
+            playPause.setAccessibleText("Reproducir o pausar");
+            stop.setAccessibleText("Detener reproducción");
+            Tooltip playTip = new Tooltip("Reproducir");
+            playPause.setTooltip(playTip);
+            stop.setTooltip(new Tooltip("Detener y regresar al inicio"));
+            playPause.setOnAction(event -> {
                 if (active.getStatus() == MediaPlayer.Status.PLAYING) active.pause();
                 else active.play();
             });
-            stop.setOnAction(event -> active.stop());
-            active.statusProperty().addListener((obs, before, now) ->
-                    play.setText(now == MediaPlayer.Status.PLAYING
-                            ? "Pausar" : "Reproducir"));
+            stop.setOnAction(event -> {
+                active.stop();
+                if (spectrum != null) spectrum.clear();
+            });
+            active.statusProperty().addListener((obs, before, now) -> {
+                boolean playing = now == MediaPlayer.Status.PLAYING;
+                playPause.setGraphic(new FontIcon(playing ? "fth-pause" : "fth-play"));
+                playTip.setText(playing ? "Pausar" : "Reproducir");
+            });
             Slider seek = new Slider(0, 100, 0);
+            seek.getStyleClass().add("media-timeline-slider");
             HBox.setHgrow(seek, Priority.ALWAYS);
+            Label elapsed = new Label("0:00 / 0:00");
+            elapsed.getStyleClass().add("media-time-label");
             active.currentTimeProperty().addListener((obs, before, now) -> {
-                Duration length = active.getTotalDuration();
-                if (!seek.isValueChanging() && length != null && !length.isUnknown()
-                        && length.toMillis() > 0)
-                    seek.setValue(now.toMillis() / length.toMillis() * 100);
+                Duration total = active.getTotalDuration();
+                if (!seek.isValueChanging() && isUsableDuration(total))
+                    seek.setValue(now.toMillis() / total.toMillis() * 100);
+                elapsed.setText(formatTime(now) + " / " + formatTime(total));
             });
-            seek.setOnMouseReleased(event -> {
-                Duration length = active.getTotalDuration();
-                if (length != null && !length.isUnknown() && length.toMillis() > 0)
-                    active.seek(Duration.millis(length.toMillis() * seek.getValue() / 100));
+            active.totalDurationProperty().addListener((obs, before, now) ->
+                    elapsed.setText(formatTime(active.getCurrentTime())
+                            + " / " + formatTime(now)));
+            seek.valueChangingProperty().addListener((obs, before, now) -> {
+                if (!now) seekPlayer(active, seek.getValue());
             });
-            active.setOnEndOfMedia(() -> { active.stop(); seek.setValue(0); });
+            seek.setOnMouseReleased(event -> seekPlayer(active, seek.getValue()));
+            active.setOnEndOfMedia(() -> {
+                active.stop();
+                seek.setValue(0);
+                if (spectrum != null) spectrum.clear();
+            });
+
+            Label volumeIcon = new Label();
+            volumeIcon.setGraphic(new FontIcon("fth-volume-2"));
+            volumeIcon.setTooltip(new Tooltip("Volumen del reproductor"));
+            Slider volume = new Slider(0, 100, 80);
+            volume.setPrefWidth(75);
+            volume.setMaxWidth(100);
+            volume.setTooltip(new Tooltip("Volumen"));
+            active.setVolume(0.8);
+            volume.valueProperty().addListener((obs, before, now) ->
+                    active.setVolume(now.doubleValue() / 100.0));
             active.setOnError(() -> unsupportedMedia(original, converted));
-            HBox controls = new HBox(9, play, stop, seek);
+            HBox controls = new HBox(10, playPause, stop, seek, elapsed,
+                    volumeIcon, volume);
             controls.getStyleClass().add("media-playback-controls");
             controls.setAlignment(Pos.CENTER_LEFT);
             setBottom(controls);
         } catch (MediaException | IllegalArgumentException problem) {
             unsupportedMedia(original, converted);
         }
+    }
+
+    private static boolean isUsableDuration(Duration duration) {
+        return duration != null && !duration.isUnknown()
+                && !duration.isIndefinite() && duration.toMillis() > 0;
+    }
+
+    private static String formatTime(Duration duration) {
+        if (!isUsableDuration(duration)) return "0:00";
+        long seconds = Math.max(0L, (long)(duration.toMillis() / 1000));
+        return String.format(Locale.ROOT, "%d:%02d", seconds / 60, seconds % 60);
+    }
+
+    private static void seekPlayer(MediaPlayer player, double percent) {
+        Duration duration = player.getTotalDuration();
+        if (isUsableDuration(duration))
+            player.seek(Duration.millis(duration.toMillis() * percent / 100.0));
     }
 
     private void unsupportedMedia(Path original, boolean converted) {
@@ -280,9 +353,14 @@ public final class ReferenceMediaPane extends BorderPane {
 
     private void releasePlayer() {
         if (player != null) {
+            player.setAudioSpectrumListener(null);
             player.stop();
             player.dispose();
             player = null;
+        }
+        if (spectrum != null) {
+            spectrum.dispose();
+            spectrum = null;
         }
     }
 
@@ -309,6 +387,10 @@ public final class ReferenceMediaPane extends BorderPane {
         if (viewport == null) return;
         viewport.zoomPercentProperty().unbindBidirectional(zoomPercent);
         viewport = null;
+    }
+
+    public boolean supportsZoom() {
+        return false == disposed && viewport != null;
     }
 
     public int getZoomPercent() { return zoomPercent.get(); }
