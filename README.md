@@ -27,7 +27,10 @@ Para trabajar normalmente desde IntelliJ IDEA: importar pom.xml como Maven, sele
 - **Doble clic sobre cualquier archivo de texto compatible**: la plantilla se abre directamente. Al escribir, se crea el recorrido virtual necesario, sin alterar la referencia ni impedir la creación manual desde el explorador.
 - **Progreso configurable por categorías** desde el botón **Filtro** de la barra inferior. Solo el código fuente cuenta inicialmente; Markdown, configuración y otros textos son optativos. El porcentaje muestra tres decimales y solo contabiliza caracteres correctos, nunca los imports omitidos.
 - Iconografía transversal de carpetas y lenguajes con Ikonli/Devicons y Feather; controles desplegables con el mismo estilo rectangular.
-- Resaltado inicial por adaptadores de Java, Python, TypeScript, C/C++ y Markdown.
+- Resaltado inicial para Java, Python, JavaScript/TypeScript, C, C++, Go, Ruby, C#, PowerShell, Shell (.sh/.bash/.zsh), CMD (.bat/.cmd) y Markdown.
+- **Modo Turbo opcional**: omite signos de puntuación consecutivos al mecanografiar. Las omisiones no cuentan como aciertos ni modifican la referencia.
+- **Consola plegable** desde Ver → Consola, Alt+F12 o la toolbar. Permite ejecutar explícitamente comandos preconfigurados, leer la salida y detenerlos.
+- **Comandos por proyecto** desde Herramientas → Preferencias → Comandos: múltiples perfiles con nombre, intérprete, instrucción y directorio relativo de trabajo.
 - Vista Markdown alternable entre fuente y renderizado en una misma pestaña.
 - Preferencias rediseñadas con navegación lateral Editor/Ventana/Sonido, vista previa de tipografía, pantalla completa y modo concentración.
 - Scrollbars verticales y horizontales con estilo compartido, compacto y rectangular en toda la aplicación.
@@ -50,3 +53,22 @@ Los paquetes nacen de necesidades del producto: referencia, espacio virtual, tra
 Paquete base: com.mmdev.codetrace. Java 21 / JavaFX 21 / Maven.
 
 La licencia todavía no ha sido decidida.
+
+## Consola y comandos externos
+
+Abre una carpeta de referencia, luego entra a **Herramientas → Preferencias → Comandos**.
+Define varios perfiles si lo necesitas: por ejemplo `Compilar`, `Probar` y `Ejecutar`.
+Cada uno guarda intérprete (CMD, PowerShell o sh), texto del comando y la
+subcarpeta de trabajo relativa al proyecto (`.` por defecto). Guarda el perfil
+y pulsa **Aplicar**. Los perfiles se almacenan fuera del repositorio, bajo
+`~/.codetrace/commands`, en formato binario propio.
+
+Abre **Ver → Consola** (Alt+F12), selecciona el perfil y pulsa **Ejecutar**.
+No se ejecuta nada automáticamente. Puedes plegar la consola o detener
+un proceso en curso.
+
+**Atención:** los comandos se ejecutan en la **carpeta real de referencia**
+y pueden modificar archivos reales. El código que escribiste en la
+reconstrucción virtual no se materializa ni se utiliza para ejecutarlos.
+Trabaja con una copia del repositorio si vas a probar comandos destructivos
+o de despliegue. La ejecución no influye en el porcentaje de mecanografía.

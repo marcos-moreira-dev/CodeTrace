@@ -22,6 +22,8 @@ import javafx.scene.control.Slider;
 import javafx.geometry.Orientation;
 import javafx.stage.Window;
 import com.mmdev.codetrace.ui.PreferencesWindow;
+import com.mmdev.codetrace.commands.ProjectCommandStore;
+import javafx.scene.control.ListView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.event.Event;
@@ -114,6 +116,18 @@ class CodeTraceAppSmokeTest {
                         .lookup(".prefs-opacity-spinner") instanceof Spinner<?>);
                 assertNotNull(preferences.getScene().getRoot().lookup(".prefs-font-choice"));
                 preferences.close();
+                Stage projectPrefs = PreferencesWindow.create(
+                        stage, AppSettings.load(), next -> {}, sample -> true,
+                        root, new ProjectCommandStore(root.resolve("config-cache")), () -> {});
+                projectPrefs.show();
+                var projectNavigation = (ListView<String>) projectPrefs
+                        .getScene().getRoot().lookup(".prefs-navigation");
+                projectNavigation.getSelectionModel().select("Comandos");
+                projectPrefs.getScene().getRoot().applyCss();
+                projectPrefs.getScene().getRoot().layout();
+                assertNotNull(projectPrefs.getScene().getRoot()
+                        .lookup(".command-settings-pane"));
+                projectPrefs.close();
                 TypingEditor editor = (TypingEditor) tabPane.getTabs().getFirst().getContent();
                 Event.fireEvent(editor, new KeyEvent(KeyEvent.KEY_TYPED,
                         "c", "c", KeyCode.UNDEFINED, false, false, false, false));
@@ -172,6 +186,8 @@ class CodeTraceAppSmokeTest {
                 fileTree.collapseAll();
                 fileTree.expandAll();
                 assertTrue(fileTree.getRoot().isExpanded());
+                assertNotNull(stage.getScene().getRoot().lookup(".command-console-pane"));
+                assertNotNull(stage.getScene().getRoot().lookup(".turbo-toggle"));
                 MenuButton filter = (MenuButton) stage.getScene().getRoot()
                         .lookup(".status-progress-filter");
                 assertNotNull(filter);

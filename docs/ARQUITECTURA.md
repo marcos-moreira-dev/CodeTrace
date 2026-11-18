@@ -36,3 +36,12 @@ El estilo común JavaFX utiliza fondo claro, azul acero, gris y verde, bordes re
 ## Pendiente
 
 Resaltadores modulares, editor de texto con selección/deshacer avanzado, vista Markdown, comandos externos, iconografía instalada y recuperación guiada de cambios de referencia. No se implementará un IDE completo ni un asistente de programación.
+
+## Consola / comandos
+`commands/ProjectCommandStore` persiste configuraciones binarias versionadas
+por ruta del proyecto fuera de la referencia. `CommandRunner` ejecuta un
+proceso explícitamente solicitado en un hilo daemon, informa salida acotada
+y valida que el directorio de trabajo permanezca dentro de la carpeta raíz.
+`ui/CommandSettingsPane` gestiona los comandos desde Preferencias;
+`ui/CommandConsolePane` muestra salida y ofrece ejecución/detención.
+Ningún comando se ejecuta durante la apertura de archivos o sesiones.

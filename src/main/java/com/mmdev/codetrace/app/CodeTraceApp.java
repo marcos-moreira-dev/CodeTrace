@@ -15,6 +15,8 @@ import com.mmdev.codetrace.ui.ToolbarIcons;
 import com.mmdev.codetrace.ui.SymbolPalette;
 import com.mmdev.codetrace.ui.FileTypeIcons;
 import com.mmdev.codetrace.ui.EditorZoomControl;
+import com.mmdev.codetrace.ui.CommandConsolePane;
+import com.mmdev.codetrace.commands.ProjectCommandStore;
 import com.mmdev.codetrace.symbols.SymbolCatalog.Layout;
 import com.mmdev.codetrace.sound.TypingSounds;
 import com.mmdev.codetrace.workspace.VirtualWorkspace;
@@ -82,6 +84,10 @@ public final class CodeTraceApp extends Application {
     private final ReferenceTree tree = new ReferenceTree(
             this::openForPractice, this::onWorkspaceChanged, this::setStatus);
     private final VBox sidebar = new VBox();
+    private final ProjectCommandStore commandStore = new ProjectCommandStore();
+    private final CommandConsolePane consolePane =
+            new CommandConsolePane(() -> setConsoleVisible(false));
+    private CheckMenuItem showConsole;
     private String progressFolder = "";
     private CheckBox onlySelectedFolder;
     private boolean syncingFolderScope;
@@ -174,7 +180,12 @@ public final class CodeTraceApp extends Application {
                 (observed, oldValue, enabled) -> stage.setFullScreen(enabled));
         stage.fullScreenProperty().addListener(
                 (observed, oldValue, enabled) -> fullscreen.setSelected(enabled));
-        Menu viewMenu = new Menu("Ver", null, explorerToggle, focus, fullscreen);
+        showConsole = new CheckMenuItem("Consola");
+        showConsole.setAccelerator(new KeyCodeCombination(
+                KeyCode.F12, KeyCombination.ALT_DOWN));
+        showConsole.setOnAction(event -> setConsoleVisible(showConsole.isSelected()));
+        Menu viewMenu = new Menu("Ver", null,
+                explorerToggle, showConsole, focus, fullscreen);
 
         skipImportsMenu.setOnAction(event -> skipImports());
         turboMenu = new CheckMenuItem("Modo Turbo · omitir símbolos");
@@ -186,7 +197,8 @@ public final class CodeTraceApp extends Application {
         Menu helpMenu = new Menu("Ayuda", null, about);
         MenuItem preferences = new MenuItem("Preferencias...");
         preferences.setOnAction(event -> PreferencesWindow.open(
-                stage, settings, this::applySettings, typingSounds::preview));
+                stage, settings, this::applySettings, typingSounds::preview,
+                reference, commandStore, this::refreshCommandPresets));
         Menu toolsMenu = new Menu("Herramientas", null, preferences);
 
         MenuBar menu = new MenuBar(
@@ -213,10 +225,15 @@ public final class CodeTraceApp extends Application {
         turboToggle.setTooltip(new Tooltip("Omitir automáticamente puntuación y símbolos al teclear"));
         turboToggle.setSelected(settings.turboMode());
         turboToggle.setOnAction(event -> setTurboMode(turboToggle.isSelected()));
+        Button consoleButton = new Button("Consola", new FontIcon("fth-terminal"));
+        consoleButton.getStyleClass().add("toolbar-action");
+        consoleButton.setTooltip(new Tooltip("Mostrar u ocultar la consola de comandos"));
+        consoleButton.setOnAction(event -> setConsoleVisible(!consolePane.isVisible()));
         ToolBar toolbar = new ToolBar(openButton, saveButton,
                 new Separator(Orientation.VERTICAL), refreshButton,
                 new Separator(Orientation.VERTICAL), skipImportsButton,
-                new Separator(Orientation.VERTICAL), symbols, turboToggle);
+                new Separator(Orientation.VERTICAL), symbols, turboToggle,
+                new Separator(Orientation.VERTICAL), consoleButton);
         top.getChildren().addAll(menu, toolbar);
         root.setTop(top);
 
@@ -287,7 +304,9 @@ public final class CodeTraceApp extends Application {
         } else {
             split.setDividerPositions(explorerRatio);
         }
-        root.setCenter(split);
+        VBox workspaceArea = new VBox(split, consolePane);
+        VBox.setVgrow(split, Priority.ALWAYS);
+        root.setCenter(workspaceArea);
 
         fileInfo.getStyleClass().add("progress-info");
         fileProgress.getStyleClass().add("typing-progress");
@@ -326,10 +345,29 @@ public final class CodeTraceApp extends Application {
         stage.setOnCloseRequest(event -> {
             if (!confirmDiscard()) {
                 event.consume();
+            } else {
+                consolePane.stop();
             }
         });
         refreshMetrics();
         stage.show();
+    }
+
+    private void setConsoleVisible(boolean visible) {
+        consolePane.setVisible(visible);
+        if (showConsole != null) showConsole.setSelected(visible);
+    }
+
+    private void refreshCommandPresets() {
+        if (reference == null) {
+            consolePane.setPresets(java.util.List.of());
+            return;
+        }
+        try {
+            consolePane.setPresets(commandStore.load(reference));
+        } catch (IOException error) {
+            setStatus("No se pudieron leer los comandos del proyecto.");
+        }
     }
 
     private void chooseReference() {
@@ -355,6 +393,8 @@ public final class CodeTraceApp extends Application {
             reference = chosen.toPath().toAbsolutePath().normalize();
             tree.setWorkspace(workspace);
             tree.open(reference);
+            consolePane.setProject(reference);
+            refreshCommandPresets();
             indexReference();
             refreshButton.setDisable(false);
             setStatus("Referencia: " + reference);
@@ -648,6 +688,8 @@ public final class CodeTraceApp extends Application {
                 restoredReference = replacement.toPath().toAbsolutePath().normalize();
             }
             reference = restoredReference;
+            consolePane.setProject(reference);
+            refreshCommandPresets();
             progressFolder = "";
             workspace = data.workspace();
             sessions = new LinkedHashMap<>(data.sessions());
