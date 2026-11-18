@@ -11,7 +11,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.control.ListCell;
 import org.kordamp.ikonli.javafx.FontIcon;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -39,27 +38,9 @@ public final class CommandSettingsPane extends VBox {
 
         list.setItems(profiles);
         list.getStyleClass().add("command-preset-list");
-        list.setCellFactory(view -> new ListCell<>() {
-            @Override protected void updateItem(Preset preset, boolean empty) {
-                super.updateItem(preset, empty);
-                setText(null);
-                if (empty || preset == null) {
-                    setGraphic(null);
-                    return;
-                }
-                Label name = new Label(preset.name());
-                name.getStyleClass().add("command-preset-name");
-                Label detail = new Label(preset.shell().label());
-                detail.getStyleClass().add("command-preset-detail");
-                VBox labels = new VBox(2, name, detail);
-                FontIcon terminal = new FontIcon("fth-terminal");
-                terminal.setIconSize(16);
-                HBox row = new HBox(8, terminal, labels);
-                row.setAlignment(Pos.CENTER_LEFT);
-                row.getStyleClass().add("command-preset-row");
-                setGraphic(row);
-            }
-        });
+        list.setCellFactory(view -> new RecordListCell<>(preset ->
+                new RecordListCell.Content(preset.name(), preset.shell().label(),
+                        null, "fth-terminal")));
         list.setPrefWidth(205);
         list.setMinWidth(190);
         list.setMaxWidth(225);
