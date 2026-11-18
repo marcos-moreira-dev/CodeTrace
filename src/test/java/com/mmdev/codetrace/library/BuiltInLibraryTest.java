@@ -100,7 +100,8 @@ class BuiltInLibraryTest {
                         "Missing version in " + pack.id() + "/" + relative);
                 assertTrue(firstLines.contains("compilar:")
                         || firstLines.contains("comprobar")
-                        || firstLines.contains("ejecutar:"),
+                        || firstLines.contains("ejecutar:")
+                        || firstLines.contains("tipos/sintaxis: tsc "),
                         "Missing CLI command in " + pack.id() + "/" + relative);
             }
         }
