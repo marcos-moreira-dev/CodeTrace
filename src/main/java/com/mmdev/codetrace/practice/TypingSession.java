@@ -60,13 +60,13 @@ public final class TypingSession {
         int end = size();
         while (end > 0 && "\n".equals(reference.get(end - 1))) end--;
         if (end == 0) return false; // Empty files have no typing exercise.
-        boolean atLeastOneTyped = false;
         for (int i = 0; i < end; i++) {
             State result = state(i);
             if (result == State.PENDING || result == State.INCORRECT) return false;
-            if (result == State.CORRECT) atLeastOneTyped = true;
         }
-        return atLeastOneTyped;
+        // An exercise containing only deliberate omissions is resolved too,
+        // but contributes zero correctly-typed characters to progress.
+        return true;
     }
 
     public int resolvedCount() {
@@ -103,10 +103,8 @@ public final class TypingSession {
     public void type(String committedText) {
         Objects.requireNonNull(committedText);
         for (String character : graphemes(normalizeLineEndings(committedText))) {
-            if (caret >= size()) {
-                return;
-            }
-            // A combining mark received after its base must not consume a new slot.
+            // A combining mark received after its base must not consume a new slot,
+            // including when the base occupies the final reference position.
             int cp = character.codePointAt(0);
             int kind = Character.getType(cp);
             if (caret > 0 && (kind == Character.NON_SPACING_MARK
@@ -117,6 +115,7 @@ public final class TypingSession {
                 entered.set(caret - 1, previous + character);
                 continue;
             }
+            if (caret >= size()) return;
             entered.set(caret, character);
             skipped.clear(caret);
             caret++;
