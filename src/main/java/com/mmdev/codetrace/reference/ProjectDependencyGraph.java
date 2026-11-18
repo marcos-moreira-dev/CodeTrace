@@ -1,0 +1,198 @@
+package com.mmdev.codetrace.reference;
+
+import java.io.IOException;
+import java.nio.file.*;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.util.*;
+import java.util.function.BooleanSupplier;
+import java.util.regex.*;
+
+/**
+ * Scope-limited, read-only importer. Only links that can be resolved to
+ * actual local files/folders are shown; no false external dependency nodes.
+ */
+public final class ProjectDependencyGraph {
+    public record Edge(String source, String target, String relation) {}
+    public record Graph(String folder, List<String> nodes, List<Edge> edges,
+                        int inspected, boolean truncated) {}
+    private record ImportRef(String target, boolean dotted, String kind) {}
+    private static final Set<String> SKIP = Set.of(".git", "node_modules",
+            "target", "build", "dist", ".idea", ".venv", "__pycache__");
+    private static final Set<String> CODE = Set.of("java", "kt", "kts", "py",
+            "js", "jsx", "ts", "tsx", "c", "cpp", "h", "hpp", "cc", "hh",
+            "cs", "go", "rb", "ps1", "psm1", "sh", "bash", "cmd", "bat");
+    private static final List<String> ENDINGS = List.of("", ".java", ".kt",
+            ".kts", ".py", ".ts", ".tsx", ".js", ".jsx", ".h", ".hpp",
+            ".c", ".cpp", ".cs", ".rb", ".sh", ".ps1", ".psm1", ".cmd",
+            ".bat", "/__init__.py", "/index.ts", "/index.js");
+    private ProjectDependencyGraph() {}
+
+    public static Graph analyze(Path project, Path selected, BooleanSupplier cancelled)
+            throws IOException {
+        Path root = project.toRealPath(), folder = selected.toRealPath();
+        if (!Files.isDirectory(folder) || !folder.startsWith(root))
+            throw new IOException("Selecciona una carpeta de la referencia actual.");
+        List<Path> source = new ArrayList<>();
+        boolean[] limit = {false};
+        Files.walkFileTree(folder, new SimpleFileVisitor<>() {
+            @Override public FileVisitResult preVisitDirectory(Path dir,
+                    BasicFileAttributes attrs) {
+                if (cancelled.getAsBoolean()) return FileVisitResult.TERMINATE;
+                if (!dir.equals(folder) && (Files.isSymbolicLink(dir)
+                        || SKIP.contains(dir.getFileName().toString())))
+                    return FileVisitResult.SKIP_SUBTREE;
+                return FileVisitResult.CONTINUE;
+            }
+            @Override public FileVisitResult visitFile(Path file,
+                    BasicFileAttributes attrs) {
+                if (cancelled.getAsBoolean()) return FileVisitResult.TERMINATE;
+                if (attrs.isRegularFile() && !Files.isSymbolicLink(file)
+                        && CODE.contains(ext(file))) {
+                    if (source.size() >= 1200) { limit[0] = true; return FileVisitResult.TERMINATE; }
+                    source.add(file);
+                }
+                return FileVisitResult.CONTINUE;
+            }
+            @Override public FileVisitResult visitFileFailed(Path file, IOException ex) {
+                return FileVisitResult.CONTINUE;
+            }
+        });
+        source.sort(Comparator.comparing(p -> relative(root, p)));
+        Set<String> known = new HashSet<>();
+        for (Path file : source) known.add(relative(root, file));
+        String goModule = "";
+        try {
+            Matcher m = Pattern.compile("(?m)^\\s*module\\s+(\\S+)")
+                    .matcher(Files.readString(root.resolve("go.mod")));
+            if (m.find()) goModule = m.group(1);
+        } catch (IOException ignored) {}
+        Set<Edge> edges = new LinkedHashSet<>();
+        for (Path file : source) {
+            if (cancelled.getAsBoolean() || edges.size() >= 1200) {
+                limit[0] = true; break;
+            }
+            TextPreview.Result data;
+            try { data = TextPreview.load(file); }
+            catch (IOException | SecurityException error) { continue; }
+            if (!data.readable() || data.content().length() > 500_000) continue;
+            String from = relative(root, file);
+            for (ImportRef imp : parse(file, data.content())) {
+                String target = resolve(root, file, known, imp, goModule);
+                if (target != null && !target.equals(from))
+                    edges.add(new Edge(from, target, imp.kind()));
+                if (cancelled.getAsBoolean() || edges.size() >= 1200) break;
+            }
+        }
+        Set<String> nodes = new TreeSet<>();
+        for (Edge edge : edges) {
+            nodes.add(edge.source());
+            nodes.add(edge.target());
+        }
+        return new Graph(relative(root, folder), List.copyOf(nodes),
+                edges.stream().sorted(Comparator.comparing(Edge::source)
+                        .thenComparing(Edge::target)).toList(), source.size(), limit[0]);
+    }
+
+    private static String ext(Path path) {
+        String name = path.getFileName().toString().toLowerCase(Locale.ROOT);
+        int dot = name.lastIndexOf('.');
+        return dot < 0 ? "" : name.substring(dot + 1);
+    }
+    private static String relative(Path root, Path file) {
+        return root.relativize(file).toString().replace('\\', '/');
+    }
+    private static void grab(String source, String expression, boolean dotted,
+                             String label, List<ImportRef> out) {
+        Matcher found = Pattern.compile(expression).matcher(source);
+        while (found.find()) out.add(new ImportRef(found.group(1).trim(), dotted, label));
+    }
+    private static List<ImportRef> parse(Path file, String text) {
+        List<ImportRef> refs = new ArrayList<>();
+        switch (ext(file)) {
+            case "java", "kt", "kts", "cs" ->
+                    grab(text, "(?m)^\\s*(?:import|using)\\s+(?:static\\s+)?([\\w.]+)",
+                            true, "import", refs);
+            case "py" -> {
+                grab(text, "(?m)^\\s*import\\s+([\\w.]+)", true, "import", refs);
+                grab(text, "(?m)^\\s*from\\s+([\\w.]+)\\s+import", true, "from", refs);
+            }
+            case "js", "jsx", "ts", "tsx" -> {
+                grab(text, "\\bfrom\\s*['\"]([^'\"]+)['\"]", false, "import", refs);
+                grab(text, "\\bimport\\s*['\"]([^'\"]+)['\"]", false, "import", refs);
+                grab(text, "\\b(?:require|import)\\s*\\(\\s*['\"]([^'\"]+)['\"]",
+                        false, "require/import", refs);
+            }
+            case "c", "cpp", "cc", "h", "hpp", "hh" ->
+                    grab(text, "(?m)^\\s*#\\s*include\\s*\"([^\"]+)\"",
+                            false, "include", refs);
+            case "rb" ->
+                    grab(text, "\\brequire_relative\\s*\\(?\\s*['\"]([^'\"]+)['\"]",
+                            false, "require_relative", refs);
+            case "sh", "bash", "ps1", "psm1" -> {
+                grab(text, "(?m)^\\s*source\\s+['\"]?([.][^\\s'\";]+)",
+                        false, "source", refs);
+                grab(text, "(?m)^\\s*\\.\\s+['\"]?([.][^\\s'\";]+)",
+                        false, "source", refs);
+                grab(text, "(?m)^\\s*Import-Module\\s+['\"]?([.][^\\s'\";]+)",
+                        false, "Import-Module", refs);
+            }
+            case "cmd", "bat" ->
+                    grab(text, "(?im)^\\s*call\\s+\"?([^\"\\r\\n]+\\.(?:cmd|bat))",
+                            false, "call", refs);
+            case "go" -> {
+                Matcher block = Pattern.compile("(?m)^\\s*import\\s*(?:\\(([\\s\\S]*?)\\)|\"([^\"]+)\")")
+                        .matcher(text);
+                while (block.find()) {
+                    if (block.group(2) != null)
+                        refs.add(new ImportRef(block.group(2), false, "go-import"));
+                    else {
+                        Matcher entries = Pattern.compile("\"([^\"]+)\"")
+                                .matcher(block.group(1));
+                        while (entries.find())
+                            refs.add(new ImportRef(entries.group(1), false, "go-import"));
+                    }
+                }
+            }
+            default -> {}
+        }
+        return refs;
+    }
+    private static String resolve(Path root, Path from, Set<String> known,
+                                  ImportRef ref, String goModule) {
+        String requested = ref.target().replace('\\', '/').strip();
+        if (requested.isEmpty() || requested.contains("$" + "{")
+                || requested.contains("$(")) return null;
+        if (ref.kind().equals("go-import")) {
+            if (goModule.isEmpty() || !requested.startsWith(goModule + "/")) return null;
+            String dir = requested.substring(goModule.length() + 1);
+            return known.stream().anyMatch(p -> p.startsWith(dir + "/") && p.endsWith(".go"))
+                    ? dir : null; // Go imports packages, not individual files.
+        }
+        if (ref.dotted()) return findUnique(known, requested.replace('.', '/'));
+        if (!ref.kind().equals("include") && !ref.kind().equals("call")
+                && !requested.startsWith(".")) return null;
+        Path target;
+        try { target = from.getParent().resolve(requested).normalize(); }
+        catch (RuntimeException error) { return null; }
+        if (!target.startsWith(root)) return null;
+        String relative = relative(root, target);
+        for (String extension : ENDINGS) {
+            if (known.contains(relative + extension)) return relative + extension;
+        }
+        // For #include "common.h" inside a project-wide include/ folder.
+        if (!requested.contains("/")) return findUnique(known, requested);
+        return null;
+    }
+    private static String findUnique(Set<String> files, String candidate) {
+        String result = null;
+        for (String ending : ENDINGS) {
+            for (String path : files) {
+                if (path.equals(candidate + ending) || path.endsWith("/" + candidate + ending)) {
+                    if (result != null && !result.equals(path)) return null;
+                    result = path;
+                }
+            }
+        }
+        return result;
+    }
+}
