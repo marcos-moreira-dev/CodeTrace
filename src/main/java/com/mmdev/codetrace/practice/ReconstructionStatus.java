@@ -1,6 +1,7 @@
 package com.mmdev.codetrace.practice;
 
 import com.mmdev.codetrace.reference.ProgressScope;
+import com.mmdev.codetrace.reference.ProgressExclusions;
 import com.mmdev.codetrace.reference.ReferenceCatalogue;
 import com.mmdev.codetrace.workspace.VirtualWorkspace;
 import java.util.HashMap;
@@ -24,10 +25,19 @@ public final class ReconstructionStatus {
     public static Map<String, State> calculate(VirtualWorkspace workspace,
             Map<String, TypingSession> sessions, Map<String, String> hashes,
             ReferenceCatalogue.Snapshot catalog, ProgressScope scope) {
+        return calculate(workspace, sessions, hashes, catalog, scope,
+                ProgressExclusions.empty());
+    }
+
+    public static Map<String, State> calculate(VirtualWorkspace workspace,
+            Map<String, TypingSession> sessions, Map<String, String> hashes,
+            ReferenceCatalogue.Snapshot catalog, ProgressScope scope,
+            ProgressExclusions exclusions) {
         Objects.requireNonNull(workspace);
         Objects.requireNonNull(sessions);
         Objects.requireNonNull(hashes);
         Objects.requireNonNull(scope);
+        Objects.requireNonNull(exclusions);
         Map<String, State> state = new HashMap<>();
         for (VirtualWorkspace.Entry entry : workspace.entries()) {
             state.put(entry.path(), State.CREATED);
@@ -58,6 +68,7 @@ public final class ReconstructionStatus {
             if (complete) state.put(path, State.COMPLETED);
 
             if (!info.typeable() || info.typeableUnits() == 0
+                    || exclusions.excludes(path)
                     || !scope.includes(ProgressScope.classify(path))) continue;
             String parent = parent(path);
             while (true) {

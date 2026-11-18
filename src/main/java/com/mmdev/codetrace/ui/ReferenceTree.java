@@ -5,6 +5,10 @@ import com.mmdev.codetrace.reference.ReferenceTreeIndex;
 import com.mmdev.codetrace.reference.PracticeEligibility;
 import com.mmdev.codetrace.practice.ReconstructionStatus.State;
 import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.function.BiConsumer;
+import org.kordamp.ikonli.javafx.FontIcon;
+import javafx.scene.control.CheckMenuItem;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -56,6 +60,9 @@ public final class ReferenceTree extends TreeView<Path> {
     private String clipboard;
     private boolean cut;
     private Consumer<String> onProgressFolder = folder -> {};
+    private Predicate<String> excluded = folder -> false;
+    private Predicate<String> explicitlyExcluded = folder -> false;
+    private BiConsumer<String, Boolean> onExcludedChanged = (folder, value) -> {};
     private Consumer<Boolean> onBusyChange = busy -> {};
     private ReferenceTreeIndex index;
     private Function<String, State> statusLookup = ignored -> State.PENDING;
@@ -83,6 +90,7 @@ public final class ReferenceTree extends TreeView<Path> {
                 }
                 String relative = relative(path);
                 boolean folder = isFolder(path);
+                boolean isExcluded = excluded.test(relative);
                 boolean practiceable = folder
                         ? (index == null || index.hasWorkableDescendant(relative))
                         : PracticeEligibility.supports(path);
@@ -103,12 +111,18 @@ public final class ReferenceTree extends TreeView<Path> {
                 nameLabel.getStyleClass().add("reference-name");
                 if (state == State.PENDING)
                     nameLabel.getStyleClass().add("reference-pending-name");
-                nameLabel.setTextFill(created ? Color.web("#263747")
-                        : Color.web("#667784"));
+                nameLabel.setTextFill(isExcluded ? Color.web("#758997")
+                        : created ? Color.web("#263747") : Color.web("#667784"));
                 nameLabel.setMinWidth(javafx.scene.layout.Region.USE_PREF_SIZE);
                 HBox graphic = new HBox(6);
                 graphic.getChildren().add(FileTypeIcons.forPath(path, folder));
                 if (badge != null) graphic.getChildren().add(badge);
+                if (folder && isExcluded) {
+                    FontIcon excludedIcon = new FontIcon("fth-eye-off");
+                    excludedIcon.setIconSize(14);
+                    excludedIcon.setIconColor(Color.web("#7A8B98"));
+                    graphic.getChildren().add(excludedIcon);
+                }
                 graphic.getChildren().add(nameLabel);
                 graphic.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
                 graphic.getStyleClass().add("reference-tree-row");
@@ -128,6 +142,7 @@ public final class ReferenceTree extends TreeView<Path> {
                     case CREATED -> "Creado virtualmente · transcripción pendiente";
                     case COMPLETED -> "Ejercicio terminado";
                 };
+                if (isExcluded) status += "\nExcluida del progreso; sigue disponible para consulta";
                 if (fileCount >= 0) {
                     status += "\n" + fileCount + (fileCount == 1
                             ? " archivo de referencia, incluidas subcarpetas"
@@ -157,6 +172,15 @@ public final class ReferenceTree extends TreeView<Path> {
 
     public void setOnProgressFolder(Consumer<String> listener) {
         onProgressFolder = listener == null ? folder -> {} : listener;
+    }
+
+    public void setExclusionHandlers(Predicate<String> excluded,
+            Predicate<String> explicitlyExcluded,
+            BiConsumer<String, Boolean> onChange) {
+        this.excluded = excluded;
+        this.explicitlyExcluded = explicitlyExcluded;
+        this.onExcludedChanged = onChange;
+        refreshStatuses();
     }
 
     public void setOnBusyChange(Consumer<Boolean> listener) {
@@ -390,6 +414,14 @@ public final class ReferenceTree extends TreeView<Path> {
                         : "Progreso: solo esta carpeta");
                 scope.setOnAction(event -> onProgressFolder.accept(relative));
                 actions.add(scope);
+                if (!relative.isEmpty()) {
+                    CheckMenuItem excludedFolder = new CheckMenuItem(
+                            "Excluir carpeta del progreso");
+                    excludedFolder.setSelected(explicitlyExcluded.test(relative));
+                    excludedFolder.setOnAction(event ->
+                            onExcludedChanged.accept(relative, excludedFolder.isSelected()));
+                    actions.add(excludedFolder);
+                }
             }
         } else if (!folder) {
             if (!created && index != null && index.isWorkable(relative)) {

@@ -7,6 +7,7 @@ import com.mmdev.codetrace.practice.PracticeMode;
 import com.mmdev.codetrace.progress.SessionArchive;
 import com.mmdev.codetrace.reference.ReferenceCatalogue;
 import com.mmdev.codetrace.reference.ProgressScope;
+import com.mmdev.codetrace.reference.ProgressExclusions;
 import com.mmdev.codetrace.reference.ReferenceFingerprint;
 import com.mmdev.codetrace.reference.TextPreview;
 import com.mmdev.codetrace.ui.ReferenceTree;
@@ -120,6 +121,7 @@ public final class CodeTraceApp extends Application {
     private Map<String, State> reconstructionStates = Map.of();
     private ReferenceCatalogue.Snapshot catalogue;
     private ProgressScope progressScope = ProgressScope.load();
+    private ProgressExclusions exclusions = ProgressExclusions.empty();
     private PracticeMode practiceMode = PracticeMode.RECONSTRUCTION;
     private RadioMenuItem manualModeMenu;
     private RadioMenuItem directModeMenu;
@@ -327,6 +329,20 @@ public final class CodeTraceApp extends Application {
         header.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
         sidebar.getChildren().addAll(header, tree);
         tree.setOnProgressFolder(this::setProgressFolder);
+        tree.setExclusionHandlers(folder -> exclusions.excludes(folder),
+                folder -> exclusions.explicitlyExcludes(folder), (folder, exclude) -> {
+                    try {
+                        exclusions = exclusions.withFolder(folder, exclude);
+                        exclusions.save(reference);
+                        refreshReconstructionStatuses();
+                        refreshMetrics();
+                        setStatus(exclude ? "Carpeta excluida del progreso: " + folder
+                                : "Carpeta incluida en el progreso: " + folder);
+                    } catch (IllegalArgumentException problem) {
+                        ProductDialogs.error(stage, "Exclusiones del proyecto",
+                                problem.getMessage());
+                    }
+                });
         tree.setOnBusyChange(busy -> {
             treeActivity.setVisible(busy);
             expand.setDisable(busy);
@@ -506,6 +522,7 @@ public final class CodeTraceApp extends Application {
         dirty = false;
         clearOpenTabs();
         reference = folder;
+        exclusions = ProgressExclusions.load(reference);
         selectPracticeMode(PracticeMode.forProject(reference));
         tree.setWorkspace(workspace);
         tree.open(reference);
@@ -779,7 +796,7 @@ public final class CodeTraceApp extends Application {
 
     private void refreshReconstructionStatuses() {
         reconstructionStates = ReconstructionStatus.calculate(
-                workspace, sessions, hashes, catalogue, progressScope);
+                workspace, sessions, hashes, catalogue, progressScope, exclusions);
         tree.refreshStatuses();
     }
 
@@ -821,11 +838,12 @@ public final class CodeTraceApp extends Application {
             fileProgress.setVisible(false);
             return;
         }
-        long total = catalogue.expectedUnits(progressScope, progressFolder);
+        long total = catalogue.expectedUnits(progressScope, progressFolder, exclusions);
         long resolved = catalogue.resolvedUnits(
-                workspace, sessions, hashes, progressScope, progressFolder);
+                workspace, sessions, hashes, progressScope, progressFolder, exclusions);
         double ratio = total == 0 ? 0.0 : (double) resolved / total;
-        long count = catalogue.includedFileCount(progressScope, progressFolder);
+        long count = catalogue.includedFileCount(
+                progressScope, progressFolder, exclusions);
         String area = progressFolder.isEmpty() ? "Proyecto" : "Carpeta";
         projectInfo.setText(count == 0 || total == 0
                 ? area + " · sin código contabilizable"
@@ -946,6 +964,7 @@ public final class CodeTraceApp extends Application {
             }
             referenceRequest++;
             reference = restoredReference;
+            exclusions = ProgressExclusions.load(reference);
             selectPracticeMode(data.practiceMode());
             consolePane.setProject(reference);
             refreshCommandPresets();

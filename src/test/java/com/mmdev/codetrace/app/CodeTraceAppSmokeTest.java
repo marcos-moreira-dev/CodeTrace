@@ -322,6 +322,8 @@ class CodeTraceAppSmokeTest {
                 assertFalse(createdFolderMenu.getItems().stream().anyMatch(item ->
                         item.getText() != null && java.util.Set.of("Cambiar nombre...",
                                 "Copiar", "Cortar", "Eliminar").contains(item.getText())));
+                assertTrue(createdFolderMenu.getItems().stream().anyMatch(item ->
+                        "Excluir carpeta del progreso".equals(item.getText())));
                 assertFalse(Files.size(nestedFile) == 0,
                         "The real source must never be modified by virtual creation");
                 // Direct mode bypasses manual file/folder creation only at

@@ -42,9 +42,15 @@ public final class ReferenceCatalogue {
         }
 
         public long expectedUnits(ProgressScope scope, String folder) {
+            return expectedUnits(scope, folder, ProgressExclusions.empty());
+        }
+
+        public long expectedUnits(ProgressScope scope, String folder,
+                                  ProgressExclusions exclusions) {
             return files.entrySet().stream()
                     .filter(pair -> pair.getValue().typeable()
                             && inFolder(pair.getKey(), folder)
+                            && !exclusions.excludes(pair.getKey())
                             && scope.includes(ProgressScope.classify(pair.getKey())))
                     .mapToLong(pair -> pair.getValue().typeableUnits())
                     .sum();
@@ -55,9 +61,15 @@ public final class ReferenceCatalogue {
         }
 
         public long includedFileCount(ProgressScope scope, String folder) {
+            return includedFileCount(scope, folder, ProgressExclusions.empty());
+        }
+
+        public long includedFileCount(ProgressScope scope, String folder,
+                                      ProgressExclusions exclusions) {
             return files.entrySet().stream()
                     .filter(pair -> pair.getValue().typeable()
                             && inFolder(pair.getKey(), folder)
+                            && !exclusions.excludes(pair.getKey())
                             && scope.includes(ProgressScope.classify(pair.getKey())))
                     .count();
         }
@@ -84,10 +96,20 @@ public final class ReferenceCatalogue {
                                   Map<String, TypingSession> typing,
                                   Map<String, String> originalHashes,
                                   ProgressScope scope, String folder) {
+            return resolvedUnits(workspace, typing, originalHashes, scope, folder,
+                    ProgressExclusions.empty());
+        }
+
+        public long resolvedUnits(VirtualWorkspace workspace,
+                                  Map<String, TypingSession> typing,
+                                  Map<String, String> originalHashes,
+                                  ProgressScope scope, String folder,
+                                  ProgressExclusions exclusions) {
             long result = 0;
             for (var pair : files.entrySet()) {
                 FileInfo info = pair.getValue();
                 if (!info.typeable() || !inFolder(pair.getKey(), folder)
+                        || exclusions.excludes(pair.getKey())
                         || !scope.includes(ProgressScope.classify(pair.getKey()))) {
                     continue;
                 }

@@ -80,6 +80,28 @@ class ReferenceCatalogueTest {
     }
 
     @Test
+    void exclusionsRemoveWholeSubtreesFromAllProgressMetrics() throws Exception {
+        Files.createDirectories(folder.resolve("src/generated"));
+        Files.writeString(folder.resolve("src/Main.java"), "ab");
+        Files.writeString(folder.resolve("src/generated/Generated.java"), "cdef");
+        var index = ReferenceCatalogue.scan(folder);
+        var ex = ProgressExclusions.empty().withFolder("src/generated", true);
+        assertEquals(6, index.expectedUnits(ProgressScope.defaults(), "src"));
+        assertEquals(2, index.expectedUnits(ProgressScope.defaults(), "src", ex));
+        assertEquals(1, index.includedFileCount(ProgressScope.defaults(), "src", ex));
+        assertEquals(0, index.expectedUnits(
+                ProgressScope.defaults(), "src/generated", ex));
+        var virtual = new VirtualWorkspace();
+        virtual.ensureFile("src/Main.java");
+        var typed = new TypingSession("ab");
+        typed.type("ab");
+        assertEquals(2, index.resolvedUnits(virtual,
+                Map.of("src/Main.java", typed),
+                Map.of("src/Main.java", index.files().get("src/Main.java").sha256()),
+                ProgressScope.defaults(), "src", ex));
+    }
+
+    @Test
     void emptyTextFileCompletesWhenCreated() throws Exception {
         Files.writeString(folder.resolve("empty.txt"), "");
         var index = ReferenceCatalogue.scan(folder);
