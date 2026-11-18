@@ -178,6 +178,9 @@ public final class MarkdownRenderer {
             for (int i = 0; i < attrs.getLength(); i++) {
                 Node attribute = attrs.item(i);
                 String attrName = attribute.getNodeName().toLowerCase(Locale.ROOT);
+                // Namespace declarations identify the SVG vocabulary; they are
+                // not resource fetches (their values are ordinarily HTTP URIs).
+                if (attrName.equals("xmlns") || attrName.startsWith("xmlns:")) continue;
                 String value = attribute.getNodeValue().toLowerCase(Locale.ROOT);
                 if (attrName.startsWith("on") || attrName.endsWith(":href")
                         || attrName.equals("href") || value.contains("url(")
