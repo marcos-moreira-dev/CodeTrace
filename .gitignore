@@ -14,3 +14,7 @@ Thumbs.db
 
 # Local diagnostic bundles and session-specific toolchains
 reports/
+
+# Generated Windows application and optional third-party binaries
+dist/
+third_party/ffmpeg/bin/
