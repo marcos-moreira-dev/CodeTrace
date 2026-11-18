@@ -819,3 +819,18 @@
     -fx-font-size: 9px;
     -fx-text-fill: #334f63;
 }
+
+
+/* Explorer navigation: three compact rows that remain usable when docked narrow. */
+.tree-search-row { -fx-padding: 0 8 4 8; -fx-alignment: center-left; }
+.tree-name-search {
+    -fx-background-radius: 0; -fx-border-radius: 0;
+    -fx-background-color: white; -fx-border-color: #a9b8c4;
+    -fx-font-size: 11px; -fx-pref-height: 26px; -fx-min-height: 26px;
+}
+.tree-name-search:focused { -fx-border-color: #426b8c; }
+.tree-search-clear { -fx-min-width: 25px; -fx-pref-width: 25px; -fx-padding: 3 4; }
+.tree-options-row { -fx-padding: 2 8 6 8; -fx-alignment: center-left; }
+.tree-options-row .check-box { -fx-font-size: 10px; -fx-text-fill: #455b6b; }
+.tree-options-row .check-box .box { -fx-background-radius: 0; -fx-border-radius: 0; }
+.reference-match-name { -fx-font-weight: bold; -fx-text-fill: #185c83; }
