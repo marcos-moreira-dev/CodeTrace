@@ -121,6 +121,16 @@ try {
                 Copy-Item -LiteralPath $junit -Destination (Join-Path $work "junit") -Recurse -Force
             }
             if ($result -eq 0 -and -not $NoApp) {
+                # Keep the diagnosis as a single-step workflow: prepare a
+                # reproducible reference project after Maven clean/verify.
+                try {
+                    & (Join-Path $PSScriptRoot "crear-fixtures-preview.ps1") | Out-Null
+                    $fixture = Join-Path $root "target\qa-preview"
+                    Note ("Proyecto de prueba visual: " + $fixture)
+                    Note "En CodeTrace: Archivo > Abrir proyecto y selecciona esa carpeta."
+                } catch {
+                    Note ("AVISO: no se pudo preparar el proyecto QA: " + $_.Exception.Message)
+                }
                 if (-not $NoScreenshot) {
                     Note "Intentando captura solo de la ventana CodeTrace..."
                     $capturer = Join-Path $PSScriptRoot "capturar-ventana.ps1"
