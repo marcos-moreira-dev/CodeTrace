@@ -45,3 +45,17 @@ y valida que el directorio de trabajo permanezca dentro de la carpeta raíz.
 `ui/CommandSettingsPane` gestiona los comandos desde Preferencias;
 `ui/CommandConsolePane` muestra salida y ofrece ejecución/detención.
 Ningún comando se ejecuta durante la apertura de archivos o sesiones.
+
+## Modalidad por proyecto y estado de reconstrucción
+`practice/PracticeMode` define la modalidad manual o directa. Es independiente
+de Turbo, de la inclusión de archivos en el porcentaje y de la sesión de
+mecanografía. Se recuerda en Preferences usando un identificador SHA-256 de la
+raíz del proyecto y también se guarda en las sesiones `.ctrace` v2; el
+lector es retrocompatible con v1.
+
+`practice/ReconstructionStatus` calcula estados sin modificar referencias:
+PENDING → CREATED → COMPLETED. Un archivo exige todos sus grafemas correctos
+y SHA-256 vigente. La carpeta se completa cuando todos los archivos de texto
+incluidos por el filtro están completos. La aplicación actualiza los estados
+al crear estructura, cambiar filtros o cruzar el umbral de finalización, no
+por cada pulsación indiscriminadamente.

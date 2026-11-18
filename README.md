@@ -112,3 +112,24 @@ automáticamente; al seleccionar uno y pulsar Ejecutar se muestra su salida.
 - Los archivos creados virtualmente son hitos: no se ofrecen acciones de eliminar, copiar, cortar o renombrar desde el explorador. El menú contextual de los archivos ofrece **Mostrar en el Explorador**, que revela el archivo original en Windows y su carpeta contenedora en Linux si no puede seleccionarlo.
 - Al abrir o seleccionar una pestaña de código, la superficie de mecanografía recupera el foco después del cambio de pestaña. Al crear explícitamente un archivo ya abierto, también queda preparado para escribir sin otro clic.
 - La opacidad de la plantilla es un **Slider horizontal** en Preferencias → Editor; los caracteres ya evaluados conservan su visibilidad.
+
+## Modalidades de práctica y estados del explorador
+
+**Práctica → Modalidad del proyecto** permite elegir entre:
+
+- **Reconstrucción manual** (predeterminada para repositorios externos): recreas carpetas y archivos desde el árbol antes de escribir.
+- **Transcripción directa** (predeterminada para la biblioteca interna): basta abrir el archivo y empezar a teclear. Al primer carácter se crean en memoria las carpetas y el archivo correspondientes; abrir la plantilla por sí solo no crea nada.
+
+La modalidad se recuerda por carpeta y se incluye en las nuevas sesiones
+`.ctrace` (formato v2). Las sesiones anteriores v1 siguen siendo compatibles
+y se restauran en reconstrucción manual. Cambiar de modalidad no altera el
+código original ni borra los avances. Turbo es independiente de la modalidad.
+
+Los íconos del explorador ahora distinguen **pendiente** (círculo gris y
+nombre en cursiva), **creado** (visto ámbar) y **terminado** (visto verde).
+Terminado significa todos los caracteres correctos, sin errores ni omisiones.
+Un archivo excluido del porcentaje global puede terminarse individualmente;
+no impide completar las carpetas según el filtro de progreso.
+
+El logo de CodeTrace también se utiliza en Preferencias, los cuadros de
+creación y la Biblioteca de práctica, manteniendo el estilo de escritorio.

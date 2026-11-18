@@ -64,12 +64,7 @@ public final class ProductDialogs {
         Dialog<ButtonType> result = new Dialog<>();
         if (owner != null) result.initOwner(owner);
         result.setTitle(title);
-        result.setOnShown(event -> {
-            if (result.getDialogPane().getScene().getWindow() instanceof Stage stage) {
-                stage.getIcons().setAll(new Image(ProductDialogs.class
-                        .getResourceAsStream("/icons/codetrace-window.png")));
-            }
-        });
+        WindowBranding.apply(result);
         result.setResizable(true);
         DialogPane pane = result.getDialogPane();
         pane.getStyleClass().add("product-dialog");

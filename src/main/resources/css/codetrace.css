@@ -747,3 +747,14 @@
 .workspace-split > .split-pane-divider:pressed {
     -fx-background-color: #547c99;
 }
+
+/* Pending reference names communicate work not yet undertaken. */
+.reference-tree-row .reference-pending-name {
+    -fx-font-style: italic;
+    -fx-text-fill: #72818d;
+}
+.reconstruction-state-icon.state-created,
+.reconstruction-state-icon.state-completed,
+.reconstruction-state-icon.state-pending {
+    -fx-alignment: center;
+}

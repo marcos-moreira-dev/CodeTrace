@@ -72,3 +72,11 @@ CodeTrace propone una práctica tranquila de reconstrucción manual de software,
 - El estado **creado** usa `fth-check-circle`, verde técnico, 15 px; el estado **pendiente** usa `fth-circle`, gris azulado, 15 px. Ambos proceden de Ikonli/Feather y nunca son caracteres Unicode dentro de Labels.
 - Contenedor fijo de 18 × 18 px entre el ícono de tipo y el nombre, con estilos `reconstruction-state-icon`, `state-created` y `state-pending`. Así el indicador no cambia a puntos suspensivos cuando el árbol se estrecha.
 - El significado sigue siendo **archivo/carpeta recreado virtualmente**, no código transcrito correctamente.
+
+## Modalidad de reconstrucción y estados (noviembre de 2026)
+- Dos modalidades del mismo motor: «Reconstrucción manual» exige creación explícita; «Transcripción directa» hace la creación virtual necesaria en el primer carácter escrito y no toca los archivos reales.
+- Las carpetas externas tienen modalidad manual inicial. La biblioteca de práctica integrada prefiere acceso directo. La elección se recuerda por proyecto; las sesiones `.ctrace` v2 la conservan al exportarse.
+- Filtros y Turbo permanecen independientes de la modalidad. Lo excluido del filtro no suma al progreso global ni bloquea el visto verde de una carpeta; la omisión Turbo/imports nunca se considera carácter correcto.
+- Color del estado: gris pendiente (nombre en cursiva), ámbar creado/incompleto, verde completamente transcrito. Los archivos completados conservan su visto aunque estén excluidos del filtro global.
+- La carpeta se muestra completa cuando todos los archivos de texto contabilizables que contiene recursivamente están correctos. Para carpetas sin texto contabilizable se mantiene el estado de creada.
+- Preferencias, Biblioteca y diálogos usan el ícono existente de CodeTrace; botones y contenedores siguen siendo rectangulares.

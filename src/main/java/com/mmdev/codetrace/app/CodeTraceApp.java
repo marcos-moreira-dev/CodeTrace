@@ -1,6 +1,9 @@
 package com.mmdev.codetrace.app;
 
 import com.mmdev.codetrace.practice.TypingSession;
+import com.mmdev.codetrace.practice.ReconstructionStatus;
+import com.mmdev.codetrace.practice.ReconstructionStatus.State;
+import com.mmdev.codetrace.practice.PracticeMode;
 import com.mmdev.codetrace.progress.SessionArchive;
 import com.mmdev.codetrace.reference.ReferenceCatalogue;
 import com.mmdev.codetrace.reference.ProgressScope;
@@ -49,6 +52,8 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.RadioMenuItem;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.Separator;
 import javafx.scene.control.SplitPane;
@@ -109,8 +114,13 @@ public final class CodeTraceApp extends Application {
     private VirtualWorkspace workspace = new VirtualWorkspace();
     private Map<String, TypingSession> sessions = new LinkedHashMap<>();
     private Map<String, String> hashes = new LinkedHashMap<>();
+    private Map<String, State> reconstructionStates = Map.of();
     private ReferenceCatalogue.Snapshot catalogue;
     private ProgressScope progressScope = ProgressScope.load();
+    private PracticeMode practiceMode = PracticeMode.RECONSTRUCTION;
+    private RadioMenuItem manualModeMenu;
+    private RadioMenuItem directModeMenu;
+    private Menu practiceModeMenu;
     private long catalogueGeneration;
     private Path reference;
     private long referenceRequest;
@@ -197,11 +207,25 @@ public final class CodeTraceApp extends Application {
         turboMenu = new CheckMenuItem("Modo Turbo · omitir símbolos");
         turboMenu.setSelected(settings.turboMode());
         turboMenu.setOnAction(event -> setTurboMode(turboMenu.isSelected()));
+        ToggleGroup modes = new ToggleGroup();
+        manualModeMenu = new RadioMenuItem("Reconstrucción manual");
+        directModeMenu = new RadioMenuItem("Transcripción directa");
+        manualModeMenu.setToggleGroup(modes);
+        directModeMenu.setToggleGroup(modes);
+        manualModeMenu.setSelected(true);
+        manualModeMenu.setOnAction(event ->
+                setPracticeMode(PracticeMode.RECONSTRUCTION));
+        directModeMenu.setOnAction(event ->
+                setPracticeMode(PracticeMode.DIRECT));
+        practiceModeMenu = new Menu("Modalidad del proyecto", null,
+                manualModeMenu, directModeMenu);
+        practiceModeMenu.setDisable(true);
         MenuItem bundledLibrary = new MenuItem("Biblioteca de práctica...");
         bundledLibrary.setOnAction(event -> openPracticeLibrary());
         Menu practiceMenu = new Menu("Práctica", null,
                 skipImportsMenu, turboMenu,
-                new javafx.scene.control.SeparatorMenuItem(), bundledLibrary);
+                new javafx.scene.control.SeparatorMenuItem(), practiceModeMenu,
+                bundledLibrary);
         MenuItem about = new MenuItem("Acerca de CodeTrace");
         about.setOnAction(event -> showAbout());
         Menu helpMenu = new Menu("Ayuda", null, about);
@@ -307,6 +331,8 @@ public final class CodeTraceApp extends Application {
         sidebar.setMinWidth(165);
         sidebar.setPrefWidth(245);
         VBox.setVgrow(tree, Priority.ALWAYS);
+        tree.setStatusLookup(path -> reconstructionStates.getOrDefault(path,
+                workspace.exists(path) ? State.CREATED : State.PENDING));
         tree.setWorkspace(workspace);
         split.getItems().addAll(sidebar, tabs);
         if (!settings.showExplorer()) {
@@ -470,14 +496,17 @@ public final class CodeTraceApp extends Application {
         sessions = new LinkedHashMap<>();
         hashes = new LinkedHashMap<>();
         catalogue = null;
+        reconstructionStates = Map.of();
         progressFolder = "";
         sessionFile = null;
         dirty = false;
         tabs.getTabs().clear();
         openedTabs.clear();
         reference = folder;
+        selectPracticeMode(PracticeMode.forProject(reference));
         tree.setWorkspace(workspace);
         tree.open(reference);
+        refreshReconstructionStatuses();
         consolePane.setProject(reference);
         refreshCommandPresets();
         indexReference();
@@ -543,13 +572,23 @@ public final class CodeTraceApp extends Application {
             TypingSession current = session;
             TypingEditor editor = new TypingEditor(current, () -> {
                 String typed = current.enteredText();
-                if ((!typed.isEmpty() || current.skippedCount() > 0)
-                        && virtualFileExists(relative)) {
+                // Direct mode virtualizes the source path on first writing,
+                // not when a preview opens. Nothing touches the real files.
+                if (practiceMode == PracticeMode.DIRECT
+                        && !virtualFileExists(relative)
+                        && (!typed.isEmpty() || current.skippedCount() > 0)) {
+                    workspace.ensureFile(relative);
+                    tree.refreshTree();
+                    refreshReconstructionStatuses();
+                }
+                if (virtualFileExists(relative)
+                        && !workspace.text(relative).equals(typed)) {
                     workspace.setText(relative, typed);
                     dirty = true;
                     updateTitle();
                 }
                 refreshMetrics();
+                refreshStatusIfCompletionChanged(relative, current);
             }, file.getFileName().toString(), settings.fontFamily(), settings.fontSize(),
                     matched -> {
                         if (settings.typingSounds() && !typingSounds.play(matched)
@@ -559,7 +598,8 @@ public final class CodeTraceApp extends Application {
                         }
                     });
             editor.setOnNotice(this::setStatus);
-            editor.setPracticePermission(() -> virtualFileExists(relative),
+            editor.setPracticePermission(
+                    () -> practiceMode == PracticeMode.DIRECT || virtualFileExists(relative),
                     () -> requestExplicitCreation(relative));
             editor.setTemplateOpacity(settings.templateOpacity());
             editor.setTurboMode(settings.turboMode());
@@ -625,6 +665,7 @@ public final class CodeTraceApp extends Application {
         }
         dirty = true;
         updateTitle();
+        refreshReconstructionStatuses();
         refreshMetrics();
         setStatus("Proyecto virtual actualizado");
     }
@@ -663,6 +704,44 @@ public final class CodeTraceApp extends Application {
                     : omitted + " caracteres omitidos");
             editor.focusEditor();
         }
+    }
+
+    /** Mode is per project; progress and file contents are preserved on switch. */
+    private void selectPracticeMode(PracticeMode next) {
+        practiceMode = next;
+        if (practiceModeMenu != null) {
+            practiceModeMenu.setDisable(reference == null);
+            manualModeMenu.setSelected(next == PracticeMode.RECONSTRUCTION);
+            directModeMenu.setSelected(next == PracticeMode.DIRECT);
+        }
+    }
+
+    private void setPracticeMode(PracticeMode next) {
+        if (reference == null || practiceMode == next) return;
+        selectPracticeMode(next);
+        PracticeMode.remember(reference, next);
+        dirty = true;
+        updateTitle();
+        setStatus(next == PracticeMode.DIRECT
+                ? "Transcripción directa · sin crear carpetas ni archivos a mano"
+                : "Reconstrucción manual · crea los archivos antes de escribir");
+    }
+
+    private void refreshReconstructionStatuses() {
+        reconstructionStates = ReconstructionStatus.calculate(
+                workspace, sessions, hashes, catalogue, progressScope);
+        tree.refreshStatuses();
+    }
+
+    /** Recompute folder states only when a file crosses the completed threshold. */
+    private void refreshStatusIfCompletionChanged(String relative, TypingSession session) {
+        boolean finished = ReconstructionStatus.entirelyCorrect(session)
+                && catalogue != null
+                && catalogue.files().containsKey(relative)
+                && catalogue.files().get(relative).sha256().equals(hashes.get(relative))
+                && virtualFileExists(relative);
+        boolean wasFinished = reconstructionStates.get(relative) == State.COMPLETED;
+        if (finished != wasFinished) refreshReconstructionStatuses();
     }
 
     private void refreshMetrics() {
@@ -741,6 +820,7 @@ public final class CodeTraceApp extends Application {
             progressScope = new ProgressScope(active, active, active, active);
             for (CheckBox choice : scopeChecks.values()) choice.setSelected(active);
             progressScope.save();
+            refreshReconstructionStatuses();
             refreshMetrics();
         });
 
@@ -756,6 +836,7 @@ public final class CodeTraceApp extends Application {
             progressScope = progressScope.with(category, control.isSelected());
             progressScope.save();
             updateAllCheck();
+            refreshReconstructionStatuses();
             refreshMetrics();
         });
         scopeChecks.put(category, control);
@@ -808,6 +889,7 @@ public final class CodeTraceApp extends Application {
             }
             referenceRequest++;
             reference = restoredReference;
+            selectPracticeMode(data.practiceMode());
             consolePane.setProject(reference);
             refreshCommandPresets();
             progressFolder = "";
@@ -820,6 +902,7 @@ public final class CodeTraceApp extends Application {
             openedTabs.clear();
             tree.setWorkspace(workspace);
             tree.open(reference);
+            refreshReconstructionStatuses();
             refreshButton.setDisable(false);
             refreshReference();
             updateTitle();
@@ -849,7 +932,7 @@ public final class CodeTraceApp extends Application {
         }
         try {
             SessionArchive.save(destination, new SessionArchive.State(
-                    reference, workspace, sessions, hashes));
+                    reference, workspace, sessions, hashes, practiceMode));
             sessionFile = destination;
             dirty = false;
             updateTitle();
@@ -868,6 +951,7 @@ public final class CodeTraceApp extends Application {
         Path root = reference;
         long generation = ++catalogueGeneration;
         catalogue = null;
+        refreshReconstructionStatuses();
         refreshMetrics();
         Task<ReferenceCatalogue.Snapshot> scan = new Task<>() {
             @Override
@@ -878,6 +962,7 @@ public final class CodeTraceApp extends Application {
         scan.setOnSucceeded(event -> {
             if (generation == catalogueGeneration && root.equals(reference)) {
                 catalogue = scan.getValue();
+                refreshReconstructionStatuses();
                 refreshMetrics();
             }
         });

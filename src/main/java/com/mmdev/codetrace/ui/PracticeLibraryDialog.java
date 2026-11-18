@@ -27,6 +27,7 @@ public final class PracticeLibraryDialog {
         Dialog<Pack> dialog = new Dialog<>();
         dialog.initOwner(owner);
         dialog.setTitle("Biblioteca de práctica — CodeTrace");
+        WindowBranding.apply(dialog);
         ButtonType open = new ButtonType("Abrir práctica", ButtonBar.ButtonData.OK_DONE);
         dialog.getDialogPane().getButtonTypes().addAll(open, ButtonType.CANCEL);
 

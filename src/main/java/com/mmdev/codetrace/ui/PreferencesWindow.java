@@ -89,6 +89,7 @@ public final class PreferencesWindow {
         dialog.initOwner(owner);
         dialog.initModality(Modality.WINDOW_MODAL);
         dialog.setTitle("Preferencias — CodeTrace");
+        WindowBranding.apply(dialog);
         dialog.setMinWidth(700);
         dialog.setMinHeight(500);
 

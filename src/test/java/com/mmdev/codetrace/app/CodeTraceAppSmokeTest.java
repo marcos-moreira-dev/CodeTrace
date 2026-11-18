@@ -42,6 +42,8 @@ import javafx.scene.input.ClipboardContent;
 import javafx.scene.control.Spinner;
 import com.mmdev.codetrace.ui.ReferenceTree;
 import com.mmdev.codetrace.ui.ReconstructionStateIcons;
+import com.mmdev.codetrace.practice.ReconstructionStatus;
+import com.mmdev.codetrace.practice.PracticeMode;
 import javafx.scene.layout.StackPane;
 import org.kordamp.ikonli.javafx.FontIcon;
 import javafx.scene.layout.FlowPane;
@@ -116,6 +118,8 @@ class CodeTraceAppSmokeTest {
                 preferences.getScene().getRoot().applyCss();
                 preferences.getScene().getRoot().layout();
                 assertNotNull(preferences.getScene().getRoot().lookup(".prefs-navigation"));
+                assertFalse(preferences.getIcons().isEmpty(),
+                        "Preferences should use the CodeTrace window icon");
                 assertNotNull(preferences.getScene().getRoot().lookup(".prefs-content"));
                 assertNotNull(preferences.getScene().getRoot().lookup(".prefs-actions"));
                 Slider opacitySlider = (Slider) preferences.getScene().getRoot()
@@ -160,6 +164,9 @@ class CodeTraceAppSmokeTest {
                 assertEquals(2, blocked.get());
                 assertEquals(1, virtual.entries().size(),
                         "Opening the reference must not create virtual paths");
+                Field modeField = CodeTraceApp.class.getDeclaredField("practiceMode");
+                modeField.setAccessible(true);
+                assertEquals(PracticeMode.RECONSTRUCTION, modeField.get(application));
                 assertEquals(0, editor.session().correctCount());
                 assertEquals(0, editor.session().caret());
 
@@ -225,6 +232,11 @@ class CodeTraceAppSmokeTest {
                 assertEquals(18.0, pendingBadge.getMinWidth());
                 assertTrue(createdBadge.getStyleClass().contains("state-created"));
                 assertTrue(pendingBadge.getStyleClass().contains("state-pending"));
+                StackPane completedBadge = ReconstructionStateIcons.forState(
+                        ReconstructionStatus.State.COMPLETED);
+                assertTrue(completedBadge.getChildren().getFirst() instanceof FontIcon);
+                assertTrue(completedBadge.getStyleClass().contains("state-completed"));
+                assertTrue(createdBadge.getStyleClass().contains("state-created"));
                 // Menus must permit constructing a real reference directory
                 // before the virtual file, with no implicit disk creation.
                 Path nested = Files.createDirectory(src.resolve("ejemplos"));
@@ -273,6 +285,27 @@ class CodeTraceAppSmokeTest {
                                 "Copiar", "Cortar", "Eliminar").contains(item.getText())));
                 assertFalse(Files.size(nestedFile) == 0,
                         "The real source must never be modified by virtual creation");
+                // Direct mode bypasses manual file/folder creation only at
+                // the moment of typing, never while merely opening the preview.
+                Path directFile = src.resolve("Direct.java");
+                Files.writeString(directFile, "A");
+                open.invoke(application, directFile);
+                assertFalse(virtual.exists("src/Direct.java"));
+                Method changeMode = CodeTraceApp.class.getDeclaredMethod(
+                        "setPracticeMode", PracticeMode.class);
+                changeMode.setAccessible(true);
+                changeMode.invoke(application, PracticeMode.DIRECT);
+                assertEquals(PracticeMode.DIRECT, modeField.get(application));
+                TypingEditor directEditor = (TypingEditor) tabPane
+                        .getSelectionModel().getSelectedItem().getContent();
+                Event.fireEvent(directEditor, new KeyEvent(KeyEvent.KEY_TYPED,
+                        "A", "A", KeyCode.UNDEFINED, false, false, false, false));
+                assertTrue(virtual.exists("src/Direct.java"),
+                        "Direct mode virtualizes the file on the first typed character");
+                assertEquals("A", virtual.text("src/Direct.java"));
+                changeMode.invoke(application, PracticeMode.RECONSTRUCTION);
+                assertTrue(virtual.exists("src/Direct.java"),
+                        "Switching modes must not discard created files");
                 fileTree.collapseAll();
                 fileTree.expandAll();
                 assertTrue(fileTree.getRoot().isExpanded());
@@ -321,6 +354,7 @@ class CodeTraceAppSmokeTest {
                 }
                 assertNotNull(stage.getScene().getRoot().lookup(".tree-activity"));
                 assertNotNull(stage.getScene().getRoot().lookup(".tree-scope-checkbox"));
+                Files.delete(directFile);
                 Files.delete(nestedFile);
                 Files.delete(nested);
                 Files.delete(file);

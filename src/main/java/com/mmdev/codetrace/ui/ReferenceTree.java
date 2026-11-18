@@ -2,6 +2,8 @@ package com.mmdev.codetrace.ui;
 
 import com.mmdev.codetrace.workspace.VirtualWorkspace;
 import com.mmdev.codetrace.reference.ReferenceTreeIndex;
+import com.mmdev.codetrace.practice.ReconstructionStatus.State;
+import java.util.function.Function;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -55,6 +57,7 @@ public final class ReferenceTree extends TreeView<Path> {
     private Consumer<String> onProgressFolder = folder -> {};
     private Consumer<Boolean> onBusyChange = busy -> {};
     private ReferenceTreeIndex index;
+    private Function<String, State> statusLookup = ignored -> State.PENDING;
     private long indexGeneration;
     private boolean loading;
     private boolean expanding;
@@ -78,7 +81,9 @@ public final class ReferenceTree extends TreeView<Path> {
                     return;
                 }
                 String relative = relative(path);
-                boolean created = workspace.exists(relative);
+                State state = workspace.exists(relative)
+                        ? statusLookup.apply(relative) : State.PENDING;
+                boolean created = state != State.PENDING;
                 long fileCount = isFolder(path) && index != null
                         ? index.recursiveFiles(relative) : -1L;
                 // Keep the icon in a dedicated cell graphic, not in the
@@ -87,9 +92,10 @@ public final class ReferenceTree extends TreeView<Path> {
                 setText(null);
                 // A real Feather vector icon is kept in a fixed-size
                 // container. No "✓" / "○" text labels can collapse into "...".
-                var badge = ReconstructionStateIcons.forCreated(created);
+                var badge = ReconstructionStateIcons.forState(state);
                 Label nameLabel = new Label(name(path));
                 nameLabel.getStyleClass().add("reference-name");
+                if (!created) nameLabel.getStyleClass().add("reference-pending-name");
                 nameLabel.setTextFill(created ? Color.web("#263747")
                         : Color.web("#667784"));
                 nameLabel.setMinWidth(javafx.scene.layout.Region.USE_PREF_SIZE);
@@ -107,8 +113,11 @@ public final class ReferenceTree extends TreeView<Path> {
                 graphic.setMinWidth(javafx.scene.layout.Region.USE_PREF_SIZE);
                 setGraphic(graphic);
                 setGraphicTextGap(0);
-                String status = created
-                        ? "Creado en el proyecto virtual" : "Pendiente de recrear";
+                String status = switch (state) {
+                    case PENDING -> "Pendiente de recrear";
+                    case CREATED -> "Creado virtualmente · transcripción pendiente";
+                    case COMPLETED -> "Todos los caracteres escritos correctamente";
+                };
                 if (fileCount >= 0) {
                     status += "\n" + fileCount + (fileCount == 1
                             ? " archivo de referencia, incluidas subcarpetas"
@@ -125,6 +134,15 @@ public final class ReferenceTree extends TreeView<Path> {
                 onOpen.accept(selected.getValue());
             }
         });
+    }
+
+    public void setStatusLookup(Function<String, State> lookup) {
+        statusLookup = java.util.Objects.requireNonNull(lookup);
+        refresh();
+    }
+
+    public void refreshStatuses() {
+        refresh();
     }
 
     public void setOnProgressFolder(Consumer<String> listener) {
@@ -473,6 +491,10 @@ public final class ReferenceTree extends TreeView<Path> {
     private static String prompt(String title, String initialValue) {
         TextInputDialog dialog = new TextInputDialog(initialValue);
         dialog.setTitle(title);
+        WindowBranding.apply(dialog);
+        dialog.getDialogPane().getStylesheets().add(
+                ReferenceTree.class.getResource("/css/codetrace.css").toExternalForm());
+        dialog.getDialogPane().getStyleClass().add("product-dialog");
         dialog.setHeaderText(null);
         dialog.setContentText("Nombre:");
         return dialog.showAndWait().orElse(null);

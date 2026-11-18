@@ -2,6 +2,8 @@ package com.mmdev.codetrace.progress;
 
 import static org.junit.jupiter.api.Assertions.*;
 import com.mmdev.codetrace.practice.TypingSession;
+import com.mmdev.codetrace.practice.PracticeMode;
+import java.io.DataOutputStream;
 import com.mmdev.codetrace.workspace.VirtualWorkspace;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -26,17 +28,39 @@ class SessionArchiveTest {
         String sha = "a".repeat(64);
         SessionArchive.State state = new SessionArchive.State(
                 directory.resolve("reference"), virtual,
-                Map.of("src/Main.java", typing), Map.of("src/Main.java", sha));
+                Map.of("src/Main.java", typing), Map.of("src/Main.java", sha),
+                PracticeMode.DIRECT);
         Path file = directory.resolve("training.ctrace");
         SessionArchive.save(file, state);
 
         var restored = SessionArchive.load(file);
         assertEquals(state.referenceRoot(), restored.referenceRoot());
+        assertEquals(PracticeMode.DIRECT, restored.practiceMode());
         assertEquals(2, restored.sessions().get("src/Main.java").correctCount());
         assertEquals(5, restored.sessions().get("src/Main.java").skippedCount());
         assertEquals(7, restored.sessions().get("src/Main.java").resolvedCount());
         assertEquals("i\u0301\n", restored.workspace().text("src/Main.java"));
         assertEquals(sha, restored.referenceHashes().get("src/Main.java"));
+    }
+
+    @Test
+    void readsVersionOneSessionsWithManualMode() throws Exception {
+        Path archive = directory.resolve("legacy.ctrace");
+        try (DataOutputStream out = new DataOutputStream(Files.newOutputStream(archive))) {
+            out.writeInt(0x43545243);
+            out.writeInt(1);
+            byte[] root = directory.toString().getBytes(java.nio.charset.StandardCharsets.UTF_8);
+            out.writeInt(root.length);
+            out.write(root);
+            out.writeInt(1); // root virtual directory
+            out.writeInt(0); // empty path
+            out.writeByte(1); // directory
+            out.writeInt(0); // no typing sessions
+            out.writeInt(0); // no hashes
+        }
+        var restored = SessionArchive.load(archive);
+        assertEquals(PracticeMode.RECONSTRUCTION, restored.practiceMode());
+        assertTrue(restored.workspace().exists(""));
     }
 
     @Test

@@ -1,6 +1,7 @@
 package com.mmdev.codetrace.progress;
 
 import com.mmdev.codetrace.practice.TypingSession;
+import com.mmdev.codetrace.practice.PracticeMode;
 import com.mmdev.codetrace.workspace.VirtualWorkspace;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -26,7 +27,7 @@ import java.util.Objects;
  */
 public final class SessionArchive {
     private static final int MAGIC = 0x43545243; // CTRC
-    private static final int VERSION = 1;
+    private static final int VERSION = 2;
     private static final int MAX_ITEMS = 200_000;
     private static final int MAX_STRING_BYTES = 8 * 1024 * 1024;
     private static final long MAX_ARCHIVE_BYTES = 256L * 1024 * 1024;
@@ -36,10 +37,19 @@ public final class SessionArchive {
 
     public record State(Path referenceRoot, VirtualWorkspace workspace,
                         Map<String, TypingSession> sessions,
-                        Map<String, String> referenceHashes) {
+                        Map<String, String> referenceHashes,
+                        PracticeMode practiceMode) {
+        public State(Path referenceRoot, VirtualWorkspace workspace,
+                     Map<String, TypingSession> sessions,
+                     Map<String, String> referenceHashes) {
+            this(referenceRoot, workspace, sessions, referenceHashes,
+                    PracticeMode.RECONSTRUCTION);
+        }
+
         public State {
             Objects.requireNonNull(referenceRoot);
             Objects.requireNonNull(workspace);
+            Objects.requireNonNull(practiceMode);
             sessions = Map.copyOf(sessions);
             referenceHashes = Map.copyOf(referenceHashes);
         }
@@ -86,6 +96,7 @@ public final class SessionArchive {
         out.writeInt(MAGIC);
         out.writeInt(VERSION);
         writeString(out, state.referenceRoot().toString());
+        out.writeByte(state.practiceMode().code());
 
         List<VirtualWorkspace.Entry> entries = state.workspace().entries();
         count(out, entries.size());
@@ -124,10 +135,16 @@ public final class SessionArchive {
     }
 
     private static State read(DataInputStream in) throws IOException {
-        if (in.readInt() != MAGIC || in.readInt() != VERSION) {
+        int magic = in.readInt();
+        int version = in.readInt();
+        if (magic != MAGIC || (version != 1 && version != VERSION)) {
             throw new IOException("Unsupported CodeTrace session header or version");
         }
         Path root = Path.of(readString(in));
+        // Original v1 sessions remain readable and keep the manual default.
+        PracticeMode mode = version == 1
+                ? PracticeMode.RECONSTRUCTION
+                : PracticeMode.fromCode(in.readUnsignedByte());
         int entryCount = boundedCount(in);
         List<VirtualWorkspace.Entry> entries = new ArrayList<>(entryCount);
         for (int i = 0; i < entryCount; i++) {
@@ -176,7 +193,7 @@ public final class SessionArchive {
                 throw new IOException("Invalid or duplicate SHA-256 record");
             }
         }
-        return new State(root, workspace, sessions, hashes);
+        return new State(root, workspace, sessions, hashes, mode);
     }
 
     private static void writeString(DataOutputStream out, String text) throws IOException {
