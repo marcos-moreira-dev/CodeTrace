@@ -540,27 +540,6 @@
     -fx-background-color: #4a6076;
 }
 
-/* Translucency is a persistent preference, not a toolbar action. */
-.prefs-opacity-spinner {
-    -fx-background-radius: 0;
-    -fx-border-radius: 0;
-    -fx-border-color: #a9b8c4;
-    -fx-background-color: #fff;
-}
-.prefs-opacity-spinner .text-field,
-.prefs-opacity-spinner .increment-arrow-button,
-.prefs-opacity-spinner .decrement-arrow-button {
-    -fx-background-radius: 0;
-    -fx-border-radius: 0;
-}
-.prefs-opacity-spinner .increment-arrow-button,
-.prefs-opacity-spinner .decrement-arrow-button {
-    -fx-background-color: #e7edf1;
-}
-.prefs-opacity-spinner .increment-arrow,
-.prefs-opacity-spinner .decrement-arrow {
-    -fx-background-color: #4a6076;
-}
 .prefs-font-choice {
     -fx-min-height: 33px;
 }

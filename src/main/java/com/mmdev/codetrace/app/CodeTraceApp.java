@@ -342,7 +342,15 @@ public final class CodeTraceApp extends Application {
         root.setBottom(footer);
 
         tabs.getSelectionModel().selectedItemProperty()
-                .addListener((observed, before, selected) -> refreshMetrics());
+                .addListener((observed, before, selected) -> {
+                    refreshMetrics();
+                    // Once tab selection is processed, return focus to its
+                    // typing surface rather than leaving it in the file tree.
+                    if (selected != null) {
+                        javafx.application.Platform.runLater(
+                                () -> focusSelectedPracticeTab(selected));
+                    }
+                });
 
         Scene scene = new Scene(root, 1160, 760);
         scene.getStylesheets().add(getClass()
@@ -516,6 +524,8 @@ public final class CodeTraceApp extends Application {
         Tab existing = openedTabs.get(relative);
         if (existing != null) {
             tabs.getSelectionModel().select(existing);
+            javafx.application.Platform.runLater(
+                    () -> focusSelectedPracticeTab(existing));
             return;
         }
         try {
@@ -562,12 +572,19 @@ public final class CodeTraceApp extends Application {
             openedTabs.put(relative, tab);
             tabs.getTabs().add(tab);
             tabs.getSelectionModel().select(tab);
-            editor.focusEditor();
+            javafx.application.Platform.runLater(
+                    () -> focusSelectedPracticeTab(tab));
             setStatus(relative);
             refreshMetrics();
         } catch (IOException | SecurityException problem) {
             setStatus("No se pudo abrir " + file.getFileName());
         }
+    }
+
+    private void focusSelectedPracticeTab(Tab tab) {
+        if (tabs.getSelectionModel().getSelectedItem() != tab) return;
+        TypingEditor editor = editorIn(tab);
+        if (editor != null) editor.focusEditor();
     }
 
     private boolean virtualFileExists(String relative) {
@@ -583,7 +600,7 @@ public final class CodeTraceApp extends Application {
         ProductDialogs.error(stage, "Crear archivo antes de practicar",
                 "El archivo \"" + name + "\" todavía no existe en tu proyecto virtual.\n\n"
                 + "Para empezar a escribir, haz clic derecho en " + location
-                + " y selecciona Nuevo archivo..., con el mismo nombre de la referencia.\n\n"
+                + " y selecciona «Crear archivo...», con el mismo nombre de la referencia.\n\n"
                 + "Si la carpeta también está pendiente, créala primero.");
     }
 
@@ -597,6 +614,14 @@ public final class CodeTraceApp extends Application {
         if (change.operation() != ReferenceTree.Operation.CREATE) {
             tabs.getTabs().clear();
             openedTabs.clear();
+        } else {
+            // After a file is created via its context menu, allow immediate
+            // typing in the existing preview without another mouse click.
+            Tab createdTab = openedTabs.get(change.target());
+            if (createdTab != null) {
+                javafx.application.Platform.runLater(
+                        () -> focusSelectedPracticeTab(createdTab));
+            }
         }
         dirty = true;
         updateTitle();

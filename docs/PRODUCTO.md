@@ -14,7 +14,7 @@ CodeTrace propone una práctica tranquila de reconstrucción manual de software,
 - Estadísticas positivas: solo caracteres escritos correctamente, sin duplicar corregidos.
 
 ## Árbol y referencia
-- Crear, renombrar, copiar, mover, eliminar elementos virtuales.
+- Crear explícitamente carpetas y archivos virtuales que coincidan con los originales. Una creación es un hito y no requiere opciones destructivas en el menú contextual.
 - Hash SHA-256 por archivo de referencia; actualización manual y conservación de progreso ante cambios.
 - Archivos binarios solo visibles y abribles externamente, nunca transcritos byte a byte.
 
@@ -52,7 +52,7 @@ CodeTrace propone una práctica tranquila de reconstrucción manual de software,
 - El menú contextual de carpetas permite que el progreso global mida todo el proyecto o solamente los archivos de una carpeta y sus descendientes. El ámbito por carpeta es una selección temporal del workspace.
 - El botón **Filtro** junto al progreso controla qué categorías de texto se tienen en cuenta; Markdown/documentación, archivos de configuración y otros textos están desactivados inicialmente.
 - El porcentaje global tiene tres decimales y se calcula solo a partir de caracteres escritos correctamente. Los fragmentos omitidos y los errores no aportan progreso, aunque su estado se conserva en la sesión.
-- El Spinner de opacidad de Preferencias afecta únicamente a los caracteres pendientes de la plantilla. Debe mantenerse el contraste de los aciertos y los errores.
+- El Slider horizontal de opacidad de Preferencias afecta únicamente a los caracteres pendientes de la plantilla, con lectura numérica auxiliar. Debe mantenerse el contraste de los aciertos y los errores.
 - El selector de tipografía muestra junto al nombre una muestra de la misma fuente. El control transversal de tamaño continúa en el extremo derecho de la barra inferior.
 - **Símbolos** copia el carácter; **Ctrl+V** en la superficie de práctica lo coloca en el próximo espacio de la plantilla. La selección de línea existente no debe reiniciar el cursor. Se rechaza el pegado de bloques largos para conservar el ejercicio de mecanografía.
 
@@ -61,3 +61,9 @@ CodeTrace propone una práctica tranquila de reconstrucción manual de software,
 - Un archivo de referencia pendiente tiene «Crear este archivo». Los elementos que no existan en el árbol de referencia se rechazan con diálogo legible, sin escribir archivos en disco.
 - Las carpetas muestran «(N archivos)»; N incluye archivos de todas sus subcarpetas. El tooltip aclara esa semántica.
 - La consola se aloja en un segundo SplitPane vertical; el usuario redimensiona el área del editor y la consola arrastrando un divisor horizontal. Cerrarla devuelve todo el espacio al editor.
+
+## Refinamiento del explorador y foco (noviembre de 2026)
+- Render del árbol compuesto: ícono independiente del texto del nombre, indicador de creación y conteo recursivo. Si el nombre es largo, puede requerir desplazamiento horizontal, pero el ícono no se sustituye por puntos suspensivos.
+- Solo se ofrecen operaciones de creación y consulta: los archivos creados permanecen como hitos. El menú de archivo incluye «Mostrar en el Explorador», que revela su referencia real en Windows; otros sistemas abren la carpeta contenedora.
+- Al abrir o volver a seleccionar una pestaña, la práctica recibe el foco del teclado mediante el pulso siguiente de JavaFX. Nunca se crea automáticamente un archivo, que sigue siendo requisito para mecanografiar.
+- La opacidad deja de ser un cuadro numérico y pasa a Slider horizontal de 20 % a 100 % con valor porcentual legible.

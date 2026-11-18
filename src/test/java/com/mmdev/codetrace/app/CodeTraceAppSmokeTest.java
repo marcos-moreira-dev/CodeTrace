@@ -115,8 +115,13 @@ class CodeTraceAppSmokeTest {
                 assertNotNull(preferences.getScene().getRoot().lookup(".prefs-navigation"));
                 assertNotNull(preferences.getScene().getRoot().lookup(".prefs-content"));
                 assertNotNull(preferences.getScene().getRoot().lookup(".prefs-actions"));
-                assertTrue(preferences.getScene().getRoot()
-                        .lookup(".prefs-opacity-spinner") instanceof Spinner<?>);
+                Slider opacitySlider = (Slider) preferences.getScene().getRoot()
+                        .lookup(".prefs-opacity-slider");
+                assertNotNull(opacitySlider, "Opacity must be a horizontal Slider");
+                assertEquals(Orientation.HORIZONTAL, opacitySlider.getOrientation());
+                assertEquals(20.0, opacitySlider.getMin());
+                assertEquals(100.0, opacitySlider.getMax());
+                assertNull(preferences.getScene().getRoot().lookup(".prefs-opacity-spinner"));
                 assertNotNull(preferences.getScene().getRoot().lookup(".prefs-font-choice"));
                 preferences.close();
                 Stage projectPrefs = PreferencesWindow.create(
@@ -233,10 +238,26 @@ class CodeTraceAppSmokeTest {
                 ContextMenu fileMenu = (ContextMenu) menuFor.invoke(fileTree, nestedFile);
                 assertTrue(fileMenu.getItems().stream().anyMatch(
                         item -> "Crear este archivo".equals(item.getText())));
+                assertTrue(fileMenu.getItems().stream().anyMatch(
+                        item -> "Mostrar en el Explorador".equals(item.getText())));
                 fileMenu.getItems().stream()
                         .filter(item -> "Crear este archivo".equals(item.getText()))
                         .findFirst().orElseThrow().fire();
                 assertTrue(virtual.exists("src/ejemplos/Demo.java"));
+                ContextMenu createdFileMenu = (ContextMenu) menuFor.invoke(
+                        fileTree, nestedFile);
+                assertTrue(createdFileMenu.getItems().stream().anyMatch(
+                        item -> "Mostrar en el Explorador".equals(item.getText())));
+                assertFalse(createdFileMenu.getItems().stream().anyMatch(item ->
+                        item.getText() != null && java.util.Set.of("Cambiar nombre...",
+                                "Copiar", "Cortar", "Eliminar").contains(item.getText())));
+                ContextMenu createdFolderMenu = (ContextMenu) menuFor.invoke(
+                        fileTree, nested);
+                assertTrue(createdFolderMenu.getItems().stream().anyMatch(
+                        item -> "Crear archivo...".equals(item.getText())));
+                assertFalse(createdFolderMenu.getItems().stream().anyMatch(item ->
+                        item.getText() != null && java.util.Set.of("Cambiar nombre...",
+                                "Copiar", "Cortar", "Eliminar").contains(item.getText())));
                 assertFalse(Files.size(nestedFile) == 0,
                         "The real source must never be modified by virtual creation");
                 fileTree.collapseAll();

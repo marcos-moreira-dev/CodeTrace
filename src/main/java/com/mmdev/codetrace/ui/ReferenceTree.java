@@ -8,6 +8,9 @@ import javafx.animation.Timeline;
 import javafx.concurrent.Task;
 import javafx.util.Duration;
 import java.io.IOException;
+import java.awt.Desktop;
+import java.util.Locale;
+import javafx.application.Platform;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayDeque;
@@ -78,18 +81,34 @@ public final class ReferenceTree extends TreeView<Path> {
                 boolean created = workspace.exists(relative);
                 long fileCount = isFolder(path) && index != null
                         ? index.recursiveFiles(relative) : -1L;
-                setText(name(path) + (fileCount < 0 ? ""
-                        : " (" + fileCount + (fileCount == 1 ? " archivo)" : " archivos)")));
+                // Keep the icon in a dedicated cell graphic, not in the
+                // TreeCell's overrun-prone text layout. Long folder names can
+                // scroll horizontally without turning the icon into "...".
+                setText(null);
                 Label badge = new Label(created ? "✓" : "○");
                 badge.getStyleClass().addAll("virtual-state",
                         created ? "virtual-created" : "virtual-pending");
                 badge.setTooltip(new Tooltip(created
-                        ? "Creado en el proyecto virtual" : "Pendiente de crear"));
-                HBox graphic = new HBox(5, FileTypeIcons.forPath(path, isFolder(path)),
-                        badge);
+                        ? "Creado en el proyecto virtual" : "Pendiente de recrear"));
+                Label nameLabel = new Label(name(path));
+                nameLabel.getStyleClass().add("reference-name");
+                nameLabel.setTextFill(created ? Color.web("#263747")
+                        : Color.web("#667784"));
+                nameLabel.setMinWidth(javafx.scene.layout.Region.USE_PREF_SIZE);
+                HBox graphic = new HBox(6,
+                        FileTypeIcons.forPath(path, isFolder(path)), nameLabel, badge);
                 graphic.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
+                graphic.getStyleClass().add("reference-tree-row");
+                if (fileCount >= 0) {
+                    Label total = new Label("(" + fileCount
+                            + (fileCount == 1 ? " archivo)" : " archivos)"));
+                    total.getStyleClass().add("reference-file-count");
+                    total.setMinWidth(javafx.scene.layout.Region.USE_PREF_SIZE);
+                    graphic.getChildren().add(total);
+                }
+                graphic.setMinWidth(javafx.scene.layout.Region.USE_PREF_SIZE);
                 setGraphic(graphic);
-                setTextFill(created ? Color.web("#263747") : Color.web("#85929C"));
+                setGraphicTextGap(0);
                 String status = created
                         ? "Creado en el proyecto virtual" : "Pendiente de recrear";
                 if (fileCount >= 0) {
@@ -321,56 +340,70 @@ public final class ReferenceTree extends TreeView<Path> {
                 actions.add(createThis);
                 actions.add(new javafx.scene.control.SeparatorMenuItem());
             }
-            // Always show the creation actions. If the parent hasn't been
-            // reconstructed yet, the message explains the required order.
             MenuItem newFolder = new MenuItem("Crear subcarpeta...");
             newFolder.setOnAction(event -> create(relative, true));
             MenuItem newFile = new MenuItem("Crear archivo...");
             newFile.setOnAction(event -> create(relative, false));
             actions.addAll(List.of(newFolder, newFile));
-            if (created && clipboard != null) {
-                MenuItem paste = new MenuItem("Pegar");
-                paste.setOnAction(event -> paste(relative));
-                actions.add(paste);
-            }
             actions.add(new javafx.scene.control.SeparatorMenuItem());
             MenuItem scope = new MenuItem(relative.isEmpty()
                     ? "Progreso: todo el proyecto"
                     : "Progreso: solo esta carpeta");
             scope.setOnAction(event -> onProgressFolder.accept(relative));
             actions.add(scope);
-        } else if (!created) {
-            // A pending source file must be creatable directly via right click.
-            MenuItem createThis = new MenuItem("Crear este archivo");
-            createThis.setOnAction(event -> recreateKnown(relative, false));
-            actions.add(createThis);
         } else {
-            // File can be opened without having been created; creation is
-            // explicit, never a side effect of opening or typing.
-            MenuItem open = new MenuItem("Abrir referencia");
-            open.setOnAction(event -> onOpen.accept(path));
-            actions.add(open);
+            if (!created) {
+                MenuItem createThis = new MenuItem("Crear este archivo");
+                createThis.setOnAction(event -> recreateKnown(relative, false));
+                actions.add(createThis);
+                actions.add(new javafx.scene.control.SeparatorMenuItem());
+            }
+            MenuItem viewSource = new MenuItem("Mostrar en el Explorador");
+            viewSource.setOnAction(event -> revealInFileExplorer(path));
+            actions.add(viewSource);
         }
-
-        if (created && !relative.isEmpty()) {
-            actions.add(new javafx.scene.control.SeparatorMenuItem());
-            MenuItem rename = new MenuItem("Cambiar nombre...");
-            rename.setOnAction(event -> rename(relative));
-            MenuItem copy = new MenuItem("Copiar");
-            copy.setOnAction(event -> {
-                clipboard = relative;
-                cut = false;
-            });
-            MenuItem move = new MenuItem("Cortar");
-            move.setOnAction(event -> {
-                clipboard = relative;
-                cut = true;
-            });
-            MenuItem delete = new MenuItem("Eliminar");
-            delete.setOnAction(event -> delete(relative));
-            actions.addAll(List.of(rename, copy, move, delete));
-        }
+        // Files already created are a completed reconstruction milestone.
+        // Destructive operations (delete, cut, rename) do not belong here.
         return new ContextMenu(actions.toArray(MenuItem[]::new));
+    }
+
+    /**
+     * Reveal the ORIGINAL reference file in the operating-system explorer.
+     * This action never opens, rewrites or materializes a virtual file.
+     */
+    private void revealInFileExplorer(Path selected) {
+        Path file = selected.toAbsolutePath().normalize();
+        if (referenceRoot == null
+                || !file.startsWith(referenceRoot.toAbsolutePath().normalize())
+                || !Files.isRegularFile(file)) {
+            ProductDialogs.error(getScene() == null ? null : getScene().getWindow(),
+                    "Referencia no disponible",
+                    "No se encontró el archivo original en la carpeta de referencia.");
+            return;
+        }
+        Thread worker = new Thread(() -> {
+            try {
+                String system = System.getProperty("os.name", "")
+                        .toLowerCase(Locale.ROOT);
+                if (system.contains("win")) {
+                    new ProcessBuilder("explorer.exe",
+                            "/select," + file).start();
+                } else if (system.contains("mac")) {
+                    new ProcessBuilder("open", "-R", file.toString()).start();
+                } else if (Desktop.isDesktopSupported()
+                        && Desktop.getDesktop().isSupported(Desktop.Action.OPEN)) {
+                    Desktop.getDesktop().open(file.getParent().toFile());
+                } else {
+                    new ProcessBuilder("xdg-open",
+                            file.getParent().toString()).start();
+                }
+            } catch (IOException | RuntimeException problem) {
+                Platform.runLater(() -> onStatus.accept(
+                        "No se pudo abrir el Explorador: " + problem.getMessage()));
+            }
+        }, "codetrace-explorer-reveal");
+        worker.setDaemon(true);
+        worker.start();
     }
 
     private void create(String parent, boolean directory) {
@@ -432,55 +465,6 @@ public final class ReferenceTree extends TreeView<Path> {
                 "Esta carpeta todavía no existe en el proyecto virtual: "
                 + relative + "\n\nHaz clic derecho sobre ella y selecciona "
                 + "«Crear esta carpeta». Después podrás crear sus archivos y subcarpetas.");
-    }
-
-    private void rename(String oldPath) {
-        String value = prompt("Cambiar nombre", name(Path.of(oldPath)));
-        if (value == null) {
-            return;
-        }
-        if (!validName(value)) {
-            onStatus.accept("Nombre no válido.");
-            return;
-        }
-        String destination = child(parentOf(oldPath), value);
-        try {
-            workspace.move(oldPath, destination);
-            changed(new Change(Operation.MOVE, oldPath, destination));
-        } catch (IllegalArgumentException problem) {
-            onStatus.accept(problem.getMessage());
-        }
-    }
-
-    private void paste(String parent) {
-        if (clipboard == null) {
-            return;
-        }
-        String destination = child(parent, name(Path.of(clipboard)));
-        try {
-            if (cut) {
-                workspace.move(clipboard, destination);
-                changed(new Change(Operation.MOVE, clipboard, destination));
-            } else {
-                workspace.copy(clipboard, destination);
-                changed(new Change(Operation.COPY, clipboard, destination));
-            }
-            clipboard = null;
-        } catch (IllegalArgumentException problem) {
-            onStatus.accept(problem.getMessage());
-        }
-    }
-
-    private void delete(String relative) {
-        ButtonType answer = ProductDialogs.confirm(getScene().getWindow(),
-                "Eliminar elemento virtual",
-                "¿Eliminar " + relative + " de la construcción virtual?",
-                ButtonType.OK, ButtonType.CANCEL);
-        if (answer != ButtonType.OK) {
-            return;
-        }
-        workspace.delete(relative);
-        changed(new Change(Operation.DELETE, relative, ""));
     }
 
     private void changed(Change change) {

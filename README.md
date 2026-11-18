@@ -21,7 +21,7 @@ Para trabajar normalmente desde IntelliJ IDEA: importar pom.xml como Maven, sele
 - Referencia de solo lectura, árbol con creación/copia/movimiento/eliminación **virtual**.
 - **Plantilla inmutable y selección por línea:** al hacer clic en una fila se resalta completa y el cursor pasa a su inicio. Escribir solo marca la posición original con verde (correcto) o rojo (incorrecto, subrayado), sin sustituir caracteres ni desplazar la referencia. El documento se muestra con líneas virtualizadas.
 - **Control horizontal del tamaño tipográfico** en la barra inferior (10 a 36 pt, rueda del ratón y botones −/+), sincronizado con Preferencias.
-- Opacidad de caracteres pendientes ajustable con un Spinner en Preferencias → Editor (20–100 %); los caracteres correctos o incorrectos permanecen completamente visibles.
+- Opacidad de caracteres pendientes ajustable con un Slider horizontal en Preferencias → Editor (20–100 %); los caracteres correctos o incorrectos permanecen completamente visibles.
 - Persistencia binaria en sesiones *.ctrace, progreso y hashes SHA-256.
 - **Explorador con marcadores de estado**: círculo gris si falta recrearlo, visto verde cuando existe en el proyecto virtual. Botones para contraer/expandir carpetas. Cada carpeta muestra el número de archivos que contiene, también en subcarpetas.
 - **Reconstrucción explícita desde el menú contextual**: sobre una carpeta pendiente, «Crear esta carpeta»; sobre una carpeta creada, «Crear subcarpeta...» y «Crear archivo...»; sobre un archivo pendiente, «Crear este archivo». Los nombres nuevos deben coincidir exactamente con la referencia; no se crean archivos reales. La carpeta padre debe existir virtualmente antes que sus descendientes. El filtro de progreso por carpeta permanece en el menú.
@@ -105,3 +105,10 @@ La consola plegable comienza sin salida. Si todavía no hay perfiles de comandos
 muestra un estado vacío con el botón **Configurar comandos...**, que abre la
 sección correspondiente de Preferencias. Los comandos jamás se ejecutan
 automáticamente; al seleccionar uno y pulsar Ejecutar se muestra su salida.
+
+### Interacción de escritorio y reconstrucción
+
+- Las filas del árbol mantienen el ícono de carpeta o de lenguaje separado del nombre, del estado de creación y del contador. Un nombre largo nunca sustituye el ícono por puntos suspensivos.
+- Los archivos creados virtualmente son hitos: no se ofrecen acciones de eliminar, copiar, cortar o renombrar desde el explorador. El menú contextual de los archivos ofrece **Mostrar en el Explorador**, que revela el archivo original en Windows y su carpeta contenedora en Linux si no puede seleccionarlo.
+- Al abrir o seleccionar una pestaña de código, la superficie de mecanografía recupera el foco después del cambio de pestaña. Al crear explícitamente un archivo ya abierto, también queda preparado para escribir sin otro clic.
+- La opacidad de la plantilla es un **Slider horizontal** en Preferencias → Editor; los caracteres ya evaluados conservan su visibilidad.

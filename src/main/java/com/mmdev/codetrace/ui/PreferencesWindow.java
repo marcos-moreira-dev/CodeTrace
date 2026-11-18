@@ -19,7 +19,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Slider;
-import javafx.scene.control.Spinner;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -152,15 +151,22 @@ public final class PreferencesWindow {
         sizeValue.getStyleClass().add("prefs-size-value");
         sizeValue.setMinWidth(44);
 
-        Spinner<Integer> opacity = new Spinner<>(20, 100, current.templateOpacity(), 5);
-        opacity.getStyleClass().add("prefs-opacity-spinner");
-        opacity.setEditable(false);
-        opacity.setPrefWidth(110);
+        // Opacity is a continuous visual preference, so use a horizontal
+        // Slider rather than a numeric Spinner. The value stays readable.
+        Slider opacity = new Slider(20, 100, current.templateOpacity());
+        opacity.getStyleClass().add("prefs-opacity-slider");
+        opacity.setSnapToTicks(true);
+        opacity.setMajorTickUnit(5);
+        opacity.setMinorTickCount(4);
+        opacity.setBlockIncrement(1);
+        opacity.setMinWidth(130);
+        HBox.setHgrow(opacity, Priority.ALWAYS);
         opacity.setTooltip(new Tooltip(
-                "Transparencia visual de los caracteres pendientes; los aciertos y errores permanecen nítidos."));
-        Label opacityUnit = new Label("%");
-        opacityUnit.getStyleClass().add("prefs-size-value");
-        HBox opacityRow = new HBox(9, opacity, opacityUnit);
+                "Opacidad de la plantilla pendiente; los aciertos y errores permanecen nítidos."));
+        Label opacityValue = new Label(current.templateOpacity() + " %");
+        opacityValue.setMinWidth(48);
+        opacityValue.getStyleClass().add("prefs-size-value");
+        HBox opacityRow = new HBox(10, opacity, opacityValue);
         opacityRow.setAlignment(Pos.CENTER_LEFT);
 
         Label preview = new Label("public class Main {\n    int valor = 21;\n}");
@@ -172,7 +178,9 @@ public final class PreferencesWindow {
             String family = families.getValue() == null ? "Consolas" : families.getValue();
             int points = (int) Math.round(size.getValue());
             preview.setFont(Font.font(family, points));
-            preview.setOpacity(opacity.getValue() / 100.0);
+            int percentage = (int) Math.round(opacity.getValue());
+            preview.setOpacity(percentage / 100.0);
+            opacityValue.setText(percentage + " %");
             sizeValue.setText(points + " pt");
         };
         size.valueProperty().addListener((obs, previous, value) -> updatePreview.run());
@@ -269,7 +277,7 @@ public final class PreferencesWindow {
                     families.getValue() == null ? current.fontFamily() : families.getValue(),
                     (int) Math.round(size.getValue()),
                     explorer.isSelected(), current.keyboardLayout(), sounds.isSelected(),
-                    opacity.getValue(), turbo.isSelected()));
+                    (int) Math.round(opacity.getValue()), turbo.isSelected()));
             return true;
         };
         Button accept = new Button("Aceptar");
