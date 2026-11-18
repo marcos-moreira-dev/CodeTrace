@@ -116,6 +116,12 @@ class CodeTraceAppSmokeTest {
                 assertEquals(2, tabPane.getTabs().size());
                 assertTrue(tabPane.getSelectionModel().getSelectedItem().getContent()
                         instanceof ReferenceMediaPane);
+                ReferenceMediaPane selectedMedia = (ReferenceMediaPane)
+                        tabPane.getSelectionModel().getSelectedItem().getContent();
+                selectedMedia.setZoomPercent(150);
+                assertEquals(150, selectedMedia.getZoomPercent());
+                assertNotNull(selectedMedia.lookup(".media-zoom-viewport"));
+                assertNotNull(stage.getScene().getRoot().lookup(".media-zoom-control"));
                 assertTrue(tabPane.getSelectionModel().getSelectedItem().isClosable());
                 tabPane.getSelectionModel().selectFirst();
                 var zoom = stage.getScene().getRoot().lookup(".status-zoom-control");
@@ -233,6 +239,9 @@ class CodeTraceAppSmokeTest {
                 second.selectLine(1);
                 assertEquals(6, second.session().caret());
                 assertEquals("beta", second.visibleLineText(1));
+                second.showSearchMatch(0, 1, 2);
+                assertEquals(6, second.session().caret(),
+                        "Find must never change the typing cursor");
 
                 // Ctrl+V of ONE symbol writes into the existing reference slot
                 // without shifting the source glyph or changing lines.
@@ -252,6 +261,9 @@ class CodeTraceAppSmokeTest {
                 ReferenceTree fileTree = (ReferenceTree) stage.getScene()
                         .getRoot().lookup(".tree-view");
                 assertNotNull(fileTree);
+                assertNotNull(stage.getScene().getRoot().lookup(".tree-name-search"));
+                assertNotNull(stage.getScene().getRoot().lookup(".tree-exclude-checkbox"));
+                assertNotNull(stage.getScene().getRoot().lookup(".tabs-actions"));
                 // Regression: the virtual status must be a real vector icon,
                 // not a Label whose text can collapse into an ellipsis.
                 StackPane createdBadge = ReconstructionStateIcons.forCreated(true);
