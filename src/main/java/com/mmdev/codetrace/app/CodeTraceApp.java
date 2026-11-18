@@ -45,11 +45,13 @@ import javafx.scene.control.SplitPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.ToolBar;
+import javafx.scene.control.Tooltip;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
@@ -71,7 +73,8 @@ public final class CodeTraceApp extends Application {
     private final SplitPane split = new SplitPane();
     private final ReferenceTree tree = new ReferenceTree(
             this::openForPractice, this::onWorkspaceChanged, this::setStatus);
-    private final VBox sidebar = new VBox(new Label("Proyecto"), tree);
+    private final VBox sidebar = new VBox();
+    private String progressFolder = "";
     private final Button refreshButton = ToolbarIcons.button(
             "", ToolbarIcons.Icon.REFRESH, "Actualizar referencia");
     private final Button skipImportsButton = ToolbarIcons.button(
@@ -194,10 +197,28 @@ public final class CodeTraceApp extends Application {
         top.getChildren().addAll(menu, toolbar);
         root.setTop(top);
 
+        Label projectHeading = new Label("Proyecto");
+        projectHeading.getStyleClass().add("sidebar-title");
+        Button collapse = new Button("−");
+        collapse.getStyleClass().add("tree-header-action");
+        collapse.setTooltip(new Tooltip("Contraer todas las carpetas"));
+        collapse.setAccessibleText("Contraer árbol");
+        collapse.setOnAction(event -> tree.collapseAll());
+        Button expand = new Button("+");
+        expand.getStyleClass().add("tree-header-action");
+        expand.setTooltip(new Tooltip("Expandir carpetas"));
+        expand.setAccessibleText("Expandir árbol");
+        expand.setOnAction(event -> tree.expandAll());
+        Region headerFill = new Region();
+        HBox.setHgrow(headerFill, Priority.ALWAYS);
+        HBox header = new HBox(5, projectHeading, headerFill, collapse, expand);
+        header.getStyleClass().add("project-tree-header");
+        header.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
+        sidebar.getChildren().addAll(header, tree);
+        tree.setOnProgressFolder(this::setProgressFolder);
         sidebar.getStyleClass().add("sidebar");
         sidebar.setMinWidth(165);
         sidebar.setPrefWidth(245);
-        sidebar.getChildren().get(0).getStyleClass().add("sidebar-title");
         VBox.setVgrow(tree, Priority.ALWAYS);
         tree.setWorkspace(workspace);
         split.getItems().addAll(sidebar, tabs);
@@ -270,6 +291,7 @@ public final class CodeTraceApp extends Application {
             sessions = new LinkedHashMap<>();
             hashes = new LinkedHashMap<>();
             catalogue = null;
+            progressFolder = "";
             sessionFile = null;
             dirty = false;
             tabs.getTabs().clear();
@@ -524,6 +546,7 @@ public final class CodeTraceApp extends Application {
                 restoredReference = replacement.toPath().toAbsolutePath().normalize();
             }
             reference = restoredReference;
+            progressFolder = "";
             workspace = data.workspace();
             sessions = new LinkedHashMap<>(data.sessions());
             hashes = new LinkedHashMap<>(data.referenceHashes());
