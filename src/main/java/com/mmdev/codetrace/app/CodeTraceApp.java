@@ -1369,7 +1369,8 @@ public final class CodeTraceApp extends Application {
         if (zoom == null || mediaZoom == null) return;
         Tab selected = tabs.getSelectionModel().getSelectedItem();
         boolean visual = selected != null
-                && selected.getContent() instanceof ReferenceMediaPane;
+                && selected.getContent() instanceof ReferenceMediaPane media
+                && media.supportsZoom();
         zoom.setVisible(!visual && !concentration);
         zoom.setManaged(!visual && !concentration);
         mediaZoom.setVisible(visual && !concentration);
