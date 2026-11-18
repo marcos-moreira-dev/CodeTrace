@@ -38,7 +38,9 @@ public final class MarkdownRenderer {
     private static final List<Extension> EXTENSIONS = List.of(TablesExtension.create());
     private static final long MAX_IMAGE_BYTES = 8L * 1024 * 1024;
     private static final long MAX_PAGE_IMAGE_BYTES = 24L * 1024 * 1024;
-    private static final Pattern HTML_IMAGE = Pattern.compile("(?is)^\\s*<img\\b[^>]*?/?>\\s*$");
+    private static final Pattern HTML_IMAGE = Pattern.compile(
+            "(?is)^\\s*(?:(?:<p|<div)\\b[^>]*>\\s*)?<img\\b[^>]*?/?>"
+            + "\\s*(?:(?:</p>|</div>)\\s*)?$");
     private static final Pattern HTML_SRC = Pattern.compile(
             "(?i)\\bsrc\\s*=\\s*(?:\\\"([^\\\"]+)\\\"|'([^']+)'|([^\\s>]+))");
     private static final Pattern HTML_ALT = Pattern.compile(
