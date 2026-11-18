@@ -4,6 +4,12 @@ import com.vdurmont.emoji.EmojiParser;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.URLDecoder;
+import java.net.URI;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import org.commonmark.node.HtmlBlock;
+import org.commonmark.node.HtmlInline;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -32,13 +38,21 @@ public final class MarkdownRenderer {
     private static final List<Extension> EXTENSIONS = List.of(TablesExtension.create());
     private static final long MAX_IMAGE_BYTES = 8L * 1024 * 1024;
     private static final long MAX_PAGE_IMAGE_BYTES = 24L * 1024 * 1024;
+    private static final Pattern HTML_IMAGE = Pattern.compile("(?is)^\\s*<img\\b[^>]*?/?>\\s*$");
+    private static final Pattern HTML_SRC = Pattern.compile(
+            "(?i)\\bsrc\\s*=\\s*(?:\\\"([^\\\"]+)\\\"|'([^']+)'|([^\\s>]+))");
+    private static final Pattern HTML_ALT = Pattern.compile(
+            "(?i)\\balt\\s*=\\s*(?:\\\"([^\\\"]*)\\\"|'([^']*)'|([^\\s>]+))");
+
+    public record RenderedPage(String html, int localImages, int externalImages,
+                               int unavailableImages) {} 
 
     private MarkdownRenderer() {
     }
 
     /** Text-only fallback for callers without a reference document. */
     public static String toHtmlPage(String markdown) {
-        return toHtmlPage(markdown, null, null);
+        return render(markdown, null, null, false).html();
     }
 
     /**
@@ -46,6 +60,15 @@ public final class MarkdownRenderer {
      * @param referenceRoot immutable reference directory; images cannot escape it
      */
     public static String toHtmlPage(String markdown, Path markdownFile, Path referenceRoot) {
+        return render(markdown, markdownFile, referenceRoot, false).html();
+    }
+
+    /**
+     * External HTTPS images are an explicit reader choice. No project can cause
+     * a network request simply by being opened in CodeTrace.
+     */
+    public static RenderedPage render(String markdown, Path markdownFile,
+                                      Path referenceRoot, boolean externalAllowed) {
         Parser parser = Parser.builder().extensions(EXTENSIONS).build();
         var document = parser.parse(markdown);
         // Expand :rocket: / :white_check_mark: etc. only in text nodes.
@@ -54,9 +77,18 @@ public final class MarkdownRenderer {
             @Override public void visit(Text text) {
                 text.setLiteral(EmojiParser.parseToUnicode(text.getLiteral()));
             }
+            @Override public void visit(HtmlInline html) {
+                convertImageHtml(html, html.getLiteral());
+            }
+            @Override public void visit(HtmlBlock html) {
+                convertImageHtml(html, html.getLiteral());
+            }
         });
 
         AtomicLong bytesEmbedded = new AtomicLong();
+        AtomicInteger local = new AtomicInteger();
+        AtomicInteger external = new AtomicInteger();
+        AtomicInteger unavailable = new AtomicInteger();
         HtmlRenderer renderer = HtmlRenderer.builder()
                 .extensions(EXTENSIONS)
                 .escapeHtml(true)
@@ -66,22 +98,36 @@ public final class MarkdownRenderer {
                     String data = inlineImage(image.getDestination(), markdownFile,
                             referenceRoot, bytesEmbedded);
                     if (data != null) {
+                        local.incrementAndGet();
                         attributes.put("src", data);
-                        attributes.put("loading", "lazy");
+                    } else if (safeExternalImage(image.getDestination())) {
+                        external.incrementAndGet();
+                        if (externalAllowed) {
+                            attributes.put("src", image.getDestination());
+                            attributes.put("referrerpolicy", "no-referrer");
+                        } else {
+                            attributes.remove("src");
+                            attributes.put("class", "markdown-image-unavailable");
+                            attributes.put("title", "Imagen externa: habilita su carga para verla");
+                        }
                     } else {
-                        // Never retain remote, file:, or traversal image URLs.
+                        unavailable.incrementAndGet();
+                        // The reference is never permitted to read outside its root.
                         attributes.remove("src");
                         attributes.put("class", "markdown-image-unavailable");
-                        attributes.put("title", "Imagen no disponible en la referencia");
+                        attributes.put("title", "No se encontró una imagen local válida");
                     }
                 })
                 .build();
         String body = renderer.render(document);
-        return "<!doctype html><html lang=\"es\"><head>"
+        String allowedImages = externalAllowed ? "data: https:" : "data:";
+        String html = "<!doctype html><html lang=\"es\"><head>"
                 + "<meta charset=\"utf-8\">"
+                + "<meta name=\"referrer\" content=\"no-referrer\">"
                 + "<meta http-equiv=\"Content-Security-Policy\" "
-                + "content=\"default-src 'none'; style-src 'unsafe-inline'; img-src data:; "
-                + "font-src 'none'; form-action 'none'; base-uri 'none'\">"
+                + "content=\"default-src 'none'; style-src 'unsafe-inline'; img-src "
+                + allowedImages + "; font-src 'none'; form-action 'none'; "
+                + "base-uri 'none'; script-src 'none'; object-src 'none'\">"
                 + "<style>"
                 + "body{font-family:Segoe UI,Arial,sans-serif;color:#263747;"
                 + "background:#fff;margin:26px auto;padding:0 30px;max-width:980px;"
@@ -102,6 +148,46 @@ public final class MarkdownRenderer {
                 + ".emoji{font-family:'Segoe UI Emoji','Apple Color Emoji',"
                 + "'Noto Color Emoji',sans-serif}"
                 + "</style></head><body>" + body + "</body></html>";
+        return new RenderedPage(html, local.get(), external.get(), unavailable.get());
+    }
+
+    private static void convertImageHtml(org.commonmark.node.Node original, String literal) {
+        if (literal == null || !HTML_IMAGE.matcher(literal).matches()) return;
+        Matcher src = HTML_SRC.matcher(literal);
+        if (!src.find()) return;
+        String url = group(src);
+        if (url == null || url.isBlank()) return;
+        url = url.replace("&amp;", "&");
+        Matcher alt = HTML_ALT.matcher(literal);
+        String caption = alt.find() ? group(alt) : "Imagen";
+        Image image = new Image(url, null);
+        image.appendChild(new Text(caption == null ? "" : caption));
+        original.insertBefore(image);
+        original.unlink();
+    }
+
+    private static String group(Matcher match) {
+        for (int i = 1; i <= match.groupCount(); i++) {
+            if (match.group(i) != null) return match.group(i);
+        }
+        return null;
+    }
+
+    private static boolean safeExternalImage(String url) {
+        try {
+            URI uri = URI.create(url);
+            if (!"https".equalsIgnoreCase(uri.getScheme()) || uri.getUserInfo() != null
+                    || (uri.getPort() != -1 && uri.getPort() != 443)) return false;
+            String host = uri.getHost();
+            if (host == null) return false;
+            host = host.toLowerCase(Locale.ROOT);
+            // No private hosts or numeric addresses (including IPv4/IPv6).
+            return host.matches("[a-z0-9.-]+") && host.contains(".")
+                    && !host.endsWith(".local") && !host.endsWith(".localhost")
+                    && !host.endsWith(".internal") && !host.matches("[0-9.]+");
+        } catch (IllegalArgumentException problem) {
+            return false;
+        }
     }
 
     private static String inlineImage(String url, Path markdownFile, Path referenceRoot,

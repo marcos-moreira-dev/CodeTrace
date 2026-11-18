@@ -50,16 +50,16 @@ public final class ProductDialogs {
 
         Label title = new Label("CodeTrace");
         title.getStyleClass().add("about-title");
-        Label version = new Label("Versión 0.3.0 · JavaFX / Java 21");
+        Label version = new Label("Versión 0.3.0");
         version.getStyleClass().add("about-version");
         VBox identity = new VBox(1, brand, title, version);
         identity.setAlignment(javafx.geometry.Pos.CENTER);
         identity.getStyleClass().add("about-identity-center");
 
         String description =
-                "CodeTrace es una herramienta de escritorio para practicar la "
-                + "reconstrucción manual de proyectos de software y familiarizarse "
-                + "con su estructura, sintaxis y proceso de elaboración.\n\n"
+                "CodeTrace es una aplicación de escritorio para explorar, "
+                + "comprender y reconstruir proyectos de software sin modificar "
+                + "sus archivos originales.\n\n"
                 + "Su propósito es desarrollar cultura, soltura y confianza "
                 + "con el trabajo cotidiano del programador. Transcribir proyectos "
                 + "permite reconocer los detalles de una implementación, "

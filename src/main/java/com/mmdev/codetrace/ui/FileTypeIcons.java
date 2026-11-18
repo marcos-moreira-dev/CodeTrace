@@ -4,6 +4,7 @@ import java.nio.file.Path;
 import java.util.Locale;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import org.kordamp.ikonli.javafx.FontIcon;
 
@@ -47,12 +48,22 @@ public final class FileTypeIcons {
         if (name.endsWith(".sh") || name.endsWith(".bash")
                 || name.endsWith(".zsh")) return font("fth-terminal", "#536A77");
         if (name.endsWith(".bat") || name.endsWith(".cmd"))
-            return badge("CMD", "#517A66");
+            return font("fth-terminal", "#517A66");
         if (name.endsWith(".rs")) return font("di-rust", "#5D6266");
+        if (name.endsWith(".svg") || name.endsWith(".bmp")
+                || name.endsWith(".ico") || name.endsWith(".tiff")
+                || name.endsWith(".tif"))
+            return font("fth-image", "#6A8B73");
+        if (name.endsWith(".mp3") || name.endsWith(".wav")
+                || name.endsWith(".aac") || name.endsWith(".m4a")
+                || name.endsWith(".flac") || name.endsWith(".ogg"))
+            return font("fth-music", "#6686A0");
         if (name.endsWith(".png") || name.endsWith(".jpg")
                 || name.endsWith(".jpeg") || name.endsWith(".gif")
                 || name.endsWith(".webp")) return font("fth-image", "#6A8B73");
-        if (name.endsWith(".mp4") || name.endsWith(".mkv") || name.endsWith(".mov"))
+        if (name.endsWith(".mp4") || name.endsWith(".m4v")
+                || name.endsWith(".webm") || name.endsWith(".avi")
+                || name.endsWith(".mkv") || name.endsWith(".mov"))
             return font("fth-film", "#74849A");
         if (name.equals("dockerfile")) return font("di-docker", "#3C91B7");
         if (name.equals(".gitignore")) return font("di-git", "#C66A45");
@@ -74,6 +85,8 @@ public final class FileTypeIcons {
         Label label = new Label(text);
         label.getStyleClass().add("source-file-badge");
         label.setTextFill(Color.web(color));
+        label.setMinWidth(Region.USE_PREF_SIZE);
+        label.setMaxWidth(Region.USE_PREF_SIZE);
         return label;
     }
 }

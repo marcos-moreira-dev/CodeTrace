@@ -44,6 +44,7 @@ import javafx.scene.input.ClipboardContent;
 import javafx.scene.control.Spinner;
 import com.mmdev.codetrace.ui.ReferenceTree;
 import com.mmdev.codetrace.ui.ReconstructionStateIcons;
+import com.mmdev.codetrace.ui.FileTypeIcons;
 import com.mmdev.codetrace.practice.ReconstructionStatus;
 import com.mmdev.codetrace.practice.PracticeMode;
 import javafx.scene.layout.StackPane;
@@ -242,6 +243,12 @@ class CodeTraceAppSmokeTest {
                 // not a Label whose text can collapse into an ellipsis.
                 StackPane createdBadge = ReconstructionStateIcons.forCreated(true);
                 StackPane pendingBadge = ReconstructionStateIcons.forCreated(false);
+                assertTrue(FileTypeIcons.forPath(Path.of("install.bat"), false)
+                        instanceof FontIcon, "Batch files require real vector icons");
+                assertTrue(FileTypeIcons.forPath(Path.of("install.cmd"), false)
+                        instanceof FontIcon, "CMD files require real vector icons");
+                assertTrue(FileTypeIcons.forPath(Path.of("logo.svg"), false)
+                        instanceof FontIcon, "SVG files require an image icon");
                 assertTrue(createdBadge.getChildren().getFirst() instanceof FontIcon);
                 assertTrue(pendingBadge.getChildren().getFirst() instanceof FontIcon);
                 assertEquals(18.0, createdBadge.getMinWidth());

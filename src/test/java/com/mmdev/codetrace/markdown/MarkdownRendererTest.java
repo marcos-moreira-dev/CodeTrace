@@ -88,6 +88,48 @@ class MarkdownRendererTest {
     }
 
     @Test
+    void remoteImagesRequireExplicitActivation() throws Exception {
+        Path root = Files.createDirectory(temp.resolve("source"));
+        Path doc = Files.writeString(root.resolve("README.md"), "# Demo");
+        String source = "![red](https://raw.githubusercontent.com/example/test/main/red.png)";
+        var blocked = MarkdownRenderer.render(source, doc, root, false);
+        var enabled = MarkdownRenderer.render(source, doc, root, true);
+        assertEquals(1, blocked.externalImages());
+        assertEquals(0, blocked.localImages());
+        assertFalse(blocked.html().contains("src=\"https:"));
+        assertTrue(blocked.html().contains("Imagen externa"));
+        assertEquals(1, enabled.externalImages());
+        assertTrue(enabled.html().contains(
+                "src=\"https://raw.githubusercontent.com/example/test/main/red.png\""));
+        assertTrue(enabled.html().contains("img-src data: https:"));
+    }
+
+    @Test
+    void inlineHtmlImageTagIsRecognizedWithoutEnablingRawHtml() throws Exception {
+        Path root = Files.createDirectory(temp.resolve("source"));
+        Path doc = Files.writeString(root.resolve("README.md"), "# Demo");
+        byte[] png = new byte[] { (byte) 137, 80, 78, 71, 0, 0, 0, 0 };
+        Files.write(root.resolve("logo.png"), png);
+        var result = MarkdownRenderer.render(
+                "<img src=\"logo.png\" alt=\"Logo\" width=\"200\" />", doc, root, false);
+        assertEquals(1, result.localImages());
+        assertTrue(result.html().contains("data:image/png;base64,"));
+        assertTrue(result.html().contains("alt=\"Logo\""));
+    }
+
+    @Test
+    void externalImagesCannotTargetPrivateOrNonHttpsResources() throws Exception {
+        Path root = Files.createDirectory(temp.resolve("source"));
+        Path doc = Files.writeString(root.resolve("README.md"), "# Demo");
+        var result = MarkdownRenderer.render(
+                "![a](http://example.com/a.png) ![b](https://localhost/a.png) "
+                + "![c](https://127.0.0.1/a.png) ![d](file:///etc/secret)",
+                doc, root, true);
+        assertEquals(0, result.externalImages());
+        assertEquals(4, result.unavailableImages());
+    }
+
+    @Test
     void escapesRawHtmlAndSanitizesDangerousUrls() {
         String page = MarkdownRenderer.toHtmlPage(
                 "<script>alert(1)</script>\n\n[click](javascript:alert%281%29)");

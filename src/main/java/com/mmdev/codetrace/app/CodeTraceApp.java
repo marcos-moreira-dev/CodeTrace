@@ -106,7 +106,8 @@ public final class CodeTraceApp extends Application {
             new EnumMap<>(ProgressScope.Category.class);
     private CheckBox allScopes;
     private final Button refreshButton = ToolbarIcons.button(
-            "", ToolbarIcons.Icon.REFRESH, "Actualizar referencia");
+            "Actualizar referencia", ToolbarIcons.Icon.REFRESH,
+            "Volver a leer los archivos originales del proyecto");
     private final Button skipImportsButton = ToolbarIcons.button(
             "Imports", ToolbarIcons.Icon.SKIP, "Saltar imports de Java");
     private final MenuItem skipImportsMenu = new MenuItem("Saltar imports");

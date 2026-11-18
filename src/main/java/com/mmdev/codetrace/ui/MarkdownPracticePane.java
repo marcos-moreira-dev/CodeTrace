@@ -9,6 +9,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.Tooltip;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -25,14 +27,30 @@ public final class MarkdownPracticePane extends BorderPane {
     private final WebView preview = new WebView();
     private final Button toggle = ToolbarIcons.button("Renderizado",
             ToolbarIcons.Icon.PREVIEW, "Mostrar Markdown renderizado");
-    private Task<String> renderTask;
+    private final Button externalImages = new Button("Cargar imágenes externas");
+    private final Label imagesInfo = new Label();
+    private Task<MarkdownRenderer.RenderedPage> renderTask;
     private boolean showingPreview;
+    private boolean allowExternalImages;
 
     public MarkdownPracticePane(TypingEditor editor, Path markdownFile, Path referenceRoot) {
         this.editor = editor;
         this.markdownFile = markdownFile;
         this.referenceRoot = referenceRoot;
-        HBox controls = new HBox(toggle);
+        Region controlsGap = new Region();
+        HBox.setHgrow(controlsGap, Priority.ALWAYS);
+        externalImages.getStyleClass().add("markdown-external-images");
+        externalImages.setVisible(false);
+        externalImages.managedProperty().bind(externalImages.visibleProperty());
+        externalImages.setTooltip(new Tooltip(
+                "Solo imágenes HTTPS; el sitio de origen puede conocer la solicitud"));
+        externalImages.setOnAction(event -> {
+            allowExternalImages = !allowExternalImages;
+            renderPreview();
+        });
+        imagesInfo.getStyleClass().add("markdown-images-status");
+        HBox controls = new HBox(8, toggle, controlsGap, imagesInfo, externalImages);
+        controls.setAlignment(Pos.CENTER_LEFT);
         controls.setPadding(new Insets(4, 8, 4, 8));
         controls.getStyleClass().add("markdown-controls");
         toggle.getStyleClass().add("markdown-preview-toggle");
@@ -52,11 +70,19 @@ public final class MarkdownPracticePane extends BorderPane {
         if (!showingPreview) {
             if (renderTask != null) renderTask.cancel();
             setCenter(editor);
+            externalImages.setVisible(false);
+            imagesInfo.setVisible(false);
+            imagesInfo.setManaged(false);
             setToggleMode(false);
             editor.focusEditor();
             return;
         }
         setToggleMode(true);
+        renderPreview();
+    }
+
+    private void renderPreview() {
+        if (renderTask != null) renderTask.cancel();
         ProgressIndicator spinner = new ProgressIndicator();
         spinner.setPrefSize(30, 30);
         spinner.setMaxSize(30, 30);
@@ -66,16 +92,26 @@ public final class MarkdownPracticePane extends BorderPane {
         setCenter(loading);
 
         // Reading and base64-encoding repository images must never freeze the FX thread.
-        Task<String> task = new Task<>() {
-            @Override protected String call() {
-                return MarkdownRenderer.toHtmlPage(
-                        editor.session().expectedText(), markdownFile, referenceRoot);
+        Task<MarkdownRenderer.RenderedPage> task = new Task<>() {
+            @Override protected MarkdownRenderer.RenderedPage call() {
+                return MarkdownRenderer.render(editor.session().expectedText(),
+                        markdownFile, referenceRoot, allowExternalImages);
             }
         };
         renderTask = task;
         task.setOnSucceeded(event -> {
             if (showingPreview && renderTask == task) {
-                preview.getEngine().loadContent(task.getValue(), "text/html");
+                MarkdownRenderer.RenderedPage result = task.getValue();
+                imagesInfo.setText(result.localImages() + " locales · "
+                        + result.externalImages() + " externas · "
+                        + result.unavailableImages() + " no disponibles");
+                imagesInfo.setVisible(result.localImages() + result.externalImages()
+                        + result.unavailableImages() > 0);
+                imagesInfo.setManaged(imagesInfo.isVisible());
+                externalImages.setVisible(result.externalImages() > 0);
+                externalImages.setText(allowExternalImages
+                        ? "Bloquear imágenes externas" : "Cargar imágenes externas");
+                preview.getEngine().loadContent(result.html(), "text/html");
                 setCenter(preview);
             }
         });

@@ -164,10 +164,9 @@
 .context-menu .menu-item:focused .label { -fx-text-fill: #263747; }
 .source-file-badge {
     -fx-font-family: "Segoe UI";
-    -fx-font-size: 9px;
+    -fx-font-size: 10px;
     -fx-font-weight: bold;
-    -fx-min-width: 17px;
-    -fx-pref-width: 17px;
+    -fx-padding: 0 2px;
     -fx-alignment: center;
 }
 
