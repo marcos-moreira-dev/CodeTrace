@@ -5,6 +5,18 @@ import org.junit.jupiter.api.Test;
 
 class AppSettingsTest {
     @Test
+    void completionSoundCanBeDisabledWithoutChangingTypingSounds() {
+        AppSettings options = new AppSettings(
+                "Consolas", 16, true, "LATAM", false, 70, false, false);
+        assertFalse(options.completionSound());
+        assertFalse(options.typingSounds());
+        assertFalse(options.withLayout("US").completionSound());
+        assertFalse(options.withTurbo(true).completionSound());
+        assertTrue(new AppSettings("Consolas", 16, true,
+                "LATAM", false, 70, false).completionSound());
+    }
+
+    @Test
     void validatesTemplateOpacityAndPreservesItWhenChangingLayout() {
         AppSettings options = new AppSettings("Consolas", 16, true,
                 "LATAM", false, 45);

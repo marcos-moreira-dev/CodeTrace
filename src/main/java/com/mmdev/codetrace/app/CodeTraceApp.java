@@ -24,6 +24,7 @@ import com.mmdev.codetrace.library.BuiltInLibrary;
 import com.mmdev.codetrace.ui.PracticeLibraryDialog;
 import com.mmdev.codetrace.symbols.SymbolCatalog.Layout;
 import com.mmdev.codetrace.sound.TypingSounds;
+import com.mmdev.codetrace.sound.CompletionSound;
 import com.mmdev.codetrace.workspace.VirtualWorkspace;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -133,6 +134,7 @@ public final class CodeTraceApp extends Application {
     private EditorZoomControl zoom;
     private boolean soundProblemReported;
     private final TypingSounds typingSounds = new TypingSounds();
+    private final CompletionSound completionSound = new CompletionSound();
     private boolean dirty;
     private boolean concentration;
     private double explorerRatio = 0.21;
@@ -759,7 +761,17 @@ public final class CodeTraceApp extends Application {
                 && catalogue.files().get(relative).sha256().equals(hashes.get(relative))
                 && virtualFileExists(relative);
         boolean wasFinished = reconstructionStates.get(relative) == State.COMPLETED;
-        if (finished != wasFinished) refreshReconstructionStatuses();
+        if (finished != wasFinished) {
+            refreshReconstructionStatuses();
+            // Only sound on a genuine incomplete -> completed transition.
+            // Reopening tabs, loading sessions and refreshing the tree never play it.
+            if (finished && reconstructionStates.get(relative) == State.COMPLETED
+                    && settings.completionSound() && !completionSound.play()
+                    && !soundProblemReported) {
+                soundProblemReported = true;
+                setStatus("Sonido de finalización no disponible en este dispositivo.");
+            }
+        }
     }
 
     private void refreshMetrics() {
@@ -1041,7 +1053,8 @@ public final class CodeTraceApp extends Application {
         }
         settings = new AppSettings(settings.fontFamily(), size,
                 settings.showExplorer(), settings.keyboardLayout(), settings.typingSounds(),
-                settings.templateOpacity(), settings.turboMode());
+                settings.templateOpacity(), settings.turboMode(),
+                settings.completionSound());
         settings.save();
         for (Tab tab : tabs.getTabs()) {
             if (tab.getContent() instanceof TypingEditor editor) {
@@ -1055,7 +1068,7 @@ public final class CodeTraceApp extends Application {
     private void applySettings(AppSettings next) {
         settings = new AppSettings(next.fontFamily(), next.fontSize(),
                 next.showExplorer(), settings.keyboardLayout(), next.typingSounds(),
-                next.templateOpacity(), next.turboMode());
+                next.templateOpacity(), next.turboMode(), next.completionSound());
         settings.save();
         turboToggle.setSelected(settings.turboMode());
         turboMenu.setSelected(settings.turboMode());

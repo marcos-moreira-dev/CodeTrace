@@ -5,18 +5,27 @@ import java.util.prefs.Preferences;
 /** Window-level preferences are separate from each .ctrace training session. */
 public record AppSettings(String fontFamily, int fontSize, boolean showExplorer,
                           String keyboardLayout, boolean typingSounds,
-                          int templateOpacity, boolean turboMode) {
+                          int templateOpacity, boolean turboMode,
+                          boolean completionSound) {
     private static final Preferences STORE =
             Preferences.userNodeForPackage(AppSettings.class);
 
     public AppSettings(String fontFamily, int fontSize, boolean showExplorer,
                        String keyboardLayout, boolean typingSounds) {
-        this(fontFamily, fontSize, showExplorer, keyboardLayout, typingSounds, 70, false);
+        this(fontFamily, fontSize, showExplorer, keyboardLayout, typingSounds, 70, false, true);
     }
 
     public AppSettings(String fontFamily, int fontSize, boolean showExplorer,
                        String keyboardLayout, boolean typingSounds, int opacity) {
-        this(fontFamily, fontSize, showExplorer, keyboardLayout, typingSounds, opacity, false);
+        this(fontFamily, fontSize, showExplorer, keyboardLayout, typingSounds, opacity, false, true);
+    }
+
+    /** Compatibility for callers constructed before completion sounds existed. */
+    public AppSettings(String fontFamily, int fontSize, boolean showExplorer,
+                       String keyboardLayout, boolean typingSounds,
+                       int templateOpacity, boolean turboMode) {
+        this(fontFamily, fontSize, showExplorer, keyboardLayout, typingSounds,
+                templateOpacity, turboMode, true);
     }
 
     public AppSettings {
@@ -45,17 +54,18 @@ public record AppSettings(String fontFamily, int fontSize, boolean showExplorer,
                 STORE.getBoolean("explorer.visible", true),
                 layout, STORE.getBoolean("practice.typingSounds", false),
                 Math.max(20, Math.min(100, STORE.getInt("editor.opacity", 70))),
-                STORE.getBoolean("practice.turbo", false));
+                STORE.getBoolean("practice.turbo", false),
+                STORE.getBoolean("practice.completionSound", true));
     }
 
     public AppSettings withLayout(String layout) {
         return new AppSettings(fontFamily, fontSize, showExplorer, layout,
-                typingSounds, templateOpacity, turboMode);
+                typingSounds, templateOpacity, turboMode, completionSound);
     }
 
     public AppSettings withTurbo(boolean enabled) {
         return new AppSettings(fontFamily, fontSize, showExplorer,
-                keyboardLayout, typingSounds, templateOpacity, enabled);
+                keyboardLayout, typingSounds, templateOpacity, enabled, completionSound);
     }
 
     public void save() {
@@ -66,5 +76,6 @@ public record AppSettings(String fontFamily, int fontSize, boolean showExplorer,
         STORE.putBoolean("practice.typingSounds", typingSounds);
         STORE.putInt("editor.opacity", templateOpacity);
         STORE.putBoolean("practice.turbo", turboMode);
+        STORE.putBoolean("practice.completionSound", completionSound);
     }
 }

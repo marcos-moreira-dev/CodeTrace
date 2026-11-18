@@ -207,6 +207,9 @@ public final class PreferencesWindow {
 
         CheckBox sounds = new CheckBox("Reproducir sonidos al escribir");
         sounds.setSelected(current.typingSounds());
+        CheckBox completionSound = new CheckBox(
+                "Reproducir sonido de éxito al completar cada archivo");
+        completionSound.setSelected(current.completionSound());
         Button sampleCorrect = new Button("Probar acierto");
         Button sampleError = new Button("Probar error");
         Label sampleStatus = new Label();
@@ -224,6 +227,7 @@ public final class PreferencesWindow {
         VBox soundPanel = section("Sonido");
         soundPanel.getChildren().addAll(
                 groupHeading("Mecanografía"), sounds,
+                groupHeading("Finalización de archivos"), completionSound,
                 groupHeading("Escuchar muestras"), previews, sampleStatus);
 
         CommandSettingsPane commandEditor = null;
@@ -278,7 +282,8 @@ public final class PreferencesWindow {
                     families.getValue() == null ? current.fontFamily() : families.getValue(),
                     (int) Math.round(size.getValue()),
                     explorer.isSelected(), current.keyboardLayout(), sounds.isSelected(),
-                    (int) Math.round(opacity.getValue()), turbo.isSelected()));
+                    (int) Math.round(opacity.getValue()), turbo.isSelected(),
+                    completionSound.isSelected()));
             return true;
         };
         Button accept = new Button("Aceptar");
