@@ -33,6 +33,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import javafx.application.Application;
 import javafx.concurrent.Task;
@@ -119,6 +120,7 @@ public final class CodeTraceApp extends Application {
             "Imports", ToolbarIcons.Icon.SKIP, "Saltar imports de Java");
     private final MenuItem skipImportsMenu = new MenuItem("Saltar imports");
     private final VBox top = new VBox();
+    private final MenuButton tabsActions = new MenuButton("Pestañas");
 
     private VirtualWorkspace workspace = new VirtualWorkspace();
     private Map<String, TypingSession> sessions = new LinkedHashMap<>();
@@ -277,10 +279,14 @@ public final class CodeTraceApp extends Application {
         progressFilter.getStyleClass().addAll("practice-rules-button", "toolbar-action");
         progressFilter.setTooltip(new Tooltip(
                 "Configurar contenido evaluado y ayudas de escritura"));
+        tabsActions.getStyleClass().addAll("toolbar-action", "tabs-actions");
+        tabsActions.setGraphic(new FontIcon("fth-layers"));
+        tabsActions.setTooltip(new Tooltip("Administrar pestañas abiertas"));
+        installTabActions();
         ToolBar toolbar = new ToolBar(openButton, saveButton,
                 new Separator(Orientation.VERTICAL), refreshButton,
                 new Separator(Orientation.VERTICAL), progressFilter, symbols,
-                new Separator(Orientation.VERTICAL), consoleButton);
+                new Separator(Orientation.VERTICAL), tabsActions, consoleButton);
         top.getChildren().addAll(menu, toolbar);
         root.setTop(top);
 
@@ -413,6 +419,7 @@ public final class CodeTraceApp extends Application {
         tabs.getSelectionModel().selectedItemProperty()
                 .addListener((observed, before, selected) -> {
                     refreshMetrics();
+                    refreshTabActions();
                     // Once tab selection is processed, return focus to its
                     // typing surface rather than leaving it in the file tree.
                     if (selected != null) {
@@ -677,6 +684,7 @@ public final class CodeTraceApp extends Application {
                 openedTabs.remove(relative);
                 if (tab.getContent() instanceof MarkdownPracticePane preview) preview.dispose();
             });
+            installTabContextMenu(tab);
             openedTabs.put(relative, tab);
             tabs.getTabs().add(tab);
             tabs.getSelectionModel().select(tab);
@@ -702,11 +710,65 @@ public final class CodeTraceApp extends Application {
             openedTabs.remove(relative);
             media.dispose();
         });
+        installTabContextMenu(tab);
         openedTabs.put(relative, tab);
         tabs.getTabs().add(tab);
         tabs.getSelectionModel().select(tab);
         setStatus("Vista previa · solo lectura: " + relative);
         refreshMetrics();
+    }
+
+    private void installTabActions() {
+        MenuItem closeCurrent = new MenuItem("Cerrar pestaña actual");
+        closeCurrent.setOnAction(event ->
+                closeTab(tabs.getSelectionModel().getSelectedItem()));
+        MenuItem closeOthers = new MenuItem("Cerrar las demás");
+        closeOthers.setOnAction(event ->
+                closeOtherTabs(tabs.getSelectionModel().getSelectedItem()));
+        MenuItem closeAll = new MenuItem("Cerrar todas");
+        closeAll.setOnAction(event -> closeAllTabs());
+        tabsActions.getItems().setAll(closeCurrent, closeOthers, closeAll);
+        refreshTabActions();
+    }
+
+    private void refreshTabActions() {
+        tabsActions.setDisable(tabs.getTabs().isEmpty());
+        if (tabsActions.getItems().size() < 3) return;
+        tabsActions.getItems().get(1).setDisable(tabs.getTabs().size() < 2);
+    }
+
+    private void installTabContextMenu(Tab tab) {
+        MenuItem close = new MenuItem("Cerrar");
+        close.setOnAction(event -> closeTab(tab));
+        MenuItem others = new MenuItem("Cerrar las demás");
+        others.setOnAction(event -> closeOtherTabs(tab));
+        MenuItem all = new MenuItem("Cerrar todas");
+        all.setOnAction(event -> closeAllTabs());
+        tab.setContextMenu(new ContextMenu(close, others, all));
+    }
+
+    private void closeTab(Tab tab) {
+        if (tab == null) return;
+        // Removing a Tab programmatically does not fire its usual onClosed
+        // handler; release resources explicitly before removal.
+        if (tab.getContent() instanceof ReferenceMediaPane media) media.dispose();
+        if (tab.getContent() instanceof MarkdownPracticePane preview) preview.dispose();
+        openedTabs.values().removeIf(candidate -> candidate == tab);
+        tabs.getTabs().remove(tab);
+        refreshTabActions();
+        refreshMetrics();
+    }
+
+    private void closeOtherTabs(Tab keep) {
+        if (keep == null) return;
+        for (Tab tab : List.copyOf(tabs.getTabs())) {
+            if (tab != keep) closeTab(tab);
+        }
+        tabs.getSelectionModel().select(keep);
+    }
+
+    private void closeAllTabs() {
+        for (Tab tab : List.copyOf(tabs.getTabs())) closeTab(tab);
     }
 
     private void clearOpenTabs() {
@@ -716,6 +778,7 @@ public final class CodeTraceApp extends Application {
         }
         tabs.getTabs().clear();
         openedTabs.clear();
+        refreshTabActions();
     }
 
     private void focusSelectedPracticeTab(Tab tab) {
