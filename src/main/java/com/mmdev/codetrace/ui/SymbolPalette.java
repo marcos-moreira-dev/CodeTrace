@@ -16,6 +16,7 @@ import javafx.scene.control.Button;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 /**
@@ -26,6 +27,7 @@ import javafx.scene.layout.VBox;
 public final class SymbolPalette extends MenuButton {
     private final ComboBox<Layout> layoutSelector = new ComboBox<>();
     private final Label hint = new Label();
+    private final VBox keyboardPreview = new VBox(3);
     private final Consumer<Layout> onLayoutChanged;
     private final Runnable onSymbolCopied;
 
@@ -57,6 +59,7 @@ public final class SymbolPalette extends MenuButton {
         layoutSelector.valueProperty().addListener((obs, before, selected) -> {
             if (selected != null) {
                 hint.setText("");
+                updateKeyboardPreview(selected);
                 this.onLayoutChanged.accept(selected);
             }
         });
@@ -95,7 +98,14 @@ public final class SymbolPalette extends MenuButton {
         hint.setWrapText(true);
         hint.setMinHeight(48);
         hint.setMaxWidth(Double.MAX_VALUE);
-        VBox body = new VBox(7, grid, layoutLabel, layoutSelector, hint);
+        keyboardPreview.getStyleClass().add("mini-keyboard");
+        keyboardPreview.setTooltip(new Tooltip(
+                "Esquema abreviado del teclado físico; los símbolos varían según el sistema"));
+        updateKeyboardPreview(initialLayout);
+        Label keyboardNote = new Label("Esquema orientativo de las teclas");
+        keyboardNote.getStyleClass().add("palette-caption");
+        VBox body = new VBox(7, grid, layoutLabel, layoutSelector,
+                keyboardPreview, keyboardNote, hint);
         body.getStyleClass().add("symbol-palette");
         body.setAlignment(Pos.TOP_LEFT);
         body.setPadding(new Insets(11));
@@ -103,6 +113,34 @@ public final class SymbolPalette extends MenuButton {
         gallery.setHideOnClick(false);
         getItems().add(gallery);
         setOnShowing(event -> hint.setText("Selecciona un símbolo para copiarlo."));
+    }
+
+    private void updateKeyboardPreview(Layout layout) {
+        // Compact visual reference, not a promise of an exact OS-level keymap.
+        String[][] rows = layout == Layout.LATAM
+                ? new String[][] {
+                    {"1","2","3","4","5","6","7","8","9","0","'","¿"},
+                    {"Q","W","E","R","T","Y","U","I","O","P","´","+"},
+                    {"A","S","D","F","G","H","J","K","L","Ñ","[","]"},
+                    {"Z","X","C","V","B","N","M",",",".","-"}
+                } : new String[][] {
+                    {"1","2","3","4","5","6","7","8","9","0","-","="},
+                    {"Q","W","E","R","T","Y","U","I","O","P","[","]"},
+                    {"A","S","D","F","G","H","J","K","L",";","'"},
+                    {"Z","X","C","V","B","N","M",",",".","/"}
+                };
+        keyboardPreview.getChildren().clear();
+        for (String[] keys : rows) {
+            HBox row = new HBox(2);
+            row.getStyleClass().add("mini-keyboard-row");
+            for (String key : keys) {
+                Label tile = new Label(key);
+                tile.getStyleClass().add("mini-keyboard-key");
+                tile.setAlignment(Pos.CENTER);
+                row.getChildren().add(tile);
+            }
+            keyboardPreview.getChildren().add(row);
+        }
     }
 
     public void selectLayout(Layout layout) {

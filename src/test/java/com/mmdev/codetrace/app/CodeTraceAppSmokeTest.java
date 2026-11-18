@@ -84,6 +84,8 @@ class CodeTraceAppSmokeTest {
                 assertNotNull(palette);
                 VBox gallery = (VBox) ((CustomMenuItem) palette.getItems().getFirst())
                         .getContent();
+                assertNotNull(gallery.lookup(".mini-keyboard"),
+                        "Symbols should include a compact keyboard-layout reference");
                 Button firstSymbol = (Button) ((FlowPane) gallery.getChildren().getFirst())
                         .getChildren().getFirst();
                 firstSymbol.fire();

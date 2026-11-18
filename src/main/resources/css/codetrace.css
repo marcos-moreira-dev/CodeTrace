@@ -797,3 +797,25 @@
     -fx-border-color: #bdc8d1 transparent transparent transparent; }
 .media-audio-title { -fx-font-size: 16px; -fx-text-fill: #304d64; }
 .media-error { -fx-text-fill: #596d7c; -fx-font-size: 13px; }
+
+/* Small physical-layout reference inside the programming-symbol gallery. */
+.mini-keyboard {
+    -fx-padding: 5px 3px;
+    -fx-background-color: #e5ecf1;
+    -fx-border-color: #bdcbd5;
+}
+.mini-keyboard-row { -fx-alignment: center; }
+.mini-keyboard-key {
+    -fx-background-color: white;
+    -fx-border-color: #b8c5cf;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+    -fx-min-width: 18px;
+    -fx-pref-width: 18px;
+    -fx-max-width: 18px;
+    -fx-min-height: 18px;
+    -fx-pref-height: 18px;
+    -fx-font-family: "Segoe UI";
+    -fx-font-size: 9px;
+    -fx-text-fill: #334f63;
+}
