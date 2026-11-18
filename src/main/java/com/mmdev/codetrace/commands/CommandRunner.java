@@ -72,9 +72,14 @@ public final class CommandRunner {
                 output.accept(System.lineSeparator() + "[Interrumpido]" + System.lineSeparator());
                 code = -2;
             } catch (IOException | IllegalArgumentException error) {
-                output.accept(System.lineSeparator()
-                        + "[No se pudo ejecutar: " + error.getMessage() + "]"
-                        + System.lineSeparator());
+                if (stopRequested.get()) {
+                    code = -2;
+                    output.accept(System.lineSeparator() + "[Detenido]" + System.lineSeparator());
+                } else {
+                    output.accept(System.lineSeparator()
+                            + "[No se pudo ejecutar: " + error.getMessage() + "]"
+                            + System.lineSeparator());
+                }
             } finally {
                 Process process = current.getAndSet(null);
                 if (process != null && process.isAlive()) terminate(process);
