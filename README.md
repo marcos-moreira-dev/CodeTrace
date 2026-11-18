@@ -16,6 +16,25 @@ El script comprueba Java y Maven, construye y prueba el proyecto, prepara autom�
 
 Para trabajar normalmente desde IntelliJ IDEA: importar pom.xml como Maven, seleccionar el SDK **Eclipse Temurin 21**, configurar Maven Toolchains y ejecutar mvn javafx:run. El pom.xml exige **Temurin 21** como toolchain; Maven puede usar ~/.m2/toolchains.xml o un archivo específico con la opción -t.
 
+## Audio y flujo de creación automática (en validación)
+
+Las pestañas de audio tienen controles habituales de **reproducir/pausar** (icono dinámico),
+**detener**, avance, tiempo transcurrido y volumen, además de un **espectro en tiempo real**
+de JavaFX. No es una forma de onda generada a partir del archivo ni requiere FFmpeg.
+El zoom violeta queda reservado para **imágenes y vídeos**, no para MP3/WAV.
+
+En **Reglas de práctica** hay una casilla `Autocrear archivos y carpetas`. Usa la
+modalidad por proyecto ya existente: marcada equivale a **Transcripción directa**,
+y crea virtualmente los antecesores y el archivo **al comenzar a teclear**;
+desmarcada requiere creación manual. Ninguna modalidad escribe sobre la referencia.
+
+Los archivos `tecla-correcta.wav.gz` y `tecla-error.wav.gz` son **WAV comprimidos
+con GZIP** para empaquetar sonidos pequeños. `TypingSounds` los descomprime y normaliza
+en una copia temporal antes de reproducirlos, conservando los originales intactos.
+
+La ventana Buscar usa el icono de CodeTrace y filas de resultados de varias líneas
+con el mismo componente visual que los comandos guardados.
+
 ## Navegación y búsqueda (versión en evaluación)
 
 El explorador incluye una búsqueda por nombres con conservación de las carpetas
