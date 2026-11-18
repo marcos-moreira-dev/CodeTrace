@@ -135,10 +135,20 @@ public final class ProjectSearchWindow {
             return;
         }
         int size = results.getItems().size();
-        currentHit = (currentHit + (backward ? size - 1 : 1) + size) % size;
+        currentHit = currentHit < 0 ? (backward ? size - 1 : 0)
+                : (currentHit + (backward ? size - 1 : 1)) % size;
         results.getSelectionModel().select(currentHit);
         results.scrollTo(currentHit);
         navigateSelected();
+    }
+
+    /** Called when the user opens a different reference or restores a session. */
+    public void projectChanged(Path current) {
+        cancel();
+        lastProject = current;
+        results.getItems().clear();
+        currentHit = -1;
+        state.setText("Referencia actualizada. Ejecuta una búsqueda nueva.");
     }
 
     private void runSearch() {
