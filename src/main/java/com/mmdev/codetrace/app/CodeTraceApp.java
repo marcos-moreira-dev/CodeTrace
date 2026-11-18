@@ -34,6 +34,12 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckMenuItem;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.CustomMenuItem;
+import javafx.scene.control.ProgressIndicator;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.GridPane;
+import java.util.EnumMap;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
@@ -75,6 +81,11 @@ public final class CodeTraceApp extends Application {
             this::openForPractice, this::onWorkspaceChanged, this::setStatus);
     private final VBox sidebar = new VBox();
     private String progressFolder = "";
+    private CheckBox onlySelectedFolder;
+    private boolean syncingFolderScope;
+    private final Map<ProgressScope.Category, CheckBox> scopeChecks =
+            new EnumMap<>(ProgressScope.Category.class);
+    private CheckBox allScopes;
     private final Button refreshButton = ToolbarIcons.button(
             "", ToolbarIcons.Icon.REFRESH, "Actualizar referencia");
     private final Button skipImportsButton = ToolbarIcons.button(
@@ -199,6 +210,37 @@ public final class CodeTraceApp extends Application {
 
         Label projectHeading = new Label("Proyecto");
         projectHeading.getStyleClass().add("sidebar-title");
+        onlySelectedFolder = new CheckBox("Solo");
+        onlySelectedFolder.getStyleClass().add("tree-scope-checkbox");
+        onlySelectedFolder.setTooltip(new Tooltip(
+                "Contabilizar solo los archivos de la carpeta seleccionada"));
+        onlySelectedFolder.setDisable(true);
+        onlySelectedFolder.setOnAction(event -> {
+            if (syncingFolderScope) return;
+            var selected = tree.getSelectionModel().getSelectedItem();
+            if (onlySelectedFolder.isSelected() && selected != null
+                    && tree.isFolderPath(selected.getValue())) {
+                setProgressFolder(tree.relativePath(selected.getValue()));
+            } else {
+                setProgressFolder("");
+            }
+        });
+        tree.getSelectionModel().selectedItemProperty().addListener(
+                (obs, before, selected) -> {
+                    boolean folder = selected != null
+                            && tree.isFolderPath(selected.getValue());
+                    onlySelectedFolder.setDisable(!folder && !onlySelectedFolder.isSelected());
+                    if (folder && onlySelectedFolder.isSelected()) {
+                        setProgressFolder(tree.relativePath(selected.getValue()));
+                    }
+                });
+        ProgressIndicator treeActivity = new ProgressIndicator();
+        treeActivity.setMaxSize(16, 16);
+        treeActivity.setMinSize(16, 16);
+        treeActivity.getStyleClass().add("tree-activity");
+        treeActivity.setVisible(false);
+        treeActivity.managedProperty().bind(treeActivity.visibleProperty());
+
         Button collapse = new Button("−");
         collapse.getStyleClass().add("tree-header-action");
         collapse.setTooltip(new Tooltip("Contraer todas las carpetas"));
@@ -206,16 +248,22 @@ public final class CodeTraceApp extends Application {
         collapse.setOnAction(event -> tree.collapseAll());
         Button expand = new Button("+");
         expand.getStyleClass().add("tree-header-action");
-        expand.setTooltip(new Tooltip("Expandir carpetas"));
+        expand.setTooltip(new Tooltip("Expandir todas las carpetas"));
         expand.setAccessibleText("Expandir árbol");
         expand.setOnAction(event -> tree.expandAll());
+
         Region headerFill = new Region();
         HBox.setHgrow(headerFill, Priority.ALWAYS);
-        HBox header = new HBox(5, projectHeading, headerFill, collapse, expand);
+        HBox header = new HBox(4, projectHeading, headerFill,
+                onlySelectedFolder, treeActivity, collapse, expand);
         header.getStyleClass().add("project-tree-header");
         header.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
         sidebar.getChildren().addAll(header, tree);
         tree.setOnProgressFolder(this::setProgressFolder);
+        tree.setOnBusyChange(busy -> {
+            treeActivity.setVisible(busy);
+            expand.setDisable(busy);
+        });
         sidebar.getStyleClass().add("sidebar");
         sidebar.setMinWidth(165);
         sidebar.setPrefWidth(245);
@@ -239,11 +287,7 @@ public final class CodeTraceApp extends Application {
         progressFilter.getStyleClass().add("status-progress-filter");
         progressFilter.setTooltip(new Tooltip(
                 "Seleccionar tipos de archivo incluidos en el progreso"));
-        addProgressOption(progressFilter, "Código fuente", ProgressScope.Category.SOURCE);
-        addProgressOption(progressFilter, "Configuración", ProgressScope.Category.CONFIGURATION);
-        addProgressOption(progressFilter, "Documentación / Markdown",
-                ProgressScope.Category.DOCUMENTATION);
-        addProgressOption(progressFilter, "Otros textos", ProgressScope.Category.OTHER_TEXT);
+        installProgressFilters();
         zoom = new EditorZoomControl(settings.fontSize(), this::setEditorZoom);
         zoom.setId("editor-font-zoom");
         HBox footer = new HBox(9, status, fileInfo, projectInfo, fileProgress,
@@ -315,7 +359,7 @@ public final class CodeTraceApp extends Application {
             setStatus("La carpeta de referencia no está disponible. Selecciona otra.");
             return;
         }
-        tree.refreshTree();
+        tree.reloadReference();
         indexReference();
         int changes = 0;
         for (var pair : hashes.entrySet()) {
@@ -487,22 +531,67 @@ public final class CodeTraceApp extends Application {
 
     private void setProgressFolder(String folder) {
         progressFolder = folder == null ? "" : folder;
+        if (onlySelectedFolder != null) {
+            syncingFolderScope = true;
+            try {
+                onlySelectedFolder.setSelected(!progressFolder.isEmpty());
+                onlySelectedFolder.setTooltip(new Tooltip(progressFolder.isEmpty()
+                        ? "Progreso: todo el proyecto"
+                        : "Progreso: " + progressFolder));
+                onlySelectedFolder.setDisable(progressFolder.isEmpty()
+                        && !tree.isFolderPath(tree.getSelectionModel().getSelectedItem() == null
+                            ? null : tree.getSelectionModel().getSelectedItem().getValue()));
+            } finally {
+                syncingFolderScope = false;
+            }
+        }
         refreshMetrics();
         setStatus(progressFolder.isEmpty()
                 ? "Progreso: todo el proyecto"
                 : "Progreso: " + progressFolder);
     }
 
-    private void addProgressOption(MenuButton menu, String title,
-                                   ProgressScope.Category category) {
-        CheckMenuItem option = new CheckMenuItem(title);
-        option.setSelected(progressScope.includes(category));
-        option.setOnAction(event -> {
-            progressScope = progressScope.with(category, option.isSelected());
+    /** Persistent filter gallery: checkboxes do NOT close after each click. */
+    private void installProgressFilters() {
+        allScopes = new CheckBox("Todos");
+        allScopes.getStyleClass().add("scope-all");
+        VBox options = new VBox(9, allScopes);
+        options.getStyleClass().add("scope-options");
+        addFilterOption(options, "Código fuente", ProgressScope.Category.SOURCE);
+        addFilterOption(options, "Configuración", ProgressScope.Category.CONFIGURATION);
+        addFilterOption(options, "Documentación / Markdown",
+                ProgressScope.Category.DOCUMENTATION);
+        addFilterOption(options, "Otros textos", ProgressScope.Category.OTHER_TEXT);
+        updateAllCheck();
+
+        allScopes.setOnAction(event -> {
+            boolean active = allScopes.isSelected();
+            progressScope = new ProgressScope(active, active, active, active);
+            for (CheckBox choice : scopeChecks.values()) choice.setSelected(active);
             progressScope.save();
             refreshMetrics();
         });
-        menu.getItems().add(option);
+
+        CustomMenuItem panel = new CustomMenuItem(options, false);
+        panel.setHideOnClick(false);
+        progressFilter.getItems().setAll(panel);
+    }
+
+    private void addFilterOption(VBox parent, String label, ProgressScope.Category category) {
+        CheckBox control = new CheckBox(label);
+        control.setSelected(progressScope.includes(category));
+        control.setOnAction(event -> {
+            progressScope = progressScope.with(category, control.isSelected());
+            progressScope.save();
+            updateAllCheck();
+            refreshMetrics();
+        });
+        scopeChecks.put(category, control);
+        parent.getChildren().add(control);
+    }
+
+    private void updateAllCheck() {
+        allScopes.setSelected(scopeChecks.values().stream().allMatch(CheckBox::isSelected));
     }
 
     private boolean selectedJavaFile() {

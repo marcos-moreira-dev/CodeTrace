@@ -1,6 +1,12 @@
 package com.mmdev.codetrace.ui;
 
 import com.mmdev.codetrace.workspace.VirtualWorkspace;
+import com.mmdev.codetrace.reference.ReferenceTreeIndex;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.concurrent.Task;
+import javafx.util.Duration;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -12,6 +18,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Consumer;
+import javafx.scene.control.TreeView;
 import javafx.scene.control.Tooltip;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
@@ -43,6 +50,12 @@ public final class ReferenceTree extends TreeView<Path> {
     private String clipboard;
     private boolean cut;
     private Consumer<String> onProgressFolder = folder -> {};
+    private Consumer<Boolean> onBusyChange = busy -> {};
+    private ReferenceTreeIndex index;
+    private long indexGeneration;
+    private boolean loading;
+    private boolean expanding;
+    private Timeline expansion;
 
     public ReferenceTree(Consumer<Path> onOpen, Consumer<Change> onChange,
                          Consumer<String> onStatus) {
@@ -63,7 +76,8 @@ public final class ReferenceTree extends TreeView<Path> {
                 }
                 String relative = relative(path);
                 boolean created = workspace.exists(relative);
-                setText(name(path));
+                setText(name(path) + (isFolder(path) && index != null
+                        ? " (" + index.recursiveFiles(relative) + ")" : ""));
                 Label badge = new Label(created ? "✓" : "○");
                 badge.getStyleClass().addAll("virtual-state",
                         created ? "virtual-created" : "virtual-pending");
@@ -92,8 +106,22 @@ public final class ReferenceTree extends TreeView<Path> {
         onProgressFolder = listener == null ? folder -> {} : listener;
     }
 
-    /** Collapse all expanded branches, keeping the root's first level visible. */
+    public void setOnBusyChange(Consumer<Boolean> listener) {
+        onBusyChange = listener == null ? busy -> {} : listener;
+        onBusyChange.accept(loading || expanding);
+    }
+
+    private void notifyBusy() {
+        onBusyChange.accept(loading || expanding);
+    }
+
+    public boolean isBusy() {
+        return loading || expanding;
+    }
+
+    /** Root's immediate children stay visible. Cancel any pending expansion. */
     public void collapseAll() {
+        cancelExpansion();
         TreeItem<Path> root = getRoot();
         if (root == null) return;
         collapseExpanded(root);
@@ -102,34 +130,93 @@ public final class ReferenceTree extends TreeView<Path> {
 
     private void collapseExpanded(TreeItem<Path> node) {
         if (!node.isExpanded()) return;
-        for (TreeItem<Path> child : node.getChildren()) {
-            collapseExpanded(child);
-        }
+        for (TreeItem<Path> child : node.getChildren()) collapseExpanded(child);
         node.setExpanded(false);
     }
 
     /**
-     * Bounded expansion to avoid freezing the UI on giant repositories.
-     * Recursively expands up to 500 nodes and reports when the limit is reached.
+     * Expand a small batch every pulse. All file access was already performed
+     * off-thread by ReferenceTreeIndex. The JavaFX thread only changes TreeItems.
+     * The user can stop expansion immediately by choosing collapse.
      */
     public void expandAll() {
+        cancelExpansion();
         if (getRoot() == null) return;
-        ArrayDeque<TreeItem<Path>> queue = new ArrayDeque<>();
-        queue.add(getRoot());
-        int count = 0;
-        while (!queue.isEmpty() && count < 500) {
-            TreeItem<Path> node = queue.removeFirst();
-            node.setExpanded(true);
-            count++;
-            if (!node.isLeaf()) {
-                for (TreeItem<Path> child : node.getChildren()) {
-                    if (!child.isLeaf()) queue.add(child);
+        getRoot().setExpanded(true);
+        ArrayDeque<TreeItem<Path>> pending = new ArrayDeque<>();
+        pending.add(getRoot());
+        expanding = true;
+        notifyBusy();
+        expansion = new Timeline(new KeyFrame(Duration.millis(20), event -> {
+            int processed = 0;
+            while (!pending.isEmpty() && processed++ < 18) {
+                TreeItem<Path> node = pending.removeFirst();
+                if (!node.isLeaf()) {
+                    node.setExpanded(true);
+                    for (TreeItem<Path> child : node.getChildren()) {
+                        if (!child.isLeaf()) pending.addLast(child);
+                    }
                 }
             }
+            if (pending.isEmpty()) cancelExpansion();
+        }));
+        expansion.setCycleCount(Animation.INDEFINITE);
+        expansion.play();
+    }
+
+    private void cancelExpansion() {
+        if (expansion != null) {
+            expansion.stop();
+            expansion = null;
         }
-        if (!queue.isEmpty()) {
-            onStatus.accept("Expansión limitada para proteger el rendimiento.");
-        }
+        expanding = false;
+        notifyBusy();
+    }
+
+    private void scanReference() {
+        if (referenceRoot == null) return;
+        cancelExpansion();
+        Path source = referenceRoot;
+        long generation = ++indexGeneration;
+        loading = true;
+        notifyBusy();
+        Task<ReferenceTreeIndex> job = new Task<>() {
+            @Override
+            protected ReferenceTreeIndex call() throws Exception {
+                return ReferenceTreeIndex.scan(source);
+            }
+        };
+        job.setOnSucceeded(event -> {
+            if (generation != indexGeneration || !source.equals(referenceRoot)) return;
+            index = job.getValue();
+            loading = false;
+            refreshTree();
+            notifyBusy();
+        });
+        job.setOnFailed(event -> {
+            if (generation != indexGeneration) return;
+            loading = false;
+            notifyBusy();
+            onStatus.accept("No se pudo analizar el árbol de archivos.");
+        });
+        Thread worker = new Thread(job, "codetrace-tree-index");
+        worker.setDaemon(true);
+        worker.start();
+    }
+
+    /** Called by the explicit Refresh action, not on every keystroke. */
+    public void reloadReference() {
+        index = null;
+        refreshTree();
+        scanReference();
+    }
+
+    public boolean isFolderPath(Path path) {
+        return path != null && isFolder(path);
+    }
+
+    public String relativePath(Path path) {
+        return relative(path);
     }
 
     public void setWorkspace(VirtualWorkspace newWorkspace) {
@@ -139,7 +226,9 @@ public final class ReferenceTree extends TreeView<Path> {
 
     public void open(Path folder) {
         referenceRoot = folder;
+        index = null;
         refreshTree();
+        scanReference();
     }
 
     public void refreshTree() {
@@ -189,14 +278,12 @@ public final class ReferenceTree extends TreeView<Path> {
                 if (!loaded && !isLeaf()) {
                     loaded = true;
                     Set<Path> children = new LinkedHashSet<>();
-                    if (Files.isDirectory(getValue()) && !Files.isSymbolicLink(getValue())) {
-                        try (Stream<Path> stream = Files.list(getValue())) {
-                            stream.forEach(children::add);
-                        } catch (IOException | SecurityException error) {
-                            onStatus.accept("No se pudo leer " + getValue().getFileName());
+                    String parent = relative(getValue());
+                    if (index != null) {
+                        for (String child : index.children(parent)) {
+                            children.add(referenceRoot.resolve(child));
                         }
                     }
-                    String parent = relative(getValue());
                     for (VirtualWorkspace.Entry entry : workspace.entries()) {
                         if (!entry.path().isEmpty() && parentOf(entry.path()).equals(parent)) {
                             children.add(referenceRoot.resolve(entry.path()));
@@ -266,6 +353,16 @@ public final class ReferenceTree extends TreeView<Path> {
             return;
         }
         String target = child(parent, value);
+        // This is reconstruction, not a free file editor.
+        // The selected name must match an existing entry in the source tree.
+        if (index == null || !(directory ? index.hasDirectory(target)
+                                            : index.hasFile(target))) {
+            ProductDialogs.error(getScene() == null ? null : getScene().getWindow(),
+                    "Elemento fuera de la referencia",
+                    "Solo puedes recrear archivos y carpetas que existan en "
+                    + "el repositorio de práctica.\n\nElemento solicitado: " + target);
+            return;
+        }
         try {
             if (directory) {
                 workspace.createDirectory(target);
@@ -348,6 +445,7 @@ public final class ReferenceTree extends TreeView<Path> {
         if (entry != null) {
             return entry.kind() == VirtualWorkspace.Kind.DIRECTORY;
         }
+        if (index != null) return index.hasDirectory(relative(path));
         return Files.isDirectory(path) && !Files.isSymbolicLink(path);
     }
 

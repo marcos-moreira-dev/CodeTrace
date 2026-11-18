@@ -37,6 +37,7 @@ public final class TypingEditor extends BorderPane {
     private static final Color INCORRECT = Color.web("#B63E41");
     private static final Color SKIPPED = Color.web("#647689");
     private static final Color CARET = Color.web("#326B9F");
+    private static final Color KEYWORD = Color.web("#164D9F");
 
     private final TypingSession session;
     private final Color[] syntaxColors;
@@ -379,8 +380,9 @@ public final class TypingEditor extends BorderPane {
             Text glyph = new Text(visible);
             glyph.setFont(font);
             glyph.setMouseTransparent(true);
-            glyph.setOpacity(cell.state() == TypingSession.State.PENDING
-                    ? pendingOpacity : 1.0);
+            glyph.setOpacity(cell.state() != TypingSession.State.PENDING ? 1.0
+                    : syntaxColors[index].equals(KEYWORD)
+                        ? Math.max(0.92, pendingOpacity) : pendingOpacity);
             glyph.setFill(switch (cell.state()) {
                 case CORRECT -> CORRECT;
                 case INCORRECT -> INCORRECT;
@@ -452,7 +454,7 @@ public final class TypingEditor extends BorderPane {
             int first = units[token.start()];
             int last = units[token.end() - 1] + 1;
             Color tint = switch (token.kind()) {
-                case KEYWORD, HEADING -> Color.web("#315F91");
+                case KEYWORD, HEADING -> KEYWORD;
                 case COMMENT -> Color.web("#647F75");
                 case STRING -> Color.web("#267A65");
                 case NUMBER -> Color.web("#9D732F");

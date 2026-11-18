@@ -6,6 +6,8 @@ import javafx.scene.control.Dialog;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
@@ -18,7 +20,8 @@ public final class ProductDialogs {
     private ProductDialogs() {}
 
     public static void about(Window owner) {
-        dialog(owner, "Acerca de CodeTrace", "CodeTrace  ·  versión 0.3.0",
+        Dialog<ButtonType> about = dialog(owner, "Acerca de CodeTrace",
+                "CodeTrace  ·  versión 0.3.0",
                 "Herramienta de escritorio para practicar la reconstrucción manual "
                 + "de proyectos de software.\n\n"
                 + "Su propósito es desarrollar familiaridad, soltura y confianza "
@@ -27,7 +30,21 @@ public final class ProductDialogs {
                 + "con mayor precisión lo que se desea construir.\n\n"
                 + "CodeTrace compara lo transcrito con la referencia, pero no "
                 + "comprueba si el código original compila o funciona.",
-                ButtonType.OK).showAndWait();
+                ButtonType.OK);
+        VBox layout = (VBox) about.getDialogPane().getContent();
+        javafx.scene.Node heading = layout.getChildren().get(0);
+        ImageView brand = new ImageView(new Image(ProductDialogs.class
+                .getResourceAsStream("/icons/codetrace-window.png")));
+        brand.setFitWidth(100);
+        brand.setFitHeight(100);
+        brand.setPreserveRatio(true);
+        brand.setSmooth(true);
+        brand.getStyleClass().add("about-logo");
+        HBox identity = new HBox(18, brand, heading);
+        identity.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
+        identity.getStyleClass().add("about-identity");
+        layout.getChildren().set(0, identity);
+        about.showAndWait();
     }
 
     public static void error(Window owner, String title, String message) {

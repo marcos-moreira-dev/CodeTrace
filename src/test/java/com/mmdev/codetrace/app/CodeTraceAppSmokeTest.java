@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.lang.reflect.Field;
@@ -29,6 +30,8 @@ import com.mmdev.codetrace.workspace.VirtualWorkspace;
 import com.mmdev.codetrace.practice.TypingSession;
 import com.mmdev.codetrace.ui.EditorZoomControl;
 import javafx.scene.control.CustomMenuItem;
+import javafx.scene.control.MenuButton;
+import javafx.scene.control.CheckBox;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.control.Spinner;
@@ -169,7 +172,28 @@ class CodeTraceAppSmokeTest {
                 fileTree.collapseAll();
                 fileTree.expandAll();
                 assertTrue(fileTree.getRoot().isExpanded());
-                assertNotNull(stage.getScene().getRoot().lookup(".status-progress-filter"));
+                MenuButton filter = (MenuButton) stage.getScene().getRoot()
+                        .lookup(".status-progress-filter");
+                assertNotNull(filter);
+                CustomMenuItem filterPanel = (CustomMenuItem) filter.getItems().getFirst();
+                assertFalse(filterPanel.isHideOnClick(),
+                        "Checking files must keep the menu open");
+                VBox filterChoices = (VBox) filterPanel.getContent();
+                assertEquals(5, filterChoices.getChildren().size());
+                CheckBox all = (CheckBox) filterChoices.getChildren().getFirst();
+                all.fire();
+                for (var child : filterChoices.getChildren().subList(1, 5)) {
+                    assertTrue(((CheckBox) child).isSelected());
+                }
+                CheckBox markdown = (CheckBox) filterChoices.getChildren().get(3);
+                markdown.fire();
+                assertFalse(all.isSelected());
+                all.fire();
+                for (var child : filterChoices.getChildren().subList(1, 5)) {
+                    assertTrue(((CheckBox) child).isSelected());
+                }
+                assertNotNull(stage.getScene().getRoot().lookup(".tree-activity"));
+                assertNotNull(stage.getScene().getRoot().lookup(".tree-scope-checkbox"));
                 Files.delete(file);
                 Files.delete(src);
                 Files.delete(root);
