@@ -10,6 +10,8 @@ import java.nio.file.Path;
 import java.util.Locale;
 import java.util.concurrent.atomic.AtomicReference;
 import javafx.concurrent.Task;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -39,6 +41,8 @@ public final class ReferenceMediaPane extends BorderPane {
     private Path temporaryMedia;
     private volatile boolean disposed;
     private boolean recovering;
+    private ZoomableMediaViewport viewport;
+    private final IntegerProperty zoomPercent = new SimpleIntegerProperty(100);
 
     public static Kind kindFor(Path file) {
         if (file == null || file.getFileName() == null) return Kind.UNSUPPORTED;
@@ -95,13 +99,8 @@ public final class ReferenceMediaPane extends BorderPane {
         view.setPreserveRatio(true);
         view.setSmooth(true);
         view.fitWidthProperty().bind(widthProperty().subtract(40));
-        StackPane canvas = new StackPane(view);
-        canvas.setPadding(new Insets(20));
-        canvas.getStyleClass().add("media-canvas");
-        ScrollPane scroll = new ScrollPane(canvas);
-        scroll.setFitToWidth(true);
-        scroll.setFitToHeight(true);
-        setCenter(scroll);
+        view.fitHeightProperty().bind(heightProperty().subtract(40));
+        installViewport(view);
         image.errorProperty().addListener((obs, old, error) -> {
             if (error && !disposed)
                 message("Este formato de imagen no es compatible con JavaFX.");
@@ -135,7 +134,9 @@ public final class ReferenceMediaPane extends BorderPane {
             web.getEngine().setJavaScriptEnabled(false);
             web.getEngine().loadContent(result.html(), "text/html");
             webImage = web;
-            setCenter(web);
+            web.prefWidthProperty().bind(widthProperty());
+            web.prefHeightProperty().bind(heightProperty());
+            installViewport(web);
         });
         task.setOnFailed(event -> {
             if (!disposed && imagePreparation == task)
@@ -221,9 +222,7 @@ public final class ReferenceMediaPane extends BorderPane {
                 screen.setPreserveRatio(true);
                 screen.fitWidthProperty().bind(widthProperty().subtract(35));
                 screen.fitHeightProperty().bind(heightProperty().subtract(90));
-                StackPane canvas = new StackPane(screen);
-                canvas.getStyleClass().add("media-canvas");
-                setCenter(canvas);
+                installViewport(screen);
             } else {
                 Label fileName = new Label(original.getFileName().toString());
                 fileName.getStyleClass().add("media-audio-title");
@@ -289,12 +288,33 @@ public final class ReferenceMediaPane extends BorderPane {
 
     private void message(String text) {
         setBottom(null);
+        releaseViewport();
         Label explanation = new Label(text);
         explanation.setWrapText(true);
         explanation.getStyleClass().add("media-error");
         StackPane canvas = new StackPane(explanation);
         canvas.setPadding(new Insets(25));
         setCenter(canvas);
+    }
+
+    private void installViewport(javafx.scene.Node visual) {
+        releaseViewport();
+        ZoomableMediaViewport next = new ZoomableMediaViewport(visual);
+        next.zoomPercentProperty().bindBidirectional(zoomPercent);
+        viewport = next;
+        setCenter(next);
+    }
+
+    private void releaseViewport() {
+        if (viewport == null) return;
+        viewport.zoomPercentProperty().unbindBidirectional(zoomPercent);
+        viewport = null;
+    }
+
+    public int getZoomPercent() { return zoomPercent.get(); }
+    public IntegerProperty zoomPercentProperty() { return zoomPercent; }
+    public void setZoomPercent(int value) {
+        zoomPercent.set(Math.max(25, Math.min(400, value)));
     }
 
     public void dispose() {
@@ -306,6 +326,7 @@ public final class ReferenceMediaPane extends BorderPane {
             webImage = null;
         }
         releasePlayer();
+        releaseViewport();
         MediaTranscoder.deleteTemporary(temporaryMedia);
         temporaryMedia = null;
     }
