@@ -21,6 +21,9 @@ Para trabajar normalmente desde IntelliJ IDEA: importar pom.xml como Maven, sele
 - Referencia de solo lectura, árbol con creación/copia/movimiento/eliminación **virtual**.
 - Editor de transcripción sobre plantilla; aciertos verdes, errores rojos y avance sin bloqueo.
 - Persistencia binaria en sesiones *.ctrace, progreso y hashes SHA-256.
+- **Doble clic sobre cualquier archivo de texto compatible**: la plantilla se abre directamente. Al escribir, se crea el recorrido virtual necesario, sin alterar la referencia ni impedir la creación manual desde el explorador.
+- **Progreso configurable por categorías** desde Práctica → Contabilizar en progreso. Solo el código fuente cuenta inicialmente; configuración, documentación y otros textos son opcionales.
+- Iconografía transversal de carpetas y lenguajes con Ikonli/Devicons y Feather; controles desplegables con el mismo estilo rectangular.
 - Resaltado inicial por adaptadores de Java, Python, TypeScript, C/C++ y Markdown.
 - Vista Markdown alternable entre fuente y renderizado en una misma pestaña.
 - Preferencias de fuente, pantalla completa y modo concentración.

@@ -111,3 +111,62 @@
     -fx-text-fill: #617282;
     -fx-font-size: 11px;
 }
+
+/* Uniform desktop combobox styling: toolbar, preferences and any future dialog. */
+.combo-box-base, .choice-box {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #a9b8c4;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+    -fx-min-height: 29px;
+}
+.combo-box-base:hover, .choice-box:hover {
+    -fx-border-color: #4a6076;
+    -fx-background-color: #f5f9fb;
+}
+.combo-box-base:focused, .choice-box:focused {
+    -fx-border-color: #4a6076;
+    -fx-border-width: 1px;
+}
+.combo-box .list-cell {
+    -fx-background-color: transparent;
+    -fx-text-fill: #263747;
+    -fx-padding: 5px 9px;
+}
+.combo-box .arrow-button {
+    -fx-background-color: #e7edf1;
+    -fx-border-color: transparent transparent transparent #b8c5cf;
+    -fx-border-width: 0 0 0 1px;
+    -fx-background-radius: 0;
+}
+.combo-box .arrow { -fx-background-color: #4a6076; }
+.combo-box-popup .list-view {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #b6c5cf;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+    -fx-padding: 2px;
+}
+.combo-box-popup .list-cell:filled:hover,
+.combo-box-popup .list-cell:filled:selected {
+    -fx-background-color: #dbe7ef;
+    -fx-text-fill: #263747;
+}
+.context-menu {
+    -fx-background-color: #f5f6f7;
+    -fx-border-color: #b5c4ce;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+}
+.context-menu .menu-item:focused {
+    -fx-background-color: #dbe7ef;
+}
+.context-menu .menu-item:focused .label { -fx-text-fill: #263747; }
+.source-file-badge {
+    -fx-font-family: "Segoe UI";
+    -fx-font-size: 9px;
+    -fx-font-weight: bold;
+    -fx-min-width: 17px;
+    -fx-pref-width: 17px;
+    -fx-alignment: center;
+}

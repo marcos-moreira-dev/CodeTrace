@@ -51,12 +51,14 @@ public final class ReferenceTree extends TreeView<Path> {
                 super.updateItem(path, empty);
                 if (empty || path == null || referenceRoot == null) {
                     setText(null);
+                    setGraphic(null);
                     setContextMenu(null);
                     return;
                 }
                 String relative = relative(path);
                 boolean created = workspace.exists(relative);
                 setText(name(path));
+                setGraphic(FileTypeIcons.forPath(path, isFolder(path)));
                 setTextFill(created ? Color.web("#263747") : Color.web("#85929C"));
                 setContextMenu(contextFor(path));
             }

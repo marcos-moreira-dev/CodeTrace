@@ -13,6 +13,7 @@ import com.mmdev.codetrace.ui.MarkdownPracticePane;
 import com.mmdev.codetrace.ui.ProductDialogs;
 import com.mmdev.codetrace.ui.ToolbarIcons;
 import com.mmdev.codetrace.ui.SymbolPalette;
+import com.mmdev.codetrace.ui.FileTypeIcons;
 import com.mmdev.codetrace.symbols.SymbolCatalog.Layout;
 import com.mmdev.codetrace.sound.TypingSounds;
 import com.mmdev.codetrace.workspace.VirtualWorkspace;
@@ -337,6 +338,7 @@ public final class CodeTraceApp extends Application {
                     || relative.toLowerCase().endsWith(".markdown");
             Tab tab = new Tab(file.getFileName().toString(),
                     markdown ? new MarkdownPracticePane(editor) : editor);
+            tab.setGraphic(FileTypeIcons.forPath(file, false));
             tab.setOnClosed(event -> openedTabs.remove(relative));
             openedTabs.put(relative, tab);
             tabs.getTabs().add(tab);
