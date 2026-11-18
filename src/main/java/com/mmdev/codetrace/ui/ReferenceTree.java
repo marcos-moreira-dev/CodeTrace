@@ -2,6 +2,8 @@ package com.mmdev.codetrace.ui;
 
 import com.mmdev.codetrace.workspace.VirtualWorkspace;
 import com.mmdev.codetrace.reference.ReferenceTreeIndex;
+import com.mmdev.codetrace.reference.TreeNameFilter;
+import javafx.animation.PauseTransition;
 import com.mmdev.codetrace.reference.PracticeEligibility;
 import com.mmdev.codetrace.practice.ReconstructionStatus.State;
 import java.util.function.Function;
@@ -70,6 +72,10 @@ public final class ReferenceTree extends TreeView<Path> {
     private boolean loading;
     private boolean expanding;
     private Timeline expansion;
+    private String nameFilter = "";
+    private Set<String> filteredPaths = Set.of();
+    private long filterGeneration;
+    private final PauseTransition searchDebounce = new PauseTransition(Duration.millis(160));
 
     public ReferenceTree(Consumer<Path> onOpen, Consumer<Change> onChange,
                          Consumer<String> onStatus) {
@@ -108,6 +114,9 @@ public final class ReferenceTree extends TreeView<Path> {
                 var badge = state == State.NOT_APPLICABLE ? null
                         : ReconstructionStateIcons.forState(state);
                 Label nameLabel = new Label(name(path));
+                if (!nameFilter.isBlank() && TreeNameFilter.fold(name(path))
+                        .contains(TreeNameFilter.fold(nameFilter)))
+                    nameLabel.getStyleClass().add("reference-match-name");
                 nameLabel.getStyleClass().add("reference-name");
                 if (state == State.PENDING)
                     nameLabel.getStyleClass().add("reference-pending-name");
@@ -273,7 +282,8 @@ public final class ReferenceTree extends TreeView<Path> {
             if (generation != indexGeneration || !source.equals(referenceRoot)) return;
             index = job.getValue();
             loading = false;
-            refreshTree();
+            if (nameFilter.isBlank()) refreshTree();
+            else searchNames(nameFilter);
             notifyBusy();
         });
         job.setOnFailed(event -> {
@@ -290,6 +300,7 @@ public final class ReferenceTree extends TreeView<Path> {
     /** Called by the explicit Refresh action, not on every keystroke. */
     public void reloadReference() {
         index = null;
+        filteredPaths = Set.of();
         refreshTree();
         scanReference();
     }
@@ -310,8 +321,42 @@ public final class ReferenceTree extends TreeView<Path> {
     public void open(Path folder) {
         referenceRoot = folder;
         index = null;
+        filteredPaths = Set.of();
+        filterGeneration++;
+        searchDebounce.stop();
         refreshTree();
         scanReference();
+    }
+
+    /** Search file/folder NAMES only; content searching is a separate service. */
+    public void searchNames(String query) {
+        nameFilter = query == null ? "" : query.strip();
+        long generation = ++filterGeneration;
+        searchDebounce.stop();
+        if (nameFilter.isEmpty() || referenceRoot == null) {
+            filteredPaths = Set.of();
+            refreshTree();
+            return;
+        }
+        ReferenceTreeIndex snapshot = index;
+        VirtualWorkspace currentWorkspace = workspace;
+        String requested = nameFilter;
+        searchDebounce.setOnFinished(event -> {
+            Task<Set<String>> search = new Task<>() {
+                @Override protected Set<String> call() {
+                    return TreeNameFilter.visible(snapshot, currentWorkspace, requested);
+                }
+            };
+            search.setOnSucceeded(done -> {
+                if (generation != filterGeneration || referenceRoot == null) return;
+                filteredPaths = search.getValue();
+                refreshTree();
+            });
+            Thread worker = new Thread(search, "codetrace-tree-name-search");
+            worker.setDaemon(true);
+            worker.start();
+        });
+        searchDebounce.playFromStart();
     }
 
     public void refreshTree() {
@@ -323,7 +368,24 @@ public final class ReferenceTree extends TreeView<Path> {
         TreeItem<Path> node = item(referenceRoot);
         setRoot(node);
         node.setExpanded(true);
-        restoreExpanded(node, expanded);
+        if (nameFilter.isBlank()) restoreExpanded(node, expanded);
+        else {
+            // Expand a bounded number of matching ancestor folders; a search
+            // for a common letter must not freeze the FX thread.
+            ArrayDeque<TreeItem<Path>> queue = new ArrayDeque<>();
+            queue.add(node);
+            int expandedCount = 0;
+            while (!queue.isEmpty() && expandedCount < 160) {
+                TreeItem<Path> current = queue.removeFirst();
+                if (!current.isLeaf()) {
+                    current.setExpanded(true);
+                    expandedCount++;
+                    for (TreeItem<Path> child : current.getChildren()) {
+                        if (!child.isLeaf()) queue.addLast(child);
+                    }
+                }
+            }
+        }
         refresh();
     }
 
@@ -373,6 +435,8 @@ public final class ReferenceTree extends TreeView<Path> {
                         }
                     }
                     super.getChildren().setAll(children.stream()
+                            .filter(child -> nameFilter.isBlank()
+                                    || filteredPaths.contains(relative(child)))
                             .sorted(Comparator.comparing((Path child) -> !isFolder(child))
                                     .thenComparing(ReferenceTree::name,
                                             String.CASE_INSENSITIVE_ORDER))
