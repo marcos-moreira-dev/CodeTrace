@@ -83,14 +83,32 @@ public final class ProjectDependencyGraph {
                 if (cancelled.getAsBoolean() || edges.size() >= 1200) break;
             }
         }
-        Set<String> nodes = new TreeSet<>();
+        Set<String> allNodes = new TreeSet<>();
         for (Edge edge : edges) {
-            nodes.add(edge.source());
-            nodes.add(edge.target());
+            allNodes.add(edge.source());
+            allNodes.add(edge.target());
         }
-        return new Graph(relative(root, folder), List.copyOf(nodes),
-                edges.stream().sorted(Comparator.comparing(Edge::source)
-                        .thenComparing(Edge::target)).toList(), source.size(), limit[0]);
+        // A JavaFX Canvas cannot safely render tens of thousands of pixels
+        // high on every GPU. Keep the most connected 180 nodes visible and
+        // disclose truncation instead of silently exhausting graphics memory.
+        Map<String, Integer> degree = new HashMap<>();
+        for (Edge edge : edges) {
+            degree.merge(edge.source(), 1, Integer::sum);
+            degree.merge(edge.target(), 1, Integer::sum);
+        }
+        List<String> ranked = allNodes.stream().sorted(
+                Comparator.<String>comparingInt(p -> degree.getOrDefault(p, 0))
+                        .reversed().thenComparing(Comparator.naturalOrder())).toList();
+        Set<String> display = new HashSet<>(ranked.subList(0,
+                Math.min(180, ranked.size())));
+        List<Edge> visible = edges.stream()
+                .filter(edge -> display.contains(edge.source())
+                        && display.contains(edge.target()))
+                .sorted(Comparator.comparing(Edge::source).thenComparing(Edge::target))
+                .limit(400).toList();
+        boolean partial = limit[0] || allNodes.size() > 180 || edges.size() > 400;
+        List<String> nodes = display.stream().sorted().toList();
+        return new Graph(relative(root, folder), nodes, visible, source.size(), partial);
     }
 
     private static String ext(Path path) {
