@@ -40,6 +40,14 @@ public final class MediaTranscoder {
         if (explicit != null && !explicit.isBlank()) return explicit.trim();
         String binary = System.getProperty("os.name", "").toLowerCase(Locale.ROOT)
                 .contains("win") ? "ffmpeg.exe" : "ffmpeg";
+        // jpackage sets java.home to <app-image>/runtime. Resolve beside
+        // the installed application rather than relying on user.dir.
+        Path runtime = Path.of(System.getProperty("java.home", "."));
+        Path imageRoot = runtime.getParent();
+        if (imageRoot != null) {
+            Path bundled = imageRoot.resolve("tools").resolve("ffmpeg").resolve(binary);
+            if (Files.isRegularFile(bundled)) return bundled.toString();
+        }
         Path besideApp = Path.of(System.getProperty("user.dir", "."),
                 "tools", "ffmpeg", binary);
         if (Files.isRegularFile(besideApp)) return besideApp.toString();
