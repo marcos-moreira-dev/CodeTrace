@@ -48,9 +48,9 @@ class ReferenceCatalogueTest {
         assertEquals(3, index.expectedUnits(codeOnly));
         assertEquals(1, index.includedFileCount(codeOnly));
         var codeAndConfig = codeOnly.with(ProgressScope.Category.CONFIGURATION, true);
-        assertEquals(3 + "<project/>".length(), index.expectedUnits(codeAndConfig));
-        assertEquals(2, index.includedFileCount(codeAndConfig));
-        assertEquals(3, index.includedFileCount(
+        assertEquals(3, index.expectedUnits(codeAndConfig));
+        assertEquals(1, index.includedFileCount(codeAndConfig));
+        assertEquals(2, index.includedFileCount(
                 new ProgressScope(true, true, true, false)));
     }
 

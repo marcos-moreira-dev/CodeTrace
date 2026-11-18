@@ -23,6 +23,8 @@ import javafx.scene.control.Slider;
 import javafx.geometry.Orientation;
 import javafx.stage.Window;
 import com.mmdev.codetrace.ui.PreferencesWindow;
+import com.mmdev.codetrace.ui.ProductDialogs;
+import com.mmdev.codetrace.reference.ReferenceTreeIndex;
 import com.mmdev.codetrace.commands.ProjectCommandStore;
 import javafx.scene.control.ListView;
 import javafx.scene.input.KeyCode;
@@ -131,6 +133,20 @@ class CodeTraceAppSmokeTest {
                 assertNull(preferences.getScene().getRoot().lookup(".prefs-opacity-spinner"));
                 assertNotNull(preferences.getScene().getRoot().lookup(".prefs-font-choice"));
                 preferences.close();
+                var about = ProductDialogs.createAbout(stage);
+                about.show();
+                about.getDialogPane().getScene().getRoot().applyCss();
+                about.getDialogPane().getScene().getRoot().layout();
+                javafx.scene.control.Label aboutCopy = (javafx.scene.control.Label)
+                        about.getDialogPane().lookup(".about-description");
+                assertNotNull(aboutCopy);
+                assertTrue(aboutCopy.getText().contains("inteligencia artificial"));
+                javafx.scene.image.ImageView aboutImage =
+                        (javafx.scene.image.ImageView)
+                                about.getDialogPane().lookup(".about-logo-large");
+                assertNotNull(aboutImage);
+                assertTrue(aboutImage.getImage().getWidth() >= 256);
+                about.close();
                 Stage projectPrefs = PreferencesWindow.create(
                         stage, AppSettings.load(), next -> {}, sample -> true,
                         root, new ProjectCommandStore(root.resolve("config-cache")), () -> {});
@@ -243,18 +259,21 @@ class CodeTraceAppSmokeTest {
                 Path nestedFile = nested.resolve("Demo.java");
                 Files.writeString(nestedFile, "class Demo {}");
                 fileTree.open(root);
+                Field treeIndexField = ReferenceTree.class.getDeclaredField("index");
+                treeIndexField.setAccessible(true);
+                treeIndexField.set(fileTree, ReferenceTreeIndex.scan(root));
                 Method menuFor = ReferenceTree.class.getDeclaredMethod(
                         "contextFor", Path.class);
                 menuFor.setAccessible(true);
                 ContextMenu rootMenu = (ContextMenu) menuFor.invoke(fileTree, root);
                 assertTrue(rootMenu.getItems().stream().anyMatch(
                         item -> "Crear subcarpeta...".equals(item.getText())));
-                assertTrue(rootMenu.getItems().stream().anyMatch(
+                assertFalse(rootMenu.getItems().stream().anyMatch(
                         item -> "Crear archivo...".equals(item.getText())));
                 ContextMenu folderMenu = (ContextMenu) menuFor.invoke(fileTree, nested);
                 assertTrue(folderMenu.getItems().stream().anyMatch(
                         item -> "Crear esta carpeta".equals(item.getText())));
-                assertTrue(folderMenu.getItems().stream().anyMatch(
+                assertFalse(folderMenu.getItems().stream().anyMatch(
                         item -> "Crear subcarpeta...".equals(item.getText())));
                 folderMenu.getItems().stream()
                         .filter(item -> "Crear esta carpeta".equals(item.getText()))
@@ -278,8 +297,9 @@ class CodeTraceAppSmokeTest {
                                 "Copiar", "Cortar", "Eliminar").contains(item.getText())));
                 ContextMenu createdFolderMenu = (ContextMenu) menuFor.invoke(
                         fileTree, nested);
-                assertTrue(createdFolderMenu.getItems().stream().anyMatch(
-                        item -> "Crear archivo...".equals(item.getText())));
+                assertFalse(createdFolderMenu.getItems().stream().anyMatch(
+                        item -> "Crear archivo...".equals(item.getText())),
+                        "No file-creation menu once all eligible files are created");
                 assertFalse(createdFolderMenu.getItems().stream().anyMatch(item ->
                         item.getText() != null && java.util.Set.of("Cambiar nombre...",
                                 "Copiar", "Cortar", "Eliminar").contains(item.getText())));
@@ -339,17 +359,17 @@ class CodeTraceAppSmokeTest {
                 assertFalse(filterPanel.isHideOnClick(),
                         "Checking files must keep the menu open");
                 VBox filterChoices = (VBox) filterPanel.getContent();
-                assertEquals(5, filterChoices.getChildren().size());
+                assertEquals(3, filterChoices.getChildren().size());
                 CheckBox all = (CheckBox) filterChoices.getChildren().getFirst();
                 all.fire();
-                for (var child : filterChoices.getChildren().subList(1, 5)) {
+                for (var child : filterChoices.getChildren().subList(1, 3)) {
                     assertTrue(((CheckBox) child).isSelected());
                 }
-                CheckBox markdown = (CheckBox) filterChoices.getChildren().get(3);
+                CheckBox markdown = (CheckBox) filterChoices.getChildren().get(2);
                 markdown.fire();
                 assertFalse(all.isSelected());
                 all.fire();
-                for (var child : filterChoices.getChildren().subList(1, 5)) {
+                for (var child : filterChoices.getChildren().subList(1, 3)) {
                     assertTrue(((CheckBox) child).isSelected());
                 }
                 assertNotNull(stage.getScene().getRoot().lookup(".tree-activity"));

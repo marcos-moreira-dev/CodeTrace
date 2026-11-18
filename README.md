@@ -133,3 +133,22 @@ no impide completar las carpetas según el filtro de progreso.
 
 El logo de CodeTrace también se utiliza en Preferencias, los cuadros de
 creación y la Biblioteca de práctica, manteniendo el estilo de escritorio.
+
+## Finalización y archivos no practicables
+
+- Un archivo puede terminarse en modo Turbo o con imports omitidos. Los caracteres
+  saltados explícitamente cuentan como *resueltos* para cerrar el ejercicio,
+  pero nunca se suman a los caracteres correctamente tecleados ni al porcentaje.
+  La última línea terminada en salto de línea no exige pulsar Enter adicional.
+  Una posición pendiente o incorrecta sí mantiene el ejercicio incompleto.
+- El indicador verde aparece al terminar el ejercicio, incluso si el porcentaje
+  global del repositorio sigue siendo inferior al 100 % por las omisiones.
+- Solo los lenguajes reconocidos por el resaltador y Markdown son elegibles
+  para mecanografía. Binarios, configuraciones y demás archivos permanecen
+  visibles en el árbol, pero no requieren creación virtual ni mecanografía.
+  Un archivo reconocido pero vacío no tiene ejercicio pendiente.
+- Las carpetas solo ofrecen crear subcarpetas o archivos cuando existe algún
+  descendiente inmediato pendiente y practicable. Las vacías o sin código
+  practicable no presentan acciones de creación.
+- **Acerca de** conserva el texto explicativo y muestra una versión ampliable
+  y centrada del logotipo, distinta del icono pequeño de la barra de título.

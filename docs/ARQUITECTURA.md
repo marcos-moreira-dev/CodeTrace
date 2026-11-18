@@ -59,3 +59,14 @@ y SHA-256 vigente. La carpeta se completa cuando todos los archivos de texto
 incluidos por el filtro están completos. La aplicación actualiza los estados
 al crear estructura, cambiar filtros o cruzar el umbral de finalización, no
 por cada pulsación indiscriminadamente.
+
+## Elegibilidad y resultado del ejercicio
+`reference/PracticeEligibility` determina si el tipo del archivo tiene un
+adaptador de lenguaje soportado. `ReferenceTreeIndex` calcula fuera del
+hilo FX los archivos practicables y sus antecesores; los menús contextuales
+se muestran solo si existen acciones posibles. `TypingSession.finishedExercise`
+separa el fin de ejercicio del cómputo de aciertos: acepta omisiones
+intencionales y no exige un Enter tras el último salto de línea.
+`ReconstructionStatus` distingue referencias no practicables, pendientes,
+creadas y ejercicios finalizados. Los cambios de filtros afectan a los
+contadores y estados recursivos, no a la elegibilidad del código.

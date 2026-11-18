@@ -6,6 +6,27 @@ import org.junit.jupiter.api.Test;
 
 class TypingSessionTest {
     @Test
+    void intentionallySkippedSymbolsResolvePracticeWithoutInflatingAciertos() {
+        TypingSession session = new TypingSession("a{}\n");
+        session.type("a");
+        session.skip(1, 3);
+        assertTrue(session.finishedExercise());
+        assertEquals(1, session.correctCount());
+        assertEquals(2, session.skippedCount());
+        session.moveCaret(0);
+        session.type("x");
+        assertFalse(session.finishedExercise());
+    }
+
+    @Test
+    void newlineAtEndIsNotAnAdditionalTypingRequirement() {
+        TypingSession session = new TypingSession("abc\n");
+        session.type("abc");
+        assertTrue(session.finishedExercise());
+        assertEquals(3, session.correctCount());
+    }
+
+    @Test
     void keepsGoingAfterMistakesAndBackspaceRestoresPendingTemplate() {
         TypingSession session = new TypingSession("class");
         session.type("clxss");

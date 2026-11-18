@@ -25,9 +25,10 @@ public final class ReconstructionStateIcons {
     }
 
     public static StackPane forState(State state) {
-        String glyph = state == State.PENDING ? "fth-circle" : "fth-check-circle";
+        String glyph = state == State.PENDING || state == State.NOT_APPLICABLE
+                ? "fth-circle" : "fth-check-circle";
         String hex = switch (state) {
-            case PENDING -> GREY;
+            case PENDING, NOT_APPLICABLE -> GREY;
             case CREATED -> AMBER;
             case COMPLETED -> GREEN;
         };
@@ -42,11 +43,13 @@ public final class ReconstructionStateIcons {
         badge.setMaxSize(18, 18);
         badge.getStyleClass().addAll("reconstruction-state-icon",
                 switch (state) {
+                    case NOT_APPLICABLE -> "state-not-applicable";
                     case PENDING -> "state-pending";
                     case CREATED -> "state-created";
                     case COMPLETED -> "state-completed";
                 });
         String meaning = switch (state) {
+            case NOT_APPLICABLE -> "No requiere práctica";
             case PENDING -> "Pendiente de recrear";
             case CREATED -> "Creado · mecanografía pendiente o incompleta";
             case COMPLETED -> "Transcripción completa · todos los caracteres correctos";

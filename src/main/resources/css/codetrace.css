@@ -758,3 +758,27 @@
 .reconstruction-state-icon.state-pending {
     -fx-alignment: center;
 }
+
+/* About: high-resolution original-family logo, centered with complete editorial copy. */
+.about-dialog .about-scroll,
+.about-dialog .about-scroll > .viewport,
+.about-dialog .about-content {
+    -fx-background-color: #f7fafc;
+    -fx-border-color: transparent;
+}
+.about-identity-center { -fx-alignment: center; }
+.about-title {
+    -fx-text-fill: #274d6b;
+    -fx-font-size: 23px;
+    -fx-font-weight: bold;
+}
+.about-version {
+    -fx-text-fill: #647c8f;
+    -fx-font-size: 12px;
+}
+.about-description {
+    -fx-font-size: 13px;
+    -fx-line-spacing: 3px;
+    -fx-text-fill: #30495a;
+    -fx-wrap-text: true;
+}

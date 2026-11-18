@@ -134,7 +134,9 @@ public final class ReferenceCatalogue {
                 try {
                     String sha = ReferenceFingerprint.sha256(file);
                     int units = -1; // Binary, unsupported, or too large for this editor.
-                    TextPreview.Result preview = TextPreview.load(file);
+                    TextPreview.Result preview = PracticeEligibility.supports(file)
+                            ? TextPreview.load(file) : new TextPreview.Result(null,
+                                    "Tipo de archivo no incluido en la práctica.");
                     if (preview.readable()) {
                         units = new TypingSession(preview.content()).size();
                     }

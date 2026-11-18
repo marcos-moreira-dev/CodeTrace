@@ -51,6 +51,24 @@ public final class TypingSession {
         return skipped.cardinality();
     }
 
+    /**
+     * A deliberate Turbo/import omission resolves a slot for this exercise,
+     * but is never counted as a correctly typed character in statistics.
+     * A final newline is structural: an EOF should not require an extra Enter.
+     */
+    public boolean finishedExercise() {
+        int end = size();
+        while (end > 0 && "\n".equals(reference.get(end - 1))) end--;
+        if (end == 0) return false; // Empty files have no typing exercise.
+        boolean atLeastOneTyped = false;
+        for (int i = 0; i < end; i++) {
+            State result = state(i);
+            if (result == State.PENDING || result == State.INCORRECT) return false;
+            if (result == State.CORRECT) atLeastOneTyped = true;
+        }
+        return atLeastOneTyped;
+    }
+
     public int resolvedCount() {
         return correctCount() + skippedCount();
     }

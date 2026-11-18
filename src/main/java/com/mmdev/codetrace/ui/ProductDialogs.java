@@ -20,31 +20,74 @@ public final class ProductDialogs {
     private ProductDialogs() {}
 
     public static void about(Window owner) {
-        Dialog<ButtonType> about = dialog(owner, "Acerca de CodeTrace",
-                "CodeTrace  ·  versión 0.3.0",
-                "Herramienta de escritorio para practicar la reconstrucción manual "
-                + "de proyectos de software.\n\n"
-                + "Su propósito es desarrollar familiaridad, soltura y confianza "
-                + "con el trabajo cotidiano del programador. La práctica manual "
-                + "permite reconocer los detalles de una implementación y expresar "
-                + "con mayor precisión lo que se desea construir.\n\n"
-                + "CodeTrace compara lo transcrito con la referencia, pero no "
-                + "comprueba si el código original compila o funciona.",
-                ButtonType.OK);
-        VBox layout = (VBox) about.getDialogPane().getContent();
-        javafx.scene.Node heading = layout.getChildren().get(0);
+        createAbout(owner).showAndWait();
+    }
+
+    /** Separate creator for GUI tests; copy remains fully visible and scrollable. */
+    public static Dialog<ButtonType> createAbout(Window owner) {
+        Dialog<ButtonType> about = new Dialog<>();
+        if (owner != null) about.initOwner(owner);
+        about.setTitle("Acerca de CodeTrace");
+        WindowBranding.apply(about);
+        about.setResizable(true);
+        DialogPane pane = about.getDialogPane();
+        pane.getStyleClass().addAll("product-dialog", "about-dialog");
+        pane.getStylesheets().add(ProductDialogs.class.getResource(
+                "/css/codetrace.css").toExternalForm());
+        pane.getButtonTypes().add(ButtonType.OK);
+        pane.setPrefSize(680, 555);
+        pane.setMinSize(560, 410);
+
+        // The original small PNG remains for OS window chrome only. The
+        // approved desktop icon has a dedicated 320px detail asset in About.
         ImageView brand = new ImageView(new Image(ProductDialogs.class
-                .getResourceAsStream("/icons/codetrace-window.png")));
-        brand.setFitWidth(100);
-        brand.setFitHeight(100);
+                .getResourceAsStream("/icons/codetrace-about-hires.png")));
+        brand.setFitWidth(180);
+        brand.setFitHeight(180);
         brand.setPreserveRatio(true);
         brand.setSmooth(true);
-        brand.getStyleClass().add("about-logo");
-        HBox identity = new HBox(18, brand, heading);
-        identity.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
-        identity.getStyleClass().add("about-identity");
-        layout.getChildren().set(0, identity);
-        about.showAndWait();
+        brand.getStyleClass().add("about-logo-large");
+
+        Label title = new Label("CodeTrace");
+        title.getStyleClass().add("about-title");
+        Label version = new Label("Versión 0.3.0 · JavaFX / Java 21");
+        version.getStyleClass().add("about-version");
+        VBox identity = new VBox(1, brand, title, version);
+        identity.setAlignment(javafx.geometry.Pos.CENTER);
+        identity.getStyleClass().add("about-identity-center");
+
+        String description =
+                "CodeTrace es una herramienta de escritorio para practicar la "
+                + "reconstrucción manual de proyectos de software y familiarizarse "
+                + "con su estructura, sintaxis y proceso de elaboración.\n\n"
+                + "Su propósito es desarrollar cultura, soltura y confianza "
+                + "con el trabajo cotidiano del programador. Transcribir proyectos "
+                + "permite reconocer los detalles de una implementación, "
+                + "comprender las decisiones que la componen y disminuir la "
+                + "resistencia a escribir código desde cero.\n\n"
+                + "La práctica manual también ayuda a expresar con palabras "
+                + "qué queremos construir: esa claridad de intención sigue "
+                + "siendo importante incluso cuando utilizamos inteligencia "
+                + "artificial como herramienta profesional.\n\n"
+                + "CodeTrace compara cada carácter con una referencia, pero no "
+                + "determina si su código original compila o funciona. "
+                + "El proyecto de referencia permanece intacto.";
+        Label body = new Label(description);
+        body.setWrapText(true);
+        body.setMaxWidth(Double.MAX_VALUE);
+        body.setMinHeight(Region.USE_PREF_SIZE);
+        body.getStyleClass().add("about-description");
+
+        VBox contents = new VBox(8, identity, body);
+        contents.getStyleClass().add("about-content");
+        contents.setPadding(new Insets(10, 24, 20, 24));
+        ScrollPane scroll = new ScrollPane(contents);
+        scroll.getStyleClass().add("about-scroll");
+        scroll.setFitToWidth(true);
+        scroll.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        scroll.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+        pane.setContent(scroll);
+        return about;
     }
 
     public static void error(Window owner, String title, String message) {

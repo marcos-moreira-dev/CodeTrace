@@ -12,7 +12,7 @@ import java.util.Objects;
  * scope affects folder completion, not whether an individual file is finished.
  */
 public final class ReconstructionStatus {
-    public enum State { PENDING, CREATED, COMPLETED }
+    public enum State { NOT_APPLICABLE, PENDING, CREATED, COMPLETED }
 
     private ReconstructionStatus() {}
 
@@ -41,10 +41,20 @@ public final class ReconstructionStatus {
             var info = pair.getValue();
             boolean created = workspace.entry(path) != null
                     && workspace.entry(path).kind() == VirtualWorkspace.Kind.FILE;
-            boolean complete = created && info.typeable()
-                    && info.typeableUnits() > 0
+            // An unsupported/binary reference is not an exercise at all.
+            if (!info.typeable()) {
+                state.put(path, State.NOT_APPLICABLE);
+                continue;
+            }
+            // An empty supported source needs no typing or virtual recreation.
+            if (info.typeableUnits() == 0) {
+                state.put(path, State.COMPLETED);
+                continue;
+            }
+            boolean complete = created
                     && info.sha256().equals(hashes.get(path))
-                    && entirelyCorrect(sessions.get(path));
+                    && sessions.get(path) != null
+                    && sessions.get(path).finishedExercise();
             if (complete) state.put(path, State.COMPLETED);
 
             if (!info.typeable() || info.typeableUnits() == 0

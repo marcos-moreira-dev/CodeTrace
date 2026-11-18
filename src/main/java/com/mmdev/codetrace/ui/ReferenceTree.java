@@ -2,6 +2,7 @@ package com.mmdev.codetrace.ui;
 
 import com.mmdev.codetrace.workspace.VirtualWorkspace;
 import com.mmdev.codetrace.reference.ReferenceTreeIndex;
+import com.mmdev.codetrace.reference.PracticeEligibility;
 import com.mmdev.codetrace.practice.ReconstructionStatus.State;
 import java.util.function.Function;
 import javafx.animation.Animation;
@@ -81,9 +82,13 @@ public final class ReferenceTree extends TreeView<Path> {
                     return;
                 }
                 String relative = relative(path);
-                State state = workspace.exists(relative)
-                        ? statusLookup.apply(relative) : State.PENDING;
-                boolean created = state != State.PENDING;
+                boolean folder = isFolder(path);
+                boolean practiceable = folder
+                        ? (index == null || index.hasWorkableDescendant(relative))
+                        : PracticeEligibility.supports(path);
+                State state = practiceable ? statusLookup.apply(relative)
+                        : State.NOT_APPLICABLE;
+                boolean created = state == State.CREATED || state == State.COMPLETED;
                 long fileCount = isFolder(path) && index != null
                         ? index.recursiveFiles(relative) : -1L;
                 // Keep the icon in a dedicated cell graphic, not in the
@@ -92,15 +97,19 @@ public final class ReferenceTree extends TreeView<Path> {
                 setText(null);
                 // A real Feather vector icon is kept in a fixed-size
                 // container. No "✓" / "○" text labels can collapse into "...".
-                var badge = ReconstructionStateIcons.forState(state);
+                var badge = state == State.NOT_APPLICABLE ? null
+                        : ReconstructionStateIcons.forState(state);
                 Label nameLabel = new Label(name(path));
                 nameLabel.getStyleClass().add("reference-name");
-                if (!created) nameLabel.getStyleClass().add("reference-pending-name");
+                if (state == State.PENDING)
+                    nameLabel.getStyleClass().add("reference-pending-name");
                 nameLabel.setTextFill(created ? Color.web("#263747")
                         : Color.web("#667784"));
                 nameLabel.setMinWidth(javafx.scene.layout.Region.USE_PREF_SIZE);
-                HBox graphic = new HBox(6,
-                        FileTypeIcons.forPath(path, isFolder(path)), badge, nameLabel);
+                HBox graphic = new HBox(6);
+                graphic.getChildren().add(FileTypeIcons.forPath(path, folder));
+                if (badge != null) graphic.getChildren().add(badge);
+                graphic.getChildren().add(nameLabel);
                 graphic.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
                 graphic.getStyleClass().add("reference-tree-row");
                 if (fileCount >= 0) {
@@ -114,9 +123,10 @@ public final class ReferenceTree extends TreeView<Path> {
                 setGraphic(graphic);
                 setGraphicTextGap(0);
                 String status = switch (state) {
+                    case NOT_APPLICABLE -> "No requiere práctica de mecanografía";
                     case PENDING -> "Pendiente de recrear";
                     case CREATED -> "Creado virtualmente · transcripción pendiente";
-                    case COMPLETED -> "Todos los caracteres escritos correctamente";
+                    case COMPLETED -> "Ejercicio terminado";
                 };
                 if (fileCount >= 0) {
                     status += "\n" + fileCount + (fileCount == 1
@@ -349,38 +359,51 @@ public final class ReferenceTree extends TreeView<Path> {
         boolean folder = isFolder(path);
         List<MenuItem> actions = new ArrayList<>();
 
-        if (folder) {
-            if (!created && !relative.isEmpty()) {
-                MenuItem createThis = new MenuItem("Crear esta carpeta");
-                createThis.setOnAction(event -> recreateKnown(relative, true));
-                actions.add(createThis);
-                actions.add(new javafx.scene.control.SeparatorMenuItem());
+        if (folder && index != null) {
+            boolean hasWorkable = index.hasWorkableDescendant(relative);
+            boolean hasPendingDirectory = index.children(relative).stream()
+                    .anyMatch(child -> index.hasDirectory(child)
+                            && index.hasWorkableDescendant(child)
+                            && !workspace.exists(child));
+            boolean hasPendingFile = index.children(relative).stream()
+                    .anyMatch(child -> index.isWorkable(child)
+                            && !workspace.exists(child));
+            if (!created && !relative.isEmpty() && hasWorkable) {
+                MenuItem makeCurrent = new MenuItem("Crear esta carpeta");
+                makeCurrent.setOnAction(event -> recreateKnown(relative, true));
+                actions.add(makeCurrent);
             }
-            MenuItem newFolder = new MenuItem("Crear subcarpeta...");
-            newFolder.setOnAction(event -> create(relative, true));
-            MenuItem newFile = new MenuItem("Crear archivo...");
-            newFile.setOnAction(event -> create(relative, false));
-            actions.addAll(List.of(newFolder, newFile));
-            actions.add(new javafx.scene.control.SeparatorMenuItem());
-            MenuItem scope = new MenuItem(relative.isEmpty()
-                    ? "Progreso: todo el proyecto"
-                    : "Progreso: solo esta carpeta");
-            scope.setOnAction(event -> onProgressFolder.accept(relative));
-            actions.add(scope);
-        } else {
-            if (!created) {
+            if (hasPendingDirectory) {
+                MenuItem newFolder = new MenuItem("Crear subcarpeta...");
+                newFolder.setOnAction(event -> create(relative, true));
+                actions.add(newFolder);
+            }
+            if (hasPendingFile) {
+                MenuItem newFile = new MenuItem("Crear archivo...");
+                newFile.setOnAction(event -> create(relative, false));
+                actions.add(newFile);
+            }
+            if (hasWorkable) {
+                if (!actions.isEmpty()) actions.add(new javafx.scene.control.SeparatorMenuItem());
+                MenuItem scope = new MenuItem(relative.isEmpty()
+                        ? "Progreso: todo el proyecto"
+                        : "Progreso: solo esta carpeta");
+                scope.setOnAction(event -> onProgressFolder.accept(relative));
+                actions.add(scope);
+            }
+        } else if (!folder) {
+            if (!created && index != null && index.isWorkable(relative)) {
                 MenuItem createThis = new MenuItem("Crear este archivo");
                 createThis.setOnAction(event -> recreateKnown(relative, false));
                 actions.add(createThis);
-                actions.add(new javafx.scene.control.SeparatorMenuItem());
             }
-            MenuItem viewSource = new MenuItem("Mostrar en el Explorador");
-            viewSource.setOnAction(event -> revealInFileExplorer(path));
-            actions.add(viewSource);
+            MenuItem reveal = new MenuItem("Mostrar en el Explorador");
+            reveal.setOnAction(event -> revealInFileExplorer(path));
+            actions.add(reveal);
         }
-        // Files already created are a completed reconstruction milestone.
-        // Destructive operations (delete, cut, rename) do not belong here.
-        return new ContextMenu(actions.toArray(MenuItem[]::new));
+
+        return actions.isEmpty() ? null
+                : new ContextMenu(actions.toArray(MenuItem[]::new));
     }
 
     /**
@@ -453,10 +476,10 @@ public final class ReferenceTree extends TreeView<Path> {
                             + relative);
             return;
         }
-        boolean validReference = index == null
-                ? (directory ? Files.isDirectory(referenceRoot.resolve(relative))
-                        : Files.isRegularFile(referenceRoot.resolve(relative)))
-                : (directory ? index.hasDirectory(relative) : index.hasFile(relative));
+        boolean validReference = index != null
+                && (directory ? index.hasDirectory(relative)
+                    && index.hasWorkableDescendant(relative)
+                    : index.isWorkable(relative));
         if (!validReference) {
             ProductDialogs.error(getScene() == null ? null : getScene().getWindow(),
                     "Elemento fuera de la referencia",

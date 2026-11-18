@@ -11,7 +11,7 @@ class ReconstructionStatusTest {
     private static final String HASH = "a".repeat(64);
 
     @Test
-    void fileIsYellowAfterCreationAndGreenOnlyWhenEveryCharacterIsCorrect() {
+    void fileIsAmberUntilItsPracticeSlotsAreResolved() {
         var workspace = new VirtualWorkspace();
         workspace.createDirectory("src");
         workspace.createFile("src/Main.java");
@@ -27,8 +27,8 @@ class ReconstructionStatusTest {
         session.skip(2, 4);
         states = ReconstructionStatus.calculate(workspace,
                 Map.of("src/Main.java", session), hashes, files, ProgressScope.defaults());
-        assertEquals(ReconstructionStatus.State.CREATED, states.get("src/Main.java"));
-        assertEquals(ReconstructionStatus.State.CREATED, states.get("src"));
+        assertEquals(ReconstructionStatus.State.COMPLETED, states.get("src/Main.java"));
+        assertEquals(ReconstructionStatus.State.COMPLETED, states.get("src"));
         session.moveCaret(2);
         session.type("{}");
         states = ReconstructionStatus.calculate(workspace,
@@ -79,6 +79,16 @@ class ReconstructionStatusTest {
     }
 
     @Test
+    void unsupportedBinaryFilesHaveNoPracticeState() {
+        var workspace = new VirtualWorkspace();
+        var state = ReconstructionStatus.calculate(workspace, Map.of(), Map.of(),
+                new ReferenceCatalogue.Snapshot(Map.of(
+                        "image.png", new ReferenceCatalogue.FileInfo(HASH, 100, -1))),
+                ProgressScope.defaults());
+        assertEquals(ReconstructionStatus.State.NOT_APPLICABLE, state.get("image.png"));
+    }
+
+    @Test
     void emptyFilesHaveNoTranscriptionRequirementAndStayCreated() {
         var workspace = new VirtualWorkspace();
         workspace.createFile("Empty.java");
@@ -86,6 +96,6 @@ class ReconstructionStatusTest {
                 new ReferenceCatalogue.Snapshot(Map.of(
                         "Empty.java", new ReferenceCatalogue.FileInfo(HASH, 0, 0))),
                 ProgressScope.defaults());
-        assertEquals(ReconstructionStatus.State.CREATED, statuses.get("Empty.java"));
+        assertEquals(ReconstructionStatus.State.COMPLETED, statuses.get("Empty.java"));
     }
 }

@@ -24,10 +24,15 @@ public final class ReferenceTreeIndex {
     private final Map<String, Long> recursiveCounts;
     private final Set<String> directories;
     private final Set<String> files;
+    private final Set<String> workableFiles;
+    private final Set<String> workableDescendants;
 
     private ReferenceTreeIndex(Map<String, List<String>> children,
                                Map<String, Long> recursiveCounts,
-                               Set<String> directories, Set<String> files) {
+                               Set<String> directories, Set<String> files,
+                               Set<String> workableFiles, Set<String> workableDescendants) {
+        this.workableFiles = Set.copyOf(workableFiles);
+        this.workableDescendants = Set.copyOf(workableDescendants);
         this.children = Map.copyOf(children);
         this.recursiveCounts = Map.copyOf(recursiveCounts);
         this.directories = Set.copyOf(directories);
@@ -50,6 +55,14 @@ public final class ReferenceTreeIndex {
         return files.contains(relative);
     }
 
+    public boolean isWorkable(String relative) {
+        return workableFiles.contains(relative);
+    }
+
+    public boolean hasWorkableDescendant(String relative) {
+        return workableDescendants.contains(relative);
+    }
+
     public static ReferenceTreeIndex scan(Path reference) throws IOException {
         if (!Files.isDirectory(reference)) {
             throw new IOException("Carpeta de referencia no disponible");
@@ -59,6 +72,8 @@ public final class ReferenceTreeIndex {
         Map<String, Long> totals = new HashMap<>();
         Set<String> folders = new HashSet<>();
         Set<String> regularFiles = new HashSet<>();
+        Set<String> workable = new HashSet<>();
+        Set<String> descendants = new HashSet<>();
         folders.add("");
         childPaths.put("", new ArrayList<>());
         totals.put("", 0L);
@@ -94,6 +109,15 @@ public final class ReferenceTreeIndex {
                 }
                 String relative = relative(root, file);
                 regularFiles.add(relative);
+                if (PracticeEligibility.supports(file) && attributes.size() > 0) {
+                    workable.add(relative);
+                    String ancestor = parent(relative);
+                    while (true) {
+                        descendants.add(ancestor);
+                        if (ancestor.isEmpty()) break;
+                        ancestor = parent(ancestor);
+                    }
+                }
                 childPaths.computeIfAbsent(parent(relative), ignored -> new ArrayList<>())
                         .add(relative);
                 String ancestor = parent(relative);
@@ -122,7 +146,8 @@ public final class ReferenceTreeIndex {
             });
             stable.put(path, List.copyOf(values));
         });
-        return new ReferenceTreeIndex(stable, totals, folders, regularFiles);
+        return new ReferenceTreeIndex(stable, totals, folders, regularFiles,
+                workable, descendants);
     }
 
     private static String relative(Path root, Path child) {

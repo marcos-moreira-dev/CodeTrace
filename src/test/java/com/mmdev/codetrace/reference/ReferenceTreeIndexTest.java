@@ -10,6 +10,18 @@ class ReferenceTreeIndexTest {
     @TempDir Path root;
 
     @Test
+    void emptyAndBinaryOnlyFoldersOfferNoWorkableFiles() throws Exception {
+        Files.createDirectory(root.resolve("assets"));
+        Files.write(root.resolve("assets/photo.jpg"), new byte[] {1, 2, 3});
+        Files.createDirectory(root.resolve("empty"));
+        Files.writeString(root.resolve("empty/Empty.java"), "");
+        var index = ReferenceTreeIndex.scan(root);
+        assertFalse(index.hasWorkableDescendant("assets"));
+        assertFalse(index.hasWorkableDescendant("empty"));
+        assertFalse(index.isWorkable("empty/Empty.java"));
+    }
+
+    @Test
     void countsAllNestedFilesAndPreservesExactNames() throws Exception {
         Files.createDirectories(root.resolve("src/main"));
         Files.createDirectory(root.resolve("docs"));
@@ -28,5 +40,9 @@ class ReferenceTreeIndexTest {
         assertTrue(index.hasDirectory("src/main"));
         assertEquals(2, index.children("src").size());
         assertTrue(index.children("").contains("pom.xml"));
+        assertTrue(index.hasWorkableDescendant(""));
+        assertTrue(index.hasWorkableDescendant("src"));
+        assertTrue(index.isWorkable("src/Main.java"));
+        assertFalse(index.isWorkable("pom.xml"));
     }
 }

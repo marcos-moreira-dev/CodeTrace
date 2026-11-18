@@ -548,7 +548,15 @@ public final class CodeTraceApp extends Application {
             return;
         }
         String relative = relative(file);
-        // Every reference text file can be opened for inspection immediately.
+        if (!com.mmdev.codetrace.reference.PracticeEligibility.supports(file)) {
+            setStatus("Archivo de referencia · no requiere mecanografía.");
+            return;
+        }
+        if (Files.size(file) == 0) {
+            setStatus("Archivo vacío · sin ejercicio de mecanografía.");
+            return;
+        }
+        // Every eligible reference text file can be inspected immediately.
         // Virtual folders and the virtual file are created only upon transcription.
         Tab existing = openedTabs.get(relative);
         if (existing != null) {
@@ -740,7 +748,7 @@ public final class CodeTraceApp extends Application {
 
     /** Recompute folder states only when a file crosses the completed threshold. */
     private void refreshStatusIfCompletionChanged(String relative, TypingSession session) {
-        boolean finished = ReconstructionStatus.entirelyCorrect(session)
+        boolean finished = session.finishedExercise()
                 && catalogue != null
                 && catalogue.files().containsKey(relative)
                 && catalogue.files().get(relative).sha256().equals(hashes.get(relative))
@@ -814,15 +822,12 @@ public final class CodeTraceApp extends Application {
         VBox options = new VBox(9, allScopes);
         options.getStyleClass().add("scope-options");
         addFilterOption(options, "Código fuente", ProgressScope.Category.SOURCE);
-        addFilterOption(options, "Configuración", ProgressScope.Category.CONFIGURATION);
-        addFilterOption(options, "Documentación / Markdown",
-                ProgressScope.Category.DOCUMENTATION);
-        addFilterOption(options, "Otros textos", ProgressScope.Category.OTHER_TEXT);
+        addFilterOption(options, "Markdown", ProgressScope.Category.DOCUMENTATION);
         updateAllCheck();
 
         allScopes.setOnAction(event -> {
             boolean active = allScopes.isSelected();
-            progressScope = new ProgressScope(active, active, active, active);
+            progressScope = new ProgressScope(active, false, active, false);
             for (CheckBox choice : scopeChecks.values()) choice.setSelected(active);
             progressScope.save();
             refreshReconstructionStatuses();

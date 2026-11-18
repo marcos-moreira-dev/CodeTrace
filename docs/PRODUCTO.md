@@ -80,3 +80,20 @@ CodeTrace propone una práctica tranquila de reconstrucción manual de software,
 - Color del estado: gris pendiente (nombre en cursiva), ámbar creado/incompleto, verde completamente transcrito. Los archivos completados conservan su visto aunque estén excluidos del filtro global.
 - La carpeta se muestra completa cuando todos los archivos de texto contabilizables que contiene recursivamente están correctos. Para carpetas sin texto contabilizable se mantiene el estado de creada.
 - Preferencias, Biblioteca y diálogos usan el ícono existente de CodeTrace; botones y contenedores siguen siendo rectangulares.
+
+## Revisión puntual (18 de noviembre de 2026)
+- El estado final del archivo es «ejercicio resuelto»: todas las posiciones
+  relevantes son correctas u omitidas voluntariamente mediante Turbo/imports.
+  Omisiones no incrementan aciertos ni porcentaje global. El fin de línea
+  terminal no exige una tecla adicional.
+- Solo las extensiones reconocidas por LanguageRegistry se consideran practicables;
+  los demás archivos, incluidos binarios y configuración no admitida, son
+  referencias no practicables y no requieren acciones virtuales.
+- Empty code: un archivo compatible vacío se considera resuelto por defecto,
+  sin requerir teclear ni crearlo manualmente.
+- El menú de creación solo ofrece acciones realizables, atendiendo a hijos
+  directos pendientes y a descendientes de código soportado.
+- El diálogo Acerca de conserva su explicación íntegra y recupera un recurso
+  gráfico nítido y centrado, sin estirar el icono de Windows.
+- Pendiente tras estabilización: auditoría formal de producto y auditoría UX/UI
+  (semántica de controles, microrrotulación, accesibilidad, tabulación y sesiones).
