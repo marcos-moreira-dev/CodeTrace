@@ -37,6 +37,12 @@ jobs:
         run: |
           & .\scripts\diagnostico.bat -NoApp -NoExplorer
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Validate reproducible preview QA fixtures
+        shell: pwsh
+        run: |
+          & .\scripts\crear-fixtures-preview.ps1
+          if (-not (Test-Path "target/qa-preview/README.md")) { throw "Missing QA README" }
+          if (-not (Test-Path "target/qa-preview/assets/seguro.svg")) { throw "Missing QA SVG" }
       - name: Preserve Windows diagnostic ZIP
         if: always()
         uses: actions/upload-artifact@v4
