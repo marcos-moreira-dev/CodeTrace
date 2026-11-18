@@ -81,4 +81,31 @@ class SessionArchiveTest {
                 Map.of(), Map.of()));
         assertTrue(SessionArchive.load(file).workspace().exists("src"));
     }
+
+    @Test
+    void rejectsTrailingBytesInsteadOfSilentlyAcceptingAnAlteredSession()
+            throws Exception {
+        Path archive = directory.resolve("trailing.ctrace");
+        SessionArchive.save(archive, new SessionArchive.State(directory,
+                new VirtualWorkspace(), Map.of(), Map.of()));
+        byte[] original = Files.readAllBytes(archive);
+        byte[] altered = java.util.Arrays.copyOf(original, original.length + 2);
+        altered[original.length] = 42;
+        altered[original.length + 1] = 43;
+        Files.write(archive, altered);
+        assertThrows(IOException.class, () -> SessionArchive.load(archive));
+    }
+
+    @Test
+    void rejectsMalformedUtf8InTheRootPath() throws Exception {
+        Path archive = directory.resolve("malformed.ctrace");
+        try (DataOutputStream out = new DataOutputStream(Files.newOutputStream(archive))) {
+            out.writeInt(0x43545243);
+            out.writeInt(2);
+            out.writeInt(1);
+            out.writeByte(0xFF); // Invalid standalone UTF-8 byte
+            out.writeByte(1); // PracticeMode.RECONSTRUCTION (unread)
+        }
+        assertThrows(IOException.class, () -> SessionArchive.load(archive));
+    }
 }
