@@ -101,3 +101,32 @@ Para un instalador EXE, añadir -Installer (necesita WiX).
 Para incluir un FFmpeg legalmente redistribuible, proporcionar el binario en third_party/ffmpeg/bin/ffmpeg.exe y la licencia en third_party/ffmpeg/LICENSE.txt. Revisar el licenciamiento y las obligaciones de fuentes y avisos antes de ejecutar el script con -IncludeFfmpeg.
 
 No se distribuye FFmpeg por defecto. La CI no reemplaza la auditoría de licencias.
+
+## Revisión de interfaz: reproductor, búsqueda y reglas
+
+- AUDIO-UI-01: Abre \`src/main/resources/sounds/success.mp3\` dentro del
+  proyecto CodeTrace. El audio debe presentar controles de icono reproducir
+  (triángulo), pausar (dos barras) y detener (cuadrado), cada uno con tooltip.
+  La barra debe permitir desplazarse, junto a tiempo y volumen.
+- AUDIO-UI-02: Comprueba el espectro de frecuencias: barras reactivas al sonido
+  durante reproducción; tras detener, quedan en reposo. Esta representación
+  no es una forma de onda precalculada.
+- AUDIO-UI-03: Una pestaña MP3 muestra controles de audio y **no muestra zoom
+  de imagen**. Una pestaña PNG o vídeo sí recupera el zoom multimedia.
+- AUDIO-UI-04: Cierra un audio mientras reproduce y cambia de referencia:
+  no debe quedar reproducción ni seguir recibiendo eventos de espectro.
+- SND-01: Los recursos \`tecla-correcta.wav.gz\` y \`tecla-error.wav.gz\`
+  son archivos WAV comprimidos con GZIP que \`TypingSounds\` descomprime
+  y normaliza en temporal. Los originales nunca se deben modificar.
+- FIND-UI-01: La ventana Buscar muestra el icono de CodeTrace en la barra
+  de título. Su lista de coincidencias presenta nombre, ruta + línea +
+  columna y fragmento, con el mismo estilo de registros de Comandos.
+- NAV-UI-01: Aumentar el espacio sobre y alrededor del buscador del explorador.
+  La X para limpiar carece de borde salvo en estados hover/foco.
+- PRACTICE-UI-01: En Reglas de práctica, marcar «Autocrear archivos y carpetas»
+  activa \`DIRECT\`: las carpetas y el archivo se crean **virtualmente al
+  empezar a transcribir**, no al abrirlos. Desmarcar activa
+  \`RECONSTRUCTION\`: creación manual. El menú Modalidad del proyecto debe
+  reflejar siempre la misma opción. Los originales y estadísticas permanecen
+  intactos al alternar.
+
