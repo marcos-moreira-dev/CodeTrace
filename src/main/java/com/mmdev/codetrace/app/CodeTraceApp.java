@@ -23,6 +23,8 @@ import com.mmdev.codetrace.ui.EditorZoomControl;
 import com.mmdev.codetrace.ui.MediaZoomControl;
 import com.mmdev.codetrace.ui.ProjectSearchWindow;
 import com.mmdev.codetrace.ui.ReferenceTextPane;
+import com.mmdev.codetrace.reference.ProjectDependencyGraph;
+import com.mmdev.codetrace.ui.DependencyGraphPane;
 import com.mmdev.codetrace.reference.ProjectTextSearch.Hit;
 import com.mmdev.codetrace.ui.CommandConsolePane;
 import com.mmdev.codetrace.commands.ProjectCommandStore;
@@ -260,7 +262,11 @@ public final class CodeTraceApp extends Application {
                 KeyCombination.SHORTCUT_DOWN, KeyCombination.SHIFT_DOWN));
         findProject.setOnAction(event ->
                 openSearch(ProjectSearchWindow.Scope.PROJECT));
+        MenuItem dependencyMap = new MenuItem("Mapa de dependencias de carpeta...");
+        dependencyMap.setGraphic(new FontIcon("fth-share-2"));
+        dependencyMap.setOnAction(event -> openDependencyGraphForSelectedFolder());
         Menu toolsMenu = new Menu("Herramientas", null, findCurrent, findProject,
+                new javafx.scene.control.SeparatorMenuItem(), dependencyMap,
                 new javafx.scene.control.SeparatorMenuItem(), preferences);
 
         MenuBar menu = new MenuBar(
@@ -747,6 +753,70 @@ public final class CodeTraceApp extends Application {
         } catch (IOException error) {
             setStatus("No se pudo consultar " + relative);
         }
+    }
+
+    /**
+     * The graph uses a selected directory only; source references remain
+     * read-only. Imports outside the local project are deliberately omitted.
+     */
+    private void openDependencyGraphForSelectedFolder() {
+        if (reference == null) {
+            showGraphNotice("Abre primero un proyecto de referencia.");
+            return;
+        }
+        var item = tree.getSelectionModel().getSelectedItem();
+        if (item == null || item.getValue() == null
+                || !tree.isFolderPath(item.getValue())) {
+            showGraphNotice("Selecciona una carpeta en el explorador antes de crear el mapa.");
+            return;
+        }
+        Path folder = item.getValue();
+        Path root = reference;
+        long request = referenceRequest;
+        setStatus("Analizando imports internos de " + folder.getFileName() + "...");
+        Task<ProjectDependencyGraph.Graph> task = new Task<>() {
+            @Override protected ProjectDependencyGraph.Graph call() throws IOException {
+                return ProjectDependencyGraph.analyze(root, folder, this::isCancelled);
+            }
+        };
+        task.setOnSucceeded(event -> {
+            if (request != referenceRequest || !root.equals(reference)) return;
+            ProjectDependencyGraph.Graph graph = task.getValue();
+            if (graph.edges().isEmpty()) {
+                showGraphNotice("No se encontraron dependencias internas resolubles "
+                        + "en la carpeta seleccionada. Los imports externos no "
+                        + "se muestran como archivos ficticios.");
+                return;
+            }
+            DependencyGraphPane view = new DependencyGraphPane(graph, relative -> {
+                Path target = reference.resolve(relative).normalize();
+                if (Files.isRegularFile(target) && target.startsWith(reference))
+                    openForPractice(target);
+            });
+            Tab tab = new Tab("Mapa · " + folder.getFileName(), view);
+            tab.setGraphic(new FontIcon("fth-share-2"));
+            installTabContextMenu(tab);
+            tabs.getTabs().add(tab);
+            tabs.getSelectionModel().select(tab);
+            setStatus(graph.edges().size() + " dependencias internas · "
+                    + graph.inspected() + " archivos analizados"
+                    + (graph.truncated() ? " · análisis parcial" : ""));
+        });
+        task.setOnFailed(event -> {
+            if (request != referenceRequest || !root.equals(reference)) return;
+            showGraphNotice("No se pudo generar el mapa: " + task.getException().getMessage());
+        });
+        Thread thread = new Thread(task, "codetrace-dependency-graph");
+        thread.setDaemon(true);
+        thread.start();
+    }
+
+    private void showGraphNotice(String message) {
+        Alert info = new Alert(Alert.AlertType.INFORMATION, message, ButtonType.OK);
+        info.initOwner(stage);
+        info.setTitle("Mapa de dependencias — CodeTrace");
+        info.setHeaderText("Exploración de relaciones");
+        info.showAndWait();
     }
 
     private void openSearch(ProjectSearchWindow.Scope scope) {
