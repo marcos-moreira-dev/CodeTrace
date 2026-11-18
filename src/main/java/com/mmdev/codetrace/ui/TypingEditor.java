@@ -7,6 +7,7 @@ import java.text.BreakIterator;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.function.Consumer;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Point2D;
@@ -35,13 +36,16 @@ public final class TypingEditor extends BorderPane {
     private final TextFlow surface = new TextFlow();
     private final ScrollPane scroll = new ScrollPane(surface);
     private final Runnable onChange;
+    private final Consumer<Boolean> onTypedCharacter;
     private long firstKeyNanos;
     private double fontSize;
     private String fontFamily;
 
     public TypingEditor(TypingSession session, Runnable onChange,
-                        String filename, String fontFamily, int fontSize) {
+                        String filename, String fontFamily, int fontSize,
+                        Consumer<Boolean> onTypedCharacter) {
         this.session = session;
+        this.onTypedCharacter = onTypedCharacter;
         this.syntaxColors = syntaxColors(session, filename);
         this.onChange = onChange;
         this.fontFamily = fontFamily;
@@ -127,7 +131,7 @@ public final class TypingEditor extends BorderPane {
             case DOWN -> session.moveCaret(verticalTarget(1));
             case TAB -> {
                 beginTyping();
-                session.type("\t");
+                typeAndNotify("\t");
             }
             default -> handled = false;
         }
@@ -153,9 +157,18 @@ public final class TypingEditor extends BorderPane {
             return;
         }
         beginTyping();
-        session.type(input);
+        typeAndNotify(input);
         event.consume();
         update();
+    }
+
+    private void typeAndNotify(String committed) {
+        int before = session.caret();
+        session.type(committed);
+        if (session.caret() > before) {
+            onTypedCharacter.accept(
+                    session.state(session.caret() - 1) == TypingSession.State.CORRECT);
+        }
     }
 
     private void beginTyping() {

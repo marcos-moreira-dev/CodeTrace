@@ -37,7 +37,7 @@ public final class PreferencesWindow {
         dialog.setMinHeight(340);
 
         ListView<String> categories = new ListView<>(
-                FXCollections.observableArrayList("Editor", "Ventana"));
+                FXCollections.observableArrayList("Editor", "Ventana", "Sonido"));
         categories.setPrefWidth(155);
         categories.setMaxWidth(155);
         categories.getSelectionModel().selectFirst();
@@ -70,6 +70,11 @@ public final class PreferencesWindow {
         HBox.setHgrow(size, Priority.ALWAYS);
         editor.add(sizeRow, 1, 1);
 
+        CheckBox sounds = new CheckBox("Sonidos de aciertos y errores");
+        sounds.setSelected(current.typingSounds());
+        VBox soundsSettings = new VBox(sounds);
+        soundsSettings.setPadding(new Insets(20));
+
         CheckBox explorer = new CheckBox("Mostrar explorador de proyectos");
         explorer.setSelected(current.showExplorer());
         VBox windowSettings = new VBox(explorer);
@@ -80,11 +85,13 @@ public final class PreferencesWindow {
         layout.setCenter(editor);
         categories.getSelectionModel().selectedItemProperty().addListener(
                 (observable, before, selected) ->
-                        layout.setCenter("Ventana".equals(selected) ? windowSettings : editor));
+                        layout.setCenter("Ventana".equals(selected) ? windowSettings
+                                : "Sonido".equals(selected) ? soundsSettings : editor));
 
         Runnable apply = () -> onApply.accept(new AppSettings(
                 families.getValue() == null ? current.fontFamily() : families.getValue(),
-                (int) Math.round(size.getValue()), explorer.isSelected()));
+                (int) Math.round(size.getValue()), explorer.isSelected(),
+                current.keyboardLayout(), sounds.isSelected()));
         Button applyButton = new Button("Aplicar");
         applyButton.setOnAction(event -> apply.run());
         Button cancel = new Button("Cancelar");

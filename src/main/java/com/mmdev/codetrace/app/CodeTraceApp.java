@@ -11,6 +11,9 @@ import com.mmdev.codetrace.ui.PreferencesWindow;
 import com.mmdev.codetrace.ui.MarkdownPracticePane;
 import com.mmdev.codetrace.ui.ProductDialogs;
 import com.mmdev.codetrace.ui.ToolbarIcons;
+import com.mmdev.codetrace.ui.SymbolPalette;
+import com.mmdev.codetrace.symbols.SymbolCatalog.Layout;
+import com.mmdev.codetrace.sound.TypingSounds;
 import com.mmdev.codetrace.workspace.VirtualWorkspace;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -80,6 +83,8 @@ public final class CodeTraceApp extends Application {
     private Path sessionFile;
     private AppSettings settings = AppSettings.load();
     private CheckMenuItem explorerToggle;
+    private SymbolPalette symbols;
+    private final TypingSounds typingSounds = new TypingSounds();
     private boolean dirty;
     private boolean concentration;
     private double explorerRatio = 0.21;
@@ -162,9 +167,14 @@ public final class CodeTraceApp extends Application {
         refreshButton.setDisable(true);
         refreshButton.setOnAction(event -> refreshReference());
         skipImportsButton.setOnAction(event -> skipImports());
+        symbols = new SymbolPalette(Layout.valueOf(settings.keyboardLayout()), next -> {
+            settings = settings.withLayout(next.name());
+            settings.save();
+        });
         ToolBar toolbar = new ToolBar(openButton, saveButton,
                 new Separator(Orientation.VERTICAL), refreshButton,
-                new Separator(Orientation.VERTICAL), skipImportsButton);
+                new Separator(Orientation.VERTICAL), skipImportsButton,
+                new Separator(Orientation.VERTICAL), symbols);
         top.getChildren().addAll(menu, toolbar);
         root.setTop(top);
 
@@ -308,7 +318,12 @@ public final class CodeTraceApp extends Application {
                 dirty = true;
                 updateTitle();
                 refreshMetrics();
-            }, file.getFileName().toString(), settings.fontFamily(), settings.fontSize());
+            }, file.getFileName().toString(), settings.fontFamily(), settings.fontSize(),
+                    matched -> {
+                        if (settings.typingSounds()) {
+                            typingSounds.play(matched);
+                        }
+                    });
             boolean markdown = relative.toLowerCase().endsWith(".md")
                     || relative.toLowerCase().endsWith(".markdown");
             Tab tab = new Tab(file.getFileName().toString(),
@@ -547,7 +562,8 @@ public final class CodeTraceApp extends Application {
     }
 
     private void applySettings(AppSettings next) {
-        settings = next;
+        settings = new AppSettings(next.fontFamily(), next.fontSize(),
+                next.showExplorer(), settings.keyboardLayout(), next.typingSounds());
         settings.save();
         if (!concentration) {
             explorerToggle.setSelected(next.showExplorer());
