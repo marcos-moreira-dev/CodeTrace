@@ -4,6 +4,7 @@ import com.mmdev.codetrace.symbols.SymbolCatalog;
 import com.mmdev.codetrace.symbols.SymbolCatalog.Layout;
 import com.mmdev.codetrace.symbols.SymbolCatalog.Symbol;
 import java.util.function.Consumer;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.ComboBox;
@@ -26,10 +27,13 @@ public final class SymbolPalette extends MenuButton {
     private final ComboBox<Layout> layoutSelector = new ComboBox<>();
     private final Label hint = new Label();
     private final Consumer<Layout> onLayoutChanged;
+    private final Runnable onSymbolCopied;
 
-    public SymbolPalette(Layout initialLayout, Consumer<Layout> onLayoutChanged) {
+    public SymbolPalette(Layout initialLayout, Consumer<Layout> onLayoutChanged,
+                         Runnable onSymbolCopied) {
         super("Símbolos");
         this.onLayoutChanged = onLayoutChanged;
+        this.onSymbolCopied = onSymbolCopied;
         getStyleClass().addAll("symbol-menu-button", "toolbar-action");
         setTooltip(new Tooltip("Copiar símbolos y consultar sus teclas"));
 
@@ -77,6 +81,10 @@ public final class SymbolPalette extends MenuButton {
                 hint.setText((success ? "Copiado: " : "No se pudo copiar: ")
                         + symbol.glyph() + "  ·  "
                         + symbol.keys(layoutSelector.getValue()));
+                if (success) {
+                    hide();
+                    Platform.runLater(onSymbolCopied);
+                }
             });
             grid.getChildren().add(tile);
         }

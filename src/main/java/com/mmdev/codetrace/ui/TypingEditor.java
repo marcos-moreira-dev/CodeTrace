@@ -12,6 +12,7 @@ import javafx.collections.FXCollections;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.Clipboard;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.geometry.Insets;
@@ -47,6 +48,7 @@ public final class TypingEditor extends BorderPane {
     private String fontFamily;
     private long firstKeyNanos;
     private boolean synchronizingLine;
+    private Consumer<String> onNotice = ignored -> {};
 
     private record SourceLine(int number, int first, int last, String original) {}
 
@@ -85,15 +87,9 @@ public final class TypingEditor extends BorderPane {
                         lines.refresh();
                     }
                 });
-        lines.setOnMouseClicked(event -> {
-            SourceLine chosen = lines.getSelectionModel().getSelectedItem();
-            if (chosen != null) {
-                // Clicking any point in a row activates the whole line.
-                session.moveCaret(chosen.first());
-                lines.refresh();
-            }
-            lines.requestFocus();
-        });
+        // A click on a different line uses the selection listener above.
+        // Clicking the CURRENT line must preserve its current character position.
+        lines.setOnMouseClicked(event -> lines.requestFocus());
         addEventFilter(KeyEvent.KEY_PRESSED, this::handlePressed);
         addEventFilter(KeyEvent.KEY_TYPED, this::handleTyped);
         setCenter(lines);
@@ -185,6 +181,10 @@ public final class TypingEditor extends BorderPane {
         lines.requestFocus();
     }
 
+    public void setOnNotice(Consumer<String> callback) {
+        onNotice = callback == null ? ignored -> {} : callback;
+    }
+
     private void handlePressed(KeyEvent event) {
         KeyCode key = event.getCode();
         boolean handled = true;
@@ -222,6 +222,13 @@ public final class TypingEditor extends BorderPane {
                 beginTyping();
                 typeAndNotify("\t");
             }
+            case V -> {
+                if (event.isShortcutDown()) {
+                    modified = pasteSingleSymbol();
+                } else {
+                    handled = false;
+                }
+            }
             default -> handled = false;
         }
         if (handled) {
@@ -247,6 +254,25 @@ public final class TypingEditor extends BorderPane {
         typeAndNotify(input);
         event.consume();
         refresh(true);
+    }
+
+    /**
+     * A copied programming symbol can be pasted into the reference position.
+     * Pasting a whole source file is deliberately not an alternative to typing.
+     */
+    private boolean pasteSingleSymbol() {
+        Clipboard clipboard = Clipboard.getSystemClipboard();
+        if (!clipboard.hasString()) return false;
+        String pasted = clipboard.getString();
+        if (pasted == null || pasted.isEmpty()) return false;
+        if (new TypingSession(pasted).size() != 1) {
+            onNotice.accept("Para practicar, pega un solo carácter cada vez.");
+            return false;
+        }
+        int before = session.caret();
+        beginTyping();
+        typeAndNotify(pasted);
+        return session.caret() != before;
     }
 
     private void typeAndNotify(String committed) {

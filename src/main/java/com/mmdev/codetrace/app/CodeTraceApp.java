@@ -186,6 +186,10 @@ public final class CodeTraceApp extends Application {
         symbols = new SymbolPalette(Layout.valueOf(settings.keyboardLayout()), next -> {
             settings = settings.withLayout(next.name());
             settings.save();
+        }, () -> {
+            TypingEditor editor = selectedEditor();
+            if (editor != null) editor.focusEditor();
+            setStatus("Símbolo copiado. Usa Ctrl+V para practicarlo.");
         });
         ToolBar toolbar = new ToolBar(openButton, saveButton,
                 new Separator(Orientation.VERTICAL), refreshButton,
@@ -349,6 +353,7 @@ public final class CodeTraceApp extends Application {
                             setStatus("Sonidos no disponibles en este dispositivo.");
                         }
                     });
+            editor.setOnNotice(this::setStatus);
             boolean markdown = relative.toLowerCase().endsWith(".md")
                     || relative.toLowerCase().endsWith(".markdown");
             Tab tab = new Tab(file.getFileName().toString(),
