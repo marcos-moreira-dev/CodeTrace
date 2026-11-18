@@ -16,6 +16,14 @@ El script comprueba Java y Maven, construye y prueba el proyecto, abre CodeTrace
 
 Para trabajar normalmente desde IntelliJ IDEA: importar pom.xml como Maven, seleccionar el SDK **Eclipse Temurin 21**, configurar Maven Toolchains y ejecutar mvn javafx:run. El pom.xml exige **Temurin 21** como toolchain; Maven puede usar ~/.m2/toolchains.xml o un archivo específico con la opción -t.
 
+## Vistas multimedia y distribución portable (en validación)
+
+Al abrir imágenes, audio y vídeo, CodeTrace muestra una pestaña **solo de lectura**. PNG/JPEG/GIF/BMP se visualizan directamente, y SVG seguro y WebP se presentan mediante WebView restringido. Los README Markdown admiten imágenes locales, incluidas algunas etiquetas HTML de imagen, tablas y emojis, sin modificar los originales.
+
+Para audio/vídeo, primero se intenta JavaFX. En formatos como MKV, WebM, AVI, FLAC y OGG, o si JavaFX no reconoce los códecs, hay una conversión **temporal y local** con FFmpeg. La conversión no se guarda dentro del proyecto, se ejecuta fuera del hilo gráfico y se cancela al cerrar la pestaña. FFmpeg puede proporcionarse mediante la propiedad Java `codetrace.ffmpeg`, la carpeta de herramientas de la aplicación, la carpeta local del usuario o `PATH`. **No se distribuye el binario de FFmpeg por defecto**: su redistribución exige cumplir la licencia del build elegido.
+
+En Windows, `scripts\package-windows.ps1` prepara un ZIP portable que incorpora el runtime Java con jpackage; `-Installer` solicita un instalador EXE si existe WiX. El parámetro `-IncludeFfmpeg` integra una copia facilitada por el distribuidor, junto con sus avisos de licencia, después de revisar obligaciones de distribución. El empaquetado automatizado y los códecs todavía requieren aceptación en Windows real. La matriz de pruebas está en [Aceptación de Windows](docs/QA-WINDOWS.md).
+
 ## Implementado (versión de desarrollo 0.3)
 
 - Referencia de solo lectura, árbol con creación/copia/movimiento/eliminación **virtual**.
