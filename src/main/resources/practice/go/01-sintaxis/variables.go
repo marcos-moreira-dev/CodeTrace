@@ -1,3 +1,7 @@
+// CodeTrace | Referencia: Go 1.24.
+// Desde PowerShell, en una COPIA del paquete: 
+// Compilar y ejecutar: go run '.\01-sintaxis\variables.go'
+
 package main
 
 import "fmt"
