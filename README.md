@@ -24,11 +24,13 @@ Para trabajar normalmente desde IntelliJ IDEA: importar pom.xml como Maven, sele
 - Resaltado inicial por adaptadores de Java, Python, TypeScript, C/C++ y Markdown.
 - Vista Markdown alternable entre fuente y renderizado en una misma pestaña.
 - Preferencias de fuente, pantalla completa y modo concentración.
+- Galería compacta **Símbolos**: copiar llaves, corchetes, arroba y otros caracteres; pista de teclado latinoamericano o estadounidense. Copiar no suma estadísticas ni introduce texto en la práctica.
+- Dos sonidos opcionales de escritura (acierto/error) suministrados por el usuario, desactivados de forma predeterminada. Activación en **Herramientas → Preferencias → Sonido**.
 - Pruebas JUnit, CI con Temurin 21 y prueba de inicio JavaFX en pantalla virtual.
 
 ### Todavía pendiente de pulir
 
-Selección/deshacer avanzados, alineación flexible de errores, recursos gráficos definitivos, consola integrada y pruebas manuales completas de UX con teclado latinoamericano. Los archivos de texto UTF-8 grandes o binarios no se transcriben en esta versión.
+Selección/deshacer avanzados, alineación flexible de errores, conjunto definitivo de iconos de archivos, consola integrada y pruebas manuales completas de UX con teclado latinoamericano. Los archivos de texto UTF-8 grandes o binarios no se transcriben en esta versión.
 
 ## Organización
 

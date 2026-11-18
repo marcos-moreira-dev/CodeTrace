@@ -66,7 +66,6 @@ public final class SymbolPalette extends MenuButton {
             tile.setMinSize(38, 38);
             tile.setPrefSize(38, 38);
             tile.setMaxSize(38, 38);
-            tile.setFocusTraversable(false);
             tile.setAccessibleText(symbol.name());
             tile.setTooltip(new Tooltip(symbol.name()));
             tile.setOnMouseEntered(event -> hint.setText(
