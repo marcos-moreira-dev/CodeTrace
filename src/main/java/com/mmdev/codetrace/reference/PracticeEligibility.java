@@ -8,8 +8,11 @@ public final class PracticeEligibility {
     private PracticeEligibility() {}
 
     public static boolean supports(String filename) {
-        return filename != null && !filename.isBlank()
-                && !LanguageRegistry.forFile(filename).name().equals("Texto");
+        if (filename == null || filename.isBlank()) return false;
+        return switch (LanguageRegistry.forFile(filename).name()) {
+            case "Texto", "CSS", "JSON", "XML", "YAML", "Properties" -> false;
+            default -> true;
+        };
     }
 
     public static boolean supports(Path file) {
