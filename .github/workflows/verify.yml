@@ -48,6 +48,8 @@ jobs:
           if (-not (Test-Path "target/qa-preview/README.md")) { throw "Missing QA README" }
           if (-not (Test-Path "target/qa-preview/assets/seguro.svg")) { throw "Missing QA SVG" }
           if (-not (Test-Path "target/qa-preview/assets/sample.webp")) { throw "Missing offline QA WebP" }
+          if (-not (Test-Path "target/qa-preview/src/Demo.java")) { throw "Missing search QA Java" }
+          if (-not (Test-Path "target/qa-preview/config.json")) { throw "Missing search QA configuration" }
       - name: Preserve Windows diagnostic ZIP
         if: always()
         uses: actions/upload-artifact@v4
