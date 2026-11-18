@@ -32,4 +32,26 @@ class CommandRunnerTest {
             runner.stop();
         }
     }
+
+    @Test
+    void stoppingImmediatelyAfterStartDoesNotLeaveAnOrphanCommand() throws Exception {
+        CommandRunner runner = new CommandRunner();
+        boolean windows = System.getProperty("os.name", "")
+                .toLowerCase(java.util.Locale.ROOT).contains("win");
+        // A deliberately long command gives stop() an observable target,
+        // including the race before ProcessBuilder has returned.
+        String commandText = windows
+                ? "ping -n 25 127.0.0.1 >nul" : "sleep 25";
+        var command = new ProjectCommandStore.Preset("Prueba detener",
+                ProjectCommandStore.Shell.preferred(), commandText, ".");
+        CountDownLatch done = new CountDownLatch(1);
+        AtomicInteger exit = new AtomicInteger(-999);
+        assertTrue(runner.start(project, command, line -> {},
+                code -> { exit.set(code); done.countDown(); }));
+        runner.stop();
+        assertTrue(done.await(10, TimeUnit.SECONDS),
+                "A stopped command must not keep running in the background");
+        assertEquals(-2, exit.get());
+        assertFalse(runner.isRunning());
+    }
 }
