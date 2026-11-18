@@ -247,11 +247,11 @@ public final class ReferenceTree extends TreeView<Path> {
     }
 
     private void delete(String relative) {
-        Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION,
-                "Eliminar " + relative + " de la construcción virtual?",
+        ButtonType answer = ProductDialogs.confirm(getScene().getWindow(),
+                "Eliminar elemento virtual",
+                "¿Eliminar " + relative + " de la construcción virtual?",
                 ButtonType.OK, ButtonType.CANCEL);
-        confirmation.setTitle("Eliminar elemento virtual");
-        if (confirmation.showAndWait().orElse(ButtonType.CANCEL) != ButtonType.OK) {
+        if (answer != ButtonType.OK) {
             return;
         }
         workspace.delete(relative);

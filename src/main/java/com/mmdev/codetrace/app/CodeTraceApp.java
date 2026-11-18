@@ -9,6 +9,8 @@ import com.mmdev.codetrace.ui.ReferenceTree;
 import com.mmdev.codetrace.ui.TypingEditor;
 import com.mmdev.codetrace.ui.PreferencesWindow;
 import com.mmdev.codetrace.ui.MarkdownPracticePane;
+import com.mmdev.codetrace.ui.ProductDialogs;
+import com.mmdev.codetrace.ui.ToolbarIcons;
 import com.mmdev.codetrace.workspace.VirtualWorkspace;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -19,6 +21,7 @@ import java.util.Map;
 import javafx.application.Application;
 import javafx.concurrent.Task;
 import javafx.geometry.Insets;
+import javafx.geometry.Orientation;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -29,6 +32,7 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.control.Separator;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -59,8 +63,10 @@ public final class CodeTraceApp extends Application {
     private final ReferenceTree tree = new ReferenceTree(
             this::openForPractice, this::onWorkspaceChanged, this::setStatus);
     private final VBox sidebar = new VBox(new Label("Proyecto"), tree);
-    private final Button refreshButton = new Button("Actualizar");
-    private final Button skipImportsButton = new Button("Saltar imports");
+    private final Button refreshButton = ToolbarIcons.button(
+            "", ToolbarIcons.Icon.REFRESH, "Actualizar referencia");
+    private final Button skipImportsButton = ToolbarIcons.button(
+            "Imports", ToolbarIcons.Icon.SKIP, "Saltar imports de Java");
     private final MenuItem skipImportsMenu = new MenuItem("Saltar imports");
     private final VBox top = new VBox();
 
@@ -75,7 +81,7 @@ public final class CodeTraceApp extends Application {
     private CheckMenuItem explorerToggle;
     private boolean dirty;
     private boolean concentration;
-    private double explorerRatio = 0.26;
+    private double explorerRatio = 0.21;
     private Stage stage;
 
     @Override
@@ -146,20 +152,24 @@ public final class CodeTraceApp extends Application {
 
         MenuBar menu = new MenuBar(
                 fileMenu, practiceMenu, viewMenu, toolsMenu, helpMenu);
-        Button openButton = new Button("Abrir referencia");
+        Button openButton = ToolbarIcons.button(
+                "Abrir", ToolbarIcons.Icon.OPEN, "Abrir carpeta de referencia");
         openButton.setOnAction(event -> chooseReference());
-        Button saveButton = new Button("Guardar");
+        Button saveButton = ToolbarIcons.button(
+                "Guardar", ToolbarIcons.Icon.SAVE, "Guardar sesión CodeTrace");
         saveButton.setOnAction(event -> saveSession(false));
         refreshButton.setDisable(true);
         refreshButton.setOnAction(event -> refreshReference());
         skipImportsButton.setOnAction(event -> skipImports());
-        ToolBar toolbar = new ToolBar(openButton, saveButton, refreshButton,
-                skipImportsButton);
+        ToolBar toolbar = new ToolBar(openButton, saveButton,
+                new Separator(Orientation.VERTICAL), refreshButton,
+                new Separator(Orientation.VERTICAL), skipImportsButton);
         top.getChildren().addAll(menu, toolbar);
         root.setTop(top);
 
         sidebar.getStyleClass().add("sidebar");
-        sidebar.setMinWidth(155);
+        sidebar.setMinWidth(165);
+        sidebar.setPrefWidth(245);
         sidebar.getChildren().get(0).getStyleClass().add("sidebar-title");
         VBox.setVgrow(tree, Priority.ALWAYS);
         tree.setWorkspace(workspace);
@@ -175,6 +185,7 @@ public final class CodeTraceApp extends Application {
         fileProgress.getStyleClass().add("typing-progress");
         fileProgress.setPrefWidth(160);
         fileProgress.setVisible(false);
+        fileProgress.managedProperty().bind(fileProgress.visibleProperty());
         HBox.setHgrow(status, Priority.ALWAYS);
         HBox footer = new HBox(12, status, fileInfo, projectInfo, fileProgress);
         footer.setPadding(new Insets(5, 10, 5, 10));
@@ -523,12 +534,9 @@ public final class CodeTraceApp extends Application {
         if (!dirty) {
             return true;
         }
-        Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION,
+        ButtonType answer = ProductDialogs.confirm(stage, "Sesión modificada",
                 "¿Guardar los cambios de la sesión antes de continuar?",
                 ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
-        confirmation.initOwner(stage);
-        confirmation.setTitle("Sesión modificada");
-        ButtonType answer = confirmation.showAndWait().orElse(ButtonType.CANCEL);
         if (answer == ButtonType.YES) {
             return saveSession(false);
         }
@@ -551,24 +559,11 @@ public final class CodeTraceApp extends Application {
     }
 
     private void showAbout() {
-        Alert dialog = new Alert(Alert.AlertType.INFORMATION);
-        dialog.initOwner(stage);
-        dialog.setTitle("Acerca de CodeTrace");
-        dialog.setHeaderText("CodeTrace · 0.2.0");
-        dialog.setContentText("Herramienta de escritorio para practicar la "
-                + "reconstrucción manual de proyectos de software.\n\n"
-                + "La práctica fortalece la familiaridad y la confianza "
-                + "al escribir y organizar código por cuenta propia.");
-        dialog.showAndWait();
+        ProductDialogs.about(stage);
     }
 
     private void showFailure(String title, String text) {
-        Alert dialog = new Alert(Alert.AlertType.ERROR,
-                text == null ? "Error de archivo" : text, ButtonType.OK);
-        dialog.initOwner(stage);
-        dialog.setTitle(title);
-        dialog.setHeaderText(null);
-        dialog.showAndWait();
+        ProductDialogs.error(stage, title, text);
     }
 
     private String relative(Path path) {
