@@ -44,6 +44,23 @@ CodeTrace no pretende sustituir un IDE ni compilar o evaluar automáticamente la
 | Paquetes instalables y actualización del producto | Script jpackage + ZIP implementado, validación pendiente | Comprobar el artefacto de CI y ejecutar en Windows limpio sin JDK/Maven; instalador EXE con WiX sin validar |
 | Auditoría funcional, producto, UX/UI y accesibilidad | Pendiente | Ejecutar matriz de aceptación completa y corregir hallazgos |
 
+## Iteración de navegación (implementación, verificación visual pendiente)
+
+- Búsqueda de nombres en TreeView: filtra archivos y carpetas con padres visibles,
+  conserva la estructura y funciona fuera del hilo gráfico.
+- Checkbox de exclusión de la carpeta seleccionada junto a "Solo": herencia
+  identificada y persistencia por proyecto, sin ocultar la referencia.
+- Menú contextual y barra de herramientas para cerrar pestaña actual, las demás
+  o todas, liberando tareas de Markdown y reproductores.
+- Zoom multimedia contextual con rango 25–400 %, Ctrl+rueda y paneo;
+  el zoom de letra permanece independiente.
+- Ventana no modal de búsqueda en archivo/proyecto, literal/regex/palabras
+  completas/mayúsculas, resultados navegables sin afectar la transcripción.
+- Pestañas de consulta de solo lectura para configuraciones y textos no ejercitables.
+- Comandos: lista con iconos, campos rectangulares y persistencia explícita
+  mediante Aplicar/Aceptar.
+- Pruebas automáticas de búsqueda; aceptación humana en Windows según QA-WINDOWS.
+
 ## Secuencia recomendada de cierre
 
 ### Fase 1 — Estabilización de exploración (prioridad máxima)
