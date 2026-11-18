@@ -32,6 +32,9 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ToggleButton;
+import javafx.scene.control.Tooltip;
+import org.kordamp.ikonli.javafx.FontIcon;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.Label;
@@ -89,6 +92,8 @@ public final class CodeTraceApp extends Application {
     private CheckMenuItem explorerToggle;
     private SymbolPalette symbols;
     private EditorZoomControl zoom;
+    private ToggleButton soundToggle;
+    private boolean soundProblemReported;
     private final TypingSounds typingSounds = new TypingSounds();
     private boolean dirty;
     private boolean concentration;
@@ -164,7 +169,7 @@ public final class CodeTraceApp extends Application {
         Menu helpMenu = new Menu("Ayuda", null, about);
         MenuItem preferences = new MenuItem("Preferencias...");
         preferences.setOnAction(event -> PreferencesWindow.open(
-                stage, settings, this::applySettings));
+                stage, settings, this::applySettings, typingSounds::preview));
         Menu toolsMenu = new Menu("Herramientas", null, preferences);
 
         MenuBar menu = new MenuBar(
@@ -182,10 +187,23 @@ public final class CodeTraceApp extends Application {
             settings = settings.withLayout(next.name());
             settings.save();
         });
+        soundToggle = new ToggleButton("Sonido", new FontIcon("fth-volume-2"));
+        soundToggle.getStyleClass().addAll("toolbar-action", "sound-toggle");
+        soundToggle.setTooltip(new Tooltip("Activar o desactivar sonido de teclas"));
+        soundToggle.setSelected(settings.typingSounds());
+        soundToggle.setOnAction(event -> {
+            settings = new AppSettings(settings.fontFamily(), settings.fontSize(),
+                    settings.showExplorer(), settings.keyboardLayout(),
+                    soundToggle.isSelected());
+            settings.save();
+            if (soundToggle.isSelected() && !typingSounds.preview(true)) {
+                setStatus("No se pudo reproducir el sonido; revisa el dispositivo de audio.");
+            }
+        });
         ToolBar toolbar = new ToolBar(openButton, saveButton,
                 new Separator(Orientation.VERTICAL), refreshButton,
                 new Separator(Orientation.VERTICAL), skipImportsButton,
-                new Separator(Orientation.VERTICAL), symbols);
+                new Separator(Orientation.VERTICAL), symbols, soundToggle);
         top.getChildren().addAll(menu, toolbar);
         root.setTop(top);
 
@@ -334,8 +352,10 @@ public final class CodeTraceApp extends Application {
                 refreshMetrics();
             }, file.getFileName().toString(), settings.fontFamily(), settings.fontSize(),
                     matched -> {
-                        if (settings.typingSounds()) {
-                            typingSounds.play(matched);
+                        if (settings.typingSounds() && !typingSounds.play(matched)
+                                && !soundProblemReported) {
+                            soundProblemReported = true;
+                            setStatus("Sonidos no disponibles en este dispositivo.");
                         }
                     });
             boolean markdown = relative.toLowerCase().endsWith(".md")
@@ -609,6 +629,7 @@ public final class CodeTraceApp extends Application {
         settings = new AppSettings(next.fontFamily(), next.fontSize(),
                 next.showExplorer(), settings.keyboardLayout(), next.typingSounds());
         settings.save();
+        soundToggle.setSelected(next.typingSounds());
         zoom.setValue(next.fontSize());
         if (!concentration) {
             explorerToggle.setSelected(next.showExplorer());

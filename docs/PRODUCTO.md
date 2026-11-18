@@ -3,7 +3,9 @@
 CodeTrace propone una práctica tranquila de reconstrucción manual de software, sin curso ni asistente. La referencia es una carpeta real que CodeTrace no modifica. La reconstrucción es un árbol virtual persistible en \`.ctrace\`, no una copia física.
 
 ## Escritura prevista
-- Código fantasma y caracteres tecleados **sobre la misma superficie**, nunca dos campos de edición.
+- Plantilla **inmutable**: todos los glifos visibles siempre proceden del archivo original. Al escribir, únicamente cambian los estilos del carácter que se está calcando; no aparece el carácter erróneo en su lugar.
+- Un clic en cualquier línea selecciona la franja rectangular completa e inicia la práctica desde el principio de esa línea, sin modificarla.
+- Control de tamaño de letra vertical, a la derecha del workspace; pestañas estilizadas de forma transversal.
 - Verde para coincidencia y rojo para diferencia; los errores no bloquean el avance.
 - Edición mínima natural: selección, cursor, Retroceso, Supr, deshacer.
 - Sin autocompletado, cierre automático de llaves o reformato.

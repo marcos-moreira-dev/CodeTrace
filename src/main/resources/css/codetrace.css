@@ -260,3 +260,17 @@
     -fx-min-width: 32px;
     -fx-padding: 4px 1px;
 }
+
+.sound-toggle {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #a9b8c4;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+}
+.sound-toggle:selected {
+    -fx-background-color: #d7e8db;
+    -fx-border-color: #5b9370;
+}
+.sound-toggle:selected:hover {
+    -fx-background-color: #c9dfcf;
+}

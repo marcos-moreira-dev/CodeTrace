@@ -18,7 +18,7 @@ public final class ProductDialogs {
     private ProductDialogs() {}
 
     public static void about(Window owner) {
-        dialog(owner, "Acerca de CodeTrace", "CodeTrace  ·  versión 0.2.0",
+        dialog(owner, "Acerca de CodeTrace", "CodeTrace  ·  versión 0.3.0",
                 "Herramienta de escritorio para practicar la reconstrucción manual "
                 + "de proyectos de software.\n\n"
                 + "Su propósito es desarrollar familiaridad, soltura y confianza "

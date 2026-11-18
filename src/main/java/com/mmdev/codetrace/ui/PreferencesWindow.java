@@ -2,6 +2,7 @@ package com.mmdev.codetrace.ui;
 
 import com.mmdev.codetrace.app.AppSettings;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -28,7 +29,8 @@ public final class PreferencesWindow {
     }
 
     public static void open(Window owner, AppSettings current,
-                            Consumer<AppSettings> onApply) {
+                            Consumer<AppSettings> onApply,
+                            Function<Boolean, Boolean> previewSound) {
         Stage dialog = new Stage();
         dialog.initOwner(owner);
         dialog.initModality(Modality.WINDOW_MODAL);
@@ -72,7 +74,18 @@ public final class PreferencesWindow {
 
         CheckBox sounds = new CheckBox("Sonidos de aciertos y errores");
         sounds.setSelected(current.typingSounds());
-        VBox soundsSettings = new VBox(sounds);
+        Button sampleCorrect = new Button("Probar acierto");
+        Button sampleError = new Button("Probar error");
+        Label sampleStatus = new Label();
+        sampleStatus.setWrapText(true);
+        sampleCorrect.setOnAction(event -> sampleStatus.setText(
+                previewSound.apply(true) ? "Reproducción solicitada."
+                        : "No se pudo reproducir el sonido."));
+        sampleError.setOnAction(event -> sampleStatus.setText(
+                previewSound.apply(false) ? "Reproducción solicitada."
+                        : "No se pudo reproducir el sonido."));
+        HBox previews = new HBox(8, sampleCorrect, sampleError);
+        VBox soundsSettings = new VBox(13, sounds, previews, sampleStatus);
         soundsSettings.setPadding(new Insets(20));
 
         CheckBox explorer = new CheckBox("Mostrar explorador de proyectos");

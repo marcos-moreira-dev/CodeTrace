@@ -96,6 +96,8 @@ class CodeTraceAppSmokeTest {
                 editor.selectLine(0);
                 assertEquals(0, editor.session().caret());
                 assertEquals(0, editor.activeLineNumber());
+                assertTrue(editor.getChildren().stream()
+                        .anyMatch(node -> node.getStyleClass().contains("typing-lines")));
 
                 TypingEditor second = new TypingEditor(
                         new TypingSession("alpha\nbeta"), () -> {},
