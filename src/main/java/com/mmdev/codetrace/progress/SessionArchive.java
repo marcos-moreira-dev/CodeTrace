@@ -9,6 +9,9 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.nio.ByteBuffer;
+import java.nio.charset.CharacterCodingException;
+import java.nio.charset.CodingErrorAction;
 import java.nio.file.AtomicMoveNotSupportedException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -69,6 +72,9 @@ public final class SessionArchive {
                     new BufferedOutputStream(Files.newOutputStream(temp)))) {
                 write(out, state);
             }
+            if (Files.size(temp) > MAX_ARCHIVE_BYTES) {
+                throw new IOException("La sesión supera el límite de 256 MB");
+            }
             try {
                 Files.move(temp, absolute,
                         StandardCopyOption.ATOMIC_MOVE, StandardCopyOption.REPLACE_EXISTING);
@@ -86,7 +92,9 @@ public final class SessionArchive {
         }
         try (DataInputStream in = new DataInputStream(
                 new BufferedInputStream(Files.newInputStream(source)))) {
-            return read(in);
+            State state = read(in);
+            if (in.read() != -1) throw new IOException("Unexpected trailing session data");
+            return state;
         } catch (IllegalArgumentException | IndexOutOfBoundsException malformed) {
             throw new IOException("Invalid CodeTrace session", malformed);
         }
@@ -212,7 +220,14 @@ public final class SessionArchive {
         }
         byte[] bytes = new byte[size];
         in.readFully(bytes);
-        return new String(bytes, StandardCharsets.UTF_8);
+        try {
+            return StandardCharsets.UTF_8.newDecoder()
+                    .onMalformedInput(CodingErrorAction.REPORT)
+                    .onUnmappableCharacter(CodingErrorAction.REPORT)
+                    .decode(ByteBuffer.wrap(bytes)).toString();
+        } catch (CharacterCodingException malformed) {
+            throw new IOException("Invalid UTF-8 in CodeTrace session", malformed);
+        }
     }
 
     private static void count(DataOutputStream out, int value) throws IOException {
