@@ -735,7 +735,7 @@ public final class CodeTraceApp extends Application {
                 setStatus(text.reason());
                 return;
             }
-            ReferenceTextPane viewer = new ReferenceTextPane(text.content());
+            ReferenceTextPane viewer = new ReferenceTextPane(text.content(), file.getFileName().toString());
             Tab tab = new Tab(file.getFileName().toString(), viewer);
             tab.setGraphic(FileTypeIcons.forPath(file, false));
             tab.setOnClosed(event -> openedTabs.remove(relative));
