@@ -118,6 +118,7 @@ public final class CodeTraceApp extends Application {
     private final Map<ProgressScope.Category, CheckBox> scopeChecks =
             new EnumMap<>(ProgressScope.Category.class);
     private CheckBox allScopes;
+    private CheckBox autoCreateCheck;
     private final Button refreshButton = ToolbarIcons.button(
             "Actualizar referencia", ToolbarIcons.Icon.REFRESH,
             "Volver a leer los archivos originales del proyecto");
@@ -976,6 +977,10 @@ public final class CodeTraceApp extends Application {
             manualModeMenu.setSelected(next == PracticeMode.RECONSTRUCTION);
             directModeMenu.setSelected(next == PracticeMode.DIRECT);
         }
+        if (autoCreateCheck != null) {
+            autoCreateCheck.setSelected(next == PracticeMode.DIRECT);
+            autoCreateCheck.setDisable(reference == null);
+        }
     }
 
     private void setPracticeMode(PracticeMode next) {
@@ -1129,10 +1134,20 @@ public final class CodeTraceApp extends Application {
         Label writingCaption = new Label("AYUDAS DE ESCRITURA");
         writingCaption.getStyleClass().add("palette-caption");
         skipImportsButton.setText("Omitir imports de Java (archivo actual)");
+        autoCreateCheck = new CheckBox("Autocrear archivos y carpetas");
+        autoCreateCheck.setTooltip(new Tooltip(
+                "Al empezar a escribir, crea automáticamente el archivo y sus carpetas "
+                + "en el espacio virtual. Nunca modifica el proyecto real."));
+        autoCreateCheck.setSelected(practiceMode == PracticeMode.DIRECT);
+        autoCreateCheck.setDisable(reference == null);
+        autoCreateCheck.setOnAction(event -> setPracticeMode(
+                autoCreateCheck.isSelected() ? PracticeMode.DIRECT
+                        : PracticeMode.RECONSTRUCTION));
         options.getChildren().addAll(new Separator(Orientation.HORIZONTAL),
-                writingCaption, turboToggle, skipImportsButton);
+                writingCaption, autoCreateCheck, turboToggle, skipImportsButton);
         Label exclusionHint = new Label(
-                "Para excluir carpetas del porcentaje, haz clic derecho en el árbol.");
+                "Autocrear solo afecta al proyecto virtual. Para excluir carpetas "
+                + "del progreso, selecciónalas y utiliza la casilla del explorador.");
         exclusionHint.getStyleClass().add("scope-exclusion-hint");
         exclusionHint.setWrapText(true);
         options.getChildren().add(exclusionHint);
