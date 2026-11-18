@@ -947,3 +947,66 @@
     -fx-text-fill: #2b526c;
 }
 .tree-options-row { -fx-padding: 2 10 8 11; }
+
+
+/* Audio controls: standard recognizable icons, timeline and live spectrum. */
+.media-playback-controls {
+    -fx-background-color: #e8eef2;
+    -fx-border-color: #bdcbd5 transparent transparent transparent;
+    -fx-padding: 10 13;
+    -fx-spacing: 10;
+}
+.media-playback-controls .media-icon-button {
+    -fx-min-width: 33px; -fx-pref-width: 33px;
+    -fx-min-height: 30px; -fx-pref-height: 30px;
+    -fx-alignment: center;
+    -fx-padding: 0;
+    -fx-border-color: #9eafbe;
+    -fx-background-color: #ffffff;
+}
+.media-playback-controls .media-icon-button .ikonli-font-icon {
+    -fx-icon-color: #36536a;
+    -fx-icon-size: 16px;
+}
+.media-playback-controls .media-icon-button:hover {
+    -fx-background-color: #dceaf3;
+    -fx-border-color: #587994;
+}
+.media-playback-controls .media-play-toggle {
+    -fx-background-color: #436a88;
+    -fx-border-color: #365b76;
+}
+.media-playback-controls .media-play-toggle .ikonli-font-icon {
+    -fx-icon-color: #ffffff;
+}
+.media-playback-controls .media-play-toggle:hover {
+    -fx-background-color: #305c7d;
+}
+.media-playback-controls .media-time-label {
+    -fx-text-fill: #425c70;
+    -fx-font-family: "Consolas";
+    -fx-font-size: 11px;
+    -fx-min-width: 78px;
+}
+.media-playback-controls .slider .track {
+    -fx-background-color: #b4c5d0;
+    -fx-background-radius: 0;
+    -fx-pref-height: 4px;
+}
+.media-playback-controls .slider .thumb {
+    -fx-background-color: #4a708d;
+    -fx-background-radius: 1px;
+}
+.media-playback-controls .label .ikonli-font-icon {
+    -fx-icon-color: #547286;
+}
+.media-audio-panel { -fx-padding: 20 28; -fx-spacing: 10; }
+.media-audio-title { -fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #2c4c63; }
+.media-audio-subtitle { -fx-font-size: 11px; -fx-text-fill: #788f9e; }
+.audio-spectrum-pane {
+    -fx-background-color: #f5f8fa;
+    -fx-border-color: #d2dde5;
+    -fx-border-width: 1;
+    -fx-min-height: 120px;
+    -fx-pref-height: 174px;
+}
