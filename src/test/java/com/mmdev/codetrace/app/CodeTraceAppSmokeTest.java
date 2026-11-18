@@ -218,23 +218,23 @@ class CodeTraceAppSmokeTest {
                 menuFor.setAccessible(true);
                 ContextMenu rootMenu = (ContextMenu) menuFor.invoke(fileTree, root);
                 assertTrue(rootMenu.getItems().stream().anyMatch(
-                        item -> item.getText().equals("Crear subcarpeta...")));
+                        item -> "Crear subcarpeta...".equals(item.getText())));
                 assertTrue(rootMenu.getItems().stream().anyMatch(
-                        item -> item.getText().equals("Crear archivo...")));
+                        item -> "Crear archivo...".equals(item.getText())));
                 ContextMenu folderMenu = (ContextMenu) menuFor.invoke(fileTree, nested);
                 assertTrue(folderMenu.getItems().stream().anyMatch(
-                        item -> item.getText().equals("Crear esta carpeta")));
+                        item -> "Crear esta carpeta".equals(item.getText())));
                 assertTrue(folderMenu.getItems().stream().anyMatch(
-                        item -> item.getText().equals("Crear subcarpeta...")));
+                        item -> "Crear subcarpeta...".equals(item.getText())));
                 folderMenu.getItems().stream()
-                        .filter(item -> item.getText().equals("Crear esta carpeta"))
+                        .filter(item -> "Crear esta carpeta".equals(item.getText()))
                         .findFirst().orElseThrow().fire();
                 assertTrue(virtual.exists("src/ejemplos"));
                 ContextMenu fileMenu = (ContextMenu) menuFor.invoke(fileTree, nestedFile);
                 assertTrue(fileMenu.getItems().stream().anyMatch(
-                        item -> item.getText().equals("Crear este archivo")));
+                        item -> "Crear este archivo".equals(item.getText())));
                 fileMenu.getItems().stream()
-                        .filter(item -> item.getText().equals("Crear este archivo"))
+                        .filter(item -> "Crear este archivo".equals(item.getText()))
                         .findFirst().orElseThrow().fire();
                 assertTrue(virtual.exists("src/ejemplos/Demo.java"));
                 assertFalse(Files.size(nestedFile) == 0,
