@@ -1,6 +1,8 @@
 package com.mmdev.codetrace.ui;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import java.nio.file.Path;
 import org.junit.jupiter.api.Test;
 
@@ -10,6 +12,10 @@ class ReferenceMediaPaneTest {
                 ReferenceMediaPane.kindFor(Path.of("logo.png")));
         assertEquals(ReferenceMediaPane.Kind.SVG,
                 ReferenceMediaPane.kindFor(Path.of("diagram.svg")));
+        assertEquals(ReferenceMediaPane.Kind.IMAGE,
+                ReferenceMediaPane.kindFor(Path.of("photo.WEBP")));
+        assertTrue(ReferenceMediaPane.needsWebImage(Path.of("photo.WEBP")));
+        assertFalse(ReferenceMediaPane.needsWebImage(Path.of("logo.png")));
         assertEquals(ReferenceMediaPane.Kind.AUDIO,
                 ReferenceMediaPane.kindFor(Path.of("music.mp3")));
         assertEquals(ReferenceMediaPane.Kind.VIDEO,
