@@ -242,15 +242,15 @@ class CodeTraceAppSmokeTest {
                 fileTree.collapseAll();
                 fileTree.expandAll();
                 assertTrue(fileTree.getRoot().isExpanded());
+                Method toggleConsole = CodeTraceApp.class.getDeclaredMethod(
+                        "setConsoleVisible", boolean.class);
+                toggleConsole.setAccessible(true);
+                toggleConsole.invoke(application, true);
                 var console = (com.mmdev.codetrace.ui.CommandConsolePane)
                         stage.getScene().getRoot().lookup(".command-console-pane");
                 assertNotNull(console);
                 console.setProject(root);
                 console.setPresets(java.util.List.of());
-                Method toggleConsole = CodeTraceApp.class.getDeclaredMethod(
-                        "setConsoleVisible", boolean.class);
-                toggleConsole.setAccessible(true);
-                toggleConsole.invoke(application, true);
                 SplitPane workspaceLayout = (SplitPane) stage.getScene()
                         .getRoot().lookup(".workspace-split");
                 assertNotNull(workspaceLayout);
