@@ -625,3 +625,16 @@
 .about-logo {
     -fx-background-color: transparent;
 }
+
+/* Turbo is a genuine typing mode, not a validation status. */
+.turbo-toggle {
+    -fx-background-color: #eef2f5;
+    -fx-border-color: #a9b9c6;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+}
+.turbo-toggle:selected {
+    -fx-background-color: #dce9f4;
+    -fx-border-color: #356f9a;
+    -fx-text-fill: #244e6e;
+}

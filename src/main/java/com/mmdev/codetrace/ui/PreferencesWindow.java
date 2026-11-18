@@ -139,11 +139,15 @@ public final class PreferencesWindow {
         opacity.valueProperty().addListener((obs, previous, value) -> updatePreview.run());
         updatePreview.run();
 
+        CheckBox turbo = new CheckBox("Omitir automáticamente símbolos y puntuación");
+        turbo.setSelected(current.turboMode());
+
         VBox editorPanel = section("Editor");
         editorPanel.getChildren().addAll(
                 field("Fuente de código", families),
                 field("Tamaño de letra", new HBox(10, size, sizeValue)),
                 field("Opacidad de la plantilla", opacityRow),
+                groupHeading("Práctica"), turbo,
                 groupHeading("Vista previa"), preview);
 
         CheckBox explorer = new CheckBox("Mostrar explorador de proyectos");
@@ -187,7 +191,7 @@ public final class PreferencesWindow {
                 families.getValue() == null ? current.fontFamily() : families.getValue(),
                 (int) Math.round(size.getValue()),
                 explorer.isSelected(), current.keyboardLayout(), sounds.isSelected(),
-                opacity.getValue()));
+                opacity.getValue(), turbo.isSelected()));
         Button accept = new Button("Aceptar");
         accept.setDefaultButton(true);
         accept.setOnAction(event -> {

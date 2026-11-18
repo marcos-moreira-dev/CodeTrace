@@ -52,6 +52,8 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.ToolBar;
 import javafx.scene.control.Tooltip;
+import javafx.scene.control.ToggleButton;
+import org.kordamp.ikonli.javafx.FontIcon;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
@@ -103,6 +105,8 @@ public final class CodeTraceApp extends Application {
     private Path sessionFile;
     private AppSettings settings = AppSettings.load();
     private CheckMenuItem explorerToggle;
+    private CheckMenuItem turboMenu;
+    private ToggleButton turboToggle;
     private SymbolPalette symbols;
     private EditorZoomControl zoom;
     private boolean soundProblemReported;
@@ -173,7 +177,10 @@ public final class CodeTraceApp extends Application {
         Menu viewMenu = new Menu("Ver", null, explorerToggle, focus, fullscreen);
 
         skipImportsMenu.setOnAction(event -> skipImports());
-        Menu practiceMenu = new Menu("Práctica", null, skipImportsMenu);
+        turboMenu = new CheckMenuItem("Modo Turbo · omitir símbolos");
+        turboMenu.setSelected(settings.turboMode());
+        turboMenu.setOnAction(event -> setTurboMode(turboMenu.isSelected()));
+        Menu practiceMenu = new Menu("Práctica", null, skipImportsMenu, turboMenu);
         MenuItem about = new MenuItem("Acerca de CodeTrace");
         about.setOnAction(event -> showAbout());
         Menu helpMenu = new Menu("Ayuda", null, about);
@@ -201,10 +208,15 @@ public final class CodeTraceApp extends Application {
             if (editor != null) editor.focusEditor();
             setStatus("Símbolo copiado. Usa Ctrl+V para practicarlo.");
         });
+        turboToggle = new ToggleButton("Turbo", new FontIcon("fth-zap"));
+        turboToggle.getStyleClass().addAll("toolbar-action", "turbo-toggle");
+        turboToggle.setTooltip(new Tooltip("Omitir automáticamente puntuación y símbolos al teclear"));
+        turboToggle.setSelected(settings.turboMode());
+        turboToggle.setOnAction(event -> setTurboMode(turboToggle.isSelected()));
         ToolBar toolbar = new ToolBar(openButton, saveButton,
                 new Separator(Orientation.VERTICAL), refreshButton,
                 new Separator(Orientation.VERTICAL), skipImportsButton,
-                new Separator(Orientation.VERTICAL), symbols);
+                new Separator(Orientation.VERTICAL), symbols, turboToggle);
         top.getChildren().addAll(menu, toolbar);
         root.setTop(top);
 
@@ -426,6 +438,7 @@ public final class CodeTraceApp extends Application {
                     });
             editor.setOnNotice(this::setStatus);
             editor.setTemplateOpacity(settings.templateOpacity());
+            editor.setTurboMode(settings.turboMode());
             boolean markdown = relative.toLowerCase().endsWith(".md")
                     || relative.toLowerCase().endsWith(".markdown");
             Tab tab = new Tab(file.getFileName().toString(),
@@ -741,13 +754,32 @@ public final class CodeTraceApp extends Application {
         return answer == ButtonType.NO;
     }
 
+    private void setTurboMode(boolean enabled) {
+        settings = settings.withTurbo(enabled);
+        settings.save();
+        turboToggle.setSelected(enabled);
+        turboMenu.setSelected(enabled);
+        for (Tab tab : tabs.getTabs()) {
+            TypingEditor editor = editorIn(tab);
+            if (editor != null) editor.setTurboMode(enabled);
+        }
+        setStatus(enabled ? "Turbo activado · símbolos omitidos, no contados"
+                : "Turbo desactivado · escribe todos los símbolos");
+    }
+
+    private TypingEditor editorIn(Tab tab) {
+        if (tab.getContent() instanceof TypingEditor editor) return editor;
+        if (tab.getContent() instanceof MarkdownPracticePane pane) return pane.editor();
+        return null;
+    }
+
     private void setEditorZoom(int size) {
         if (size == settings.fontSize()) {
             return;
         }
         settings = new AppSettings(settings.fontFamily(), size,
                 settings.showExplorer(), settings.keyboardLayout(), settings.typingSounds(),
-                settings.templateOpacity());
+                settings.templateOpacity(), settings.turboMode());
         settings.save();
         for (Tab tab : tabs.getTabs()) {
             if (tab.getContent() instanceof TypingEditor editor) {
@@ -761,8 +793,10 @@ public final class CodeTraceApp extends Application {
     private void applySettings(AppSettings next) {
         settings = new AppSettings(next.fontFamily(), next.fontSize(),
                 next.showExplorer(), settings.keyboardLayout(), next.typingSounds(),
-                next.templateOpacity());
+                next.templateOpacity(), next.turboMode());
         settings.save();
+        turboToggle.setSelected(settings.turboMode());
+        turboMenu.setSelected(settings.turboMode());
         zoom.setValue(next.fontSize());
         if (!concentration) {
             explorerToggle.setSelected(next.showExplorer());
@@ -771,9 +805,11 @@ public final class CodeTraceApp extends Application {
             if (tab.getContent() instanceof TypingEditor editor) {
                 editor.setFontSettings(next.fontFamily(), next.fontSize());
                 editor.setTemplateOpacity(next.templateOpacity());
+                editor.setTurboMode(next.turboMode());
             } else if (tab.getContent() instanceof MarkdownPracticePane pane) {
                 pane.editor().setFontSettings(next.fontFamily(), next.fontSize());
                 pane.editor().setTemplateOpacity(next.templateOpacity());
+                pane.editor().setTurboMode(next.turboMode());
             }
         }
     }

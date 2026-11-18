@@ -5,13 +5,18 @@ import java.util.prefs.Preferences;
 /** Window-level preferences are separate from each .ctrace training session. */
 public record AppSettings(String fontFamily, int fontSize, boolean showExplorer,
                           String keyboardLayout, boolean typingSounds,
-                          int templateOpacity) {
+                          int templateOpacity, boolean turboMode) {
     private static final Preferences STORE =
             Preferences.userNodeForPackage(AppSettings.class);
 
     public AppSettings(String fontFamily, int fontSize, boolean showExplorer,
                        String keyboardLayout, boolean typingSounds) {
-        this(fontFamily, fontSize, showExplorer, keyboardLayout, typingSounds, 70);
+        this(fontFamily, fontSize, showExplorer, keyboardLayout, typingSounds, 70, false);
+    }
+
+    public AppSettings(String fontFamily, int fontSize, boolean showExplorer,
+                       String keyboardLayout, boolean typingSounds, int opacity) {
+        this(fontFamily, fontSize, showExplorer, keyboardLayout, typingSounds, opacity, false);
     }
 
     public AppSettings {
@@ -39,12 +44,18 @@ public record AppSettings(String fontFamily, int fontSize, boolean showExplorer,
         return new AppSettings(family, size,
                 STORE.getBoolean("explorer.visible", true),
                 layout, STORE.getBoolean("practice.typingSounds", false),
-                Math.max(20, Math.min(100, STORE.getInt("editor.opacity", 70))));
+                Math.max(20, Math.min(100, STORE.getInt("editor.opacity", 70))),
+                STORE.getBoolean("practice.turbo", false));
     }
 
     public AppSettings withLayout(String layout) {
         return new AppSettings(fontFamily, fontSize, showExplorer, layout,
-                typingSounds, templateOpacity);
+                typingSounds, templateOpacity, turboMode);
+    }
+
+    public AppSettings withTurbo(boolean enabled) {
+        return new AppSettings(fontFamily, fontSize, showExplorer,
+                keyboardLayout, typingSounds, templateOpacity, enabled);
     }
 
     public void save() {
@@ -54,5 +65,6 @@ public record AppSettings(String fontFamily, int fontSize, boolean showExplorer,
         STORE.put("keyboard.layout", keyboardLayout);
         STORE.putBoolean("practice.typingSounds", typingSounds);
         STORE.putInt("editor.opacity", templateOpacity);
+        STORE.putBoolean("practice.turbo", turboMode);
     }
 }

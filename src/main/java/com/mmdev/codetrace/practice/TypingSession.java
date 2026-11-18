@@ -141,6 +141,21 @@ public final class TypingSession {
         }
     }
 
+    /**
+     * Turbo advances past pending punctuation, never letters, numbers, spaces,
+     * tabs or line endings. Omitted slots are preserved in .ctrace and do
+     * not contribute to the correctly-typed progress metric.
+     */
+    public int skipTurboSymbols() {
+        int start = caret;
+        while (caret < size() && TurboSymbols.isAutomatic(reference.get(caret))
+                && (entered.get(caret) == null || skipped.get(caret))) {
+            skipped.set(caret);
+            caret++;
+        }
+        return caret - start;
+    }
+
     public void undoSkip(int fromInclusive, int toExclusive) {
         if (fromInclusive < 0 || fromInclusive > toExclusive || toExclusive > size()) {
             throw new IndexOutOfBoundsException("Invalid range");

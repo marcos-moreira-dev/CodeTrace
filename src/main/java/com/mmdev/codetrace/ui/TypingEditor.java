@@ -50,6 +50,7 @@ public final class TypingEditor extends BorderPane {
     private String fontFamily;
     private long firstKeyNanos;
     private boolean synchronizingLine;
+    private boolean turboMode;
     private Consumer<String> onNotice = ignored -> {};
 
     private record SourceLine(int number, int first, int last, String original) {}
@@ -192,6 +193,14 @@ public final class TypingEditor extends BorderPane {
         lines.requestFocus();
     }
 
+    public void setTurboMode(boolean enabled) {
+        turboMode = enabled;
+    }
+
+    public boolean isTurboMode() {
+        return turboMode;
+    }
+
     public void setOnNotice(Consumer<String> callback) {
         onNotice = callback == null ? ignored -> {} : callback;
     }
@@ -287,11 +296,17 @@ public final class TypingEditor extends BorderPane {
     }
 
     private void typeAndNotify(String committed) {
+        // Symbols are bypassed only during an intentional typing action.
+        // Navigation and line selection never silently change progress.
+        if (turboMode) session.skipTurboSymbols();
         int previous = session.caret();
         session.type(committed);
-        if (session.caret() > previous) {
-            onTypedCharacter.accept(
-                    session.state(session.caret() - 1) == TypingSession.State.CORRECT);
+        int afterTyping = session.caret();
+        if (afterTyping > previous) {
+            boolean correct = session.state(afterTyping - 1)
+                    == TypingSession.State.CORRECT;
+            onTypedCharacter.accept(correct);
+            if (turboMode) session.skipTurboSymbols();
         }
     }
 
