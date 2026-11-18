@@ -834,3 +834,15 @@
 .tree-options-row .check-box { -fx-font-size: 10px; -fx-text-fill: #455b6b; }
 .tree-options-row .check-box .box { -fx-background-radius: 0; -fx-border-radius: 0; }
 .reference-match-name { -fx-font-weight: bold; -fx-text-fill: #185c83; }
+
+
+/* One statusbar location, two contextual zoom semantics. */
+.media-zoom-control .ikonli-font-icon { -fx-icon-color: #73559a; }
+.media-zoom-control .label { -fx-text-fill: #65438d; }
+.media-zoom-control .slider .track { -fx-background-color: #e7deef; }
+.media-zoom-control .slider .thumb { -fx-background-color: #76549e; }
+.media-zoom-control .zoom-step { -fx-text-fill: #65438d; }
+.media-zoom-viewport { -fx-background-color: #eef1f3; -fx-cursor: open-hand; }
+.media-zoom-viewport:pressed { -fx-cursor: closed-hand; }
+.tabs-actions { -fx-background-radius: 0; -fx-border-radius: 0;
+    -fx-background-color: #ffffff; -fx-border-color: #a9b8c4; }
