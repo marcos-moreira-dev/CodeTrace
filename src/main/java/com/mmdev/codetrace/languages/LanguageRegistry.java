@@ -40,6 +40,29 @@ public final class LanguageRegistry {
                             + "enum|union|typedef|const|static|extern|return|if|else|for|"
                             + "while|switch|case|break|continue|namespace|using|template|"
                             + "public|private|protected|new|delete|auto|constexpr|#include")),
+            new RegexSupport("C#", List.of(".cs", ".csx"),
+                    cStylePattern("using|namespace|class|struct|record|interface|enum|"
+                            + "public|private|protected|internal|static|async|await|"
+                            + "void|return|new|if|else|foreach|for|while|try|catch|"
+                            + "throw|var|int|string|bool|decimal|null|true|false")),
+            new RegexSupport("Go", List.of(".go"),
+                    cStylePattern("package|import|func|var|const|type|struct|interface|"
+                            + "if|else|for|range|switch|case|default|go|defer|"
+                            + "return|map|chan|select|break|continue|nil|true|false")),
+            new RegexSupport("Ruby", List.of(".rb", ".rake"), hashCommentPattern(
+                    "def|class|module|end|if|elsif|else|unless|while|until|do|"
+                            + "begin|rescue|ensure|return|yield|require|include|"
+                            + "true|false|nil|self|case|when|then|super")),
+            new RegexSupport("PowerShell", List.of(".ps1", ".psm1", ".psd1"),
+                    shellPattern("param|function|filter|begin|process|end|if|elseif|"
+                            + "else|foreach|for|while|switch|try|catch|finally|"
+                            + "throw|return|break|continue|class|enum|using|"
+                            + "Import-Module|Get-ChildItem|Write-Host|Set-Location")),
+            new RegexSupport("Shell", List.of(".sh", ".bash", ".zsh"),
+                    shellPattern("if|then|else|elif|fi|for|while|do|done|case|esac|"
+                            + "in|function|export|local|readonly|return|exit|"
+                            + "source|echo|printf|cd|mkdir|grep|sed|awk")),
+            new RegexSupport("Windows CMD", List.of(".bat", ".cmd"), cmdPattern()),
             new RegexSupport("Markdown", List.of(".md", ".markdown"), markdownPattern())
     );
 
@@ -86,6 +109,36 @@ public final class LanguageRegistry {
                 + "not|and|or|try|except|finally|raise|with|as|import|from|"
                 + "async|await|lambda|yield|None|True|False|pass|break|continue)\\b)"
                 + "|(?<number>\\b\\d+(?:\\.\\d+)?\\b)", Pattern.MULTILINE);
+    }
+
+    private static Pattern hashCommentPattern(String keywords) {
+        return Pattern.compile(
+                "(?<comment>#[^\\r\\n]*)"
+                + "|(?<string>\"(?:\\\\.|[^\"\\\\])*\"|'(?:\\\\.|[^'\\\\])*')"
+                + "|(?<keyword>\\b(?:" + keywords + ")\\b)"
+                + "|(?<number>\\b\\d+(?:\\.\\d+)?\\b)",
+                Pattern.MULTILINE);
+    }
+
+    private static Pattern shellPattern(String keywords) {
+        return Pattern.compile(
+                "(?<comment>#[^\\r\\n]*)"
+                + "|(?<string>\"(?:\\\\.|[^\"\\\\])*\"|'(?:\\\\.|[^'\\\\])*')"
+                + "|(?<annotation>\\$[A-Za-z_][A-Za-z_0-9]*)"
+                + "|(?<keyword>\\b(?:" + keywords + ")\\b)"
+                + "|(?<number>\\b\\d+\\b)",
+                Pattern.MULTILINE | Pattern.CASE_INSENSITIVE);
+    }
+
+    private static Pattern cmdPattern() {
+        return Pattern.compile(
+                "(?<comment>^(?:[ \\t]*REM\\b|[ \\t]*::)[^\\r\\n]*)"
+                + "|(?<string>\"[^\"\\r\\n]*\")"
+                + "|(?<annotation>%[A-Za-z0-9_]+%)"
+                + "|(?<keyword>\\b(?:echo|set|if|else|for|in|do|call|goto|"
+                + "exit|start|cd|pushd|popd|copy|move|del|mkdir|rmdir|"
+                + "setlocal|endlocal|errorlevel)\\b)",
+                Pattern.MULTILINE | Pattern.CASE_INSENSITIVE);
     }
 
     private static Pattern markdownPattern() {

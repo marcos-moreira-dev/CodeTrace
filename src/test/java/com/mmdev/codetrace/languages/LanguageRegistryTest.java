@@ -11,6 +11,13 @@ class LanguageRegistryTest {
         assertEquals("TypeScript", LanguageRegistry.forFile("service.ts").name());
         assertEquals("C/C++", LanguageRegistry.forFile("main.cpp").name());
         assertEquals("Markdown", LanguageRegistry.forFile("README.md").name());
+        assertEquals("Go", LanguageRegistry.forFile("main.go").name());
+        assertEquals("Ruby", LanguageRegistry.forFile("app.rb").name());
+        assertEquals("C#", LanguageRegistry.forFile("Program.cs").name());
+        assertEquals("PowerShell", LanguageRegistry.forFile("build.ps1").name());
+        assertEquals("Shell", LanguageRegistry.forFile("script.sh").name());
+        assertEquals("Windows CMD", LanguageRegistry.forFile("build.cmd").name());
+        assertEquals("Windows CMD", LanguageRegistry.forFile("run.bat").name());
         assertEquals("Texto", LanguageRegistry.forFile("notes.unknown").name());
     }
 

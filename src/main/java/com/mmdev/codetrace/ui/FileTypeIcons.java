@@ -40,6 +40,14 @@ public final class FileTypeIcons {
         if (name.endsWith(".php")) return font("di-php", "#6F6CA4");
         if (name.endsWith(".rb")) return font("di-ruby", "#A94D53");
         if (name.endsWith(".go")) return font("di-go", "#448DA1");
+        if (name.endsWith(".cs") || name.endsWith(".csx"))
+            return badge("C#", "#72559A");
+        if (name.endsWith(".ps1") || name.endsWith(".psm1")
+                || name.endsWith(".psd1")) return badge("PS", "#366EAD");
+        if (name.endsWith(".sh") || name.endsWith(".bash")
+                || name.endsWith(".zsh")) return font("fth-terminal", "#536A77");
+        if (name.endsWith(".bat") || name.endsWith(".cmd"))
+            return badge("CMD", "#517A66");
         if (name.endsWith(".rs")) return font("di-rust", "#5D6266");
         if (name.endsWith(".png") || name.endsWith(".jpg")
                 || name.endsWith(".jpeg") || name.endsWith(".gif")
