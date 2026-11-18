@@ -35,6 +35,7 @@ public final class CommandConsolePane extends BorderPane {
     private final VBox emptyState = new VBox(12, emptyMessage, configure);
     private final Runnable onConfigure;
     private Path project;
+    private long outputGeneration;
 
     public CommandConsolePane(Runnable onClose) {
         this(onClose, () -> {});
@@ -91,6 +92,8 @@ public final class CommandConsolePane extends BorderPane {
     }
 
     public void setProject(Path selected) {
+        // Ignore log callbacks already queued for the previous project.
+        outputGeneration++;
         if (executor.isRunning()) executor.stop();
         project = selected;
         output.clear();
@@ -139,10 +142,12 @@ public final class CommandConsolePane extends BorderPane {
         if (project == null || presets.getValue() == null) return;
         Preset selected = presets.getValue();
         Path currentRoot = project;
+        long generation = ++outputGeneration;
         output.appendText(System.lineSeparator() + "▶ " + selected.name()
                 + System.lineSeparator());
         boolean started = executor.start(currentRoot, selected,
                 text -> Platform.runLater(() -> {
+                    if (generation != outputGeneration) return;
                     output.appendText(text);
                     // Bounded history, separate from the reference project.
                     if (output.getLength() > 200_000) {
@@ -151,6 +156,7 @@ public final class CommandConsolePane extends BorderPane {
                     output.positionCaret(output.getLength());
                 }),
                 code -> Platform.runLater(() -> {
+                    if (generation != outputGeneration) return;
                     output.appendText(System.lineSeparator()
                             + "[Proceso finalizado · código " + code + "]"
                             + System.lineSeparator());
