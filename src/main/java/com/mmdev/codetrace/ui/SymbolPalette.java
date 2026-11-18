@@ -99,7 +99,7 @@ public final class SymbolPalette extends MenuButton {
         hint.setMinHeight(48);
         hint.setMaxWidth(Double.MAX_VALUE);
         keyboardPreview.getStyleClass().add("mini-keyboard");
-        keyboardPreview.setTooltip(new Tooltip(
+        Tooltip.install(keyboardPreview, new Tooltip(
                 "Esquema abreviado del teclado físico; los símbolos varían según el sistema"));
         updateKeyboardPreview(initialLayout);
         Label keyboardNote = new Label("Esquema orientativo de las teclas");
