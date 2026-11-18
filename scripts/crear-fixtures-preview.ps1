@@ -10,6 +10,11 @@ New-Item -ItemType Directory -Force -Path $assets | Out-Null
 
 $logo = Join-Path $root "src\main\resources\icons\codetrace-window.png"
 Copy-Item -LiteralPath $logo -Destination (Join-Path $assets "logo con espacio.png") -Force
+# Always include a genuine, tiny WebP even when FFmpeg is unavailable.
+# Eight-by-eight solid steel-blue image for decoder regression.
+$webp = 'UklGRjAAAABXRUJQVlA4ICQAAABQAQCdASoIAAgAAUAmJQBOgCgAAP7vvVcjt+uiY7wbJFNdgAA='
+[IO.File]::WriteAllBytes((Join-Path $assets 'sample.webp'),
+    [Convert]::FromBase64String($webp))
 $svg = @'
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 120">
   <rect x="0" y="0" width="240" height="120" fill="#E7EDF1"/>
