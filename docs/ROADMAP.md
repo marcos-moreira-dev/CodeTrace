@@ -44,6 +44,20 @@ CodeTrace no pretende sustituir un IDE ni compilar o evaluar automáticamente la
 | Paquetes instalables y actualización del producto | Script jpackage + ZIP implementado, validación pendiente | Comprobar el artefacto de CI y ejecutar en Windows limpio sin JDK/Maven; instalador EXE con WiX sin validar |
 | Auditoría funcional, producto, UX/UI y accesibilidad | Pendiente | Ejecutar matriz de aceptación completa y corregir hallazgos |
 
+## Iteración audiovisual y ergonomía (implementada, aceptación pendiente)
+
+- Audio: iconos reproducir/pausar y detener, tooltips, barra temporal,
+  controles de volumen y espectro de frecuencias JavaFX en tiempo real.
+- Los archivos WAV.GZ de efectos son recursos comprimidos; el audio original
+  no se reescribe y no requiere FFmpeg.
+- Zoom contextual visible solamente en imágenes y vídeos.
+- Buscar: título con icono de aplicación y resultados en filas estilizadas
+  mediante `RecordListCell`, compartido con Comandos del proyecto.
+- Reglas: checkbox Autocrear archivos y carpetas sincronizado con modalidad
+  DIRECT/RECONSTRUCTION por proyecto, sin estado adicional ni cambios reales.
+- Explorador: mayor separación entre título y buscador, X limpia sin borde.
+- Pruebas gráficas y matriz de aceptación pendientes de inspección en Windows.
+
 ## Iteración de navegación (implementación, verificación visual pendiente)
 
 - Búsqueda de nombres en TreeView: filtra archivos y carpetas con padres visibles,
