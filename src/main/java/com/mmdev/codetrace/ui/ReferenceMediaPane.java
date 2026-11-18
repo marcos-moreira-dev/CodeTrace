@@ -1,12 +1,14 @@
 package com.mmdev.codetrace.ui;
 
 import com.mmdev.codetrace.markdown.MarkdownRenderer;
+import com.mmdev.codetrace.media.MediaTranscoder;
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Locale;
+import javafx.concurrent.Task;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -30,6 +32,10 @@ import javafx.util.Duration;
 public final class ReferenceMediaPane extends BorderPane {
     public enum Kind { IMAGE, SVG, AUDIO, VIDEO, UNSUPPORTED }
     private MediaPlayer player;
+    private Task<Path> conversion;
+    private Path temporaryMedia;
+    private boolean disposed;
+    private boolean recovering;
 
     public static Kind kindFor(Path file) {
         if (file == null || file.getFileName() == null) return Kind.UNSUPPORTED;
@@ -41,6 +47,13 @@ public final class ReferenceMediaPane extends BorderPane {
             return Kind.VIDEO;
         return Kind.UNSUPPORTED;
     }
+
+    /** JavaFX Image cannot decode WebP; the sandboxed JavaFX WebView can. */
+    public static boolean needsWebImage(Path file) {
+        return file != null && file.getFileName() != null
+                && file.getFileName().toString().toLowerCase(Locale.ROOT).endsWith(".webp");
+    }
+
     private static boolean ends(String name, String... extensions) {
         for (String extension : extensions) if (name.endsWith(extension)) return true;
         return false;
@@ -56,8 +69,11 @@ public final class ReferenceMediaPane extends BorderPane {
                 return;
             }
             switch (kindFor(actual)) {
-                case IMAGE -> showImage(actual);
-                case SVG -> showSvg(actual, root);
+                case IMAGE -> {
+                    if (needsWebImage(actual)) showWebImage(actual, root);
+                    else showImage(actual);
+                }
+                case SVG -> showWebImage(actual, root);
                 case AUDIO, VIDEO -> showMedia(actual);
                 default -> message("No hay un visor integrado para este formato.");
             }
@@ -84,16 +100,17 @@ public final class ReferenceMediaPane extends BorderPane {
         scroll.setFitToHeight(true);
         setCenter(scroll);
         image.errorProperty().addListener((obs, old, error) -> {
-            if (error) message("Este formato de imagen no es compatible con JavaFX.");
+            if (error && !disposed)
+                message("Este formato de imagen no es compatible con JavaFX.");
         });
     }
 
-    private void showSvg(Path file, Path root) {
+    private void showWebImage(Path file, Path root) {
         String filename = URLEncoder.encode(file.getFileName().toString(),
                 StandardCharsets.UTF_8).replace("+", "%20");
-        var result = MarkdownRenderer.render("![SVG](" + filename + ")", file, root, false);
+        var result = MarkdownRenderer.render("![Imagen](" + filename + ")", file, root, false);
         if (result.localImages() == 0) {
-            message("No se puede mostrar este SVG de forma segura.");
+            message("No se puede mostrar la imagen de forma segura (límite: 8 MB).");
             return;
         }
         WebView web = new WebView();
@@ -103,12 +120,53 @@ public final class ReferenceMediaPane extends BorderPane {
         setCenter(web);
     }
 
-    private void showMedia(Path file) {
+    private void showMedia(Path original) {
+        if (MediaTranscoder.needsConversion(original)) convertAndPlay(original);
+        else playMedia(original, original, false);
+    }
+
+    /** Conversion is off the FX thread and operates only on an OS temporary file. */
+    private void convertAndPlay(Path original) {
+        if (disposed || (conversion != null && !conversion.isDone())) return;
+        releasePlayer();
+        message("Preparando vista multimedia mediante FFmpeg local…");
+        Task<Path> task = new Task<>() {
+            @Override protected Path call() throws IOException {
+                return MediaTranscoder.transcode(original,
+                        kindFor(original) == Kind.AUDIO
+                                ? MediaTranscoder.Output.AUDIO
+                                : MediaTranscoder.Output.VIDEO,
+                        this::isCancelled);
+            }
+        };
+        conversion = task;
+        task.setOnSucceeded(event -> {
+            Path prepared = task.getValue();
+            if (disposed || conversion != task) {
+                MediaTranscoder.deleteTemporary(prepared);
+                return;
+            }
+            temporaryMedia = prepared;
+            playMedia(prepared, original, true);
+        });
+        task.setOnFailed(event -> {
+            if (!disposed && conversion == task) {
+                message("No se pudo preparar este medio: "
+                        + task.getException().getMessage());
+            }
+        });
+        Thread thread = new Thread(task, "codetrace-ffmpeg-preview");
+        thread.setDaemon(true);
+        thread.start();
+    }
+
+    private void playMedia(Path file, Path original, boolean converted) {
+        if (disposed) return;
         try {
             Media media = new Media(file.toUri().toString());
             player = new MediaPlayer(media);
             player.setAutoPlay(false);
-            if (kindFor(file) == Kind.VIDEO) {
+            if (kindFor(original) == Kind.VIDEO) {
                 MediaView screen = new MediaView(player);
                 screen.setPreserveRatio(true);
                 screen.fitWidthProperty().bind(widthProperty().subtract(35));
@@ -117,7 +175,7 @@ public final class ReferenceMediaPane extends BorderPane {
                 canvas.getStyleClass().add("media-canvas");
                 setCenter(canvas);
             } else {
-                Label fileName = new Label(file.getFileName().toString());
+                Label fileName = new Label(original.getFileName().toString());
                 fileName.getStyleClass().add("media-audio-title");
                 StackPane cover = new StackPane(fileName);
                 cover.getStyleClass().add("media-canvas");
@@ -125,41 +183,60 @@ public final class ReferenceMediaPane extends BorderPane {
             }
             Button play = new Button("Reproducir");
             Button stop = new Button("Detener");
+            MediaPlayer active = player;
             play.setOnAction(event -> {
-                if (player.getStatus() == MediaPlayer.Status.PLAYING) player.pause();
-                else player.play();
+                if (active.getStatus() == MediaPlayer.Status.PLAYING) active.pause();
+                else active.play();
             });
-            stop.setOnAction(event -> player.stop());
-            player.statusProperty().addListener((obs, before, now) ->
+            stop.setOnAction(event -> active.stop());
+            active.statusProperty().addListener((obs, before, now) ->
                     play.setText(now == MediaPlayer.Status.PLAYING
                             ? "Pausar" : "Reproducir"));
             Slider seek = new Slider(0, 100, 0);
             HBox.setHgrow(seek, Priority.ALWAYS);
-            player.currentTimeProperty().addListener((obs, before, now) -> {
-                Duration length = player.getTotalDuration();
+            active.currentTimeProperty().addListener((obs, before, now) -> {
+                Duration length = active.getTotalDuration();
                 if (!seek.isValueChanging() && length != null && !length.isUnknown()
                         && length.toMillis() > 0)
                     seek.setValue(now.toMillis() / length.toMillis() * 100);
             });
             seek.setOnMouseReleased(event -> {
-                Duration length = player.getTotalDuration();
+                Duration length = active.getTotalDuration();
                 if (length != null && !length.isUnknown() && length.toMillis() > 0)
-                    player.seek(Duration.millis(length.toMillis() * seek.getValue() / 100));
+                    active.seek(Duration.millis(length.toMillis() * seek.getValue() / 100));
             });
-            player.setOnEndOfMedia(() -> { player.stop(); seek.setValue(0); });
-            player.setOnError(() -> message(
-                    "No se puede reproducir este medio con los códecs disponibles."));
+            active.setOnEndOfMedia(() -> { active.stop(); seek.setValue(0); });
+            active.setOnError(() -> unsupportedMedia(original, converted));
             HBox controls = new HBox(9, play, stop, seek);
             controls.getStyleClass().add("media-playback-controls");
             controls.setAlignment(Pos.CENTER_LEFT);
             setBottom(controls);
         } catch (MediaException | IllegalArgumentException problem) {
-            message("Este medio requiere otro códec o contenedor. "
-                    + "Puedes abrirlo con «Mostrar en el Explorador».");
+            unsupportedMedia(original, converted);
+        }
+    }
+
+    private void unsupportedMedia(Path original, boolean converted) {
+        if (disposed || recovering) return;
+        if (!converted) {
+            recovering = true;
+            convertAndPlay(original);
+            return;
+        }
+        releasePlayer();
+        message("No se puede reproducir este medio con los códecs disponibles.");
+    }
+
+    private void releasePlayer() {
+        if (player != null) {
+            player.stop();
+            player.dispose();
+            player = null;
         }
     }
 
     private void message(String text) {
+        setBottom(null);
         Label explanation = new Label(text);
         explanation.setWrapText(true);
         explanation.getStyleClass().add("media-error");
@@ -169,10 +246,10 @@ public final class ReferenceMediaPane extends BorderPane {
     }
 
     public void dispose() {
-        if (player != null) {
-            player.stop();
-            player.dispose();
-            player = null;
-        }
+        disposed = true;
+        if (conversion != null) conversion.cancel(true);
+        releasePlayer();
+        MediaTranscoder.deleteTemporary(temporaryMedia);
+        temporaryMedia = null;
     }
 }
