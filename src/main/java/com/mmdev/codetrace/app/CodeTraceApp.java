@@ -782,6 +782,8 @@ public final class CodeTraceApp extends Application {
         if (selected == null) return;
         javafx.application.Platform.runLater(() -> {
             tabs.getSelectionModel().select(selected);
+            if (selected.getContent() instanceof MarkdownPracticePane markdown)
+                markdown.showSource();
             TypingEditor editor = editorIn(selected);
             if (editor != null) editor.showSearchMatch(
                     hit.line() - 1, hit.column() - 1, hit.length());
