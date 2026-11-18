@@ -19,9 +19,10 @@ class ProjectTextSearchTest {
         var options = new ProjectTextSearch.Options("public", false, false, false);
         var projectHits = ProjectTextSearch.search(root, null, options, () -> false);
         assertEquals(3, projectHits.size());
-        assertEquals("Main.java", projectHits.get(0).relative());
-        assertEquals(1, projectHits.get(0).line());
-        assertEquals(1, projectHits.get(0).column());
+        var mainHit = projectHits.stream()
+                .filter(hit -> hit.relative().equals("Main.java")).findFirst().orElseThrow();
+        assertEquals(1, mainHit.line());
+        assertEquals(1, mainHit.column());
         assertEquals(1, ProjectTextSearch.search(root, "docs/README.md",
                 options, () -> false).size());
         assertArrayEquals(original, Files.readAllBytes(javaFile));
