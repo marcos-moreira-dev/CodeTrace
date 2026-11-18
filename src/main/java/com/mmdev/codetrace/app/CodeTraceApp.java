@@ -110,6 +110,7 @@ public final class CodeTraceApp extends Application {
     private ProgressScope progressScope = ProgressScope.load();
     private long catalogueGeneration;
     private Path reference;
+    private long referenceRequest;
     private Path sessionFile;
     private AppSettings settings = AppSettings.load();
     private CheckMenuItem explorerToggle;
@@ -400,6 +401,7 @@ public final class CodeTraceApp extends Application {
         var selection = PracticeLibraryDialog.choose(stage, library);
         if (selection.isEmpty() || !confirmDiscard()) return;
         BuiltInLibrary.Pack selectedPack = selection.get();
+        long requestId = ++referenceRequest;
         setStatus("Abriendo biblioteca " + selectedPack.name() + "...");
         Task<Path> prepare = new Task<>() {
             @Override
@@ -408,6 +410,7 @@ public final class CodeTraceApp extends Application {
             }
         };
         prepare.setOnSucceeded(event -> {
+            if (requestId != referenceRequest) return;
             Path root = prepare.getValue();
             activateReference(root);
             // An immediately open template makes the built-in library useful
@@ -416,9 +419,13 @@ public final class CodeTraceApp extends Application {
             openForPractice(root.resolve(first));
             setStatus("Biblioteca de práctica · " + selectedPack.name());
         });
-        prepare.setOnFailed(event -> showFailure("Biblioteca de práctica",
-                "No se pudo preparar la biblioteca interna: "
-                        + prepare.getException().getMessage()));
+        prepare.setOnFailed(event -> {
+            if (requestId == referenceRequest) {
+                showFailure("Biblioteca de práctica",
+                        "No se pudo preparar la biblioteca interna: "
+                                + prepare.getException().getMessage());
+            }
+        });
         Thread loader = new Thread(prepare, "codetrace-practice-library-loader");
         loader.setDaemon(true);
         loader.start();
@@ -426,6 +433,7 @@ public final class CodeTraceApp extends Application {
 
     /** Shared reference activation for an external folder or bundled pack. */
     private void activateReference(Path folder) {
+        referenceRequest++;
         workspace = new VirtualWorkspace();
         sessions = new LinkedHashMap<>();
         hashes = new LinkedHashMap<>();
@@ -731,6 +739,7 @@ public final class CodeTraceApp extends Application {
                 }
                 restoredReference = replacement.toPath().toAbsolutePath().normalize();
             }
+            referenceRequest++;
             reference = restoredReference;
             consolePane.setProject(reference);
             refreshCommandPresets();
