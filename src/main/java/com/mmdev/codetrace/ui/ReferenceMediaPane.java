@@ -47,6 +47,7 @@ public final class ReferenceMediaPane extends BorderPane {
     private boolean recovering;
     private ZoomableMediaViewport viewport;
     private final IntegerProperty zoomPercent = new SimpleIntegerProperty(100);
+    private final Kind previewKind;
 
     public static Kind kindFor(Path file) {
         if (file == null || file.getFileName() == null) return Kind.UNSUPPORTED;
@@ -71,6 +72,7 @@ public final class ReferenceMediaPane extends BorderPane {
     }
 
     public ReferenceMediaPane(Path file, Path referenceRoot) {
+        previewKind = kindFor(file);
         getStyleClass().add("reference-media-pane");
         try {
             Path root = referenceRoot.toRealPath();
@@ -390,7 +392,8 @@ public final class ReferenceMediaPane extends BorderPane {
     }
 
     public boolean supportsZoom() {
-        return false == disposed && viewport != null;
+        return !disposed && (previewKind == Kind.IMAGE
+                || previewKind == Kind.SVG || previewKind == Kind.VIDEO);
     }
 
     public int getZoomPercent() { return zoomPercent.get(); }
