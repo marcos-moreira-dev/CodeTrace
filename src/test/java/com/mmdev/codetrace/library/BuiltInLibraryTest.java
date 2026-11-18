@@ -68,8 +68,14 @@ class BuiltInLibraryTest {
     @Test
     void deeperCategoriesExistForJavaAndTypeScript() throws Exception {
         var library = new BuiltInLibrary(temp.resolve("cache"));
+        assertEquals(16, library.size(library.packs().get(0)));
+        assertEquals(16, library.size(library.packs().get(1)));
         for (var pack : library.packs().subList(0, 2)) {
             var names = library.entries(pack);
+            assertTrue(names.stream().anyMatch(p -> p.toLowerCase().contains("euclides")));
+            assertTrue(names.stream().anyMatch(p -> p.toLowerCase().contains("callback")));
+            assertTrue(names.stream().anyMatch(p -> p.toLowerCase().contains("observador")));
+            assertTrue(names.stream().anyMatch(p -> p.toLowerCase().contains("cola_circular") || p.contains("ColaCircular")));
             assertTrue(names.stream().anyMatch(p -> p.contains("estructuras")));
             assertTrue(names.stream().anyMatch(p -> p.contains("algoritmos")));
             assertTrue(names.stream().anyMatch(p -> p.contains("patrones")));
