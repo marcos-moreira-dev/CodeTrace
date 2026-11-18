@@ -30,3 +30,10 @@ CodeTrace propone una práctica tranquila de reconstrucción manual de software,
 - Markdown fuente/renderizado en una misma pestaña.
 - Comandos externos guardados por proyecto; no validación ni compilación obligatoria.
 - Catálogo de pequeños proyectos de referencia por temas.
+
+## Galería visual de referencia (noviembre de 2026)
+- Los caracteres de la plantilla permanecen idénticos al original.
+- Cada posición ya tecleada recibe un fondo rectangular verde pálido si coincide y rosa/rojo pálido si no coincide, como la referencia gráfica de mecanografía.
+- Los caracteres pendientes permanecen sin fondo coloreado. El cursor se distingue por un subrayado azul fino y la línea actual sigue seleccionada discretamente.
+- El fondo se aplica también a espacios: el usuario debe distinguir los aciertos y errores de espacios, llaves, puntuación y letras, sin sustituir su glifo.
+- El tamaño de letra y la fuente mantienen dimensiones fijas por estado; un error nunca desplaza los símbolos siguientes.

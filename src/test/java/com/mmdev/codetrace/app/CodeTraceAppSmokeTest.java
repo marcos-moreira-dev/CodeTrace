@@ -25,6 +25,8 @@ import com.mmdev.codetrace.ui.EditorZoomControl;
 import javafx.scene.control.CustomMenuItem;
 import javafx.scene.input.Clipboard;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import com.mmdev.codetrace.ui.SymbolPalette;
 import javafx.stage.Stage;
@@ -93,6 +95,15 @@ class CodeTraceAppSmokeTest {
                 assertEquals(untouched, editor.visibleLineText(0),
                         "Wrong input must never replace the visible source");
                 assertEquals(TypingSession.State.INCORRECT, editor.session().state(1));
+
+                // Rendered glyphs remain from the reference; only backgrounds
+                // communicate correct/incorrect. Nothing typed replaces a glyph.
+                stage.getScene().getRoot().applyCss();
+                stage.getScene().getRoot().layout();
+                assertTrue(editor.lookupAll(".trace-correct").size() >= 1,
+                        "Expected a green-background correct-character tile");
+                assertTrue(editor.lookupAll(".trace-incorrect").size() >= 1,
+                        "Expected a red-background incorrect-character tile");
                 editor.selectLine(0);
                 assertEquals(0, editor.session().caret());
                 assertEquals(0, editor.activeLineNumber());

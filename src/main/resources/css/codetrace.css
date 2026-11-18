@@ -274,3 +274,35 @@
 .sound-toggle:selected:hover {
     -fx-background-color: #c9dfcf;
 }
+
+/* Reference-image tracing: soft rectangular highlights BEHIND fixed glyphs. */
+.typing-line-glyphs {
+    -fx-alignment: center-left;
+    -fx-spacing: 1px;
+}
+.trace-character {
+    -fx-background-radius: 2px;
+    -fx-border-radius: 2px;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+.trace-pending {
+    -fx-background-color: transparent;
+}
+.trace-correct {
+    -fx-background-color: #e0f4d8;
+}
+.trace-incorrect {
+    -fx-background-color: #ffd0d8;
+}
+.trace-skipped {
+    -fx-background-color: #ecf1f4;
+}
+.trace-caret {
+    -fx-border-color: transparent transparent #3f84c4 transparent;
+    -fx-border-width: 0 0 2px 0;
+}
+.trace-end-caret {
+    -fx-border-color: #cad8e6 #cad8e6 #3f84c4 #cad8e6;
+    -fx-border-width: 1px 1px 2px 1px;
+}

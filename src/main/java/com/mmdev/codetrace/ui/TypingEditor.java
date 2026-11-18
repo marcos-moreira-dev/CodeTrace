@@ -3,11 +3,9 @@ package com.mmdev.codetrace.ui;
 import com.mmdev.codetrace.languages.LanguageRegistry;
 import com.mmdev.codetrace.languages.LanguageSupport;
 import com.mmdev.codetrace.practice.TypingSession;
-import java.text.BreakIterator;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Locale;
 import java.util.function.Consumer;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -16,11 +14,13 @@ import javafx.scene.control.ListView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Region;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextFlow;
 
 /**
  * CodeTrace is a tracer, not a text editor: every visible glyph comes from the
@@ -317,57 +317,83 @@ public final class TypingEditor extends BorderPane {
         return Math.ceil(fontSize * 1.5 + 7);
     }
 
-    private TextFlow makeVisibleLine(SourceLine line) {
-        TextFlow flow = new TextFlow();
-        flow.getStyleClass().add("typing-line-flow");
-        // Fixed reference glyphs make all colored states occupy the same slots.
-        StringBuilder run = new StringBuilder();
-        Color color = null;
-        boolean underline = false;
-        for (int i = line.first(); i < line.last(); i++) {
-            TypingSession.Cell cell = session.cell(i);
-            boolean atCaret = i == session.caret();
-            Color next = switch (cell.state()) {
-                case PENDING -> syntaxColors[i];
+    /**
+     * Reference glyphs and their positions never change. The node behind each
+     * grapheme changes appearance instead: faint pending, mint correct, pink
+     * incorrect. This mirrors the supplied typing reference image.
+     *
+     * Only the visible ListView rows are built, including for long projects.
+     */
+    private HBox makeVisibleLine(SourceLine line) {
+        HBox row = new HBox(1.0);
+        row.setAlignment(Pos.CENTER_LEFT);
+        row.getStyleClass().add("typing-line-glyphs");
+        Font font = Font.font(fontFamily, fontSize);
+
+        Text measure = new Text("M");
+        measure.setFont(font);
+        double columnWidth = Math.max(7.0, measure.getLayoutBounds().getWidth());
+        double tileHeight = Math.max(22, Math.ceil(fontSize * 1.45));
+        double rowWidth = 0;
+
+        for (int index = line.first(); index < line.last(); index++) {
+            TypingSession.Cell cell = session.cell(index);
+            String original = cell.expected();
+            String visible = original.equals("\t") ? "    " : original;
+            Text glyph = new Text(visible);
+            glyph.setFont(font);
+            glyph.setMouseTransparent(true);
+            glyph.setFill(switch (cell.state()) {
                 case CORRECT -> CORRECT;
                 case INCORRECT -> INCORRECT;
                 case SKIPPED -> SKIPPED;
-            };
-            boolean nextUnderline = atCaret || cell.state() == TypingSession.State.INCORRECT;
-            if (color != next || underline != nextUnderline) {
-                flush(run, flow, color, underline);
-                color = next;
-                underline = nextUnderline;
+                case PENDING -> syntaxColors[index];
+            });
+
+            // Every position gets exactly the same width regardless of its
+            // result. Tabs and wider Unicode graphemes preserve their extent.
+            double width = original.equals("\t")
+                    ? columnWidth * 4 : Math.max(columnWidth,
+                            glyph.getLayoutBounds().getWidth());
+            StackPane tile = new StackPane(glyph);
+            tile.setAlignment(Pos.CENTER);
+            tile.setMouseTransparent(true);
+            tile.getStyleClass().addAll("trace-character",
+                    switch (cell.state()) {
+                        case CORRECT -> "trace-correct";
+                        case INCORRECT -> "trace-incorrect";
+                        case SKIPPED -> "trace-skipped";
+                        case PENDING -> "trace-pending";
+                    });
+            if (index == session.caret()) {
+                tile.getStyleClass().add("trace-caret");
             }
-            // Never display cell.entered(): even an error leaves the source intact.
-            run.append(cell.expected());
+            sizeTile(tile, width, tileHeight);
+            row.getChildren().add(tile);
+            rowWidth += width + 1.0;
         }
-        flush(run, flow, color, underline);
-        if (line.original().isEmpty() || session.caret() == line.last()) {
-            // Caret is placed only at end of line; it never shifts source glyphs.
-            Text endCaret = styledText(
-                    line.number() == activeLineNumber() ? "│" : " ",
-                    CARET, false);
-            flow.getChildren().add(endCaret);
+
+        if (session.caret() == line.last()) {
+            // A zero-content caret AFTER the last glyph adds no extra source
+            // character and never shifts the existing letters.
+            StackPane caret = new StackPane();
+            caret.setMouseTransparent(true);
+            caret.getStyleClass().addAll("trace-character",
+                    "trace-pending", "trace-caret", "trace-end-caret");
+            sizeTile(caret, columnWidth, tileHeight);
+            row.getChildren().add(caret);
+            rowWidth += columnWidth + 1.0;
         }
-        Text measurement = styledText(line.original().replace("\t", "    "), PENDING, false);
-        flow.setMinWidth(Math.max(14, measurement.getLayoutBounds().getWidth() + 20));
-        flow.setPrefWidth(Math.max(14, measurement.getLayoutBounds().getWidth() + 20));
-        return flow;
+
+        row.setMinWidth(rowWidth);
+        row.setPrefWidth(rowWidth);
+        return row;
     }
 
-    private void flush(StringBuilder run, TextFlow flow, Color color, boolean underlined) {
-        if (run.isEmpty()) return;
-        flow.getChildren().add(styledText(run.toString(), color, underlined));
-        run.setLength(0);
-    }
-
-    private Text styledText(String value, Color color, boolean underline) {
-        Text view = new Text(value);
-        view.setFont(Font.font(fontFamily, fontSize));
-        view.setFill(color);
-        view.setUnderline(underline);
-        return view;
+    private static void sizeTile(StackPane tile, double width, double height) {
+        tile.setMinSize(width, height);
+        tile.setPrefSize(width, height);
+        tile.setMaxSize(width, height);
     }
 
     private static Color[] syntaxColors(TypingSession session, String filename) {
