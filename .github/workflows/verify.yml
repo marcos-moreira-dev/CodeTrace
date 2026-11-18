@@ -47,6 +47,7 @@ jobs:
           & .\scripts\crear-fixtures-preview.ps1
           if (-not (Test-Path "target/qa-preview/README.md")) { throw "Missing QA README" }
           if (-not (Test-Path "target/qa-preview/assets/seguro.svg")) { throw "Missing QA SVG" }
+          if (-not (Test-Path "target/qa-preview/assets/sample.webp")) { throw "Missing offline QA WebP" }
       - name: Preserve Windows diagnostic ZIP
         if: always()
         uses: actions/upload-artifact@v4
