@@ -72,6 +72,26 @@ El contenido externo debe permanecer bloqueado hasta habilitarlo manualmente.
 '@
 [IO.File]::WriteAllText((Join-Path $fixture "README.md"), $markdown,
     [Text.UTF8Encoding]::new($false))
+$sourceFolder = Join-Path $fixture "src"
+New-Item -ItemType Directory -Force -Path $sourceFolder | Out-Null
+$sampleJava = @'
+public class Demo {
+    public static void main(String[] args) {
+        System.out.println("CodeTrace busca sin reemplazar");
+        int total = sumar(7, 8);
+        System.out.println(total);
+    }
+
+    static int sumar(int a, int b) {
+        return a + b;
+    }
+}
+'@
+[IO.File]::WriteAllText((Join-Path $sourceFolder "Demo.java"), $sampleJava,
+    [Text.UTF8Encoding]::new($false))
+[IO.File]::WriteAllText((Join-Path $fixture "config.json"),
+    '{"demo":"CodeTrace","version":1,"objetivo":"buscar en proyecto"}',
+    [Text.UTF8Encoding]::new($false))
 [IO.File]::WriteAllText((Join-Path $fixture "prueba.bat"),
     "@echo off" + [Environment]::NewLine + "echo CodeTrace",
     [Text.Encoding]::ASCII)
