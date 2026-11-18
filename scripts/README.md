@@ -16,7 +16,7 @@ Desde la carpeta descomprimida:
 
 1. Ejecuta scripts\diagnostico.bat.
 2. El programa busca Temurin 21 y Maven, guarda sus versiones y ejecuta **mvn clean verify**.
-3. Si pasan las pruebas, inicia CodeTrace con **mvn javafx:run**.
+3. Si pasan las pruebas, crea automáticamente `target\qa-preview` con ejemplos de Markdown, imágenes, SVG y multimedia (si FFmpeg está disponible), e inicia CodeTrace con **mvn javafx:run**. Abre esa carpeta de QA desde Archivo → Abrir proyecto para comprobar las vistas.
 4. Puedes probar la aplicación; ciérrala cuando quieras finalizar.
 5. El script crea un ZIP en reports\ y abre el Explorador de Windows seleccionándolo.
 
