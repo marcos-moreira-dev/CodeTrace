@@ -17,8 +17,8 @@ class BuiltInLibraryTest {
     @Test
     void allPacksAreBundledOfflineAndHaveRealCodeExtensions() throws Exception {
         var library = new BuiltInLibrary(temp.resolve("offline"));
-        assertEquals(12, library.packs().size());
-        assertEquals(12, library.packs().stream().map(BuiltInLibrary.Pack::id)
+        assertEquals(13, library.packs().size());
+        assertEquals(13, library.packs().stream().map(BuiltInLibrary.Pack::id)
                 .collect(Collectors.toSet()).size());
         for (var pack : library.packs()) {
             assertTrue(library.size(pack) >= 2, pack.name());
@@ -68,9 +68,12 @@ class BuiltInLibraryTest {
     @Test
     void deeperCategoriesExistForJavaAndTypeScript() throws Exception {
         var library = new BuiltInLibrary(temp.resolve("cache"));
-        assertEquals(16, library.size(library.packs().get(0)));
-        assertEquals(16, library.size(library.packs().get(1)));
-        for (var pack : library.packs().subList(0, 2)) {
+        var extended = library.packs().stream()
+                .filter(pack -> java.util.Set.of("java21", "typescript", "kotlin")
+                        .contains(pack.id())).toList();
+        assertEquals(3, extended.size());
+        for (var pack : extended) {
+            assertEquals(16, library.size(pack));
             var names = library.entries(pack);
             assertTrue(names.stream().anyMatch(p -> p.toLowerCase().contains("euclides")));
             assertTrue(names.stream().anyMatch(p -> p.toLowerCase().contains("callback")));
@@ -79,6 +82,27 @@ class BuiltInLibraryTest {
             assertTrue(names.stream().anyMatch(p -> p.contains("estructuras")));
             assertTrue(names.stream().anyMatch(p -> p.contains("algoritmos")));
             assertTrue(names.stream().anyMatch(p -> p.contains("patrones")));
+        }
+    }
+
+    @Test
+    void everyExerciseDocumentsItsVersionAndCompilingOrCheckingCommand()
+            throws Exception {
+        var library = new BuiltInLibrary(temp.resolve("versions"));
+        for (var pack : library.packs()) {
+            Path root = library.open(pack);
+            for (String relative : library.entries(pack)) {
+                String text = Files.readString(root.resolve(relative));
+                String firstLines = text.lines().limit(10)
+                        .collect(Collectors.joining("\n")).toLowerCase(java.util.Locale.ROOT);
+                assertTrue(firstLines.contains("codetrace"), pack.id() + "/" + relative);
+                assertTrue(firstLines.contains("referencia:") || firstLines.contains("kotlin 2.2"),
+                        "Missing version in " + pack.id() + "/" + relative);
+                assertTrue(firstLines.contains("compilar:")
+                        || firstLines.contains("comprobar")
+                        || firstLines.contains("ejecutar:"),
+                        "Missing CLI command in " + pack.id() + "/" + relative);
+            }
         }
     }
 }
