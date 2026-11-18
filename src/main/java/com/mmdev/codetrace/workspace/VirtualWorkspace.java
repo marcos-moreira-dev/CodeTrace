@@ -53,6 +53,29 @@ public final class VirtualWorkspace {
         add(path, Kind.FILE, "");
     }
 
+    /**
+     * When a source file is opened directly, virtualize its ancestor directories
+     * only when typing actually begins. Explicit manual creation remains available.
+     */
+    public void ensureFile(String path) {
+        checkPath(path);
+        String[] parts = path.split("/");
+        String current = "";
+        for (int i = 0; i < parts.length - 1; i++) {
+            current = current.isEmpty() ? parts[i] : current + "/" + parts[i];
+            if (!exists(current)) {
+                createDirectory(current);
+            } else if (entry(current).kind() != Kind.DIRECTORY) {
+                throw new IllegalArgumentException("Not a directory: " + current);
+            }
+        }
+        if (!exists(path)) {
+            createFile(path);
+        } else if (entry(path).kind() != Kind.FILE) {
+            throw new IllegalArgumentException("Not a file: " + path);
+        }
+    }
+
     public void setText(String path, String text) {
         Entry current = requireFile(path);
         entries.put(path, new Entry(current.path(), Kind.FILE, Objects.requireNonNull(text)));

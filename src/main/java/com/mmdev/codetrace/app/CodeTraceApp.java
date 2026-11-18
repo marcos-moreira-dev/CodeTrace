@@ -286,15 +286,8 @@ public final class CodeTraceApp extends Application {
             return;
         }
         String relative = relative(file);
-        if (!workspace.exists(relative)) {
-            setStatus("Crea primero el archivo " + file.getFileName()
-                    + " en el proyecto virtual.");
-            return;
-        }
-        if (workspace.entry(relative).kind() != VirtualWorkspace.Kind.FILE) {
-            setStatus("La entrada virtual no es un archivo.");
-            return;
-        }
+        // Every reference text file can be opened for inspection immediately.
+        // Virtual folders and the virtual file are created only upon transcription.
         Tab existing = openedTabs.get(relative);
         if (existing != null) {
             tabs.getSelectionModel().select(existing);
@@ -314,9 +307,17 @@ public final class CodeTraceApp extends Application {
             hashes.putIfAbsent(relative, ReferenceFingerprint.sha256(file));
             TypingSession current = session;
             TypingEditor editor = new TypingEditor(current, () -> {
-                workspace.setText(relative, current.enteredText());
-                dirty = true;
-                updateTitle();
+                String typed = current.enteredText();
+                if (!typed.isEmpty() || current.skippedCount() > 0) {
+                    boolean wasCreated = !workspace.exists(relative);
+                    workspace.ensureFile(relative);
+                    workspace.setText(relative, typed);
+                    if (wasCreated) {
+                        tree.refreshTree();
+                    }
+                    dirty = true;
+                    updateTitle();
+                }
                 refreshMetrics();
             }, file.getFileName().toString(), settings.fontFamily(), settings.fontSize(),
                     matched -> {

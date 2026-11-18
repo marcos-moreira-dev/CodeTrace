@@ -107,7 +107,7 @@ public final class TypingEditor extends BorderPane {
                 line.append(unit);
             }
         }
-        update();
+        update(true);
         return session.skippedCount() - omittedBefore;
     }
 
@@ -118,17 +118,36 @@ public final class TypingEditor extends BorderPane {
     private void handlePressed(KeyEvent event) {
         KeyCode key = event.getCode();
         boolean handled = true;
+        boolean modified = true;
         switch (key) {
             case BACK_SPACE -> session.backspace();
             case DELETE -> session.deleteAtCaret();
-            case LEFT -> session.moveCaret(Math.max(0, session.caret() - 1));
-            case RIGHT -> session.moveCaret(Math.min(session.size(), session.caret() + 1));
-            case HOME -> session.moveCaret(event.isControlDown()
-                    ? 0 : startOfLine(session.caret()));
-            case END -> session.moveCaret(event.isControlDown()
-                    ? session.size() : endOfLine(session.caret()));
-            case UP -> session.moveCaret(verticalTarget(-1));
-            case DOWN -> session.moveCaret(verticalTarget(1));
+            case LEFT -> {
+                session.moveCaret(Math.max(0, session.caret() - 1));
+                modified = false;
+            }
+            case RIGHT -> {
+                session.moveCaret(Math.min(session.size(), session.caret() + 1));
+                modified = false;
+            }
+            case HOME -> {
+                session.moveCaret(event.isControlDown()
+                        ? 0 : startOfLine(session.caret()));
+                modified = false;
+            }
+            case END -> {
+                session.moveCaret(event.isControlDown()
+                        ? session.size() : endOfLine(session.caret()));
+                modified = false;
+            }
+            case UP -> {
+                session.moveCaret(verticalTarget(-1));
+                modified = false;
+            }
+            case DOWN -> {
+                session.moveCaret(verticalTarget(1));
+                modified = false;
+            }
             case TAB -> {
                 beginTyping();
                 typeAndNotify("\t");
@@ -137,7 +156,7 @@ public final class TypingEditor extends BorderPane {
         }
         if (handled) {
             event.consume();
-            update();
+            update(modified);
         }
     }
 
@@ -159,7 +178,7 @@ public final class TypingEditor extends BorderPane {
         beginTyping();
         typeAndNotify(input);
         event.consume();
-        update();
+        update(true);
     }
 
     private void typeAndNotify(String committed) {
@@ -211,9 +230,11 @@ public final class TypingEditor extends BorderPane {
         return Math.min(nextStart + column, endOfLine(nextStart));
     }
 
-    private void update() {
+    private void update(boolean modified) {
         render();
-        onChange.run();
+        if (modified) {
+            onChange.run();
+        }
     }
 
     private void render() {
@@ -267,7 +288,7 @@ public final class TypingEditor extends BorderPane {
             int target = start + clusterCount(displayed.substring(
                     0, Math.max(0, Math.min(charIndex, displayed.length()))));
             session.moveCaret(Math.max(0, Math.min(session.size(), target)));
-            update();
+            update(false);
             surface.requestFocus();
             event.consume();
         });
