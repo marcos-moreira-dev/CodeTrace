@@ -9,6 +9,8 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+import javafx.scene.image.Image;
 import javafx.stage.Window;
 
 /** Shared readable dialogs. Long messages scroll instead of being ellipsized. */
@@ -45,6 +47,12 @@ public final class ProductDialogs {
         Dialog<ButtonType> result = new Dialog<>();
         if (owner != null) result.initOwner(owner);
         result.setTitle(title);
+        result.setOnShown(event -> {
+            if (result.getDialogPane().getScene().getWindow() instanceof Stage stage) {
+                stage.getIcons().setAll(new Image(ProductDialogs.class
+                        .getResourceAsStream("/icons/codetrace-window.png")));
+            }
+        });
         result.setResizable(true);
         DialogPane pane = result.getDialogPane();
         pane.getStyleClass().add("product-dialog");

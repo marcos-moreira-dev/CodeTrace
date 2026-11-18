@@ -23,6 +23,7 @@ import javafx.concurrent.Task;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -199,6 +200,8 @@ public final class CodeTraceApp extends Application {
         scene.getStylesheets().add(getClass()
                 .getResource("/css/codetrace.css").toExternalForm());
         stage.setTitle("CodeTrace");
+        stage.getIcons().add(new Image(
+                getClass().getResourceAsStream("/icons/codetrace-window.png")));
         stage.setMinWidth(760);
         stage.setMinHeight(480);
         stage.setScene(scene);
