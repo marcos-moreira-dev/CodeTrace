@@ -516,13 +516,9 @@ public final class CodeTraceApp extends Application {
             TypingSession current = session;
             TypingEditor editor = new TypingEditor(current, () -> {
                 String typed = current.enteredText();
-                if (!typed.isEmpty() || current.skippedCount() > 0) {
-                    boolean wasCreated = !workspace.exists(relative);
-                    workspace.ensureFile(relative);
+                if ((!typed.isEmpty() || current.skippedCount() > 0)
+                        && virtualFileExists(relative)) {
                     workspace.setText(relative, typed);
-                    if (wasCreated) {
-                        tree.refreshTree();
-                    }
                     dirty = true;
                     updateTitle();
                 }
@@ -536,6 +532,8 @@ public final class CodeTraceApp extends Application {
                         }
                     });
             editor.setOnNotice(this::setStatus);
+            editor.setPracticePermission(() -> virtualFileExists(relative),
+                    () -> requestExplicitCreation(relative));
             editor.setTemplateOpacity(settings.templateOpacity());
             editor.setTurboMode(settings.turboMode());
             boolean markdown = relative.toLowerCase().endsWith(".md")
@@ -555,14 +553,34 @@ public final class CodeTraceApp extends Application {
         }
     }
 
+    private boolean virtualFileExists(String relative) {
+        VirtualWorkspace.Entry entry = workspace.entry(relative);
+        return entry != null && entry.kind() == VirtualWorkspace.Kind.FILE;
+    }
+
+    private void requestExplicitCreation(String relative) {
+        int slash = relative.lastIndexOf('/');
+        String parent = slash < 0 ? "" : relative.substring(0, slash);
+        String name = slash < 0 ? relative : relative.substring(slash + 1);
+        String location = parent.isEmpty() ? "la raíz del proyecto" : "la carpeta " + parent;
+        ProductDialogs.error(stage, "Crear archivo antes de practicar",
+                "El archivo \"" + name + "\" todavía no existe en tu proyecto virtual.\n\n"
+                + "Para empezar a escribir, haz clic derecho en " + location
+                + " y selecciona Nuevo archivo..., con el mismo nombre de la referencia.\n\n"
+                + "Si la carpeta también está pendiente, créala primero.");
+    }
+
     private void onWorkspaceChanged(ReferenceTree.Change change) {
         if (change.operation() == ReferenceTree.Operation.DELETE) {
             removeSessionsUnder(change.source());
         } else if (change.operation() == ReferenceTree.Operation.MOVE) {
             moveSessionsUnder(change.source(), change.target());
         }
-        tabs.getTabs().clear();
-        openedTabs.clear();
+        // A newly created file unlocks its existing, open preview immediately.
+        if (change.operation() != ReferenceTree.Operation.CREATE) {
+            tabs.getTabs().clear();
+            openedTabs.clear();
+        }
         dirty = true;
         updateTitle();
         refreshMetrics();
