@@ -64,4 +64,16 @@ class ProjectDependencyGraphTest {
         assertTrue(graph.edges().stream().anyMatch(e ->
                 e.source().equals("app.go") && e.target().equals("utility")));
     }
+
+    @Test
+    void boundsVeryLargeGraphsToAvoidOversizedCanvas() throws Exception {
+        for (int i = 0; i < 205; i++) {
+            String dependency = i < 204 ? "import './node" + (i + 1) + "';" : "";
+            Files.writeString(root.resolve("node" + i + ".ts"), dependency);
+        }
+        var graph = ProjectDependencyGraph.analyze(root, root, () -> false);
+        assertTrue(graph.truncated(), "UI must explicitly disclose a partial graph");
+        assertTrue(graph.nodes().size() <= 180);
+        assertTrue(graph.edges().size() <= 400);
+    }
 }
