@@ -552,8 +552,13 @@ public final class CodeTraceApp extends Application {
             setStatus("Archivo de referencia · no requiere mecanografía.");
             return;
         }
-        if (Files.size(file) == 0) {
-            setStatus("Archivo vacío · sin ejercicio de mecanografía.");
+        try {
+            if (Files.size(file) == 0) {
+                setStatus("Archivo vacío · sin ejercicio de mecanografía.");
+                return;
+            }
+        } catch (IOException problem) {
+            setStatus("No se pudo leer el archivo de referencia.");
             return;
         }
         // Every eligible reference text file can be inspected immediately.
