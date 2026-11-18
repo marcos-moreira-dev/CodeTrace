@@ -52,6 +52,8 @@ public final class TypingEditor extends BorderPane {
     private long firstKeyNanos;
     private boolean synchronizingLine;
     private boolean turboMode;
+    private int searchFirst = -1;
+    private int searchLast = -1;
     private Consumer<String> onNotice = ignored -> {};
     private BooleanSupplier mayPractice = () -> true;
     private Runnable onPracticeBlocked = () -> {};
@@ -140,6 +142,37 @@ public final class TypingEditor extends BorderPane {
         session.moveCaret(target.first());
         synchronizeLine(true);
         lines.requestFocus();
+    }
+
+    /**
+     * Search navigation highlights immutable reference glyphs and scrolls to
+     * the matching row. It intentionally does NOT move the typing caret.
+     */
+    public void showSearchMatch(int zeroBasedLine, int zeroBasedColumn, int length) {
+        if (zeroBasedLine < 0 || zeroBasedLine >= sourceLines.size()) return;
+        SourceLine line = sourceLines.get(zeroBasedLine);
+        int position = line.first();
+        int offset = 0;
+        int requestedStart = Math.max(0, zeroBasedColumn);
+        while (position < line.last() && offset < requestedStart) {
+            offset += session.cell(position).expected().length();
+            position++;
+        }
+        searchFirst = position;
+        int endOffset = requestedStart + Math.max(1, length);
+        while (position < line.last() && offset < endOffset) {
+            offset += session.cell(position).expected().length();
+            position++;
+        }
+        searchLast = position;
+        synchronizingLine = true;
+        try {
+            lines.getSelectionModel().select(zeroBasedLine);
+        } finally {
+            synchronizingLine = false;
+        }
+        lines.scrollTo(zeroBasedLine);
+        lines.refresh();
     }
 
     /** Apply only to pending source characters, never to correctly typed tiles. */
@@ -457,6 +490,9 @@ public final class TypingEditor extends BorderPane {
                     });
             if (index == session.caret()) {
                 tile.getStyleClass().add("trace-caret");
+            }
+            if (index >= searchFirst && index < searchLast) {
+                tile.getStyleClass().add("trace-search-hit");
             }
             sizeTile(tile, width, tileHeight);
             row.getChildren().add(tile);
