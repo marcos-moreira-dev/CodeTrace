@@ -20,6 +20,7 @@ import com.mmdev.codetrace.ui.ToolbarIcons;
 import com.mmdev.codetrace.ui.SymbolPalette;
 import com.mmdev.codetrace.ui.FileTypeIcons;
 import com.mmdev.codetrace.ui.EditorZoomControl;
+import com.mmdev.codetrace.ui.MediaZoomControl;
 import com.mmdev.codetrace.ui.CommandConsolePane;
 import com.mmdev.codetrace.commands.ProjectCommandStore;
 import com.mmdev.codetrace.library.BuiltInLibrary;
@@ -143,6 +144,7 @@ public final class CodeTraceApp extends Application {
     private ToggleButton turboToggle;
     private SymbolPalette symbols;
     private EditorZoomControl zoom;
+    private MediaZoomControl mediaZoom;
     private boolean soundProblemReported;
     private final TypingSounds typingSounds = new TypingSounds();
     private final CompletionSound completionSound = new CompletionSound();
@@ -197,10 +199,7 @@ public final class CodeTraceApp extends Application {
                 top.getChildren().get(1).setVisible(!enabled);
                 top.getChildren().get(1).setManaged(!enabled);
             }
-            if (zoom != null) {
-                zoom.setVisible(!enabled);
-                zoom.setManaged(!enabled);
-            }
+            updateContextualZoom();
         });
 
         CheckMenuItem fullscreen = new CheckMenuItem("Pantalla completa");
@@ -407,8 +406,12 @@ public final class CodeTraceApp extends Application {
         installProgressFilters();
         zoom = new EditorZoomControl(settings.fontSize(), this::setEditorZoom);
         zoom.setId("editor-font-zoom");
+        mediaZoom = new MediaZoomControl(this::setSelectedMediaZoom);
+        mediaZoom.setId("media-image-zoom");
+        mediaZoom.setVisible(false);
+        mediaZoom.setManaged(false);
         HBox footer = new HBox(9, status, fileInfo, projectInfo, fileProgress,
-                new Separator(Orientation.VERTICAL), zoom);
+                new Separator(Orientation.VERTICAL), zoom, mediaZoom);
         footer.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
         footer.setMinHeight(34);
         status.setMinWidth(80);
@@ -420,6 +423,7 @@ public final class CodeTraceApp extends Application {
                 .addListener((observed, before, selected) -> {
                     refreshMetrics();
                     refreshTabActions();
+                    updateContextualZoom();
                     // Once tab selection is processed, return focus to its
                     // typing surface rather than leaving it in the file tree.
                     if (selected != null) {
@@ -704,6 +708,12 @@ public final class CodeTraceApp extends Application {
             return;
         }
         ReferenceMediaPane media = new ReferenceMediaPane(file, reference);
+        media.zoomPercentProperty().addListener((obs, old, value) -> {
+            if (tabs.getSelectionModel().getSelectedItem() != null
+                    && tabs.getSelectionModel().getSelectedItem().getContent() == media
+                    && mediaZoom != null)
+                mediaZoom.setValue(value.intValue());
+        });
         Tab tab = new Tab(file.getFileName().toString(), media);
         tab.setGraphic(FileTypeIcons.forPath(file, false));
         tab.setOnClosed(event -> {
@@ -1238,6 +1248,27 @@ public final class CodeTraceApp extends Application {
         if (tab.getContent() instanceof TypingEditor editor) return editor;
         if (tab.getContent() instanceof MarkdownPracticePane pane) return pane.editor();
         return null;
+    }
+
+    private void setSelectedMediaZoom(int percent) {
+        Tab selected = tabs.getSelectionModel().getSelectedItem();
+        if (selected != null && selected.getContent() instanceof ReferenceMediaPane media)
+            media.setZoomPercent(percent);
+    }
+
+    private void updateContextualZoom() {
+        if (zoom == null || mediaZoom == null) return;
+        Tab selected = tabs.getSelectionModel().getSelectedItem();
+        boolean visual = selected != null
+                && selected.getContent() instanceof ReferenceMediaPane;
+        zoom.setVisible(!visual && !concentration);
+        zoom.setManaged(!visual && !concentration);
+        mediaZoom.setVisible(visual && !concentration);
+        mediaZoom.setManaged(visual && !concentration);
+        if (visual) {
+            ReferenceMediaPane media = (ReferenceMediaPane) selected.getContent();
+            mediaZoom.setValue(media.getZoomPercent());
+        }
     }
 
     private void setEditorZoom(int size) {
