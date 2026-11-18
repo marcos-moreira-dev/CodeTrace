@@ -1,6 +1,11 @@
 package com.mmdev.codetrace.ui;
 
 import com.mmdev.codetrace.app.AppSettings;
+import com.mmdev.codetrace.commands.ProjectCommandStore;
+import com.mmdev.codetrace.commands.ProjectCommandStore.Preset;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import javafx.collections.FXCollections;
@@ -42,16 +47,34 @@ public final class PreferencesWindow {
         create(owner, current, onApply, previewSound).showAndWait();
     }
 
+    public static void open(Window owner, AppSettings current,
+                            Consumer<AppSettings> onApply,
+                            Function<Boolean, Boolean> previewSound,
+                            Path projectRoot, ProjectCommandStore store,
+                            Runnable onCommandsChanged) {
+        create(owner, current, onApply, previewSound,
+                projectRoot, store, onCommandsChanged).showAndWait();
+    }
+
     /** Allows GUI smoke tests to inspect the scene before opening the modal. */
     public static Stage create(Window owner, AppSettings current,
                                Consumer<AppSettings> onApply,
                                Function<Boolean, Boolean> previewSound) {
+        return create(owner, current, onApply, previewSound,
+                null, null, () -> {});
+    }
+
+    public static Stage create(Window owner, AppSettings current,
+                               Consumer<AppSettings> onApply,
+                               Function<Boolean, Boolean> previewSound,
+                               Path projectRoot, ProjectCommandStore store,
+                               Runnable onCommandsChanged) {
         Stage dialog = new Stage();
         dialog.initOwner(owner);
         dialog.initModality(Modality.WINDOW_MODAL);
         dialog.setTitle("Preferencias — CodeTrace");
-        dialog.setMinWidth(630);
-        dialog.setMinHeight(440);
+        dialog.setMinWidth(700);
+        dialog.setMinHeight(500);
 
         BorderPane root = new BorderPane();
         root.getStyleClass().add("prefs-root");
@@ -63,7 +86,7 @@ public final class PreferencesWindow {
         root.setTop(header);
 
         ListView<String> navigation = new ListView<>(
-                FXCollections.observableArrayList("Editor", "Ventana", "Sonido"));
+                FXCollections.observableArrayList("Editor", "Ventana", "Sonido", "Comandos"));
         navigation.getStyleClass().add("prefs-navigation");
         navigation.setPrefWidth(168);
         navigation.setMinWidth(168);
@@ -79,7 +102,8 @@ public final class PreferencesWindow {
                     FontIcon icon = new FontIcon(switch (item) {
                         case "Editor" -> "fth-type";
                         case "Ventana" -> "fth-layout";
-                        default -> "fth-volume-2";
+                        case "Sonido" -> "fth-volume-2";
+                        default -> "fth-terminal";
                     });
                     icon.setIconSize(16);
                     icon.setIconColor(javafx.scene.paint.Color.web("#4A6076"));
@@ -176,39 +200,75 @@ public final class PreferencesWindow {
                 groupHeading("Mecanografía"), sounds,
                 groupHeading("Escuchar muestras"), previews, sampleStatus);
 
+        CommandSettingsPane commandEditor = null;
+        javafx.scene.Node commandsPage;
+        if (projectRoot != null && store != null) {
+            try {
+                commandEditor = new CommandSettingsPane(store.load(projectRoot));
+                commandsPage = commandEditor;
+            } catch (IOException badConfiguration) {
+                Label notice = new Label("No se pudieron abrir los comandos guardados: "
+                        + badConfiguration.getMessage());
+                notice.setWrapText(true);
+                commandsPage = new VBox(notice);
+                commandsPage.getStyleClass().add("prefs-section");
+            }
+        } else {
+            Label notice = new Label(
+                    "Abre una carpeta de referencia para configurar sus comandos.");
+            notice.setWrapText(true);
+            commandsPage = new VBox(notice);
+            commandsPage.getStyleClass().add("prefs-section");
+        }
+
         BorderPane sectionContent = new BorderPane();
         sectionContent.getStyleClass().add("prefs-content");
         sectionContent.setCenter(editorPanel);
         navigation.getSelectionModel().selectedItemProperty().addListener(
                 (obs, previous, selected) -> sectionContent.setCenter(
                         "Ventana".equals(selected) ? windowPanel
-                                : "Sonido".equals(selected) ? soundPanel : editorPanel));
+                                : "Sonido".equals(selected) ? soundPanel
+                                : "Comandos".equals(selected) ? commandsPage : editorPanel));
         navigation.getSelectionModel().selectFirst();
         root.setLeft(navigation);
         root.setCenter(sectionContent);
 
-        Runnable apply = () -> onApply.accept(new AppSettings(
-                families.getValue() == null ? current.fontFamily() : families.getValue(),
-                (int) Math.round(size.getValue()),
-                explorer.isSelected(), current.keyboardLayout(), sounds.isSelected(),
-                opacity.getValue(), turbo.isSelected()));
+        final CommandSettingsPane editableCommands = commandEditor;
+        java.util.function.BooleanSupplier apply = () -> {
+            if (editableCommands != null) {
+                if (!editableCommands.commitDraft()) return false;
+                try {
+                    store.save(projectRoot, editableCommands.profiles());
+                    onCommandsChanged.run();
+                } catch (IOException error) {
+                    ProductDialogs.error(dialog, "Comandos del proyecto",
+                            "No se pudieron guardar: " + error.getMessage());
+                    return false;
+                }
+            }
+            onApply.accept(new AppSettings(
+                    families.getValue() == null ? current.fontFamily() : families.getValue(),
+                    (int) Math.round(size.getValue()),
+                    explorer.isSelected(), current.keyboardLayout(), sounds.isSelected(),
+                    opacity.getValue(), turbo.isSelected()));
+            return true;
+        };
         Button accept = new Button("Aceptar");
         accept.setDefaultButton(true);
         accept.setOnAction(event -> {
-            apply.run();
-            dialog.close();
+            if (apply.getAsBoolean()) dialog.close();
         });
         Button cancel = new Button("Cancelar");
         cancel.setCancelButton(true);
         cancel.setOnAction(event -> dialog.close());
         Button applyButton = new Button("Aplicar");
-        applyButton.setOnAction(event -> apply.run());
+        applyButton.setOnAction(event -> apply.getAsBoolean());
         HBox buttons = new HBox(9, accept, cancel, applyButton);
         buttons.setAlignment(Pos.CENTER_RIGHT);
         buttons.getStyleClass().add("prefs-actions");
         root.setBottom(buttons);
 
-        Scene scene = new Scene(root, 740, 490);
+        Scene scene = new Scene(root, 830, 600);
         scene.getStylesheets().add(PreferencesWindow.class
                 .getResource("/css/codetrace.css").toExternalForm());
         dialog.setScene(scene);
