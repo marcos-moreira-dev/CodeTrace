@@ -62,6 +62,11 @@ public final class MarkdownPracticePane extends BorderPane {
         toggle.setOnAction(event -> toggle());
     }
 
+    /** Search navigation must reveal the source row instead of the HTML preview. */
+    public void showSource() {
+        if (showingPreview) toggle();
+    }
+
     public TypingEditor editor() {
         return editor;
     }
