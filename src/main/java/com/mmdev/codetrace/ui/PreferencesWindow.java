@@ -221,6 +221,8 @@ public final class PreferencesWindow {
             commandsPage.getStyleClass().add("prefs-section");
         }
 
+        final javafx.scene.Node stableCommandsPage = commandsPage;
+
         BorderPane sectionContent = new BorderPane();
         sectionContent.getStyleClass().add("prefs-content");
         sectionContent.setCenter(editorPanel);
@@ -228,7 +230,7 @@ public final class PreferencesWindow {
                 (obs, previous, selected) -> sectionContent.setCenter(
                         "Ventana".equals(selected) ? windowPanel
                                 : "Sonido".equals(selected) ? soundPanel
-                                : "Comandos".equals(selected) ? commandsPage : editorPanel));
+                                : "Comandos".equals(selected) ? stableCommandsPage : editorPanel));
         navigation.getSelectionModel().selectFirst();
         root.setLeft(navigation);
         root.setCenter(sectionContent);
