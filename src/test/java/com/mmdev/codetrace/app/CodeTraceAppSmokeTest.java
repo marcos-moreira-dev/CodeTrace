@@ -266,8 +266,9 @@ class CodeTraceAppSmokeTest {
                         "contextFor", Path.class);
                 menuFor.setAccessible(true);
                 ContextMenu rootMenu = (ContextMenu) menuFor.invoke(fileTree, root);
-                assertTrue(rootMenu.getItems().stream().anyMatch(
-                        item -> "Crear subcarpeta...".equals(item.getText())));
+                assertFalse(rootMenu.getItems().stream().anyMatch(
+                        item -> "Crear subcarpeta...".equals(item.getText())),
+                        "No new-folder action when all immediate folders already exist");
                 assertFalse(rootMenu.getItems().stream().anyMatch(
                         item -> "Crear archivo...".equals(item.getText())));
                 ContextMenu folderMenu = (ContextMenu) menuFor.invoke(fileTree, nested);
