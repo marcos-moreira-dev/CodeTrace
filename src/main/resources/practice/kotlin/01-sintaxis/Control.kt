@@ -1,0 +1,19 @@
+// CodeTrace | Kotlin 2.2 | JVM 21 | Java JDK 21.
+// Desde PowerShell, en una copia de esta biblioteca:
+// Compilar: kotlinc -jvm-target 21 '.\01-sintaxis\Control.kt' -include-runtime -d "$env:TEMP\codetrace-kotlin.jar"
+// Ejecutar: java -jar "$env:TEMP\codetrace-kotlin.jar"
+
+object Control {
+    fun sumarPares(limite: Int): Int {
+        var total = 0
+        for (i in 0..limite) {
+            if (i % 2 == 0) total += i
+        }
+        return total
+    }
+
+    @JvmStatic
+    fun main(args: Array<String>) {
+        println(sumarPares(8))
+    }
+}
