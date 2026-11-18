@@ -35,7 +35,7 @@ El estilo común JavaFX utiliza fondo claro, azul acero, gris y verde, bordes re
 
 ## Pendiente
 
-Resaltadores modulares, editor de texto con selección/deshacer avanzado, vista Markdown, comandos externos, iconografía instalada y recuperación guiada de cambios de referencia. No se implementará un IDE completo ni un asistente de programación.
+Selección/deshacer avanzados del editor, recuperación guiada de cambios de referencia y auditoría visual/accesibilidad. Markdown, comandos externos e iconografía ya disponen de implementaciones que necesitan aceptación en Windows. No se implementará un IDE completo ni un asistente de programación.
 
 ## Consola / comandos
 `commands/ProjectCommandStore` persiste configuraciones binarias versionadas
@@ -70,3 +70,13 @@ intencionales y no exige un Enter tras el último salto de línea.
 `ReconstructionStatus` distingue referencias no practicables, pendientes,
 creadas y ejercicios finalizados. Los cambios de filtros afectan a los
 contadores y estados recursivos, no a la elegibilidad del código.
+
+## Previsualización multimedia y distribución
+
+`MarkdownRenderer` trabaja con texto de referencia, reconoce Markdown y HTML de imagen restringido, y convierte imágenes locales válidas en URI de datos con límites de tamaño. Solo admite archivos dentro de la raíz real resuelta del proyecto; usa CSP en WebView y no habilita JavaScript ni imágenes externas sin consentimiento.
+
+`ReferenceMediaPane` distingue imágenes, SVG, audio y vídeo sin crear entradas virtuales ni sumar estadísticas. La ruta WebP/SVG utiliza WebView; PNG/JPEG/GIF/BMP emplean JavaFX Image. `MediaTranscoder` ofrece conversión local opcional a MP3/MP4 mediante FFmpeg: proceso separado y cancelable, directorio temporal del sistema, límites de entrada/salida y limpieza al cerrar pestañas. No invoca shell ni altera la referencia. El códec concreto depende del FFmpeg instalado o incorporado legalmente.
+
+`MarkdownPracticePane.dispose()` cancela la preparación de HTML y vacía WebView al cerrar pestañas o cambiar el proyecto. `CodeTraceApp.clearOpenTabs()` debe liberar reproductores y vistas Markdown de forma simétrica.
+
+`scripts/package-windows.ps1` utiliza jpackage con Temurin 21, dependencias de Maven y un runtime incluido para generar el ZIP portable. FFmpeg no se distribuye por defecto. El flujo de CI empaqueta Windows y conserva el ZIP como artefacto. La prueba final de UX y códecs debe seguir la matriz de [QA-WINDOWS](QA-WINDOWS.md).
