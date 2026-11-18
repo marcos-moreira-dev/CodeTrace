@@ -15,6 +15,7 @@ import java.nio.file.Path;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.concurrent.atomic.AtomicInteger;
 import javafx.application.Platform;
 import javafx.scene.control.Button;
 import javafx.scene.control.TabPane;
@@ -129,12 +130,34 @@ class CodeTraceAppSmokeTest {
                         .lookup(".command-settings-pane"));
                 projectPrefs.close();
                 TypingEditor editor = (TypingEditor) tabPane.getTabs().getFirst().getContent();
-                Event.fireEvent(editor, new KeyEvent(KeyEvent.KEY_TYPED,
-                        "c", "c", KeyCode.UNDEFINED, false, false, false, false));
                 Field workspaceField = CodeTraceApp.class.getDeclaredField("workspace");
                 workspaceField.setAccessible(true);
                 VirtualWorkspace virtual = (VirtualWorkspace) workspaceField.get(application);
-                assertTrue(virtual.exists("src/Main.java"));
+
+                // Opening the original is read-only; all attempted writes are blocked
+                // until the file and each parent are explicitly created in memory.
+                assertFalse(editor.isPracticeEnabled());
+                AtomicInteger blocked = new AtomicInteger();
+                editor.setPracticePermission(() ->
+                        virtual.entry("src/Main.java") != null
+                                && virtual.entry("src/Main.java").kind()
+                                        == VirtualWorkspace.Kind.FILE,
+                        blocked::incrementAndGet);
+                Event.fireEvent(editor, new KeyEvent(KeyEvent.KEY_TYPED,
+                        "c", "c", KeyCode.UNDEFINED, false, false, false, false));
+                Event.fireEvent(editor, new KeyEvent(KeyEvent.KEY_PRESSED,
+                        "", "", KeyCode.BACK_SPACE, false, false, false, false));
+                assertEquals(2, blocked.get());
+                assertEquals(1, virtual.entries().size(),
+                        "Opening the reference must not create virtual paths");
+                assertEquals(0, editor.session().correctCount());
+                assertEquals(0, editor.session().caret());
+
+                virtual.createDirectory("src");
+                virtual.createFile("src/Main.java");
+                assertTrue(editor.isPracticeEnabled());
+                Event.fireEvent(editor, new KeyEvent(KeyEvent.KEY_TYPED,
+                        "c", "c", KeyCode.UNDEFINED, false, false, false, false));
                 assertEquals("c", virtual.text("src/Main.java"));
                 String untouched = editor.visibleLineText(0);
                 Event.fireEvent(editor, new KeyEvent(KeyEvent.KEY_TYPED,

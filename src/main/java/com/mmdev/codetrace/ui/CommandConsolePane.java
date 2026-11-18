@@ -15,6 +15,9 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.Node;
 import javafx.scene.text.Font;
 
 /**
@@ -27,9 +30,18 @@ public final class CommandConsolePane extends BorderPane {
     private final TextArea output = new TextArea();
     private final Button run = new Button("Ejecutar");
     private final Button stop = new Button("Detener");
+    private final Label emptyMessage = new Label();
+    private final Button configure = new Button("Configurar comandos...");
+    private final VBox emptyState = new VBox(12, emptyMessage, configure);
+    private final Runnable onConfigure;
     private Path project;
 
     public CommandConsolePane(Runnable onClose) {
+        this(onClose, () -> {});
+    }
+
+    public CommandConsolePane(Runnable onClose, Runnable onConfigure) {
+        this.onConfigure = onConfigure;
         getStyleClass().add("command-console-pane");
         setPrefHeight(195);
         setMinHeight(116);
@@ -64,7 +76,17 @@ public final class CommandConsolePane extends BorderPane {
         output.setFocusTraversable(true);
         output.setFont(Font.font("Consolas", 12));
         output.getStyleClass().add("console-output");
-        setCenter(output);
+        emptyState.getStyleClass().add("console-empty-state");
+        emptyMessage.getStyleClass().add("console-empty-message");
+        emptyMessage.setWrapText(true);
+        emptyMessage.setMaxWidth(420);
+        emptyState.setAlignment(Pos.CENTER);
+        configure.getStyleClass().add("console-configure");
+        configure.setOnAction(event -> this.onConfigure.run());
+        StackPane center = new StackPane(output, emptyState);
+        center.getStyleClass().add("console-output-area");
+        setCenter(center);
+        output.textProperty().addListener((obs, previous, current) -> updateEmptyState());
         updateActions();
     }
 
@@ -95,6 +117,22 @@ public final class CommandConsolePane extends BorderPane {
     private void updateActions() {
         run.setDisable(project == null || executor.isRunning() || presets.getValue() == null);
         stop.setDisable(!executor.isRunning());
+        updateEmptyState();
+    }
+
+    private void updateEmptyState() {
+        boolean show = !executor.isRunning() && output.getText().isBlank();
+        emptyState.setVisible(show);
+        emptyState.setManaged(show);
+        configure.setVisible(show && project != null);
+        configure.setManaged(show && project != null);
+        if (project == null) {
+            emptyMessage.setText("Abre una referencia para utilizar la consola.");
+        } else if (presets.getItems().isEmpty()) {
+            emptyMessage.setText("Aún no hay comandos guardados para este proyecto.");
+        } else {
+            emptyMessage.setText("Selecciona un comando guardado y pulsa Ejecutar.");
+        }
     }
 
     private void runSelected() {

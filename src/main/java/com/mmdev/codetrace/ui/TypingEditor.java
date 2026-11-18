@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Consumer;
+import java.util.function.BooleanSupplier;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.scene.control.ListCell;
@@ -52,6 +53,8 @@ public final class TypingEditor extends BorderPane {
     private boolean synchronizingLine;
     private boolean turboMode;
     private Consumer<String> onNotice = ignored -> {};
+    private BooleanSupplier mayPractice = () -> true;
+    private Runnable onPracticeBlocked = () -> {};
 
     private record SourceLine(int number, int first, int last, String original) {}
 
@@ -167,6 +170,7 @@ public final class TypingEditor extends BorderPane {
     }
 
     public int skipJavaImports() {
+        if (!permitPractice()) return 0;
         int omittedBefore = session.skippedCount();
         int start = 0;
         StringBuilder line = new StringBuilder();
@@ -205,13 +209,39 @@ public final class TypingEditor extends BorderPane {
         onNotice = callback == null ? ignored -> {} : callback;
     }
 
+    /**
+     * A reference is always readable but cannot be transcribed until its
+     * matching file has been explicitly created in the virtual workspace.
+     * Navigation remains available while viewing a pending source file.
+     */
+    public void setPracticePermission(BooleanSupplier allowed, Runnable onBlocked) {
+        mayPractice = java.util.Objects.requireNonNull(allowed);
+        onPracticeBlocked = java.util.Objects.requireNonNull(onBlocked);
+    }
+
+    public boolean isPracticeEnabled() {
+        return mayPractice.getAsBoolean();
+    }
+
+    private boolean permitPractice() {
+        if (mayPractice.getAsBoolean()) return true;
+        onPracticeBlocked.run();
+        return false;
+    }
+
     private void handlePressed(KeyEvent event) {
         KeyCode key = event.getCode();
         boolean handled = true;
         boolean modified = true;
         switch (key) {
-            case BACK_SPACE -> session.backspace();
-            case DELETE -> session.deleteAtCaret();
+            case BACK_SPACE -> {
+                if (permitPractice()) session.backspace();
+                else modified = false;
+            }
+            case DELETE -> {
+                if (permitPractice()) session.deleteAtCaret();
+                else modified = false;
+            }
             case LEFT -> {
                 session.moveCaret(Math.max(0, session.caret() - 1));
                 modified = false;
@@ -239,12 +269,16 @@ public final class TypingEditor extends BorderPane {
                 modified = false;
             }
             case TAB -> {
-                beginTyping();
-                typeAndNotify("\t");
+                if (permitPractice()) {
+                    beginTyping();
+                    typeAndNotify("\t");
+                } else {
+                    modified = false;
+                }
             }
             case V -> {
                 if (event.isShortcutDown()) {
-                    modified = pasteSingleSymbol();
+                    modified = permitPractice() && pasteSingleSymbol();
                 } else {
                     handled = false;
                 }
@@ -270,9 +304,10 @@ public final class TypingEditor extends BorderPane {
         if (Character.isISOControl(cp) && !input.equals("\n") && !input.equals("\r")) {
             return;
         }
+        event.consume();
+        if (!permitPractice()) return;
         beginTyping();
         typeAndNotify(input);
-        event.consume();
         refresh(true);
     }
 

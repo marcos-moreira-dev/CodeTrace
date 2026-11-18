@@ -56,6 +56,23 @@ public final class PreferencesWindow {
                 projectRoot, store, onCommandsChanged).showAndWait();
     }
 
+    /** Open Preferences directly at the relevant project-command category. */
+    public static void openCommands(Window owner, AppSettings current,
+                                    Consumer<AppSettings> onApply,
+                                    Function<Boolean, Boolean> previewSound,
+                                    Path projectRoot, ProjectCommandStore store,
+                                    Runnable onCommandsChanged) {
+        Stage dialog = create(owner, current, onApply, previewSound,
+                projectRoot, store, onCommandsChanged);
+        @SuppressWarnings("unchecked")
+        ListView<String> navigation = (ListView<String>)
+                dialog.getScene().getRoot().lookup(".prefs-navigation");
+        if (navigation != null) {
+            navigation.getSelectionModel().select("Comandos");
+        }
+        dialog.showAndWait();
+    }
+
     /** Allows GUI smoke tests to inspect the scene before opening the modal. */
     public static Stage create(Window owner, AppSettings current,
                                Consumer<AppSettings> onApply,

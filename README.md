@@ -24,7 +24,7 @@ Para trabajar normalmente desde IntelliJ IDEA: importar pom.xml como Maven, sele
 - Opacidad de caracteres pendientes ajustable con un Spinner en Preferencias → Editor (20–100 %); los caracteres correctos o incorrectos permanecen completamente visibles.
 - Persistencia binaria en sesiones *.ctrace, progreso y hashes SHA-256.
 - **Explorador con marcadores de estado**: círculo gris si falta recrearlo, visto verde cuando existe en el proyecto virtual. Botones para contraer/expandir carpetas. Menú contextual sobre carpetas para medir el progreso de esa rama o de todo el proyecto.
-- **Doble clic sobre cualquier archivo de texto compatible**: la plantilla se abre directamente. Al escribir, se crea el recorrido virtual necesario, sin alterar la referencia ni impedir la creación manual desde el explorador.
+- **Doble clic sobre cualquier archivo de texto compatible**: se abre inmediatamente como referencia de solo lectura. Para mecanografiarlo, primero debes recrear explícitamente el archivo y sus carpetas antecesoras en el explorador virtual. Si intentas escribir antes, aparece un cuadro de diálogo; nunca se crea nada automáticamente.
 - **Progreso configurable por categorías** desde el botón **Filtro** de la barra inferior. Solo el código fuente cuenta inicialmente; Markdown, configuración y otros textos son optativos. El porcentaje muestra tres decimales y solo contabiliza caracteres correctos, nunca los imports omitidos.
 - Iconografía transversal de carpetas y lenguajes con Ikonli/Devicons y Feather; controles desplegables con el mismo estilo rectangular.
 - Resaltado inicial para Java, Python, JavaScript/TypeScript, C, C++, Go, Ruby, C#, PowerShell, Shell (.sh/.bash/.zsh), CMD (.bat/.cmd) y Markdown.
@@ -90,3 +90,17 @@ mecanografía y no en ejercicios evaluados automáticamente.
 
 La biblioteca es una fuente de texto de referencia: no compila ni ejecuta
 los ejemplos y no necesita compilar para que puedas practicar.
+
+## Creación explícita y consola
+
+El código de referencia puede inspeccionarse sin recrear su estructura. Si
+intentas escribir, borrar, pegar un símbolo o saltar imports en un archivo que
+todavía no existe virtualmente, CodeTrace muestra un mensaje y deja la
+sesión y el proyecto virtual sin cambios. Para habilitar la práctica
+crea primero las carpetas desde el árbol y después el archivo de nombre idéntico.
+La creación no altera la copia real ni descarta la pestaña abierta.
+
+La consola plegable comienza sin salida. Si todavía no hay perfiles de comandos,
+muestra un estado vacío con el botón **Configurar comandos...**, que abre la
+sección correspondiente de Preferencias. Los comandos jamás se ejecutan
+automáticamente; al seleccionar uno y pulsar Ejecutar se muestra su salida.

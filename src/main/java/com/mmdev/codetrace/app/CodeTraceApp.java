@@ -88,7 +88,8 @@ public final class CodeTraceApp extends Application {
     private final VBox sidebar = new VBox();
     private final ProjectCommandStore commandStore = new ProjectCommandStore();
     private final CommandConsolePane consolePane =
-            new CommandConsolePane(() -> setConsoleVisible(false));
+            new CommandConsolePane(() -> setConsoleVisible(false),
+                    this::openCommandPreferences);
     private CheckMenuItem showConsole;
     private String progressFolder = "";
     private CheckBox onlySelectedFolder;
@@ -358,6 +359,12 @@ public final class CodeTraceApp extends Application {
         });
         refreshMetrics();
         stage.show();
+    }
+
+    private void openCommandPreferences() {
+        PreferencesWindow.openCommands(stage, settings, this::applySettings,
+                typingSounds::preview, reference, commandStore,
+                this::refreshCommandPresets);
     }
 
     private void setConsoleVisible(boolean visible) {

@@ -732,3 +732,27 @@
     -fx-text-fill: #607a8e;
     -fx-font-size: 11px;
 }
+
+/* Console empty state: actionable without fabricating terminal output. */
+.console-output-area { -fx-background-color: #f7fafb; }
+.console-empty-state {
+    -fx-background-color: #f7fafb;
+    -fx-spacing: 12px;
+    -fx-alignment: center;
+    -fx-padding: 12px 20px;
+}
+.console-empty-message {
+    -fx-font-size: 12px;
+    -fx-text-fill: #526a7c;
+    -fx-wrap-text: true;
+    -fx-alignment: center;
+}
+.console-configure {
+    -fx-background-color: #e6eef3;
+    -fx-border-color: #9eb5c6;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+    -fx-text-fill: #274d6a;
+    -fx-padding: 6px 12px;
+}
+.console-configure:hover { -fx-background-color: #d6e6f0; }
