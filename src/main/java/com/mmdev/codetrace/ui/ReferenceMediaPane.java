@@ -8,6 +8,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Locale;
+import java.util.concurrent.atomic.AtomicReference;
 import javafx.concurrent.Task;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -33,8 +34,10 @@ public final class ReferenceMediaPane extends BorderPane {
     public enum Kind { IMAGE, SVG, AUDIO, VIDEO, UNSUPPORTED }
     private MediaPlayer player;
     private Task<Path> conversion;
+    private Task<MarkdownRenderer.RenderedPage> imagePreparation;
+    private WebView webImage;
     private Path temporaryMedia;
-    private boolean disposed;
+    private volatile boolean disposed;
     private boolean recovering;
 
     public static Kind kindFor(Path file) {
@@ -105,19 +108,42 @@ public final class ReferenceMediaPane extends BorderPane {
         });
     }
 
+    /**
+     * Decode/base64-encode repository images off the FX thread. Even a valid
+     * SVG may be expensive to parse; the tab must stay responsive.
+     */
     private void showWebImage(Path file, Path root) {
         String filename = URLEncoder.encode(file.getFileName().toString(),
                 StandardCharsets.UTF_8).replace("+", "%20");
-        var result = MarkdownRenderer.render("![Imagen](" + filename + ")", file, root, false);
-        if (result.localImages() == 0) {
-            message("No se puede mostrar la imagen de forma segura (límite: 8 MB).");
-            return;
-        }
-        WebView web = new WebView();
-        web.setContextMenuEnabled(false);
-        web.getEngine().setJavaScriptEnabled(false);
-        web.getEngine().loadContent(result.html(), "text/html");
-        setCenter(web);
+        message("Preparando imagen de referencia…");
+        Task<MarkdownRenderer.RenderedPage> task = new Task<>() {
+            @Override protected MarkdownRenderer.RenderedPage call() {
+                return MarkdownRenderer.render("![Imagen](" + filename + ")",
+                        file, root, false);
+            }
+        };
+        imagePreparation = task;
+        task.setOnSucceeded(event -> {
+            if (disposed || imagePreparation != task) return;
+            var result = task.getValue();
+            if (result.localImages() == 0) {
+                message("No se puede mostrar la imagen de forma segura (límite: 8 MB).");
+                return;
+            }
+            WebView web = new WebView();
+            web.setContextMenuEnabled(false);
+            web.getEngine().setJavaScriptEnabled(false);
+            web.getEngine().loadContent(result.html(), "text/html");
+            webImage = web;
+            setCenter(web);
+        });
+        task.setOnFailed(event -> {
+            if (!disposed && imagePreparation == task)
+                message("No fue posible preparar la imagen de referencia.");
+        });
+        Thread worker = new Thread(task, "codetrace-image-preview");
+        worker.setDaemon(true);
+        worker.start();
     }
 
     private void showMedia(Path original) {
@@ -125,23 +151,44 @@ public final class ReferenceMediaPane extends BorderPane {
         else playMedia(original, original, false);
     }
 
-    /** Conversion is off the FX thread and operates only on an OS temporary file. */
+    /**
+     * Conversion is off the FX thread. A cancelled JavaFX Task does not invoke
+     * onSucceeded, even if the worker finishes after cancellation. Retain the
+     * path separately so every race releases the temporary result.
+     */
     private void convertAndPlay(Path original) {
         if (disposed || (conversion != null && !conversion.isDone())) return;
         releasePlayer();
         message("Preparando vista multimedia mediante FFmpeg local…");
+        Button cancel = new Button("Cancelar conversión");
+        HBox bar = new HBox(cancel);
+        bar.setAlignment(Pos.CENTER_LEFT);
+        bar.getStyleClass().add("media-playback-controls");
+        setBottom(bar);
+        AtomicReference<Path> created = new AtomicReference<>();
         Task<Path> task = new Task<>() {
             @Override protected Path call() throws IOException {
-                return MediaTranscoder.transcode(original,
+                Path ready = MediaTranscoder.transcode(original,
                         kindFor(original) == Kind.AUDIO
                                 ? MediaTranscoder.Output.AUDIO
                                 : MediaTranscoder.Output.VIDEO,
                         this::isCancelled);
+                created.set(ready);
+                if (isCancelled() || disposed) {
+                    MediaTranscoder.deleteTemporary(created.getAndSet(null));
+                    return null;
+                }
+                return ready;
             }
         };
         conversion = task;
+        cancel.setOnAction(event -> {
+            task.cancel(true);
+            message("Conversión cancelada.");
+        });
         task.setOnSucceeded(event -> {
-            Path prepared = task.getValue();
+            Path prepared = created.getAndSet(null);
+            if (prepared == null) return;
             if (disposed || conversion != task) {
                 MediaTranscoder.deleteTemporary(prepared);
                 return;
@@ -149,7 +196,10 @@ public final class ReferenceMediaPane extends BorderPane {
             temporaryMedia = prepared;
             playMedia(prepared, original, true);
         });
+        task.setOnCancelled(event ->
+                MediaTranscoder.deleteTemporary(created.getAndSet(null)));
         task.setOnFailed(event -> {
+            MediaTranscoder.deleteTemporary(created.getAndSet(null));
             if (!disposed && conversion == task) {
                 message("No se pudo preparar este medio: "
                         + task.getException().getMessage());
@@ -250,6 +300,11 @@ public final class ReferenceMediaPane extends BorderPane {
     public void dispose() {
         disposed = true;
         if (conversion != null) conversion.cancel(true);
+        if (imagePreparation != null) imagePreparation.cancel(true);
+        if (webImage != null) {
+            webImage.getEngine().loadContent("", "text/html");
+            webImage = null;
+        }
         releasePlayer();
         MediaTranscoder.deleteTemporary(temporaryMedia);
         temporaryMedia = null;
