@@ -35,6 +35,7 @@ public final class BuiltInLibrary {
 
     private static final List<Pack> PACKS = List.of(
             new Pack("java21", "Java 21", ".java"),
+            new Pack("kotlin", "Kotlin 2.2", ".kt"),
             new Pack("typescript", "TypeScript", ".ts"),
             new Pack("javascript", "JavaScript", ".js"),
             new Pack("python", "Python", ".py"),
