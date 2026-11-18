@@ -1,0 +1,41 @@
+name: Windows portable package
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "src/**"
+      - "pom.xml"
+      - "scripts/package-windows.ps1"
+      - ".github/workflows/package-windows.yml"
+
+jobs:
+  package:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Eclipse Temurin 21 and Maven
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+          cache: maven
+      - name: Build portable application with jpackage
+        shell: pwsh
+        run: ./scripts/package-windows.ps1
+      - name: Verify launcher and distribution ZIP
+        shell: pwsh
+        run: |
+          if (-not (Test-Path "dist/CodeTrace/CodeTrace.exe")) {
+            throw "Missing CodeTrace launcher"
+          }
+          if (-not (Test-Path "dist/CodeTrace-Windows-portable.zip")) {
+            throw "Missing portable ZIP"
+          }
+      - name: Upload portable build for Windows validation
+        uses: actions/upload-artifact@v4
+        with:
+          name: CodeTrace-Windows-portable
+          path: dist/CodeTrace-Windows-portable.zip
+          if-no-files-found: error
+          retention-days: 7
