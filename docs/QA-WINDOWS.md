@@ -4,8 +4,8 @@
 
 ## Preparación
 
-1. Ejecuta scripts\crear-fixtures-preview.ps1 desde PowerShell y abre target\qa-preview como proyecto de referencia. Si FFmpeg está disponible, generará vídeos y audios pequeños además de imágenes y README de prueba.
-2. Ejecuta scripts\diagnostico.bat para generar el ZIP técnico.
+1. Ejecuta scripts\diagnostico.bat. El diagnóstico compila y prueba el proyecto, genera automáticamente target\qa-preview, abre CodeTrace y al cerrarlo genera el ZIP técnico.
+2. Abre target\qa-preview como referencia dentro de CodeTrace. Si FFmpeg está instalado en PATH, el generador crea también audio y vídeo de prueba.
 3. Alternativamente, abre un repositorio de muestra con README.md, una subcarpeta assets, archivos .bat y .cmd, código Java y TypeScript, un SVG y archivos multimedia.
 4. Conserva los hashes SHA-256 de los archivos originales antes y después.
 5. Repite con una sesión .ctrace nueva y con otra restaurada.
@@ -36,9 +36,12 @@
 | PR-03 | Turbo e imports omitidos | No incrementan aciertos aunque cierren ejercicios |
 | PR-04 | Filtros y exclusión por carpeta | Modifican cómputo, no visibilidad ni archivos |
 | PR-05 | Guardar/restaurar sesiones v1/v2 | Progreso correcto y referencia intacta |
-| UX-01 | LATAM/US, teclado y foco tras cambiar pestaña | Atajos y teclas correctos |
+| UX-01 | LATAM/US, teclado y foco tras cambiar pestaña | Atajos, teclas muertas y acentos al final de archivo correctos |
 | UX-02 | Tamaño, opacidad, paneles y escala DPI | Sin solapamientos ni truncamientos |
-| CLI-01 | Consola: comando controlado, detener y cerrar | Sin ejecución implícita; proceso termina |
+| CLI-01 | Consola: comando controlado, detener y cerrar | Sin ejecución implícita; proceso termina aunque se pulse Detener inmediatamente |
+| CLI-02 | Cambiar de referencia con comando en curso | No mezcla salida del proyecto anterior |
+| PR-06 | Archivo resuelto únicamente con omisiones voluntarias | Indicador de finalización sin incrementar aciertos |
+| PR-07 | Abrir una sesión .ctrace truncada o alterada | Informa error sin restauración parcial |
 | PKG-01 | ZIP portable sin JDK/Maven | CodeTrace.exe inicia y abre una práctica |
 | PKG-02 | Portable con FFmpeg incluido legalmente | MKV/FLAC sin FFmpeg instalado globalmente |
 
