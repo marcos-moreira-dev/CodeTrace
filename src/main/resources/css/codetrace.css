@@ -1010,3 +1010,52 @@
     -fx-min-height: 120px;
     -fx-pref-height: 174px;
 }
+
+
+/* Read-only syntax view: virtualized colored lines with stable gutters. */
+.reference-colored-lines {
+    -fx-background-color: #ffffff;
+    -fx-control-inner-background: #ffffff;
+    -fx-padding: 0;
+}
+.reference-colored-lines .list-cell {
+    -fx-background-color: #ffffff;
+    -fx-padding: 1px 10px 1px 0;
+    -fx-border-color: transparent;
+}
+.reference-colored-lines .list-cell:filled:selected,
+.reference-colored-lines:focused .list-cell:filled:selected {
+    -fx-background-color: #e5f0f7;
+    -fx-border-color: transparent transparent transparent #4a6e87;
+    -fx-border-width: 0 0 0 3px;
+    -fx-padding: 1px 10px 1px 0;
+}
+.reference-text-row { -fx-alignment: center-left; -fx-spacing: 12; }
+.reference-line-number {
+    -fx-font-family: "Consolas"; -fx-font-size: 11px;
+    -fx-text-fill: #8a9ca8;
+    -fx-padding: 0 7px 0 3px;
+    -fx-background-color: #f4f7f9;
+    -fx-border-color: transparent #dce4e9 transparent transparent;
+}
+.reference-text-flow { -fx-line-spacing: 0; }
+
+/* Deliberately distinct but quiet top bars: graphite/slate vs warm-neutral. */
+.menu-bar {
+    -fx-background-color: #526471;
+    -fx-border-color: transparent transparent #445562 transparent;
+}
+.menu-bar > .container > .menu-button > .label { -fx-text-fill: #f8fafb; }
+.menu-bar > .container > .menu-button:hover,
+.menu-bar > .container > .menu-button:showing,
+.menu-bar > .container > .menu-button:focused {
+    -fx-background-color: #354c5d;
+}
+.menu-bar > .container > .menu-button:hover > .label,
+.menu-bar > .container > .menu-button:showing > .label {
+    -fx-text-fill: #ffffff;
+}
+.tool-bar {
+    -fx-background-color: #f0f0ec;
+    -fx-border-color: transparent transparent #c4ccc9 transparent;
+}
