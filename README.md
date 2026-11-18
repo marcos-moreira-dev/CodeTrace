@@ -16,6 +16,25 @@ El script comprueba Java y Maven, construye y prueba el proyecto, prepara autom�
 
 Para trabajar normalmente desde IntelliJ IDEA: importar pom.xml como Maven, seleccionar el SDK **Eclipse Temurin 21**, configurar Maven Toolchains y ejecutar mvn javafx:run. El pom.xml exige **Temurin 21** como toolchain; Maven puede usar ~/.m2/toolchains.xml o un archivo específico con la opción -t.
 
+## Navegación y búsqueda (versión en evaluación)
+
+El explorador incluye una búsqueda por nombres con conservación de las carpetas
+antecesoras. Las casillas "Solo" y "Excluir del progreso" actúan sobre la carpeta
+seleccionada: la primera define el ámbito temporal; la segunda guarda una
+exclusión persistente del cálculo, pero nunca impide explorar ni practicar.
+
+Al seleccionar una pestaña de imagen o vídeo, el control inferior de fuente
+se sustituye por el zoom multimedia (25–400 %, Ctrl+rueda, arrastrar para
+panear y doble clic para restablecer). El menú "Pestañas" permite cerrar la
+actual, las demás o todas; también existe menú contextual en cada pestaña.
+
+Herramientas > Buscar en archivo (Ctrl+F) y Buscar en proyecto (Ctrl+Shift+F)
+presenta coincidencias con ruta, línea y columna. F3 y Shift+F3 navegan.
+No existen acciones de reemplazo: el original es inmutable y buscar nunca
+mueve el cursor de mecanografía. Los archivos de configuración legibles pueden
+abrirse en una pestaña de consulta exclusivamente de solo lectura.
+El modo concentración utiliza F10 para evitar conflicto con la búsqueda global.
+
 ## Vistas multimedia y distribución portable (en validación)
 
 Al abrir imágenes, audio y vídeo, CodeTrace muestra una pestaña **solo de lectura**. PNG/JPEG/GIF/BMP se visualizan directamente, y SVG seguro y WebP se presentan mediante WebView restringido. Los README Markdown admiten imágenes locales, incluidas algunas etiquetas HTML de imagen, tablas y emojis, sin modificar los originales.
