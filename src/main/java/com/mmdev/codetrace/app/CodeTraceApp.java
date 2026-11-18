@@ -574,6 +574,7 @@ public final class CodeTraceApp extends Application {
         dirty = false;
         clearOpenTabs();
         reference = folder;
+        if (searchWindow != null) searchWindow.projectChanged(reference);
         exclusions = ProgressExclusions.load(reference);
         if (explorerSearch != null) explorerSearch.clear();
         updateSelectedFolderExclusion();
@@ -1207,6 +1208,7 @@ public final class CodeTraceApp extends Application {
             }
             referenceRequest++;
             reference = restoredReference;
+            if (searchWindow != null) searchWindow.projectChanged(reference);
             exclusions = ProgressExclusions.load(reference);
             selectPracticeMode(data.practiceMode());
             consolePane.setProject(reference);
