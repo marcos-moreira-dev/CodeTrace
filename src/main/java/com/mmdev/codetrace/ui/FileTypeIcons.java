@@ -22,6 +22,8 @@ public final class FileTypeIcons {
         String name = path.getFileName() == null ? "" :
                 path.getFileName().toString().toLowerCase(Locale.ROOT);
         if (name.endsWith(".java")) return font("di-java", "#C75B38");
+        if (name.endsWith(".kt") || name.endsWith(".kts"))
+            return badge("Kt", "#8055B5");
         if (name.endsWith(".py") || name.endsWith(".pyw"))
             return font("di-python", "#3678A4");
         if (name.endsWith(".js") || name.endsWith(".jsx"))
