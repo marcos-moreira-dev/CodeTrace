@@ -25,7 +25,13 @@
     -fx-padding: 10 12;
 }
 .tree-view { -fx-background-color: #eef1f3; }
-.tree-cell:selected { -fx-background-color: #c9dbe8; -fx-text-fill: #263747; }
+.tree-cell:selected, .tree-cell:filled:selected:focused {
+    -fx-background-color: #c9dbe8;
+    -fx-text-fill: #203748;
+}
+.tree-cell:selected .reference-name, .tree-cell:selected .reference-file-count {
+    -fx-text-fill: #203748;
+}
 .split-pane { -fx-padding: 0; -fx-background-color: #b9c5cd; }
 .split-pane-divider { -fx-background-color: #9caebd; -fx-padding: 2; }
 .tab-pane { -fx-background-color: #ffffff; }
@@ -519,8 +525,8 @@
     -fx-alignment: center;
 }
 
-/* Scope controls belong beside the progress indicator, not in the main toolbar. */
-.status-progress-filter {
+/* All practice rules belong in one toolbar dropdown. */
+.practice-rules-button {
     -fx-background-color: #e7edf1;
     -fx-background-radius: 0;
     -fx-border-radius: 0;
@@ -529,11 +535,11 @@
     -fx-font-size: 11px;
     -fx-min-height: 24px;
 }
-.status-progress-filter:hover {
+.practice-rules-button:hover {
     -fx-background-color: #dce8ee;
     -fx-border-color: #819aac;
 }
-.status-progress-filter .arrow {
+.practice-rules-button .arrow {
     -fx-background-color: #4a6076;
 }
 
@@ -781,3 +787,13 @@
     -fx-text-fill: #30495a;
     -fx-wrap-text: true;
 }
+
+.scope-exclusion-hint { -fx-font-size: 11px; -fx-text-fill: #607486; -fx-max-width: 248px; }
+.scope-options { -fx-padding: 12px; -fx-min-width: 262px; }
+.markdown-images-status { -fx-font-size: 10.5px; -fx-text-fill: #597084; }
+.markdown-external-images { -fx-font-size: 11px; -fx-padding: 4px 7px; }
+.media-canvas { -fx-background-color: #f3f6f8; }
+.media-playback-controls { -fx-padding: 10px; -fx-background-color: #e7edf1;
+    -fx-border-color: #bdc8d1 transparent transparent transparent; }
+.media-audio-title { -fx-font-size: 16px; -fx-text-fill: #304d64; }
+.media-error { -fx-text-fill: #596d7c; -fx-font-size: 13px; }

@@ -89,7 +89,7 @@ public final class CodeTraceApp extends Application {
     private final Label fileInfo = new Label();
     private final Label projectInfo = new Label();
     private final ProgressBar fileProgress = new ProgressBar(0);
-    private final MenuButton progressFilter = new MenuButton("Filtro");
+    private final MenuButton progressFilter = new MenuButton("Reglas de práctica");
     private final SplitPane split = new SplitPane();
     private final SplitPane workspaceSplit = new SplitPane();
     private double consoleDivider = 0.73;
@@ -269,10 +269,12 @@ public final class CodeTraceApp extends Application {
         consoleButton.getStyleClass().add("toolbar-action");
         consoleButton.setTooltip(new Tooltip("Mostrar u ocultar la consola de comandos"));
         consoleButton.setOnAction(event -> setConsoleVisible(!consolePane.isVisible()));
+        progressFilter.getStyleClass().addAll("practice-rules-button", "toolbar-action");
+        progressFilter.setTooltip(new Tooltip(
+                "Configurar contenido evaluado y ayudas de escritura"));
         ToolBar toolbar = new ToolBar(openButton, saveButton,
                 new Separator(Orientation.VERTICAL), refreshButton,
-                new Separator(Orientation.VERTICAL), skipImportsButton,
-                new Separator(Orientation.VERTICAL), symbols, turboToggle,
+                new Separator(Orientation.VERTICAL), progressFilter, symbols,
                 new Separator(Orientation.VERTICAL), consoleButton);
         top.getChildren().addAll(menu, toolbar);
         root.setTop(top);
@@ -372,14 +374,11 @@ public final class CodeTraceApp extends Application {
         fileProgress.managedProperty().bind(fileProgress.visibleProperty());
         status.setMaxWidth(Double.MAX_VALUE);
         HBox.setHgrow(status, Priority.ALWAYS);
-        progressFilter.getStyleClass().add("status-progress-filter");
-        progressFilter.setTooltip(new Tooltip(
-                "Seleccionar tipos de archivo incluidos en el progreso"));
         installProgressFilters();
         zoom = new EditorZoomControl(settings.fontSize(), this::setEditorZoom);
         zoom.setId("editor-font-zoom");
         HBox footer = new HBox(9, status, fileInfo, projectInfo, fileProgress,
-                progressFilter, new Separator(Orientation.VERTICAL), zoom);
+                new Separator(Orientation.VERTICAL), zoom);
         footer.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
         footer.setMinHeight(34);
         status.setMinWidth(80);
@@ -884,10 +883,22 @@ public final class CodeTraceApp extends Application {
     private void installProgressFilters() {
         allScopes = new CheckBox("Todos");
         allScopes.getStyleClass().add("scope-all");
-        VBox options = new VBox(9, allScopes);
+        Label contentCaption = new Label("CONTENIDO EVALUADO");
+        contentCaption.getStyleClass().add("palette-caption");
+        VBox options = new VBox(9, contentCaption, allScopes);
         options.getStyleClass().add("scope-options");
         addFilterOption(options, "Código fuente", ProgressScope.Category.SOURCE);
         addFilterOption(options, "Markdown", ProgressScope.Category.DOCUMENTATION);
+        Label writingCaption = new Label("AYUDAS DE ESCRITURA");
+        writingCaption.getStyleClass().add("palette-caption");
+        skipImportsButton.setText("Omitir imports de Java (archivo actual)");
+        options.getChildren().addAll(new Separator(Orientation.HORIZONTAL),
+                writingCaption, turboToggle, skipImportsButton);
+        Label exclusionHint = new Label(
+                "Para excluir carpetas del porcentaje, haz clic derecho en el árbol.");
+        exclusionHint.getStyleClass().add("scope-exclusion-hint");
+        exclusionHint.setWrapText(true);
+        options.getChildren().add(exclusionHint);
         updateAllCheck();
 
         allScopes.setOnAction(event -> {

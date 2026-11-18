@@ -111,8 +111,11 @@ public final class ReferenceTree extends TreeView<Path> {
                 nameLabel.getStyleClass().add("reference-name");
                 if (state == State.PENDING)
                     nameLabel.getStyleClass().add("reference-pending-name");
-                nameLabel.setTextFill(isExcluded ? Color.web("#758997")
-                        : created ? Color.web("#263747") : Color.web("#667784"));
+                nameLabel.textFillProperty().bind(javafx.beans.binding.Bindings
+                        .when(selectedProperty()).then(Color.web("#203748"))
+                        .otherwise(isExcluded ? Color.web("#758997")
+                                : created ? Color.web("#263747")
+                                : Color.web("#667784")));
                 nameLabel.setMinWidth(javafx.scene.layout.Region.USE_PREF_SIZE);
                 HBox graphic = new HBox(6);
                 graphic.getChildren().add(FileTypeIcons.forPath(path, folder));
@@ -130,6 +133,9 @@ public final class ReferenceTree extends TreeView<Path> {
                     Label total = new Label("(" + fileCount
                             + (fileCount == 1 ? " archivo)" : " archivos)"));
                     total.getStyleClass().add("reference-file-count");
+                    total.textFillProperty().bind(javafx.beans.binding.Bindings
+                            .when(selectedProperty()).then(Color.web("#203748"))
+                            .otherwise(Color.web("#637889")));
                     total.setMinWidth(javafx.scene.layout.Region.USE_PREF_SIZE);
                     graphic.getChildren().add(total);
                 }

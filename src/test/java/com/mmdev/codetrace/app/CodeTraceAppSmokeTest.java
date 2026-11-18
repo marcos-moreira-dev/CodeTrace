@@ -372,25 +372,26 @@ class CodeTraceAppSmokeTest {
                         .lookup(".console-configure").isVisible());
                 toggleConsole.invoke(application, false);
                 assertEquals(1, workspaceLayout.getItems().size());
-                assertNotNull(stage.getScene().getRoot().lookup(".turbo-toggle"));
                 MenuButton filter = (MenuButton) stage.getScene().getRoot()
-                        .lookup(".status-progress-filter");
+                        .lookup(".practice-rules-button");
                 assertNotNull(filter);
                 CustomMenuItem filterPanel = (CustomMenuItem) filter.getItems().getFirst();
                 assertFalse(filterPanel.isHideOnClick(),
                         "Checking files must keep the menu open");
                 VBox filterChoices = (VBox) filterPanel.getContent();
-                assertEquals(3, filterChoices.getChildren().size());
-                CheckBox all = (CheckBox) filterChoices.getChildren().getFirst();
+                assertTrue(filterChoices.getChildren().size() >= 8);
+                assertTrue(filterChoices.getChildren().stream().anyMatch(n ->
+                        n.getStyleClass().contains("turbo-toggle")));
+                CheckBox all = (CheckBox) filterChoices.getChildren().get(1);
                 all.fire();
-                for (var child : filterChoices.getChildren().subList(1, 3)) {
+                for (var child : filterChoices.getChildren().subList(2, 4)) {
                     assertTrue(((CheckBox) child).isSelected());
                 }
-                CheckBox markdown = (CheckBox) filterChoices.getChildren().get(2);
+                CheckBox markdown = (CheckBox) filterChoices.getChildren().get(3);
                 markdown.fire();
                 assertFalse(all.isSelected());
                 all.fire();
-                for (var child : filterChoices.getChildren().subList(1, 3)) {
+                for (var child : filterChoices.getChildren().subList(2, 4)) {
                     assertTrue(((CheckBox) child).isSelected());
                 }
                 assertNotNull(stage.getScene().getRoot().lookup(".tree-activity"));
