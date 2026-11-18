@@ -21,6 +21,9 @@ import com.mmdev.codetrace.ui.SymbolPalette;
 import com.mmdev.codetrace.ui.FileTypeIcons;
 import com.mmdev.codetrace.ui.EditorZoomControl;
 import com.mmdev.codetrace.ui.MediaZoomControl;
+import com.mmdev.codetrace.ui.ProjectSearchWindow;
+import com.mmdev.codetrace.ui.ReferenceTextPane;
+import com.mmdev.codetrace.reference.ProjectTextSearch.Hit;
 import com.mmdev.codetrace.ui.CommandConsolePane;
 import com.mmdev.codetrace.commands.ProjectCommandStore;
 import com.mmdev.codetrace.library.BuiltInLibrary;
@@ -145,6 +148,7 @@ public final class CodeTraceApp extends Application {
     private SymbolPalette symbols;
     private EditorZoomControl zoom;
     private MediaZoomControl mediaZoom;
+    private ProjectSearchWindow searchWindow;
     private boolean soundProblemReported;
     private final TypingSounds typingSounds = new TypingSounds();
     private final CompletionSound completionSound = new CompletionSound();
@@ -190,8 +194,7 @@ public final class CodeTraceApp extends Application {
         });
 
         CheckMenuItem focus = new CheckMenuItem("Modo concentración");
-        focus.setAccelerator(new KeyCodeCombination(KeyCode.F,
-                KeyCombination.SHORTCUT_DOWN, KeyCombination.SHIFT_DOWN));
+        focus.setAccelerator(new KeyCodeCombination(KeyCode.F10));
         focus.selectedProperty().addListener((observed, before, enabled) -> {
             concentration = enabled;
             explorerToggle.setSelected(!enabled);
@@ -245,7 +248,18 @@ public final class CodeTraceApp extends Application {
         preferences.setOnAction(event -> PreferencesWindow.open(
                 stage, settings, this::applySettings, typingSounds::preview,
                 reference, commandStore, this::refreshCommandPresets));
-        Menu toolsMenu = new Menu("Herramientas", null, preferences);
+        MenuItem findCurrent = new MenuItem("Buscar en archivo...");
+        findCurrent.setAccelerator(new KeyCodeCombination(
+                KeyCode.F, KeyCombination.SHORTCUT_DOWN));
+        findCurrent.setOnAction(event ->
+                openSearch(ProjectSearchWindow.Scope.FILE));
+        MenuItem findProject = new MenuItem("Buscar en proyecto...");
+        findProject.setAccelerator(new KeyCodeCombination(KeyCode.F,
+                KeyCombination.SHORTCUT_DOWN, KeyCombination.SHIFT_DOWN));
+        findProject.setOnAction(event ->
+                openSearch(ProjectSearchWindow.Scope.PROJECT));
+        Menu toolsMenu = new Menu("Herramientas", null, findCurrent, findProject,
+                new javafx.scene.control.SeparatorMenuItem(), preferences);
 
         MenuBar menu = new MenuBar(
                 fileMenu, practiceMenu, viewMenu, toolsMenu, helpMenu);
@@ -441,6 +455,10 @@ public final class CodeTraceApp extends Application {
         stage.setMinWidth(760);
         stage.setMinHeight(480);
         stage.setScene(scene);
+        scene.getAccelerators().put(new KeyCodeCombination(KeyCode.F3),
+                () -> navigateSearch(false));
+        scene.getAccelerators().put(new KeyCodeCombination(KeyCode.F3,
+                KeyCombination.SHIFT_DOWN), () -> navigateSearch(true));
         stage.setOnCloseRequest(event -> {
             if (!confirmDiscard()) {
                 event.consume();
@@ -607,7 +625,7 @@ public final class CodeTraceApp extends Application {
         if (!com.mmdev.codetrace.reference.PracticeEligibility.supports(file)) {
             if (ReferenceMediaPane.kindFor(file) != ReferenceMediaPane.Kind.UNSUPPORTED)
                 openMediaReference(file, relative);
-            else setStatus("Archivo de referencia · no requiere mecanografía.");
+            else openTextReference(file, relative);
             return;
         }
         try {
@@ -699,6 +717,76 @@ public final class CodeTraceApp extends Application {
         } catch (IOException | SecurityException problem) {
             setStatus("No se pudo abrir " + file.getFileName());
         }
+    }
+
+    private void openTextReference(Path file, String relative) {
+        Tab existing = openedTabs.get(relative);
+        if (existing != null) {
+            tabs.getSelectionModel().select(existing);
+            return;
+        }
+        try {
+            TextPreview.Result text = TextPreview.load(file);
+            if (!text.readable()) {
+                setStatus(text.reason());
+                return;
+            }
+            ReferenceTextPane viewer = new ReferenceTextPane(text.content());
+            Tab tab = new Tab(file.getFileName().toString(), viewer);
+            tab.setGraphic(FileTypeIcons.forPath(file, false));
+            tab.setOnClosed(event -> openedTabs.remove(relative));
+            installTabContextMenu(tab);
+            openedTabs.put(relative, tab);
+            tabs.getTabs().add(tab);
+            tabs.getSelectionModel().select(tab);
+            setStatus("Consulta de solo lectura: " + relative);
+        } catch (IOException error) {
+            setStatus("No se pudo consultar " + relative);
+        }
+    }
+
+    private void openSearch(ProjectSearchWindow.Scope scope) {
+        if (searchWindow == null) {
+            searchWindow = new ProjectSearchWindow(stage, () -> reference,
+                    this::selectedTextFile, this::navigateToSearchHit);
+        }
+        searchWindow.show(scope);
+    }
+
+    private void navigateSearch(boolean backward) {
+        if (searchWindow == null) {
+            openSearch(ProjectSearchWindow.Scope.FILE);
+            return;
+        }
+        searchWindow.next(backward);
+    }
+
+    private String selectedTextFile() {
+        Tab selected = tabs.getSelectionModel().getSelectedItem();
+        if (selected == null || (editorIn(selected) == null
+                && !(selected.getContent() instanceof ReferenceTextPane)))
+            return null;
+        for (var entry : openedTabs.entrySet()) {
+            if (entry.getValue() == selected) return entry.getKey();
+        }
+        return null;
+    }
+
+    private void navigateToSearchHit(Hit hit) {
+        if (reference == null) return;
+        Path file = reference.resolve(hit.relative()).normalize();
+        if (!file.startsWith(reference.normalize())) return;
+        openForPractice(file);
+        Tab selected = openedTabs.get(hit.relative());
+        if (selected == null) return;
+        javafx.application.Platform.runLater(() -> {
+            tabs.getSelectionModel().select(selected);
+            TypingEditor editor = editorIn(selected);
+            if (editor != null) editor.showSearchMatch(
+                    hit.line() - 1, hit.column() - 1, hit.length());
+            else if (selected.getContent() instanceof ReferenceTextPane viewer)
+                viewer.showSearchMatch(hit.line(), hit.column(), hit.length());
+        });
     }
 
     private void openMediaReference(Path file, String relative) {
