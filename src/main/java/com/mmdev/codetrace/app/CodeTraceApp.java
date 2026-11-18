@@ -65,6 +65,8 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.ToolBar;
 import javafx.scene.control.Tooltip;
 import javafx.scene.control.ToggleButton;
+import javafx.scene.control.TextField;
+import javafx.scene.control.ContextMenu;
 import org.kordamp.ikonli.javafx.FontIcon;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
@@ -103,6 +105,9 @@ public final class CodeTraceApp extends Application {
     private CheckMenuItem showConsole;
     private String progressFolder = "";
     private CheckBox onlySelectedFolder;
+    private CheckBox excludeSelectedFolder;
+    private boolean syncingExclusion;
+    private TextField explorerSearch;
     private boolean syncingFolderScope;
     private final Map<ProgressScope.Category, CheckBox> scopeChecks =
             new EnumMap<>(ProgressScope.Category.class);
@@ -296,8 +301,23 @@ public final class CodeTraceApp extends Application {
                 setProgressFolder("");
             }
         });
+        excludeSelectedFolder = new CheckBox("Excluir del progreso");
+        excludeSelectedFolder.getStyleClass().add("tree-exclude-checkbox");
+        excludeSelectedFolder.setDisable(true);
+        excludeSelectedFolder.setTooltip(new Tooltip(
+                "No contabilizar la carpeta seleccionada; sus archivos siguen disponibles"));
+        excludeSelectedFolder.setOnAction(event -> {
+            if (syncingExclusion || reference == null) return;
+            var selected = tree.getSelectionModel().getSelectedItem();
+            if (selected == null || selected.getValue() == null
+                    || !tree.isFolderPath(selected.getValue())) return;
+            String relative = tree.relativePath(selected.getValue());
+            if (relative.isEmpty()) return;
+            changeFolderExclusion(relative, excludeSelectedFolder.isSelected());
+        });
         tree.getSelectionModel().selectedItemProperty().addListener(
                 (obs, before, selected) -> {
+                    updateSelectedFolderExclusion();
                     boolean folder = selected != null
                             && tree.isFolderPath(selected.getValue());
                     onlySelectedFolder.setDisable(!folder && !onlySelectedFolder.isSelected());
@@ -326,25 +346,29 @@ public final class CodeTraceApp extends Application {
         Region headerFill = new Region();
         HBox.setHgrow(headerFill, Priority.ALWAYS);
         HBox header = new HBox(4, projectHeading, headerFill,
-                onlySelectedFolder, treeActivity, collapse, expand);
+                treeActivity, collapse, expand);
         header.getStyleClass().add("project-tree-header");
         header.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
-        sidebar.getChildren().addAll(header, tree);
+        explorerSearch = new TextField();
+        explorerSearch.setPromptText("Buscar archivo o carpeta...");
+        explorerSearch.getStyleClass().add("tree-name-search");
+        explorerSearch.setAccessibleText("Buscar por nombre en el explorador");
+        explorerSearch.textProperty().addListener((obs, old, current) ->
+                tree.searchNames(current));
+        Button clearSearch = new Button("×");
+        clearSearch.getStyleClass().add("tree-search-clear");
+        clearSearch.setTooltip(new Tooltip("Limpiar búsqueda del explorador"));
+        clearSearch.setOnAction(event -> explorerSearch.clear());
+        HBox searchRow = new HBox(4, explorerSearch, clearSearch);
+        HBox.setHgrow(explorerSearch, Priority.ALWAYS);
+        searchRow.getStyleClass().add("tree-search-row");
+        HBox optionsRow = new HBox(13, onlySelectedFolder, excludeSelectedFolder);
+        optionsRow.getStyleClass().add("tree-options-row");
+        sidebar.getChildren().addAll(header, searchRow, optionsRow, tree);
         tree.setOnProgressFolder(this::setProgressFolder);
         tree.setExclusionHandlers(folder -> exclusions.excludes(folder),
-                folder -> exclusions.explicitlyExcludes(folder), (folder, exclude) -> {
-                    try {
-                        exclusions = exclusions.withFolder(folder, exclude);
-                        exclusions.save(reference);
-                        refreshReconstructionStatuses();
-                        refreshMetrics();
-                        setStatus(exclude ? "Carpeta excluida del progreso: " + folder
-                                : "Carpeta incluida en el progreso: " + folder);
-                    } catch (IllegalArgumentException problem) {
-                        ProductDialogs.error(stage, "Exclusiones del proyecto",
-                                problem.getMessage());
-                    }
-                });
+                folder -> exclusions.explicitlyExcludes(folder),
+                this::changeFolderExclusion);
         tree.setOnBusyChange(busy -> {
             treeActivity.setVisible(busy);
             expand.setDisable(busy);
@@ -522,6 +546,8 @@ public final class CodeTraceApp extends Application {
         clearOpenTabs();
         reference = folder;
         exclusions = ProgressExclusions.load(reference);
+        if (explorerSearch != null) explorerSearch.clear();
+        updateSelectedFolderExclusion();
         selectPracticeMode(PracticeMode.forProject(reference));
         tree.setWorkspace(workspace);
         tree.open(reference);
@@ -859,6 +885,47 @@ public final class CodeTraceApp extends Application {
                         + count + " archivos incluidos"));
         fileProgress.setProgress(ratio);
         fileProgress.setVisible(count > 0 && total > 0);
+    }
+
+    /** Both the context menu and the toolbar checkbox share this path. */
+    private void changeFolderExclusion(String folder, boolean excluded) {
+        try {
+            exclusions = exclusions.withFolder(folder, excluded);
+            exclusions.save(reference);
+            refreshReconstructionStatuses();
+            refreshMetrics();
+            updateSelectedFolderExclusion();
+            setStatus((excluded ? "Carpeta excluida del progreso: "
+                    : "Carpeta incluida en el progreso: ") + folder);
+        } catch (IllegalArgumentException error) {
+            ProductDialogs.error(stage, "Exclusiones del proyecto", error.getMessage());
+            updateSelectedFolderExclusion();
+        }
+    }
+
+    /** Inherited exclusion is visible but cannot be changed on a child. */
+    private void updateSelectedFolderExclusion() {
+        if (excludeSelectedFolder == null) return;
+        var selected = tree.getSelectionModel().getSelectedItem();
+        boolean folder = selected != null && selected.getValue() != null
+                && tree.isFolderPath(selected.getValue());
+        String relative = folder ? tree.relativePath(selected.getValue()) : "";
+        boolean inherited = folder && !relative.isEmpty()
+                && exclusions.excludes(relative)
+                && !exclusions.explicitlyExcludes(relative);
+        syncingExclusion = true;
+        try {
+            excludeSelectedFolder.setSelected(folder && !relative.isEmpty()
+                    && exclusions.excludes(relative));
+            excludeSelectedFolder.setIndeterminate(inherited);
+            excludeSelectedFolder.setDisable(reference == null
+                    || !folder || relative.isEmpty() || inherited);
+            excludeSelectedFolder.setTooltip(new Tooltip(inherited
+                    ? "La exclusión se hereda de una carpeta superior. Cámbiala allí."
+                    : "Excluir esta carpeta del cálculo de progreso, no de la exploración"));
+        } finally {
+            syncingExclusion = false;
+        }
     }
 
     private void setProgressFolder(String folder) {
