@@ -130,3 +130,28 @@ No se distribuye FFmpeg por defecto. La CI no reemplaza la auditoría de licenci
   reflejar siempre la misma opción. Los originales y estadísticas permanecen
   intactos al alternar.
 
+
+## Revisión: coloreado, grafo y compatibilidad de ejercicios
+
+- SYNTAX-01: Abre `styles/theme.css` dentro de `target/qa-preview`. Debe
+  distinguir selector, propiedad, número, comentario verde y código hexadecimal,
+  mostrar líneas y permitir copiar sin alterar el archivo.
+- SYNTAX-02: Abre JSON/XML/YAML de referencia y comprueba colores de
+  propiedades, tipos básicos y literales, sin activar mecanografía.
+- SYNTAX-03: Java/Kotlin/Python/JS/TS/C/C++: los tipos primitivos, llamadas
+  como `obj.metodo()`, números y comentarios tienen estilos distinguibles.
+- GRAPH-01: Selecciona la carpeta raíz de `target/qa-preview`, abre
+  Herramientas → Mapa de dependencias. Debe encontrar Java A→B, TS main→util,
+  Python app→helper y C app→demo.h (la cabecera está en include/).
+- GRAPH-02: Selecciona una carpeta sin enlaces internos, usa el mismo menú.
+  Debe explicar que no encontró dependencias internas, sin crear una pestaña vacía.
+- GRAPH-03: Cambia de referencia durante el análisis. No debe abrirse un mapa
+  del proyecto anterior.
+- GRAPH-04: Usa el zoom y doble clic sobre un nodo de archivo. Debe abrir
+  la consulta sin afectar las estadísticas de transcripción.
+- PACK-01: Práctica → Biblioteca: 13 paquetes, 108 ejercicios. Kotlin 2.2
+  incluye 16, así como Java 21 y TypeScript 5.9; los demás seis.
+- PACK-02: Cada archivo contiene en comentarios una versión explícita y un
+  comando PowerShell para comprobar/compilar/ejecutar, según tenga `main`.
+- VISUAL-01: Valida barra de menú pizarra contra barra de herramientas neutral
+  cálida; comprobar legibilidad y contraste en Windows y al abrir submenús.

@@ -112,3 +112,15 @@ CodeTrace no pretende sustituir un IDE ni compilar o evaluar automáticamente la
 - El propósito es equivalencia **temática**, no forzar Observer o clases en shell/CMD.
 - Matriz de compatibilidad y comandos: [LENGUAJES-Y-COMANDOS](LENGUAJES-Y-COMANDOS.md).
 - Validación integral con compiladores externos todavía pendiente; la prueba de Maven comprueba estructura y comentarios y compila Java 21.
+
+## Mapa de dependencias (vista estática experimental)
+
+- Herramientas → Mapa de dependencias de carpeta; requiere carpeta seleccionada.
+- Solo imports resueltos a archivos/paquetes internos dentro del ámbito.
+- Análisis sin ejecutar código, en trabajador aparte; límites de 1200
+  archivos y 1200 aristas; aviso claro cuando no hay relaciones.
+- Pestaña con círculos, flechas, zoom y doble clic para consultar el archivo.
+- Soporte léxico básico para 13 lenguajes; sin prometer análisis profundo de
+  rutas generadas por frameworks ni importaciones dinámicas.
+- Próxima etapa: reducir cruces en diagramas grandes y ampliar resolución
+  semántica por lenguaje con pruebas en repositorios reales.

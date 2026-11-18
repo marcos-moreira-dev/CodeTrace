@@ -35,6 +35,29 @@ en una copia temporal antes de reproducirlos, conservando los originales intacto
 La ventana Buscar usa el icono de CodeTrace y filas de resultados de varias líneas
 con el mismo componente visual que los comandos guardados.
 
+## Lectura con resaltado y mapa de dependencias (iteración de evaluación)
+
+Los archivos legibles que no son ejercicios de transcripción (CSS, JSON, XML,
+YAML, Properties) ahora tienen un **visor coloreado de solo lectura** con
+líneas virtualizadas, números y búsqueda. Los lenguajes de programación
+reconocen en la medida de lo posible palabras clave, **tipos**, llamadas,
+miembros, comentarios (verde) y literales. Los colores son compartidos con el
+editor de transcripción; no se editan los originales.
+
+Selecciona una carpeta en el árbol y abre **Herramientas → Mapa de dependencias
+de carpeta**. CodeTrace analiza imports locales en segundo plano, abre una
+pestaña con nodos y flechas y permite doble clic sobre los archivos relacionados.
+Cuando no hay dependencias internas resolubles presenta un aviso. No presume que
+todos los imports externos correspondan a archivos locales. Soporta resolución
+estática básica para Java, Kotlin, Python, JS/TS, C/C++, C#, Go, Ruby,
+PowerShell, shell y CMD; las importaciones dinámicas o de frameworks no son
+un análisis semántico completo.
+
+La barra de menú usa gris pizarra moderado y la barra de herramientas un
+neutral cálido para diferenciarlas sin imitar interfaces antiguas exageradas.
+Las versiones y comandos de los 108 ejemplos se describen en
+[Versiones y CLI](docs/LENGUAJES-Y-COMANDOS.md).
+
 ## Navegación y búsqueda (versión en evaluación)
 
 El explorador incluye una búsqueda por nombres con conservación de las carpetas
