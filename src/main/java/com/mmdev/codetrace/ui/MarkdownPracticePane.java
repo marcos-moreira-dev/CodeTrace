@@ -32,6 +32,7 @@ public final class MarkdownPracticePane extends BorderPane {
     private Task<MarkdownRenderer.RenderedPage> renderTask;
     private boolean showingPreview;
     private boolean allowExternalImages;
+    private boolean disposed;
 
     public MarkdownPracticePane(TypingEditor editor, Path markdownFile, Path referenceRoot) {
         this.editor = editor;
@@ -69,6 +70,8 @@ public final class MarkdownPracticePane extends BorderPane {
         showingPreview = !showingPreview;
         if (!showingPreview) {
             if (renderTask != null) renderTask.cancel();
+            // Stop outstanding external requests when the preview is hidden.
+            preview.getEngine().loadContent("", "text/html");
             setCenter(editor);
             externalImages.setVisible(false);
             imagesInfo.setVisible(false);
@@ -82,6 +85,7 @@ public final class MarkdownPracticePane extends BorderPane {
     }
 
     private void renderPreview() {
+        if (disposed) return;
         if (renderTask != null) renderTask.cancel();
         ProgressIndicator spinner = new ProgressIndicator();
         spinner.setPrefSize(30, 30);
@@ -100,7 +104,7 @@ public final class MarkdownPracticePane extends BorderPane {
         };
         renderTask = task;
         task.setOnSucceeded(event -> {
-            if (showingPreview && renderTask == task) {
+            if (!disposed && showingPreview && renderTask == task) {
                 MarkdownRenderer.RenderedPage result = task.getValue();
                 imagesInfo.setText(result.localImages() + " locales · "
                         + result.externalImages() + " externas · "
@@ -135,5 +139,13 @@ public final class MarkdownPracticePane extends BorderPane {
                 : "Mostrar Markdown renderizado";
         toggle.setTooltip(new Tooltip(title));
         toggle.setAccessibleText(title);
+    }
+
+    /** Release pending rendering and the WebView when its tab closes. */
+    public void dispose() {
+        disposed = true;
+        showingPreview = false;
+        if (renderTask != null) renderTask.cancel(true);
+        preview.getEngine().loadContent("", "text/html");
     }
 }
