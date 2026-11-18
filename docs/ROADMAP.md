@@ -1,0 +1,73 @@
+# CodeTrace — matriz de producto y plan de cierre
+
+Actualización: 18 de noviembre de 2026. Esta matriz distingue la **implementación** de la **validación manual**; un CI verde no demuestra por sí solo la ergonomía en Windows.
+
+## Identidad y límites
+
+**CodeTrace permite explorar, comprender y reconstruir proyectos de software sin alterar los archivos originales.**
+
+Dos acciones distintas:
+
+1. **Consultar:** abrir estructura, código, documentación y medios como referencias de solo lectura. No crea nada ni acumula progreso.
+2. **Reconstruir:** crear virtualmente archivos/carpetas (o activar transcripción directa), transcribir caracteres, omitir partes de forma deliberada y guardar avances.
+
+CodeTrace no pretende sustituir un IDE ni compilar o evaluar automáticamente la corrección del código.
+
+## Reglas semánticas aprobadas
+
+- Cada proyecto tiene un directorio de referencia **intacto**.
+- Crear una carpeta o archivo es un hito virtual, no una escritura sobre la referencia.
+- **Pendiente:** gris y cursiva. **Creado/incompleto:** visto ámbar. **Completado:** visto verde. Los archivos vacíos compatibles no necesitan transcripción.
+- El porcentaje reconoce solo caracteres efectivamente escritos y correctos. Turbo, imports saltados y caracteres erróneos no suman, aunque las omisiones intencionales permiten concluir un ejercicio.
+- Filtro de código/Markdown, carpeta activa y exclusiones afectan únicamente el **alcance de evaluación**, no la lectura, navegación o capacidad de practicar.
+- Turbo y omisión de imports son **ayudas de escritura**, no categorías de archivos. Su interfaz está agrupada con el contenido evaluado en «Reglas de práctica».
+- «Solo esta carpeta» selecciona un ámbito temporal; «Excluir carpeta del progreso» persiste por proyecto.
+- Toda previsualización multimedia es de solo lectura y no cuenta para la mecanografía.
+
+## Estado por capacidad
+
+| Capacidad | Estado | Criterio para cerrarla |
+|---|---|---|
+| Árbol de referencia, conteo recursivo, expansión incremental e iconos de estados | Implementado | Comprobar grandes repositorios, foco y contraste en Windows |
+| Reconstrucción manual, directa, sesiones `.ctrace`, aciertos/errores, Turbo, imports | Implementado | Auditoría de sesiones, regresiones y accesibilidad de teclado |
+| Sonidos de pulsación y finalización, preferencias persistentes | Implementado | Verificación auditiva en hardware Windows |
+| Reglas de práctica agrupadas en toolbar; filtro código/Markdown; exclusión por carpeta | Implementado | Validar selección y restauración, porcentajes por carpeta y que no cambia el contenido visible |
+| Markdown: fuente/renderizado, tablas, emojis, imágenes relativas, HTML `<img>` seguro | Implementado, visual pendiente | Probar en Windows imágenes PNG/JPEG/SVG reales y casos relativos de README |
+| Imágenes externas HTTPS en Markdown | Implementado con opt-in | Verificar conexión, CSP, error sin internet y comportamiento al desactivarlas |
+| Pestañas de imágenes PNG/JPEG/GIF/BMP/WebP y SVG seguro | Implementado, visual pendiente | Escalado, imagen grande y pestañas cerradas |
+| Pestañas de audio/video con play, pausa, stop y desplazamiento | Parcial | Validar MP3/WAV/MP4; manejar códecs no disponibles y liberación de recursos |
+| FFmpeg integrado y autocontenido para formatos adicionales | Pendiente | Elegir distribución, plataformas y licencias; conversión aislada y cancelable, sin tocar originales |
+| Símbolos y miniteclado LATAM/US orientativo | Implementado | Confirmar diferencias de distribución en Windows y ajustar teclas especiales |
+| Comandos del proyecto y consola inferior redimensionable | Implementado, auditoría pendiente | Revisar historial, ergonomía y salidas extensas, Windows/PowerShell/sh |
+| Biblioteca de práctica interna por 12 lenguajes | Base implementada | Completar temarios; Java y TypeScript: patrones, estructuras y algoritmos nativos |
+| Iconos de archivo y diálogos con identidad CodeTrace | Implementado, auditoría pendiente | Corregir formatos faltantes; revisar consistencia, resoluciones y selección |
+| Paquetes instalables y actualización del producto | Pendiente | Diseñar jpackage/ZIP y prueba Windows sin entorno de desarrollo |
+| Auditoría funcional, producto, UX/UI y accesibilidad | Pendiente | Ejecutar matriz de aceptación completa y corregir hallazgos |
+
+## Secuencia recomendada de cierre
+
+### Fase 1 — Estabilización de exploración (prioridad máxima)
+- Probar imágenes Markdown locales y externas con el repositorio real del usuario.
+- Verificar SVG, imágenes, audio y video; limpiar recursos al cerrar pestañas o cambiar de proyecto.
+- Resolver formatos multimedia importantes mediante FFmpeg solo tras acordar empaquetado seguro.
+
+### Fase 2 — Reglas y sesiones
+- Auditar las interacciones de alcance: proyecto, carpeta, exclusiones y categorías, sin duplicación de controles.
+- Verificar correctamente la finalización con Turbo e imports.
+- Decidir si la configuración de exclusiones debe viajar dentro del archivo `.ctrace` (ahora se guarda localmente por proyecto).
+
+### Fase 3 — Material de práctica
+- Revisar los doce repositorios/paquetes internos: ejemplos cortos, nomenclatura y alcance.
+- Completar los módulos de Java/TypeScript de patrones, algoritmos y estructuras de datos sin depender de frameworks de colección para los ejercicios didácticos.
+
+### Fase 4 — Pulido y distribución
+- Auditoría de producto: funciones que sobran, expectativas, errores legibles y ausencia de ediciones reales.
+- Auditoría UX/UI: navegación por teclado, contraste, fuentes, barra de estado, escalado y paneles.
+- Distribución para Windows con JDK/JavaFX runtime, pruebas de arranque limpio y licencia de terceros.
+
+## Verificación y evidencias
+
+- `mvn clean verify` con JDK 21 y Maven configurados.
+- `scripts/diagnostico.bat` ejecuta diagnósticos y abre la aplicación para la prueba de aceptación.
+- GitHub Actions ejecuta pruebas unitarias y arranque gráfico básico; **no sustituye** la inspección de las imágenes y códecs reales en Windows.
+- No dar por terminada ninguna capacidad visual solo por haber compilado; vincular cada incidencia a una captura/reproducción y repetir la prueba tras corregirla.

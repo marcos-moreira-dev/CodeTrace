@@ -163,3 +163,8 @@ y muestra imágenes PNG, JPEG, GIF, BMP, WebP y SVG seguros incluidos en la
 referencia, utilizando rutas relativas desde el documento. Las imágenes se
 incorporan solo para lectura, con límites de tamaño; no se realizan descargas
 ni se permite acceder fuera del proyecto. La vista se prepara en segundo plano.
+
+## Roadmap y criterios de aceptación
+
+La [matriz de producto y cierre](docs/ROADMAP.md) distingue funciones verificadas, soporte parcial y trabajo pendiente.
+
