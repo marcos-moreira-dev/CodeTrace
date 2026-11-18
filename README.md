@@ -152,3 +152,14 @@ creación y la Biblioteca de práctica, manteniendo el estilo de escritorio.
   practicable no presentan acciones de creación.
 - **Acerca de** conserva el texto explicativo y muestra una versión ampliable
   y centrada del logotipo, distinta del icono pequeño de la barra de título.
+
+### Markdown: fuente y vista renderizada
+
+En las pestañas `.md` y `.markdown`, el botón con icono **Renderizado** muestra
+una vista de lectura sin modificar la plantilla; **Fuente** vuelve al editor.
+La vista reconoce emojis Unicode y alias comunes de GitHub (`:rocket:`,
+`:white_check_mark:`, etc.), conserva el texto literal de los bloques de código
+y muestra imágenes PNG, JPEG, GIF, BMP, WebP y SVG seguros incluidos en la
+referencia, utilizando rutas relativas desde el documento. Las imágenes se
+incorporan solo para lectura, con límites de tamaño; no se realizan descargas
+ni se permite acceder fuera del proyecto. La vista se prepara en segundo plano.

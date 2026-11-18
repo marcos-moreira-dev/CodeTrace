@@ -626,7 +626,7 @@ public final class CodeTraceApp extends Application {
             boolean markdown = relative.toLowerCase().endsWith(".md")
                     || relative.toLowerCase().endsWith(".markdown");
             Tab tab = new Tab(file.getFileName().toString(),
-                    markdown ? new MarkdownPracticePane(editor) : editor);
+                    markdown ? new MarkdownPracticePane(editor, file, reference) : editor);
             tab.setGraphic(FileTypeIcons.forPath(file, false));
             tab.setOnClosed(event -> openedTabs.remove(relative));
             openedTabs.put(relative, tab);
