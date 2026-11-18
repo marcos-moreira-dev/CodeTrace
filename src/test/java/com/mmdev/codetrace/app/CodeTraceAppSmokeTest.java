@@ -209,7 +209,17 @@ class CodeTraceAppSmokeTest {
                 fileTree.collapseAll();
                 fileTree.expandAll();
                 assertTrue(fileTree.getRoot().isExpanded());
-                assertNotNull(stage.getScene().getRoot().lookup(".command-console-pane"));
+                var console = (com.mmdev.codetrace.ui.CommandConsolePane)
+                        stage.getScene().getRoot().lookup(".command-console-pane");
+                assertNotNull(console);
+                console.setProject(root);
+                console.setPresets(java.util.List.of());
+                console.setVisible(true);
+                assertTrue(stage.getScene().getRoot()
+                        .lookup(".console-empty-state").isVisible());
+                assertTrue(stage.getScene().getRoot()
+                        .lookup(".console-configure").isVisible());
+                console.setVisible(false);
                 assertNotNull(stage.getScene().getRoot().lookup(".turbo-toggle"));
                 MenuButton filter = (MenuButton) stage.getScene().getRoot()
                         .lookup(".status-progress-filter");
