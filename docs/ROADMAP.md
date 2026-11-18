@@ -29,7 +29,7 @@ CodeTrace no pretende sustituir un IDE ni compilar o evaluar automáticamente la
 | Capacidad | Estado | Criterio para cerrarla |
 |---|---|---|
 | Árbol de referencia, conteo recursivo, expansión incremental e iconos de estados | Implementado | Comprobar grandes repositorios, foco y contraste en Windows |
-| Reconstrucción manual, directa, sesiones `.ctrace`, aciertos/errores, Turbo, imports | Implementado | Auditoría de sesiones, regresiones y accesibilidad de teclado |
+| Reconstrucción manual, directa, sesiones `.ctrace`, aciertos/errores, Turbo, imports | Implementado; endurecida la lectura de sesiones y las entradas Unicode separadas | Auditoría de sesiones, regresiones y accesibilidad de teclado en Windows real |
 | Sonidos de pulsación y finalización, preferencias persistentes | Implementado | Verificación auditiva en hardware Windows |
 | Reglas de práctica agrupadas en toolbar; filtro código/Markdown; exclusión por carpeta | Implementado | Validar selección y restauración, porcentajes por carpeta y que no cambia el contenido visible |
 | Markdown: fuente/renderizado, tablas, emojis, imágenes relativas, HTML `<img>` seguro | Implementado, visual pendiente | Probar en Windows imágenes PNG/JPEG/SVG reales y casos relativos de README |
@@ -38,7 +38,7 @@ CodeTrace no pretende sustituir un IDE ni compilar o evaluar automáticamente la
 | Pestañas de audio/video con play, pausa, stop y desplazamiento | Parcial | Validar MP3/WAV/MP4; manejar códecs no disponibles y liberación de recursos |
 | FFmpeg para formatos adicionales | Fallback implementado, binario no incluido | Probar conversión, cancelación, temporales y códecs reales; revisar licencias antes de incluir FFmpeg |
 | Símbolos y miniteclado LATAM/US orientativo | Implementado | Confirmar diferencias de distribución en Windows y ajustar teclas especiales |
-| Comandos del proyecto y consola inferior redimensionable | Implementado, auditoría pendiente | Revisar historial, ergonomía y salidas extensas, Windows/PowerShell/sh |
+| Comandos del proyecto y consola inferior redimensionable | Implementado; reforzada la cancelación y separación de salida por proyecto | Revisar historial, ergonomía y salidas extensas, Windows/PowerShell/sh |
 | Biblioteca de práctica interna por 12 lenguajes | Base implementada | Completar temarios; Java y TypeScript: patrones, estructuras, algoritmos y callbacks nativos |
 | Iconos de archivo y diálogos con identidad CodeTrace | Implementado, auditoría pendiente | Corregir formatos faltantes; revisar consistencia, resoluciones y selección |
 | Paquetes instalables y actualización del producto | Script jpackage + ZIP implementado, validación pendiente | Comprobar el artefacto de CI y ejecutar en Windows limpio sin JDK/Maven; instalador EXE con WiX sin validar |
