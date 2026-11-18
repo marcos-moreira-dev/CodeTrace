@@ -846,3 +846,56 @@
 .media-zoom-viewport:pressed { -fx-cursor: closed-hand; }
 .tabs-actions { -fx-background-radius: 0; -fx-border-radius: 0;
     -fx-background-color: #ffffff; -fx-border-color: #a9b8c4; }
+
+
+/* Shared rectangular preferences/command-form language. */
+.command-preset-column { -fx-padding: 0 3 0 0; }
+.command-preset-list {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #b6c4ce;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+}
+.command-preset-list .list-cell { -fx-background-color: #fff; -fx-padding: 7 8; }
+.command-preset-list .list-cell:filled:selected {
+    -fx-background-color: #d5e4ee;
+    -fx-border-color: transparent transparent transparent #426b8c;
+    -fx-border-width: 0 0 0 3;
+}
+.command-preset-name { -fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: #28455e; }
+.command-preset-detail { -fx-font-size: 10px; -fx-text-fill: #63788a; }
+.command-preset-row .ikonli-font-icon { -fx-icon-color: #53718a; }
+.command-edit-panel {
+    -fx-padding: 10 12;
+    -fx-background-color: #f8fafb;
+    -fx-border-color: #c5d1d9;
+}
+.command-preset-save { -fx-alignment: center-left; }
+.command-settings-pane .text-field, .command-settings-pane .text-area {
+    -fx-background-radius: 0; -fx-border-radius: 0;
+    -fx-border-color: #acbbc6; -fx-background-color: #fff;
+}
+.command-settings-pane .text-input:focused { -fx-border-color: #426b8c; }
+
+/* Non-modal Find dialog; uses the same style rules as Preferences. */
+.project-search-window { -fx-background-color: #f7f9fa; }
+.search-window-header { -fx-background-color: #e8eef2;
+    -fx-border-color: transparent transparent #bdcbd5 transparent; }
+.search-window-footer { -fx-background-color: #e8eef2;
+    -fx-border-color: #bdcbd5 transparent transparent transparent; }
+.project-search-window .text-field {
+    -fx-background-radius: 0; -fx-border-radius: 0;
+    -fx-background-color: white; -fx-border-color: #a9b8c4;
+}
+.project-search-window .list-view { -fx-background-color: white; }
+.project-search-window .list-cell:filled { -fx-font-family: "Consolas"; -fx-font-size: 11px; }
+.project-search-window .list-cell:filled:selected { -fx-background-color: #d1e2ed;
+    -fx-text-fill: #263747; }
+
+/* Search highlights are borders so typing correctness backgrounds stay visible. */
+.trace-search-hit {
+    -fx-border-color: #e8a628;
+    -fx-border-width: 0 0 2px 0;
+}
+.reference-text-content { -fx-font-family: "Consolas";
+    -fx-font-size: 12px; -fx-background-color: #fff; }
