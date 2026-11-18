@@ -20,6 +20,8 @@ public final class CommandRunner {
     private static final int OUTPUT_LIMIT = 180_000;
     private final AtomicBoolean running = new AtomicBoolean();
     private final AtomicReference<Process> current = new AtomicReference<>();
+    private final AtomicBoolean stopRequested = new AtomicBoolean();
+    private final AtomicReference<Thread> workerThread = new AtomicReference<>();
 
     public boolean isRunning() {
         return running.get();
@@ -32,14 +34,17 @@ public final class CommandRunner {
         Objects.requireNonNull(output);
         Objects.requireNonNull(finished);
         if (!running.compareAndSet(false, true)) return false;
+        stopRequested.set(false);
         Thread worker = new Thread(() -> {
             int code = -1;
             try {
                 Path workdir = ProjectCommandStore.workingDirectory(projectRoot, preset);
                 List<String> args = preset.shell().invocation(preset.command());
+                if (stopRequested.get()) { code = -2; return; }
                 Process process = new ProcessBuilder(args).directory(workdir.toFile())
                         .redirectErrorStream(true).start();
                 current.set(process);
+                if (stopRequested.get()) terminate(process);
                 output.accept("[" + preset.name() + "] " + preset.shell().label()
                         + " · " + workdir + System.lineSeparator());
                 int emitted = 0;
@@ -61,6 +66,7 @@ public final class CommandRunner {
                     }
                 }
                 code = process.waitFor();
+                if (stopRequested.get()) code = -2;
             } catch (InterruptedException cancelled) {
                 Thread.currentThread().interrupt();
                 output.accept(System.lineSeparator() + "[Interrumpido]" + System.lineSeparator());
@@ -70,23 +76,32 @@ public final class CommandRunner {
                         + "[No se pudo ejecutar: " + error.getMessage() + "]"
                         + System.lineSeparator());
             } finally {
-                current.set(null);
+                Process process = current.getAndSet(null);
+                if (process != null && process.isAlive()) terminate(process);
+                workerThread.set(null);
                 running.set(false);
                 finished.accept(code);
             }
         }, "codetrace-command-runner");
         worker.setDaemon(true);
+        workerThread.set(worker);
         worker.start();
         return true;
     }
 
     public void stop() {
+        stopRequested.set(true);
         Process process = current.get();
-        if (process == null) return;
-        // Stop children too (Maven, compilers, etc.) instead of leaving them running.
+        if (process != null) terminate(process);
+        Thread worker = workerThread.get();
+        if (worker != null) worker.interrupt();
+    }
+
+    private static void terminate(Process process) {
+        // Do not block the JavaFX thread waiting for child tools to exit.
         process.descendants().forEach(handle -> {
-            if (handle.isAlive()) handle.destroy();
+            if (handle.isAlive()) handle.destroyForcibly();
         });
-        process.destroy();
+        if (process.isAlive()) process.destroyForcibly();
     }
 }
