@@ -236,3 +236,14 @@ previo de 4096 caracteres por línea). Los patrones con retrocesos
 patológicos se rechazan con un mensaje legible, en lugar de bloquear
 indefinidamente un hilo de búsqueda. Las búsquedas literales no necesitan
 esta capa. La interrupción no borra resultados persistidos ni referencias.
+
+## Lectura asíncrona de sesiones y huellas interrumpibles
+
+La lectura `.ctrace` se realiza mediante `LatestTaskRunner<SessionArchive.State>`
+fuera del hilo de JavaFX. Cambiar de proyecto, iniciar otra restauración o cerrar
+la aplicación invalida la solicitud anterior; ninguna restauración aplica su
+estado hasta haberse leído por completo. Antes de aplicar, si el usuario
+modificó su sesión durante la lectura, se vuelve a consultar si desea guardarla.
+Si cancela el selector de una referencia ausente, la sesión actual permanece
+intacta. `ReferenceFingerprint.sha256` comprueba interrupciones entre bloques
+de lectura para evitar trabajos costosos que sobrevivan a su cancelación.

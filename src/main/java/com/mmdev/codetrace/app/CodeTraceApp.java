@@ -155,6 +155,8 @@ public final class CodeTraceApp extends Application {
     private final ReferenceCatalogueScanner catalogueScanner =
             new ReferenceCatalogueScanner();
     private final LatestTaskRunner<Integer> referenceChecks = new LatestTaskRunner<>();
+    private final LatestTaskRunner<SessionArchive.State> sessionLoader =
+            new LatestTaskRunner<>();
     private Path reference;
     private long referenceRequest;
     private Path sessionFile;
@@ -501,6 +503,7 @@ public final class CodeTraceApp extends Application {
                 consolePane.stop();
                 referenceChecks.cancel();
                 catalogueScanner.cancel();
+                sessionLoader.cancel();
                 tree.cancelPendingWork();
             }
         });
@@ -614,6 +617,7 @@ public final class CodeTraceApp extends Application {
     private void applyProjectState(ProjectActivation next, boolean resumed) {
         catalogueScanner.cancel();
         referenceChecks.cancel();
+        sessionLoader.cancel();
         referenceRequest++;
         autoCreateGeneration++;
         clearOpenTabs();
@@ -1383,25 +1387,40 @@ public final class CodeTraceApp extends Application {
     }
 
     private void openSession() {
-        if (!confirmDiscard()) return;
+        // Read before confirmation: invalid archives never discard active work.
+        // Never let an older load replace a newer request while a chooser is open.
+        sessionLoader.cancel();
         FileChooser chooser = sessionChooser("Abrir sesión CodeTrace");
         java.io.File selected = chooser.showOpenDialog(stage);
         if (selected == null) return;
-        try {
-            SessionArchive.State data = SessionArchive.load(selected.toPath());
-            Path restoredReference = data.referenceRoot();
+
+        Path archive = selected.toPath().toAbsolutePath().normalize();
+        long request = referenceRequest;
+        setStatus("Leyendo sesión " + archive.getFileName() + "...");
+        sessionLoader.submit(() -> SessionArchive.load(archive), state -> {
+            if (request != referenceRequest) return;
+            Path restoredReference = state.referenceRoot();
             if (!Files.isDirectory(restoredReference)) {
                 DirectoryChooser folder = new DirectoryChooser();
                 folder.setTitle("Buscar carpeta de referencia");
                 java.io.File replacement = folder.showDialog(stage);
-                if (replacement == null) return; // Current project remains intact.
+                if (replacement == null) {
+                    setStatus("Restauración cancelada: se conserva la sesión actual.");
+                    return;
+                }
                 restoredReference = replacement.toPath().toAbsolutePath().normalize();
             }
+            // The user may have typed while the session was loading.
+            if (!confirmDiscard()) {
+                setStatus("Restauración cancelada: se conserva la sesión actual.");
+                return;
+            }
             applyProjectState(ProjectActivation.resumed(
-                    restoredReference, selected.toPath(), data), true);
-        } catch (IOException | SecurityException failure) {
-            showFailure("No se pudo abrir la sesión", failure.getMessage());
-        }
+                    restoredReference, archive, state), true);
+        }, error -> {
+            if (request == referenceRequest)
+                showFailure("No se pudo abrir la sesión", error.getMessage());
+        }, "codetrace-session-loader");
     }
 
     private boolean saveSession(boolean forceAs) {

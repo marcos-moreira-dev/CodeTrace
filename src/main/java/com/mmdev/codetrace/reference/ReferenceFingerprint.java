@@ -2,6 +2,7 @@ package com.mmdev.codetrace.reference;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.concurrent.CancellationException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.security.MessageDigest;
@@ -19,7 +20,11 @@ public final class ReferenceFingerprint {
             try (InputStream in = Files.newInputStream(file)) {
                 byte[] buffer = new byte[8192];
                 int size;
-                while ((size = in.read(buffer)) != -1) {
+                while (true) {
+                    if (Thread.currentThread().isInterrupted())
+                        throw new CancellationException("Huella de referencia cancelada");
+                    size = in.read(buffer);
+                    if (size == -1) break;
                     digest.update(buffer, 0, size);
                 }
             }

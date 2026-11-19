@@ -2,6 +2,7 @@ package com.mmdev.codetrace.reference;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import org.junit.jupiter.api.Test;
@@ -19,4 +20,20 @@ class ReferenceFingerprintTest {
         Files.writeString(file, "abd");
         assertNotEquals(first, ReferenceFingerprint.sha256(file));
     }
+    @Test
+    void interruptStopsChecksumInsteadOfReturningAnIncompleteDigest() throws Exception {
+        Path file = Files.writeString(folder.resolve("Large.java"),
+                "hello source".repeat(1024));
+        Thread.currentThread().interrupt();
+        try {
+            assertThrows(java.util.concurrent.CancellationException.class,
+                    () -> ReferenceFingerprint.sha256(file));
+        } finally {
+            Thread.interrupted();
+        }
+        // Cancellation has not modified the source and is safe to retry.
+        assertEquals(64, ReferenceFingerprint.sha256(file).length());
+        assertEquals("hello source".repeat(1024), Files.readString(file));
+    }
+
 }

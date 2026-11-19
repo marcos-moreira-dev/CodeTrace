@@ -419,3 +419,17 @@ Consulta también [Auditoría de cierre](AUDITORIA-CIERRE-2026-11.md).
   debe informar patrón demasiado costoso y dejar responder la interfaz.
 - Ejecutar una búsqueda costosa y pulsar «Detener»: no deben quedar
   resultados tardíos ni modificarse los archivos de referencia.
+
+## SESSION-ASYNC — restauración sin congelar la interfaz
+
+- Abrir un `.ctrace` grande: el mensaje «Leyendo sesión» aparece y la
+  ventana continúa respondiendo. La sesión activa no se reemplaza hasta
+  terminar correctamente la lectura.
+- Durante la carga, cambiar a otro proyecto o elegir otro `.ctrace`:
+  la primera operación no debe restaurarse después.
+- Durante la carga, modificar la transcripción actual: antes de sustituirla
+  debe solicitar confirmación; al cancelar se conserva el progreso.
+- Abrir una sesión con referencia original ausente y cancelar la reubicación:
+  no cambia el proyecto abierto.
+- Verificar que un escaneo de archivos grandes se interrumpe al cambiar de
+  proyecto y que ninguna referencia se modifica físicamente.
