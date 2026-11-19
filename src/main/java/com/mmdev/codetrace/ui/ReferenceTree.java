@@ -100,7 +100,8 @@ public final class ReferenceTree extends TreeView<Path> {
                 boolean isExcluded = excluded.test(relative);
                 boolean practiceable = folder
                         ? (index == null || index.hasWorkableDescendant(relative))
-                        : PracticeEligibility.supports(path);
+                        : (index != null ? index.isWorkable(relative)
+                                : PracticeEligibility.supports(path));
                 State state = practiceable ? statusLookup.apply(relative)
                         : State.NOT_APPLICABLE;
                 boolean created = state == State.CREATED || state == State.COMPLETED;
