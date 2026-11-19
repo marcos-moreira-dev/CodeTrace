@@ -57,6 +57,9 @@ class ReferenceTreeIndexTest {
         assertTrue(nodes.contains(new ReferenceTreeIndex.Node("src/empty", true)));
         assertTrue(nodes.contains(new ReferenceTreeIndex.Node("src/code/Main.java", false)));
         assertFalse(nodes.stream().anyMatch(n -> n.path().startsWith("target/")));
+        assertFalse(ReferenceTreeIndex.scan(root)
+                .hasWorkableDescendant("target"),
+                "Compiled/generated sources are not pending typing work");
         int parent = nodes.indexOf(new ReferenceTreeIndex.Node("src/code", true));
         int child = nodes.indexOf(new ReferenceTreeIndex.Node("src/code/Main.java", false));
         assertTrue(parent >= 0 && child > parent, "Virtual folders must precede files");
