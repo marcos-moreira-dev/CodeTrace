@@ -1228,3 +1228,12 @@
 /* Graph camera renders only the visible viewport; never allocates a bitmap
    the size of the virtual (unbounded) map. */
 .dependency-map-viewport { -fx-background-color: #f8fafb; }
+
+/* Visible safety boundary: commands run in the original project, never virtual. */
+.console-real-files-warning {
+    -fx-background-color: #fff8e6;
+    -fx-border-color: #dcc79b transparent transparent transparent;
+    -fx-padding: 5px 12px;
+    -fx-font-size: 11px;
+    -fx-text-fill: #76572b;
+}
