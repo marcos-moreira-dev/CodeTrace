@@ -261,3 +261,12 @@ estado parcialmente recuperado; el archivo original queda intacto.
 `ProjectCommandStore.load` exige consumir todo el documento binario
 versionado `.ctcmd`; bytes sobrantes implican corrupción y se rechazan
 con `IOException`. No se ejecuta ningún comando al cargar preferencias.
+
+## Prueba integral de inmutabilidad de referencias
+
+`integration/ReferenceIntegrityWorkflowTest` crea una referencia temporal y
+compara las huellas SHA-256 de **todos** sus archivos antes y después de
+indexar, recrear virtualmente, buscar texto, analizar dependencias y
+guardar/restaurar una sesión `.ctrace` fuera del proyecto. Complementa las
+pruebas aisladas y protege el contrato principal de CodeTrace: no escribir
+sobre los originales durante el entrenamiento.
