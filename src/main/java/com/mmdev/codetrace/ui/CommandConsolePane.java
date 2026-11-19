@@ -170,7 +170,7 @@ public final class CommandConsolePane extends BorderPane {
                     + "Puede crear, modificar o eliminar archivos reales. "
                     + "No ejecuta la reconstrucción virtual de CodeTrace. "
                     + "Utiliza una copia del proyecto si vas a probar operaciones de escritura.",
-                    runConfirmed, ButtonType.CANCEL);
+                    runConfirmed);
             if (decision.choice() != runConfirmed) return;
             if (decision.doNotShowAgain()) CommandWarningPreferences.setMustConfirm(false);
             commandExecutionAcknowledged = true;
