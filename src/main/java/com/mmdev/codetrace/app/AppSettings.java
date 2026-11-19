@@ -1,14 +1,26 @@
 package com.mmdev.codetrace.app;
 
 import java.util.prefs.Preferences;
+import com.mmdev.codetrace.reference.GraphLayoutEngine;
 
 /** Window-level preferences are separate from each .ctrace training session. */
 public record AppSettings(String fontFamily, int fontSize, boolean showExplorer,
                           String keyboardLayout, boolean typingSounds,
                           int templateOpacity, boolean turboMode,
-                          boolean completionSound) {
+                          boolean completionSound,
+                          GraphLayoutEngine.Mode graphLayoutMode) {
     private static final Preferences STORE =
             Preferences.userNodeForPackage(AppSettings.class);
+    public static final GraphLayoutEngine.Mode DEFAULT_GRAPH_MODE =
+            GraphLayoutEngine.Mode.ORGANIZED;
+
+    /** Existing settings clients keep the organized graph default. */
+    public AppSettings(String fontFamily, int fontSize, boolean showExplorer,
+                       String keyboardLayout, boolean typingSounds,
+                       int templateOpacity, boolean turboMode, boolean completionSound) {
+        this(fontFamily, fontSize, showExplorer, keyboardLayout, typingSounds,
+                templateOpacity, turboMode, completionSound, DEFAULT_GRAPH_MODE);
+    }
 
     public AppSettings(String fontFamily, int fontSize, boolean showExplorer,
                        String keyboardLayout, boolean typingSounds) {
@@ -29,6 +41,8 @@ public record AppSettings(String fontFamily, int fontSize, boolean showExplorer,
     }
 
     public AppSettings {
+        if (graphLayoutMode == null)
+            throw new IllegalArgumentException("Graph layout mode is required");
         if (templateOpacity < 20 || templateOpacity > 100) {
             throw new IllegalArgumentException("Template opacity must be 20–100 percent");
         }
@@ -55,17 +69,35 @@ public record AppSettings(String fontFamily, int fontSize, boolean showExplorer,
                 layout, STORE.getBoolean("practice.typingSounds", false),
                 Math.max(20, Math.min(100, STORE.getInt("editor.opacity", 70))),
                 STORE.getBoolean("practice.turbo", false),
-                STORE.getBoolean("practice.completionSound", true));
+                STORE.getBoolean("practice.completionSound", true),
+                storedGraphMode());
+    }
+
+    private static GraphLayoutEngine.Mode storedGraphMode() {
+        try {
+            return GraphLayoutEngine.Mode.valueOf(
+                    STORE.get("graph.layout", DEFAULT_GRAPH_MODE.name()));
+        } catch (IllegalArgumentException invalid) {
+            return DEFAULT_GRAPH_MODE;
+        }
+    }
+
+    public AppSettings withGraphLayoutMode(GraphLayoutEngine.Mode mode) {
+        return new AppSettings(fontFamily, fontSize, showExplorer,
+                keyboardLayout, typingSounds, templateOpacity, turboMode,
+                completionSound, mode);
     }
 
     public AppSettings withLayout(String layout) {
         return new AppSettings(fontFamily, fontSize, showExplorer, layout,
-                typingSounds, templateOpacity, turboMode, completionSound);
+                typingSounds, templateOpacity, turboMode, completionSound,
+                graphLayoutMode);
     }
 
     public AppSettings withTurbo(boolean enabled) {
         return new AppSettings(fontFamily, fontSize, showExplorer,
-                keyboardLayout, typingSounds, templateOpacity, enabled, completionSound);
+                keyboardLayout, typingSounds, templateOpacity, enabled,
+                completionSound, graphLayoutMode);
     }
 
     public void save() {
@@ -77,5 +109,6 @@ public record AppSettings(String fontFamily, int fontSize, boolean showExplorer,
         STORE.putInt("editor.opacity", templateOpacity);
         STORE.putBoolean("practice.turbo", turboMode);
         STORE.putBoolean("practice.completionSound", completionSound);
+        STORE.put("graph.layout", graphLayoutMode.name());
     }
 }
