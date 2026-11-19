@@ -37,6 +37,7 @@ class OnDemandHlsVideoTest {
                 Path.of("sample.mov"), Path.of("part.ts"), 121, 900);
         assertEquals("726.000", args.get(args.indexOf("-ss") + 1));
         assertEquals("6.000", args.get(args.indexOf("-t") + 1));
+        assertEquals("726.000", args.get(args.indexOf("-output_ts_offset") + 1));
         assertEquals("mpegts", args.get(args.indexOf("-f") + 1));
         assertEquals("libx264", args.get(args.indexOf("-c:v") + 1));
         assertTrue(args.stream().anyMatch(arg -> arg.contains("force_original_aspect_ratio=decrease")));
