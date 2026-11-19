@@ -8,13 +8,13 @@ import java.util.function.Consumer;
 import javafx.geometry.Pos;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
 /**
- * Shared, accessible rectangular single-choice control, reusable in settings
- * and workspaces. It uses real RadioButtons/ToggleGroup rather than checkboxes.
+ * Shared, accessible vertical single-choice control, reusable across preferences.
+ * It uses real RadioButtons/ToggleGroup without an artificial enclosing frame.
  */
-public final class ExclusiveChoiceBar<T> extends HBox {
+public final class ExclusiveChoiceBar<T> extends VBox {
     public record Choice<T>(T value, String text, String tooltip) {}
 
     private final ToggleGroup group = new ToggleGroup();
@@ -22,14 +22,16 @@ public final class ExclusiveChoiceBar<T> extends HBox {
 
     public ExclusiveChoiceBar(List<Choice<T>> options, T initial,
                               Consumer<T> changed) {
-        super(0);
+        super(5);
         getStyleClass().add("exclusive-choice-bar");
-        setAlignment(Pos.CENTER_LEFT);
+        setAlignment(Pos.TOP_LEFT);
+        setFillWidth(false);
         for (Choice<T> option : options) {
             RadioButton button = new RadioButton(option.text());
             button.setToggleGroup(group);
             button.setUserData(option.value());
             button.getStyleClass().add("exclusive-choice");
+            button.setMinHeight(30);
             if (option.tooltip() != null) {
                 button.setTooltip(new javafx.scene.control.Tooltip(option.tooltip()));
             }
