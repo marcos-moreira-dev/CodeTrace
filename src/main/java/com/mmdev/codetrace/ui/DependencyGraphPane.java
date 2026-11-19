@@ -255,9 +255,11 @@ public final class DependencyGraphPane extends BorderPane {
     private void applyZoom(int percent) {
         int value = Math.max(25, Math.min(400, percent));
         if (value == zoomPercent.get()) return;
-        // Unlike Node.setScaleX/Y, an explicit Scale(0,0) has no implicit
-        // center pivot. Scroll offsets can now be computed exactly.
-        artwork.getTransforms().setAll(new Scale(value / 100.0,
+        // Apply the zero-pivot transform to the Canvas INSIDE Group.
+        // ScrollPane measures the Group's layoutBounds, so the scrollable
+        // extent now reflects the transformed Canvas (unlike scaling the
+        // ScrollPane's content Group itself).
+        canvas.getTransforms().setAll(new Scale(value / 100.0,
                 value / 100.0, 0, 0));
         zoomPercent.set(value);
     }
