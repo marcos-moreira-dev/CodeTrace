@@ -185,7 +185,7 @@ try {
         Compress-Archive -Path (Join-Path $work "*") -DestinationPath $zip -Force
         Write-Host ("ZIP: " + $zip)
         if (-not $NoExplorer) {
-            Start-Process -FilePath explorer.exe -ArgumentList ('/select,"' + $zip + '"')
+            Invoke-Item -LiteralPath $reportRoot
         }
     } catch {
         Write-Warning ("No se pudo comprimir el informe: " + $_.Exception.Message)
