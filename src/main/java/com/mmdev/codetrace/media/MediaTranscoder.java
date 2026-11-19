@@ -6,6 +6,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.nio.charset.StandardCharsets;
 import java.util.concurrent.TimeUnit;
 import java.util.function.BooleanSupplier;
 
@@ -19,6 +20,9 @@ public final class MediaTranscoder {
     private static final long MAX_INPUT_BYTES = 512L * 1024 * 1024;
     private static final long MAX_OUTPUT_BYTES = 512L * 1024 * 1024;
     private static final long MAX_CONVERSION_SECONDS = 300;
+    private static final long MAX_VIDEO_PREVIEW_SECONDS = 75;
+    /** Video conversion is preview-only: never transcode a multi-hour movie eagerly. */
+    public static final int VIDEO_PREVIEW_SECONDS = 30;
     private MediaTranscoder() {}
 
     public static boolean needsConversion(Path file) {
@@ -58,8 +62,10 @@ public final class MediaTranscoder {
     }
 
     /**
-     * Transcodes to a temporary JavaFX-compatible MP3/MP4. The caller owns
-     * the resulting temporary file and must delete it after disposing playback.
+     * Audio transcodes normally; video creates only a short, downscaled
+     * H.264 Baseline/AAC preview. Full video remains in its original file and
+     * can be opened explicitly with an external player. The caller owns the
+     * resulting temporary file and must delete it after disposing playback.
      */
     public static Path transcode(Path original, Output output,
                                  BooleanSupplier cancelled) throws IOException {
@@ -70,42 +76,35 @@ public final class MediaTranscoder {
         if (cancelled.getAsBoolean()) throw new IOException("Conversión cancelada.");
         Path temporary = Files.createTempFile("codetrace-preview-",
                 output == Output.AUDIO ? ".mp3" : ".mp4");
+        Path errorLog = null;
         Process process = null;
         boolean success = false;
         try {
-            List<String> command = new ArrayList<>(List.of(
-                    executable(), "-hide_banner", "-nostdin", "-loglevel", "error",
-                    "-y", "-protocol_whitelist", "file,pipe", "-i", source.toString()));
-            if (output == Output.AUDIO) {
-                command.addAll(List.of("-map", "0:a:0", "-vn", "-c:a",
-                        "libmp3lame", "-b:a", "160k"));
-            } else {
-                command.addAll(List.of("-map", "0:v:0", "-map", "0:a:0?",
-                        "-c:v", "libx264", "-preset", "ultrafast",
-                        "-pix_fmt", "yuv420p", "-c:a", "aac",
-                        "-movflags", "+faststart"));
-            }
-            command.addAll(List.of("-fs", Long.toString(MAX_OUTPUT_BYTES),
-                    temporary.toString()));
-            process = new ProcessBuilder(command)
+            errorLog = Files.createTempFile("codetrace-ffmpeg-errors-", ".txt");
+            process = new ProcessBuilder(conversionCommand(source, temporary, output))
                     .redirectInput(ProcessBuilder.Redirect.PIPE)
                     .redirectOutput(ProcessBuilder.Redirect.DISCARD)
-                    .redirectError(ProcessBuilder.Redirect.DISCARD)
+                    .redirectError(errorLog.toFile())
                     .start();
+            long timeoutSeconds = output == Output.VIDEO
+                    ? MAX_VIDEO_PREVIEW_SECONDS : MAX_CONVERSION_SECONDS;
             long limit = System.nanoTime()
-                    + TimeUnit.SECONDS.toNanos(MAX_CONVERSION_SECONDS);
+                    + TimeUnit.SECONDS.toNanos(timeoutSeconds);
             while (!process.waitFor(200, TimeUnit.MILLISECONDS)) {
                 if (cancelled.getAsBoolean() || Thread.currentThread().isInterrupted()) {
                     throw new IOException("Conversión cancelada.");
                 }
                 if (System.nanoTime() - limit >= 0) {
-                    throw new IOException("La conversión superó cinco minutos.");
+                    throw new IOException(output == Output.VIDEO
+                            ? "La vista previa de vídeo tardó demasiado (75 s). "
+                              + "Abre el archivo con el reproductor del sistema."
+                            : "La conversión superó cinco minutos.");
                 }
             }
             if (cancelled.getAsBoolean()) throw new IOException("Conversión cancelada.");
             if (process.exitValue() != 0 || Files.size(temporary) == 0) {
-                throw new IOException("FFmpeg no pudo convertir este medio. "
-                        + "Comprueba los códecs de la instalación.");
+                throw new IOException("FFmpeg no pudo preparar este medio."
+                        + errorSummary(errorLog));
             }
             success = true;
             return temporary;
@@ -121,6 +120,49 @@ public final class MediaTranscoder {
         } finally {
             if (process != null && process.isAlive()) process.destroyForcibly();
             if (!success) deleteTemporary(temporary);
+            deleteTemporary(errorLog);
+        }
+    }
+
+    /**
+     * A short, low-resolution AVC Baseline/AAC segment is intentionally used
+     * rather than converting the entire reference into a temporary MP4.
+     * The source file is only read: output is always the given temp path.
+     */
+    static List<String> conversionCommand(Path source, Path temporary, Output output) {
+        List<String> args = new ArrayList<>(List.of(
+                executable(), "-hide_banner", "-nostdin", "-loglevel", "error",
+                "-y", "-protocol_whitelist", "file,pipe", "-i", source.toString()));
+        if (output == Output.AUDIO) {
+            args.addAll(List.of("-map", "0:a:0", "-vn", "-c:a",
+                    "libmp3lame", "-b:a", "160k"));
+        } else {
+            args.addAll(List.of("-t", Integer.toString(VIDEO_PREVIEW_SECONDS),
+                    "-map", "0:v:0", "-map", "0:a:0?",
+                    "-vf", "scale=w=960:h=540:force_original_aspect_ratio=decrease:force_divisible_by=2",
+                    "-r", "24",
+                    "-c:v", "libx264", "-preset", "ultrafast", "-crf", "27",
+                    "-profile:v", "baseline", "-level:v", "3.1",
+                    "-pix_fmt", "yuv420p",
+                    "-c:a", "aac", "-b:a", "128k", "-ar", "44100", "-ac", "2",
+                    "-movflags", "+faststart"));
+        }
+        args.addAll(List.of("-fs", Long.toString(MAX_OUTPUT_BYTES),
+                temporary.toString()));
+        return List.copyOf(args);
+    }
+
+    /** Bounded FFmpeg error output; no need to lose the cause of a failed conversion. */
+    private static String errorSummary(Path log) {
+        if (log == null) return " Comprueba los códecs de FFmpeg.";
+        try (var input = Files.newInputStream(log)) {
+            String detail = new String(input.readNBytes(2048), StandardCharsets.UTF_8)
+                    .replaceAll("[\\r\\n\\t]+", " ").trim();
+            if (detail.isEmpty()) return " Comprueba los códecs de FFmpeg.";
+            if (detail.length() > 300) detail = detail.substring(0, 300) + "…";
+            return " FFmpeg: " + detail;
+        } catch (IOException unreadable) {
+            return " Revisa la instalación de FFmpeg.";
         }
     }
 

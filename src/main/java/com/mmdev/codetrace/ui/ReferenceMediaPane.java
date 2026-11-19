@@ -10,6 +10,8 @@ import java.nio.file.Path;
 import java.util.Locale;
 import java.util.concurrent.atomic.AtomicReference;
 import javafx.concurrent.Task;
+import javafx.application.Platform;
+import javafx.scene.control.ProgressIndicator;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.geometry.Insets;
@@ -166,9 +168,23 @@ public final class ReferenceMediaPane extends BorderPane {
     private void convertAndPlay(Path original) {
         if (disposed || (conversion != null && !conversion.isDone())) return;
         releasePlayer();
-        message("Preparando vista multimedia mediante FFmpeg local…");
+        // A short segment should appear quickly, without transcoding the full
+        // reference movie before JavaFX can even attempt playback.
+        message("Preparando vista previa del vídeo…");
+        ProgressIndicator spinner = new ProgressIndicator();
+        spinner.setPrefSize(44, 44);
+        Label title = new Label(kindFor(original) == Kind.VIDEO
+                ? "Preparando los primeros " + MediaTranscoder.VIDEO_PREVIEW_SECONDS
+                    + " segundos con FFmpeg…"
+                : "Preparando audio con FFmpeg…");
+        title.setWrapText(true);
+        Label hint = new Label("El archivo original permanece intacto.");
+        VBox loading = new VBox(14, spinner, title, hint);
+        loading.setAlignment(Pos.CENTER);
+        loading.setPadding(new Insets(24));
+        setCenter(new StackPane(loading));
         Button cancel = new Button("Cancelar conversión");
-        HBox bar = new HBox(cancel);
+        HBox bar = new HBox(10, cancel, openOriginalButton(original));
         bar.setAlignment(Pos.CENTER_LEFT);
         bar.getStyleClass().add("media-playback-controls");
         setBottom(bar);
@@ -191,7 +207,8 @@ public final class ReferenceMediaPane extends BorderPane {
         conversion = task;
         cancel.setOnAction(event -> {
             task.cancel(true);
-            message("Conversión cancelada.");
+            message("Conversión cancelada. El archivo original sigue disponible.");
+            showOriginalAction(original);
         });
         task.setOnSucceeded(event -> {
             Path prepared = created.getAndSet(null);
@@ -208,8 +225,9 @@ public final class ReferenceMediaPane extends BorderPane {
         task.setOnFailed(event -> {
             MediaTranscoder.deleteTemporary(created.getAndSet(null));
             if (!disposed && conversion == task) {
-                message("No se pudo preparar este medio: "
+                message("No se pudo preparar la vista previa: "
                         + task.getException().getMessage());
+                showOriginalAction(original);
             }
         });
         Thread thread = new Thread(task, "codetrace-ffmpeg-preview");
@@ -312,14 +330,25 @@ public final class ReferenceMediaPane extends BorderPane {
             active.setVolume(0.8);
             volume.valueProperty().addListener((obs, before, now) ->
                     active.setVolume(now.doubleValue() / 100.0));
-            active.setOnError(() -> unsupportedMedia(original, converted));
+            active.setOnError(() -> unsupportedMedia(
+                    original, converted, active.getError()));
             HBox controls = new HBox(10, playPause, stop, seek, elapsed,
                     volumeIcon, volume);
             controls.getStyleClass().add("media-playback-controls");
             controls.setAlignment(Pos.CENTER_LEFT);
-            setBottom(controls);
+            if (converted && kindFor(original) == Kind.VIDEO) {
+                Label preview = new Label("Vista previa de "
+                        + MediaTranscoder.VIDEO_PREVIEW_SECONDS + " s · "
+                        + "el vídeo original no se ha modificado");
+                HBox full = new HBox(12, preview, openOriginalButton(original));
+                full.setAlignment(Pos.CENTER_LEFT);
+                full.setPadding(new Insets(3, 9, 5, 9));
+                setBottom(new VBox(4, controls, full));
+            } else {
+                setBottom(controls);
+            }
         } catch (MediaException | IllegalArgumentException problem) {
-            unsupportedMedia(original, converted);
+            unsupportedMedia(original, converted, problem);
         }
     }
 
@@ -340,17 +369,81 @@ public final class ReferenceMediaPane extends BorderPane {
             player.seek(Duration.millis(duration.toMillis() * percent / 100.0));
     }
 
-    private void unsupportedMedia(Path original, boolean converted) {
+    private void unsupportedMedia(Path original, boolean converted, Throwable reason) {
         if (disposed) return;
+        if (reason != null) {
+            // Include the underlying native-media failure in the diagnostic log.
+            System.err.println("[CodeTrace/media] JavaFX: "
+                    + reason.getClass().getSimpleName() + ": " + reason.getMessage());
+        }
         if (converted) {
             releasePlayer();
-            message("No se puede reproducir este medio con los códecs disponibles.");
+            MediaTranscoder.deleteTemporary(temporaryMedia);
+            temporaryMedia = null;
+            String detail = reason == null || reason.getMessage() == null ? ""
+                    : " Detalle: " + abbreviate(reason.getMessage(), 180);
+            message("La vista previa MP4 se preparó, pero JavaFX/Windows "
+                    + "no pudo reproducirla." + detail
+                    + " Abre el original con un reproductor compatible.");
+            showOriginalAction(original);
             return;
         }
         if (!recovering) {
             recovering = true;
             convertAndPlay(original);
         }
+    }
+
+    private static String abbreviate(String text, int maximum) {
+        String compact = text.replaceAll("[\\r\\n\\t]+", " ").trim();
+        return compact.length() > maximum
+                ? compact.substring(0, maximum) + "…" : compact;
+    }
+
+    private void showOriginalAction(Path original) {
+        HBox controls = new HBox(8, openOriginalButton(original));
+        controls.setAlignment(Pos.CENTER_LEFT);
+        controls.getStyleClass().add("media-playback-controls");
+        setBottom(controls);
+    }
+
+    /**
+     * Never launch another application automatically. This action is only
+     * performed after the user clicks the button.
+     */
+    private Button openOriginalButton(Path original) {
+        Button button = new Button("Abrir archivo completo en reproductor externo");
+        button.setTooltip(new Tooltip(
+                "Abre el archivo original con la aplicación predeterminada de Windows."));
+        button.setOnAction(event -> {
+            button.setDisable(true);
+            Thread open = new Thread(() -> {
+                try {
+                    if (!java.awt.Desktop.isDesktopSupported()
+                            || !java.awt.Desktop.getDesktop()
+                                    .isSupported(java.awt.Desktop.Action.OPEN)) {
+                        throw new IOException("El sistema no admite esta acción.");
+                    }
+                    java.awt.Desktop.getDesktop().open(original.toFile());
+                } catch (IOException | UnsupportedOperationException | SecurityException e) {
+                    Platform.runLater(() -> {
+                        if (!disposed) {
+                            message("No se pudo abrir el reproductor externo: "
+                                    + abbreviate(e.getMessage() == null
+                                            ? "operación no disponible" : e.getMessage(), 180));
+                            showOriginalAction(original);
+                        }
+                    });
+                } finally {
+                    Platform.runLater(() -> {
+                        if (!disposed) button.setDisable(false);
+                    });
+                }
+            }, "codetrace-external-media-open");
+            open.setDaemon(true);
+            open.start();
+        });
+        return button;
     }
 
     private void releasePlayer() {

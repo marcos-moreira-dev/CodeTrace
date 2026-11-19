@@ -279,3 +279,18 @@ no basta si uno de sus directorios ascendentes es un enlace simbólico.
 Enlaces hacia fuera de la referencia cuentan como divergencias, sin
 leer contenidos externos. Se añade prueba portátil, condicionada a
 que Windows permita crear enlaces simbólicos.
+
+## Vista previa rápida de MKV y otros vídeos externos
+
+Para medios que JavaFX no reproduce directamente, `MediaTranscoder`
+genera solo **30 segundos de vista previa**, a un máximo aproximado de
+960×540, H.264 Baseline/AAC y 24 fps. La conversión de un vídeo completo
+de varias horas ya no es un requisito para abrir la pestaña; su trabajo
+tiene además un plazo máximo de 75 segundos. El archivo original no se
+modifica. El usuario puede abrirlo entero con su reproductor predeterminado,
+siempre tras pulsar el botón de forma explícita.
+Los mensajes de error de FFmpeg se capturan en un temporal separado,
+acotados en longitud y eliminados al terminar, para diagnosticar códecs
+ausentes sin inundar la consola. El reproductor integrado sigue dependiendo
+de los códecs compatibles con JavaFX/Windows y puede fallar pese a que
+FFmpeg haya generado correctamente el MP4.

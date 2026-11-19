@@ -18,6 +18,25 @@ import org.junit.jupiter.api.io.TempDir;
 class MediaTranscoderTest {
     @TempDir Path temp;
 
+    @Test void videoUsesBoundedCompatiblePreviewRatherThanConvertingEntireMovie() {
+        var video = MediaTranscoder.conversionCommand(
+                temp.resolve("long movie[1].mkv"), temp.resolve("sample.mp4"),
+                MediaTranscoder.Output.VIDEO);
+        int duration = video.indexOf("-t");
+        assertTrue(duration > 0);
+        assertEquals("30", video.get(duration + 1));
+        assertEquals("baseline", video.get(video.indexOf("-profile:v") + 1));
+        assertEquals("yuv420p", video.get(video.indexOf("-pix_fmt") + 1));
+        assertEquals("+faststart", video.get(video.indexOf("-movflags") + 1));
+        assertTrue(video.contains("scale=w=960:h=540:force_original_aspect_ratio=decrease:force_divisible_by=2"));
+        assertEquals(temp.resolve("sample.mp4").toString(), video.getLast());
+
+        var audio = MediaTranscoder.conversionCommand(
+                temp.resolve("voice.ogg"), temp.resolve("sample.mp3"),
+                MediaTranscoder.Output.AUDIO);
+        assertFalse(audio.contains("-t"), "Audio conversion keeps its original duration");
+    }
+
     @Test void classifiesMediaThatJavaFxCannotAlwaysDecode() {
         assertTrue(MediaTranscoder.needsConversion(Path.of("voice.FLAC")));
         assertTrue(MediaTranscoder.needsConversion(Path.of("video.MKV")));

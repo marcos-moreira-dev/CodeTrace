@@ -470,3 +470,16 @@ Consulta también [Auditoría de cierre](AUDITORIA-CIERRE-2026-11.md).
   debe ejecutarse uno.
 - Al cambiar de proyecto durante el comando, comprobar que no se agregan
   líneas de salida antiguas a la nueva consola.
+
+## MEDIA-QUICK-PREVIEW — MKV largo y códecs del sistema
+
+- Abrir un MKV largo: CodeTrace indica que prepara **solo 30 segundos**
+  y no debe convertir la película completa ni crear un archivo en Descargas.
+- Probar vídeo 4K o de tasa de cuadros alta: salida temporal limitada
+  a 960×540 / 24 fps y cancelación utilizable.
+- Si JavaFX no admite el MP4 convertido, mostrar mensaje específico y
+  botón para abrir el original con el reproductor del sistema.
+- Cancelar la conversión, cerrar la pestaña y comprobar la limpieza
+  de archivos `codetrace-preview-*` temporales.
+- Archivo sin vídeo válido o FFmpeg sin `libx264`: informar el error
+  recogido de FFmpeg, sin bloquear indefinidamente la aplicación.
