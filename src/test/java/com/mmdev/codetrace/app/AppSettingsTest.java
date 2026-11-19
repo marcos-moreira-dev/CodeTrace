@@ -29,20 +29,21 @@ class AppSettingsTest {
     }
 
     @Test
-    void readOnlyNoticeCanBeTurnedOffAndSurvivesOtherChanges() {
+    void readOnlyNoticeStartsEnabledAndCanBeReenabledAfterOptOut() {
         AppSettings original = new AppSettings("Consolas", 16, true,
                 "LATAM", false, 70, false, true);
-        assertFalse(original.readOnlyNotice(),
-                "Consultation popups should be opt-in, not interrupt every file");
-        AppSettings enabled = original.withReadOnlyNotice(true);
-        assertTrue(enabled.readOnlyNotice());
-        assertTrue(enabled.withLayout("US").readOnlyNotice());
-        assertTrue(enabled.withTurbo(true).readOnlyNotice());
-        assertTrue(enabled.withCompletionDialog(false).readOnlyNotice());
-        assertTrue(enabled.withGraphLayoutMode(
+        assertTrue(original.readOnlyNotice(),
+                "New installations should explain consultation before an opt-out");
+        AppSettings suppressed = original.withReadOnlyNotice(false);
+        assertFalse(suppressed.readOnlyNotice());
+        assertFalse(suppressed.withLayout("US").readOnlyNotice());
+        assertFalse(suppressed.withTurbo(true).readOnlyNotice());
+        assertFalse(suppressed.withCompletionDialog(false).readOnlyNotice());
+        assertFalse(suppressed.withGraphLayoutMode(
                 com.mmdev.codetrace.reference.GraphLayoutEngine.Mode.GRID)
                 .readOnlyNotice());
-        assertFalse(enabled.withReadOnlyNotice(false).readOnlyNotice());
+        assertTrue(suppressed.withReadOnlyNotice(true).readOnlyNotice(),
+                "The notice must be restorable from Preferences");
     }
 
     @Test
