@@ -51,6 +51,8 @@ public final class FileTypeIcons {
                 || name.endsWith(".zsh")) return font("fth-terminal", "#536A77");
         if (name.endsWith(".bat") || name.endsWith(".cmd"))
             return font("fth-terminal", "#517A66");
+        if (name.endsWith(".asm") || name.endsWith(".nasm"))
+            return badge("ASM", "#6A5B90");
         if (name.endsWith(".rs")) return font("di-rust", "#5D6266");
         if (name.endsWith(".svg") || name.endsWith(".bmp")
                 || name.endsWith(".ico") || name.endsWith(".tiff")

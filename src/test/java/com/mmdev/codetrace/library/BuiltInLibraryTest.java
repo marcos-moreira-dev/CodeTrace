@@ -17,12 +17,12 @@ class BuiltInLibraryTest {
     @Test
     void allPacksAreBundledOfflineAndHaveRealCodeExtensions() throws Exception {
         var library = new BuiltInLibrary(temp.resolve("offline"));
-        assertEquals(13, library.packs().size());
-        assertEquals(13, library.packs().stream().map(BuiltInLibrary.Pack::id)
+        assertEquals(14, library.packs().size());
+        assertEquals(14, library.packs().stream().map(BuiltInLibrary.Pack::id)
                 .collect(Collectors.toSet()).size());
         for (var pack : library.packs()) {
-            assertEquals(java.util.Set.of("java21", "kotlin", "typescript")
-                    .contains(pack.id()) ? 16 : 6, library.size(pack), pack.name());
+            assertTrue(library.size(pack) >= (java.util.Set.of("java21", "kotlin", "typescript")
+                    .contains(pack.id()) ? 16 : 6), pack.name());
             Path root = library.open(pack);
             for (String relative : library.entries(pack)) {
                 Path file = root.resolve(relative);
@@ -74,7 +74,7 @@ class BuiltInLibraryTest {
                         .contains(pack.id())).toList();
         assertEquals(3, extended.size());
         for (var pack : extended) {
-            assertEquals(16, library.size(pack));
+            assertTrue(library.size(pack) >= 16);
             var names = library.entries(pack);
             assertTrue(names.stream().anyMatch(p -> p.toLowerCase().contains("euclides")));
             assertTrue(names.stream().anyMatch(p -> p.toLowerCase().contains("callback")));

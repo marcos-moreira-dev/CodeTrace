@@ -46,7 +46,8 @@ public final class BuiltInLibrary {
             new Pack("ruby", "Ruby", ".rb"),
             new Pack("powershell", "PowerShell", ".ps1"),
             new Pack("shell", "Shell (Linux)", ".sh"),
-            new Pack("cmd", "Windows CMD", ".cmd")
+            new Pack("cmd", "Windows CMD", ".cmd"),
+            new Pack("nasm-x64", "Ensamblador NASM x86-64 (Intel)", ".asm")
     );
 
     private final Path cacheRoot;

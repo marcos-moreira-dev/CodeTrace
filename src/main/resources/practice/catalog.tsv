@@ -107,3 +107,12 @@ cmd	03-funciones/subrutinas.cmd
 cmd	05-algoritmos/euclides.cmd
 cmd	05-algoritmos/contar.cmd
 cmd	06-flujos/callbacks.cmd
+
+nasm-x64	01-sintaxis/registros.asm
+nasm-x64	02-control/bucles.asm
+nasm-x64	03-procedimientos/pila.asm
+nasm-x64	04-estructuras/arreglo.asm
+nasm-x64	05-algoritmos/euclides.asm
+nasm-x64	05-algoritmos/fibonacci.asm
+nasm-x64	06-sistema/hola_linux.asm
+nasm-x64	07-proyectos/contador/contador.asm
