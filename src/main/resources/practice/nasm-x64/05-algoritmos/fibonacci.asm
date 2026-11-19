@@ -7,15 +7,15 @@ global fibonacci
 
 fibonacci:
     xor rax, rax
-    mov rbx, 1
+    mov r8, 1
     xor rcx, rcx
 .bucle:
     cmp rcx, rdi
     jge .fin
     mov rdx, rax
-    add rdx, rbx
-    mov rax, rbx
-    mov rbx, rdx
+    add rdx, r8
+    mov rax, r8
+    mov r8, rdx
     inc rcx
     jmp .bucle
 .fin:
