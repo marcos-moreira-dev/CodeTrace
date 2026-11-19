@@ -210,18 +210,22 @@ public final class CodeTraceApp extends Application {
         openReference.setAccelerator(new KeyCodeCombination(
                 KeyCode.O, KeyCombination.SHORTCUT_DOWN));
         openReference.setOnAction(event -> chooseReference());
-        MenuItem openSession = new MenuItem("Abrir sesión...");
+        MenuItem openFile = new MenuItem("Abrir archivo...");
+        openFile.setOnAction(event -> chooseFile());
+        MenuItem openSession = new MenuItem("Abrir proyecto CodeTrace (.ctrace)...");
         openSession.setOnAction(event -> openSession());
-        MenuItem save = new MenuItem("Guardar sesión");
+        MenuItem save = new MenuItem("Guardar proyecto");
         save.setAccelerator(new KeyCodeCombination(
                 KeyCode.S, KeyCombination.SHORTCUT_DOWN));
         save.setOnAction(event -> saveSession(false));
-        MenuItem saveAs = new MenuItem("Guardar sesión como...");
+        MenuItem saveAs = new MenuItem("Guardar proyecto como...");
         saveAs.setOnAction(event -> saveSession(true));
         MenuItem quit = new MenuItem("Salir");
         quit.setOnAction(event -> stage.close());
         Menu fileMenu = new Menu("Archivo", null,
-                openReference, openSession, save, saveAs, quit);
+                openReference, openFile, openSession,
+                new javafx.scene.control.SeparatorMenuItem(),
+                save, saveAs, quit);
 
         explorerToggle = new CheckMenuItem("Explorador");
         explorerToggle.setSelected(settings.showExplorer());
@@ -312,10 +316,22 @@ public final class CodeTraceApp extends Application {
         MenuBar menu = new MenuBar(
                 fileMenu, practiceMenu, viewMenu, toolsMenu, helpMenu);
         Button openButton = ToolbarIcons.button(
-                "Abrir", ToolbarIcons.Icon.OPEN, "Abrir carpeta de referencia");
+                "Abrir referencia", ToolbarIcons.Icon.OPEN,
+                "Abrir una carpeta de referencia para explorar y practicar");
         openButton.setOnAction(event -> chooseReference());
+        Button openFileButton = new Button("Abrir archivo", new FontIcon("fth-file-text"));
+        openFileButton.getStyleClass().add("toolbar-action");
+        openFileButton.setTooltip(new Tooltip(
+                "Abrir un archivo; fuera de la referencia se consulta en solo lectura"));
+        openFileButton.setOnAction(event -> chooseFile());
+        Button openProjectButton = new Button("Abrir proyecto", new FontIcon("fth-layers"));
+        openProjectButton.getStyleClass().add("toolbar-action");
+        openProjectButton.setTooltip(new Tooltip(
+                "Restaurar un proyecto CodeTrace guardado (.ctrace)"));
+        openProjectButton.setOnAction(event -> openSession());
         Button saveButton = ToolbarIcons.button(
-                "Guardar", ToolbarIcons.Icon.SAVE, "Guardar sesión CodeTrace");
+                "Guardar proyecto", ToolbarIcons.Icon.SAVE,
+                "Guardar progreso y estructura virtual como proyecto .ctrace");
         saveButton.setOnAction(event -> saveSession(false));
         refreshButton.setDisable(true);
         refreshButton.getStyleClass().add("tree-header-action");
@@ -348,7 +364,8 @@ public final class CodeTraceApp extends Application {
         tabsActions.setGraphic(new FontIcon("fth-layers"));
         tabsActions.setTooltip(new Tooltip("Administrar pestañas abiertas"));
         installTabActions();
-        ToolBar toolbar = new ToolBar(openButton, saveButton,
+        ToolBar toolbar = new ToolBar(openButton, openFileButton,
+                openProjectButton, saveButton,
                 new Separator(Orientation.VERTICAL), progressFilter, symbols,
                 new Separator(Orientation.VERTICAL), tabsActions, consoleButton);
         top.getChildren().addAll(menu, toolbar);
@@ -606,6 +623,32 @@ public final class CodeTraceApp extends Application {
         }
     }
 
+    /**
+     * Single-file entry point: use the current reference if the file belongs
+     * to it; otherwise open an independent, immutable consultation tab.
+     * Never replace or discard the active project to inspect one loose file.
+     */
+    private void chooseFile() {
+        FileChooser chooser = new FileChooser();
+        chooser.setTitle("Abrir archivo");
+        if (reference != null && Files.isDirectory(reference))
+            chooser.setInitialDirectory(reference.toFile());
+        java.io.File chosen = chooser.showOpenDialog(stage);
+        if (chosen == null) return;
+        Path file = chosen.toPath().toAbsolutePath().normalize();
+        if (file.getFileName().toString().toLowerCase(java.util.Locale.ROOT)
+                .endsWith(".ctrace")) {
+            openSession(file);
+        } else if (reference != null && file.startsWith(reference)
+                && Files.isRegularFile(file)) {
+            openForPractice(file);
+        } else if (Files.isRegularFile(file)) {
+            openReadOnlyFile(file, file.getParent());
+        } else {
+            setStatus("El archivo seleccionado no está disponible.");
+        }
+    }
+
     private void openPracticeLibrary() {
         final BuiltInLibrary library;
         try {
@@ -749,9 +792,10 @@ public final class CodeTraceApp extends Application {
                 return;
             }
             openTextReference(file, relative);
-            javafx.application.Platform.runLater(() ->
-                    ProductDialogs.information(stage, "Archivo de consulta",
-                            "No requiere práctica de mecanografía."));
+            if (settings.readOnlyNotice())
+                javafx.application.Platform.runLater(() ->
+                        ProductDialogs.information(stage, "Archivo de consulta",
+                                "No requiere práctica de mecanografía."));
             return;
         }
         try {
@@ -879,6 +923,10 @@ public final class CodeTraceApp extends Application {
             setStatus("La carpeta de consulta ya no contiene ese archivo.");
             return;
         }
+        openReadOnlyFile(file, folder);
+    }
+
+    private void openReadOnlyFile(Path file, Path folder) {
         String key = "consulta://" + file.toAbsolutePath().normalize();
         Tab existing = documents.find(key);
         if (existing != null) {
@@ -1570,7 +1618,7 @@ public final class CodeTraceApp extends Application {
         // Read before confirmation: invalid archives never discard active work.
         // Never let an older load replace a newer request while a chooser is open.
         sessionLoader.cancel();
-        FileChooser chooser = sessionChooser("Abrir sesión CodeTrace");
+        FileChooser chooser = sessionChooser("Abrir proyecto CodeTrace (.ctrace)");
         java.io.File selected = chooser.showOpenDialog(stage);
         if (selected == null) return;
 
@@ -1582,7 +1630,7 @@ public final class CodeTraceApp extends Application {
         sessionLoader.cancel();
         Path archive = selectedArchive.toAbsolutePath().normalize();
         long request = referenceRequest;
-        setStatus("Leyendo sesión " + archive.getFileName() + "...");
+        setStatus("Abriendo proyecto " + archive.getFileName() + "...");
         sessionLoader.submit(() -> SessionArchive.load(archive), state -> {
             if (request != referenceRequest) return;
             Path restoredReference = state.referenceRoot();
@@ -1605,7 +1653,7 @@ public final class CodeTraceApp extends Application {
                     restoredReference, archive, state), true);
         }, error -> {
             if (request == referenceRequest)
-                showFailure("No se pudo abrir la sesión", error.getMessage());
+                showFailure("No se pudo abrir el proyecto", error.getMessage());
         }, "codetrace-session-loader");
     }
 
@@ -1616,7 +1664,7 @@ public final class CodeTraceApp extends Application {
         }
         Path destination = sessionFile;
         if (destination == null || forceAs) {
-            FileChooser chooser = sessionChooser("Guardar sesión CodeTrace");
+            FileChooser chooser = sessionChooser("Guardar proyecto CodeTrace (.ctrace)");
             chooser.setInitialFileName(reference.getFileName() + ".ctrace");
             java.io.File selected = chooser.showSaveDialog(stage);
             if (selected == null) {
@@ -1634,7 +1682,7 @@ public final class CodeTraceApp extends Application {
             sessionFile = destination;
             dirty = false;
             updateTitle();
-            setStatus("Sesión guardada: " + destination.getFileName());
+            setStatus("Proyecto guardado: " + destination.getFileName());
             return true;
         } catch (IOException failure) {
             showFailure("No se pudo guardar la sesión", failure.getMessage());
@@ -1757,7 +1805,7 @@ public final class CodeTraceApp extends Application {
                 settings.showExplorer(), settings.keyboardLayout(), settings.typingSounds(),
                 settings.templateOpacity(), settings.turboMode(),
                 settings.completionSound(), settings.completionDialog(),
-                settings.graphLayoutMode());
+                settings.readOnlyNotice(), settings.graphLayoutMode());
         settings.save();
         for (Tab tab : tabs.getTabs()) {
             if (tab.getContent() instanceof TypingEditor editor) {
@@ -1775,7 +1823,7 @@ public final class CodeTraceApp extends Application {
         settings = new AppSettings(next.fontFamily(), next.fontSize(),
                 next.showExplorer(), settings.keyboardLayout(), next.typingSounds(),
                 next.templateOpacity(), next.turboMode(), next.completionSound(),
-                next.completionDialog(), next.graphLayoutMode());
+                next.completionDialog(), next.readOnlyNotice(), next.graphLayoutMode());
         settings.save();
         consolePane.resetExecutionAcknowledgement();
         turboToggle.setSelected(settings.turboMode());
