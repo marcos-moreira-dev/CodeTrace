@@ -95,6 +95,8 @@ public final class ProjectCommandStore {
                 presets.add(new Preset(in.readUTF(), Shell.valueOf(in.readUTF()),
                         in.readUTF(), in.readUTF()));
             }
+            if (in.read() != -1)
+                throw new IOException("Unexpected trailing command configuration data");
             return List.copyOf(presets);
         } catch (IllegalArgumentException malformed) {
             throw new IOException("Invalid command entry", malformed);

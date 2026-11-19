@@ -67,7 +67,7 @@ public final class ProjectSearchWindow {
         expression.setOnAction(event -> runSearch());
         search.setDefaultButton(true);
         search.setOnAction(event -> runSearch());
-        stop.setOnAction(event -> cancel());
+        stop.setOnAction(event -> cancelByUser());
         stop.setDisable(true);
         HBox form = new HBox(8, new Label("Qué buscar"), expression, search, stop);
         form.setAlignment(Pos.CENTER_LEFT);
@@ -118,7 +118,7 @@ public final class ProjectSearchWindow {
         // Escape first cancels a running search; otherwise closes the tool.
         scene.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
             if (event.getCode() == KeyCode.ESCAPE) {
-                if (active != null) cancel();
+                if (active != null) cancelByUser();
                 else stage.hide();
                 event.consume();
             } else if (event.getCode() == KeyCode.ENTER && event.isControlDown()) {
@@ -252,6 +252,11 @@ public final class ProjectSearchWindow {
         active = null;
         search.setDisable(false);
         stop.setDisable(true);
+    }
+
+    private void cancelByUser() {
+        cancel();
+        state.setText("Búsqueda cancelada.");
     }
 
     private void cancel() {

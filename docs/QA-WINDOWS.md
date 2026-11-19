@@ -444,3 +444,11 @@ Consulta también [Auditoría de cierre](AUDITORIA-CIERRE-2026-11.md).
   pulsar Buscar: mostrar el error de validación, no coincidencias antiguas.
 - Pulsar Detener durante una búsqueda y repetir con otro patrón: los
   callbacks del trabajo cancelado no deben repoblar la lista.
+
+## COMMAND-CONFIG / SEARCH-CANCEL — regresión
+
+- Añadir datos sobrantes a un archivo `.ctcmd` de prueba: CodeTrace debe
+  rechazar la configuración, sin ejecutar sus comandos ni modificar
+  archivos dentro del proyecto original.
+- Iniciar una búsqueda lenta y pulsar «Detener» o Escape: mostrar
+  «Búsqueda cancelada» y no recuperar resultados tardíos.

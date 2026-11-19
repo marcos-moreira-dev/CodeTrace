@@ -255,3 +255,9 @@ reconstrucción de elementos virtuales, sesiones, ranuras de caracteres,
 huellas y posiciones del grafo, y tras leer campos de texto grandes.
 La cancelación produce `CancellationException` en vez de devolver un
 estado parcialmente recuperado; el archivo original queda intacto.
+
+## Integridad de preferencias de comandos
+
+`ProjectCommandStore.load` exige consumir todo el documento binario
+versionado `.ctcmd`; bytes sobrantes implican corrupción y se rechazan
+con `IOException`. No se ejecuta ningún comando al cargar preferencias.
