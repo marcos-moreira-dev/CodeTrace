@@ -510,6 +510,15 @@ public final class ReferenceMediaPane extends BorderPane {
                         ? "Vídeo por partes · solo lectura"
                         : (converted ? "Vídeo listo" : "Vídeo de referencia"));
                 HBox full = new HBox(12, preview);
+                if (streaming != null) {
+                    Button fullConversion = new Button("Conversión completa");
+                    fullConversion.setTooltip(new Tooltip(
+                            "Alternativa si la reproducción por partes no funciona. "
+                            + "Prepara todo el vídeo y puede tardar unos minutos."));
+                    fullConversion.setOnAction(event -> convertAndPlay(
+                            original, MediaTranscoder.Output.VIDEO));
+                    full.getChildren().add(fullConversion);
+                }
                 if (streaming == null && (!converted || conversionMode == MediaTranscoder.Output.VIDEO_REMUX)) {
                     // JavaFX can output audio without surfacing a video-decoding
                     // error. Expose recovery even if its error callback never runs.
