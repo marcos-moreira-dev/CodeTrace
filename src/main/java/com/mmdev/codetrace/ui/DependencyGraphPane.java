@@ -4,7 +4,9 @@ import com.mmdev.codetrace.reference.GraphLayout;
 import com.mmdev.codetrace.reference.GraphLayoutEngine;
 import com.mmdev.codetrace.reference.ProjectDependencyGraph;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Consumer;
 import javafx.application.Platform;
 import javafx.geometry.Point2D;
@@ -44,6 +46,7 @@ public final class DependencyGraphPane extends BorderPane {
     private final IntegerProperty zoomPercent = new SimpleIntegerProperty(100);
     private GraphLayoutEngine.Mode layoutMode;
     private String selected;
+    private Set<String> selectedNeighbors = Set.of();
     private String pressed;
     private GraphLayout.Point initialPosition;
     private double pressX, pressY;
@@ -172,8 +175,7 @@ public final class DependencyGraphPane extends BorderPane {
         });
         canvas.setOnMouseReleased(event -> {
             if (pressed != null && moved) {
-                selected = pressed;
-                onNodeSelected.accept(selected);
+                selectNode(pressed);
                 notifyLayoutChanged();
                 // Growth happens AFTER release, retaining absolute scroll
                 // offsets; it never interferes with the drag gesture.
@@ -194,11 +196,9 @@ public final class DependencyGraphPane extends BorderPane {
                 return;
             }
             String node = pickNode(event.getX(), event.getY());
-            if (node == null) return;
-            selected = node;
-            onNodeSelected.accept(node);
-            redraw();
-            if (event.getClickCount() == 2) openSource.accept(node);
+            // A click on empty workspace clears the previous selection.
+            selectNode(node);
+            if (node != null && event.getClickCount() == 2) openSource.accept(node);
             event.consume();
         });
         scroll.addEventFilter(javafx.scene.input.ScrollEvent.SCROLL, event -> {
@@ -273,6 +273,34 @@ public final class DependencyGraphPane extends BorderPane {
     }
     public GraphLayoutEngine.Mode getLayoutMode() { return layoutMode; }
     public String getSelectedNode() { return selected; }
+
+    /** Distinct directly connected neighbors, regardless of arrow direction. */
+    public Set<String> getSelectedNeighbors() {
+        return selectedNeighbors;
+    }
+
+    public void clearSelection() {
+        selectNode(null);
+    }
+
+    private void selectNode(String path) {
+        if (path != null && !layout.containsKey(path)) return;
+        selected = path;
+        if (path == null) {
+            selectedNeighbors = Set.of();
+        } else {
+            Set<String> neighbors = new LinkedHashSet<>();
+            for (var edge : model.edges()) {
+                if (edge.source().equals(path) && !edge.target().equals(path))
+                    neighbors.add(edge.target());
+                if (edge.target().equals(path) && !edge.source().equals(path))
+                    neighbors.add(edge.source());
+            }
+            selectedNeighbors = Set.copyOf(neighbors);
+        }
+        onNodeSelected.accept(path);
+        redraw();
+    }
     public double getCanvasWidth() { return canvas.getWidth(); }
     public double getCanvasHeight() { return canvas.getHeight(); }
     public boolean isPannableByScrollPane() { return scroll.isPannable(); }
@@ -366,8 +394,10 @@ public final class DependencyGraphPane extends BorderPane {
             GraphLayout.Point a = layout.get(edge.source());
             GraphLayout.Point b = layout.get(edge.target());
             if (a == null || b == null) continue;
-            boolean related = edge.source().equals(selected) || edge.target().equals(selected);
-            g.setStroke(Color.web(related ? "#477c9f" : "#c1d2dd"));
+            boolean related = selected != null
+                    && (edge.source().equals(selected) || edge.target().equals(selected));
+            g.setStroke(Color.web(related ? "#168a97" : "#c1d2dd"));
+            g.setLineWidth(related ? 2.05 : 1.1);
             g.strokeLine(a.x(), a.y(), b.x(), b.y());
             double angle = Math.atan2(b.y() - a.y(), b.x() - a.x());
             double tipX = b.x() - NODE_RADIUS * Math.cos(angle);
@@ -379,24 +409,28 @@ public final class DependencyGraphPane extends BorderPane {
                     tipX - 7 * Math.cos(angle + 0.50),
                     tipY - 7 * Math.sin(angle + 0.50));
         }
+        g.setLineWidth(1.15);
         // Draw labels last on opaque backing so crisscrossing edges never
         // obscure their text, even in graphs with high-degree hubs.
         for (String path : model.nodes()) {
             GraphLayout.Point p = layout.get(path);
             if (p == null) continue;
             boolean active = path.equals(selected);
+            boolean neighbor = selectedNeighbors.contains(path);
             String label = path.substring(path.lastIndexOf('/') + 1);
             if (label.length() > 35) label = label.substring(0, 32) + "...";
             double labelWidth = Math.min(241, Math.max(70, label.length() * 6.5 + 12));
-            g.setFill(Color.web(active ? "#e8f0f6" : "#f8fafb"));
+            g.setFill(Color.web(active ? "#ede9fb" : neighbor ? "#dff6f5" : "#f8fafb"));
             g.fillRect(p.x() + 14, p.y() - 13, labelWidth, 26);
-            g.setFill(Color.web(active ? "#c36c31" : "#4b7593"));
+            // Purple = selected, teal = direct neighbor, slate = unrelated.
+            g.setFill(Color.web(active ? "#7254b5" : neighbor ? "#07919a" : "#4b7593"));
             g.fillOval(p.x() - NODE_RADIUS, p.y() - NODE_RADIUS, NODE_RADIUS * 2,
                     NODE_RADIUS * 2);
             g.setStroke(Color.WHITE);
             g.strokeOval(p.x() - NODE_RADIUS, p.y() - NODE_RADIUS,
                     NODE_RADIUS * 2, NODE_RADIUS * 2);
-            g.setFill(Color.web("#263f51"));
+            g.setFill(Color.web(active ? "#423174"
+                    : neighbor ? "#135e68" : "#263f51"));
             g.setFont(Font.font("Segoe UI", active ? 13 : 12));
             g.fillText(label, p.x() + 20, p.y() + 4, 226);
         }
