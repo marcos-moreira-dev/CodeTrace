@@ -318,7 +318,7 @@ public final class CodeTraceApp extends Application {
 
         Label projectHeading = new Label("Proyecto");
         projectHeading.getStyleClass().add("sidebar-title");
-        onlySelectedFolder = new CheckBox("Solo");
+        onlySelectedFolder = com.mmdev.codetrace.ui.AppControls.checkBox("Solo");
         onlySelectedFolder.getStyleClass().add("tree-scope-checkbox");
         onlySelectedFolder.setTooltip(new Tooltip(
                 "Contabiliza solo la carpeta activa. Selecciona otra carpeta para cambiar "
@@ -334,7 +334,7 @@ public final class CodeTraceApp extends Application {
                 setProgressFolder("");
             }
         });
-        excludeSelectedFolder = new CheckBox("Excluir del progreso");
+        excludeSelectedFolder = com.mmdev.codetrace.ui.AppControls.checkBox("Excluir del progreso");
         excludeSelectedFolder.getStyleClass().add("tree-exclude-checkbox");
         excludeSelectedFolder.setDisable(true);
         excludeSelectedFolder.setTooltip(new Tooltip(
@@ -1319,7 +1319,7 @@ public final class CodeTraceApp extends Application {
 
     /** Persistent filter gallery: checkboxes do NOT close after each click. */
     private void installProgressFilters() {
-        allScopes = new CheckBox("Todos");
+        allScopes = com.mmdev.codetrace.ui.AppControls.checkBox("Todos");
         allScopes.getStyleClass().add("scope-all");
         Label contentCaption = new Label("CONTENIDO EVALUADO");
         contentCaption.getStyleClass().add("palette-caption");
@@ -1330,7 +1330,7 @@ public final class CodeTraceApp extends Application {
         Label writingCaption = new Label("AYUDAS DE ESCRITURA");
         writingCaption.getStyleClass().add("palette-caption");
         skipImportsButton.setText("Omitir imports de Java (archivo actual)");
-        autoCreateCheck = new CheckBox("Autocrear archivos y carpetas");
+        autoCreateCheck = com.mmdev.codetrace.ui.AppControls.checkBox("Autocrear archivos y carpetas");
         autoCreateCheck.setTooltip(new Tooltip(
                 "Al activar, recrea virtualmente las carpetas y los archivos de referencia "
                 + "(excepto cachés y compilados). Creado no significa completado."));
@@ -1365,7 +1365,7 @@ public final class CodeTraceApp extends Application {
     }
 
     private void addFilterOption(VBox parent, String label, ProgressScope.Category category) {
-        CheckBox control = new CheckBox(label);
+        CheckBox control = com.mmdev.codetrace.ui.AppControls.checkBox(label);
         control.setSelected(progressScope.includes(category));
         control.setOnAction(event -> {
             progressScope = progressScope.with(category, control.isSelected());
