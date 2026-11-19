@@ -502,3 +502,17 @@ Consulta también [Auditoría de cierre](AUDITORIA-CIERRE-2026-11.md).
   gran zona vacía, y seguir mostrando Sí, No y Cancelar completos.
 - Provocar un mensaje largo de error: el texto debe desplazarse dentro
   del diálogo sin recortar el botón de aceptación, incluso a DPI 150 %.
+
+## MEDIA-SEEK-ANYWHERE — barra temporal y navegación aleatoria
+
+- Con un MP4 completamente preparado de dos minutos, hacer clic en el
+  10 %, 50 % y 95 % de **la pista**, lejos del cuadradito: debe saltar
+  directamente al instante proporcional, sin avances por incrementos.
+- Arrastrar el pulgar y soltarlo: debe mantenerse el comportamiento de
+  arrastre y el tiempo reflejado en la etiqueta.
+- Hacer clic tras pausar y tras pulsar Detener: el salto no debe
+  volver a transcodificar FFmpeg ni alterar el archivo de referencia.
+- Usar flechas, Inicio y Fin con el control enfocado. Comprobar también
+  funcionamiento con el ancho de panel estrecho y a 150 % de DPI.
+- El salto dentro de un MP4 completo no implica generación de segmentos;
+  la reproducción HLS progresiva sigue siendo una mejora futura.

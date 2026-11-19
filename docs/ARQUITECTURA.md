@@ -312,3 +312,13 @@ comprueba el espacio disponible antes de copiar. El FFmpeg externo
 mantiene mensajes de error acotados en un temporal eliminado al terminar.
 No se introduce vlcj porque requeriría una evaluación explícita de
 las condiciones GPL para el producto.
+
+## Salto directo en la línea de tiempo
+
+El control `Slider` de reproducción intercepta clics en la pista,
+calculando la posición relativa a los límites reales del track y
+llamando a `MediaPlayer.seek`. El pulgar conserva su arrastre habitual;
+teclado y estado STOPPED están contemplados. No se ejecuta FFmpeg al
+saltar por un MP4 que ya se preparó. Un `MediaPlayer` no se trata como
+reproductor de un archivo temporal MP4 que sigue siendo escrito:
+reproducción por segmentos HLS requiere un pipeline aparte y sus pruebas.

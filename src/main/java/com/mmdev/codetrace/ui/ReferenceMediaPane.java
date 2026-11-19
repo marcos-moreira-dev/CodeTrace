@@ -15,13 +15,18 @@ import javafx.scene.control.ProgressIndicator;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.geometry.Insets;
+import javafx.geometry.Bounds;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.VBox;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.input.KeyCode;
 import org.kordamp.ikonli.javafx.FontIcon;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -331,6 +336,10 @@ public final class ReferenceMediaPane extends BorderPane {
             });
             Slider seek = new Slider(0, 100, 0);
             seek.getStyleClass().add("media-timeline-slider");
+            seek.setAccessibleText("Posición del vídeo o audio");
+            seek.setTooltip(new Tooltip(
+                    "Haz clic en cualquier punto de la barra para saltar; "
+                    + "arrastra el control para ajustar la posición."));
             HBox.setHgrow(seek, Priority.ALWAYS);
             Label elapsed = new Label("0:00 / 0:00");
             elapsed.getStyleClass().add("media-time-label");
@@ -343,10 +352,37 @@ public final class ReferenceMediaPane extends BorderPane {
             active.totalDurationProperty().addListener((obs, before, now) ->
                     elapsed.setText(formatTime(active.getCurrentTime())
                             + " / " + formatTime(now)));
+            // JavaFX's default track click only moves by blockIncrement;
+            // it does not jump straight to the clicked timestamp. Intercept
+            // track presses (but not thumb presses) for exact point seeking.
+            seek.addEventFilter(MouseEvent.MOUSE_PRESSED, event -> {
+                if (event.getButton() != MouseButton.PRIMARY) return;
+                if (!(event.getTarget() instanceof Node target)) return;
+                for (Node node = target; node != null && node != seek;
+                     node = node.getParent()) {
+                    if (node.getStyleClass().contains("thumb")) return;
+                    if (!node.getStyleClass().contains("track")) continue;
+                    Bounds track = node.localToScene(node.getBoundsInLocal());
+                    double percent = percentAtTrack(
+                            event.getSceneX(), track.getMinX(), track.getWidth());
+                    seek.setValue(percent);
+                    seekPlayer(active, percent);
+                    event.consume(); // Prevent a second, incremental track jump.
+                    return;
+                }
+            });
+            // Thumb dragging commits on release. Arrow/Home/End keys also seek.
             seek.valueChangingProperty().addListener((obs, before, now) -> {
                 if (!now) seekPlayer(active, seek.getValue());
             });
-            seek.setOnMouseReleased(event -> seekPlayer(active, seek.getValue()));
+            seek.setOnKeyReleased(event -> {
+                KeyCode key = event.getCode();
+                if (key == KeyCode.LEFT || key == KeyCode.RIGHT
+                        || key == KeyCode.HOME || key == KeyCode.END
+                        || key == KeyCode.PAGE_UP || key == KeyCode.PAGE_DOWN) {
+                    seekPlayer(active, seek.getValue());
+                }
+            });
             active.setOnEndOfMedia(() -> {
                 active.stop();
                 seek.setValue(0);
@@ -408,10 +444,31 @@ public final class ReferenceMediaPane extends BorderPane {
         return String.format(Locale.ROOT, "%d:%02d", seconds / 60, seconds % 60);
     }
 
+    /** Map a click on the *track*, not the whole Slider with its thumb margin. */
+    static double percentAtTrack(double sceneX, double trackStart, double trackWidth) {
+        if (!Double.isFinite(sceneX) || !Double.isFinite(trackStart)
+                || !Double.isFinite(trackWidth) || trackWidth <= 0) return 0;
+        return Math.max(0, Math.min(100,
+                (sceneX - trackStart) / trackWidth * 100.0));
+    }
+
     private static void seekPlayer(MediaPlayer player, double percent) {
         Duration duration = player.getTotalDuration();
-        if (isUsableDuration(duration))
-            player.seek(Duration.millis(duration.toMillis() * percent / 100.0));
+        if (!isUsableDuration(duration) || !Double.isFinite(percent)) return;
+        Duration destination = Duration.millis(duration.toMillis()
+                * Math.max(0, Math.min(100, percent)) / 100.0);
+        // MediaPlayer ignores seek() while STOPPED. Move to PAUSED first so
+        // a click after pressing Stop can still change the position.
+        if (player.getStatus() == MediaPlayer.Status.STOPPED) {
+            player.pause();
+            Platform.runLater(() -> {
+                if (player.getStatus() != MediaPlayer.Status.DISPOSED
+                        && player.getStatus() != MediaPlayer.Status.STOPPED)
+                    player.seek(destination);
+            });
+        } else {
+            player.seek(destination);
+        }
     }
 
     private void unsupportedMedia(Path original, boolean converted, Throwable reason) {

@@ -25,4 +25,19 @@ class ReferenceMediaPaneTest {
         assertEquals(ReferenceMediaPane.Kind.UNSUPPORTED,
                 ReferenceMediaPane.kindFor(Path.of("binary.exe")));
     }
+
+    @Test void timelineClickSeeksToExactPositionRatherThanBlockIncrement() {
+        assertEquals(0, ReferenceMediaPane.percentAtTrack(80, 100, 400), 0.00001);
+        assertEquals(0, ReferenceMediaPane.percentAtTrack(100, 100, 400), 0.00001);
+        assertEquals(25, ReferenceMediaPane.percentAtTrack(200, 100, 400), 0.00001);
+        assertEquals(50, ReferenceMediaPane.percentAtTrack(300, 100, 400), 0.00001);
+        assertEquals(100, ReferenceMediaPane.percentAtTrack(500, 100, 400), 0.00001);
+        assertEquals(100, ReferenceMediaPane.percentAtTrack(900, 100, 400), 0.00001);
+    }
+
+    @Test void timelineRejectsInvalidTrackDimensions() {
+        assertEquals(0, ReferenceMediaPane.percentAtTrack(200, 100, 0));
+        assertEquals(0, ReferenceMediaPane.percentAtTrack(200, 100, Double.NaN));
+        assertEquals(0, ReferenceMediaPane.percentAtTrack(Double.NaN, 100, 400));
+    }
 }
