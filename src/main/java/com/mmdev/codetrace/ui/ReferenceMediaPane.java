@@ -116,7 +116,7 @@ public final class ReferenceMediaPane extends BorderPane {
         installViewport(view);
         image.errorProperty().addListener((obs, old, error) -> {
             if (error && !disposed)
-                message("Este formato de imagen no es compatible con JavaFX.");
+                message("No se pudo mostrar esta imagen.");
         });
     }
 
@@ -182,18 +182,14 @@ public final class ReferenceMediaPane extends BorderPane {
         MediaTranscoder.deleteTemporary(temporaryMedia);
         temporaryMedia = null;
         conversionMode = output;
-        message("Preparando medio completo con FFmpeg…");
         ProgressIndicator spinner = new ProgressIndicator();
         spinner.setPrefSize(44, 44);
-        String heading = switch (output) {
-            case AUDIO -> "Preparando audio completo con FFmpeg…";
-            case VIDEO_REMUX -> "Preparando vídeo completo sin recomprimir los fotogramas…";
-            case VIDEO -> "Convirtiendo vídeo completo a H.264 HD (hasta 1080p)…";
-        };
-        String explanation = output == MediaTranscoder.Output.VIDEO
-                ? "Se conservará la duración y la cadencia del original. "
-                  + "Esta conversión puede tardar según el tamaño del archivo."
-                : "Sin límite de 30 segundos ni reducción de resolución o FPS.";
+        String heading = output == MediaTranscoder.Output.AUDIO
+                ? "Abriendo audio…" : "Abriendo vídeo…";
+        String explanation = output == MediaTranscoder.Output.AUDIO
+                ? "Ya casi está listo."
+                : "Puedes seguir utilizando CodeTrace. Los vídeos grandes "
+                  + "pueden tardar unos minutos.";
         Label title = new Label(heading);
         title.setWrapText(true);
         Label hint = new Label(explanation);
@@ -203,16 +199,24 @@ public final class ReferenceMediaPane extends BorderPane {
         loading.setPadding(new Insets(24));
         setCenter(new StackPane(loading));
 
-        Button cancel = new Button("Cancelar preparación");
+        Button cancel = new Button("Cancelar");
         HBox bar = new HBox(10, cancel, openOriginalButton(original));
         bar.setAlignment(Pos.CENTER_LEFT);
         bar.getStyleClass().add("media-playback-controls");
         setBottom(bar);
 
         AtomicReference<Path> created = new AtomicReference<>();
+        AtomicReference<MediaTranscoder.Output> chosen = new AtomicReference<>(output);
         Task<Path> task = new Task<>() {
             @Override protected Path call() throws IOException {
-                Path ready = MediaTranscoder.transcode(original, output, this::isCancelled);
+                // Probe the video codec on this worker. If JavaFX would
+                // display audio over a blank video track, prepare a playable
+                // version directly instead of forcing a failed first attempt.
+                MediaTranscoder.Output effective = output
+                        == MediaTranscoder.Output.VIDEO_REMUX
+                        ? MediaTranscoder.preferredVideoOutput(original) : output;
+                chosen.set(effective);
+                Path ready = MediaTranscoder.transcode(original, effective, this::isCancelled);
                 created.set(ready);
                 if (isCancelled() || disposed) {
                     MediaTranscoder.deleteTemporary(created.getAndSet(null));
@@ -223,9 +227,13 @@ public final class ReferenceMediaPane extends BorderPane {
         };
         conversion = task;
         cancel.setOnAction(event -> {
+            conversionMode = chosen.get();
             task.cancel(true);
-            message("Preparación cancelada. El archivo original permanece intacto.");
-            showPlaybackOptions(original, output == MediaTranscoder.Output.VIDEO_REMUX);
+            message(output == MediaTranscoder.Output.AUDIO
+                    ? "Se canceló la apertura del audio."
+                    : "Se canceló la apertura del vídeo.");
+            showPlaybackOptions(original,
+                    conversionMode == MediaTranscoder.Output.VIDEO_REMUX);
         });
         task.setOnSucceeded(event -> {
             Path prepared = created.getAndSet(null);
@@ -234,6 +242,7 @@ public final class ReferenceMediaPane extends BorderPane {
                 MediaTranscoder.deleteTemporary(prepared);
                 return;
             }
+            conversionMode = chosen.get();
             temporaryMedia = prepared;
             playMedia(prepared, original, true);
         });
@@ -242,12 +251,16 @@ public final class ReferenceMediaPane extends BorderPane {
         task.setOnFailed(event -> {
             MediaTranscoder.deleteTemporary(created.getAndSet(null));
             if (!disposed && conversion == task) {
+                conversionMode = chosen.get();
                 Throwable cause = task.getException();
-                message("No se pudo preparar el vídeo completo: "
-                        + (cause == null ? "error desconocido" : abbreviate(
-                        cause.getMessage() == null ? "error desconocido"
-                                : cause.getMessage(), 220)));
-                showPlaybackOptions(original, output == MediaTranscoder.Output.VIDEO_REMUX);
+                if (cause != null) System.err.println("[CodeTrace/media] " + cause);
+                String issue = cause != null && cause.getMessage() != null
+                        && cause.getMessage().contains("Espacio temporal")
+                        ? "No hay suficiente espacio libre para abrir este archivo."
+                        : "No se pudo abrir el archivo.";
+                message(issue);
+                showPlaybackOptions(original,
+                        conversionMode == MediaTranscoder.Output.VIDEO_REMUX);
             }
         });
         Thread worker = new Thread(task, "codetrace-ffmpeg-fullmedia");
@@ -260,14 +273,22 @@ public final class ReferenceMediaPane extends BorderPane {
         HBox actions = new HBox(10);
         actions.setAlignment(Pos.CENTER_LEFT);
         actions.getStyleClass().add("media-playback-controls");
+        Button retry = new Button("Reintentar");
+        retry.setOnAction(event -> convertAndPlay(original,
+                conversionMode == null
+                        ? (kindFor(original) == Kind.AUDIO
+                                ? MediaTranscoder.Output.AUDIO
+                                : MediaTranscoder.Output.VIDEO_REMUX)
+                        : conversionMode));
+        actions.getChildren().add(retry);
         if (allowHDConversion && kindFor(original) == Kind.VIDEO) {
-            Button encode = new Button("Preparar vídeo completo en HD");
-            encode.setTooltip(new Tooltip(
-                    "Convierte todos los fotogramas a H.264, hasta 1080p, "
-                    + "sin reducir los FPS. Puede tardar bastante."));
-            encode.setOnAction(event -> convertAndPlay(
+            Button compatible = new Button("Mejorar reproducción");
+            compatible.setTooltip(new Tooltip(
+                    "Prueba otra forma de reproducir el vídeo en CodeTrace. "
+                    + "Puede tardar unos minutos."));
+            compatible.setOnAction(event -> convertAndPlay(
                     original, MediaTranscoder.Output.VIDEO));
-            actions.getChildren().add(encode);
+            actions.getChildren().add(compatible);
         }
         actions.getChildren().add(openOriginalButton(original));
         setBottom(actions);
@@ -406,17 +427,15 @@ public final class ReferenceMediaPane extends BorderPane {
             controls.getStyleClass().add("media-playback-controls");
             controls.setAlignment(Pos.CENTER_LEFT);
             if (converted && kindFor(original) == Kind.VIDEO) {
-                Label preview = new Label(conversionMode == MediaTranscoder.Output.VIDEO_REMUX
-                        ? "Vídeo completo · resolución, fotogramas y duración originales"
-                        : "Vídeo completo · H.264, hasta 1080p y FPS originales");
+                Label preview = new Label("Vídeo listo");
                 HBox full = new HBox(12, preview);
                 if (conversionMode == MediaTranscoder.Output.VIDEO_REMUX) {
                     // JavaFX can output audio without surfacing a video-decoding
                     // error. Expose recovery even if its error callback never runs.
-                    Button fallback = new Button("¿Solo audio o pantalla negra? Preparar HD");
+                    Button fallback = new Button("¿No se ve la imagen? Mejorar reproducción");
                     fallback.setTooltip(new Tooltip(
-                            "Convertir toda la película a H.264 hasta 1080p. "
-                            + "Puede tardar bastante; no cambia el original."));
+                            "Prueba otra forma de ver este vídeo en CodeTrace. "
+                            + "Puede tardar unos minutos."));
                     fallback.setOnAction(event -> convertAndPlay(
                             original, MediaTranscoder.Output.VIDEO));
                     full.getChildren().add(fallback);
@@ -480,11 +499,9 @@ public final class ReferenceMediaPane extends BorderPane {
         releasePlayer();
         MediaTranscoder.deleteTemporary(temporaryMedia);
         temporaryMedia = null;
-        String detail = reason == null || reason.getMessage() == null ? ""
-                : " Detalle: " + abbreviate(reason.getMessage(), 180);
-        message("JavaFX/Windows no puede reproducir este códec." + detail
-                + " Puedes preparar el archivo completo en H.264 HD, "
-                + "o abrir el original con el reproductor del sistema.");
+        message(kindFor(original) == Kind.AUDIO
+                ? "No se pudo reproducir este audio."
+                : "No se pudo reproducir este vídeo.");
         showPlaybackOptions(original, !converted
                 || conversionMode == MediaTranscoder.Output.VIDEO_REMUX);
     }
@@ -504,9 +521,9 @@ public final class ReferenceMediaPane extends BorderPane {
      * performed after the user clicks the button.
      */
     private Button openOriginalButton(Path original) {
-        Button button = new Button("Abrir archivo completo en reproductor externo");
+        Button button = new Button("Abrir con otra aplicación");
         button.setTooltip(new Tooltip(
-                "Abre el archivo original con la aplicación predeterminada de Windows."));
+                "Abre el archivo en el reproductor predeterminado del equipo."));
         button.setOnAction(event -> {
             button.setDisable(true);
             Thread open = new Thread(() -> {
@@ -520,9 +537,8 @@ public final class ReferenceMediaPane extends BorderPane {
                 } catch (IOException | UnsupportedOperationException | SecurityException e) {
                     Platform.runLater(() -> {
                         if (!disposed) {
-                            message("No se pudo abrir el reproductor externo: "
-                                    + abbreviate(e.getMessage() == null
-                                            ? "operación no disponible" : e.getMessage(), 180));
+                            System.err.println("[CodeTrace/media] " + e);
+                            message("No se pudo abrir el archivo con otra aplicación.");
                             showOriginalAction(original);
                         }
                     });

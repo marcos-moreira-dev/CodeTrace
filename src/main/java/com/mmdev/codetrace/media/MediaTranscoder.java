@@ -63,6 +63,55 @@ public final class MediaTranscoder {
     }
 
     /**
+     * Choose a playable strategy before FFmpeg prepares the media. Copying
+     * HEVC/VP9/AV1 into an MP4 can give JavaFX audio but a blank picture.
+     * ffprobe is optional; if absent, the existing manual fallback remains.
+     */
+    public static Output preferredVideoOutput(Path original) {
+        try {
+            String filename = executable();
+            boolean windows = System.getProperty("os.name", "")
+                    .toLowerCase(Locale.ROOT).contains("win");
+            String probeName = windows ? "ffprobe.exe" : "ffprobe";
+            Path command = Path.of(filename);
+            String probe = command.getParent() == null ? probeName
+                    : command.getParent().resolve(probeName).toString();
+            Process process = new ProcessBuilder(probe,
+                    "-v", "error", "-protocol_whitelist", "file,pipe",
+                    "-select_streams", "v:0",
+                    "-show_entries", "stream=codec_name",
+                    "-of", "default=noprint_wrappers=1:nokey=1",
+                    original.toAbsolutePath().normalize().toString())
+                    .redirectError(ProcessBuilder.Redirect.DISCARD)
+                    .start();
+            try {
+                if (!process.waitFor(5, TimeUnit.SECONDS)
+                        || process.exitValue() != 0)
+                    return Output.VIDEO_REMUX;
+                byte[] data = process.getInputStream().readNBytes(80);
+                return outputForVideoCodec(new String(data, StandardCharsets.UTF_8));
+            } finally {
+                if (process.isAlive()) process.destroyForcibly();
+            }
+        } catch (IOException | SecurityException unavailable) {
+            return Output.VIDEO_REMUX;
+        } catch (InterruptedException interrupted) {
+            Thread.currentThread().interrupt();
+            return Output.VIDEO_REMUX;
+        }
+    }
+
+    static Output outputForVideoCodec(String codec) {
+        String normalized = codec == null ? ""
+                : codec.strip().toLowerCase(Locale.ROOT);
+        // Only unambiguously identified unsupported codecs require encoding.
+        if (normalized.matches("[a-z0-9_]+")
+                && !normalized.isEmpty() && !normalized.equals("h264"))
+            return Output.VIDEO;
+        return Output.VIDEO_REMUX;
+    }
+
+    /**
      * Full-length media preparation. We first try a lossless, fast remux
      * (video stream copy); H.264/AAC compatible sources retain all frames,
      * resolution and duration. Other video codecs require explicit HD encode.

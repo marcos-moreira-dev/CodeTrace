@@ -182,4 +182,19 @@ class MediaTranscoderTest {
         }
         assertFalse(Files.exists(ready));
     }
+    @Test void unsupportedVideoCodecSelectsCompatiblePlayback() {
+        assertEquals(MediaTranscoder.Output.VIDEO_REMUX,
+                MediaTranscoder.outputForVideoCodec("h264"));
+        assertEquals(MediaTranscoder.Output.VIDEO,
+                MediaTranscoder.outputForVideoCodec("hevc"));
+        assertEquals(MediaTranscoder.Output.VIDEO,
+                MediaTranscoder.outputForVideoCodec("vp9"));
+        assertEquals(MediaTranscoder.Output.VIDEO,
+                MediaTranscoder.outputForVideoCodec("av1"));
+        assertEquals(MediaTranscoder.Output.VIDEO_REMUX,
+                MediaTranscoder.outputForVideoCodec(""));
+        assertEquals(MediaTranscoder.Output.VIDEO_REMUX,
+                MediaTranscoder.outputForVideoCodec("invalid codec"));
+    }
+
 }

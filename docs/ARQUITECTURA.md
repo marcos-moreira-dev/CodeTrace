@@ -322,3 +322,14 @@ teclado y estado STOPPED están contemplados. No se ejecuta FFmpeg al
 saltar por un MP4 que ya se preparó. Un `MediaPlayer` no se trata como
 reproductor de un archivo temporal MP4 que sigue siendo escrito:
 reproducción por segmentos HLS requiere un pipeline aparte y sus pruebas.
+
+## Elección de reproducción por códec
+
+La comprobación opcional `ffprobe`, realizada fuera del hilo de JavaFX,
+distingue H.264 (remultiplexación rápida) de códecs incompatibles conocidos
+(como HEVC, VP9 y AV1). Para estos últimos, se prepara directamente el
+vídeo compatible en vez de reproducir solo audio desde un MP4 copiado.
+Si `ffprobe` no está disponible, se conserva el flujo anterior con
+recuperación manual. Este mecanismo todavía puede tardar en vídeos largos:
+no sustituye una futura reproducción progresiva ni garantiza que el
+decodificador de JavaFX pueda reproducir cualquier archivo.

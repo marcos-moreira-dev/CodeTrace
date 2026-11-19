@@ -532,3 +532,15 @@ Consulta también [Auditoría de cierre](AUDITORIA-CIERRE-2026-11.md).
   una referencia vacía o un ejercicio todavía incorrecto, nunca.
 - La felicitación no depende de que haya terminado de indexarse la
   referencia ni de que el árbol haya actualizado su icono de progreso.
+
+## MEDIA-CODEC-CHOICE — abrir un vídeo sin pantalla en blanco
+
+- Con `ffprobe` disponible, los vídeos MKV con H.264 mantienen la ruta
+  de apertura rápida; los que contengan HEVC, VP9 o AV1 preparan una
+  versión compatible automáticamente, sin reproducir solo audio primero.
+- Si `ffprobe` no está instalado, continuar con la apertura habitual y
+  ofrecer un botón sencillo de compatibilidad si falta la imagen.
+- Los mensajes visibles deben describir acciones del usuario: «Abriendo
+  vídeo», «Reintentar» y «Abrir con otra aplicación»; reservar nombres de
+  códecs, FFmpeg y detalles técnicos para el diagnóstico.
+- Cancelar y reintentar la preparación dentro de la misma pestaña.
