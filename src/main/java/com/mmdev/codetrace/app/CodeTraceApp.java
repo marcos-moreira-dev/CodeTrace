@@ -268,7 +268,7 @@ public final class CodeTraceApp extends Application {
         findProject.setOnAction(event ->
                 openSearch(ProjectSearchWindow.Scope.PROJECT));
         MenuItem dependencyMap = new MenuItem("Mapa de dependencias de carpeta...");
-        dependencyMap.setGraphic(new FontIcon("fth-share-2"));
+        dependencyMap.setGraphic(new FontIcon("fth-map"));
         dependencyMap.setOnAction(event -> openDependencyGraphForSelectedFolder());
         Menu toolsMenu = new Menu("Herramientas", null, findCurrent, findProject,
                 new javafx.scene.control.SeparatorMenuItem(), dependencyMap,
@@ -754,7 +754,9 @@ public final class CodeTraceApp extends Application {
                 setStatus(text.reason());
                 return;
             }
-            ReferenceTextPane viewer = new ReferenceTextPane(text.content(), file.getFileName().toString());
+            ReferenceTextPane viewer = new ReferenceTextPane(
+                    text.content(), file.getFileName().toString());
+            viewer.setFontSettings(settings.fontFamily(), settings.fontSize());
             Tab tab = new Tab(file.getFileName().toString(), viewer);
             tab.setGraphic(FileTypeIcons.forPath(file, false));
             tab.setOnClosed(event -> openedTabs.remove(relative));
@@ -801,10 +803,26 @@ public final class CodeTraceApp extends Application {
                         + "se muestran como archivos ficticios.");
                 return;
             }
+            GraphLayout saved = graphLayouts.get(graph.folder());
+            if (saved != null && !saved.fingerprint().equals(graph.fingerprint())) {
+                graphLayouts.remove(graph.folder());
+                dirty = true;
+                updateTitle();
+                saved = null;
+            }
             DependencyGraphPane view = new DependencyGraphPane(graph, relative -> {
                 Path target = reference.resolve(relative).normalize();
                 if (Files.isRegularFile(target) && target.startsWith(reference))
                     openForPractice(target);
+            }, saved, updated -> {
+                graphLayouts.put(graph.folder(), updated);
+                dirty = true;
+                updateTitle();
+            });
+            view.zoomPercentProperty().addListener((obs, old, value) -> {
+                if (tabs.getSelectionModel().getSelectedItem() != null
+                        && tabs.getSelectionModel().getSelectedItem().getContent() == view)
+                    mediaZoom.setValue(value.intValue());
             });
             Tab tab = new Tab("Mapa · " + folder.getFileName(), view);
             tab.setGraphic(new FontIcon("fth-share-2"));
@@ -1504,23 +1522,33 @@ public final class CodeTraceApp extends Application {
 
     private void setSelectedMediaZoom(int percent) {
         Tab selected = tabs.getSelectionModel().getSelectedItem();
-        if (selected != null && selected.getContent() instanceof ReferenceMediaPane media)
-            media.setZoomPercent(percent);
+        if (selected != null) {
+            if (selected.getContent() instanceof ReferenceMediaPane media)
+                media.setZoomPercent(percent);
+            else if (selected.getContent() instanceof DependencyGraphPane graph)
+                graph.setZoomPercent(percent);
+        }
     }
 
     private void updateContextualZoom() {
         if (zoom == null || mediaZoom == null) return;
         Tab selected = tabs.getSelectionModel().getSelectedItem();
-        boolean visual = selected != null
+        boolean graph = selected != null
+                && selected.getContent() instanceof DependencyGraphPane;
+        boolean visual = graph || (selected != null
                 && selected.getContent() instanceof ReferenceMediaPane media
-                && media.supportsZoom();
+                && media.supportsZoom());
+        mediaZoom.setGraphMode(graph);
         zoom.setVisible(!visual && !concentration);
         zoom.setManaged(!visual && !concentration);
         mediaZoom.setVisible(visual && !concentration);
         mediaZoom.setManaged(visual && !concentration);
         if (visual) {
-            ReferenceMediaPane media = (ReferenceMediaPane) selected.getContent();
-            mediaZoom.setValue(media.getZoomPercent());
+            if (graph)
+                mediaZoom.setValue(((DependencyGraphPane) selected.getContent())
+                        .getZoomPercent());
+            else mediaZoom.setValue(((ReferenceMediaPane) selected.getContent())
+                    .getZoomPercent());
         }
     }
 
@@ -1538,6 +1566,8 @@ public final class CodeTraceApp extends Application {
                 editor.setFontSettings(settings.fontFamily(), size);
             } else if (tab.getContent() instanceof MarkdownPracticePane markdown) {
                 markdown.editor().setFontSettings(settings.fontFamily(), size);
+            } else if (tab.getContent() instanceof ReferenceTextPane referenceText) {
+                referenceText.setFontSettings(settings.fontFamily(), size);
             }
         }
     }
@@ -1562,6 +1592,8 @@ public final class CodeTraceApp extends Application {
                 pane.editor().setFontSettings(next.fontFamily(), next.fontSize());
                 pane.editor().setTemplateOpacity(next.templateOpacity());
                 pane.editor().setTurboMode(next.turboMode());
+            } else if (tab.getContent() instanceof ReferenceTextPane referenceText) {
+                referenceText.setFontSettings(next.fontFamily(), next.fontSize());
             }
         }
     }
