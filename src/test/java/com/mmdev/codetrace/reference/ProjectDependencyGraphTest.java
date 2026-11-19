@@ -76,4 +76,16 @@ class ProjectDependencyGraphTest {
         assertTrue(graph.nodes().size() <= 180);
         assertTrue(graph.edges().size() <= 400);
     }
+
+    @Test
+    void referenceContentChangesInvalidateStoredNodePositions() throws Exception {
+        Files.writeString(root.resolve("one.ts"), "import './two';\nconst a = 1;");
+        Path dependency = Files.writeString(root.resolve("two.ts"), "export const b = 2;");
+        var before = ProjectDependencyGraph.analyze(root, root, () -> false);
+        Files.writeString(dependency, "export const b = 3;");
+        var after = ProjectDependencyGraph.analyze(root, root, () -> false);
+        assertEquals(before.edges(), after.edges());
+        assertNotEquals(before.fingerprint(), after.fingerprint(),
+                "Changing a source must reset any saved positions");
+    }
 }
