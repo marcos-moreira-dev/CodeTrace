@@ -51,7 +51,7 @@ public final class ProductDialogs {
 
         Label title = new Label("CodeTrace");
         title.getStyleClass().add("about-title");
-        Label version = new Label("Versión 0.3.0");
+        Label version = new Label("Versión 0.3.0 · desarrollo");
         version.getStyleClass().add("about-version");
         VBox identity = new VBox(1, brand, title, version);
         identity.setAlignment(javafx.geometry.Pos.CENTER);
