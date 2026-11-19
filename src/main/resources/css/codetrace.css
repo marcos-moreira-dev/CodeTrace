@@ -1059,3 +1059,59 @@
     -fx-background-color: #f0f0ec;
     -fx-border-color: transparent transparent #c4ccc9 transparent;
 }
+
+
+/* JavaFX tab overflow: native round notched dropdown replaced by square UI. */
+.tab-pane > .tab-header-area > .control-buttons-tab {
+    -fx-background-color: #e6edf2;
+    -fx-padding: 0 6 0 4;
+}
+.tab-pane > .tab-header-area > .control-buttons-tab > .container {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+.tab-pane > .tab-header-area > .control-buttons-tab > .container > .tab-down-button {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #a9b8c4;
+    -fx-border-width: 1px;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+    -fx-padding: 6 8;
+    -fx-min-width: 28px;
+    -fx-min-height: 26px;
+    -fx-cursor: hand;
+}
+.tab-pane > .tab-header-area > .control-buttons-tab > .container > .tab-down-button:hover {
+    -fx-background-color: #d5e4ee;
+    -fx-border-color: #64839a;
+}
+.tab-pane > .tab-header-area > .control-buttons-tab > .container > .tab-down-button > .arrow {
+    -fx-background-color: #3a5870;
+    -fx-shape: "M0 0 L8 0 L4 4 Z";
+    -fx-padding: 2px 4px;
+}
+
+/* The graph shares the ONE statusbar zoom, but uses a link/network tone. */
+.graph-zoom-control .ikonli-font-icon { -fx-icon-color: #3e7183; }
+.graph-zoom-control .slider .track { -fx-background-color: #d8e8ec; }
+.graph-zoom-control .slider .thumb {
+    -fx-background-color: #4f8494;
+    -fx-border-color: #376b7d;
+}
+.graph-zoom-control .zoom-step,
+.graph-zoom-control .zoom-value { -fx-text-fill: #376879; }
+.dependency-map-toolbar {
+    -fx-background-color: #edf2f5;
+    -fx-border-color: transparent transparent #c0ced8 transparent;
+    -fx-alignment: center-left;
+}
+.dependency-map-heading { -fx-font-size: 12px; -fx-text-fill: #36556b; }
+.dependency-map-reset { -fx-background-radius: 0; -fx-border-radius: 0; }
+.dependency-map-scroll { -fx-background-color: #f8fafb; }
+.dependency-map-status, .dependency-map-note {
+    -fx-text-fill: #566c7b; -fx-font-size: 11px;
+}
+.dependency-map-footer {
+    -fx-background-color: #eaf0f4;
+    -fx-border-color: #bdcbd5 transparent transparent transparent;
+}
