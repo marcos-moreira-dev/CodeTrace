@@ -141,3 +141,18 @@ CodeTrace no pretende sustituir un IDE ni compilar o evaluar automáticamente la
 - Ajuste estilístico del botón de pestañas desbordadas.
 - Verificación manual de contraste, arrastre, zoom, formatos mixtos de texto
   y reapertura de sesiones antiguas en Windows.
+
+## Lectura de dependencias: distribución y navegación
+
+- Dos distribuciones elegibles mediante control transversal ExclusiveChoiceBar:
+  Cuadrícula (base) y Organizado (componentes, capas, pasadas baricéntricas).
+- Organización determinista con separación de etiquetas y partición
+  de capas densas para evitar lienzos gigantescos.
+- El lienzo crece al mover nodos cerca de su borde, respetando topes
+  de memoria y coordenadas.
+- Menú contextual: mapa para carpeta pulsada y colapso recursivo donde
+  existan subcarpetas. El grafo no modifica fuentes originales.
+- Ruta del nodo en statusbar global; pie de grafo solo muestra
+  conteo de relaciones.
+- SessionArchive v4 persiste modo y coordenadas, compatible con v1-v3.
+- Verificación visual pendiente con proyectos de distintas densidades.
