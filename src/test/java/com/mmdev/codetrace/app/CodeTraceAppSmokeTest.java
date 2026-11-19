@@ -168,6 +168,25 @@ class CodeTraceAppSmokeTest {
                 assertTrue(graphZoom.getStyleClass().contains("graph-zoom-control"));
                 graphZoom.setValue(175);
                 assertEquals(1, graphZoom.lookupAll(".slider").size());
+                var graphModel = new com.mmdev.codetrace.reference.ProjectDependencyGraph.Graph(
+                        "src", java.util.List.of("src/Main.java", "src/Util.java"),
+                        java.util.List.of(new com.mmdev.codetrace.reference
+                                .ProjectDependencyGraph.Edge("src/Main.java",
+                                        "src/Util.java", "import")),
+                        2, false, "a".repeat(64));
+                AtomicReference<com.mmdev.codetrace.reference.GraphLayout> graphChanges =
+                        new AtomicReference<>();
+                var graphPane = new com.mmdev.codetrace.ui.DependencyGraphPane(
+                        graphModel, ignored -> {}, null, graphChanges::set,
+                        ignored -> {});
+                assertEquals(com.mmdev.codetrace.reference.GraphLayoutEngine.Mode.GRID,
+                        graphPane.getLayoutMode());
+                graphPane.setLayoutMode(
+                        com.mmdev.codetrace.reference.GraphLayoutEngine.Mode.ORGANIZED);
+                assertEquals(com.mmdev.codetrace.reference.GraphLayoutEngine.Mode.ORGANIZED,
+                        graphChanges.get().mode());
+                assertTrue(graphPane.getCanvasWidth() > 2000,
+                        "Map supports a larger draggable workspace");
 
                 Slider fontSlider = (Slider) zoom.lookup(".slider");
                 assertNotNull(fontSlider);
