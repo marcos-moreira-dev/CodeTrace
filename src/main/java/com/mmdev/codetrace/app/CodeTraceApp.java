@@ -151,7 +151,8 @@ public final class CodeTraceApp extends Application {
     private RadioMenuItem manualModeMenu;
     private RadioMenuItem directModeMenu;
     private Menu practiceModeMenu;
-    private long catalogueGeneration;
+    private final ReferenceCatalogueScanner catalogueScanner =
+            new ReferenceCatalogueScanner();
     private Path reference;
     private long referenceRequest;
     private Path sessionFile;
@@ -595,6 +596,7 @@ public final class CodeTraceApp extends Application {
 
     /** Shared reference activation for an external folder or bundled pack. */
     private void activateReference(Path folder) {
+        catalogueScanner.cancel();
         referenceRequest++;
         workspace = new VirtualWorkspace();
         sessions = new LinkedHashMap<>();
@@ -1388,6 +1390,7 @@ public final class CodeTraceApp extends Application {
                 }
                 restoredReference = replacement.toPath().toAbsolutePath().normalize();
             }
+            catalogueScanner.cancel();
             referenceRequest++;
             reference = restoredReference;
             catalogue = null;
@@ -1453,49 +1456,34 @@ public final class CodeTraceApp extends Application {
     }
 
     private void indexReference() {
-        if (reference == null) {
-            return;
-        }
+        if (reference == null) return;
         Path root = reference;
-        ReferenceCatalogue.Snapshot previousCatalogue = catalogue;
-        long generation = ++catalogueGeneration;
+        ReferenceCatalogue.Snapshot previous = catalogue;
         catalogue = null;
         refreshReconstructionStatuses();
         refreshMetrics();
-        Task<ReferenceCatalogue.Snapshot> scan = new Task<>() {
-            @Override
-            protected ReferenceCatalogue.Snapshot call() throws Exception {
-                return ReferenceCatalogue.scan(root);
-            }
-        };
-        scan.setOnSucceeded(event -> {
-            if (generation == catalogueGeneration && root.equals(reference)) {
-                catalogue = scan.getValue();
-                if (previousCatalogue != null
-                        && !previousCatalogue.files().equals(catalogue.files())) {
-                    if (!graphLayouts.isEmpty()) {
-                        graphLayouts.clear();
-                        dirty = true;
-                        updateTitle();
-                    }
-                    for (Tab tab : List.copyOf(tabs.getTabs())) {
-                        if (tab.getContent() instanceof DependencyGraphPane)
-                            closeTab(tab);
-                    }
-                    setStatus("Cambió la referencia: distribuciones del mapa restablecidas");
+
+        catalogueScanner.scan(root, updated -> {
+            if (!root.equals(reference)) return;
+            catalogue = updated;
+            if (previous != null && !previous.files().equals(updated.files())) {
+                if (!graphLayouts.isEmpty()) {
+                    graphLayouts.clear();
+                    dirty = true;
+                    updateTitle();
                 }
-                refreshReconstructionStatuses();
-                refreshMetrics();
+                for (Tab tab : List.copyOf(tabs.getTabs())) {
+                    if (tab.getContent() instanceof DependencyGraphPane)
+                        closeTab(tab);
+                }
+                setStatus("Cambió la referencia: distribuciones del mapa restablecidas");
             }
-        });
-        scan.setOnFailed(event -> {
-            if (generation == catalogueGeneration) {
+            refreshReconstructionStatuses();
+            refreshMetrics();
+        }, error -> {
+            if (root.equals(reference))
                 setStatus("No se pudo analizar la referencia.");
-            }
         });
-        Thread worker = new Thread(scan, "codetrace-reference-index");
-        worker.setDaemon(true);
-        worker.start();
     }
 
     private FileChooser sessionChooser(String title) {

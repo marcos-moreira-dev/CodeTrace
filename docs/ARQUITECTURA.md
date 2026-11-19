@@ -132,3 +132,12 @@ inmutables y permite localizar en tiempo logarítmico la línea del cursor.
 `TypingEditor` deja de recorrer todas las líneas en cada pulsación. Los
 saltos de línea pertenecen a su fila anterior, como en el comportamiento
 preexistente; no se modifican las ranuras Unicode de `TypingSession`.
+
+## Indexación asíncrona cancelable del proyecto
+
+`app/ReferenceCatalogueScanner` administra la tarea JavaFX de catálogo del
+proyecto activo: un escaneo nuevo cancela el anterior y descarta callbacks
+obsoletos. El cambio de referencia o restauración de una sesión cancela la
+indexación previa. `ReferenceCatalogue.scan` consulta la interrupción del hilo
+entre entradas del árbol y termina el recorrido cuando se solicita cancelación.
+Los archivos del proyecto continúan siendo de solo lectura.

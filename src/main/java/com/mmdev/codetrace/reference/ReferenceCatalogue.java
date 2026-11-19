@@ -141,6 +141,8 @@ public final class ReferenceCatalogue {
             @Override
             public FileVisitResult preVisitDirectory(Path dir,
                                                      BasicFileAttributes attributes) {
+                if (Thread.currentThread().isInterrupted())
+                    return FileVisitResult.TERMINATE;
                 if (!dir.equals(referenceRoot)
                         && IGNORED_FOLDERS.contains(dir.getFileName().toString())) {
                     return FileVisitResult.SKIP_SUBTREE;
@@ -150,6 +152,8 @@ public final class ReferenceCatalogue {
 
             @Override
             public FileVisitResult visitFile(Path file, BasicFileAttributes attributes) {
+                if (Thread.currentThread().isInterrupted())
+                    return FileVisitResult.TERMINATE;
                 if (!attributes.isRegularFile()) {
                     return FileVisitResult.CONTINUE;
                 }
