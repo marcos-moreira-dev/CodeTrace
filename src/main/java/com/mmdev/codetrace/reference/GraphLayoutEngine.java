@@ -2,7 +2,6 @@ package com.mmdev.codetrace.reference;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -166,7 +165,7 @@ public final class GraphLayoutEngine {
         }
         // Occupancy grid reserves a whole rectangle for filename + node.
         // Choosing the nearest free cell minimizes displacement from forces.
-        Map<String, GraphLayout.Point> output = new LinkedHashMap<>();
+        Map<String, int[]> cells = new LinkedHashMap<>();
         Set<Long> occupied = new HashSet<>();
         for (int i = 0; i < n; i++) {
             int targetColumn = (int) Math.round(x[i] / CELL_WIDTH);
@@ -197,8 +196,18 @@ public final class GraphLayoutEngine {
             }
             long key = (((long) bestColumn) << 32) ^ (bestRow & 0xffffffffL);
             occupied.add(key);
-            output.put(sorted.get(i), new GraphLayout.Point(
-                    bestColumn * CELL_WIDTH, bestRow * CELL_HEIGHT));
+            cells.put(sorted.get(i), new int[]{bestColumn, bestRow});
+        }
+        // Local physics is centered on (0,0), but GraphLayout.Point represents
+        // persisted non-negative canvas coordinates. Normalize BEFORE records.
+        int minColumn = cells.values().stream().mapToInt(p -> p[0]).min().orElse(0);
+        int minRow = cells.values().stream().mapToInt(p -> p[1]).min().orElse(0);
+        Map<String, GraphLayout.Point> output = new LinkedHashMap<>();
+        for (var entry : cells.entrySet()) {
+            int[] cell = entry.getValue();
+            output.put(entry.getKey(), new GraphLayout.Point(
+                    (cell[0] - minColumn) * CELL_WIDTH,
+                    (cell[1] - minRow) * CELL_HEIGHT));
         }
         return output;
     }
