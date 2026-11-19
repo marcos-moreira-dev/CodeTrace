@@ -121,7 +121,7 @@ public final class MarkdownRenderer {
                     }
                 })
                 .build();
-        String body = renderer.render(document);
+        String body = TwemojiSvgAssets.decorate(renderer.render(document));
         String allowedImages = externalAllowed ? "data: https:" : "data:";
         String html = "<!doctype html><html lang=\"es\"><head>"
                 + "<meta charset=\"utf-8\">"
@@ -149,6 +149,8 @@ public final class MarkdownRenderer {
                 + "padding:8px;border:1px dashed #b8c5cf;color:#6f8190}"
                 + ".emoji{font-family:'Segoe UI Emoji','Apple Color Emoji',"
                 + "'Noto Color Emoji',sans-serif}"
+                + "img.codetrace-emoji{display:inline-block;width:1.12em;"
+                + "height:1.12em;vertical-align:-0.19em;border:0}"
                 + "</style></head><body>" + body + "</body></html>";
         return new RenderedPage(html, local.get(), external.get(), unavailable.get());
     }
