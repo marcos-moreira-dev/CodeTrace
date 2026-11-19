@@ -18,10 +18,6 @@ import java.util.Set;
  * Hashes cover all regular files; typeable counts cover compatible UTF-8 text.
  */
 public final class ReferenceCatalogue {
-    private static final Set<String> IGNORED_FOLDERS = Set.of(
-            ".git", ".idea", ".local", "target", "node_modules",
-            "build", "dist", "__pycache__", ".venv");
-
     public record FileInfo(String sha256, long bytes, int typeableUnits) {
         public boolean typeable() {
             return typeableUnits >= 0;
@@ -144,7 +140,7 @@ public final class ReferenceCatalogue {
                                                      BasicFileAttributes attributes) {
                 abortIfInterrupted();
                 if (!dir.equals(referenceRoot)
-                        && IGNORED_FOLDERS.contains(dir.getFileName().toString())) {
+                        && ReferenceScanRules.generatedName(dir.getFileName().toString())) {
                     return FileVisitResult.SKIP_SUBTREE;
                 }
                 return FileVisitResult.CONTINUE;

@@ -200,3 +200,12 @@ confunda una búsqueda parcial con una búsqueda exhaustiva. Se omiten carpetas
 generadas, incluidas las salidas de diagnóstico en `reports`.
 La API histórica `search` continúa devolviendo una lista para consumidores
 existentes.
+
+## Política única de carpetas generadas
+
+`reference/ReferenceScanRules` centraliza las carpetas omitidas por los
+analizadores y la autocreación: `.git`, `.idea`, `.local`, `target`,
+`node_modules`, `build`, `dist`, `reports`, `__pycache__` y `.venv`.
+El explorador de solo lectura sigue mostrando esos archivos para consulta;
+no se consideran ejercicios, progreso ni dependencias relevantes por defecto.
+Evita que cada analizador mantenga un conjunto divergente de exclusiones.

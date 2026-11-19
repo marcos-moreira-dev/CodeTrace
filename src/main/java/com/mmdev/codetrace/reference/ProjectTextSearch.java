@@ -22,9 +22,6 @@ import java.util.regex.PatternSyntaxException;
  * progress changes or new virtual entries.
  */
 public final class ProjectTextSearch {
-    private static final Set<String> GENERATED = Set.of(
-            ".git", ".idea", ".local", "node_modules", "target", "build",
-            "dist", "reports", "__pycache__", ".venv");
     private static final int MAX_PATTERN = 256;
     private static final int MAX_HITS = 1500;
     private static final int MAX_LINE = 4096;
@@ -79,7 +76,7 @@ public final class ProjectTextSearch {
                         BasicFileAttributes attrs) {
                     if (cancelled.getAsBoolean()) return FileVisitResult.TERMINATE;
                     if (!dir.equals(realRoot) && (Files.isSymbolicLink(dir)
-                            || GENERATED.contains(dir.getFileName().toString())))
+                            || ReferenceScanRules.generatedName(dir.getFileName().toString())))
                         return FileVisitResult.SKIP_SUBTREE;
                     return FileVisitResult.CONTINUE;
                 }

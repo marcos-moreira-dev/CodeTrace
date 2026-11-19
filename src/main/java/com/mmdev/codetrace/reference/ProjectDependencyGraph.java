@@ -20,8 +20,6 @@ public final class ProjectDependencyGraph {
     public record Graph(String folder, List<String> nodes, List<Edge> edges,
                         int inspected, boolean truncated, String fingerprint) {}
     private record ImportRef(String target, boolean dotted, String kind) {}
-    private static final Set<String> SKIP = Set.of(".git", "node_modules",
-            "target", "build", "dist", ".idea", ".venv", "__pycache__");
     private static final Set<String> CODE = Set.of("java", "kt", "kts", "py",
             "js", "jsx", "ts", "tsx", "c", "cpp", "h", "hpp", "cc", "hh",
             "cs", "go", "rb", "ps1", "psm1", "sh", "bash", "cmd", "bat");
@@ -43,7 +41,7 @@ public final class ProjectDependencyGraph {
                     BasicFileAttributes attrs) {
                 if (cancelled.getAsBoolean()) return FileVisitResult.TERMINATE;
                 if (!dir.equals(folder) && (Files.isSymbolicLink(dir)
-                        || SKIP.contains(dir.getFileName().toString())))
+                        || ReferenceScanRules.generatedName(dir.getFileName().toString())))
                     return FileVisitResult.SKIP_SUBTREE;
                 return FileVisitResult.CONTINUE;
             }
