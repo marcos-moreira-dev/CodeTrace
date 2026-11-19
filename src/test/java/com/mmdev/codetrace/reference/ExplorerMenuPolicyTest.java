@@ -15,7 +15,7 @@ class ExplorerMenuPolicyTest {
         Files.createDirectories(root.resolve("src/nested"));
         Files.writeString(root.resolve("src/A.java"), "class A {}");
         Files.writeString(root.resolve("src/nested/B.java"), "class B {}");
-        Files.writeString(root.resolve("README.md"), "# docs");
+        Files.write(root.resolve("photo.png"), new byte[] {0, 1, 2});
         var index = ReferenceTreeIndex.scan(root);
         var workspace = new VirtualWorkspace();
         var children = VirtualChildrenIndex.snapshot(workspace);
@@ -43,7 +43,7 @@ class ExplorerMenuPolicyTest {
                 children, workspace).createThisFile());
         assertFalse(ExplorerMenuPolicy.forPath("src", true, index,
                 children, workspace).createThisFolder());
-        assertFalse(ExplorerMenuPolicy.forPath("README.md", false, index,
+        assertFalse(ExplorerMenuPolicy.forPath("photo.png", false, index,
                 children, workspace).createThisFile());
     }
 }
