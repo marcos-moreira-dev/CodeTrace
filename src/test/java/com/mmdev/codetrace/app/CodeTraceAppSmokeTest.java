@@ -462,6 +462,28 @@ class CodeTraceAppSmokeTest {
                 }
                 assertNotNull(stage.getScene().getRoot().lookup(".tree-activity"));
                 assertNotNull(stage.getScene().getRoot().lookup(".tree-scope-checkbox"));
+                Method focusFolder = CodeTraceApp.class.getDeclaredMethod(
+                        "setProgressFolder", String.class);
+                focusFolder.setAccessible(true);
+                focusFolder.invoke(application, "src");
+                assertTrue(auto != null);
+                CheckBox only = (CheckBox) stage.getScene().getRoot()
+                        .lookup(".tree-scope-checkbox");
+                assertTrue(only.isSelected());
+                assertEquals("src", fileTree.progressFocusFolder());
+                assertFalse(fileTree.isDisabled(), "Outside folders remain navigable");
+                var srcNode = fileTree.getRoot().getChildren().stream()
+                        .filter(n -> n.getValue().equals(src)).findFirst().orElseThrow();
+                var nestedNode = srcNode.getChildren().stream()
+                        .filter(n -> n.getValue().equals(nested)).findFirst().orElseThrow();
+                fileTree.getSelectionModel().select(nestedNode);
+                assertEquals("src/ejemplos", fileTree.progressFocusFolder(),
+                        "Selecting a different folder while Solo is on switches scope");
+                fileTree.getSelectionModel().select(fileTree.getRoot());
+                assertEquals("", fileTree.progressFocusFolder(),
+                        "Selecting project root returns to whole-project progress");
+                assertFalse(only.isSelected());
+
                 Files.delete(imageFile);
                 Files.delete(directFile);
                 Files.delete(nestedFile);
