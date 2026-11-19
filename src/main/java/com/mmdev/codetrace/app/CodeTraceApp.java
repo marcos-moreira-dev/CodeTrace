@@ -1384,6 +1384,7 @@ public final class CodeTraceApp extends Application {
             }
             referenceRequest++;
             reference = restoredReference;
+            catalogue = null;
             if (searchWindow != null) searchWindow.projectChanged(reference);
             exclusions = ProgressExclusions.load(reference);
             selectPracticeMode(data.practiceMode());
@@ -1449,6 +1450,7 @@ public final class CodeTraceApp extends Application {
             return;
         }
         Path root = reference;
+        ReferenceCatalogue.Snapshot previousCatalogue = catalogue;
         long generation = ++catalogueGeneration;
         catalogue = null;
         refreshReconstructionStatuses();
@@ -1462,6 +1464,19 @@ public final class CodeTraceApp extends Application {
         scan.setOnSucceeded(event -> {
             if (generation == catalogueGeneration && root.equals(reference)) {
                 catalogue = scan.getValue();
+                if (previousCatalogue != null
+                        && !previousCatalogue.files().equals(catalogue.files())) {
+                    if (!graphLayouts.isEmpty()) {
+                        graphLayouts.clear();
+                        dirty = true;
+                        updateTitle();
+                    }
+                    for (Tab tab : List.copyOf(tabs.getTabs())) {
+                        if (tab.getContent() instanceof DependencyGraphPane)
+                            closeTab(tab);
+                    }
+                    setStatus("Cambió la referencia: distribuciones del mapa restablecidas");
+                }
                 refreshReconstructionStatuses();
                 refreshMetrics();
             }
