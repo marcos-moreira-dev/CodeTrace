@@ -3,6 +3,7 @@ package com.mmdev.codetrace.ui;
 import com.mmdev.codetrace.workspace.VirtualWorkspace;
 import com.mmdev.codetrace.reference.ReferenceTreeIndex;
 import com.mmdev.codetrace.reference.TreeNameFilter;
+import com.mmdev.codetrace.reference.FolderProgressFocus;
 import javafx.animation.PauseTransition;
 import com.mmdev.codetrace.reference.PracticeEligibility;
 import com.mmdev.codetrace.practice.ReconstructionStatus.State;
@@ -69,6 +70,7 @@ public final class ReferenceTree extends TreeView<Path> {
     private Consumer<ReferenceTreeIndex> onIndexReady = ignored -> {};
     private ReferenceTreeIndex index;
     private Function<String, State> statusLookup = ignored -> State.PENDING;
+    private String progressFocusFolder = "";
     private long indexGeneration;
     private boolean loading;
     private boolean expanding;
@@ -93,11 +95,15 @@ public final class ReferenceTree extends TreeView<Path> {
                     setGraphic(null);
                     setTooltip(null);
                     setContextMenu(null);
+                    getStyleClass().remove("reference-outside-scope");
                     return;
                 }
                 String relative = relative(path);
                 boolean folder = isFolder(path);
                 boolean isExcluded = excluded.test(relative);
+                boolean outsideScope = FolderProgressFocus.outside(progressFocusFolder, relative);
+                getStyleClass().remove("reference-outside-scope");
+                if (outsideScope) getStyleClass().add("reference-outside-scope");
                 boolean practiceable = folder
                         ? (index == null || index.hasWorkableDescendant(relative))
                         : (index != null ? index.isWorkable(relative)
@@ -160,6 +166,9 @@ public final class ReferenceTree extends TreeView<Path> {
                     case COMPLETED -> "Ejercicio terminado";
                 };
                 if (isExcluded) status += "\nExcluida del progreso; sigue disponible para consulta";
+                if (outsideScope) status += "\nFuera del ámbito Solo: " + progressFocusFolder
+                        + "\nSigue disponible. Selecciona otra carpeta para cambiar el ámbito "
+                        + "o desmarca Solo para volver a todo el proyecto.";
                 if (fileCount >= 0) {
                     status += "\n" + fileCount + (fileCount == 1
                             ? " archivo de referencia, incluidas subcarpetas"
@@ -190,6 +199,19 @@ public final class ReferenceTree extends TreeView<Path> {
     public void setOnProgressFolder(Consumer<String> listener) {
         onProgressFolder = listener == null ? folder -> {} : listener;
     }
+
+    /**
+     * Only de-emphasize the graphic of out-of-scope nodes. Do not disable the
+     * TreeCell: users must remain free to browse, open files and switch folders.
+     */
+    public void setProgressFocusFolder(String relative) {
+        String next = relative == null ? "" : relative;
+        if (progressFocusFolder.equals(next)) return;
+        progressFocusFolder = next;
+        refresh();
+    }
+
+    public String progressFocusFolder() { return progressFocusFolder; }
 
     public void setExclusionHandlers(Predicate<String> excluded,
             Predicate<String> explicitlyExcluded,
