@@ -234,6 +234,12 @@ public final class PreferencesWindow {
         CheckBox completionSound = AppControls.checkBox(
                 "Reproducir sonido al terminar un archivo");
         completionSound.setSelected(current.completionSound());
+        CheckBox completionDialog = AppControls.checkBox(
+                "Mostrar felicitación y estadísticas al terminar un archivo");
+        completionDialog.setSelected(current.completionDialog());
+        completionDialog.setTooltip(new javafx.scene.control.Tooltip(
+                "Muestra aciertos, tiempo y velocidad media al finalizar "
+                + "un ejercicio de mecanografía; no afecta a los multimedia."));
         Button sampleCorrect = new Button("Probar acierto");
         Button sampleError = new Button("Probar error");
         Label sampleStatus = new Label();
@@ -252,6 +258,7 @@ public final class PreferencesWindow {
         soundPanel.getChildren().addAll(
                 groupHeading("Mecanografía"), sounds,
                 groupHeading("Finalización de archivos"), completionSound,
+                completionDialog,
                 groupHeading("Escuchar muestras"), previews, sampleStatus);
 
         CommandSettingsPane commandEditor = null;
@@ -308,7 +315,8 @@ public final class PreferencesWindow {
                     (int) Math.round(size.getValue()),
                     explorer.isSelected(), current.keyboardLayout(), sounds.isSelected(),
                     (int) Math.round(opacity.getValue()), turbo.isSelected(),
-                    completionSound.isSelected(), graphLayout.selected()));
+                    completionSound.isSelected(), completionDialog.isSelected(),
+                    graphLayout.selected()));
             return true;
         };
         Button accept = new Button("Aceptar");
