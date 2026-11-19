@@ -203,8 +203,8 @@ public final class TypingEditor extends BorderPane {
     }
 
     public double progress() {
-        return session.size() == 0 ? 1.0
-                : (double) session.resolvedCount() / session.size();
+        return session.visibleUnitCount() == 0 ? 1.0
+                : (double) session.resolvedVisibleCount() / session.visibleUnitCount();
     }
 
     public long correctCpm() {
