@@ -321,3 +321,29 @@ soltar, preservando el desplazamiento actual. Las etiquetas usan fondo claro
 para seguir siendo legibles aun cuando una arista pase por detrás.
 
 El mapa nunca reescribe los imports reales ni cambia el progreso de mecanografía.
+
+## Grafo: acercamiento contextual, paneo y satélites (iteración de noviembre)
+
+En **Herramientas → Preferencias → Grafo**, las dos opciones se muestran una
+**debajo de la otra**, como radios exclusivos sin una caja rectangular
+decorativa. Para una instalación sin preferencias anteriores,
+**Organizado** sigue siendo el valor inicial; la elección del usuario
+se conserva y prevalece al abrir nuevos mapas.
+
+En los mapas, **Ctrl+rueda conserva bajo el cursor el punto del grafo
+que se está ampliando**, en lugar de acercar desde la esquina superior
+izquierda. El control inferior de zoom mantiene el **centro visible**
+como ancla. La transformación se aplica al Canvas dentro de Group
+para que ScrollPane vea su extensión escalada y calcule correctamente
+los desplazamientos. El **botón central del ratón** activa la mano de
+paneo (abierta en reposo, cerrada mientras se arrastra). Se puede seguir
+arrastrando el fondo con el botón izquierdo, sin mover nodos.
+
+El modo Organizado coloca primero los archivos con varias relaciones.
+Después añade los archivos con una única conexión en las **celdas libres
+más cercanas al único vecino**. Un nodo periférico deja así de dispersarse
+por repulsión general, mientras que los muchos dependientes de un mismo
+nodo ocupan anillos sucesivos para no sobreponer nombres. La distribución
+es una **heurística determinista**, no una promesa de óptimo global para
+cualquier grafo. Los nodos siguen siendo arrastrables y las posiciones
+manuales se guardan exclusivamente con la sesión.
