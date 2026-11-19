@@ -347,3 +347,26 @@ Consulta también [Auditoría de cierre](AUDITORIA-CIERRE-2026-11.md).
 - RELEASE-01: ejecutar el paquete portable en Windows limpio,
   comprobar licencia/avisos de terceros, versión y todos los P0 de
   la auditoría antes de etiquetar una versión estable.
+
+
+## Regresión arquitectónica (tras refactorización de noviembre)
+
+- **FIND-FIRST-CLICK:** buscar en todo el proyecto, pulsar una sola vez
+  sobre un resultado y comprobar que abre la pestaña correcta, muestra la
+  línea seleccionada y resalta la coincidencia. Repetir con Java, XML, JSON
+  y Markdown en modo fuente. La transcripción no debe cambiar.
+- **FIND-FILTER-LAYOUT:** con ventana amplia, Ámbito y los tres checkboxes
+  deben ocupar una fila. A 590 px deben envolver sin solaparse ni ocultarse.
+- **CODE-GUTTER:** abrir un Java para practicar y un XML para consultar.
+  Ambas vistas deben mostrar numeración de líneas 1-based desde el inicio,
+  incluso tras cambiar zoom, mover scroll y buscar una coincidencia.
+- **TAB-LIFECYCLE:** abrir Markdown con imágenes, un vídeo y dos archivos;
+  cerrar pestaña individual con X, cerrar otras y cerrar todas. Reabrir cada
+  referencia sin estado residual y confirmar que cesa el audio/vídeo.
+- **TREE-INDEXED:** expandir/colapsar directorios profundos y aplicar filtro
+  por nombre sobre un proyecto con miles de archivos, incluyendo carpetas
+  virtuales creadas. Debe seguir respondiendo; ninguna operación escribe
+  archivos de la referencia.
+- **TREE-CANCEL:** iniciar Expansión recursiva en un árbol grande, cambiar
+  inmediatamente de proyecto y verificar que la expansión anterior no
+  reaparece ni modifica el nuevo árbol.

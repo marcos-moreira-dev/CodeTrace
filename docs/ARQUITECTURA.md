@@ -96,3 +96,11 @@ reconstruye al actualizar su modelo y consulta hijos directos durante la
 expansión perezosa, evitando recorrer el workspace completo por cada carpeta.
 La fuente de verdad sigue siendo `VirtualWorkspace`; la caché no altera
 la lógica de reconstrucción ni el formato de sesiones.
+
+## Expansión recursiva del árbol
+
+`ui/BatchedTreeExpander` concentra el temporizador JavaFX, la cancelación y
+los límites de trabajo para expandir carpetas de forma recursiva sin congelar
+la interfaz. `ReferenceTree` conserva la semántica de colapso, la selección,
+los nodos y los índices. Cambiar de referencia o iniciar otra expansión
+cancela la operación anterior.

@@ -13,9 +13,6 @@ import java.util.function.Predicate;
 import java.util.function.BiConsumer;
 import org.kordamp.ikonli.javafx.FontIcon;
 import javafx.scene.control.CheckMenuItem;
-import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.concurrent.Task;
 import javafx.util.Duration;
 import java.io.IOException;
@@ -76,11 +73,7 @@ public final class ReferenceTree extends TreeView<Path> {
     private String progressFocusFolder = "";
     private long indexGeneration;
     private boolean loading;
-    private boolean expanding;
-    private Timeline expansion;
-    private static final int EXPANSION_BATCH = 48;
-    private static final int MAX_RECURSIVELY_EXPANDED_FOLDERS = 12_000;
-    private int expansionVisited;
+    private final BatchedTreeExpander expander;
     private String nameFilter = "";
     private Set<String> filteredPaths = Set.of();
     private long filterGeneration;
@@ -91,6 +84,7 @@ public final class ReferenceTree extends TreeView<Path> {
         this.onOpen = onOpen;
         this.onChange = onChange;
         this.onStatus = onStatus;
+        this.expander = new BatchedTreeExpander(onStatus, this::notifyBusy);
         setShowRoot(true);
         setCellFactory(view -> new TreeCell<>() {
             @Override
@@ -235,7 +229,7 @@ public final class ReferenceTree extends TreeView<Path> {
 
     public void setOnBusyChange(Consumer<Boolean> listener) {
         onBusyChange = listener == null ? busy -> {} : listener;
-        onBusyChange.accept(loading || expanding);
+        onBusyChange.accept(loading || expander.isExpanding());
     }
 
     public void setOnIndexReady(Consumer<ReferenceTreeIndex> callback) {
@@ -243,16 +237,16 @@ public final class ReferenceTree extends TreeView<Path> {
     }
 
     private void notifyBusy() {
-        onBusyChange.accept(loading || expanding);
+        onBusyChange.accept(loading || expander.isExpanding());
     }
 
     public boolean isBusy() {
-        return loading || expanding;
+        return loading || expander.isExpanding();
     }
 
     /** Root's immediate children stay visible. Cancel any pending expansion. */
     public void collapseAll() {
-        cancelExpansion();
+        expander.cancel();
         TreeItem<Path> root = getRoot();
         if (root == null) return;
         collapseExpanded(root);
@@ -272,7 +266,7 @@ public final class ReferenceTree extends TreeView<Path> {
      * expansion flags, so reopening does not re-expand grandchildren.
      */
     public void collapseRecursively(Path directory) {
-        cancelExpansion();
+        expander.cancel();
         TreeItem<Path> clicked = findVisibleNode(getRoot(), directory);
         if (clicked == null || !isFolder(directory)) return;
         // Rebuild from a snapshot of the entire expanded tree. This is more
@@ -314,61 +308,20 @@ public final class ReferenceTree extends TreeView<Path> {
      * reference paths come from the indexed, read-only tree.
      */
     public void expandRecursively(Path directory) {
-        cancelExpansion();
+        expander.cancel();
         TreeItem<Path> clicked = findVisibleNode(getRoot(), directory);
         if (clicked == null || !isFolder(directory)) return;
-        ArrayDeque<TreeItem<Path>> pending = new ArrayDeque<>();
-        pending.add(clicked);
-        expansionVisited = 0;
-        expanding = true;
-        notifyBusy();
-        processExpansionBatch(pending);
-        if (pending.isEmpty() || !expanding) return;
-        expansion = new Timeline(new KeyFrame(Duration.millis(20),
-                event -> processExpansionBatch(pending)));
-        expansion.setCycleCount(Animation.INDEFINITE);
-        expansion.play();
+        expander.expand(clicked);
     }
 
-    /** Expand the entire reference, using the same recursive, bounded UI work. */
+    /** Expand the entire reference using the same bounded FX batches. */
     public void expandAll() {
         if (referenceRoot != null) expandRecursively(referenceRoot);
     }
 
-    private void processExpansionBatch(ArrayDeque<TreeItem<Path>> pending) {
-        int processed = 0;
-        while (!pending.isEmpty() && processed++ < EXPANSION_BATCH
-                && expansionVisited < MAX_RECURSIVELY_EXPANDED_FOLDERS) {
-            TreeItem<Path> node = pending.removeFirst();
-            if (node.isLeaf()) continue;
-            node.setExpanded(true);
-            expansionVisited++;
-            for (TreeItem<Path> child : node.getChildren()) {
-                if (!child.isLeaf()) pending.addLast(child);
-            }
-        }
-        if (pending.isEmpty() || expansionVisited >= MAX_RECURSIVELY_EXPANDED_FOLDERS) {
-            boolean limited = !pending.isEmpty();
-            int count = expansionVisited;
-            cancelExpansion();
-            onStatus.accept(limited
-                    ? "Se mostraron " + count + " carpetas; límite de seguridad alcanzado."
-                    : "Expansión recursiva terminada: " + count + " carpetas.");
-        }
-    }
-
-    private void cancelExpansion() {
-        if (expansion != null) {
-            expansion.stop();
-            expansion = null;
-        }
-        expanding = false;
-        notifyBusy();
-    }
-
     private void scanReference() {
         if (referenceRoot == null) return;
-        cancelExpansion();
+        expander.cancel();
         Path source = referenceRoot;
         long generation = ++indexGeneration;
         loading = true;
