@@ -11,6 +11,16 @@ import org.junit.jupiter.api.io.TempDir;
 class ReferenceChangeDetectorTest {
     @TempDir Path root;
 
+    @Test void neverFollowsPathsOutsideTheSelectedReference() throws Exception {
+        Path reference = Files.createDirectories(root.resolve("project"));
+        Path outside = Files.writeString(root.resolve("outside.java"), "secret");
+        String expected = ReferenceFingerprint.sha256(outside);
+        assertEquals(1, ReferenceChangeDetector.changedCount(reference,
+                Map.of("../outside.java", expected)),
+                "A deliberately malformed saved path must not read outside the project");
+        assertEquals("secret", Files.readString(outside));
+    }
+
     @Test void detectsChangedAndMissingReferencesWithoutWritingThem() throws Exception {
         Path original = Files.writeString(root.resolve("A.java"), "class A {}");
         Path changed = Files.writeString(root.resolve("B.java"), "before");

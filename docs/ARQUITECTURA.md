@@ -163,3 +163,11 @@ huellas de una sesión también se ejecuta ahora fuera del hilo gráfico.
 Al cambiar de proyecto o cerrar CodeTrace se cancelan ambas operaciones.
 Los eventos de navegación de Buscar comprueban que la pestaña aún pertenezca
 al proyecto activo antes de modificar la selección o el resaltado.
+
+## Verificación acotada a la referencia
+
+`ReferenceChangeDetector` normaliza cada ruta relativa antes de comprobar
+su huella y rechaza cualquier ruta que escape la carpeta seleccionada. No
+sigue enlaces simbólicos al verificar archivos. Estas precauciones protegen
+también a futuros consumidores del detector, aunque `SessionArchive` ya
+valide las rutas al leer el archivo `.ctrace`.
