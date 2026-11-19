@@ -306,6 +306,7 @@ public final class DependencyGraphPane extends BorderPane {
     public double getCameraX() { return camera.centerX(); }
     public double getCameraY() { return camera.centerY(); }
     public boolean hasUnboundedPan() { return true; }
+    public boolean isPartial() { return model.truncated(); }
     public int nodeCount() { return model.nodes().size(); }
     public int connectionCount() { return model.edges().size(); }
     public String folder() { return model.folder(); }
