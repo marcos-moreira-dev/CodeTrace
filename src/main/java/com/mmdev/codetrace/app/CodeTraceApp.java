@@ -788,7 +788,9 @@ public final class CodeTraceApp extends Application {
                             ProductDialogs.success(stage, "Archivo terminado",
                                     CompletionSummary.message(
                                             file.getFileName().toString(),
-                                            current, activeEditor.get().practiceElapsedMillis()));
+                                            current, activeEditor.get().practiceElapsedMillis(),
+                                            activeEditor.get().correctTypedEvents(),
+                                            activeEditor.get().incorrectTypedEvents()));
                         }
                     });
                 }
