@@ -7,12 +7,21 @@ import com.mmdev.codetrace.reference.GraphLayoutEngine;
 public record AppSettings(String fontFamily, int fontSize, boolean showExplorer,
                           String keyboardLayout, boolean typingSounds,
                           int templateOpacity, boolean turboMode,
-                          boolean completionSound,
+                          boolean completionSound, boolean completionDialog,
                           GraphLayoutEngine.Mode graphLayoutMode) {
     private static final Preferences STORE =
             Preferences.userNodeForPackage(AppSettings.class);
     public static final GraphLayoutEngine.Mode DEFAULT_GRAPH_MODE =
             GraphLayoutEngine.Mode.ORGANIZED;
+
+    /** Preserve the established 9-argument API for older settings callers. */
+    public AppSettings(String fontFamily, int fontSize, boolean showExplorer,
+                       String keyboardLayout, boolean typingSounds,
+                       int templateOpacity, boolean turboMode,
+                       boolean completionSound, GraphLayoutEngine.Mode graphLayoutMode) {
+        this(fontFamily, fontSize, showExplorer, keyboardLayout, typingSounds,
+                templateOpacity, turboMode, completionSound, true, graphLayoutMode);
+    }
 
     /** Existing settings clients keep the organized graph default. */
     public AppSettings(String fontFamily, int fontSize, boolean showExplorer,
@@ -70,6 +79,7 @@ public record AppSettings(String fontFamily, int fontSize, boolean showExplorer,
                 Math.max(20, Math.min(100, STORE.getInt("editor.opacity", 70))),
                 STORE.getBoolean("practice.turbo", false),
                 STORE.getBoolean("practice.completionSound", true),
+                STORE.getBoolean("practice.completionDialog", true),
                 storedGraphMode());
     }
 
@@ -85,19 +95,25 @@ public record AppSettings(String fontFamily, int fontSize, boolean showExplorer,
     public AppSettings withGraphLayoutMode(GraphLayoutEngine.Mode mode) {
         return new AppSettings(fontFamily, fontSize, showExplorer,
                 keyboardLayout, typingSounds, templateOpacity, turboMode,
-                completionSound, mode);
+                completionSound, completionDialog, mode);
     }
 
     public AppSettings withLayout(String layout) {
         return new AppSettings(fontFamily, fontSize, showExplorer, layout,
                 typingSounds, templateOpacity, turboMode, completionSound,
-                graphLayoutMode);
+                completionDialog, graphLayoutMode);
     }
 
     public AppSettings withTurbo(boolean enabled) {
         return new AppSettings(fontFamily, fontSize, showExplorer,
                 keyboardLayout, typingSounds, templateOpacity, enabled,
-                completionSound, graphLayoutMode);
+                completionSound, completionDialog, graphLayoutMode);
+    }
+
+    public AppSettings withCompletionDialog(boolean visible) {
+        return new AppSettings(fontFamily, fontSize, showExplorer, keyboardLayout,
+                typingSounds, templateOpacity, turboMode, completionSound,
+                visible, graphLayoutMode);
     }
 
     public void save() {
@@ -109,6 +125,7 @@ public record AppSettings(String fontFamily, int fontSize, boolean showExplorer,
         STORE.putInt("editor.opacity", templateOpacity);
         STORE.putBoolean("practice.turbo", turboMode);
         STORE.putBoolean("practice.completionSound", completionSound);
+        STORE.putBoolean("practice.completionDialog", completionDialog);
         // v2 intentionally does not inherit the older experimental GRID choice.
         // New and migrated installations start organized until explicitly changed.
         STORE.put("graph.layout.v2", graphLayoutMode.name());
