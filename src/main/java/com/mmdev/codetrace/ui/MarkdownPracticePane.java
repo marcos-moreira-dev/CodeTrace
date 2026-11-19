@@ -1,6 +1,7 @@
 package com.mmdev.codetrace.ui;
 
 import com.mmdev.codetrace.markdown.MarkdownRenderer;
+import com.mmdev.codetrace.markdown.MarkdownPreviewEncoding;
 import java.nio.file.Path;
 import javafx.concurrent.Task;
 import javafx.geometry.Insets;
@@ -120,7 +121,8 @@ public final class MarkdownPracticePane extends BorderPane {
                 externalImages.setVisible(result.externalImages() > 0);
                 externalImages.setText(allowExternalImages
                         ? "Bloquear imágenes externas" : "Cargar imágenes externas");
-                preview.getEngine().loadContent(result.html(), "text/html");
+                preview.getEngine().loadContent(
+                        MarkdownPreviewEncoding.asciiSafeHtml(result.html()), "text/html");
                 setCenter(preview);
             }
         });
