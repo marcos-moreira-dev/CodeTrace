@@ -138,7 +138,8 @@ public final class ReferenceTreeIndex {
                 }
                 String relative = relative(root, file);
                 regularFiles.add(relative);
-                if (PracticeEligibility.supports(file) && attributes.size() > 0) {
+                if (PracticeEligibility.supports(file) && attributes.size() > 0
+                        && !generated(relative)) {
                     workable.add(relative);
                     String ancestor = parent(relative);
                     while (true) {
