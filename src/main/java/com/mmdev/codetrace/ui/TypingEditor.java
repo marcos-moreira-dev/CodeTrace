@@ -207,10 +207,18 @@ public final class TypingEditor extends BorderPane {
                 : (double) session.resolvedVisibleCount() / session.visibleUnitCount();
     }
 
+    /** Elapsed wall-clock time since the first typing action (pauses included). */
+    public long practiceElapsedMillis() {
+        if (firstKeyNanos == 0) return 0;
+        return Math.max(0L, java.util.concurrent.TimeUnit.NANOSECONDS.toMillis(
+                System.nanoTime() - firstKeyNanos));
+    }
+
     public long correctCpm() {
         if (firstKeyNanos == 0) return 0;
         double minutes = (System.nanoTime() - firstKeyNanos) / 60_000_000_000.0;
-        return minutes < (3.0 / 60) ? 0 : Math.round(session.correctCount() / minutes);
+        return minutes < (3.0 / 60) ? 0
+                : Math.round(session.correctVisibleCount() / minutes);
     }
 
     public int skipJavaImports() {
