@@ -1037,7 +1037,7 @@
 .code-line-number {
     -fx-font-family: "Consolas";
     -fx-text-fill: #78838d;
-    -fx-padding: 0 9px 0 0;
+    -fx-padding: 0 9px 8px 0;
     -fx-background-color: #f1f3f5;
     -fx-background-radius: 0;
     -fx-border-color: transparent #d5dbe0 transparent transparent;
@@ -1339,8 +1339,11 @@
     -fx-border-width: 0;
     -fx-padding: 0;
 }
+/* Label text sits below the TextFlow glyphs under JavaFX's default
+   label baseline. Bottom content inset lifts only the digits, not the
+   continuous full-height gutter background or its borders. */
 .code-line-number {
     -fx-background-insets: 0;
     -fx-border-insets: 0;
-    -fx-padding: 0 9px 0 0;
+    -fx-padding: 0 9px 8px 0;
 }
