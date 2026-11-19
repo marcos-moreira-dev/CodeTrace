@@ -126,6 +126,6 @@ try {
     Write-Host ("ZIP: " + $zip) -ForegroundColor Cyan
     Write-Host "Revisa las capturas antes de compartir."
     if (-not $NoExplorer) {
-        Start-Process explorer.exe -ArgumentList ('/select,"' + $zip + '"')
+        Invoke-Item -LiteralPath $reports
     }
 }
