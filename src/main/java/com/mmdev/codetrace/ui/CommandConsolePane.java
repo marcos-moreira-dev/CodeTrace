@@ -9,6 +9,8 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.ButtonBar;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.Tooltip;
@@ -35,6 +37,9 @@ public final class CommandConsolePane extends BorderPane {
     private final VBox emptyState = new VBox(12, emptyMessage, configure);
     private final Runnable onConfigure;
     private Path project;
+    private boolean commandExecutionAcknowledged;
+    private final Label realProjectWarning = new Label(
+            "Los comandos se ejecutan sobre los archivos reales, no sobre la reconstrucción virtual.");
     private long outputGeneration;
 
     public CommandConsolePane(Runnable onClose) {
@@ -71,6 +76,13 @@ public final class CommandConsolePane extends BorderPane {
         header.setAlignment(Pos.CENTER_LEFT);
         header.getStyleClass().add("console-header");
         setTop(header);
+        realProjectWarning.getStyleClass().add("console-real-files-warning");
+        realProjectWarning.setWrapText(true);
+        realProjectWarning.setTooltip(new Tooltip(
+                "El programa externo puede modificar los archivos originales. Usa una copia para probar."));
+        realProjectWarning.setVisible(false);
+        realProjectWarning.managedProperty().bind(realProjectWarning.visibleProperty());
+        setBottom(realProjectWarning);
 
         output.setEditable(false);
         output.setWrapText(false);
@@ -92,6 +104,10 @@ public final class CommandConsolePane extends BorderPane {
     }
 
     public void setProject(Path selected) {
+        // A new reference must explicitly acknowledge the real-file boundary.
+        if (!java.util.Objects.equals(project, selected))
+            commandExecutionAcknowledged = false;
+        realProjectWarning.setVisible(selected != null);
         // Ignore log callbacks already queued for the previous project.
         outputGeneration++;
         if (executor.isRunning()) executor.stop();
@@ -142,6 +158,21 @@ public final class CommandConsolePane extends BorderPane {
         if (project == null || presets.getValue() == null) return;
         Preset selected = presets.getValue();
         Path currentRoot = project;
+        if (!commandExecutionAcknowledged) {
+            ButtonType runConfirmed = new ButtonType("Ejecutar comando",
+                    ButtonBar.ButtonData.OK_DONE);
+            ButtonType accepted = ProductDialogs.confirm(
+                    getScene() == null ? null : getScene().getWindow(),
+                    "Confirmar ejecución sobre archivos reales",
+                    "Este comando se ejecutará en el proyecto ORIGINAL: "
+                    + currentRoot + "\n\n"
+                    + "Puede crear, modificar o eliminar archivos reales. "
+                    + "No ejecuta la reconstrucción virtual de CodeTrace. "
+                    + "Utiliza una copia del proyecto si vas a probar operaciones de escritura.",
+                    runConfirmed, ButtonType.CANCEL);
+            if (accepted != runConfirmed) return;
+            commandExecutionAcknowledged = true;
+        }
         long generation = ++outputGeneration;
         output.appendText(System.lineSeparator() + "▶ " + selected.name()
                 + System.lineSeparator());
