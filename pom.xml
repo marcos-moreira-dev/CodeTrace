@@ -16,7 +16,20 @@
     <dependency><groupId>org.kordamp.ikonli</groupId><artifactId>ikonli-devicons-pack</artifactId><version>12.4.0</version></dependency>
     <dependency><groupId>org.kordamp.ikonli</groupId><artifactId>ikonli-feather-pack</artifactId><version>12.4.0</version></dependency>
   </dependencies>
-  <build><plugins>
+  <build>
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>false</filtering>
+        <excludes><exclude>codetrace-version.properties</exclude></excludes>
+      </resource>
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>true</filtering>
+        <includes><include>codetrace-version.properties</include></includes>
+      </resource>
+    </resources>
+    <plugins>
     <plugin>
       <groupId>org.apache.maven.plugins</groupId>
       <artifactId>maven-toolchains-plugin</artifactId>
