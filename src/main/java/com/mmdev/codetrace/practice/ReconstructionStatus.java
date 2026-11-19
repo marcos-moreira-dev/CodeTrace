@@ -18,8 +18,8 @@ public final class ReconstructionStatus {
     private ReconstructionStatus() {}
 
     public static boolean entirelyCorrect(TypingSession session) {
-        return session != null && session.size() > 0
-                && session.correctCount() == session.size();
+        return session != null && session.visibleUnitCount() > 0
+                && session.correctVisibleCount() == session.visibleUnitCount();
     }
 
     public static Map<String, State> calculate(VirtualWorkspace workspace,
