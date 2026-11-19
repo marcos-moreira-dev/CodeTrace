@@ -17,7 +17,8 @@ public record GraphLayout(String fingerprint, Map<String, Point> positions,
     public record Point(double x, double y) {
         public Point {
             if (!Double.isFinite(x) || !Double.isFinite(y)
-                    || x < 0 || y < 0 || x > 100_000 || y > 100_000)
+                    || x < -100_000 || y < -100_000
+                    || x > 100_000 || y > 100_000)
                 throw new IllegalArgumentException("Coordenadas de nodo inválidas");
         }
     }
