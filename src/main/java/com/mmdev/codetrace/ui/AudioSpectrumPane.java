@@ -70,11 +70,9 @@ public final class AudioSpectrumPane extends Region {
         GraphicsContext g = canvas.getGraphicsContext2D();
         g.setFill(Color.web("#f5f8fa"));
         g.fillRect(0, 0, w, h);
-        g.setFill(Color.web("#61788a"));
-        g.fillText("ESPECTRO DE AUDIO · EN TIEMPO REAL", 18, 22);
         g.setStroke(Color.web("#d9e3ea"));
-        double bottom = h - 18;
-        double plotTop = 38;
+        double bottom = h - 14;
+        double plotTop = 14;
         for (int k = 1; k <= 3; k++) {
             double y = plotTop + (bottom - plotTop) * k / 4;
             g.strokeLine(16, y, w - 16, y);

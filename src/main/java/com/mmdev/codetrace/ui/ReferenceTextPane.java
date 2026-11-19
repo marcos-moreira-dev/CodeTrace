@@ -17,6 +17,7 @@ import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -75,8 +76,17 @@ public final class ReferenceTextPane extends BorderPane {
                     offset = end;
                 }
                 if (line.spans().isEmpty()) addColoredText(flow, " ", null, false);
+                // A TXT is still a line-oriented source view. Keep the
+                // number gutter on the exact same row height as code and
+                // never let a long emoji line wrap below another number.
+                double height = CodeLineGutter.rowHeight(fontSize);
+                flow.setMinWidth(Region.USE_PREF_SIZE);
+                flow.setMaxWidth(Region.USE_PREF_SIZE);
                 HBox row = new HBox(10, number, flow);
                 row.setAlignment(Pos.CENTER_LEFT);
+                row.setMinHeight(height);
+                row.setPrefHeight(height);
+                row.setMinWidth(Region.USE_PREF_SIZE);
                 row.getStyleClass().add("reference-text-row");
                 setGraphic(row);
             }

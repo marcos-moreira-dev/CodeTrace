@@ -399,10 +399,25 @@ public final class ReferenceMediaPane extends BorderPane {
                 releaseViewport();
                 Label fileName = new Label(original.getFileName().toString());
                 fileName.getStyleClass().add("media-audio-title");
-                Label kind = new Label("Audio de referencia · solo lectura");
-                kind.getStyleClass().add("media-audio-subtitle");
+                Label details = new Label(AudioFileDetails.summary(
+                        original, null, media.getMetadata()));
+                details.getStyleClass().add("media-audio-subtitle");
+                details.setWrapText(true);
+                details.setMaxWidth(Double.MAX_VALUE);
+                // Duration and tags may arrive asynchronously from the decoder.
+                Runnable refreshDetails = () -> {
+                    if (!disposed && player == active)
+                        details.setText(AudioFileDetails.summary(
+                                original, active.getTotalDuration(), media.getMetadata()));
+                };
+                active.totalDurationProperty().addListener(
+                        (obs, previous, duration) -> refreshDetails.run());
+                media.getMetadata().addListener(
+                        (javafx.collections.MapChangeListener<String, Object>) change ->
+                                refreshDetails.run());
+                active.setOnReady(refreshDetails);
                 spectrum = new AudioSpectrumPane();
-                VBox audio = new VBox(10, fileName, kind, spectrum);
+                VBox audio = new VBox(10, fileName, details, spectrum);
                 audio.getStyleClass().add("media-audio-panel");
                 audio.setAlignment(Pos.CENTER);
                 spectrum.prefWidthProperty().bind(audio.widthProperty().subtract(40));
