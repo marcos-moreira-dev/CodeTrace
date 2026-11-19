@@ -53,6 +53,8 @@ public final class TypingEditor extends BorderPane {
     private double pendingOpacity = 0.70;
     private String fontFamily;
     private long firstKeyNanos;
+    private long correctTypedEvents;
+    private long incorrectTypedEvents;
     private boolean synchronizingLine;
     private boolean turboMode;
     private int searchFirst = -1;
@@ -214,11 +216,17 @@ public final class TypingEditor extends BorderPane {
                 System.nanoTime() - firstKeyNanos));
     }
 
+    /** Correct visible keystrokes entered in this editor instance, not restored history. */
+    public long correctTypedEvents() { return correctTypedEvents; }
+
+    /** Incorrect visible keystrokes, including those subsequently corrected. */
+    public long incorrectTypedEvents() { return incorrectTypedEvents; }
+
     public long correctCpm() {
         if (firstKeyNanos == 0) return 0;
         double minutes = (System.nanoTime() - firstKeyNanos) / 60_000_000_000.0;
         return minutes < (3.0 / 60) ? 0
-                : Math.round(session.correctVisibleCount() / minutes);
+                : Math.round(correctTypedEvents / minutes);
     }
 
     public int skipJavaImports() {
@@ -387,13 +395,31 @@ public final class TypingEditor extends BorderPane {
         // Navigation and line selection never silently change progress.
         if (turboMode) session.skipTurboSymbols();
         int previous = session.caret();
+        boolean wasIncorrect = previous > 0
+                && session.state(previous - 1) == TypingSession.State.INCORRECT;
         session.type(committed);
         int afterTyping = session.caret();
         if (afterTyping > previous) {
+            // Count this opening's actual attempts, not all characters already
+            // present from a restored .ctrace session. Line separators are
+            // structural and cannot inflate the visible-typing statistics.
+            for (int i = previous; i < afterTyping; i++) {
+                if ("\n".equals(session.cell(i).expected())) continue;
+                if (session.state(i) == TypingSession.State.CORRECT)
+                    correctTypedEvents++;
+                else incorrectTypedEvents++;
+            }
             boolean correct = session.state(afterTyping - 1)
                     == TypingSession.State.CORRECT;
             onTypedCharacter.accept(correct);
             if (turboMode) session.skipTurboSymbols();
+        } else if (previous > 0 && wasIncorrect
+                && !"\n".equals(session.cell(previous - 1).expected())
+                && session.state(previous - 1) == TypingSession.State.CORRECT) {
+            // A separately committed combining accent can fix the last
+            // grapheme without advancing the caret (LATAM/IME keyboards).
+            correctTypedEvents++;
+            onTypedCharacter.accept(true);
         }
     }
 
