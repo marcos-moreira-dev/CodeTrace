@@ -109,10 +109,20 @@ public final class GraphLayoutEngine {
 
     private static Map<String, GraphLayout.Point> arrangeComponent(
             List<String> members, Map<String, Set<String>> adjacent) {
+        // Arrange the connected backbone first. A vertex of degree one is
+        // geometrically simpler: it is attached after its parent is placed.
+        // Keeping leaves out of the force simulation avoids scattering them
+        // due to repulsion from unrelated nodes.
         List<String> sorted = members.stream()
+                .filter(node -> adjacent.get(node).size() >= 2)
                 .sorted(Comparator.<String>comparingInt(
                         n -> adjacent.get(n).size()).reversed()
                         .thenComparing(Comparator.naturalOrder())).toList();
+        if (sorted.isEmpty()) {
+            // A connected component with no degree >= 2 is a singleton or
+            // just one edge: use the first vertex as its backbone.
+            sorted = List.of(members.stream().min(String::compareTo).orElseThrow());
+        }
         int n = sorted.size();
         double[] x = new double[n], y = new double[n];
         Map<String, Integer> byId = new HashMap<>();
@@ -197,6 +207,53 @@ public final class GraphLayoutEngine {
             long key = (((long) bestColumn) << 32) ^ (bestRow & 0xffffffffL);
             occupied.add(key);
             cells.put(sorted.get(i), new int[]{bestColumn, bestRow});
+        }
+        // Degree-one nodes get the nearest unoccupied cell around their
+        // single neighbor. In a star, the hub is laid out first and its
+        // satellites fill expanding rings; there is no reason for an
+        // isolated satellite to sit far away from that hub.
+        List<String> satellites = members.stream()
+                .filter(node -> !cells.containsKey(node))
+                .sorted(Comparator.<String, String>comparing(
+                        node -> adjacent.get(node).stream().min(String::compareTo).orElse(""))
+                        .thenComparing(Comparator.naturalOrder())).toList();
+        for (String leaf : satellites) {
+            String parent = adjacent.get(leaf).stream()
+                    .min(String::compareTo).orElseThrow();
+            int[] center = cells.get(parent);
+            if (center == null)
+                throw new IllegalStateException("Leaf parent is not in backbone: " + parent);
+            int col = center[0], row = center[1];
+            int bestCol = col, bestRow = row;
+            boolean placed = false;
+            for (int radius = 1; radius <= members.size() + 1 && !placed; radius++) {
+                double best = Double.POSITIVE_INFINITY;
+                for (int dx = -radius; dx <= radius; dx++) {
+                    for (int dy = -radius; dy <= radius; dy++) {
+                        if (Math.max(Math.abs(dx), Math.abs(dy)) != radius) continue;
+                        int candidateCol = col + dx;
+                        int candidateRow = row + dy;
+                        long key = (((long) candidateCol) << 32)
+                                ^ (candidateRow & 0xffffffffL);
+                        if (occupied.contains(key)) continue;
+                        // Prefer a satellite just right of its parent, then
+                        // above/below, then left. Keep all labels separated.
+                        double score = dx * dx + dy * dy
+                                + (dx < 0 ? 0.2 : 0) + (dy == 0 ? 0 : 0.05);
+                        if (score < best) {
+                            best = score;
+                            bestCol = candidateCol;
+                            bestRow = candidateRow;
+                            placed = true;
+                        }
+                    }
+                }
+            }
+            if (!placed) throw new IllegalStateException("No free satellite cell");
+            long occupiedKey = (((long) bestCol) << 32)
+                    ^ (bestRow & 0xffffffffL);
+            occupied.add(occupiedKey);
+            cells.put(leaf, new int[]{bestCol, bestRow});
         }
         // Local physics is centered on (0,0), but GraphLayout.Point represents
         // persisted non-negative canvas coordinates. Normalize BEFORE records.
