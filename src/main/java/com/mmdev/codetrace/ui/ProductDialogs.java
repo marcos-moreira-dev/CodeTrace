@@ -114,7 +114,13 @@ public final class ProductDialogs {
         }
         author.getChildren().add(authorDetails);
 
-        VBox contents = new VBox(15, identity, body, new Separator(), author);
+        Label licenses = new Label(
+                "Fuentes IBM Plex · SIL OFL 1.1  |  Emojis Twemoji · CC BY 4.0\n"
+                + "Créditos y licencias: IBM/plex y jdecked/twemoji.");
+        licenses.setWrapText(true);
+        licenses.getStyleClass().add("about-license-note");
+        VBox contents = new VBox(15, identity, body, new Separator(), author,
+                new Separator(), licenses);
         contents.getStyleClass().add("about-content");
         contents.setPadding(new Insets(10, 24, 20, 24));
         ScrollPane scroll = new ScrollPane(contents);

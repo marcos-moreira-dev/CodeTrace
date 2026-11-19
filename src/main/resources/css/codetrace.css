@@ -1305,3 +1305,18 @@
 .prefs-navigation .list-cell:filled:hover .ikonli-font-icon {
     -fx-icon-color: #344f66;
 }
+
+/* Two independent project/consultation explorers, one expanded at a time. */
+.project-tree-header { -fx-min-height: 29px; }
+.consultation-folder-tree { -fx-background-color: #f9fafb; }
+.consultation-tree-hint { -fx-text-fill: #637889; -fx-font-size: 10px; }
+.about-license-note { -fx-font-size: 11px; -fx-text-fill: #657989; }
+.accordion > .titled-pane > .title {
+    -fx-background-color: #e5edf2;
+    -fx-border-color: transparent transparent #c5d0d8 transparent;
+    -fx-background-radius: 0;
+}
+.accordion > .titled-pane > .content {
+    -fx-background-color: #f6f8fa;
+    -fx-border-color: transparent;
+}

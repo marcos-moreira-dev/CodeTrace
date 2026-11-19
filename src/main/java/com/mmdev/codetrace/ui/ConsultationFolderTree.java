@@ -110,6 +110,7 @@ public final class ConsultationFolderTree extends TreeView<Path> {
         if (item.getChildren().isEmpty() ||
                 !(item.getChildren().getFirst() instanceof Loading)) return;
         Path source = item.getValue();
+        Path permittedRoot = folder;
         Task<List<Path>> task = new Task<>() {
             @Override protected List<Path> call() throws IOException {
                 List<Path> children = new ArrayList<>();
@@ -118,7 +119,7 @@ public final class ConsultationFolderTree extends TreeView<Path> {
                         if (isCancelled()) break;
                         // Ignore junctions/symlinks: no traversal outside this root.
                         if (Files.isSymbolicLink(entry)
-                                || !ConsultationFolderPolicy.contains(folder, entry)) continue;
+                                || !ConsultationFolderPolicy.contains(permittedRoot, entry)) continue;
                         children.add(entry);
                     }
                 }

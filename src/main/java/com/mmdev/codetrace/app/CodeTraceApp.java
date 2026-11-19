@@ -32,6 +32,8 @@ import com.mmdev.codetrace.ui.EditorZoomControl;
 import com.mmdev.codetrace.ui.MediaZoomControl;
 import com.mmdev.codetrace.ui.ProjectSearchWindow;
 import com.mmdev.codetrace.ui.ReferenceTextPane;
+import com.mmdev.codetrace.ui.ReadOnlyMarkdownPane;
+import com.mmdev.codetrace.ui.UnsupportedReferencePane;
 import com.mmdev.codetrace.reference.ProjectDependencyGraph;
 import com.mmdev.codetrace.ui.DependencyGraphPane;
 import com.mmdev.codetrace.reference.ProjectTextSearch.Hit;
@@ -866,11 +868,38 @@ public final class CodeTraceApp extends Application {
             return;
         }
         String key = "consulta://" + file.toAbsolutePath().normalize();
+        Tab existing = documents.find(key);
+        if (existing != null) {
+            tabs.getSelectionModel().select(existing);
+            return;
+        }
         if (ReferenceMediaPane.kindFor(file) != ReferenceMediaPane.Kind.UNSUPPORTED) {
             openMediaReference(file, key, folder);
-        } else {
-            openTextReference(file, key);
+            return;
         }
+        javafx.scene.Node viewer;
+        String name = file.getFileName().toString();
+        try {
+            TextPreview.Result data = TextPreview.load(file);
+            if (!data.readable()) {
+                viewer = new UnsupportedReferencePane(file);
+            } else if (name.toLowerCase(java.util.Locale.ROOT).endsWith(".md")
+                    || name.toLowerCase(java.util.Locale.ROOT).endsWith(".markdown")) {
+                viewer = new ReadOnlyMarkdownPane(
+                        data.content(), file, folder, settings.fontFamily(), settings.fontSize());
+            } else {
+                ReferenceTextPane text = new ReferenceTextPane(data.content(), name);
+                text.setFontSettings(settings.fontFamily(), settings.fontSize());
+                viewer = text;
+            }
+        } catch (IOException | SecurityException error) {
+            viewer = new UnsupportedReferencePane(file);
+        }
+        Tab tab = new Tab(name, viewer);
+        tab.setGraphic(FileTypeIcons.forPath(file, false));
+        installTabContextMenu(tab);
+        documents.open(key, tab);
+        setStatus("Consulta de solo lectura: " + name);
     }
 
     private void chooseConsultationFolder() {

@@ -80,5 +80,6 @@ public final class DocumentTabs {
         byPath.values().removeIf(registered -> registered == tab);
         if (tab.getContent() instanceof ReferenceMediaPane media) media.dispose();
         if (tab.getContent() instanceof MarkdownPracticePane markdown) markdown.dispose();
+        if (tab.getContent() instanceof ReadOnlyMarkdownPane reading) reading.dispose();
     }
 }
