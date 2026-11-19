@@ -29,6 +29,23 @@ class AppSettingsTest {
     }
 
     @Test
+    void readOnlyNoticeCanBeTurnedOffAndSurvivesOtherChanges() {
+        AppSettings original = new AppSettings("Consolas", 16, true,
+                "LATAM", false, 70, false, true);
+        assertFalse(original.readOnlyNotice(),
+                "Consultation popups should be opt-in, not interrupt every file");
+        AppSettings enabled = original.withReadOnlyNotice(true);
+        assertTrue(enabled.readOnlyNotice());
+        assertTrue(enabled.withLayout("US").readOnlyNotice());
+        assertTrue(enabled.withTurbo(true).readOnlyNotice());
+        assertTrue(enabled.withCompletionDialog(false).readOnlyNotice());
+        assertTrue(enabled.withGraphLayoutMode(
+                com.mmdev.codetrace.reference.GraphLayoutEngine.Mode.GRID)
+                .readOnlyNotice());
+        assertFalse(enabled.withReadOnlyNotice(false).readOnlyNotice());
+    }
+
+    @Test
     void organizedIsDefaultAndGraphChoiceSurvivesOtherSettingChanges() {
         AppSettings initial = new AppSettings(
                 "Consolas", 16, true, "LATAM", false, 70, false, true);
