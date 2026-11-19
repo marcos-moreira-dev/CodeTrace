@@ -156,3 +156,7 @@ shell	07-proyectos/tuberias/funciones.sh
 shell	07-proyectos/tuberias/main.sh
 cmd	07-proyectos/subrutinas/funciones.cmd
 cmd	07-proyectos/subrutinas/main.cmd
+java21	05-algoritmos/Dijkstra.java
+typescript	05-algoritmos/dijkstra.ts
+python	05-algoritmos/dijkstra.py
+cpp	05-algoritmos/Dijkstra.cpp

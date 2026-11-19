@@ -1,46 +1,46 @@
-# Biblioteca de práctica integrada (v1)
+# Biblioteca de práctica CodeTrace — criterios y estructura
 
-CodeTrace incluye **108 ejercicios originales en 13 paquetes** dentro del
-JAR, sin descarga de repositorios ni compilación durante la mecanografía.
-La fuente exacta de los recuentos es `src/main/resources/practice/catalog.tsv`.
+La biblioteca es una referencia **de solo lectura**, no un compilador: las
+fuentes se entregan dentro del programa, se materializan en una carpeta local
+propia y la sesión de mecanografía se guarda por separado en .ctrace.
 
-## Paquetes y cantidades
+## Organización de aprendizajes
 
-| Paquete | Ejercicios | Referencia didáctica |
-|---|---:|---|
-| `java21` | 16 | Java 21 |
-| `kotlin` | 16 | Kotlin 2.2 / JVM 21 |
-| `typescript` | 16 | TypeScript 5.9 |
-| `javascript` | 6 | ECMAScript 2022 |
-| `python` | 6 | Python 3.12 |
-| `c` | 6 | C17 |
-| `cpp` | 6 | C++20 |
-| `csharp` | 6 | C# 12 / .NET 8 |
-| `go` | 6 | Go 1.24 |
-| `ruby` | 6 | Ruby 3.3 |
-| `powershell` | 6 | PowerShell 7.4 |
-| `shell` | 6 | POSIX sh |
-| `cmd` | 6 | Windows CMD |
-| **Total** | **108** | **13 paquetes** |
+1. **Sintaxis:** variables, tipos, flujo, funciones y peculiaridades del idioma.
+2. **Estructuras:** pilas, listas, colas, arreglos y uso de memoria.
+3. **Algoritmos:** búsqueda binaria, Euclides, ordenación, **Dijkstra** y
+   ejercicios de costo computacional, con complejidad explicada cuando procede.
+4. **Patrones y proyectos:** Observer y Factory Method como conjuntos de
+   archivos con interfaces, implementaciones, fábricas, observadores y demos.
+5. **Integración:** comandos, módulos, scripts y herramientas externas.
+6. **Ensambador NASM x86-64:** sintaxis Intel, registros, pila, memoria,
+   bucles, Euclides, Fibonacci y llamadas Linux. No prometer que los ejemplos
+   con llamadas al sistema Linux son ejecutables Windows sin modificaciones.
 
-Los ejercicios son implementaciones reducidas y originales para practicar
-mecanografía, organizadas por fundamentos, tipos, funciones, estructuras de
-datos, algoritmos y patrones cuando el lenguaje lo justifica. El objetivo es
-equivalencia temática, no obligar a los lenguajes procedimentales o de shell
-a utilizar paradigmas orientados a objetos. Se usan como referencias
-conceptuales las especificaciones de lenguajes y materiales de ciencias de
-la computación; no son copias literales.
+### Convenciones de inclusión
 
-## Infraestructura
+- Cada archivo fuente indica en sus primeras líneas **versión de referencia**
+  y **comando de compilación/comprobación**.
+- Los proyectos multiarhivo permanecen en la MISMA carpeta de caso de uso.
+  CodeTrace no copia dependencias de forma mágica ni los ejecuta
+  automáticamente: sirven para estudiar relaciones reales entre archivos.
+- Los patrones se enseñan donde tienen sentido para el paradigma y el
+  alcance. No forzar Factory Method en CMD ni POO ficticia en ensamblador.
+- Cada ejemplo distingue el lenguaje, su versión, dependencias y sistema
+  operativo (especialmente NASM y scripts Shell).
+- Se permite omitir las declaraciones de dependencias del archivo actual,
+  pero nunca se omiten en masa llamadas o código arbitrario por heurísticas.
+- Los emojis pueden visualizarse como anotaciones; no son caracteres que
+  deban teclearse y no suman puntos de velocidad ni bloquean finalizar.
+- Los originales de referencia no se sobrescriben durante la práctica.
 
-- `practice/catalog.tsv`: inventario de recursos empaquetados, un archivo por línea; la primera columna identifica el paquete y la segunda es la ruta.
-- `com.mmdev.codetrace.library.BuiltInLibrary`: valida el catálogo, expone los paquetes y materializa referencias en `~/.codetrace/practice-library/v1/<pack>/`.
-- El contenido del JAR prevalece: al abrir un paquete, se restauran los archivos que hayan cambiado en esa copia de caché.
-- La mecanografía utiliza `TypingSession`, incluidas las reglas de Turbo y progreso; las omisiones no cuentan como caracteres correctos.
-- El entrenamiento no compila ni ejecuta los archivos. **Los comandos externos configurados por el usuario sí pueden modificar físicamente la caché**, por lo que no deben apuntar a esta biblioteca.
-- El progreso se almacena en sesiones `.ctrace`, separadas de las plantillas.
+## Pruebas de aceptación
 
-La biblioteca funciona sin internet. Para versiones de referencia y comandos
-de comprobación consulta `docs/LENGUAJES-Y-COMANDOS.md`. La validación de
-todos los ejercicios con cada toolchain externo sigue pendiente: Maven solo
-verifica una parte del contenido y los ejemplos Java.
+- Enumerar 14 paquetes, incluidos los 13 previos y NASM, desde interfaz.
+- Comprobar integridad del catálogo y existencia de los archivos
+  multiarhivo; validar que los Java de la biblioteca compilan juntos.
+- Ejecutar manualmente un Factory Method, un Observer y Dijkstra en
+  distintos lenguajes, según compiladores disponibles.
+- Verificar compilación NASM \`nasm -f elf64\` dentro de WSL/Linux si está
+  disponible; no exigir NASM para ejecutar CodeTrace.
+- No fusionar en \`main\` ni publicar instalador hasta aceptar esos casos.
