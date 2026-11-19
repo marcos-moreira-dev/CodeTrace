@@ -136,3 +136,32 @@ Windows y una decisión sobre licencia y paquete de publicación.
   subcarpetas» abre toda su descendencia de forma progresiva. Son
   operaciones inversas, con pruebas JavaFX que reabren la rama
   y verifican que no reaparezcan niveles antiguos.
+
+
+## Evidencia de cierre acumulada — 19-nov-2026
+
+Se verificó el ZIP de Windows `CodeTrace-feedback-20261119-003936.zip`
+(generado desde el commit `7e64bff9`, sin publicar información privada).
+Contiene 46 suites JUnit y **154 pruebas registradas: 153 aprobadas,
+0 errores, 0 fallos y 1 omitida** (smoke GUI bajo Maven ordinario);
+`maven-verify.log` y `javafx-run.log` terminan en `BUILD SUCCESS`.
+`captura-errores.log` está vacío. La captura automática es de la
+pantalla inicial *sin proyecto*, por lo que **no acredita** UX de sesión,
+búsqueda, grafo, multimedia o restauración. En GitHub, el smoke gráfico
+se ejecuta como verificación independiente.
+
+| Aspecto de cierre | Evidencia | Estado |
+|---|---|---|
+| Compilación y ejecución Windows | Diagnóstico real, 154 pruebas, captura inicial | **Aprobado técnicamente** |
+| Integridad virtual / archivos originales | Prueba integrada de indexación, búsqueda, grafo y guardado | **Automatizado** |
+| Rutas fuera del proyecto | Comprobación real de symlinks y rutas normalizadas | **Automatizado; validación Windows condicionada a permisos de symlink** |
+| Carga de sesiones v1–v4 | Pruebas binarias existentes y cancelación cooperativa | **Automatizado, faltan casos manuales de uso real** |
+| Búsqueda, explorador, zoom y grafos | JUnit y smoke JavaFX en CI | **Falta aceptación visual con proyecto abierto** |
+| Multimedia / procesos FFmpeg | Cobertura parcial e infraestructura de cancelación | **Faltan medios reales y liberación de recursos** |
+| Comandos externos | Advertencia y confirmación; pruebas de código | **Faltan cancelación y procesos hijos reales en Windows** |
+| Portable final sin herramientas de desarrollo | ZIP generado por GitHub | **Pendiente ensayo en Windows limpio** |
+| Licencia, avisos, changelog, versión | Auditoría previa | **Pendiente decisión de publicación** |
+
+El estado automático **no sustituye** las comprobaciones P0 de
+`QA-WINDOWS.md`. Mantener el PR #1 como borrador y la rama `main`
+sin alterar hasta registrar esa aceptación.

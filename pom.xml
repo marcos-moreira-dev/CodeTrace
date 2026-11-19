@@ -37,6 +37,9 @@
       <executions><execution><goals><goal>toolchain</goal></goals></execution></executions>
       <configuration><toolchains><jdk><version>21</version><vendor>temurin</vendor></jdk></toolchains></configuration>
     </plugin>
+    <!-- Explicit filtered-properties encoding avoids platform-dependent
+         Maven resource warnings and preserves the version resource. -->
+    <plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-resources-plugin</artifactId><version>3.4.0</version><configuration><encoding>UTF-8</encoding><propertiesEncoding>UTF-8</propertiesEncoding></configuration></plugin>
     <plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-compiler-plugin</artifactId><version>3.16.0</version><configuration><release>21</release></configuration></plugin>
     <plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-surefire-plugin</artifactId><version>3.6.1</version><configuration><useModulePath>false</useModulePath></configuration></plugin>
     <plugin><groupId>org.openjfx</groupId><artifactId>javafx-maven-plugin</artifactId><version>0.0.8</version><configuration><mainClass>com.mmdev.codetrace.app.Launcher</mainClass></configuration></plugin>
