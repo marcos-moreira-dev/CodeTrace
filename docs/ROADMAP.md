@@ -117,8 +117,10 @@ CodeTrace no pretende sustituir un IDE ni compilar o evaluar automáticamente la
 
 - Herramientas → Mapa de dependencias de carpeta; requiere carpeta seleccionada.
 - Solo imports resueltos a archivos/paquetes internos dentro del ámbito.
-- Análisis sin ejecutar código, en trabajador aparte; límites de 1200
-  archivos y 1200 aristas; aviso claro cuando no hay relaciones.
+- Análisis sin ejecutar código, en trabajador aparte: inspecciona hasta
+  1200 archivos y 1200 aristas. La vista gráfica muestra un máximo de
+  180 nodos y 400 aristas con aviso persistente de «Vista parcial» cuando
+  corresponde; los límites no implican que se hayan resuelto imports dinámicos.
 - Pestaña con círculos, flechas, zoom y doble clic para consultar el archivo.
 - Soporte léxico básico para 13 lenguajes; sin prometer análisis profundo de
   rutas generadas por frameworks ni importaciones dinámicas.

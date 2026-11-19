@@ -97,14 +97,23 @@ try {
 </toolchains>
 "@
             [System.IO.File]::WriteAllText($tc,$xml,[System.Text.UTF8Encoding]::new($false))
-            $oldPreference = $ErrorActionPreference
-            $ErrorActionPreference = "Continue"
+            # java -version prints its normal output to stderr. Capture it
+            # through ProcessStartInfo so PowerShell 5.1 cannot mislabel it
+            # as a NativeCommandError in the diagnostic report.
+            $javaInfo = New-Object System.Diagnostics.ProcessStartInfo
+            $javaInfo.FileName = Join-Path $jdk "bin\java.exe"
+            $javaInfo.Arguments = "-version"
+            $javaInfo.UseShellExecute = $false
+            $javaInfo.CreateNoWindow = $true
+            $javaInfo.RedirectStandardError = $true
+            $javaProcess = [System.Diagnostics.Process]::Start($javaInfo)
             try {
-                $javaVersion = & (Join-Path $jdk "bin\java.exe") -version 2>&1 | Out-String
-                $mavenVersion = & $mvn -version 2>&1 | Out-String
+                $javaVersion = $javaProcess.StandardError.ReadToEnd()
+                $javaProcess.WaitForExit()
             } finally {
-                $ErrorActionPreference = $oldPreference
+                $javaProcess.Dispose()
             }
+            $mavenVersion = & $mvn -version 2>&1 | Out-String
             [System.IO.File]::WriteAllText((Join-Path $logs "versiones.txt"),
                 "JAVA:" + [Environment]::NewLine + $javaVersion +
                 [Environment]::NewLine + "MAVEN:" + [Environment]::NewLine + $mavenVersion)

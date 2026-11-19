@@ -1,32 +1,46 @@
 # Biblioteca de práctica integrada (v1)
 
-Biblioteca de transcripción autocontenida. Los **44** archivos de ejemplo son originales y se incorporan al JAR. No se descargan repositorios ni se compila código durante el entrenamiento.
+CodeTrace incluye **108 ejercicios originales en 13 paquetes** dentro del
+JAR, sin descarga de repositorios ni compilación durante la mecanografía.
+La fuente exacta de los recuentos es `src/main/resources/practice/catalog.tsv`.
 
-## Packs
-- `c`: 2 archivos
-- `cmd`: 2 archivos
-- `cpp`: 2 archivos
-- `csharp`: 2 archivos
-- `go`: 2 archivos
-- `java21`: 12 archivos
-- `javascript`: 2 archivos
-- `powershell`: 2 archivos
-- `python`: 2 archivos
-- `ruby`: 2 archivos
-- `shell`: 2 archivos
-- `typescript`: 12 archivos
+## Paquetes y cantidades
 
-Java 21 y TypeScript abarcan sintaxis, tipos, funciones, estructuras de datos nativas, algoritmos y patrones de diseño. Se tomaron como referencia conceptual las secciones correspondientes de *Java SE 21 Language Specification* y *The Concise TypeScript Book*, así como las categorías del repositorio `marcos-moreira-dev/Estructuras-de-Datos-y-Algoritmos`. **Los ejemplos son implementaciones nuevas y reducidas para mecanografía, no copias literales de los libros o del repositorio.**
+| Paquete | Ejercicios | Referencia didáctica |
+|---|---:|---|
+| `java21` | 16 | Java 21 |
+| `kotlin` | 16 | Kotlin 2.2 / JVM 21 |
+| `typescript` | 16 | TypeScript 5.9 |
+| `javascript` | 6 | ECMAScript 2022 |
+| `python` | 6 | Python 3.12 |
+| `c` | 6 | C17 |
+| `cpp` | 6 | C++20 |
+| `csharp` | 6 | C# 12 / .NET 8 |
+| `go` | 6 | Go 1.24 |
+| `ruby` | 6 | Ruby 3.3 |
+| `powershell` | 6 | PowerShell 7.4 |
+| `shell` | 6 | POSIX sh |
+| `cmd` | 6 | Windows CMD |
+| **Total** | **108** | **13 paquetes** |
 
-Los demás lenguajes contienen dos ejemplos de sintaxis iniciales, ampliables en versiones futuras. Los packs no se presentan como un currículo obligatorio ni asignan calificaciones: el usuario elige libremente qué texto transcribir.
+Los ejercicios son implementaciones reducidas y originales para practicar
+mecanografía, organizadas por fundamentos, tipos, funciones, estructuras de
+datos, algoritmos y patrones cuando el lenguaje lo justifica. El objetivo es
+equivalencia temática, no obligar a los lenguajes procedimentales o de shell
+a utilizar paradigmas orientados a objetos. Se usan como referencias
+conceptuales las especificaciones de lenguajes y materiales de ciencias de
+la computación; no son copias literales.
 
 ## Infraestructura
 
-- `practice/catalog.tsv`: inventario de recursos empaquetados, un archivo por línea; primera columna ID de pack, segunda ruta relativa.
-- `com.mmdev.codetrace.library.BuiltInLibrary`: valida inventario y expone los packs; materializa copias de referencia en `~/.codetrace/practice-library/v1/<pack>/` para reutilizar el mismo editor, árbol, huellas y sistema de sesiones.
-- El original del JAR es la única autoridad: en aperturas posteriores se restauran los ficheros que hayan cambiado en la carpeta de caché.
-- La reproducción y las estadísticas usan exactamente `TypingSession`; las omisiones Turbo no aportan caracteres correctos.
-- La práctica **no ejecuta** los archivos. El módulo de comandos externos, cuando se usa, puede modificar físicamente la carpeta de caché; se recomienda no configurarlo para el material interno.
-- La persistencia del avance continúa mediante las sesiones `.ctrace`, por separado de los textos de referencia.
+- `practice/catalog.tsv`: inventario de recursos empaquetados, un archivo por línea; la primera columna identifica el paquete y la segunda es la ruta.
+- `com.mmdev.codetrace.library.BuiltInLibrary`: valida el catálogo, expone los paquetes y materializa referencias en `~/.codetrace/practice-library/v1/<pack>/`.
+- El contenido del JAR prevalece: al abrir un paquete, se restauran los archivos que hayan cambiado en esa copia de caché.
+- La mecanografía utiliza `TypingSession`, incluidas las reglas de Turbo y progreso; las omisiones no cuentan como caracteres correctos.
+- El entrenamiento no compila ni ejecuta los archivos. **Los comandos externos configurados por el usuario sí pueden modificar físicamente la caché**, por lo que no deben apuntar a esta biblioteca.
+- El progreso se almacena en sesiones `.ctrace`, separadas de las plantillas.
 
-La biblioteca debe continuar 100 % offline. No se depende de una conexión GitHub en tiempo de ejecución.
+La biblioteca funciona sin internet. Para versiones de referencia y comandos
+de comprobación consulta `docs/LENGUAJES-Y-COMANDOS.md`. La validación de
+todos los ejercicios con cada toolchain externo sigue pendiente: Maven solo
+verifica una parte del contenido y los ejemplos Java.

@@ -46,8 +46,17 @@ $mavenArgs = @("-B", "-ntp", "-t", $toolchains, "clean", "verify",
 & $mvn @mavenArgs
 if ($LASTEXITCODE -ne 0) { throw "Falló Maven verify o la preparación de dependencias." }
 
-$jar = Join-Path $target "codetrace-0.3.0-SNAPSHOT.jar"
-if (-not (Test-Path -LiteralPath $jar)) { throw "No existe el JAR compilado." }
+# Derive the artifact name from pom.xml. This works for both SNAPSHOT builds
+# and the eventual 0.3.0 release without editing the packaging script.
+[xml]$pomModel = Get-Content -LiteralPath (Join-Path $root "pom.xml") -Raw
+$artifact = $pomModel.SelectSingleNode("/*[local-name()='project']/*[local-name()='artifactId']").InnerText.Trim()
+$version = $pomModel.SelectSingleNode("/*[local-name()='project']/*[local-name()='version']").InnerText.Trim()
+if ([string]::IsNullOrWhiteSpace($artifact) -or [string]::IsNullOrWhiteSpace($version)) {
+    throw "El pom.xml no tiene artifactId o version válidos."
+}
+$jarName = "$artifact-$version.jar"
+$jar = Join-Path $target $jarName
+if (-not (Test-Path -LiteralPath $jar)) { throw "No existe el JAR compilado: $jarName" }
 Copy-Item -LiteralPath $jar -Destination $input -Force
 $jpackage = Join-Path $jdk "bin\jpackage.exe"
 $portable = Join-Path $dist "CodeTrace"
@@ -55,7 +64,7 @@ if (Test-Path $portable) { Remove-Item -LiteralPath $portable -Recurse -Force }
 
 Write-Host "Creando aplicación portable de Windows (JRE incluido)..."
 $packageArgs = @("--type", "app-image", "--name", "CodeTrace",
-    "--input", $input, "--main-jar", "codetrace-0.3.0-SNAPSHOT.jar",
+    "--input", $input, "--main-jar", $jarName,
     "--main-class", "com.mmdev.codetrace.app.Launcher",
     "--dest", $dist, "--java-options", "-Dfile.encoding=UTF-8")
 & $jpackage @packageArgs

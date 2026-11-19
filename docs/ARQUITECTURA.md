@@ -209,3 +209,11 @@ analizadores y la autocreación: `.git`, `.idea`, `.local`, `target`,
 El explorador de solo lectura sigue mostrando esos archivos para consulta;
 no se consideran ejercicios, progreso ni dependencias relevantes por defecto.
 Evita que cada analizador mantenga un conjunto divergente de exclusiones.
+
+## Empaquetado sin nombres de versión duplicados
+
+`scripts/package-windows.ps1` obtiene `artifactId` y `version` desde
+`pom.xml` para localizar el JAR y suministrarlo a `jpackage`, en vez
+de codificar el nombre `codetrace-0.3.0-SNAPSHOT.jar`. No se ha cambiado
+la versión del producto: continúa en desarrollo hasta decidir licencia,
+avisos de terceros, aceptación Windows y release.
