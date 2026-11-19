@@ -13,6 +13,7 @@ import com.mmdev.codetrace.reference.ProgressExclusions;
 import com.mmdev.codetrace.reference.ReferenceFingerprint;
 import com.mmdev.codetrace.reference.TextPreview;
 import com.mmdev.codetrace.ui.ReferenceTree;
+import com.mmdev.codetrace.ui.DocumentTabs;
 import com.mmdev.codetrace.ui.TypingEditor;
 import com.mmdev.codetrace.ui.PreferencesWindow;
 import com.mmdev.codetrace.ui.MarkdownPracticePane;
@@ -39,7 +40,6 @@ import com.mmdev.codetrace.workspace.VirtualWorkspace;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -96,7 +96,10 @@ import javafx.stage.Stage;
  */
 public final class CodeTraceApp extends Application {
     private final TabPane tabs = new TabPane();
-    private final Map<String, Tab> openedTabs = new HashMap<>();
+    private final DocumentTabs documents = new DocumentTabs(tabs, () -> {
+        refreshTabActions();
+        refreshMetrics();
+    });
     private final Label status = new Label("Listo");
     private final Label fileInfo = new Label();
     private final Label projectInfo = new Label();
@@ -671,7 +674,7 @@ public final class CodeTraceApp extends Application {
         }
         // Every eligible reference text file can be inspected immediately.
         // Virtual folders and the virtual file are created only upon transcription.
-        Tab existing = openedTabs.get(relative);
+        Tab existing = documents.find(relative);
         if (existing != null) {
             tabs.getSelectionModel().select(existing);
             javafx.application.Platform.runLater(
@@ -734,14 +737,8 @@ public final class CodeTraceApp extends Application {
             Tab tab = new Tab(file.getFileName().toString(),
                     markdown ? new MarkdownPracticePane(editor, file, reference) : editor);
             tab.setGraphic(FileTypeIcons.forPath(file, false));
-            tab.setOnClosed(event -> {
-                openedTabs.remove(relative);
-                if (tab.getContent() instanceof MarkdownPracticePane preview) preview.dispose();
-            });
             installTabContextMenu(tab);
-            openedTabs.put(relative, tab);
-            tabs.getTabs().add(tab);
-            tabs.getSelectionModel().select(tab);
+            documents.open(relative, tab);
             javafx.application.Platform.runLater(
                     () -> focusSelectedPracticeTab(tab));
             setStatus(relative);
@@ -752,7 +749,7 @@ public final class CodeTraceApp extends Application {
     }
 
     private void openTextReference(Path file, String relative) {
-        Tab existing = openedTabs.get(relative);
+        Tab existing = documents.find(relative);
         if (existing != null) {
             tabs.getSelectionModel().select(existing);
             return;
@@ -768,11 +765,8 @@ public final class CodeTraceApp extends Application {
             viewer.setFontSettings(settings.fontFamily(), settings.fontSize());
             Tab tab = new Tab(file.getFileName().toString(), viewer);
             tab.setGraphic(FileTypeIcons.forPath(file, false));
-            tab.setOnClosed(event -> openedTabs.remove(relative));
             installTabContextMenu(tab);
-            openedTabs.put(relative, tab);
-            tabs.getTabs().add(tab);
-            tabs.getSelectionModel().select(tab);
+            documents.open(relative, tab);
             setStatus("Consulta de solo lectura: " + relative);
         } catch (IOException error) {
             setStatus("No se pudo consultar " + relative);
@@ -860,8 +854,7 @@ public final class CodeTraceApp extends Application {
                       + "de tamaño o densidad. No representa todas las relaciones del proyecto."
                     : "Relaciones internas detectadas en " + graph.folder()));
             installTabContextMenu(tab);
-            tabs.getTabs().add(tab);
-            tabs.getSelectionModel().select(tab);
+            documents.open(null, tab);
             setStatus("Mapa · " + graph.folder()
                     + (graph.truncated() ? " · vista parcial" : ""));
         });
@@ -903,10 +896,7 @@ public final class CodeTraceApp extends Application {
         if (selected == null || (editorIn(selected) == null
                 && !(selected.getContent() instanceof ReferenceTextPane)))
             return null;
-        for (var entry : openedTabs.entrySet()) {
-            if (entry.getValue() == selected) return entry.getKey();
-        }
-        return null;
+        return documents.pathOf(selected);
     }
 
     private void navigateToSearchHit(Hit hit) {
@@ -914,7 +904,7 @@ public final class CodeTraceApp extends Application {
         Path file = reference.resolve(hit.relative()).normalize();
         if (!file.startsWith(reference.normalize())) return;
         openForPractice(file);
-        Tab selected = openedTabs.get(hit.relative());
+        Tab selected = documents.find(hit.relative());
         if (selected == null) return;
         javafx.application.Platform.runLater(() -> {
             tabs.getSelectionModel().select(selected);
@@ -929,7 +919,7 @@ public final class CodeTraceApp extends Application {
     }
 
     private void openMediaReference(Path file, String relative) {
-        Tab existing = openedTabs.get(relative);
+        Tab existing = documents.find(relative);
         if (existing != null) {
             tabs.getSelectionModel().select(existing);
             return;
@@ -943,14 +933,8 @@ public final class CodeTraceApp extends Application {
         });
         Tab tab = new Tab(file.getFileName().toString(), media);
         tab.setGraphic(FileTypeIcons.forPath(file, false));
-        tab.setOnClosed(event -> {
-            openedTabs.remove(relative);
-            media.dispose();
-        });
         installTabContextMenu(tab);
-        openedTabs.put(relative, tab);
-        tabs.getTabs().add(tab);
-        tabs.getSelectionModel().select(tab);
+        documents.open(relative, tab);
         setStatus("Vista previa · solo lectura: " + relative);
         refreshMetrics();
     }
@@ -985,37 +969,19 @@ public final class CodeTraceApp extends Application {
     }
 
     private void closeTab(Tab tab) {
-        if (tab == null) return;
-        // Removing a Tab programmatically does not fire its usual onClosed
-        // handler; release resources explicitly before removal.
-        if (tab.getContent() instanceof ReferenceMediaPane media) media.dispose();
-        if (tab.getContent() instanceof MarkdownPracticePane preview) preview.dispose();
-        openedTabs.values().removeIf(candidate -> candidate == tab);
-        tabs.getTabs().remove(tab);
-        refreshTabActions();
-        refreshMetrics();
+        documents.close(tab);
     }
 
     private void closeOtherTabs(Tab keep) {
-        if (keep == null) return;
-        for (Tab tab : List.copyOf(tabs.getTabs())) {
-            if (tab != keep) closeTab(tab);
-        }
-        tabs.getSelectionModel().select(keep);
+        documents.closeOthers(keep);
     }
 
     private void closeAllTabs() {
-        for (Tab tab : List.copyOf(tabs.getTabs())) closeTab(tab);
+        documents.closeAll();
     }
 
     private void clearOpenTabs() {
-        for (Tab tab : tabs.getTabs()) {
-            if (tab.getContent() instanceof ReferenceMediaPane media) media.dispose();
-            if (tab.getContent() instanceof MarkdownPracticePane preview) preview.dispose();
-        }
-        tabs.getTabs().clear();
-        openedTabs.clear();
-        refreshTabActions();
+        documents.closeAll();
     }
 
     private void focusSelectedPracticeTab(Tab tab) {
@@ -1053,7 +1019,7 @@ public final class CodeTraceApp extends Application {
         } else {
             // After a file is created via its context menu, allow immediate
             // typing in the existing preview without another mouse click.
-            Tab createdTab = openedTabs.get(change.target());
+            Tab createdTab = documents.find(change.target());
             if (createdTab != null) {
                 javafx.application.Platform.runLater(
                         () -> focusSelectedPracticeTab(createdTab));

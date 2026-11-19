@@ -227,14 +227,14 @@
     -fx-background-color: #ffffff;
     -fx-text-fill: #81909b;
     -fx-border-color: transparent;
-    -fx-padding: 1px 12px 1px 17px;
+    -fx-padding: 1px 12px 1px 0;
 }
 .typing-lines .list-cell:filled:selected,
 .typing-lines:focused .list-cell:filled:selected {
     -fx-background-color: #e7f0f6;
     -fx-border-color: transparent transparent transparent #4a6076;
     -fx-border-width: 0 0 0 3px;
-    -fx-padding: 1px 12px 1px 14px;
+    -fx-padding: 1px 12px 1px 0;
 }
 .typing-lines .list-cell:filled:hover:!selected {
     -fx-background-color: #f4f8fa;
@@ -1030,8 +1030,11 @@
     -fx-border-width: 0 0 0 3px;
     -fx-padding: 1px 10px 1px 0;
 }
-.reference-text-row { -fx-alignment: center-left; -fx-spacing: 12; }
-.reference-line-number {
+.reference-text-row, .code-line-row {
+    -fx-alignment: center-left;
+    -fx-spacing: 12;
+}
+.code-line-number {
     -fx-font-family: "Consolas"; -fx-font-size: 11px;
     -fx-text-fill: #8a9ca8;
     -fx-padding: 0 7px 0 3px;
@@ -1222,7 +1225,7 @@
 .app-checkbox:selected .box { -fx-background-color: #e5f0f6; -fx-border-color: #4d7897; }
 .app-checkbox:selected .mark { -fx-background-color: #1f697d; }
 .app-checkbox:disabled { -fx-opacity: 0.48; }
-.search-filter-options { -fx-padding: 1 0 1 76; }
+.search-filter-options { -fx-padding: 1 0 1 0; }
 .search-filter-options .app-checkbox { -fx-font-size: 11.5px; }
 
 /* Graph camera renders only the visible viewport; never allocates a bitmap

@@ -142,6 +142,11 @@ class CodeTraceAppSmokeTest {
                 assertTrue(searchStage.isShowing());
                 assertFalse(searchStage.getIcons().isEmpty(),
                         "Find should show the CodeTrace titlebar icon");
+                var filterRow = (FlowPane) searchStage.getScene().getRoot()
+                        .lookup(".search-filter-options");
+                assertNotNull(filterRow);
+                assertEquals(4, filterRow.getChildren().size(),
+                        "The scope and checkboxes share a responsive row");
                 searchStage.close();
                 tabPane.getSelectionModel().selectFirst();
                 var zoom = stage.getScene().getRoot().lookup(".status-zoom-control");
@@ -156,6 +161,16 @@ class CodeTraceAppSmokeTest {
                 assertEquals(23, xml.fontSize());
                 xml.setFontSettings("Consolas", 13);
                 assertEquals(13, xml.fontSize());
+                var gutter = com.mmdev.codetrace.ui.CodeLineGutter.number(42);
+                assertEquals("42", gutter.getText());
+                assertTrue(gutter.getStyleClass().contains("code-line-number"));
+                var disposableTabs = new com.mmdev.codetrace.ui.DocumentTabs(
+                        new TabPane(), () -> {});
+                javafx.scene.control.Tab sample = new javafx.scene.control.Tab("A");
+                disposableTabs.open("src/A.java", sample);
+                assertSame(sample, disposableTabs.find("src/A.java"));
+                disposableTabs.close(sample);
+                assertNull(disposableTabs.find("src/A.java"));
                 com.mmdev.codetrace.ui.ReferenceTextPane plain =
                         new com.mmdev.codetrace.ui.ReferenceTextPane("Hello", "notes.txt");
                 plain.setFontSettings("Consolas", 24);
@@ -427,6 +442,10 @@ class CodeTraceAppSmokeTest {
                 editor.selectLine(0);
                 assertEquals(0, editor.session().caret());
                 assertEquals(0, editor.activeLineNumber());
+                assertTrue(editor.lookupAll(".code-line-number").stream()
+                        .anyMatch(node -> node instanceof javafx.scene.control.Label label
+                                && "1".equals(label.getText())),
+                        "Practice lines must have a native 1-based gutter");
                 assertTrue(editor.getChildren().stream()
                         .anyMatch(node -> node.getStyleClass().contains("typing-lines")));
 

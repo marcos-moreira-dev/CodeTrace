@@ -80,3 +80,10 @@ contadores y estados recursivos, no a la elegibilidad del código.
 `MarkdownPracticePane.dispose()` cancela la preparación de HTML y vacía WebView al cerrar pestañas o cambiar el proyecto. `CodeTraceApp.clearOpenTabs()` debe liberar reproductores y vistas Markdown de forma simétrica.
 
 `scripts/package-windows.ps1` utiliza jpackage con Temurin 21, dependencias de Maven y un runtime incluido para generar el ZIP portable. FFmpeg no se distribuye por defecto. El flujo de CI empaqueta Windows y conserva el ZIP como artefacto. La prueba final de UX y códecs debe seguir la matriz de [QA-WINDOWS](QA-WINDOWS.md).
+
+## Refactorización de navegación y componentes de código (iteración posterior)
+
+- `ui/DocumentTabs` mantiene la identidad de pestañas y la liberación de vistas de medios/Markdown; `CodeTraceApp` coordina los casos de uso y delega la administración del ciclo de vida de pestañas.
+- `ui/CodeLineGutter` proporciona una numeración 1-based uniforme, integrada en las celdas virtualizadas tanto de `TypingEditor` como de `ReferenceTextPane`. Los índices internos de `TypingSession` no cambian.
+- Buscar coloca Ámbito y sus opciones en una fila adaptable y navega al primer clic en resultados (sin modificar la transcripción).
+- Pendiente de aceptación visual Windows: scroll a coincidencias recién abiertas, foco, escalado DPI y pruebas de regresión de cierre con medios activos.

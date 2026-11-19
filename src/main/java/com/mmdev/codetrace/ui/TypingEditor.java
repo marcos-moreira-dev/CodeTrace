@@ -171,8 +171,9 @@ public final class TypingEditor extends BorderPane {
         } finally {
             synchronizingLine = false;
         }
-        lines.scrollTo(zeroBasedLine);
+        // Rebuild the visible cell before requesting the target scroll position.
         lines.refresh();
+        lines.scrollTo(zeroBasedLine);
     }
 
     /** Apply only to pending source characters, never to correctly typed tiles. */
@@ -513,7 +514,12 @@ public final class TypingEditor extends BorderPane {
 
         row.setMinWidth(rowWidth);
         row.setPrefWidth(rowWidth);
-        return row;
+        // The gutter is part of the same virtualized line cell, not an overlay.
+        // Its numbering is human-facing (1-based); caret indices stay 0-based.
+        HBox visualLine = new HBox(12, CodeLineGutter.number(line.number() + 1), row);
+        visualLine.setAlignment(Pos.CENTER_LEFT);
+        visualLine.getStyleClass().add("code-line-row");
+        return visualLine;
     }
 
     private static void sizeTile(StackPane tile, double width, double height) {

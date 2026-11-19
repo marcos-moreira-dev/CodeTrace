@@ -53,10 +53,7 @@ public final class ReferenceTextPane extends BorderPane {
                     setGraphic(null);
                     return;
                 }
-                Label number = new Label(Integer.toString(line.number()));
-                number.getStyleClass().add("reference-line-number");
-                number.setPrefWidth(49);
-                number.setAlignment(Pos.CENTER_RIGHT);
+                Label number = CodeLineGutter.number(line.number());
                 TextFlow flow = new TextFlow();
                 flow.getStyleClass().add("reference-text-flow");
                 int offset = 0;
@@ -176,8 +173,8 @@ public final class ReferenceTextPane extends BorderPane {
         selectedMatchStart = Math.max(0, column - 1);
         selectedMatchEnd = selectedMatchStart + Math.max(1, length);
         lines.getSelectionModel().select(line - 1);
-        lines.scrollTo(Math.max(0, line - 3));
         lines.refresh();
+        lines.scrollTo(Math.max(0, line - 3));
         lines.requestFocus();
     }
 }

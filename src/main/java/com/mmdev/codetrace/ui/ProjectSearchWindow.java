@@ -72,13 +72,16 @@ public final class ProjectSearchWindow {
         HBox form = new HBox(8, new Label("Qué buscar"), expression, search, stop);
         form.setAlignment(Pos.CENTER_LEFT);
         HBox.setHgrow(expression, Priority.ALWAYS);
-        FlowPane options = new FlowPane(14, 6, caseSensitive, wholeWords, regex);
-        options.getStyleClass().add("search-filter-options");
-        options.setAlignment(Pos.CENTER_LEFT);
-        HBox filter = new HBox(8, new Label("Ámbito"), scope);
+        HBox scopeControl = new HBox(8, new Label("Ámbito"), scope);
+        scopeControl.setAlignment(Pos.CENTER_LEFT);
+        scope.setPrefWidth(180);
+        scope.setMaxWidth(180);
+        // Wrap only on narrow windows; normally keep every option beside Ámbito.
+        FlowPane filter = new FlowPane(14, 6, scopeControl,
+                caseSensitive, wholeWords, regex);
+        filter.getStyleClass().add("search-filter-options");
         filter.setAlignment(Pos.CENTER_LEFT);
-        scope.setMaxWidth(240);
-        VBox header = new VBox(9, form, filter, options);
+        VBox header = new VBox(9, form, filter);
         header.setPadding(new Insets(12));
         header.getStyleClass().add("search-window-header");
 
@@ -91,7 +94,8 @@ public final class ProjectSearchWindow {
                                 + ", columna " + hit.column(),
                         hit.excerpt(), "fth-search")));
         results.setOnMouseClicked(event -> {
-            if (event.getClickCount() == 2) navigateSelected();
+            if (event.getButton() == javafx.scene.input.MouseButton.PRIMARY
+                    && event.getClickCount() == 1) navigateSelected();
         });
         results.getSelectionModel().selectedIndexProperty().addListener(
                 (obs, old, selected) -> currentHit = selected.intValue());
