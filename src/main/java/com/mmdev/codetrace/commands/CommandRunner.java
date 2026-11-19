@@ -80,6 +80,10 @@ public final class CommandRunner {
                 outputReader.setDaemon(true);
                 outputReader.start();
                 code = process.waitFor();
+                // Normal completion must drain the child's final output before
+                // reporting "finished". Never wait for the pipe on cancellation,
+                // because an inherited descriptor may outlive the shell.
+                if (!stopRequested.get()) outputReader.join(1500);
                 outputActive.set(false);
                 if (stopRequested.get()) code = -2;
             } catch (InterruptedException cancelled) {
