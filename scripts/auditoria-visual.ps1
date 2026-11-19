@@ -1,11 +1,17 @@
 #Requires -Version 5.1
 <#
-Capturas guiadas para auditoria de UX/UI de CodeTrace.
+Por defecto captura automaticamente los cambios visibles mientras se navega.
+Usa -Guiado para recorrer manualmente 37 pantallas especificas de CodeTrace.
 No sube archivos y no modifica la referencia. Revisa las capturas: pueden
 mostrar rutas personales, proyectos, nombres o contenido privado.
 #>
 [CmdletBinding()]
-param([int]$SecondsToFocus = 3, [switch]$NoExplorer)
+param([int]$SecondsToFocus = 3, [switch]$NoExplorer,
+      [switch]$Guiado, [ValidateRange(30,3600)][int]$DurationSeconds = 300)
+if (-not $Guiado) {
+    & (Join-Path $PSScriptRoot "captura-automatica.ps1") -DurationSeconds $DurationSeconds -NoExplorer:$NoExplorer
+    exit $LASTEXITCODE
+}
 $ErrorActionPreference = "Stop"
 $root = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..")).Path
 $reports = Join-Path $root "reports"
@@ -87,15 +93,8 @@ try {
             $manifest.Add("$slug | OMITIDO")
             continue
         }
-        try {
-            $app = Get-Process -ErrorAction SilentlyContinue |
-                Where-Object { $_.MainWindowHandle -ne [IntPtr]::Zero -and $_.MainWindowTitle -match 'CodeTrace' } |
-                Select-Object -First 1
-            if ($app) {
-                $shell = New-Object -ComObject WScript.Shell
-                [void]$shell.AppActivate($app.Id)
-            }
-        } catch { }
+        # Never activate another window based on a partial title match.
+        # The capturer itself requires CodeTrace's verified foreground process.
         Write-Host "Enfoca la ventana CodeTrace para capturarla..."
         Start-Sleep -Seconds ([Math]::Max(1, $SecondsToFocus))
         $target = Join-Path $screens ($slug + ".png")
