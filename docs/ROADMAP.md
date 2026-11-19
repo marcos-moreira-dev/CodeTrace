@@ -1,6 +1,6 @@
 # CodeTrace — matriz de producto y plan de cierre
 
-Actualización: 18 de noviembre de 2026. Esta matriz distingue la **implementación** de la **validación manual**; un CI verde no demuestra por sí solo la ergonomía en Windows.
+Actualización: 18 de noviembre de 2026. Auditoría consolidada en [AUDITORIA-CIERRE-2026-11](AUDITORIA-CIERRE-2026-11.md). Esta matriz distingue la **implementación** de la **validación manual**; un CI verde no demuestra por sí solo la ergonomía en Windows.
 
 ## Identidad y límites
 
@@ -39,7 +39,7 @@ CodeTrace no pretende sustituir un IDE ni compilar o evaluar automáticamente la
 | FFmpeg para formatos adicionales | Fallback implementado, binario no incluido | Probar conversión, cancelación, temporales y códecs reales; revisar licencias antes de incluir FFmpeg |
 | Símbolos y miniteclado LATAM/US orientativo | Implementado | Confirmar diferencias de distribución en Windows y ajustar teclas especiales |
 | Comandos del proyecto y consola inferior redimensionable | Implementado; reforzada la cancelación y separación de salida por proyecto | Revisar historial, ergonomía y salidas extensas, Windows/PowerShell/sh |
-| Biblioteca de práctica interna por 12 lenguajes | Base implementada | Completar temarios; Java y TypeScript: patrones, estructuras, algoritmos y callbacks nativos |
+| Biblioteca de práctica interna por 13 lenguajes | Base implementada | Completar temarios; Java y TypeScript: patrones, estructuras, algoritmos y callbacks nativos |
 | Iconos de archivo y diálogos con identidad CodeTrace | Implementado, auditoría pendiente | Corregir formatos faltantes; revisar consistencia, resoluciones y selección |
 | Paquetes instalables y actualización del producto | Script jpackage + ZIP implementado, validación pendiente | Comprobar el artefacto de CI y ejecutar en Windows limpio sin JDK/Maven; instalador EXE con WiX sin validar |
 | Auditoría funcional, producto, UX/UI y accesibilidad | Pendiente | Ejecutar matriz de aceptación completa y corregir hallazgos |
@@ -89,7 +89,7 @@ CodeTrace no pretende sustituir un IDE ni compilar o evaluar automáticamente la
 - Decidir si la configuración de exclusiones debe viajar dentro del archivo `.ctrace` (ahora se guarda localmente por proyecto).
 
 ### Fase 3 — Material de práctica
-- Revisar los doce repositorios/paquetes internos: ejemplos cortos, nomenclatura y alcance.
+- Revisar los trece repositorios/paquetes internos: ejemplos cortos, nomenclatura y alcance.
 - Completar los módulos de Java/TypeScript de patrones, algoritmos y estructuras de datos sin depender de frameworks de colección para los ejercicios didácticos.
 
 ### Fase 4 — Pulido y distribución
@@ -130,7 +130,7 @@ CodeTrace no pretende sustituir un IDE ni compilar o evaluar automáticamente la
 - Zoom contextual único: puntos para código y consultas de texto, porcentaje
   para imágenes, vídeos y grafos. Un solo deslizador visible a la vez.
 - Grafo interactivo: arrastre individual de nodos, posiciones persistidas en
-  sesión v3 y huella del contenido para restablecer cuando cambie la referencia.
+  sesión v4 y huella del contenido para restablecer cuando cambie la referencia.
 - Selección de carpeta, doble clic para abrir archivo, flechas y mapa sin
   dibujar imports externos inventados.
 - Autocreación de la estructura virtual completa en lotes; excluye cachés
@@ -144,12 +144,12 @@ CodeTrace no pretende sustituir un IDE ni compilar o evaluar automáticamente la
 
 ## Lectura de dependencias: distribución y navegación
 
-- Dos distribuciones elegibles mediante control transversal ExclusiveChoiceBar:
-  Cuadrícula (base) y Organizado (componentes, capas, pasadas baricéntricas).
+- Dos distribuciones elegibles desde Preferencias mediante ExclusiveChoiceBar:
+  Organizado es el valor inicial; Cuadrícula es la alternativa explícita.
 - Organización determinista con separación de etiquetas y partición
   de capas densas para evitar lienzos gigantescos.
-- El lienzo crece al mover nodos cerca de su borde, respetando topes
-  de memoria y coordenadas.
+- Cámara virtual independiente del Canvas, centrada al abrir, con paneo
+  libre y dibujado solo en el viewport; no necesita agrandar un bitmap.
 - Menú contextual: mapa para carpeta pulsada y colapso recursivo donde
   existan subcarpetas. El grafo no modifica fuentes originales.
 - Ruta del nodo en statusbar global; pie de grafo solo muestra
@@ -168,5 +168,8 @@ CodeTrace no pretende sustituir un IDE ni compilar o evaluar automáticamente la
 - Se desacopla el arrastre de nodos del panning del ScrollPane y se
   pospone el crecimiento del lienzo hasta soltar el nodo, manteniendo
   la posición visible.
-- Restablecer distribución se traslada a un menú contextual discreto.
-- Validación visual y de arrastre en Windows aún necesaria.
+- Restablecer distribución y centrar/ajustar a ventana están en menú contextual.
+- Checkboxes compartidos mediante AppControls, incluidos filtros de Buscar.
+- Colapso realmente recursivo: el directorio escogido permanece visible
+  pero sus descendientes se cierran aunque hayan sido expandidos antes.
+- Validación visual, accesibilidad y arrastre en Windows aún necesarias.
