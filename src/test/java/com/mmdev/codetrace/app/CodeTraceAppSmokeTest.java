@@ -166,10 +166,10 @@ class CodeTraceAppSmokeTest {
                 assertTrue(gutter.getStyleClass().contains("code-line-number"));
                 var disposableTabs = new com.mmdev.codetrace.ui.DocumentTabs(
                         new TabPane(), () -> {});
-                javafx.scene.control.Tab sample = new javafx.scene.control.Tab("A");
-                disposableTabs.open("src/A.java", sample);
-                assertSame(sample, disposableTabs.find("src/A.java"));
-                disposableTabs.close(sample);
+                javafx.scene.control.Tab sampleTab = new javafx.scene.control.Tab("A");
+                disposableTabs.open("src/A.java", sampleTab);
+                assertSame(sampleTab, disposableTabs.find("src/A.java"));
+                disposableTabs.close(sampleTab);
                 assertNull(disposableTabs.find("src/A.java"));
                 com.mmdev.codetrace.ui.ReferenceTextPane plain =
                         new com.mmdev.codetrace.ui.ReferenceTextPane("Hello", "notes.txt");
