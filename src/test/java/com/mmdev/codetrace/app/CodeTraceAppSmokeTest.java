@@ -518,8 +518,9 @@ class CodeTraceAppSmokeTest {
                         "Mapa de dependencias...".equals(item.getText())));
                 assertTrue(folderMenu.getItems().stream().anyMatch(
                         item -> "Crear esta carpeta".equals(item.getText())));
-                assertFalse(folderMenu.getItems().stream().anyMatch(
-                        item -> "Crear subcarpeta...".equals(item.getText())));
+                assertTrue(folderMenu.getItems().stream().anyMatch(
+                        item -> "Crear subcarpeta...".equals(item.getText())),
+                        "The deep fixture includes an uncreated subfolder");
                 folderMenu.getItems().stream()
                         .filter(item -> "Crear esta carpeta".equals(item.getText()))
                         .findFirst().orElseThrow().fire();
