@@ -17,7 +17,7 @@ public record AppSettings(String fontFamily, int fontSize, boolean showExplorer,
                        GraphLayoutEngine.Mode graphLayoutMode) {
         this(fontFamily, fontSize, showExplorer, keyboardLayout, typingSounds,
                 templateOpacity, turboMode, completionSound, completionDialog,
-                false, graphLayoutMode);
+                true, graphLayoutMode);
     }
 
     private static final Preferences STORE =
@@ -91,7 +91,7 @@ public record AppSettings(String fontFamily, int fontSize, boolean showExplorer,
                 STORE.getBoolean("practice.turbo", false),
                 STORE.getBoolean("practice.completionSound", true),
                 STORE.getBoolean("practice.completionDialog", true),
-                STORE.getBoolean("notice.readOnlyConsultation", false),
+                STORE.getBoolean("notice.readOnlyConsultation.v2", true),
                 storedGraphMode());
     }
 
@@ -144,7 +144,7 @@ public record AppSettings(String fontFamily, int fontSize, boolean showExplorer,
         STORE.putBoolean("practice.turbo", turboMode);
         STORE.putBoolean("practice.completionSound", completionSound);
         STORE.putBoolean("practice.completionDialog", completionDialog);
-        STORE.putBoolean("notice.readOnlyConsultation", readOnlyNotice);
+        STORE.putBoolean("notice.readOnlyConsultation.v2", readOnlyNotice);
         // v2 intentionally does not inherit the older experimental GRID choice.
         // New and migrated installations start organized until explicitly changed.
         STORE.put("graph.layout.v2", graphLayoutMode.name());
