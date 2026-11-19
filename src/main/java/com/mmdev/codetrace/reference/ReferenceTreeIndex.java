@@ -63,6 +63,35 @@ public final class ReferenceTreeIndex {
         return workableDescendants.contains(relative);
     }
 
+    /** Nodes eligible for virtual recreation, excluding generated/cache trees. */
+    public record Node(String path, boolean directory) {}
+
+    private static final Set<String> GENERATED = Set.of(".git", ".idea",
+            ".local", "target", "node_modules", "build", "dist",
+            "__pycache__", ".venv");
+
+    public List<Node> recreationNodes() {
+        List<Node> nodes = new ArrayList<>();
+        for (String folder : directories) {
+            if (!folder.isEmpty() && !generated(folder))
+                nodes.add(new Node(folder, true));
+        }
+        for (String file : files) {
+            if (!generated(file)) nodes.add(new Node(file, false));
+        }
+        nodes.sort(java.util.Comparator
+                .comparingInt((Node n) -> n.path().split("/").length)
+                .thenComparing((Node n) -> !n.directory())
+                .thenComparing(Node::path));
+        return List.copyOf(nodes);
+    }
+
+    private static boolean generated(String path) {
+        for (String part : path.split("/"))
+            if (GENERATED.contains(part)) return true;
+        return false;
+    }
+
     public static ReferenceTreeIndex scan(Path reference) throws IOException {
         if (!Files.isDirectory(reference)) {
             throw new IOException("Carpeta de referencia no disponible");
