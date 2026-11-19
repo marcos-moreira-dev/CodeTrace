@@ -3,6 +3,7 @@ package com.mmdev.codetrace.ui;
 import com.mmdev.codetrace.languages.LanguageRegistry;
 import com.mmdev.codetrace.languages.LanguageSupport;
 import com.mmdev.codetrace.practice.TypingSession;
+import com.mmdev.codetrace.practice.EmojiUnits;
 import com.mmdev.codetrace.reference.SourceRange;
 import com.mmdev.codetrace.reference.SourceLineIndex;
 import java.util.ArrayList;
@@ -499,7 +500,8 @@ public final class TypingEditor extends BorderPane {
             String original = cell.expected();
             String visible = original.equals("\t") ? "    " : original;
             Text glyph = new Text(visible);
-            glyph.setFont(font);
+            glyph.setFont(EmojiUnits.isEmoji(original)
+                    ? Font.font("Segoe UI Emoji", fontSize) : font);
             glyph.setMouseTransparent(true);
             glyph.setOpacity(cell.state() != TypingSession.State.PENDING ? 1.0
                     : syntaxColors[index].equals(KEYWORD)

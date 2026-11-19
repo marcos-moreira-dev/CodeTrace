@@ -1,12 +1,10 @@
 package com.mmdev.codetrace.practice;
 
-import java.text.BreakIterator;
 import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 import java.util.Objects;
 
 /**
@@ -27,6 +25,8 @@ public final class TypingSession {
     public TypingSession(String original) {
         reference = List.copyOf(graphemes(normalizeLineEndings(Objects.requireNonNull(original))));
         entered = new ArrayList<>(Collections.nCopies(reference.size(), null));
+        preserveEmojiAnnotations();
+        advanceEmoji();
     }
 
     public int size() {
@@ -41,7 +41,7 @@ public final class TypingSession {
     public int visibleUnitCount() {
         int total = 0;
         for (String expected : reference)
-            if (!"\n".equals(expected)) total++;
+            if (!"\n".equals(expected) && !EmojiUnits.isEmoji(expected)) total++;
         return total;
     }
 
@@ -49,7 +49,8 @@ public final class TypingSession {
     public int correctVisibleCount() {
         int total = 0;
         for (int i = 0; i < size(); i++)
-            if (!"\n".equals(reference.get(i)) && state(i) == State.CORRECT) total++;
+            if (!"\n".equals(reference.get(i))
+                    && !EmojiUnits.isEmoji(reference.get(i)) && state(i) == State.CORRECT) total++;
         return total;
     }
 
@@ -57,7 +58,7 @@ public final class TypingSession {
     public int resolvedVisibleCount() {
         int total = 0;
         for (int i = 0; i < size(); i++) {
-            if ("\n".equals(reference.get(i))) continue;
+            if ("\n".equals(reference.get(i)) || EmojiUnits.isEmoji(reference.get(i))) continue;
             State result = state(i);
             if (result == State.CORRECT || result == State.SKIPPED) total++;
         }
@@ -87,7 +88,7 @@ public final class TypingSession {
     public boolean finishedExercise() {
         boolean containsVisibleExercise = false;
         for (int i = 0; i < size(); i++) {
-            if ("\n".equals(reference.get(i))) continue;
+            if ("\n".equals(reference.get(i)) || EmojiUnits.isEmoji(reference.get(i))) continue;
             containsVisibleExercise = true;
             State result = state(i);
             if (result == State.PENDING || result == State.INCORRECT) return false;
@@ -144,14 +145,17 @@ public final class TypingSession {
                 entered.set(caret - 1, previous + character);
                 continue;
             }
+            advanceEmoji();
             if (caret >= size()) return;
             entered.set(caret, character);
             skipped.clear(caret);
             caret++;
+            advanceEmoji();
         }
     }
 
     public void backspace() {
+        while (caret > 0 && EmojiUnits.isEmoji(reference.get(caret - 1))) caret--;
         if (caret > 0) {
             caret--;
             entered.set(caret, null);
@@ -160,6 +164,7 @@ public final class TypingSession {
     }
 
     public void deleteAtCaret() {
+        advanceEmoji();
         if (caret < size()) {
             entered.set(caret, null);
             skipped.clear(caret);
@@ -171,6 +176,7 @@ public final class TypingSession {
             throw new IndexOutOfBoundsException("Caret: " + position);
         }
         caret = position;
+        advanceEmoji();
     }
 
     public void skip(int fromInclusive, int toExclusive) {
@@ -207,6 +213,8 @@ public final class TypingSession {
             throw new IndexOutOfBoundsException("Invalid range");
         }
         skipped.clear(fromInclusive, toExclusive);
+        preserveEmojiAnnotations();
+        advanceEmoji();
     }
 
     public String expectedText() {
@@ -248,6 +256,7 @@ public final class TypingSession {
             }
             result.skipped.set(index);
         }
+        result.preserveEmojiAnnotations();
         result.moveCaret(position);
         return result;
     }
@@ -261,15 +270,22 @@ public final class TypingSession {
         return text.replace("\r\n", "\n").replace("\r", "\n");
     }
 
-    private static List<String> graphemes(String text) {
-        BreakIterator iterator = BreakIterator.getCharacterInstance(Locale.ROOT);
-        iterator.setText(text);
-        List<String> result = new ArrayList<>();
-        int start = iterator.first();
-        for (int end = iterator.next(); end != BreakIterator.DONE;
-             start = end, end = iterator.next()) {
-            result.add(text.substring(start, end));
+    private void preserveEmojiAnnotations() {
+        for (int i = 0; i < size(); i++) {
+            if (EmojiUnits.isEmoji(reference.get(i))) {
+                entered.set(i, null);
+                skipped.set(i);
+            }
         }
-        return result;
+    }
+
+    private void advanceEmoji() {
+        while (caret < size() && EmojiUnits.isEmoji(reference.get(caret))) {
+            skipped.set(caret++);
+        }
+    }
+
+    private static List<String> graphemes(String text) {
+        return EmojiUnits.graphemes(text);
     }
 }
