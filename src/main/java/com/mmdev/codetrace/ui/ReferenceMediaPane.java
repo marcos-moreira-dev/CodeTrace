@@ -202,11 +202,14 @@ public final class ReferenceMediaPane extends BorderPane {
         actions.getStyleClass().add("media-playback-controls");
         setBottom(actions);
 
+        AtomicReference<OnDemandHlsVideo> createdStream = new AtomicReference<>();
         Task<OnDemandHlsVideo> task = new Task<>() {
             @Override protected OnDemandHlsVideo call() throws IOException {
                 OnDemandHlsVideo ready = OnDemandHlsVideo.open(original);
+                createdStream.set(ready);
                 if (isCancelled() || disposed) {
-                    ready.close();
+                    OnDemandHlsVideo stale = createdStream.getAndSet(null);
+                    if (stale != null) stale.close();
                     return null;
                 }
                 return ready;
@@ -219,7 +222,7 @@ public final class ReferenceMediaPane extends BorderPane {
             showPlaybackOptions(original, true);
         });
         task.setOnSucceeded(event -> {
-            OnDemandHlsVideo ready = task.getValue();
+            OnDemandHlsVideo ready = createdStream.getAndSet(null);
             if (ready == null) return;
             if (disposed || streamPreparation != task) {
                 ready.close();
@@ -228,7 +231,13 @@ public final class ReferenceMediaPane extends BorderPane {
             streaming = ready;
             playMedia(ready.playlistUrl(), original, false);
         });
+        task.setOnCancelled(event -> {
+            OnDemandHlsVideo stale = createdStream.getAndSet(null);
+            if (stale != null) stale.close();
+        });
         task.setOnFailed(event -> {
+            OnDemandHlsVideo stale = createdStream.getAndSet(null);
+            if (stale != null) stale.close();
             if (disposed || streamPreparation != task) return;
             System.err.println("[CodeTrace/HLS] " + task.getException());
             message("No se pudo iniciar la reproducción por partes.");
