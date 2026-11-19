@@ -554,8 +554,10 @@ class CodeTraceAppSmokeTest {
                 var collapsedNested = collapsedSrc.getChildren().stream()
                         .filter(item -> nested.equals(item.getValue()))
                         .findFirst().orElseThrow();
-                assertTrue(collapsedSrc.isExpanded(),
-                        "Colapsar subcarpetas must leave the clicked directory expanded");
+                assertFalse(collapsedSrc.isExpanded(),
+                        "Colapsar todas closes the selected branch itself");
+                // Opening the branch again must not restore deep expansion.
+                collapsedSrc.setExpanded(true);
                 assertFalse(collapsedNested.isExpanded(),
                         "Nested directories should be recursively collapsed");
                 assertTrue(collapsedSrc.getChildren().contains(collapsedNested),
@@ -588,7 +590,9 @@ class CodeTraceAppSmokeTest {
                 var againSrc = fileTree.getRoot().getChildren().stream()
                         .filter(item -> src.equals(item.getValue()))
                         .findFirst().orElseThrow();
-                assertTrue(againSrc.isExpanded());
+                assertFalse(againSrc.isExpanded(),
+                        "Second recursive collapse must close the branch itself");
+                againSrc.setExpanded(true);
                 assertFalse(againSrc.getChildren().stream()
                         .filter(item -> nested.equals(item.getValue()))
                         .findFirst().orElseThrow().isExpanded());
