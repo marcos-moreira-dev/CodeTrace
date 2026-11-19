@@ -153,6 +153,28 @@ public final class ProductDialogs {
                 .showAndWait();
     }
 
+    /** A gentle, reversible opt-out for informational consultation notices. */
+    public static Dialog<ButtonType> createConsultationNotice(Window owner) {
+        Dialog<ButtonType> notice = dialog(owner, "Archivo de consulta",
+                "Archivo de consulta", "No requiere práctica de mecanografía.",
+                Severity.INFO, ButtonType.OK);
+        CheckBox suppress = AppControls.checkBox("No volver a mostrar este aviso");
+        suppress.getStyleClass().add("consultation-notice-optout");
+        suppress.setTooltip(new javafx.scene.control.Tooltip(
+                "Puedes volver a mostrarlo desde Preferencias > Avisos."));
+        ((VBox) notice.getDialogPane().getContent()).getChildren().add(suppress);
+        return notice;
+    }
+
+    /** Return true only when the user accepts and ticks the opt-out. */
+    public static boolean showConsultationNotice(Window owner) {
+        Dialog<ButtonType> notice = createConsultationNotice(owner);
+        VBox body = (VBox) notice.getDialogPane().getContent();
+        CheckBox suppress = (CheckBox) body.getChildren().getLast();
+        ButtonType choice = notice.showAndWait().orElse(ButtonType.CANCEL);
+        return choice == ButtonType.OK && suppress.isSelected();
+    }
+
     public static void success(Window owner, String title, String message) {
         dialog(owner, title, title, message, Severity.SUCCESS, ButtonType.OK)
                 .showAndWait();
