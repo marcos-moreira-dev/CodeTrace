@@ -459,6 +459,12 @@ public final class CodeTraceApp extends Application {
                     refreshMetrics();
                     refreshTabActions();
                     updateContextualZoom();
+                    if (selected != null
+                            && selected.getContent() instanceof DependencyGraphPane graph) {
+                        setStatus(graph.getSelectedNode() == null
+                                ? "Mapa · " + graph.folder()
+                                : graph.getSelectedNode());
+                    }
                     // Once tab selection is processed, return focus to its
                     // typing surface rather than leaving it in the file tree.
                     if (selected != null) {
