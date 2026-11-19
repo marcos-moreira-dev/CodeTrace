@@ -208,6 +208,9 @@ class CodeTraceAppSmokeTest {
                         (javafx.scene.Group) graphScroll.getContent();
                 javafx.scene.canvas.Canvas graphSurface =
                         (javafx.scene.canvas.Canvas) graphGroup.getChildren().getFirst();
+                assertEquals(graphSurface.getWidth() * 0.55,
+                        graphGroup.getLayoutBounds().getWidth(), 0.1,
+                        "ScrollPane must measure scaled Canvas bounds via Group");
                 graphScroll.setHvalue(0.15);
                 graphScroll.setVvalue(0.10);
                 var oldNode = graphChanges.get().positions().get("src/Main.java");
@@ -309,7 +312,7 @@ class CodeTraceAppSmokeTest {
                 javafx.scene.Node choices = preferences.getScene().getRoot()
                         .lookup(".prefs-graph-layout");
                 assertNotNull(choices, "Graph distribution belongs in Preferences");
-                assertInstanceOf(javafx.scene.layout.VBox.class, choices,
+                assertTrue(choices instanceof javafx.scene.layout.VBox,
                         "Radio choices must be stacked vertically");
                 assertEquals(2, ((javafx.scene.layout.VBox) choices)
                         .getChildren().size());
