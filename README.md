@@ -23,10 +23,12 @@ Las pestañas de audio tienen controles habituales de **reproducir/pausar** (ico
 de JavaFX. No es una forma de onda generada a partir del archivo ni requiere FFmpeg.
 El zoom violeta queda reservado para **imágenes y vídeos**, no para MP3/WAV.
 
-En **Reglas de práctica** hay una casilla `Autocrear archivos y carpetas`. Usa la
-modalidad por proyecto ya existente: marcada equivale a **Transcripción directa**,
-y crea virtualmente los antecesores y el archivo **al comenzar a teclear**;
-desmarcada requiere creación manual. Ninguna modalidad escribe sobre la referencia.
+En **Reglas de práctica** hay una casilla `Autocrear archivos y carpetas`.
+Cuando está marcada, CodeTrace **recrea virtualmente el árbol de referencia
+por lotes** (sin cachés ni artefactos de compilación): todos los archivos
+comienzan como creados, pero siguen sin completarse hasta transcribirlos.
+Desmarcada, la creación vuelve a ser manual. Ninguna modalidad escribe
+sobre la referencia.
 
 Los archivos `tecla-correcta.wav.gz` y `tecla-error.wav.gz` son **WAV comprimidos
 con GZIP** para empaquetar sonidos pequeños. `TypingSounds` los descomprime y normaliza
@@ -65,9 +67,10 @@ antecesoras. Las casillas "Solo" y "Excluir del progreso" actúan sobre la carpe
 seleccionada: la primera define el ámbito temporal; la segunda guarda una
 exclusión persistente del cálculo, pero nunca impide explorar ni practicar.
 
-Al seleccionar una pestaña de imagen o vídeo, el control inferior de fuente
-se sustituye por el zoom multimedia (25–400 %, Ctrl+rueda, arrastrar para
-panear y doble clic para restablecer). El menú "Pestañas" permite cerrar la
+Al seleccionar una pestaña de imagen, vídeo o mapa de dependencias, el
+control inferior de fuente se sustituye por el zoom contextual
+(25–400 %, Ctrl+rueda y paneo). En el grafo, el zoom sigue el cursor y
+se puede panear ilimitadamente sobre una cámara virtual centrada. El menú "Pestañas" permite cerrar la
 actual, las demás o todas; también existe menú contextual en cada pestaña.
 
 Herramientas > Buscar en archivo (Ctrl+F) y Buscar en proyecto (Ctrl+Shift+F)
@@ -94,7 +97,7 @@ En Windows, `scripts\package-windows.ps1` prepara un ZIP portable que incorpora 
 - Persistencia binaria en sesiones *.ctrace, progreso y hashes SHA-256.
 - **Explorador con tres estados vectoriales**: círculo gris y nombre en cursiva si falta recrearlo; visto ámbar si ya existe virtualmente pero no terminó; visto verde si todos sus caracteres están correctamente transcritos. Botones de expandir/contraer y recuentos de archivos recursivos.
 - **Reconstrucción explícita desde el menú contextual**: sobre una carpeta pendiente, «Crear esta carpeta»; sobre una carpeta creada, «Crear subcarpeta...» y «Crear archivo...»; sobre un archivo pendiente, «Crear este archivo». Los nombres nuevos deben coincidir exactamente con la referencia; no se crean archivos reales. La carpeta padre debe existir virtualmente antes que sus descendientes. El filtro de progreso por carpeta permanece en el menú.
-- **Doble clic sobre cualquier archivo de texto compatible**: se abre inmediatamente como referencia de solo lectura. Para mecanografiarlo, primero debes recrear explícitamente el archivo y sus carpetas antecesoras en el explorador virtual. Si intentas escribir antes, aparece un cuadro de diálogo; nunca se crea nada automáticamente.
+- **Doble clic sobre cualquier archivo de texto compatible**: se abre inmediatamente como referencia de solo lectura. En modo manual, para mecanografiarlo debes recrear explícitamente el archivo y sus carpetas antecesoras; en modo Autocrear, CodeTrace recrea previamente la estructura virtual. Nunca modifica la referencia.
 - **Progreso configurable por categorías** desde el botón **Filtro** de la barra inferior. Solo el código fuente cuenta inicialmente; Markdown, configuración y otros textos son optativos. El porcentaje muestra tres decimales y solo contabiliza caracteres correctos, nunca los imports omitidos.
 - Iconografía transversal de carpetas y lenguajes con Ikonli/Devicons y Feather; controles desplegables con el mismo estilo rectangular.
 - Resaltado inicial para Java, Python, JavaScript/TypeScript, C, C++, Go, Ruby, C#, PowerShell, Shell (.sh/.bash/.zsh), CMD (.bat/.cmd) y Markdown.
@@ -103,10 +106,10 @@ En Windows, `scripts\package-windows.ps1` prepara un ZIP portable que incorpora 
 - **Consola plegable y redimensionable** desde Ver → Consola, Alt+F12 o la toolbar. Arrastra el divisor horizontal para ampliar/reducir la salida, como ya haces con el explorador. Permite ejecutar comandos preconfigurados, ver su salida y detenerlos.
 - **Comandos por proyecto** desde Herramientas → Preferencias → Comandos: múltiples perfiles con nombre, intérprete, instrucción y directorio relativo de trabajo.
 - Vista Markdown alternable entre fuente y renderizado en una misma pestaña.
-- Preferencias rediseñadas con navegación lateral Editor/Ventana/Sonido, vista previa de tipografía, pantalla completa y modo concentración.
+- Preferencias rediseñadas con navegación lateral Editor/Ventana/Grafo/Sonido/Comandos, vista previa de tipografía y selector de distribución Organizado/Cuadrícula.
 - Scrollbars verticales y horizontales con estilo compartido, compacto y rectangular en toda la aplicación.
 - Galería compacta **Símbolos**: copia llaves, corchetes, arroba y más; informa la combinación de teclado y devuelve el foco a la transcripción. **Ctrl+V** pega exactamente un carácter en la posición actual sin modificar la referencia. Copiar por sí solo no aumenta estadísticas; el pegado correcto sí cuenta.
-- Dos sonidos opcionales de escritura (acierto/error) suministrados por el usuario. La carga convierte y amplifica los WAV originalmente muy silenciosos. Se activan únicamente desde **Herramientas → Preferencias → Sonido**, donde también se pueden probar. Desactivados de manera predeterminada.
+- Dos sonidos opcionales de escritura (acierto/error) incluidos como recursos WAV comprimidos. La carga los descomprime y normaliza. Se activan únicamente desde **Herramientas → Preferencias → Sonido**, donde también se pueden probar. Desactivados de manera predeterminada.
 - Pruebas JUnit, CI con Temurin 21 y prueba de inicio JavaFX en pantalla virtual.
 
 ### Todavía pendiente de pulir
@@ -119,6 +122,7 @@ Los paquetes nacen de necesidades del producto: referencia, espacio virtual, tra
 
 - [Contrato de producto](docs/PRODUCTO.md)
 - [Arquitectura](docs/ARQUITECTURA.md)
+- [Auditoría de cierre](docs/AUDITORIA-CIERRE-2026-11.md)
 - [Diagnóstico de Windows](scripts/README.md)
 
 Paquete base: com.mmdev.codetrace. Java 21 / JavaFX 21 / Maven.
