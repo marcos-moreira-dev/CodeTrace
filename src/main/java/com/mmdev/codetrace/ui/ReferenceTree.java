@@ -628,6 +628,12 @@ public final class ReferenceTree extends TreeView<Path> {
      * Reveal the ORIGINAL reference file in the operating-system explorer.
      * This action never opens, rewrites or materializes a virtual file.
      */
+    /** Build Windows Explorer's /select syntax without shell evaluation. */
+    static List<String> windowsRevealCommand(Path file) {
+        return List.of("explorer.exe", "/select,",
+                file.toAbsolutePath().normalize().toString());
+    }
+
     private void revealInFileExplorer(Path selected) {
         Path file = selected.toAbsolutePath().normalize();
         if (referenceRoot == null
@@ -643,8 +649,10 @@ public final class ReferenceTree extends TreeView<Path> {
                 String system = System.getProperty("os.name", "")
                         .toLowerCase(Locale.ROOT);
                 if (system.contains("win")) {
-                    new ProcessBuilder("explorer.exe",
-                            "/select," + file).start();
+                    // Explorer treats /select, and the path as separate
+                    // arguments. Combining them loses space-containing paths
+                    // (e.g. the user's Documents folder) on Windows.
+                    new ProcessBuilder(windowsRevealCommand(file)).start();
                 } else if (system.contains("mac")) {
                     new ProcessBuilder("open", "-R", file.toString()).start();
                 } else if (Desktop.isDesktopSupported()
