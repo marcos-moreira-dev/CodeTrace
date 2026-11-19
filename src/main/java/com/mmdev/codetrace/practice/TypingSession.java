@@ -133,6 +133,8 @@ public final class TypingSession {
     public void type(String committedText) {
         Objects.requireNonNull(committedText);
         for (String character : graphemes(normalizeLineEndings(committedText))) {
+            // Pasted emojis are annotations, never typing targets.
+            if (EmojiUnits.isEmoji(character)) continue;
             // A combining mark received after its base must not consume a new slot,
             // including when the base occupies the final reference position.
             int cp = character.codePointAt(0);
