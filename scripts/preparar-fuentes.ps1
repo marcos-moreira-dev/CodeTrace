@@ -29,8 +29,7 @@ function GitBlobSha([string]$file) {
     [System.Buffer]::BlockCopy($data, 0, $full, $prefix.Length, $data.Length)
     $sha1 = [System.Security.Cryptography.SHA1]::Create()
     try {
-        return [System.BitConverter]::ToString($sha1.ComputeHash($full)).
-            Replace("-", "").ToLowerInvariant()
+        return ([System.BitConverter]::ToString($sha1.ComputeHash($full))).Replace("-", "").ToLowerInvariant()
     } finally { $sha1.Dispose() }
 }
 $problems = New-Object "System.Collections.Generic.List[string]"
