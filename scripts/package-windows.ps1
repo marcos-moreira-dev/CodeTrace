@@ -54,6 +54,11 @@ $version = $pomModel.SelectSingleNode("/*[local-name()='project']/*[local-name()
 if ([string]::IsNullOrWhiteSpace($artifact) -or [string]::IsNullOrWhiteSpace($version)) {
     throw "El pom.xml no tiene artifactId o version válidos."
 }
+# Windows installers need a numeric version (POM development versions may end in -SNAPSHOT).
+$appVersion = ($version -replace '-.*$', '')
+if ($appVersion -notmatch '^\d+(\.\d+){0,3}$') {
+    throw "Versión inválida para el instalador Windows: $version"
+}
 $jarName = "$artifact-$version.jar"
 $jar = Join-Path $target $jarName
 if (-not (Test-Path -LiteralPath $jar)) { throw "No existe el JAR compilado: $jarName" }
@@ -66,7 +71,8 @@ Write-Host "Creando aplicación portable de Windows (JRE incluido)..."
 $packageArgs = @("--type", "app-image", "--name", "CodeTrace",
     "--input", $input, "--main-jar", $jarName,
     "--main-class", "com.mmdev.codetrace.app.Launcher",
-    "--dest", $dist, "--java-options", "-Dfile.encoding=UTF-8")
+    "--dest", $dist, "--java-options", "-Dfile.encoding=UTF-8",
+    "--app-version", $appVersion, "--vendor", "Marcos Moreira DEV")
 & $jpackage @packageArgs
 if ($LASTEXITCODE -ne 0) { throw "jpackage no pudo generar la aplicación." }
 
@@ -76,12 +82,14 @@ if ($IncludeFfmpeg) {
     $thirdParty = Join-Path $root "third_party\ffmpeg"
     $binary = Join-Path $thirdParty "bin\ffmpeg.exe"
     $notice = Join-Path $thirdParty "LICENSE.txt"
+    $probe = Join-Path $thirdParty "bin\ffprobe.exe"
     if (-not (Test-Path $binary) -or -not (Test-Path $notice)) {
         throw "Para incluir FFmpeg se requieren third_party\ffmpeg\bin\ffmpeg.exe y LICENSE.txt. Revisa también las obligaciones de su licencia."
     }
     $destination = Join-Path $portable "tools\ffmpeg"
     New-Item -ItemType Directory -Force -Path $destination | Out-Null
     Copy-Item -LiteralPath $binary -Destination $destination
+    if (Test-Path -LiteralPath $probe) { Copy-Item -LiteralPath $probe -Destination $destination }
     Copy-Item -LiteralPath $notice -Destination $destination
     Write-Host "FFmpeg incorporado. La redistribución exige revisar licencias y fuentes."
 }
@@ -91,7 +99,7 @@ Compress-Archive -Path $portable -DestinationPath $zip -CompressionLevel Optimal
 Write-Host "Portable listo: $zip"
 if ($Installer) {
     Write-Host "Creando instalador EXE (requiere WiX Toolset compatible)..."
-    & $jpackage --type exe --app-image $portable --name CodeTrace --dest $dist
+    & $jpackage --type exe --app-image $portable --name CodeTrace --app-version $appVersion --dest $dist --win-menu --win-shortcut
     if ($LASTEXITCODE -ne 0) { throw "No se creó el instalador EXE; verifica WiX." }
 }
 Remove-Item -LiteralPath $toolchains -Force -ErrorAction SilentlyContinue
