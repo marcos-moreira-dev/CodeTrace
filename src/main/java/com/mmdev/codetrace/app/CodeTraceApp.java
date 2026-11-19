@@ -6,6 +6,8 @@ import com.mmdev.codetrace.practice.ReconstructionStatus.State;
 import com.mmdev.codetrace.practice.PracticeMode;
 import com.mmdev.codetrace.progress.SessionArchive;
 import com.mmdev.codetrace.reference.ReferenceCatalogue;
+import com.mmdev.codetrace.reference.ReferenceTreeIndex;
+import com.mmdev.codetrace.reference.GraphLayout;
 import com.mmdev.codetrace.reference.ProgressScope;
 import com.mmdev.codetrace.reference.ProgressExclusions;
 import com.mmdev.codetrace.reference.ReferenceFingerprint;
@@ -115,6 +117,9 @@ public final class CodeTraceApp extends Application {
     private CheckBox onlySelectedFolder;
     private CheckBox excludeSelectedFolder;
     private boolean syncingExclusion;
+    private ReferenceTreeIndex referenceIndex;
+    private long autoCreateGeneration;
+    private Map<String, GraphLayout> graphLayouts = new LinkedHashMap<>();
     private TextField explorerSearch;
     private boolean syncingFolderScope;
     private final Map<ProgressScope.Category, CheckBox> scopeChecks =
@@ -394,6 +399,11 @@ public final class CodeTraceApp extends Application {
         optionsRow.getStyleClass().add("tree-options-row");
         sidebar.getChildren().addAll(header, searchRow, optionsRow, tree);
         tree.setOnProgressFolder(this::setProgressFolder);
+        tree.setOnIndexReady(index -> {
+            referenceIndex = index;
+            if (practiceMode == PracticeMode.DIRECT)
+                autoCreateReferenceTree();
+        });
         tree.setExclusionHandlers(folder -> exclusions.excludes(folder),
                 folder -> exclusions.explicitlyExcludes(folder),
                 this::changeFolderExclusion);
@@ -580,6 +590,9 @@ public final class CodeTraceApp extends Application {
         reconstructionStates = Map.of();
         progressFolder = "";
         sessionFile = null;
+        graphLayouts.clear();
+        referenceIndex = null;
+        autoCreateGeneration++;
         dirty = false;
         clearOpenTabs();
         reference = folder;
@@ -1058,10 +1071,65 @@ public final class CodeTraceApp extends Application {
         selectPracticeMode(next);
         PracticeMode.remember(reference, next);
         dirty = true;
+        if (next == PracticeMode.DIRECT) autoCreateReferenceTree();
         updateTitle();
         setStatus(next == PracticeMode.DIRECT
-                ? "Transcripción directa · sin crear carpetas ni archivos a mano"
-                : "Reconstrucción manual · crea los archivos antes de escribir");
+                ? "Autocreación activada · se recreará el árbol virtual completo"
+                : "Reconstrucción manual · conserva los elementos creados");
+    }
+
+    /**
+     * Materialize reference names in memory only. Enabling autocreation does
+     * not create text content, move the typing caret or award progress.
+     * Batches prevent large projects from blocking the JavaFX event thread.
+     */
+    private void autoCreateReferenceTree() {
+        if (reference == null || referenceIndex == null
+                || practiceMode != PracticeMode.DIRECT) return;
+        var nodes = referenceIndex.recreationNodes();
+        long generation = ++autoCreateGeneration;
+        long request = referenceRequest;
+        Path root = reference;
+        final int limit = Math.min(10_000, nodes.size());
+        final int[] cursor = {0};
+        final int[] added = {0};
+        final int[] skipped = {0};
+        Runnable batch = new Runnable() {
+            @Override public void run() {
+                if (generation != autoCreateGeneration
+                        || request != referenceRequest
+                        || !root.equals(reference)
+                        || practiceMode != PracticeMode.DIRECT) return;
+                int stop = Math.min(limit, cursor[0] + 150);
+                while (cursor[0] < stop) {
+                    var node = nodes.get(cursor[0]++);
+                    if (workspace.exists(node.path())) continue;
+                    try {
+                        if (node.directory()) workspace.createDirectory(node.path());
+                        else workspace.createFile(node.path());
+                        added[0]++;
+                    } catch (IllegalArgumentException invalid) {
+                        skipped[0]++;
+                    }
+                }
+                if (cursor[0] < limit) {
+                    javafx.application.Platform.runLater(this);
+                } else {
+                    if (added[0] > 0) {
+                        dirty = true;
+                        updateTitle();
+                        refreshReconstructionStatuses();
+                        refreshMetrics();
+                    }
+                    tree.refreshStatuses();
+                    setStatus("Autocreación virtual: " + added[0]
+                            + " elementos nuevos · "
+                            + (nodes.size() - limit + skipped[0])
+                            + " omitidos · transcripción pendiente");
+                }
+            }
+        };
+        javafx.application.Platform.runLater(batch);
     }
 
     private void refreshReconstructionStatuses() {
@@ -1206,8 +1274,8 @@ public final class CodeTraceApp extends Application {
         skipImportsButton.setText("Omitir imports de Java (archivo actual)");
         autoCreateCheck = new CheckBox("Autocrear archivos y carpetas");
         autoCreateCheck.setTooltip(new Tooltip(
-                "Al empezar a escribir, crea automáticamente el archivo y sus carpetas "
-                + "en el espacio virtual. Nunca modifica el proyecto real."));
+                "Al activar, recrea virtualmente las carpetas y los archivos de referencia "
+                + "(excepto cachés y compilados). Creado no significa completado."));
         autoCreateCheck.setSelected(practiceMode == PracticeMode.DIRECT);
         autoCreateCheck.setDisable(reference == null);
         autoCreateCheck.setOnAction(event -> setPracticeMode(
@@ -1216,8 +1284,9 @@ public final class CodeTraceApp extends Application {
         options.getChildren().addAll(new Separator(Orientation.HORIZONTAL),
                 writingCaption, autoCreateCheck, turboToggle, skipImportsButton);
         Label exclusionHint = new Label(
-                "Autocrear solo afecta al proyecto virtual. Para excluir carpetas "
-                + "del progreso, selecciónalas y utiliza la casilla del explorador.");
+                "Autocrear marca los archivos de práctica como creados (amarillo); "
+                + "solo terminan (verde) al transcribirlos. Los filtros de "
+                + "contenido deciden qué se contabiliza.");
         exclusionHint.getStyleClass().add("scope-exclusion-hint");
         exclusionHint.setWrapText(true);
         options.getChildren().add(exclusionHint);
@@ -1300,6 +1369,9 @@ public final class CodeTraceApp extends Application {
             if (searchWindow != null) searchWindow.projectChanged(reference);
             exclusions = ProgressExclusions.load(reference);
             selectPracticeMode(data.practiceMode());
+            graphLayouts = new LinkedHashMap<>(data.graphs());
+            referenceIndex = null;
+            autoCreateGeneration++;
             consolePane.setProject(reference);
             refreshCommandPresets();
             progressFolder = "";
@@ -1341,7 +1413,8 @@ public final class CodeTraceApp extends Application {
         }
         try {
             SessionArchive.save(destination, new SessionArchive.State(
-                    reference, workspace, sessions, hashes, practiceMode));
+                    reference, workspace, sessions, hashes, practiceMode,
+                    graphLayouts));
             sessionFile = destination;
             dirty = false;
             updateTitle();
