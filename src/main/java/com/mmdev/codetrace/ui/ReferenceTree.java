@@ -267,12 +267,26 @@ public final class ReferenceTree extends TreeView<Path> {
      */
     public void collapseRecursively(Path directory) {
         cancelExpansion();
-        TreeItem<Path> node = findVisibleNode(getRoot(), directory);
-        if (node == null || !isFolder(directory)) return;
-        for (TreeItem<Path> child : node.getChildren()) {
-            collapseExpanded(child);
-        }
-        node.setExpanded(true);
+        TreeItem<Path> clicked = findVisibleNode(getRoot(), directory);
+        if (clicked == null || !isFolder(directory)) return;
+        // Rebuild from a snapshot of the entire expanded tree. This is more
+        // reliable than collapsing only the currently materialized TreeItems:
+        // lazy children and refreshes must not resurrect deep expansion flags.
+        Set<Path> expanded = new HashSet<>();
+        collectExpanded(getRoot(), expanded);
+        expanded.removeIf(path -> path.startsWith(directory) && !path.equals(directory));
+        expanded.add(directory);
+        Path selectedPath = getSelectionModel().getSelectedItem() == null ? null
+                : getSelectionModel().getSelectedItem().getValue();
+        TreeItem<Path> refreshed = item(referenceRoot);
+        setRoot(refreshed);
+        refreshed.setExpanded(true);
+        restoreExpanded(refreshed, expanded);
+        TreeItem<Path> selection = selectedPath == null ? null
+                : findVisibleNode(refreshed, selectedPath);
+        if (selection == null) selection = findVisibleNode(refreshed, directory);
+        if (selection != null) getSelectionModel().select(selection);
+        refresh();
     }
 
     private static TreeItem<Path> findVisibleNode(TreeItem<Path> from, Path path) {
