@@ -25,14 +25,14 @@ public final class MediaZoomControl extends HBox {
         Button increase = new Button("+");
         decrease.getStyleClass().add("zoom-step");
         increase.getStyleClass().add("zoom-step");
-        decrease.setTooltip(new Tooltip("Alejar imagen o vídeo"));
-        increase.setTooltip(new Tooltip("Acercar imagen o vídeo"));
+        decrease.setTooltip(new Tooltip("Alejar"));
+        increase.setTooltip(new Tooltip("Acercar"));
         decrease.setOnAction(event -> setFromUser((int)slider.getValue() - 10));
         increase.setOnAction(event -> setFromUser((int)slider.getValue() + 10));
         slider.setPrefWidth(112);
         slider.setMinWidth(92);
         slider.setMaxWidth(112);
-        slider.setTooltip(new Tooltip("Zoom multimedia; Ctrl+rueda o arrastrar para mover"));
+        slider.setTooltip(new Tooltip("Zoom de imagen, vídeo o mapa; Ctrl+rueda"));
         slider.valueProperty().addListener((obs, previous, current) -> {
             int percent = (int) Math.round(current.doubleValue());
             value.setText(percent + " %");
@@ -49,6 +49,17 @@ public final class MediaZoomControl extends HBox {
         FontIcon graphic = new FontIcon("fth-image");
         graphic.setIconSize(15);
         getChildren().addAll(graphic, decrease, slider, increase, value);
+    }
+
+    /** Reuse the same status-bar position for media and dependency graphs. */
+    public void setGraphMode(boolean graph) {
+        getStyleClass().removeAll("graph-zoom-control", "media-image-zoom-control");
+        getStyleClass().add(graph ? "graph-zoom-control" : "media-image-zoom-control");
+        FontIcon graphic = new FontIcon(graph ? "fth-share-2" : "fth-image");
+        graphic.setIconSize(15);
+        getChildren().set(0, graphic);
+        setAccessibleText(graph ? "Zoom del mapa de dependencias, porcentaje"
+                : "Zoom multimedia, porcentaje");
     }
 
     public void setValue(int zoomPercent) {
