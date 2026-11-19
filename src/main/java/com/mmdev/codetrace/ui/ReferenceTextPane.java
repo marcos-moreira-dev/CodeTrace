@@ -30,6 +30,8 @@ public final class ReferenceTextPane extends BorderPane {
 
     private final ListView<SourceLine> lines = new ListView<>();
     private final String original;
+    private String fontFamily = "Consolas";
+    private int fontSize = 12;
     private int selectedMatchLine = -1;
     private int selectedMatchStart = -1;
     private int selectedMatchEnd = -1;
@@ -90,17 +92,33 @@ public final class ReferenceTextPane extends BorderPane {
         setCenter(lines);
     }
 
+    /**
+     * Uses the same font preference as TypingEditor, but never changes text.
+     * Reuses the virtualized ListView rather than reparsing the reference.
+     */
+    public void setFontSettings(String family, int points) {
+        String nextFamily = family == null || family.isBlank() ? "Consolas" : family;
+        int nextSize = Math.max(10, Math.min(36, points));
+        if (fontFamily.equals(nextFamily) && fontSize == nextSize) return;
+        fontFamily = nextFamily;
+        fontSize = nextSize;
+        lines.refresh();
+    }
+
+    public int fontSize() { return fontSize; }
+    public String fontFamily() { return fontFamily; }
+
     private static void copy(String text) {
         ClipboardContent content = new ClipboardContent();
         content.putString(text);
         Clipboard.getSystemClipboard().setContent(content);
     }
 
-    private static void addColoredText(TextFlow flow, String content,
+    private void addColoredText(TextFlow flow, String content,
                                        LanguageSupport.Kind kind, boolean selected) {
         if (content.isEmpty()) return;
         Text text = new Text(content);
-        text.setFont(Font.font("Consolas", 12));
+        text.setFont(Font.font(fontFamily, fontSize));
         text.setFill(selected ? Color.web("#BE6423")
                 : kind == null ? Color.web("#273947") : SyntaxPalette.color(kind));
         if (selected) {
