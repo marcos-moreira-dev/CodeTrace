@@ -658,7 +658,7 @@ NO recorre por sí misma casos de uso no abiertos. La cobertura completa de
   «No volver a mostrar esta advertencia» DESMARCADA. Cancelar no debe ocultar
   advertencias ni ejecutar el comando. Aceptar con la casilla marcada evita
   futuras confirmaciones, sin ocultar el aviso persistente de consola.
-- **WARN-02:** Preferencias → Comandos: opción para volver a exigir la
+- **WARN-02:** Preferencias → Avisos: opción para volver a exigir la
   confirmación y botón «Restablecer avisos de seguridad». Aplicar, ejecutar
   otra orden en el mismo proyecto y comprobar que el aviso reaparece.
   No restablecer fuentes, otros sonidos ni configuración de grafos.
@@ -687,3 +687,30 @@ NO recorre por sí misma casos de uso no abiertos. La cobertura completa de
 
 La verificación de compilación automatizada NO sustituye la revisión gráfica
 de emojis ni la comprobación manual de los iconos al pasar el ratón.
+
+
+## Regresión multimedia / avisos / emojis (cierre de noviembre)
+
+- **MEDIA-NOTICE-01:** Doble clic en .mkv, .mp4, .mov, .mp3, .wav, .png,
+  .jpg, .svg y .webp. Se abre su visor de solo lectura directamente, sin
+  mostrar ninguna ventana «Archivo de consulta» ni mensaje de mecanografía.
+  El comportamiento de PDF y documentos de consulta permanece independiente.
+- **PREFS-AVISOS-01:** Abrir Preferencias sin proyecto: aparece una categoría
+  izquierda visible «Avisos» con icono y controles de confirmación.
+  Desmarcar, pulsar Aplicar y cerrar: un comando real no vuelve a solicitar
+  confirmación. «Restablecer avisos de seguridad» vuelve a marcar la casilla;
+  al pulsar Aplicar se reactivan las confirmaciones, incluso sin abrir un
+  proyecto nuevo. El aviso permanente de la consola NO desaparece.
+- **EMOJI-FIXTURE-01:** Ejecutar
+  \`powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\generar-prueba-emojis.ps1\`.
+  Debe crear un .txt y un .md dentro de Descargas sin sobrescribir copias
+  anteriores. Abrir el TXT en CodeTrace, abrir Markdown y alternar
+  Fuente/Renderizado; observar banderas, tonos, familia ZWJ, keycaps y
+  alias Markdown; cada símbolo debería conservar su secuencia.
+- **EMOJI-FIXTURE-02:** Distinguir legibilidad de renderizado a todo color:
+  JavaFX Text en Windows puede utilizar pictogramas monocromáticos, incluso
+  con Segoe UI Emoji. No afirmar visualización cromática sin observarla.
+  Confirmar que los emojis no se exigen en el editor de práctica.
+
+La compilación y los tests de componentes no certifican el aspecto final
+de fuentes ni las ventanas modales: se comprueban manualmente en Windows.
