@@ -487,6 +487,8 @@ class CodeTraceAppSmokeTest {
                 Path nested = Files.createDirectory(src.resolve("ejemplos"));
                 Path nestedFile = nested.resolve("Demo.java");
                 Files.writeString(nestedFile, "class Demo {}");
+                Path deep = Files.createDirectories(nested.resolve("deep/layer"));
+                Files.writeString(deep.resolve("Example.java"), "class Example {}");
                 fileTree.open(root);
                 Field treeIndexField = ReferenceTree.class.getDeclaredField("index");
                 treeIndexField.setAccessible(true);
@@ -529,7 +531,15 @@ class CodeTraceAppSmokeTest {
                         .filter(item -> nested.equals(item.getValue()))
                         .findFirst().orElseThrow();
                 nestedTree.setExpanded(true);
-                assertTrue(nestedTree.isExpanded());
+                var deepTree = nestedTree.getChildren().stream()
+                        .filter(item -> nested.resolve("deep").equals(item.getValue()))
+                        .findFirst().orElseThrow();
+                deepTree.setExpanded(true);
+                var layerTree = deepTree.getChildren().stream()
+                        .filter(item -> deep.equals(item.getValue()))
+                        .findFirst().orElseThrow();
+                layerTree.setExpanded(true);
+                assertTrue(layerTree.isExpanded());
                 srcMenu.getItems().stream()
                         .filter(item -> "Colapsar subcarpetas".equals(item.getText()))
                         .findFirst().orElseThrow().fire();
@@ -545,6 +555,18 @@ class CodeTraceAppSmokeTest {
                         "Nested directories should be recursively collapsed");
                 assertTrue(collapsedSrc.getChildren().contains(collapsedNested),
                         "Immediate subfolders must remain visible");
+                collapsedNested.setExpanded(true);
+                var collapsedDeep = collapsedNested.getChildren().stream()
+                        .filter(item -> nested.resolve("deep").equals(item.getValue()))
+                        .findFirst().orElseThrow();
+                assertFalse(collapsedDeep.isExpanded(),
+                        "Reopening the first descendant must not restore deeper expansion");
+                collapsedDeep.setExpanded(true);
+                var collapsedLayer = collapsedDeep.getChildren().stream()
+                        .filter(item -> deep.equals(item.getValue()))
+                        .findFirst().orElseThrow();
+                assertFalse(collapsedLayer.isExpanded(),
+                        "All nested levels must stay collapsed, not just the first one");
                 assertTrue(Files.exists(nestedFile));
                 ContextMenu fileMenu = (ContextMenu) menuFor.invoke(fileTree, nestedFile);
                 assertTrue(fileMenu.getItems().stream().anyMatch(
