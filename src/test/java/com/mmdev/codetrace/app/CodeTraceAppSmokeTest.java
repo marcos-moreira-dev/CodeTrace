@@ -199,19 +199,30 @@ class CodeTraceAppSmokeTest {
                         "Map supports a larger draggable workspace");
 
                 // Regression for the reported 55%-zoom jump to the upper-left.
+                // Attach to a real scene: JavaFX event x/y are SCENE coordinates,
+                // not raw Canvas-local coordinates under the 55% transform.
+                var previousTab = tabPane.getSelectionModel().getSelectedItem();
+                var graphTestTab = new javafx.scene.control.Tab("Map QA", graphPane);
+                tabPane.getTabs().add(graphTestTab);
+                tabPane.getSelectionModel().select(graphTestTab);
                 graphPane.setZoomPercent(55);
+                stage.getScene().getRoot().applyCss();
+                stage.getScene().getRoot().layout();
                 javafx.scene.control.ScrollPane graphScroll =
                         (javafx.scene.control.ScrollPane) graphPane.getCenter();
                 javafx.scene.Group graphGroup =
                         (javafx.scene.Group) graphScroll.getContent();
                 javafx.scene.canvas.Canvas graphSurface =
                         (javafx.scene.canvas.Canvas) graphGroup.getChildren().getFirst();
-                graphScroll.setHvalue(0.65);
-                graphScroll.setVvalue(0.40);
+                graphScroll.setHvalue(0.15);
+                graphScroll.setVvalue(0.10);
                 var oldNode = graphChanges.get().positions().get("src/Main.java");
+                var pressScene = graphSurface.localToScene(oldNode.x(), oldNode.y());
+                var dragScene = graphSurface.localToScene(
+                        oldNode.x() + 55, oldNode.y() + 30);
                 javafx.scene.input.MouseEvent pressed = new javafx.scene.input.MouseEvent(
                         javafx.scene.input.MouseEvent.MOUSE_PRESSED,
-                        oldNode.x(), oldNode.y(), 0, 0,
+                        pressScene.getX(), pressScene.getY(), 0, 0,
                         javafx.scene.input.MouseButton.PRIMARY, 1,
                         false, false, false, false, true, false, false,
                         false, false, false,
@@ -220,23 +231,23 @@ class CodeTraceAppSmokeTest {
                 javafx.event.Event.fireEvent(graphSurface, pressed);
                 javafx.scene.input.MouseEvent dragged = new javafx.scene.input.MouseEvent(
                         javafx.scene.input.MouseEvent.MOUSE_DRAGGED,
-                        oldNode.x() + 55, oldNode.y() + 30, 0, 0,
+                        dragScene.getX(), dragScene.getY(), 0, 0,
                         javafx.scene.input.MouseButton.PRIMARY, 1,
                         false, false, false, false, true, false, false,
                         false, false, false,
                         new javafx.scene.input.PickResult(
                                 graphSurface, oldNode.x() + 55, oldNode.y() + 30));
                 javafx.event.Event.fireEvent(graphSurface, dragged);
-                assertEquals(0.65, graphScroll.getHvalue(), 0.00001,
+                assertEquals(0.15, graphScroll.getHvalue(), 0.00001,
                         "Dragging a node must not pan the map");
-                assertEquals(0.40, graphScroll.getVvalue(), 0.00001,
+                assertEquals(0.10, graphScroll.getVvalue(), 0.00001,
                         "Dragging a node must preserve vertical scroll");
                 assertTrue(graphChanges.get().positions().get("src/Main.java")
                         .equals(oldNode), "Unreleased changes are not persisted");
                 javafx.event.Event.fireEvent(graphSurface,
                         new javafx.scene.input.MouseEvent(
                                 javafx.scene.input.MouseEvent.MOUSE_RELEASED,
-                                oldNode.x() + 55, oldNode.y() + 30, 0, 0,
+                                dragScene.getX(), dragScene.getY(), 0, 0,
                                 javafx.scene.input.MouseButton.PRIMARY, 1,
                                 false, false, false, false, false, false, false,
                                 false, false, false,
@@ -244,8 +255,10 @@ class CodeTraceAppSmokeTest {
                                         graphSurface, oldNode.x() + 55, oldNode.y() + 30)));
                 assertTrue(graphChanges.get().positions().get("src/Main.java").x()
                         > oldNode.x(), "A node really moved independently");
-                assertEquals(0.65, graphScroll.getHvalue(), 0.00001);
-                assertEquals(0.40, graphScroll.getVvalue(), 0.00001);
+                assertEquals(0.15, graphScroll.getHvalue(), 0.00001);
+                assertEquals(0.10, graphScroll.getVvalue(), 0.00001);
+                tabPane.getTabs().remove(graphTestTab);
+                tabPane.getSelectionModel().select(previousTab);
 
                 Slider fontSlider = (Slider) zoom.lookup(".slider");
                 assertNotNull(fontSlider);
