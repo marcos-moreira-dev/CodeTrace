@@ -4,6 +4,7 @@ import com.mmdev.codetrace.languages.LanguageRegistry;
 import com.mmdev.codetrace.languages.LanguageSupport;
 import com.mmdev.codetrace.practice.TypingSession;
 import com.mmdev.codetrace.reference.SourceRange;
+import com.mmdev.codetrace.reference.SourceLineIndex;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -44,6 +45,7 @@ public final class TypingEditor extends BorderPane {
     private final TypingSession session;
     private final Color[] syntaxColors;
     private final List<SourceLine> sourceLines = new ArrayList<>();
+    private final SourceLineIndex lineIndex;
     private final ListView<SourceLine> lines = new ListView<>();
     private final Runnable onChange;
     private final Consumer<Boolean> onTypedCharacter;
@@ -71,6 +73,8 @@ public final class TypingEditor extends BorderPane {
         this.fontSize = fontSize;
         this.syntaxColors = syntaxColors(session, filename);
         buildLines();
+        lineIndex = new SourceLineIndex(
+                sourceLines.stream().mapToInt(SourceLine::last).toArray());
 
         getStyleClass().add("typing-editor");
         lines.getStyleClass().add("typing-lines");
@@ -420,16 +424,9 @@ public final class TypingEditor extends BorderPane {
     }
 
     private void synchronizeLine(boolean scrollToLine) {
-        int position = session.caret();
-        int selected = sourceLines.size() - 1;
-        for (int i = 0; i < sourceLines.size(); i++) {
-            SourceLine line = sourceLines.get(i);
-            int max = line.last();
-            if (position <= max) {
-                selected = i;
-                break;
-            }
-        }
+        // Source line bounds are immutable. Binary search avoids scanning
+        // the entire document on every keystroke in very long files.
+        int selected = lineIndex.findLine(session.caret());
         synchronizingLine = true;
         try {
             lines.getSelectionModel().select(selected);

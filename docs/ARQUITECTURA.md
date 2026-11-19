@@ -124,3 +124,11 @@ archivos de referencia ni el formato binario `.ctrace`.
 `reference/ProgressSummary` concentra el cálculo puro de unidades esperadas,
 caracteres correctos y archivos incluidos (con filtros y exclusiones).
 `CodeTraceApp` conserva solo la presentación del resultado en JavaFX.
+
+## Índice de posición en transcripción
+
+`reference/SourceLineIndex` conserva las posiciones finales de las líneas
+inmutables y permite localizar en tiempo logarítmico la línea del cursor.
+`TypingEditor` deja de recorrer todas las líneas en cada pulsación. Los
+saltos de línea pertenecen a su fila anterior, como en el comportamiento
+preexistente; no se modifican las ranuras Unicode de `TypingSession`.
