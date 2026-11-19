@@ -759,3 +759,24 @@ de fuentes ni las ventanas modales: se comprueban manualmente en Windows.
 El último cierre debe combinar Maven verify, diagnóstico Windows,
 empaquetado y una comprobación real en JavaFX. Las capturas no equivalen
 a una certificación de los estados que no se muestran.
+
+## Asociación de sesiones y continuidad del gutter
+
+- FILETYPE-01: Guardar un archivo .ctrace y confirmar que conserva su formato binario de sesión.
+- FILETYPE-02: Instalar mediante CodeTrace-0.3.0.exe y comprobar que Windows muestra el
+  icono propio de sesión (no el logo principal) para archivos .ctrace.
+- FILETYPE-03: Doble clic desde Windows en una sesión con espacios o acentos en su ruta:
+  CodeTrace debe iniciar y restaurar con el mismo cargador usado por Archivo > Abrir sesión.
+- FILETYPE-04: Doble clic en .ctrace desde el árbol principal: restaurar en vez de
+  mostrar el mensaje genérico de consulta. No modificar el proyecto de referencia sin
+  la confirmación requerida para descartar cambios pendientes.
+- FILETYPE-05: El ZIP portable no registra asociaciones; solo lo hace el instalador.
+- FILETYPE-06: El ICO generado debe incluir 16, 24, 32, 48, 64, 128 y 256 píxeles.
+- GUTTER-01: Abrir Java, YAML, TXT, Markdown fuente, JSON, XML y PowerShell.
+  Los números de línea no deben mostrar franjas blancas entre celdas.
+- GUTTER-02: Cambiar el tamaño de fuente y desplazarse por documentos extensos:
+  las filas del gutter siguen alineadas con el contenido.
+
+Las pruebas CI verifican la sintaxis del generador ICO, el recurso PNG y
+el archivo de asociación. La presentación real de los iconos y gutter
+todavía requiere comprobación visual en Windows.
