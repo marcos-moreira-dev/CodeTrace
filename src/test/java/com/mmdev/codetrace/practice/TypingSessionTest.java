@@ -116,4 +116,46 @@ class TypingSessionTest {
         assertTrue(session.finishedExercise());
         assertEquals(0, session.correctCount());
     }
+    @Test
+    void invisibleInternalNewlinesNeverBlockOtherwiseCorrectVisibleCode() {
+        TypingSession session = new TypingSession("abc\nxyz\n");
+        session.type("abc");
+        // A user may jump to another row rather than typing the hidden Enter tile.
+        session.moveCaret(4);
+        session.type("xyz");
+        assertEquals(0, session.incorrectCount());
+        assertTrue(session.finishedExercise(),
+                "All visible green glyphs should complete the exercise");
+        assertEquals(6, session.correctCount());
+    }
+
+    @Test
+    void invisibleMistypedLineSeparatorCannotBlockCorrectedCode() {
+        TypingSession session = new TypingSession("a\nb\n");
+        session.type("ax"); // The invisible line break is entered incorrectly.
+        session.type("x"); // Also mistype the visible second line.
+        assertFalse(session.finishedExercise());
+        session.moveCaret(2);
+        session.backspace(); // Clear the incorrect line separator.
+        session.moveCaret(2);
+        session.type("b");
+        assertTrue(session.finishedExercise());
+        assertEquals(2, session.correctCount());
+    }
+
+    @Test
+    void anEmptyOrNewlineOnlyDocumentNeverTriggersACompletion() {
+        assertFalse(new TypingSession("").finishedExercise());
+        assertFalse(new TypingSession("\n\n").finishedExercise());
+        TypingSession source = new TypingSession("one\ntwo");
+        source.type("one");
+        source.moveCaret(4);
+        source.type("txo");
+        assertFalse(source.finishedExercise(), "Visible typos still block finishing");
+        source.moveCaret(6);
+        source.backspace();
+        source.type("w");
+        assertTrue(source.finishedExercise());
+    }
+
 }
