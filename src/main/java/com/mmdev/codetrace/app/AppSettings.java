@@ -76,7 +76,7 @@ public record AppSettings(String fontFamily, int fontSize, boolean showExplorer,
     private static GraphLayoutEngine.Mode storedGraphMode() {
         try {
             return GraphLayoutEngine.Mode.valueOf(
-                    STORE.get("graph.layout", DEFAULT_GRAPH_MODE.name()));
+                    STORE.get("graph.layout.v2", DEFAULT_GRAPH_MODE.name()));
         } catch (IllegalArgumentException invalid) {
             return DEFAULT_GRAPH_MODE;
         }
@@ -109,6 +109,8 @@ public record AppSettings(String fontFamily, int fontSize, boolean showExplorer,
         STORE.putInt("editor.opacity", templateOpacity);
         STORE.putBoolean("practice.turbo", turboMode);
         STORE.putBoolean("practice.completionSound", completionSound);
-        STORE.put("graph.layout", graphLayoutMode.name());
+        // v2 intentionally does not inherit the older experimental GRID choice.
+        // New and migrated installations start organized until explicitly changed.
+        STORE.put("graph.layout.v2", graphLayoutMode.name());
     }
 }
