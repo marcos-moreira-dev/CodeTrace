@@ -1247,3 +1247,49 @@
     -fx-font-size: 11px;
     -fx-text-fill: #76572b;
 }
+
+
+/* Empty editor surface: no tabs, original brand icon in muted grayscale. */
+.document-workspace { -fx-background-color: #ffffff; }
+.empty-workspace {
+    -fx-background-color: #ffffff;
+    -fx-padding: 26px 30px;
+}
+.empty-workspace-heading {
+    -fx-text-fill: #526477;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+.empty-workspace-hint {
+    -fx-text-fill: #778897;
+    -fx-font-size: 12px;
+    -fx-text-alignment: center;
+    -fx-alignment: center;
+    -fx-max-width: 340px;
+}
+
+/* Always-present stopwatch follows the application's square control language. */
+.status-stopwatch { -fx-alignment: center-left; -fx-spacing: 5px; }
+.status-stopwatch .stopwatch-value {
+    -fx-font-family: "Consolas";
+    -fx-font-size: 12px;
+    -fx-text-fill: #2c4a60;
+    -fx-font-weight: bold;
+}
+.status-stopwatch .stopwatch-action {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+    -fx-padding: 3px 5px;
+    -fx-min-width: 22px;
+    -fx-min-height: 22px;
+}
+.status-stopwatch .stopwatch-action:hover,
+.status-stopwatch .stopwatch-action:focused {
+    -fx-background-color: #dbe6ed;
+}
+.status-stopwatch .stopwatch-action .ikonli-font-icon {
+    -fx-icon-size: 12px;
+    -fx-icon-color: #38566d;
+}
