@@ -307,3 +307,36 @@ No se distribuye FFmpeg por defecto. La CI no reemplaza la auditoría de licenci
 - ABOUT-AUTHOR-02: Abre Acerca de sin internet. La imagen debe ser
   local y no solicitar permisos externos; su recurso empaquetado tiene
   resolución 112×112.
+
+## Última aceptación: cierre recursivo y cámara virtual (18-nov-2026)
+
+Consulta también [Auditoría de cierre](AUDITORIA-CIERRE-2026-11.md).
+
+- TREE-RECURSIVE-01: expande `src/main/java/com/...` completamente,
+  clic derecho sobre `src` → «Colapsar subcarpetas». Debe permanecer
+  visible `main` y `test`, **ambos colapsados**. Al reabrir `main`,
+  la subcarpeta `java` todavía debe estar cerrada; al reabrirla,
+  `com` sigue cerrada. La selección permanece coherente.
+- GRAPH-CAMERA-01: abre un mapa nuevo: Organizado debe activarse
+  inicialmente incluso si una versión experimental anterior había
+  guardado Cuadrícula. El grafo aparece centrado y ajustado.
+- GRAPH-CAMERA-02: panea miles de píxeles a derecha, izquierda,
+  arriba y abajo. No deben existir bordes del antiguo Canvas ni
+  crecer el consumo de memoria por un bitmap enorme.
+- GRAPH-CAMERA-03: pulsa «Centrar y ajustar a ventana» en el menú
+  contextual del mapa o Inicio. Debe aparecer otra vez el conjunto de
+  nodos sin borrar las posiciones manuales.
+- GRAPH-CAMERA-04: usa Ctrl+rueda sobre un nodo y arrastra un nodo
+  con zoom 55 %. La cámara no debe saltar ni desplazarse al mover
+  únicamente el nodo.
+- GRAPH-PREF-03: tras migrar preferencias antiguas, Organizado es
+  predeterminado. Elegir Cuadrícula explícitamente en Preferencias debe
+  respetarse en mapas nuevos; un archivo .ctrace antiguo no debe
+  imponer Cuadrícula silenciosamente.
+- FIND-CHECKS-01: en Buscar, comprueba que Distinguir mayúsculas,
+  Solo palabras completas y Expresión regular usen el mismo control
+  rectangular que el explorador y Preferencias, sin solapamientos a
+  anchura mínima de ventana.
+- RELEASE-01: ejecutar el paquete portable en Windows limpio,
+  comprobar licencia/avisos de terceros, versión y todos los P0 de
+  la auditoría antes de etiquetar una versión estable.
