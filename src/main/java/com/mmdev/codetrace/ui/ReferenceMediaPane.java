@@ -387,7 +387,10 @@ public final class ReferenceMediaPane extends BorderPane {
         try {
             Media media = new Media(uri);
             player = new MediaPlayer(media);
-            player.setAutoPlay(false);
+// JavaFX starts playback as soon as the media is READY. This also
+            // applies after chunked video preparation or audio conversion;
+            // Play/Pause and Stop continue to work normally.
+            player.setAutoPlay(true);
             MediaPlayer active = player;
             if (kindFor(original) == Kind.VIDEO) {
                 MediaView screen = new MediaView(active);
