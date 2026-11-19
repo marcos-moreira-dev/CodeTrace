@@ -504,16 +504,16 @@ class CodeTraceAppSmokeTest {
                         item -> "Crear archivo...".equals(item.getText())));
                 ContextMenu srcMenu = (ContextMenu) menuFor.invoke(fileTree, src);
                 assertTrue(srcMenu.getItems().stream().anyMatch(item ->
-                        "Colapsar subcarpetas".equals(item.getText())));
+                        "Colapsar todas las subcarpetas".equals(item.getText())));
                 assertTrue(srcMenu.getItems().stream().anyMatch(item ->
                         "Mapa de dependencias...".equals(item.getText())));
                 ContextMenu folderMenu = (ContextMenu) menuFor.invoke(fileTree, nested);
                 assertTrue(folderMenu.getItems().stream().anyMatch(item ->
-                        "Colapsar subcarpetas".equals(item.getText())),
+                        "Colapsar todas las subcarpetas".equals(item.getText())),
                         "The nested folder now contains a deeper subfolder");
                 assertFalse(((ContextMenu) menuFor.invoke(fileTree, deep))
                         .getItems().stream().anyMatch(item ->
-                        "Colapsar subcarpetas".equals(item.getText())));
+                        "Colapsar todas las subcarpetas".equals(item.getText())));
                 assertTrue(folderMenu.getItems().stream().anyMatch(item ->
                         "Mapa de dependencias...".equals(item.getText())));
                 assertTrue(folderMenu.getItems().stream().anyMatch(
@@ -546,7 +546,7 @@ class CodeTraceAppSmokeTest {
                 layerTree.setExpanded(true);
                 assertTrue(layerTree.isExpanded());
                 srcMenu.getItems().stream()
-                        .filter(item -> "Colapsar subcarpetas".equals(item.getText()))
+                        .filter(item -> "Colapsar todas las subcarpetas".equals(item.getText()))
                         .findFirst().orElseThrow().fire();
                 var collapsedSrc = fileTree.getRoot().getChildren().stream()
                         .filter(item -> src.equals(item.getValue()))
@@ -572,6 +572,26 @@ class CodeTraceAppSmokeTest {
                         .findFirst().orElseThrow();
                 assertFalse(collapsedLayer.isExpanded(),
                         "All nested levels must stay collapsed, not just the first one");
+                // User request: show ALL nested directories in one action.
+                var expandedMenu = (ContextMenu) menuFor.invoke(fileTree, src);
+                assertTrue(expandedMenu.getItems().stream().anyMatch(item ->
+                        "Expandir todas las subcarpetas".equals(item.getText())));
+                expandedMenu.getItems().stream()
+                        .filter(item -> "Expandir todas las subcarpetas".equals(item.getText()))
+                        .findFirst().orElseThrow().fire();
+                assertTrue(collapsedSrc.isExpanded(), "Chosen folder stays visible");
+                assertTrue(collapsedNested.isExpanded(), "First nested directory expanded");
+                assertTrue(collapsedDeep.isExpanded(), "Grandchild directory expanded");
+                assertTrue(collapsedLayer.isExpanded(), "Deep descendant expanded recursively");
+                // Collapse a second time to check both commands are repeatable.
+                fileTree.collapseRecursively(src);
+                var againSrc = fileTree.getRoot().getChildren().stream()
+                        .filter(item -> src.equals(item.getValue()))
+                        .findFirst().orElseThrow();
+                assertTrue(againSrc.isExpanded());
+                assertFalse(againSrc.getChildren().stream()
+                        .filter(item -> nested.equals(item.getValue()))
+                        .findFirst().orElseThrow().isExpanded());
                 assertTrue(Files.exists(nestedFile));
                 ContextMenu fileMenu = (ContextMenu) menuFor.invoke(fileTree, nestedFile);
                 assertTrue(fileMenu.getItems().stream().anyMatch(
