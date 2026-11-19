@@ -312,6 +312,7 @@ public final class PreferencesWindow {
         });
         CheckBox readOnlyNotice = AppControls.checkBox(
                 "Mostrar aviso al abrir archivos solo de consulta");
+        readOnlyNotice.getStyleClass().add("read-only-consultation-notice");
         readOnlyNotice.setSelected(current.readOnlyNotice());
         readOnlyNotice.setTooltip(new Tooltip(
                 "Cuando está desactivado, los archivos de solo lectura se abren "
