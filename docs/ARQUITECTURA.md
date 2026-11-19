@@ -113,3 +113,14 @@ convierte la coincidencia en un valor validado. `TypingEditor` adapta el
 rango a sus índices internos 0-based, mientras `ReferenceTextPane` usa
 líneas visibles 1-based. `CodeTraceApp` no tiene que conocer esa diferencia.
 Se conservan los métodos primitivos anteriores por compatibilidad de pruebas.
+
+## Estado de sesiones y cálculo de progreso (extracción incremental)
+
+`progress/PracticeSessionPaths` encapsula el traslado y eliminación de
+transcripciones y huellas por subárbol. El criterio de pertenencia distingue
+`src/` de `src2/`, y siempre devuelve instantáneas de los mapas sin tocar
+archivos de referencia ni el formato binario `.ctrace`.
+
+`reference/ProgressSummary` concentra el cálculo puro de unidades esperadas,
+caracteres correctos y archivos incluidos (con filtros y exclusiones).
+`CodeTraceApp` conserva solo la presentación del resultado en JavaFX.

@@ -5,6 +5,8 @@ import com.mmdev.codetrace.practice.ReconstructionStatus;
 import com.mmdev.codetrace.practice.ReconstructionStatus.State;
 import com.mmdev.codetrace.practice.PracticeMode;
 import com.mmdev.codetrace.progress.SessionArchive;
+import com.mmdev.codetrace.progress.PracticeSessionPaths;
+import com.mmdev.codetrace.reference.ProgressSummary;
 import com.mmdev.codetrace.reference.ReferenceCatalogue;
 import com.mmdev.codetrace.reference.ReferenceTreeIndex;
 import com.mmdev.codetrace.reference.GraphLayout;
@@ -1033,27 +1035,17 @@ public final class CodeTraceApp extends Application {
     }
 
     private void removeSessionsUnder(String root) {
-        sessions.keySet().removeIf(path -> path.equals(root) || path.startsWith(root + "/"));
-        hashes.keySet().removeIf(path -> path.equals(root) || path.startsWith(root + "/"));
+        PracticeSessionPaths remaining = new PracticeSessionPaths(sessions, hashes)
+                .withoutSubtree(root);
+        sessions = remaining.sessions();
+        hashes = remaining.hashes();
     }
 
     private void moveSessionsUnder(String from, String to) {
-        Map<String, TypingSession> moved = new LinkedHashMap<>();
-        Map<String, String> movedHashes = new LinkedHashMap<>();
-        for (var pair : sessions.entrySet()) {
-            String path = pair.getKey();
-            String target = path.equals(from) || path.startsWith(from + "/")
-                    ? to + path.substring(from.length()) : path;
-            moved.put(target, pair.getValue());
-        }
-        for (var pair : hashes.entrySet()) {
-            String path = pair.getKey();
-            String target = path.equals(from) || path.startsWith(from + "/")
-                    ? to + path.substring(from.length()) : path;
-            movedHashes.put(target, pair.getValue());
-        }
-        sessions = moved;
-        hashes = movedHashes;
+        PracticeSessionPaths relocated = new PracticeSessionPaths(sessions, hashes)
+                .movedSubtree(from, to);
+        sessions = relocated.sessions();
+        hashes = relocated.hashes();
     }
 
     private void skipImports() {
@@ -1204,12 +1196,13 @@ public final class CodeTraceApp extends Application {
             fileProgress.setVisible(false);
             return;
         }
-        long total = catalogue.expectedUnits(progressScope, progressFolder, exclusions);
-        long resolved = catalogue.resolvedUnits(
-                workspace, sessions, hashes, progressScope, progressFolder, exclusions);
-        double ratio = total == 0 ? 0.0 : (double) resolved / total;
-        long count = catalogue.includedFileCount(
+        ProgressSummary summary = ProgressSummary.calculate(
+                catalogue, workspace, sessions, hashes,
                 progressScope, progressFolder, exclusions);
+        long total = summary.totalUnits();
+        long resolved = summary.correctUnits();
+        double ratio = summary.ratio();
+        long count = summary.includedFiles();
         String area = progressFolder.isEmpty() ? "Proyecto" : "Carpeta";
         projectInfo.setText(count == 0 || total == 0
                 ? area + " · sin código contabilizable"
