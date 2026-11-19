@@ -65,13 +65,15 @@ class TypingSessionTest {
     @Test
     void supportsUnicodeAndRestoringSparseSlots() {
         TypingSession session = new TypingSession("a🙂b");
-        session.type("a🙂");
-        assertEquals(2, session.correctCount());
+        session.type("a🙂"); // Pasted emoji cannot consume a slot.
+        assertEquals(1, session.correctCount());
+        assertEquals(1, session.skippedCount());
         assertEquals(3, session.size());
         var restored = TypingSession.restore(session.expectedText(),
-                session.enteredSlots(), List.of(), session.caret());
+                session.enteredSlots(), session.skippedSlots(), session.caret());
         restored.type("b");
-        assertEquals(3, restored.correctCount());
+        assertEquals(2, restored.correctCount());
+        assertTrue(restored.finishedExercise());
     }
 
     @Test
