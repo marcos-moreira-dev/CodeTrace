@@ -855,6 +855,10 @@ public final class CodeTraceApp extends Application {
             });
             Tab tab = new Tab("Mapa · " + folder.getFileName(), view);
             tab.setGraphic(new FontIcon("fth-share-2"));
+            tab.setTooltip(new Tooltip(graph.truncated()
+                    ? "Vista parcial: algunas dependencias se omitieron por los límites "
+                      + "de tamaño o densidad. No representa todas las relaciones del proyecto."
+                    : "Relaciones internas detectadas en " + graph.folder()));
             installTabContextMenu(tab);
             tabs.getTabs().add(tab);
             tabs.getSelectionModel().select(tab);
@@ -1213,9 +1217,12 @@ public final class CodeTraceApp extends Application {
         Tab active = tabs.getSelectionModel().getSelectedItem();
         if (!hasEditor && active != null
                 && active.getContent() instanceof DependencyGraphPane map) {
-            fileInfo.setText(map.selectedNodeSummary());
+            fileInfo.setText((map.isPartial() ? "Vista parcial · " : "")
+                    + map.selectedNodeSummary());
             fileInfo.setTooltip(new Tooltip(
-                    map.nodeCount() + " nodos · " + map.connectionCount()
+                    (map.isPartial() ? "IMPORTANTE: análisis parcial; no todas las "
+                            + "relaciones caben en el mapa.\n" : "")
+                    + map.nodeCount() + " nodos · " + map.connectionCount()
                             + " conexiones internas\n"
                             + "Arrastra un círculo o su nombre para moverlo. "
                             + "Arrastra el fondo para desplazarte."));
