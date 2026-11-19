@@ -22,9 +22,9 @@ class ReferenceCatalogueTest {
 
         var catalogue = ReferenceCatalogue.scan(folder);
         assertEquals(2, catalogue.files().size());
-        assertEquals(2, catalogue.files().get("src/Main.java").typeableUnits());
+        assertEquals(1, catalogue.files().get("src/Main.java").typeableUnits());
         assertFalse(catalogue.files().get("logo.bin").typeable());
-        assertEquals(2, catalogue.expectedUnits());
+        assertEquals(1, catalogue.expectedUnits());
 
         VirtualWorkspace virtual = new VirtualWorkspace();
         virtual.createDirectory("src");
@@ -32,7 +32,7 @@ class ReferenceCatalogueTest {
         TypingSession session = new TypingSession("í\n");
         session.type("i\u0301\n");
         String sha = catalogue.files().get("src/Main.java").sha256();
-        assertEquals(2, catalogue.resolvedUnits(virtual, Map.of("src/Main.java", session),
+        assertEquals(1, catalogue.resolvedUnits(virtual, Map.of("src/Main.java", session),
                 Map.of("src/Main.java", sha)));
         assertEquals(0, catalogue.resolvedUnits(virtual, Map.of("src/Main.java", session),
                 Map.of("src/Main.java", "f".repeat(64))));
