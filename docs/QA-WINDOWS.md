@@ -188,3 +188,19 @@ No se distribuye FFmpeg por defecto. La CI no reemplaza la auditoría de licenci
   y la práctica manual sigue funcionando.
 - TABS-UI-01: Abre muchas pestañas, verifica que el menú de desbordamiento
   sea rectangular, legible y consistente con el resto de controles.
+
+## Ámbito Solo: foco visual y navegación
+
+- SOLO-01: Selecciona `src/main/java`, marca `Solo`. El subárbol y sus
+  ancestros deben mantenerse legibles; `src/test` y `README.md` quedan
+  atenuados sin verse bloqueados.
+- SOLO-02: Sin desmarcar `Solo`, selecciona `src/main/resources`:
+  el foco visual y el porcentaje deben cambiar al nuevo ámbito.
+- SOLO-03: Selecciona el nodo raíz del proyecto o desmarca `Solo`:
+  todas las ramas recuperan su aspecto normal y el progreso es global.
+- SOLO-04: Abre un archivo atenuado. Debe permitir consulta o práctica sin
+  contabilizar sus caracteres en el porcentaje de otra carpeta.
+- SOLO-05: Combina `Solo`, `Excluir del progreso` y autocreación: el foco
+  no borra exclusiones, los estados creados o los ejercicios terminados.
+- SOLO-06: Al abrir otra referencia o sesión, no debe quedar atenuada
+  por un ámbito perteneciente al proyecto anterior.
