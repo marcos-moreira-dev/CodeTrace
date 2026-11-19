@@ -214,14 +214,18 @@ class CodeTraceAppSmokeTest {
                         oldNode.x(), oldNode.y(), 0, 0,
                         javafx.scene.input.MouseButton.PRIMARY, 1,
                         false, false, false, false, true, false, false,
-                        false, false, false, null);
+                        false, false, false,
+                        new javafx.scene.input.PickResult(
+                                graphSurface, oldNode.x(), oldNode.y()));
                 javafx.event.Event.fireEvent(graphSurface, pressed);
                 javafx.scene.input.MouseEvent dragged = new javafx.scene.input.MouseEvent(
                         javafx.scene.input.MouseEvent.MOUSE_DRAGGED,
                         oldNode.x() + 55, oldNode.y() + 30, 0, 0,
                         javafx.scene.input.MouseButton.PRIMARY, 1,
                         false, false, false, false, true, false, false,
-                        false, false, false, null);
+                        false, false, false,
+                        new javafx.scene.input.PickResult(
+                                graphSurface, oldNode.x() + 55, oldNode.y() + 30));
                 javafx.event.Event.fireEvent(graphSurface, dragged);
                 assertEquals(0.65, graphScroll.getHvalue(), 0.00001,
                         "Dragging a node must not pan the map");
@@ -235,7 +239,9 @@ class CodeTraceAppSmokeTest {
                                 oldNode.x() + 55, oldNode.y() + 30, 0, 0,
                                 javafx.scene.input.MouseButton.PRIMARY, 1,
                                 false, false, false, false, false, false, false,
-                                false, false, false, null));
+                                false, false, false,
+                                new javafx.scene.input.PickResult(
+                                        graphSurface, oldNode.x() + 55, oldNode.y() + 30)));
                 assertTrue(graphChanges.get().positions().get("src/Main.java").x()
                         > oldNode.x(), "A node really moved independently");
                 assertEquals(0.65, graphScroll.getHvalue(), 0.00001);
