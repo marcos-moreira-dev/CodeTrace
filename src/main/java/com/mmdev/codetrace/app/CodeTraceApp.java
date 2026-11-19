@@ -1629,6 +1629,7 @@ public final class CodeTraceApp extends Application {
                 next.templateOpacity(), next.turboMode(), next.completionSound(),
                 next.completionDialog(), next.graphLayoutMode());
         settings.save();
+        consolePane.resetExecutionAcknowledgement();
         turboToggle.setSelected(settings.turboMode());
         turboMenu.setSelected(settings.turboMode());
         zoom.setValue(next.fontSize());

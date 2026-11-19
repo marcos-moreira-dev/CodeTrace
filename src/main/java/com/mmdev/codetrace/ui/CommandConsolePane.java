@@ -130,6 +130,11 @@ public final class CommandConsolePane extends BorderPane {
         executor.stop();
     }
 
+    /** Re-arm the warning when Preferences restores its default protection. */
+    public void resetExecutionAcknowledgement() {
+        commandExecutionAcknowledged = false;
+    }
+
     public boolean isRunning() {
         return executor.isRunning();
     }

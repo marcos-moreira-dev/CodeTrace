@@ -2,6 +2,7 @@ package com.mmdev.codetrace.ui;
 
 import com.mmdev.codetrace.languages.LanguageRegistry;
 import com.mmdev.codetrace.languages.LanguageSupport;
+import com.mmdev.codetrace.practice.EmojiUnits;
 import com.mmdev.codetrace.reference.SourceRange;
 import java.util.ArrayList;
 import java.util.List;
@@ -116,8 +117,29 @@ public final class ReferenceTextPane extends BorderPane {
     private void addColoredText(TextFlow flow, String content,
                                        LanguageSupport.Kind kind, boolean selected) {
         if (content.isEmpty()) return;
+        // Emit one Text node per ordinary run, not per character; only emoji
+        // clusters receive a font fallback. This preserves virtualized speed.
+        StringBuilder ordinary = new StringBuilder();
+        for (String cluster : EmojiUnits.graphemes(content)) {
+            if (EmojiUnits.isEmoji(cluster)) {
+                if (!ordinary.isEmpty()) {
+                    appendTextRun(flow, ordinary.toString(), kind, selected, false);
+                    ordinary.setLength(0);
+                }
+                appendTextRun(flow, cluster, kind, selected, true);
+            } else {
+                ordinary.append(cluster);
+            }
+        }
+        if (!ordinary.isEmpty())
+            appendTextRun(flow, ordinary.toString(), kind, selected, false);
+    }
+
+    private void appendTextRun(TextFlow flow, String content,
+                               LanguageSupport.Kind kind,
+                               boolean selected, boolean emoji) {
         Text text = new Text(content);
-        text.setFont(Font.font(fontFamily, fontSize));
+        text.setFont(Font.font(emoji ? "Segoe UI Emoji" : fontFamily, fontSize));
         text.setFill(selected ? Color.web("#BE6423")
                 : kind == null ? Color.web("#273947") : SyntaxPalette.color(kind));
         if (selected) {
