@@ -1128,39 +1128,36 @@
 }
 
 
-/* Reusable exclusive radio group: actual RadioButtons, visually segmented.
-   No rounded pills; compatible with the rectangular CodeTrace design language. */
+/* Reusable vertical radio selector. No container, segmented tiles or extra frame. */
 .exclusive-choice-bar {
-    -fx-background-color: #ffffff;
-    -fx-border-color: #a6b7c4;
-    -fx-border-width: 1;
-    -fx-background-radius: 0;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+    -fx-padding: 0;
 }
 .exclusive-choice-bar .exclusive-choice {
-    -fx-padding: 7 11;
+    -fx-padding: 6 12 6 2;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
     -fx-background-radius: 0;
     -fx-border-radius: 0;
-    -fx-background-color: #ffffff;
-    -fx-border-color: transparent;
     -fx-text-fill: #35546b;
+    -fx-font-size: 12px;
     -fx-cursor: hand;
-    -fx-font-size: 11px;
 }
 .exclusive-choice-bar .exclusive-choice:hover {
-    -fx-background-color: #e6eff5;
+    -fx-background-color: #edf3f7;
 }
 .exclusive-choice-bar .exclusive-choice:selected {
-    -fx-background-color: #d6e5f0;
+    -fx-background-color: transparent;
     -fx-font-weight: bold;
     -fx-text-fill: #244b67;
-    -fx-border-color: transparent transparent #527e9d transparent;
-    -fx-border-width: 0 0 2px 0;
 }
 .exclusive-choice-bar .exclusive-choice .radio {
     -fx-background-color: #ffffff;
     -fx-border-color: #94aabb;
-    -fx-border-radius: 8;
-    -fx-background-radius: 8;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
     -fx-padding: 4px;
 }
 .exclusive-choice-bar .exclusive-choice:selected .radio {
