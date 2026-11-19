@@ -508,7 +508,11 @@ class CodeTraceAppSmokeTest {
                 assertTrue(srcMenu.getItems().stream().anyMatch(item ->
                         "Mapa de dependencias...".equals(item.getText())));
                 ContextMenu folderMenu = (ContextMenu) menuFor.invoke(fileTree, nested);
-                assertFalse(folderMenu.getItems().stream().anyMatch(item ->
+                assertTrue(folderMenu.getItems().stream().anyMatch(item ->
+                        "Colapsar subcarpetas".equals(item.getText())),
+                        "The nested folder now contains a deeper subfolder");
+                assertFalse(((ContextMenu) menuFor.invoke(fileTree, deep))
+                        .getItems().stream().anyMatch(item ->
                         "Colapsar subcarpetas".equals(item.getText())));
                 assertTrue(folderMenu.getItems().stream().anyMatch(item ->
                         "Mapa de dependencias...".equals(item.getText())));
