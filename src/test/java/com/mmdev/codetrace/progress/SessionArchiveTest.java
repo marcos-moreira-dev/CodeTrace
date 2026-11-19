@@ -232,6 +232,24 @@ class SessionArchiveTest {
         assertTrue(SessionArchive.load(destination).workspace().exists(""));
     }
 
+
+    @Test
+    void interruptedReadDoesNotReturnPartialStateOrAlterSavedSession() throws Exception {
+        Path archive = directory.resolve("interrupt.ctrace");
+        SessionArchive.save(archive, new SessionArchive.State(
+                directory, new VirtualWorkspace(), Map.of(), Map.of()));
+        byte[] before = Files.readAllBytes(archive);
+        Thread.currentThread().interrupt();
+        try {
+            assertThrows(java.util.concurrent.CancellationException.class,
+                    () -> SessionArchive.load(archive));
+        } finally {
+            Thread.interrupted();
+        }
+        assertArrayEquals(before, Files.readAllBytes(archive));
+        assertTrue(SessionArchive.load(archive).workspace().exists(""));
+    }
+
     private static void writeLegacyString(DataOutputStream out, String value)
             throws IOException {
         byte[] text = value.getBytes(java.nio.charset.StandardCharsets.UTF_8);

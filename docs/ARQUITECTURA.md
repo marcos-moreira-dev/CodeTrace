@@ -247,3 +247,11 @@ modificó su sesión durante la lectura, se vuelve a consultar si desea guardarl
 Si cancela el selector de una referencia ausente, la sesión actual permanece
 intacta. `ReferenceFingerprint.sha256` comprueba interrupciones entre bloques
 de lectura para evitar trabajos costosos que sobrevivan a su cancelación.
+
+## Cancelación cooperativa del lector `.ctrace`
+
+`SessionArchive.load` comprueba la interrupción antes y durante la
+reconstrucción de elementos virtuales, sesiones, ranuras de caracteres,
+huellas y posiciones del grafo, y tras leer campos de texto grandes.
+La cancelación produce `CancellationException` en vez de devolver un
+estado parcialmente recuperado; el archivo original queda intacto.

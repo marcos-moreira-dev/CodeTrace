@@ -24,6 +24,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.CancellationException;
 
 /**
  * Versioned binary .ctrace sessions, not JSON or serialized Java objects.
@@ -98,6 +99,7 @@ public final class SessionArchive {
     }
 
     public static State load(Path source) throws IOException {
+        checkInterrupted();
         if (Files.size(source) > MAX_ARCHIVE_BYTES) {
             throw new IOException("Session exceeds the supported size");
         }
@@ -182,6 +184,7 @@ public final class SessionArchive {
         int entryCount = boundedCount(in);
         List<VirtualWorkspace.Entry> entries = new ArrayList<>(entryCount);
         for (int i = 0; i < entryCount; i++) {
+            checkInterrupted();
             String path = readString(in);
             int kind = in.readUnsignedByte();
             if (kind == 1) {
@@ -198,6 +201,7 @@ public final class SessionArchive {
         int sessionCount = boundedCount(in);
         Map<String, TypingSession> sessions = new LinkedHashMap<>();
         for (int i = 0; i < sessionCount; i++) {
+            checkInterrupted();
             String path = readString(in);
             if (path.isEmpty() || sessions.containsKey(path)) {
                 throw new IOException("Invalid or duplicate session path");
@@ -208,11 +212,13 @@ public final class SessionArchive {
             int unitCount = boundedCount(in);
             List<String> slots = new ArrayList<>(unitCount);
             for (int j = 0; j < unitCount; j++) {
+                checkInterrupted();
                 slots.add(in.readBoolean() ? readString(in) : null);
             }
             int skippedCount = boundedCount(in);
             List<Integer> skipped = new ArrayList<>(skippedCount);
             for (int j = 0; j < skippedCount; j++) {
+                checkInterrupted();
                 skipped.add(in.readInt());
             }
             sessions.put(path, TypingSession.restore(original, slots, skipped, caret));
@@ -220,6 +226,7 @@ public final class SessionArchive {
         int hashCount = boundedCount(in);
         Map<String, String> hashes = new HashMap<>();
         for (int i = 0; i < hashCount; i++) {
+            checkInterrupted();
             String path = readString(in);
             VirtualWorkspace.checkPath(path);
             String hash = readString(in);
@@ -232,6 +239,7 @@ public final class SessionArchive {
             int graphCount = boundedCount(in);
             if (graphCount > 100) throw new IOException("Too many graph layouts");
             for (int i = 0; i < graphCount; i++) {
+                checkInterrupted();
                 String folder = readString(in);
                 if (!folder.isEmpty()) VirtualWorkspace.checkPath(folder);
                 String fingerprint = readString(in);
@@ -239,6 +247,7 @@ public final class SessionArchive {
                 if (nodeCount > 180) throw new IOException("Too many graph nodes");
                 Map<String, GraphLayout.Point> positions = new LinkedHashMap<>();
                 for (int n = 0; n < nodeCount; n++) {
+                    checkInterrupted();
                     String node = readString(in);
                     VirtualWorkspace.checkPath(node);
                     GraphLayout.Point point = new GraphLayout.Point(
@@ -272,12 +281,14 @@ public final class SessionArchive {
     }
 
     private static String readString(DataInputStream in) throws IOException {
+        checkInterrupted();
         int size = in.readInt();
         if (size < 0 || size > MAX_STRING_BYTES) {
             throw new IOException("Invalid text field size");
         }
         byte[] bytes = new byte[size];
         in.readFully(bytes);
+        checkInterrupted();
         try {
             return StandardCharsets.UTF_8.newDecoder()
                     .onMalformedInput(CodingErrorAction.REPORT)
@@ -286,6 +297,11 @@ public final class SessionArchive {
         } catch (CharacterCodingException malformed) {
             throw new IOException("Invalid UTF-8 in CodeTrace session", malformed);
         }
+    }
+
+    private static void checkInterrupted() {
+        if (Thread.currentThread().isInterrupted())
+            throw new CancellationException("Lectura de sesión cancelada");
     }
 
     private static void count(DataOutputStream out, int value) throws IOException {
