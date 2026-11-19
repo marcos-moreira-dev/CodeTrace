@@ -441,7 +441,7 @@ public final class TypingEditor extends BorderPane {
     }
 
     private double cellHeight() {
-        return Math.ceil(fontSize * 1.5 + 7);
+        return CodeLineGutter.rowHeight(fontSize);
     }
 
     /**
@@ -522,7 +522,8 @@ public final class TypingEditor extends BorderPane {
         row.setPrefWidth(rowWidth);
         // The gutter is part of the same virtualized line cell, not an overlay.
         // Its numbering is human-facing (1-based); caret indices stay 0-based.
-        HBox visualLine = new HBox(12, CodeLineGutter.number(line.number() + 1), row);
+        HBox visualLine = new HBox(10,
+                CodeLineGutter.number(line.number() + 1, sourceLines.size(), fontSize), row);
         visualLine.setAlignment(Pos.CENTER_LEFT);
         visualLine.getStyleClass().add("code-line-row");
         return visualLine;

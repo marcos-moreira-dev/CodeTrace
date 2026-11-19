@@ -54,7 +54,8 @@ public final class ReferenceTextPane extends BorderPane {
                     setGraphic(null);
                     return;
                 }
-                Label number = CodeLineGutter.number(line.number());
+                Label number = CodeLineGutter.number(
+                        line.number(), lines.getItems().size(), fontSize);
                 TextFlow flow = new TextFlow();
                 flow.getStyleClass().add("reference-text-flow");
                 int offset = 0;
@@ -73,7 +74,7 @@ public final class ReferenceTextPane extends BorderPane {
                     offset = end;
                 }
                 if (line.spans().isEmpty()) addColoredText(flow, " ", null, false);
-                HBox row = new HBox(12, number, flow);
+                HBox row = new HBox(10, number, flow);
                 row.setAlignment(Pos.CENTER_LEFT);
                 row.getStyleClass().add("reference-text-row");
                 setGraphic(row);

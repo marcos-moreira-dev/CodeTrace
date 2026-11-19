@@ -161,9 +161,13 @@ class CodeTraceAppSmokeTest {
                 assertEquals(23, xml.fontSize());
                 xml.setFontSettings("Consolas", 13);
                 assertEquals(13, xml.fontSize());
-                var gutter = com.mmdev.codetrace.ui.CodeLineGutter.number(42);
+                var gutter = com.mmdev.codetrace.ui.CodeLineGutter.number(42, 300, 13);
                 assertEquals("42", gutter.getText());
                 assertTrue(gutter.getStyleClass().contains("code-line-number"));
+                assertEquals(com.mmdev.codetrace.ui.CodeLineGutter.rowHeight(13),
+                        gutter.getPrefHeight());
+                assertEquals(com.mmdev.codetrace.ui.CodeLineGutter.widthFor(300, 13),
+                        gutter.getPrefWidth());
                 var disposableTabs = new com.mmdev.codetrace.ui.DocumentTabs(
                         new TabPane(), () -> {});
                 javafx.scene.control.Tab sampleTab = new javafx.scene.control.Tab("A");

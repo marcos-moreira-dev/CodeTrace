@@ -370,3 +370,12 @@ Consulta también [Auditoría de cierre](AUDITORIA-CIERRE-2026-11.md).
 - **TREE-CANCEL:** iniciar Expansión recursiva en un árbol grande, cambiar
   inmediatamente de proyecto y verificar que la expansión anterior no
   reaparece ni modifica el nuevo árbol.
+
+
+## GUTTER-COMPACT — numeración continua al estilo de Notepad++
+
+- Abrir Java de práctica y XML/JSON de consulta: margen gris **continuo**, sin números en cajas ni rayas horizontales.
+- Números alineados a la derecha, separador vertical fino y separación discreta antes del texto.
+- Fila activa tenue, sin barra gruesa azul a la izquierda.
+- A 13 pt caben más líneas que antes, sin recortar glifos o desajustar cursor.
+- Probar 10, 20, 36 pt; archivo de 1000+ líneas, zoom, búsqueda, pestañas y Windows 100/125/150 % DPI.

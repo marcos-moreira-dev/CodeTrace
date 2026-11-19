@@ -227,14 +227,14 @@
     -fx-background-color: #ffffff;
     -fx-text-fill: #81909b;
     -fx-border-color: transparent;
-    -fx-padding: 1px 12px 1px 0;
+    -fx-padding: 0 10px 0 0;
 }
 .typing-lines .list-cell:filled:selected,
 .typing-lines:focused .list-cell:filled:selected {
-    -fx-background-color: #e7f0f6;
-    -fx-border-color: transparent transparent transparent #4a6076;
-    -fx-border-width: 0 0 0 3px;
-    -fx-padding: 1px 12px 1px 0;
+    -fx-background-color: #f6f8fa;
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+    -fx-padding: 0 10px 0 0;
 }
 .typing-lines .list-cell:filled:hover:!selected {
     -fx-background-color: #f4f8fa;
@@ -1020,26 +1020,33 @@
 }
 .reference-colored-lines .list-cell {
     -fx-background-color: #ffffff;
-    -fx-padding: 1px 10px 1px 0;
+    -fx-padding: 0 10px 0 0;
     -fx-border-color: transparent;
 }
 .reference-colored-lines .list-cell:filled:selected,
 .reference-colored-lines:focused .list-cell:filled:selected {
-    -fx-background-color: #e5f0f7;
-    -fx-border-color: transparent transparent transparent #4a6e87;
-    -fx-border-width: 0 0 0 3px;
-    -fx-padding: 1px 10px 1px 0;
+    -fx-background-color: #f6f8fa;
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+    -fx-padding: 0 10px 0 0;
 }
 .reference-text-row, .code-line-row {
     -fx-alignment: center-left;
-    -fx-spacing: 12;
+    -fx-spacing: 10;
 }
 .code-line-number {
-    -fx-font-family: "Consolas"; -fx-font-size: 11px;
-    -fx-text-fill: #8a9ca8;
-    -fx-padding: 0 7px 0 3px;
-    -fx-background-color: #f4f7f9;
-    -fx-border-color: transparent #dce4e9 transparent transparent;
+    -fx-font-family: "Consolas";
+    -fx-text-fill: #78838d;
+    -fx-padding: 0 9px 0 0;
+    -fx-background-color: #f1f3f5;
+    -fx-background-radius: 0;
+    -fx-border-color: transparent #d5dbe0 transparent transparent;
+    -fx-border-width: 0 1px 0 0;
+}
+.typing-lines .list-cell:filled:selected .code-line-number,
+.reference-colored-lines .list-cell:filled:selected .code-line-number {
+    -fx-background-color: #e6ecef;
+    -fx-text-fill: #465e70;
 }
 .reference-text-flow { -fx-line-spacing: 0; }
 
