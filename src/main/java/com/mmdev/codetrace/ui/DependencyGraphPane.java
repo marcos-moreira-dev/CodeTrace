@@ -49,6 +49,7 @@ public final class DependencyGraphPane extends BorderPane {
     private double pressX, pressY;
     private boolean panning, moved;
     private double panSceneX, panSceneY, panStartX, panStartY;
+    private boolean firstFitPerformed;
 
     public DependencyGraphPane(ProjectDependencyGraph.Graph graph,
                                Consumer<String> openSource) {
@@ -106,16 +107,19 @@ public final class DependencyGraphPane extends BorderPane {
         canvas.setManaged(false);
         canvas.widthProperty().bind(viewport.widthProperty());
         canvas.heightProperty().bind(viewport.heightProperty());
-        canvas.widthProperty().addListener((obs, old, value) -> redraw());
-        canvas.heightProperty().addListener((obs, old, value) -> redraw());
+        canvas.widthProperty().addListener((obs, old, value) -> onViewportResized());
+        canvas.heightProperty().addListener((obs, old, value) -> onViewportResized());
         setCenter(viewport);
         canvas.setCursor(Cursor.OPEN_HAND);
         canvas.setFocusTraversable(true);
 
         MenuItem reset = new MenuItem("Restablecer distribución");
         reset.setOnAction(event -> resetLayout());
-        viewport.setOnContextMenuRequested(event -> new ContextMenu(reset)
-                .show(viewport, event.getScreenX(), event.getScreenY()));
+        MenuItem fit = new MenuItem("Centrar y ajustar a ventana");
+        fit.setOnAction(event -> fitToViewport());
+        ContextMenu graphMenu = new ContextMenu(fit, reset);
+        viewport.setOnContextMenuRequested(event -> graphMenu.show(
+                viewport, event.getScreenX(), event.getScreenY()));
 
         canvas.setOnMouseMoved(event -> {
             if (!panning && pressed == null)
@@ -204,8 +208,7 @@ public final class DependencyGraphPane extends BorderPane {
             if (event.getCode() == KeyCode.ESCAPE) {
                 clearSelection();
             } else if (event.getCode() == KeyCode.HOME) {
-                centerCameraOnGraph();
-                redraw();
+                fitToViewport();
             } else if (event.getCode() == KeyCode.LEFT) {
                 panByPixels(65, 0);
             } else if (event.getCode() == KeyCode.RIGHT) {
@@ -217,6 +220,43 @@ public final class DependencyGraphPane extends BorderPane {
             } else return;
             event.consume();
         });
+        redraw();
+    }
+
+    private void onViewportResized() {
+        if (!firstFitPerformed && canvas.getWidth() >= 320
+                && canvas.getHeight() >= 240) {
+            firstFitPerformed = true;
+            fitToViewport();
+        } else {
+            redraw();
+        }
+    }
+
+    /**
+     * Center on all nodes and choose an overview zoom when the workspace first
+     * becomes visible. Users may then zoom in without losing the camera.
+     */
+    public void fitToViewport() {
+        double w = canvas.getWidth(), h = canvas.getHeight();
+        centerCameraOnGraph();
+        if (w >= 120 && h >= 120 && !layout.isEmpty()) {
+            double minX = layout.values().stream()
+                    .mapToDouble(GraphLayout.Point::x).min().orElse(0);
+            double maxX = layout.values().stream()
+                    .mapToDouble(GraphLayout.Point::x).max().orElse(0);
+            double minY = layout.values().stream()
+                    .mapToDouble(GraphLayout.Point::y).min().orElse(0);
+            double maxY = layout.values().stream()
+                    .mapToDouble(GraphLayout.Point::y).max().orElse(0);
+            double graphWidth = Math.max(250, maxX - minX + 270);
+            double graphHeight = Math.max(110, maxY - minY + 90);
+            double factor = Math.min((w - 90) / graphWidth,
+                    (h - 90) / graphHeight);
+            int percent = (int) clamp(Math.floor(factor * 100), 25, 100);
+            camera.zoomAt(percent / 100.0, w / 2, h / 2, w, h);
+            zoomPercent.set(percent);
+        }
         redraw();
     }
 
@@ -316,8 +356,7 @@ public final class DependencyGraphPane extends BorderPane {
     public void resetLayout() {
         layout.clear();
         layout.putAll(GraphLayoutEngine.arrange(model, layoutMode));
-        centerCameraOnGraph();
-        redraw();
+        fitToViewport();
         notifyLayoutChanged();
     }
 
