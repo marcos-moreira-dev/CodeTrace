@@ -1,0 +1,18 @@
+PRUEBA DE EMOJIS - CODETRACE (UTF-8)
+Compara el visor de consulta con Markdown (Fuente y Renderizado).
+Los emojis son referencias visuales; nunca deberían exigir mecanografía.
+
+01. Caras: 😀 😃 😄 😁 😆 😅 😂 🤣 😊 🙂 🙃 😉 😍 🥰 😘 😎 🤔 🥹 😭 😴 🤯 🫠 🫡
+02. Manos: 👍 👎 👋 🤝 🙌 👏 🫶 🤘 🤙 👌 🤞 🤟 👋🏻 👋🏽 👋🏿 👍🏿 🫱🏽‍🫲🏻
+03. Familias: 👨‍👩‍👧‍👦 👩‍👩‍👦 👨‍👨‍👧 👩‍👦 👩‍🔬 👨‍🏫 👩‍🚀 🧑‍💻 👩🏽‍🚒 🧑🏾‍🎓 🧑‍🦽
+04. Banderas: 🇪🇨 🇺🇸 🇯🇵 🇫🇷 🇧🇷 🇨🇦 🇪🇸 🇨🇴 🇵🇪 🇬🇧 🌋 🗺️ 🏠 🏛️
+05. Tecnología: 💻 🖥️ 🖱️ ⌨️ 📱 📡 🔌 💾 💿 🔋 🤖 ⚙️ 🛠️ 🔬 🧪 🧬 📊 📈 📐 🧠
+06. Naturaleza: 🌞 ☀️ 🌤️ 🌦️ 🌧️ ⛈️ 🌈 🌊 🌵 🌴 🌳 🌻 🌷 🐢 🐙 🦋 🐈 🐕 🦉
+07. Estados: ✅ ☑️ ✔️ ❌ ❎ ⚠️ ℹ️ ❓ ❗ ➕ ➖ ➗ ♻️ ❤️ 🩷 💙 💚 💜 🔥 💯
+08. Comida y arte: 🍎 🍇 🥑 🍕 🍔 🍜 🍰 ☕ 🧃 ⚽ 🏀 🏓 🎨 🎭 🎬 🎮 🎧 🎹
+09. Vehículos: 🚗 🚕 🚍 🚲 🚀 ✈️ 🚁 🛸 🚢 🧭 🕰️ 🔔 🔑 🧰 🪄 🎁
+10. Variaciones: ✈ ✈️ ☺ ☺️ ❤ ❤️ ☀ ☀️ ☂ ☂️ 0️⃣ 1️⃣ 2️⃣ #️⃣ *️⃣ ©️ ®️ ™️
+
+Prueba mezclada: ABC👩‍💻DEF | console.log("Listo ✅"); | Ecuador 🇪🇨
+Sin emojis: abc ABC á é í ó ú ñ Ñ 123456 {} [] ( ) ; / + =
+FIN DE LA PRUEBA 🏁
