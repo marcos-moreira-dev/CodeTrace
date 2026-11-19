@@ -132,9 +132,7 @@ public final class CodeTraceApp extends Application {
             new EnumMap<>(ProgressScope.Category.class);
     private CheckBox allScopes;
     private CheckBox autoCreateCheck;
-    private final Button refreshButton = ToolbarIcons.button(
-            "Actualizar referencia", ToolbarIcons.Icon.REFRESH,
-            "Volver a leer los archivos originales del proyecto");
+    private final Button refreshButton = new Button("", new FontIcon("fth-refresh-cw"));
     private final Button skipImportsButton = ToolbarIcons.button(
             "Imports", ToolbarIcons.Icon.SKIP, "Saltar imports de Java");
     private final MenuItem skipImportsMenu = new MenuItem("Saltar imports");
@@ -293,6 +291,10 @@ public final class CodeTraceApp extends Application {
                 "Guardar", ToolbarIcons.Icon.SAVE, "Guardar sesión CodeTrace");
         saveButton.setOnAction(event -> saveSession(false));
         refreshButton.setDisable(true);
+        refreshButton.getStyleClass().add("tree-header-action");
+        refreshButton.setTooltip(new Tooltip("Actualizar referencia: volver a analizar "
+                + "los archivos originales sin modificar la sesión"));
+        refreshButton.setAccessibleText("Actualizar referencia");
         refreshButton.setOnAction(event -> refreshReference());
         skipImportsButton.setOnAction(event -> skipImports());
         symbols = new SymbolPalette(Layout.valueOf(settings.keyboardLayout()), next -> {
@@ -320,7 +322,6 @@ public final class CodeTraceApp extends Application {
         tabsActions.setTooltip(new Tooltip("Administrar pestañas abiertas"));
         installTabActions();
         ToolBar toolbar = new ToolBar(openButton, saveButton,
-                new Separator(Orientation.VERTICAL), refreshButton,
                 new Separator(Orientation.VERTICAL), progressFilter, symbols,
                 new Separator(Orientation.VERTICAL), tabsActions, consoleButton);
         top.getChildren().addAll(menu, toolbar);
@@ -389,7 +390,7 @@ public final class CodeTraceApp extends Application {
         Region headerFill = new Region();
         HBox.setHgrow(headerFill, Priority.ALWAYS);
         HBox header = new HBox(4, projectHeading, headerFill,
-                treeActivity, collapse, expand);
+                treeActivity, refreshButton, collapse, expand);
         header.getStyleClass().add("project-tree-header");
         header.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
         explorerSearch = new TextField();

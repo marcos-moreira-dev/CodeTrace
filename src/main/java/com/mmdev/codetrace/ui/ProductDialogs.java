@@ -147,10 +147,12 @@ public final class ProductDialogs {
         pane.getStylesheets().add(ProductDialogs.class.getResource(
                 "/css/codetrace.css").toExternalForm());
         pane.getButtonTypes().addAll(choices);
-        pane.setMinWidth(470);
-        pane.setPrefWidth(600);
-        pane.setMinHeight(260);
-        pane.setPrefHeight(355);
+        // Size confirmation and error dialogs to their content; no empty panel.
+        // Longer diagnostics still get a bounded scrollable viewport.
+        pane.setMinWidth(440);
+        pane.setPrefWidth(520);
+        pane.setMinHeight(Region.USE_COMPUTED_SIZE);
+        pane.setPrefHeight(Region.USE_COMPUTED_SIZE);
         Label headingLabel = new Label(heading);
         headingLabel.getStyleClass().add("dialog-heading");
         headingLabel.setWrapText(true);
@@ -160,13 +162,22 @@ public final class ProductDialogs {
         text.setWrapText(true);
         text.setMaxWidth(Double.MAX_VALUE);
         text.setMinHeight(Region.USE_PREF_SIZE);
-        ScrollPane scroll = new ScrollPane(text);
-        scroll.getStyleClass().add("dialog-message-scroll");
-        scroll.setFitToWidth(true);
-        scroll.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        VBox.setVgrow(scroll, Priority.ALWAYS);
-        VBox body = new VBox(12, headingLabel, scroll);
-        body.setPadding(new Insets(14, 18, 8, 18));
+        VBox body = new VBox(12);
+        body.getChildren().add(headingLabel);
+        boolean longMessage = message.length() > 420 || message.lines().count() > 7;
+        if (longMessage) {
+            ScrollPane scroll = new ScrollPane(text);
+            scroll.getStyleClass().add("dialog-message-scroll");
+            scroll.setFitToWidth(true);
+            scroll.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+            scroll.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+            scroll.setPrefViewportHeight(188);
+            scroll.setMaxHeight(236);
+            body.getChildren().add(scroll);
+        } else {
+            body.getChildren().add(text);
+        }
+        body.setPadding(new Insets(12, 18, 12, 18));
         pane.setContent(body);
         return result;
     }

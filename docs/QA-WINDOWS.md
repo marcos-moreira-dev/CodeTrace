@@ -490,3 +490,15 @@ Consulta también [Auditoría de cierre](AUDITORIA-CIERRE-2026-11.md).
   temporales `codetrace-fullmedia-*`; el original debe mantenerse intacto.
 - Con poco espacio libre o sin FFmpeg: mostrar aviso accionable y
   permitir abrir el original sin que CodeTrace quede bloqueado.
+
+## UX-PROJECT-HEADER — controles y diálogos compactos
+
+- La barra principal contiene Abrir y Guardar, pero no «Actualizar referencia».
+- La cabecera Proyecto presenta tres acciones pequeñas a la derecha:
+  actualizar, contraer todas y expandir todas, con accesibilidad y tooltip.
+- Comprobar que Actualizar permanece desactivado si no hay proyecto y
+  conserva pestañas y progreso al ejecutarlo.
+- Abrir el diálogo «Sesión modificada»: debe ajustarse al texto, sin una
+  gran zona vacía, y seguir mostrando Sí, No y Cancelar completos.
+- Provocar un mensaje largo de error: el texto debe desplazarse dentro
+  del diálogo sin recortar el botón de aceptación, incluso a DPI 150 %.
