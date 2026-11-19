@@ -842,7 +842,9 @@ public final class CodeTraceApp extends Application {
                 if (tabs.getSelectionModel().getSelectedItem() != null
                         && tabs.getSelectionModel().getSelectedItem().getContent()
                                 instanceof DependencyGraphPane) {
-                    setStatus(selectedPath);
+                    setStatus(selectedPath == null
+                            ? "Mapa · " + graph.folder()
+                            : selectedPath);
                     refreshMetrics();
                 }
             }, settings.graphLayoutMode());
