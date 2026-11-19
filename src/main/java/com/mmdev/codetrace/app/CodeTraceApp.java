@@ -1382,13 +1382,16 @@ public final class CodeTraceApp extends Application {
                             + "Arrastra el fondo para desplazarte."));
         } else if (!hasEditor) {
             fileInfo.setText("");
+            fileInfo.setTooltip(null);
         } else {
+            fileInfo.setTooltip(null);
             TypingSession typing = editor.session();
             fileInfo.setText(typing.correctCount() + " correctos · "
                     + editor.correctCpm() + " CPM");
         }
         if (catalogue == null) {
             projectInfo.setText("");
+            projectInfo.setTooltip(null);
             fileProgress.setVisible(false);
             return;
         }
