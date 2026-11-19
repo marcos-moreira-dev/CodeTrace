@@ -516,3 +516,19 @@ Consulta también [Auditoría de cierre](AUDITORIA-CIERRE-2026-11.md).
   funcionamiento con el ancho de panel estrecho y a 150 % de DPI.
 - El salto dentro de un MP4 completo no implica generación de segmentos;
   la reproducción HLS progresiva sigue siendo una mejora futura.
+
+## PRACTICE-COMPLETED — felicitación y sonido de finalización
+
+- Crear un archivo de código breve y transcribir correctamente su última
+  letra: mostrar «Archivo terminado» con un solo botón «Aceptar».
+- Reproducir `sounds/success.mp3` una vez en ese momento si
+  Preferencias > Sonido > «Reproducir sonido al terminar un archivo»
+  está activado (valor predeterminado). Con la casilla desactivada, el
+  aviso visual permanece y el sonido no se reproduce.
+- Abrir un archivo ya completado desde una sesión `.ctrace`: no volver
+  a mostrar felicitación. Modificarlo y completarlo de nuevo sí genera
+  una nueva transición.
+- Corregir una letra equivocada al final debe mostrar el aviso una vez;
+  una referencia vacía o un ejercicio todavía incorrecto, nunca.
+- La felicitación no depende de que haya terminado de indexarse la
+  referencia ni de que el árbol haya actualizado su icono de progreso.

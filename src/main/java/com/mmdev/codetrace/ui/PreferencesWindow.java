@@ -231,8 +231,8 @@ public final class PreferencesWindow {
 
         CheckBox sounds = AppControls.checkBox("Reproducir sonidos al escribir");
         sounds.setSelected(current.typingSounds());
-        CheckBox completionSound = new CheckBox(
-                "Reproducir sonido de éxito al completar cada archivo");
+        CheckBox completionSound = AppControls.checkBox(
+                "Reproducir sonido al terminar un archivo");
         completionSound.setSelected(current.completionSound());
         Button sampleCorrect = new Button("Probar acierto");
         Button sampleError = new Button("Probar error");

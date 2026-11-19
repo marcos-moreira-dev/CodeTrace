@@ -38,6 +38,7 @@ import com.mmdev.codetrace.ui.PracticeLibraryDialog;
 import com.mmdev.codetrace.symbols.SymbolCatalog.Layout;
 import com.mmdev.codetrace.sound.TypingSounds;
 import com.mmdev.codetrace.sound.CompletionSound;
+import com.mmdev.codetrace.practice.CompletionTransition;
 import com.mmdev.codetrace.workspace.VirtualWorkspace;
 import com.mmdev.codetrace.workspace.VirtualTreeRecreator;
 import java.io.IOException;
@@ -727,6 +728,10 @@ public final class CodeTraceApp extends Application {
             }
             hashes.putIfAbsent(relative, ReferenceFingerprint.sha256(file));
             TypingSession current = session;
+            // Completion feedback tracks typing transitions, not the
+            // asynchronous catalogue or progress-reporting infrastructure.
+            CompletionTransition completion = new CompletionTransition(
+                    current.finishedExercise());
             TypingEditor editor = new TypingEditor(current, () -> {
                 String typed = current.enteredText();
                 // Direct mode virtualizes the source path on first writing,
@@ -751,6 +756,21 @@ public final class CodeTraceApp extends Application {
                 }
                 refreshMetrics();
                 refreshStatusIfCompletionChanged(relative, current);
+                if (completion.update(current.finishedExercise())) {
+                    javafx.application.Platform.runLater(() -> {
+                        if (current != sessions.get(relative)
+                                || reference == null
+                                || documents.find(relative) == null) return;
+                        if (settings.completionSound() && !completionSound.play()
+                                && !soundProblemReported) {
+                            soundProblemReported = true;
+                            setStatus("No se pudo reproducir el sonido de finalización.");
+                        }
+                        ProductDialogs.information(stage, "Archivo terminado",
+                                "¡Bien hecho! Has completado «"
+                                        + file.getFileName() + "».");
+                    });
+                }
             }, file.getFileName().toString(), settings.fontFamily(), settings.fontSize(),
                     matched -> {
                         if (settings.typingSounds() && !typingSounds.play(matched)
@@ -1176,14 +1196,6 @@ public final class CodeTraceApp extends Application {
         boolean wasFinished = reconstructionStates.get(relative) == State.COMPLETED;
         if (finished != wasFinished) {
             refreshReconstructionStatuses();
-            // Only sound on a genuine incomplete -> completed transition.
-            // Reopening tabs, loading sessions and refreshing the tree never play it.
-            if (finished && reconstructionStates.get(relative) == State.COMPLETED
-                    && settings.completionSound() && !completionSound.play()
-                    && !soundProblemReported) {
-                soundProblemReported = true;
-                setStatus("Sonido de finalización no disponible en este dispositivo.");
-            }
         }
     }
 

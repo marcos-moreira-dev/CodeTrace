@@ -123,6 +123,11 @@ public final class ProductDialogs {
         return about;
     }
 
+    /** Compact, product-facing completion and success feedback. */
+    public static void information(Window owner, String title, String message) {
+        dialog(owner, title, title, message, ButtonType.OK).showAndWait();
+    }
+
     public static void error(Window owner, String title, String message) {
         dialog(owner, title, title, message == null ? "Operación no disponible." : message,
                 ButtonType.OK).showAndWait();
