@@ -143,7 +143,8 @@ No se ejecuta nada automáticamente. Puedes plegar la consola o detener
 un proceso en curso.
 
 **Atención:** los comandos se ejecutan en la **carpeta real de referencia**
-y pueden modificar archivos reales. El código que escribiste en la
+y pueden modificar archivos reales. La consola ahora advierte esta diferencia
+visiblemente y exige confirmación antes de la primera ejecución por proyecto. El código que escribiste en la
 reconstrucción virtual no se materializa ni se utiliza para ejecutarlos.
 Trabaja con una copia del repositorio si vas a probar comandos destructivos
 o de despliegue. La ejecución no influye en el porcentaje de mecanografía.
@@ -282,9 +283,13 @@ por qué no se contabilizan.
 
 ## Distribuciones de grafo y acceso contextual desde el árbol
 
-El menú contextual de una carpeta permite **Colapsar subcarpetas** cuando
-contiene carpetas descendientes, y **Mapa de dependencias...** para crear el
-mapa de esa carpeta exacta, incluso si otra entrada estaba seleccionada.
+El menú contextual de una carpeta con subcarpetas ofrece dos operaciones
+independientes: **Expandir todas las subcarpetas** muestra recursivamente
+todos los niveles (por lotes para no bloquear JavaFX), mientras que
+**Colapsar todas las subcarpetas** cierra la carpeta elegida Y sus
+descendientes. Al volver a abrirla manualmente, los niveles internos
+permanecen cerrados. También aparece **Mapa de dependencias...** para
+analizar esa carpeta exacta, aunque otra entrada esté seleccionada.
 
 Las dos distribuciones **Organizado** (por conexiones, con reserva
 de espacio para las etiquetas) y **Cuadrícula** (disposición clásica) se
@@ -292,10 +297,12 @@ seleccionan con radios exclusivos en **Herramientas → Preferencias → Grafo**
 no en una barra permanente sobre el mapa. Organizado es el valor inicial.
 Es un algoritmo de presentación heurístico, no un analizador semántico nuevo.
 
-El lienzo ofrece más superficie y puede ampliarse **al soltar** un nodo
-cerca del borde, sin reiniciar el desplazamiento. Las posiciones manuales y el
-modo de distribución se guardan en la sesión **.ctrace v4**; las sesiones
-v1/v2/v3 se pueden leer, y v3 recupera Cuadrícula como modo inicial.
+El mapa usa una cámara lógica independiente del tamaño del Canvas: permite
+panear indefinidamente en X/Y, se centra y ajusta al abrir y tiene el menú
+«Centrar y ajustar a ventana». Las posiciones manuales y el modo de
+distribución se guardan en la sesión **.ctrace v4**. Las sesiones v1/v2/v3
+son compatibles, pero una sesión v3 de Cuadrícula NO sobrescribe la
+preferencia actual Organizado.
 
 Al seleccionar o arrastrar un nodo, la **ruta completa** aparece a la
 izquierda de la barra de estado de la aplicación. Los contadores de relaciones
@@ -308,8 +315,9 @@ en una capa comprimida, calcula posiciones reproducibles a partir de relaciones
 internas y después asigna a cada nombre de archivo una celda libre; así evita
 que sus etiquetas se escriban unas encima de otras. La alternativa Cuadrícula
 se configura en **Herramientas → Preferencias → Grafo** mediante radios
-exclusivos y estilizados. El modo seleccionado se guarda en Preferencias y,
-si existe sesión, la configuración de esa sesión conserva su distribución.
+exclusivos y estilizados. Las preferencias del usuario gobiernan los mapas
+nuevos; las posiciones de sesiones anteriores solo se reutilizan cuando
+coinciden la huella de referencia y el modo elegido.
 
 Se quitaron el encabezado con contadores y el pie de instrucciones dentro del
 mapa. Al abrirlo, la barra de estado muestra el ámbito; al seleccionar un
@@ -318,10 +326,10 @@ y salientes aparece junto a los demás datos de estado. Los totales del mapa
 están en el tooltip de esa zona, no como texto permanente en el workspace.
 **Restablecer distribución** está disponible con clic derecho sobre el mapa.
 
-El arrastre ya **no utiliza el desplazamiento automático de ScrollPane**:
-sobre un nodo mueve solo ese nodo; sobre el fondo mueve la vista.
-El lienzo no cambia de tamaño durante el arrastre y puede crecer después de
-soltar, preservando el desplazamiento actual. Las etiquetas usan fondo claro
+El arrastre **no utiliza el desplazamiento automático de ScrollPane**:
+sobre un nodo mueve solo ese nodo; sobre el fondo mueve la cámara.
+El Canvas tiene exactamente el tamaño del viewport visible y nunca necesita
+crecer para dejar panear. Las etiquetas usan fondo claro
 para seguir siendo legibles aun cuando una arista pase por detrás.
 
 El mapa nunca reescribe los imports reales ni cambia el progreso de mecanografía.
@@ -337,9 +345,8 @@ se conserva y prevalece al abrir nuevos mapas.
 En los mapas, **Ctrl+rueda conserva bajo el cursor el punto del grafo
 que se está ampliando**, en lugar de acercar desde la esquina superior
 izquierda. El control inferior de zoom mantiene el **centro visible**
-como ancla. La transformación se aplica al Canvas dentro de Group
-para que ScrollPane vea su extensión escalada y calcule correctamente
-los desplazamientos. El **botón central del ratón** activa la mano de
+como ancla. La transformación es gestionada por GraphCamera, separada
+del Canvas visible; no existe un límite de scroll al alcanzar un borde. El **botón central del ratón** activa la mano de
 paneo (abierta en reposo, cerrada mientras se arrastra). Se puede seguir
 arrastrando el fondo con el botón izquierdo, sin mover nodos.
 
@@ -361,10 +368,10 @@ manuales se guardan exclusivamente con la sesión.
 - **Clic en el fondo vacío, sin arrastrar:** deselecciona el nodo, elimina
   todos los resaltados relacionados y restaura el resumen del mapa en la
   barra de estado, sin modificar las posiciones.
-- **Clic derecho → Colapsar subcarpetas:** el directorio pulsado sigue
-  **abierto**, por lo que sus hijos inmediatos continúan visibles. Se cierran
-  recursivamente sus subcarpetas, para recuperar rápidamente una vista
-  compacta de la estructura, sin alterar el proyecto real.
+- **Clic derecho → Expandir todas / Colapsar todas las subcarpetas:**
+  son operaciones recursivas y opuestas. La primera deja abierta toda la
+  jerarquía, la segunda cierra también la carpeta pulsada. Reabrirla después
+  NO vuelve a desplegar automáticamente sus descendientes.
 
 **Ayuda → Acerca de CodeTrace** concentra identidad del producto, objetivo
 didáctico y una sección pequeña de **Autor y desarrollo** con el nombre

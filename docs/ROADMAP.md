@@ -170,6 +170,7 @@ CodeTrace no pretende sustituir un IDE ni compilar o evaluar automáticamente la
   la posición visible.
 - Restablecer distribución y centrar/ajustar a ventana están en menú contextual.
 - Checkboxes compartidos mediante AppControls, incluidos filtros de Buscar.
-- Colapso realmente recursivo: el directorio escogido permanece visible
-  pero sus descendientes se cierran aunque hayan sido expandidos antes.
+- Dos comandos inequívocos: expandir recursivamente TODOS los niveles de
+  la carpeta elegida (por lotes), y colapsar ese directorio Y sus
+  descendientes, sin reabrirlos al expandir manualmente después.
 - Validación visual, accesibilidad y arrastre en Windows aún necesarias.

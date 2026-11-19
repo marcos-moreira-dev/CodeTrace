@@ -208,11 +208,17 @@ No se distribuye FFmpeg por defecto. La CI no reemplaza la auditoría de licenci
 ## Aceptación adicional: menú de carpeta y distribución ordenada
 
 - TREE-MENU-01: Clic derecho en carpeta con subcarpetas: aparecen
-  **Colapsar subcarpetas** y **Mapa de dependencias...**.
+  **Expandir todas las subcarpetas**, **Colapsar todas las subcarpetas**
+  y **Mapa de dependencias...**.
 - TREE-MENU-02: Clic derecho en carpeta sin subcarpetas: omite colapso
   recursivo, pero conserva el acceso al mapa.
-- TREE-MENU-03: Expande varias subcarpetas, colapsa recursivamente la carpeta
-  intermedia y vuelve a abrirla. No deben reaparecer subcarpetas abiertas.
+- TREE-MENU-03: Expande varias subcarpetas, colapsa recursivamente una
+  carpeta intermedia (ella misma queda cerrada) y vuelve a abrirla.
+  No deben reaparecer subcarpetas abiertas.
+- TREE-MENU-04: En esa carpeta pulsa «Expandir todas las subcarpetas».
+  TODOS los niveles hasta los más profundos deben abrirse en lotes,
+  sin congelar la interfaz. Prueba de nuevo «Colapsar todas» y verifica
+  que la carpeta seleccionada también se cierre.
 - GRAPH-OPEN-01: Clic derecho sobre una carpeta que NO estaba seleccionada
   y abre Mapa: el análisis debe corresponder exactamente a esa carpeta.
 - GRAPH-MODE-01: El selector de radios ofrece Cuadrícula y Organizado, con
@@ -220,8 +226,8 @@ No se distribuye FFmpeg por defecto. La CI no reemplaza la auditoría de licenci
 - GRAPH-MODE-02: Organizado agrupa nodos cercanos por conexiones, procura
   reducir cruces y deja suficiente espacio entre sus nombres. Debe
   conservar flechas y doble clic para abrir archivos.
-- GRAPH-MODE-03: Arrastra nodos en ambas distribuciones hacia la derecha
-  y abajo. El lienzo debe ampliarse y permitir desplazamiento.
+- GRAPH-MODE-03: Arrastra nodos en ambas distribuciones en cualquier
+  dirección. La cámara permite paneo sin límites, sin agrandar el Canvas.
 - GRAPH-STATUS-01: Selecciona y arrastra nodos: la ruta relativa completa
   aparece a la izquierda en la barra de estado. El pie del mapa no la repite.
 - GRAPH-SAVE-02: Elige Organizado, reacomoda nodos, guarda la sesión,
@@ -296,9 +302,9 @@ No se distribuye FFmpeg por defecto. La CI no reemplaza la auditoría de licenci
   posiciones ni selecciona nodos por accidente. El doble clic sobre
   un archivo continúa abriéndolo.
 - TREE-COLLAPSE-01: Expande `src`, `main`, `java`, `com`, etc.
-  Clic derecho en `main` → «Colapsar subcarpetas». `main` debe
-  permanecer expandida, con `java` y `resources` visibles, pero
-  todos sus subárboles internos cerrados.
+  Clic derecho en `main` → «Colapsar todas las subcarpetas».
+  `main` queda cerrada. Reabrirla muestra `java` y `resources`
+  cerradas; reabrir `java` deja sus descendientes igualmente cerrados.
 - TREE-COLLAPSE-02: Repite sobre un subárbol pequeño y verifica que
   el menú funciona aunque otra carpeta estuviera seleccionada.
 - ABOUT-AUTHOR-01: Ayuda → Acerca de CodeTrace: logo, versión,
@@ -313,10 +319,11 @@ No se distribuye FFmpeg por defecto. La CI no reemplaza la auditoría de licenci
 Consulta también [Auditoría de cierre](AUDITORIA-CIERRE-2026-11.md).
 
 - TREE-RECURSIVE-01: expande `src/main/java/com/...` completamente,
-  clic derecho sobre `src` → «Colapsar subcarpetas». Debe permanecer
-  visible `main` y `test`, **ambos colapsados**. Al reabrir `main`,
-  la subcarpeta `java` todavía debe estar cerrada; al reabrirla,
-  `com` sigue cerrada. La selección permanece coherente.
+  clic derecho sobre `src` → «Colapsar todas las subcarpetas».
+  `src` debe quedar cerrado. Al reabrirlo aparecen `main` y `test`
+  cerradas. Reabre `main`: `java` sigue cerrada; al reabrirla,
+  `com` sigue cerrada. Después pulsa «Expandir todas las subcarpetas»
+  y verifica que `com` se despliega sin abrir cada nivel manualmente. La selección permanece coherente.
 - GRAPH-CAMERA-01: abre un mapa nuevo: Organizado debe activarse
   inicialmente incluso si una versión experimental anterior había
   guardado Cuadrícula. El grafo aparece centrado y ajustado.

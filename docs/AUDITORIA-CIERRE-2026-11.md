@@ -12,9 +12,10 @@ todo el hardware Windows, códecs ni la interacción a distintas escalas DPI.
 
 El trabajo de esta revisión incorpora:
 
-- Colapso recursivo por instantánea de ramas abiertas: conserva visible la
-  carpeta pulsada y cierra **todos** sus descendientes, aunque existieran
-  nodos `TreeItem` materializados de operaciones anteriores.
+- Menú con **Expandir todas las subcarpetas** (abre todos los niveles por
+  lotes) y **Colapsar todas las subcarpetas** (cierra la propia carpeta y
+  todos sus descendientes). Las vistas anteriores se reconstruyen sin
+  conservar estados de expansión obsoletos.
 - Mapa con **cámara lógica** `GraphCamera` independiente del Canvas:
   paneo sin bordes, sin bitmap gigantesco y sin reescritura de posiciones.
   Inicio centrado y con ajuste de vista; zoom anclado al cursor.
@@ -59,14 +60,15 @@ El trabajo de esta revisión incorpora:
 | Listas | `RecordListCell` | Buscar y comandos; selección, truncamiento, texto largo y contraste. |
 | Diálogos | `ProductDialogs`, `WindowBranding` | Icono, título, scroll, botones, foco inicial, Esc y fotografías locales. |
 | Pestañas | `TabPane` con menú de desbordamiento | Cerrar todas/otras, selección, zoom correcto y liberación multimedia. |
-| Explorador | `ReferenceTree` | Colapsar toda la descendencia; conservar visible el hijo inmediato y la selección de carpeta. |
+| Explorador | `ReferenceTree` | Expandir todos los niveles y colapsar toda la rama, incluida la carpeta pulsada; conservar selección y navegación. |
 | Grafo | `DependencyGraphPane` + `GraphCamera` | Centrado inicial, paneo virtual sin bordes, selección de vecinos, abrir archivo, sesión y reset. |
 
 ## Pruebas de aceptación añadidas por esta revisión
 
-1. **TREE-DEEP:** abrir `src/main/java/com`, colapsar recursivamente en
-   `src`, comprobar que `src` permanece expandida, pero `main`,
-   `java` y `com` se cierran. Reabrir `main`: `java` sigue cerrada.
+1. **TREE-DEEP:** abrir `src/main/java/com`, colapsar sobre `src`
+   y comprobar que `src` queda cerrada. Al reabrirla, `main`, `java`
+   y `com` permanecen cerradas hasta expandirse explícitamente.
+   «Expandir todas» debe abrir los tres niveles sin clics adicionales.
 2. **GRAPH-CAMERA:** al abrir, mapa centrado; panear grandes distancias
    horizontal y verticalmente y regresar. No debe existir borde de paneo.
 3. **GRAPH-FIT:** clic derecho → Centrar y ajustar a ventana. Vuelve al
@@ -101,3 +103,25 @@ resultado observado, captura, commit, y ZIP de `scripts/diagnostico.bat`.
 **Regla de cierre:** ni un pipeline verde ni una captura bonita equivalen
 a aceptación definitiva; deben cumplirse las verificaciones P0 en hardware
 Windows real.
+
+## Avances de cierre de esta revisión
+
+- **TREE-DEEP / E-02 (implementación y regresión):** menú de expansión total
+  y colapso total con pruebas JavaFX de varios niveles. Pendiente aceptación
+  manual en el árbol de un repositorio real.
+- **C-02 (parcial):** cobertura JUnit adicional para sesiones v4 con
+  posiciones negativas, archivos truncados y escritura excesiva que NO debe
+  destruir la última sesión guardada. La compatibilidad v1/v2/v3 ya tenía
+  pruebas. Falta recuperación real en Windows con referencias modificadas.
+- **C-06 (UX mejorada):** advertencia visible y confirmación antes del primer
+  comando externo de cada proyecto; ejecuciones únicamente por clic explícito.
+  Faltan pruebas manuales de comandos peligrosos y procesos largos.
+- **E-04 (parcial):** aviso persistente «Vista parcial» en barra de estado
+  y tooltip del tab cuando el análisis excede límites; no promete analizar
+  todos los imports.
+- **E-06 (parcial):** Buscar admite Escape para cancelar/cerrar,
+  Ctrl+Intro para ejecutar y nombre accesible en la lista de resultados.
+  Falta recorrido completo de foco, contrastes y DPI.
+
+**No se declaran cerrados P0** hasta contar con las pruebas indicadas en
+Windows y una decisión sobre licencia y paquete de publicación.
