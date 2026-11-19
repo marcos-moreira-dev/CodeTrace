@@ -275,3 +275,25 @@ Este enfoque **solo afecta a la visualización y al cálculo de progreso**;
 no altera la creación virtual, los estados amarillo/verde ni las reglas
 de exclusión guardadas. Las ramas atenuadas muestran un tooltip que explica
 por qué no se contabilizan.
+
+## Distribuciones de grafo y acceso contextual desde el árbol
+
+El menú contextual de una carpeta permite **Colapsar subcarpetas** cuando
+contiene carpetas descendientes, y **Mapa de dependencias...** para crear el
+mapa de esa carpeta exacta, incluso si otra entrada estaba seleccionada.
+
+En el mapa se ofrecen dos **radio botones** estilizados, de selección
+exclusiva y con el mismo lenguaje visual de las otras opciones de CodeTrace:
+**Cuadrícula** (disposición clásica por filas) y **Organizado** (agrupación
+determinista por componentes y capas, con pasadas baricéntricas para reducir
+cruces y separación fija entre nodos/etiquetas). Este último es un algoritmo
+de presentación heurístico, no un analizador semántico nuevo.
+
+El lienzo ofrece más superficie y se amplía mientras se arrastran nodos
+hacia los bordes, dentro de límites seguros. Las posiciones manuales y el
+modo de distribución se guardan en la sesión **.ctrace v4**; las sesiones
+v1/v2/v3 se pueden leer, y v3 recupera Cuadrícula como modo inicial.
+
+Al seleccionar o arrastrar un nodo, la **ruta completa** aparece en la barra
+de estado de la aplicación (lado izquierdo). Dentro del propio mapa solo se
+muestran sus relaciones entrantes y salientes para evitar información duplicada.
