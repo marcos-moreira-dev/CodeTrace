@@ -16,6 +16,8 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.scene.image.Image;
 import javafx.stage.Window;
+import javafx.scene.paint.Color;
+import org.kordamp.ikonli.javafx.FontIcon;
 
 /** Shared readable dialogs. Long messages scroll instead of being ellipsized. */
 public final class ProductDialogs {
@@ -123,24 +125,51 @@ public final class ProductDialogs {
         return about;
     }
 
-    /** Compact, product-facing completion and success feedback. */
+    /** Traditional, understated iconography shared by all product dialogs. */
+    private enum Severity {
+        INFO("fth-info", "#4c718d"),
+        SUCCESS("fth-check-circle", "#26834b"),
+        WARNING("fth-alert-triangle", "#a57626"),
+        ERROR("fth-alert-circle", "#b64e4e"),
+        QUESTION("fth-help-circle", "#4c718d");
+
+        final String icon;
+        final String color;
+        Severity(String icon, String color) {
+            this.icon = icon;
+            this.color = color;
+        }
+    }
+
     public static void information(Window owner, String title, String message) {
-        dialog(owner, title, title, message, ButtonType.OK).showAndWait();
+        dialog(owner, title, title, message, Severity.INFO, ButtonType.OK)
+                .showAndWait();
+    }
+
+    public static void success(Window owner, String title, String message) {
+        dialog(owner, title, title, message, Severity.SUCCESS, ButtonType.OK)
+                .showAndWait();
+    }
+
+    public static void warning(Window owner, String title, String message) {
+        dialog(owner, title, title, message, Severity.WARNING, ButtonType.OK)
+                .showAndWait();
     }
 
     public static void error(Window owner, String title, String message) {
         dialog(owner, title, title, message == null ? "Operación no disponible." : message,
-                ButtonType.OK).showAndWait();
+                Severity.ERROR, ButtonType.OK).showAndWait();
     }
 
     public static ButtonType confirm(Window owner, String title, String message,
                                      ButtonType... choices) {
-        return dialog(owner, title, title, message, choices)
+        return dialog(owner, title, title, message, Severity.QUESTION, choices)
                 .showAndWait().orElse(ButtonType.CANCEL);
     }
 
     private static Dialog<ButtonType> dialog(Window owner, String title,
                                              String heading, String message,
+                                             Severity severity,
                                              ButtonType... choices) {
         Dialog<ButtonType> result = new Dialog<>();
         if (owner != null) result.initOwner(owner);
@@ -167,8 +196,16 @@ public final class ProductDialogs {
         text.setWrapText(true);
         text.setMaxWidth(Double.MAX_VALUE);
         text.setMinHeight(Region.USE_PREF_SIZE);
+        FontIcon statusIcon = new FontIcon(severity.icon);
+        statusIcon.setIconSize(25);
+        statusIcon.setIconColor(Color.web(severity.color));
+        statusIcon.setMouseTransparent(true);
+        HBox headingRow = new HBox(12, statusIcon, headingLabel);
+        headingRow.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
+        headingRow.getStyleClass().add("dialog-status-heading");
+        HBox.setHgrow(headingLabel, Priority.ALWAYS);
         VBox body = new VBox(12);
-        body.getChildren().add(headingLabel);
+        body.getChildren().add(headingRow);
         boolean longMessage = message.length() > 420 || message.lines().count() > 7;
         if (longMessage) {
             ScrollPane scroll = new ScrollPane(text);
