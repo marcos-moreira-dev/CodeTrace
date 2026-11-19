@@ -321,7 +321,8 @@ public final class CodeTraceApp extends Application {
         onlySelectedFolder = new CheckBox("Solo");
         onlySelectedFolder.getStyleClass().add("tree-scope-checkbox");
         onlySelectedFolder.setTooltip(new Tooltip(
-                "Contabilizar solo los archivos de la carpeta seleccionada"));
+                "Contabiliza solo la carpeta activa. Selecciona otra carpeta para cambiar "
+                + "el ámbito o desmarca Solo para incluir todo el proyecto."));
         onlySelectedFolder.setDisable(true);
         onlySelectedFolder.setOnAction(event -> {
             if (syncingFolderScope) return;
@@ -589,6 +590,7 @@ public final class CodeTraceApp extends Application {
         catalogue = null;
         reconstructionStates = Map.of();
         progressFolder = "";
+        tree.setProgressFocusFolder("");
         sessionFile = null;
         graphLayouts.clear();
         referenceIndex = null;
@@ -1257,13 +1259,16 @@ public final class CodeTraceApp extends Application {
 
     private void setProgressFolder(String folder) {
         progressFolder = folder == null ? "" : folder;
+        tree.setProgressFocusFolder(progressFolder);
         if (onlySelectedFolder != null) {
             syncingFolderScope = true;
             try {
                 onlySelectedFolder.setSelected(!progressFolder.isEmpty());
                 onlySelectedFolder.setTooltip(new Tooltip(progressFolder.isEmpty()
-                        ? "Progreso: todo el proyecto"
-                        : "Progreso: " + progressFolder));
+                        ? "Progreso: todo el proyecto. Selecciona una carpeta para activar Solo."
+                        : "Solo: " + progressFolder
+                                + "\nLas demás carpetas se atenúan, pero siguen accesibles."
+                                + "\nSelecciona otra carpeta para cambiar el ámbito."));
                 onlySelectedFolder.setDisable(progressFolder.isEmpty()
                         && !tree.isFolderPath(tree.getSelectionModel().getSelectedItem() == null
                             ? null : tree.getSelectionModel().getSelectedItem().getValue()));
@@ -1394,6 +1399,7 @@ public final class CodeTraceApp extends Application {
             consolePane.setProject(reference);
             refreshCommandPresets();
             progressFolder = "";
+            tree.setProgressFocusFolder("");
             workspace = data.workspace();
             sessions = new LinkedHashMap<>(data.sessions());
             hashes = new LinkedHashMap<>(data.referenceHashes());
