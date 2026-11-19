@@ -52,21 +52,23 @@ public final class TypingSession {
     }
 
     /**
-     * A deliberate Turbo/import omission resolves a slot for this exercise,
-     * but is never counted as a correctly typed character in statistics.
-     * A final newline is structural: an EOF should not require an extra Enter.
+     * Complete when all VISIBLE source graphemes are correctly transcribed
+     * (or deliberately skipped). Newline separators are not rendered as
+     * glyphs by TypingEditor; they must never invisibly block completion.
+     * Enter can still be practiced and counted when typed correctly.
      */
     public boolean finishedExercise() {
-        int end = size();
-        while (end > 0 && "\n".equals(reference.get(end - 1))) end--;
-        if (end == 0) return false; // Empty files have no typing exercise.
-        for (int i = 0; i < end; i++) {
+        boolean containsVisibleExercise = false;
+        for (int i = 0; i < size(); i++) {
+            if ("\n".equals(reference.get(i))) continue;
+            containsVisibleExercise = true;
             State result = state(i);
             if (result == State.PENDING || result == State.INCORRECT) return false;
         }
-        // An exercise containing only deliberate omissions is resolved too,
-        // but contributes zero correctly-typed characters to progress.
-        return true;
+        // Empty files and files made entirely of line breaks are not exercises.
+        // Deliberate Turbo/import skips still count as resolved for completion,
+        // but never inflate correctCount().
+        return containsVisibleExercise;
     }
 
     public int resolvedCount() {
