@@ -832,13 +832,14 @@ public final class CodeTraceApp extends Application {
                 dirty = true;
                 updateTitle();
             }, selectedPath -> {
-                // The application statusbar is the canonical location for
-                // full paths; the map footer shows connection counts only.
+                // Left: file path. Right: incoming/outgoing relationships.
                 if (tabs.getSelectionModel().getSelectedItem() != null
                         && tabs.getSelectionModel().getSelectedItem().getContent()
-                                instanceof DependencyGraphPane)
+                                instanceof DependencyGraphPane) {
                     setStatus(selectedPath);
-            });
+                    refreshMetrics();
+                }
+            }, settings.graphLayoutMode());
             view.zoomPercentProperty().addListener((obs, old, value) -> {
                 if (tabs.getSelectionModel().getSelectedItem() != null
                         && tabs.getSelectionModel().getSelectedItem().getContent() == view)
@@ -849,9 +850,8 @@ public final class CodeTraceApp extends Application {
             installTabContextMenu(tab);
             tabs.getTabs().add(tab);
             tabs.getSelectionModel().select(tab);
-            setStatus(graph.edges().size() + " dependencias internas · "
-                    + graph.inspected() + " archivos analizados"
-                    + (graph.truncated() ? " · análisis parcial" : ""));
+            setStatus("Mapa · " + graph.folder()
+                    + (graph.truncated() ? " · vista parcial" : ""));
         });
         task.setOnFailed(event -> {
             if (request != referenceRequest || !root.equals(reference)) return;
@@ -1202,7 +1202,16 @@ public final class CodeTraceApp extends Application {
         boolean hasEditor = editor != null;
         skipImportsButton.setDisable(!hasEditor || !selectedJavaFile());
         skipImportsMenu.setDisable(!hasEditor || !selectedJavaFile());
-        if (!hasEditor) {
+        Tab active = tabs.getSelectionModel().getSelectedItem();
+        if (!hasEditor && active != null
+                && active.getContent() instanceof DependencyGraphPane map) {
+            fileInfo.setText(map.selectedNodeSummary());
+            fileInfo.setTooltip(new Tooltip(
+                    map.nodeCount() + " nodos · " + map.connectionCount()
+                            + " conexiones internas\n"
+                            + "Arrastra un círculo o su nombre para moverlo. "
+                            + "Arrastra el fondo para desplazarte."));
+        } else if (!hasEditor) {
             fileInfo.setText("");
         } else {
             TypingSession typing = editor.session();
@@ -1598,7 +1607,7 @@ public final class CodeTraceApp extends Application {
         settings = new AppSettings(settings.fontFamily(), size,
                 settings.showExplorer(), settings.keyboardLayout(), settings.typingSounds(),
                 settings.templateOpacity(), settings.turboMode(),
-                settings.completionSound());
+                settings.completionSound(), settings.graphLayoutMode());
         settings.save();
         for (Tab tab : tabs.getTabs()) {
             if (tab.getContent() instanceof TypingEditor editor) {
@@ -1612,9 +1621,11 @@ public final class CodeTraceApp extends Application {
     }
 
     private void applySettings(AppSettings next) {
+        var previousGraphMode = settings.graphLayoutMode();
         settings = new AppSettings(next.fontFamily(), next.fontSize(),
                 next.showExplorer(), settings.keyboardLayout(), next.typingSounds(),
-                next.templateOpacity(), next.turboMode(), next.completionSound());
+                next.templateOpacity(), next.turboMode(), next.completionSound(),
+                next.graphLayoutMode());
         settings.save();
         turboToggle.setSelected(settings.turboMode());
         turboMenu.setSelected(settings.turboMode());
@@ -1633,8 +1644,12 @@ public final class CodeTraceApp extends Application {
                 pane.editor().setTurboMode(next.turboMode());
             } else if (tab.getContent() instanceof ReferenceTextPane referenceText) {
                 referenceText.setFontSettings(next.fontFamily(), next.fontSize());
+            } else if (tab.getContent() instanceof DependencyGraphPane graph
+                    && previousGraphMode != next.graphLayoutMode()) {
+                graph.setLayoutMode(next.graphLayoutMode());
             }
         }
+        refreshMetrics();
     }
 
     private void showAbout() {
