@@ -37,7 +37,9 @@ import javafx.scene.text.Text;
  * visible cells instead of allocating a Text node for every character.
  */
 public final class TypingEditor extends BorderPane {
-    private static final Color PENDING = Color.web("#81909B");
+    // Unwritten reference characters must remain comfortably legible on white.
+    // Existing opacity preferences still apply; correctness colors stay intact.
+    private static final Color PENDING = Color.web("#263B4C");
     private static final Color CORRECT = Color.web("#26834B");
     private static final Color INCORRECT = Color.web("#B63E41");
     private static final Color SKIPPED = Color.web("#647689");
