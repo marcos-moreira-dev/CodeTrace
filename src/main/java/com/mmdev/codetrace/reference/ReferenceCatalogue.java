@@ -118,7 +118,7 @@ public final class ReferenceCatalogue {
                 if (info.typeableUnits() == 0) continue;
                 TypingSession session = typing.get(path);
                 if (session != null && info.sha256().equals(originalHashes.get(path))) {
-                    result += Math.min(info.typeableUnits(), session.correctCount());
+                    result += Math.min(info.typeableUnits(), session.correctVisibleCount());
                 }
             }
             return result;
@@ -159,7 +159,7 @@ public final class ReferenceCatalogue {
                             ? TextPreview.load(file) : new TextPreview.Result(null,
                                     "Tipo de archivo no incluido en la práctica.");
                     if (preview.readable()) {
-                        units = new TypingSession(preview.content()).size();
+                        units = new TypingSession(preview.content()).visibleUnitCount();
                     }
                     String relative = referenceRoot.relativize(file)
                             .toString().replace('\\', '/');
