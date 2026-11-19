@@ -379,3 +379,14 @@ Consulta también [Auditoría de cierre](AUDITORIA-CIERRE-2026-11.md).
 - Fila activa tenue, sin barra gruesa azul a la izquierda.
 - A 13 pt caben más líneas que antes, sin recortar glifos o desajustar cursor.
 - Probar 10, 20, 36 pt; archivo de 1000+ líneas, zoom, búsqueda, pestañas y Windows 100/125/150 % DPI.
+
+## PROJECT-ASYNC — pruebas de cancelación de trabajos
+
+- Abrir un proyecto grande, actualizar la referencia y comprobar que la
+  interfaz sigue respondiendo mientras se verifican las huellas.
+- Cambiar inmediatamente de proyecto o cerrar CodeTrace durante un escaneo;
+  ningún resultado previo debe sobrescribir el nuevo estado.
+- Abrir una sesión `.ctrace` con archivos originales modificados: informar
+  la cantidad de referencias divergentes conservando la transcripción virtual.
+- Buscar una coincidencia y cambiar inmediatamente de proyecto: una navegación
+  diferida no debe recuperar la pestaña cerrada ni resaltar código del anterior.

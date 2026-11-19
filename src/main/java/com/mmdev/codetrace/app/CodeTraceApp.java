@@ -153,6 +153,7 @@ public final class CodeTraceApp extends Application {
     private Menu practiceModeMenu;
     private final ReferenceCatalogueScanner catalogueScanner =
             new ReferenceCatalogueScanner();
+    private final LatestTaskRunner<Integer> referenceChecks = new LatestTaskRunner<>();
     private Path reference;
     private long referenceRequest;
     private Path sessionFile;
@@ -497,6 +498,8 @@ public final class CodeTraceApp extends Application {
                 event.consume();
             } else {
                 consolePane.stop();
+                referenceChecks.cancel();
+                catalogueScanner.cancel();
             }
         });
         refreshMetrics();
@@ -608,6 +611,7 @@ public final class CodeTraceApp extends Application {
      */
     private void applyProjectState(ProjectActivation next, boolean resumed) {
         catalogueScanner.cancel();
+        referenceChecks.cancel();
         referenceRequest++;
         autoCreateGeneration++;
         clearOpenTabs();
@@ -657,9 +661,20 @@ public final class CodeTraceApp extends Application {
 
     /** Reference verification does not re-index or mutate original files. */
     private void reportReferenceChanges() {
-        int changes = ReferenceChangeDetector.changedCount(reference, hashes);
-        setStatus(changes == 0 ? "Referencia actualizada"
-                : changes + " archivo(s) cambiaron; transcripciones conservadas");
+        if (reference == null) return;
+        Path root = reference;
+        long request = referenceRequest;
+        Map<String, String> saved = Map.copyOf(hashes);
+        setStatus("Verificando archivos de referencia...");
+        referenceChecks.submit(() -> ReferenceChangeDetector.changedCount(root, saved),
+                changes -> {
+                    if (request != referenceRequest || !root.equals(reference)) return;
+                    setStatus(changes == 0 ? "Referencia actualizada"
+                            : changes + " archivo(s) cambiaron; transcripciones conservadas");
+                }, error -> {
+                    if (request == referenceRequest && root.equals(reference))
+                        setStatus("No se pudieron verificar los archivos de referencia.");
+                }, "codetrace-reference-verification");
     }
 
     private void openForPractice(Path file) {
@@ -918,7 +933,11 @@ public final class CodeTraceApp extends Application {
         Tab selected = documents.find(hit.relative());
         if (selected == null) return;
         var location = hit.range();
+        Path root = reference;
+        long request = referenceRequest;
         javafx.application.Platform.runLater(() -> {
+            if (request != referenceRequest || !root.equals(reference)
+                    || !tabs.getTabs().contains(selected)) return;
             tabs.getSelectionModel().select(selected);
             if (selected.getContent() instanceof MarkdownPracticePane markdown)
                 markdown.showSource();

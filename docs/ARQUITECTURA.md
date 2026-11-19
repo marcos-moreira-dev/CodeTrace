@@ -153,3 +153,13 @@ consola, búsqueda y métricas. Al restaurar se indexa la referencia una sola ve
 `app/ReferenceChangeDetector` compara las huellas guardadas de forma
 independiente de JavaFX; no escribe en los archivos originales. Reubicar una
 carpeta de referencia al abrir una sesión conserva el contenido virtual.
+
+## Ciclo de vida de operaciones en segundo plano
+
+`app/LatestTaskRunner<T>` concentra cancelación, generación de solicitudes
+y descarte de resultados antiguos para trabajos `Task<T>` de JavaFX.
+`ReferenceCatalogueScanner` delega ahí sus escaneos; la verificación de
+huellas de una sesión también se ejecuta ahora fuera del hilo gráfico.
+Al cambiar de proyecto o cerrar CodeTrace se cancelan ambas operaciones.
+Los eventos de navegación de Buscar comprueban que la pestaña aún pertenezca
+al proyecto activo antes de modificar la selección o el resaltado.

@@ -16,6 +16,9 @@ public final class ReferenceChangeDetector {
         Objects.requireNonNull(fingerprints);
         int changes = 0;
         for (var pair : fingerprints.entrySet()) {
+            if (Thread.currentThread().isInterrupted())
+                throw new java.util.concurrent.CancellationException(
+                        "Reference verification cancelled");
             Path source = root.resolve(pair.getKey());
             try {
                 if (!Files.isRegularFile(source)
