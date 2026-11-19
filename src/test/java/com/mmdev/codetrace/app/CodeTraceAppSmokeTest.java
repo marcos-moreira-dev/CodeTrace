@@ -250,6 +250,31 @@ class CodeTraceAppSmokeTest {
                         > oldNode.x(), "A node really moved independently");
                 assertEquals(0.15, graphScroll.getHvalue(), 0.00001);
                 assertEquals(0.10, graphScroll.getVvalue(), 0.00001);
+                // Middle click changes cursor to a panning hand, even over nodes.
+                double backgroundX = graphSurface.getWidth() - 30;
+                double backgroundY = graphSurface.getHeight() - 30;
+                graphSurface.getOnMousePressed().handle(
+                        new javafx.scene.input.MouseEvent(
+                                javafx.scene.input.MouseEvent.MOUSE_PRESSED,
+                                backgroundX, backgroundY, 100, 100,
+                                javafx.scene.input.MouseButton.MIDDLE, 1,
+                                false, false, false, false, false, true, false,
+                                false, false, false,
+                                new javafx.scene.input.PickResult(
+                                        graphSurface, backgroundX, backgroundY)));
+                assertEquals(javafx.scene.Cursor.CLOSED_HAND,
+                        graphSurface.getCursor(),
+                        "Pressing the middle button should show the panning hand");
+                graphSurface.getOnMouseReleased().handle(
+                        new javafx.scene.input.MouseEvent(
+                                javafx.scene.input.MouseEvent.MOUSE_RELEASED,
+                                backgroundX, backgroundY, 100, 100,
+                                javafx.scene.input.MouseButton.MIDDLE, 1,
+                                false, false, false, false, false, false, false,
+                                false, false, false,
+                                new javafx.scene.input.PickResult(
+                                        graphSurface, backgroundX, backgroundY)));
+                assertEquals(javafx.scene.Cursor.OPEN_HAND, graphSurface.getCursor());
                 Slider fontSlider = (Slider) zoom.lookup(".slider");
                 assertNotNull(fontSlider);
                 assertEquals(Orientation.HORIZONTAL, fontSlider.getOrientation());
@@ -281,9 +306,13 @@ class CodeTraceAppSmokeTest {
                 preferencesNavigation.getSelectionModel().select("Grafo");
                 preferences.getScene().getRoot().applyCss();
                 preferences.getScene().getRoot().layout();
-                assertNotNull(preferences.getScene().getRoot()
-                        .lookup(".prefs-graph-layout"),
-                        "Graph distribution should be configured in Preferences");
+                javafx.scene.Node choices = preferences.getScene().getRoot()
+                        .lookup(".prefs-graph-layout");
+                assertNotNull(choices, "Graph distribution belongs in Preferences");
+                assertInstanceOf(javafx.scene.layout.VBox.class, choices,
+                        "Radio choices must be stacked vertically");
+                assertEquals(2, ((javafx.scene.layout.VBox) choices)
+                        .getChildren().size());
                 preferences.close();
                 var about = ProductDialogs.createAbout(stage);
                 about.show();
