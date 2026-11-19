@@ -204,3 +204,27 @@ No se distribuye FFmpeg por defecto. La CI no reemplaza la auditoría de licenci
   no borra exclusiones, los estados creados o los ejercicios terminados.
 - SOLO-06: Al abrir otra referencia o sesión, no debe quedar atenuada
   por un ámbito perteneciente al proyecto anterior.
+
+## Aceptación adicional: menú de carpeta y distribución ordenada
+
+- TREE-MENU-01: Clic derecho en carpeta con subcarpetas: aparecen
+  **Colapsar subcarpetas** y **Mapa de dependencias...**.
+- TREE-MENU-02: Clic derecho en carpeta sin subcarpetas: omite colapso
+  recursivo, pero conserva el acceso al mapa.
+- TREE-MENU-03: Expande varias subcarpetas, colapsa recursivamente la carpeta
+  intermedia y vuelve a abrirla. No deben reaparecer subcarpetas abiertas.
+- GRAPH-OPEN-01: Clic derecho sobre una carpeta que NO estaba seleccionada
+  y abre Mapa: el análisis debe corresponder exactamente a esa carpeta.
+- GRAPH-MODE-01: El selector de radios ofrece Cuadrícula y Organizado, con
+  una sola opción activa y estilos rectangulares consistentes.
+- GRAPH-MODE-02: Organizado agrupa nodos cercanos por conexiones, procura
+  reducir cruces y deja suficiente espacio entre sus nombres. Debe
+  conservar flechas y doble clic para abrir archivos.
+- GRAPH-MODE-03: Arrastra nodos en ambas distribuciones hacia la derecha
+  y abajo. El lienzo debe ampliarse y permitir desplazamiento.
+- GRAPH-STATUS-01: Selecciona y arrastra nodos: la ruta relativa completa
+  aparece a la izquierda en la barra de estado. El pie del mapa no la repite.
+- GRAPH-SAVE-02: Elige Organizado, reacomoda nodos, guarda la sesión,
+  cierra y vuelve a abrirla. Deben recuperarse radio y posiciones.
+- GRAPH-LEGACY-01: Abre un .ctrace v3: conserva nodos guardados
+  en modo Cuadrícula, sin errores de lectura.
