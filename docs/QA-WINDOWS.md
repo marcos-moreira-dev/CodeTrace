@@ -649,3 +649,41 @@ HLS con imagen, sonido, seek y sincronía reales.
 La captura automática observa cambios visuales mientras se navega, pero
 NO recorre por sí misma casos de uso no abiertos. La cobertura completa de
 37 casos solo existe después de comprobar cada caso explícitamente.
+
+
+## Pulido conservador y biblioteca ampliada (noviembre 2026)
+
+- **WARN-01:** Una nueva referencia y ejecución externa muestra «Confirmar
+  ejecución sobre archivos reales» con la casilla
+  «No volver a mostrar esta advertencia» DESMARCADA. Cancelar no debe ocultar
+  advertencias ni ejecutar el comando. Aceptar con la casilla marcada evita
+  futuras confirmaciones, sin ocultar el aviso persistente de consola.
+- **WARN-02:** Preferencias → Comandos: opción para volver a exigir la
+  confirmación y botón «Restablecer avisos de seguridad». Aplicar, ejecutar
+  otra orden en el mismo proyecto y comprobar que el aviso reaparece.
+  No restablecer fuentes, otros sonidos ni configuración de grafos.
+- **HOVER-01:** Sobre botones, pestañas, menús, iconos y controles claros:
+  los iconos siguen siendo visibles en color azul/gris, nunca blanco sobre
+  blanco. El botón azul principal de reproducción conserva blanco sobre azul.
+- **EMOJI-01:** Abrir texto de consulta y código con 🙂, 🇪🇨, ✅, 👨‍👩‍👧‍👦
+  y un keycap 1️⃣. Mantener los grafemas completos; comprobar fuentes de
+  Windows (Segoe UI Emoji), sin reemplazos ni cuadros vacíos.
+- **EMOJI-02:** Ninguno de esos emojis requiere tecleo, ni incrementa
+  correctos/CPM; su presencia no impide el diálogo de archivo terminado.
+  Probar corrección justo antes/después del emoji y restaurar sesión .ctrace.
+- **DEPS-01:** «Omitir dependencias de código» es el único texto visible del
+  botón y menú. Probar declaraciones import Java/Kotlin, Python, TS/JS,
+  #include C/C++, using C#, import Go (incluido bloque), require Ruby,
+  source Bash, Import-Module PowerShell y %include NASM. No omitir
+  llamadas ordinarias a funciones ni comentarios que contengan «import».
+- **LIB-01:** Biblioteca de práctica ofrece 14 paquetes y 160 archivos.
+  Verificar carpetas de proyectos multiarhivo para Factory Method y Observer;
+  ejecutar muestras manualmente con toolchains cuando estén disponibles.
+  La validación automática compila TODOS los archivos Java 21 conjuntamente.
+- **ASM-01:** NASM x86-64 Intel aparece con ícono propio, resaltado y
+  práctica habilitada. Validar «nasm -f elf64» sobre los ocho archivos en
+  Linux/WSL; el ejemplo «hola_linux.asm» utiliza llamadas al sistema Linux
+  y no debe presentarse como aplicación Win32 nativa.
+
+La verificación de compilación automatizada NO sustituye la revisión gráfica
+de emojis ni la comprobación manual de los iconos al pasar el ratón.
