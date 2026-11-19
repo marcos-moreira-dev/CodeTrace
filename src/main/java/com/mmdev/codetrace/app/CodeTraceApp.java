@@ -8,6 +8,7 @@ import com.mmdev.codetrace.progress.SessionArchive;
 import com.mmdev.codetrace.progress.PracticeSessionPaths;
 import com.mmdev.codetrace.reference.ProgressSummary;
 import com.mmdev.codetrace.reference.ReferenceCatalogue;
+import com.mmdev.codetrace.reference.ReferenceFingerprint;
 import com.mmdev.codetrace.reference.ReferenceTreeIndex;
 import com.mmdev.codetrace.reference.GraphLayout;
 import com.mmdev.codetrace.reference.ProgressScope;
