@@ -14,6 +14,12 @@ public final class CompletionSummary {
      */
     public static String message(String filename, TypingSession session,
                                  long elapsedMillis) {
+        return message(filename, session, elapsedMillis, session.correctVisibleCount(), 0);
+    }
+
+    public static String message(String filename, TypingSession session,
+                                 long elapsedMillis, long correctTypedEvents,
+                                 long incorrectTypedEvents) {
         Objects.requireNonNull(filename);
         Objects.requireNonNull(session);
         int correct = session.correctVisibleCount();
@@ -22,15 +28,19 @@ public final class CompletionSummary {
         long seconds = Math.max(0L, elapsedMillis / 1000L);
         String time = String.format(Locale.ROOT, "%02d:%02d:%02d",
                 seconds / 3600, (seconds / 60) % 60, seconds % 60);
-        String speed = elapsedMillis < 3000 || correct == 0
+        String speed = elapsedMillis < 3000 || correctTypedEvents == 0
                 ? "No calculable (práctica muy breve)"
-                : Math.round(correct * 60_000.0 / elapsedMillis)
+                : Math.round(correctTypedEvents * 60_000.0 / elapsedMillis)
                     + " caracteres por minuto (CPM)";
         StringBuilder output = new StringBuilder();
         output.append("¡Bien hecho! Has completado «").append(filename).append("».\n\n")
                 .append("Aciertos finales: ").append(correct).append(" de ").append(visible)
                 .append("\nVelocidad media aproximada: ").append(speed)
                 .append("\nTiempo transcurrido: ").append(time);
+        if (incorrectTypedEvents > 0) {
+            output.append("\nErrores al teclear durante esta práctica: ")
+                    .append(incorrectTypedEvents);
+        }
         if (skipped > 0) {
             output.append("\nCaracteres omitidos deliberadamente: ").append(skipped);
         }
