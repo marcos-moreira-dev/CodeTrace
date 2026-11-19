@@ -283,6 +283,9 @@ public final class OnDemandHlsVideo implements AutoCloseable {
                 "-pix_fmt", "yuv420p", "-g", "60", "-sc_threshold", "0",
                 "-c:a", "aac", "-b:a", "128k", "-ar", "48000", "-ac", "2",
                 "-muxdelay", "0", "-muxpreload", "0",
+                // Each FFmpeg process starts its own MPEG-TS clock. Align
+                // timestamps with the global HLS timeline for gap-free seek.
+                "-output_ts_offset", String.format(Locale.ROOT, "%.3f", from),
                 "-f", "mpegts", output.toString()));
         return List.copyOf(args);
     }
