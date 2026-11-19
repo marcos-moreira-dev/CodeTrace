@@ -21,6 +21,24 @@ class ReferenceChangeDetectorTest {
         assertEquals("secret", Files.readString(outside));
     }
 
+
+    @Test void rejectsSymlinkedParentThatEscapesTheProject() throws Exception {
+        Path reference = Files.createDirectory(root.resolve("link-check"));
+        Path outside = Files.createDirectory(root.resolve("external"));
+        Path secret = Files.writeString(outside.resolve("Private.java"), "private");
+        Path linked = reference.resolve("linked");
+        try {
+            Files.createSymbolicLink(linked, outside);
+        } catch (java.io.IOException | UnsupportedOperationException
+                 | SecurityException unsupported) {
+            org.junit.jupiter.api.Assumptions.assumeTrue(false, 
+                    "Symbolic-link creation is unavailable on this Windows setup");
+        }
+        assertEquals(1, ReferenceChangeDetector.changedCount(reference,
+                Map.of("linked/Private.java", ReferenceFingerprint.sha256(secret))));
+        assertEquals("private", Files.readString(secret));
+    }
+
     @Test void detectsChangedAndMissingReferencesWithoutWritingThem() throws Exception {
         Path original = Files.writeString(root.resolve("A.java"), "class A {}");
         Path changed = Files.writeString(root.resolve("B.java"), "before");

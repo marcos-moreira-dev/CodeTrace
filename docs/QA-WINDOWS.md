@@ -452,3 +452,11 @@ Consulta también [Auditoría de cierre](AUDITORIA-CIERRE-2026-11.md).
   archivos dentro del proyecto original.
 - Iniciar una búsqueda lenta y pulsar «Detener» o Escape: mostrar
   «Búsqueda cancelada» y no recuperar resultados tardíos.
+
+## REFERENCE-SYMLINK — protección de referencias
+
+- En un entorno de pruebas, crear una subcarpeta simbólica hacia un
+  directorio exterior y reabrir una sesión con una huella bajo ese enlace:
+  debe contarse como referencia divergente, nunca leerse como original.
+- Mantener rutas normales y proyectos con la raíz seleccionada mediante
+  un enlace interno funcionando como antes.

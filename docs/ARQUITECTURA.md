@@ -270,3 +270,12 @@ indexar, recrear virtualmente, buscar texto, analizar dependencias y
 guardar/restaurar una sesión `.ctrace` fuera del proyecto. Complementa las
 pruebas aisladas y protege el contrato principal de CodeTrace: no escribir
 sobre los originales durante el entrenamiento.
+
+## Rutas reales de archivos de referencia
+
+La comprobación de huellas valida tanto la ruta normalizada como
+`toRealPath()` antes de leer el archivo: `NOFOLLOW_LINKS` sobre el archivo
+no basta si uno de sus directorios ascendentes es un enlace simbólico.
+Enlaces hacia fuera de la referencia cuentan como divergencias, sin
+leer contenidos externos. Se añade prueba portátil, condicionada a
+que Windows permita crear enlaces simbólicos.

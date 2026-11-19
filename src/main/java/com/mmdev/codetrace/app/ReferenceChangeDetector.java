@@ -16,6 +16,15 @@ public final class ReferenceChangeDetector {
         Objects.requireNonNull(root);
         Objects.requireNonNull(fingerprints);
         Path normalizedRoot = root.toAbsolutePath().normalize();
+        // Resolve the root once. File path containment must be checked on the
+        // real path as well: NOFOLLOW_LINKS on a file does not prevent a
+        // symlinked parent directory from escaping the selected project.
+        Path realRoot;
+        try {
+            realRoot = normalizedRoot.toRealPath();
+        } catch (IOException | SecurityException unavailable) {
+            return fingerprints.size();
+        }
         int changes = 0;
         for (var pair : fingerprints.entrySet()) {
             if (Thread.currentThread().isInterrupted())
@@ -30,6 +39,7 @@ public final class ReferenceChangeDetector {
             }
             try {
                 if (!Files.isRegularFile(source, LinkOption.NOFOLLOW_LINKS)
+                        || !source.toRealPath().startsWith(realRoot)
                         || !ReferenceFingerprint.sha256(source).equals(pair.getValue())) {
                     changes++;
                 }
