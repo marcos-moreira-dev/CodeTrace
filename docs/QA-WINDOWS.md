@@ -228,3 +228,31 @@ No se distribuye FFmpeg por defecto. La CI no reemplaza la auditoría de licenci
   cierra y vuelve a abrirla. Deben recuperarse radio y posiciones.
 - GRAPH-LEGACY-01: Abre un .ctrace v3: conserva nodos guardados
   en modo Cuadrícula, sin errores de lectura.
+
+## Aceptación: revisión de arrastre, superposición y microcopias
+
+- MAP-DEFAULT-01: Abre un mapa por primera vez, sin sesión previa.
+  Su modo inicial debe ser Organizado y no debe mostrarse barra de radio
+  botones ni títulos de estadísticas encima del lienzo.
+- MAP-PREFS-01: Herramientas → Preferencias → Grafo. Comprueba los
+  radios estilizados Organizado / Cuadrícula y guarda Cuadrícula. Los
+  mapas nuevos deben utilizar Cuadrícula; vuelve a Organizado después.
+- MAP-DRAG-01: Con zoom 55 %, panea hasta una zona alejada del origen
+  y arrastra varias veces un nodo. El scroll NO debe saltar a (0,0) y
+  las aristas deben acompañar el movimiento.
+- MAP-PAN-01: Arrastra el fondo: debe desplazarse el mapa, pero no
+  ningún nodo. Arrastra el nodo desde su etiqueta o desde el círculo:
+  solo ese nodo cambia de posición.
+- MAP-LABELS-01: En el grafo real de CodeTrace y en una estrella con
+  al menos 80 relaciones, no deben superponerse las etiquetas iniciales.
+  Los enlaces pueden cruzarse, pero no atravesar visualmente las letras.
+- MAP-STATUS-01: Selecciona un nodo. La barra inferior izquierda muestra
+  su ruta; el área informativa de la barra inferior incluye los números
+  de conexiones. La vista del grafo no debe tener microcopias repetidas.
+- MAP-RESET-01: Clic derecho sobre el lienzo y elige Restablecer
+  distribución. Deben recuperarse posiciones sin modificar las fuentes.
+- MAP-SESSION-01: Mueve un nodo, guarda y reabre la sesión. La posición
+  debe conservarse; una disposición anterior con etiquetas superpuestas
+  debe repararse al abrir el mismo grafo.
+- MAP-VISUAL-01: Valida el contraste del texto sobre su fondo, el
+  zoom contextual y la ausencia de bandas o saltos al cambiar tamaño.
