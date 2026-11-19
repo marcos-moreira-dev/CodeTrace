@@ -7,6 +7,10 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.function.Consumer;
 import javafx.application.Platform;
+import javafx.geometry.Point2D;
+import javafx.scene.Cursor;
+import javafx.scene.Node;
+import javafx.scene.transform.Scale;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.Group;
@@ -45,6 +49,7 @@ public final class DependencyGraphPane extends BorderPane {
     private double pressX, pressY;
     private boolean panning, moved;
     private double panSceneX, panSceneY, panStartH, panStartV;
+    private long zoomRevision;
 
     public DependencyGraphPane(ProjectDependencyGraph.Graph graph,
                                Consumer<String> openSource) {
@@ -103,6 +108,15 @@ public final class DependencyGraphPane extends BorderPane {
         reset.setOnAction(event -> resetLayout());
         scroll.setContextMenu(new javafx.scene.control.ContextMenu(reset));
         setCenter(scroll);
+        canvas.setCursor(Cursor.OPEN_HAND);
+        canvas.setOnMouseMoved(event -> {
+            if (!panning && pressed == null)
+                canvas.setCursor(pickNode(event.getX(), event.getY()) == null
+                        ? Cursor.OPEN_HAND : Cursor.HAND);
+        });
+        canvas.setOnMouseExited(event -> {
+            if (!panning && pressed == null) canvas.setCursor(Cursor.DEFAULT);
+        });
 
         canvas.setOnMousePressed(event -> {
             pressed = null;
@@ -117,6 +131,7 @@ public final class DependencyGraphPane extends BorderPane {
                 initialPosition = layout.get(hit);
                 pressX = event.getX();
                 pressY = event.getY();
+                canvas.setCursor(Cursor.CLOSED_HAND);
             } else {
                 // Pan deliberately on empty background (left or middle button).
                 panning = true;
@@ -124,6 +139,7 @@ public final class DependencyGraphPane extends BorderPane {
                 panSceneY = event.getSceneY();
                 panStartH = scroll.getHvalue();
                 panStartV = scroll.getVvalue();
+                canvas.setCursor(Cursor.CLOSED_HAND);
             }
             event.consume();
         });
@@ -169,6 +185,8 @@ public final class DependencyGraphPane extends BorderPane {
             pressed = null;
             initialPosition = null;
             panning = false;
+            canvas.setCursor(pickNode(event.getX(), event.getY()) == null
+                    ? Cursor.OPEN_HAND : Cursor.HAND);
         });
         canvas.setOnMouseClicked(event -> {
             if (event.getButton() != MouseButton.PRIMARY || moved) {
@@ -185,20 +203,71 @@ public final class DependencyGraphPane extends BorderPane {
         });
         scroll.addEventFilter(javafx.scene.input.ScrollEvent.SCROLL, event -> {
             if (!event.isControlDown() && !event.isShortcutDown()) return;
-            setZoomPercent(getZoomPercent() + (event.getDeltaY() > 0 ? 10 : -10));
+            setZoomPercentAround(getZoomPercent() + (event.getDeltaY() > 0 ? 10 : -10),
+                    event.getSceneX(), event.getSceneY());
             event.consume();
-        });
-        zoomPercent.addListener((obs, old, value) -> {
-            double factor = value.doubleValue() / 100.0;
-            artwork.setScaleX(factor);
-            artwork.setScaleY(factor);
         });
     }
 
     public int getZoomPercent() { return zoomPercent.get(); }
     public IntegerProperty zoomPercentProperty() { return zoomPercent; }
+    /** The bottom statusbar slider zooms around the visible viewport center. */
     public void setZoomPercent(int percent) {
-        zoomPercent.set(Math.max(25, Math.min(400, percent)));
+        Node viewport = scroll.lookup(".viewport");
+        if (viewport == null || viewport.getScene() == null) {
+            applyZoom(percent);
+            return;
+        }
+        Point2D center = viewport.localToScene(
+                viewport.getLayoutBounds().getWidth() / 2,
+                viewport.getLayoutBounds().getHeight() / 2);
+        setZoomPercentAround(percent, center.getX(), center.getY());
+    }
+
+    /** Ctrl+wheel keeps the map point under the mouse at the same screen pixel. */
+    public void setZoomPercentAround(int percent, double sceneX, double sceneY) {
+        int next = Math.max(25, Math.min(400, percent));
+        if (next == zoomPercent.get()) return;
+        Node viewport = scroll.lookup(".viewport");
+        if (viewport == null || viewport.getScene() == null
+                || canvas.getScene() == null) {
+            applyZoom(next);
+            return;
+        }
+        Point2D logical = canvas.sceneToLocal(sceneX, sceneY);
+        Point2D location = viewport.sceneToLocal(sceneX, sceneY);
+        applyZoom(next);
+        long version = ++zoomRevision;
+        Platform.runLater(() -> {
+            if (version != zoomRevision) return;
+            scroll.applyCss();
+            scroll.layout();
+            double zoom = zoomPercent.get() / 100.0;
+            scroll.setHvalue(anchoredScrollValue(
+                    logical.getX(), location.getX(), canvas.getWidth(),
+                    scroll.getViewportBounds().getWidth(), zoom));
+            scroll.setVvalue(anchoredScrollValue(
+                    logical.getY(), location.getY(), canvas.getHeight(),
+                    scroll.getViewportBounds().getHeight(), zoom));
+        });
+    }
+
+    private void applyZoom(int percent) {
+        int value = Math.max(25, Math.min(400, percent));
+        if (value == zoomPercent.get()) return;
+        // Unlike Node.setScaleX/Y, an explicit Scale(0,0) has no implicit
+        // center pivot. Scroll offsets can now be computed exactly.
+        artwork.getTransforms().setAll(new Scale(value / 100.0,
+                value / 100.0, 0, 0));
+        zoomPercent.set(value);
+    }
+
+    public static double anchoredScrollValue(double logical, double viewportPixel,
+                                              double contentExtent, double viewportExtent,
+                                              double factor) {
+        double scrollable = contentExtent * factor - viewportExtent;
+        if (scrollable <= 0) return 0;
+        return clamp((logical * factor - viewportPixel) / scrollable, 0, 1);
     }
     public GraphLayoutEngine.Mode getLayoutMode() { return layoutMode; }
     public String getSelectedNode() { return selected; }
