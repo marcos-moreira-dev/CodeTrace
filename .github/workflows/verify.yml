@@ -53,6 +53,29 @@ jobs:
           if (-not (Test-Path "target/qa-preview/styles/theme.css")) { throw "Missing CSS QA fixture" }
           if (-not (Test-Path "target/qa-preview/src/demo/A.java")) { throw "Missing dependency graph QA Java" }
           if (-not (Test-Path "target/qa-preview/web/main.ts")) { throw "Missing dependency graph QA TypeScript" }
+      - name: Validate Windows screenshot scripts syntax and safety
+        shell: pwsh
+        run: |
+          $files = @(
+            "scripts/capturar-ventana.ps1",
+            "scripts/captura-automatica.ps1",
+            "scripts/auditoria-visual.ps1"
+          )
+          foreach ($file in $files) {
+            $tokens = $null
+            $errors = $null
+            [void][System.Management.Automation.Language.Parser]::ParseFile(
+              (Resolve-Path $file), [ref]$tokens, [ref]$errors)
+            if ($errors.Count -ne 0) {
+              throw "PowerShell syntax error in $file : $($errors -join '; ')"
+            }
+          }
+          $capture = Get-Content "scripts/capturar-ventana.ps1" -Raw
+          if ($capture -notmatch "GetWindowThreadProcessId" -or
+              $capture -notmatch "Get-CimInstance") {
+            throw "Screenshot capture must verify window process identity."
+          }
+          Write-Host "CodeTrace-only capture script checks OK."
       - name: Preserve Windows diagnostic ZIP
         if: always()
         uses: actions/upload-artifact@v4
