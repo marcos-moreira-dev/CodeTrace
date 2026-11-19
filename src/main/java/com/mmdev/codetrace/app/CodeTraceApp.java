@@ -400,6 +400,7 @@ public final class CodeTraceApp extends Application {
         optionsRow.getStyleClass().add("tree-options-row");
         sidebar.getChildren().addAll(header, searchRow, optionsRow, tree);
         tree.setOnProgressFolder(this::setProgressFolder);
+        tree.setOnDependencyGraph(this::openDependencyGraphForFolder);
         tree.setOnIndexReady(index -> {
             referenceIndex = index;
             if (practiceMode == PracticeMode.DIRECT)
@@ -787,7 +788,17 @@ public final class CodeTraceApp extends Application {
             showGraphNotice("Selecciona una carpeta en el explorador antes de crear el mapa.");
             return;
         }
-        Path folder = item.getValue();
+        openDependencyGraphForFolder(item.getValue());
+    }
+
+    /** Used by Tools and by the exact folder that received a right click. */
+    private void openDependencyGraphForFolder(Path folder) {
+        if (reference == null || folder == null || !tree.isFolderPath(folder)
+                || !folder.toAbsolutePath().normalize()
+                          .startsWith(reference.toAbsolutePath().normalize())) {
+            showGraphNotice("Selecciona una carpeta de la referencia actual.");
+            return;
+        }
         Path root = reference;
         long request = referenceRequest;
         setStatus("Analizando imports internos de " + folder.getFileName() + "...");
@@ -820,6 +831,13 @@ public final class CodeTraceApp extends Application {
                 graphLayouts.put(graph.folder(), updated);
                 dirty = true;
                 updateTitle();
+            }, selectedPath -> {
+                // The application statusbar is the canonical location for
+                // full paths; the map footer shows connection counts only.
+                if (tabs.getSelectionModel().getSelectedItem() != null
+                        && tabs.getSelectionModel().getSelectedItem().getContent()
+                                instanceof DependencyGraphPane)
+                    setStatus(selectedPath);
             });
             view.zoomPercentProperty().addListener((obs, old, value) -> {
                 if (tabs.getSelectionModel().getSelectedItem() != null
