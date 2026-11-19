@@ -27,4 +27,20 @@ class AppSettingsTest {
         assertThrows(IllegalArgumentException.class,
                 () -> new AppSettings("Consolas", 16, true, "LATAM", false, 101));
     }
+
+    @Test
+    void organizedIsDefaultAndGraphChoiceSurvivesOtherSettingChanges() {
+        AppSettings initial = new AppSettings(
+                "Consolas", 16, true, "LATAM", false, 70, false, true);
+        assertEquals(com.mmdev.codetrace.reference.GraphLayoutEngine.Mode.ORGANIZED,
+                initial.graphLayoutMode());
+        var grid = initial.withGraphLayoutMode(
+                com.mmdev.codetrace.reference.GraphLayoutEngine.Mode.GRID);
+        assertEquals(com.mmdev.codetrace.reference.GraphLayoutEngine.Mode.GRID,
+                grid.withLayout("US").graphLayoutMode());
+        assertEquals(com.mmdev.codetrace.reference.GraphLayoutEngine.Mode.GRID,
+                grid.withTurbo(true).graphLayoutMode());
+        assertThrows(IllegalArgumentException.class,
+                () -> initial.withGraphLayoutMode(null));
+    }
 }
