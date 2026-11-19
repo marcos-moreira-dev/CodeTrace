@@ -696,6 +696,9 @@ class CodeTraceAppSmokeTest {
                 Files.delete(imageFile);
                 Files.delete(directFile);
                 Files.delete(nestedFile);
+                Files.delete(deep.resolve("Example.java"));
+                Files.delete(deep);
+                Files.delete(nested.resolve("deep"));
                 Files.delete(nested);
                 Files.delete(file);
                 Files.delete(src);
