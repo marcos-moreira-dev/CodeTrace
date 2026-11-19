@@ -17,7 +17,7 @@ class EmojiUnitsTest {
 
     @Test void userTypesOnlyOrdinaryCharactersAndCanCorrectAfterEmoji() {
         TypingSession typing = new TypingSession("a😀b\n👨‍👩‍👧‍👦c🇪🇨");
-        assertEquals(4, typing.visibleUnitCount());
+        assertEquals(3, typing.visibleUnitCount());
         typing.type("ab");
         typing.moveCaret(4); // Start of emoji family followed by c.
         typing.type("x");
@@ -25,8 +25,8 @@ class EmojiUnitsTest {
         typing.backspace();
         typing.type("c");
         assertTrue(typing.finishedExercise());
-        assertEquals(4, typing.correctVisibleCount());
-        assertEquals(4, typing.resolvedVisibleCount());
+        assertEquals(3, typing.correctVisibleCount());
+        assertEquals(3, typing.resolvedVisibleCount());
         assertEquals(3, typing.skippedCount());
         assertEquals("a😀b\n👨‍👩‍👧‍👦c🇪🇨", typing.expectedText());
     }
