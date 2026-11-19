@@ -37,6 +37,33 @@ public final class TypingSession {
         return caret;
     }
 
+    /** Source units visible to the typist; structural newlines are not drawn. */
+    public int visibleUnitCount() {
+        int total = 0;
+        for (String expected : reference)
+            if (!"\n".equals(expected)) total++;
+        return total;
+    }
+
+    /** Correct visible characters; does not count invisible Enter separators. */
+    public int correctVisibleCount() {
+        int total = 0;
+        for (int i = 0; i < size(); i++)
+            if (!"\n".equals(reference.get(i)) && state(i) == State.CORRECT) total++;
+        return total;
+    }
+
+    /** For the per-file bar, deliberate skips are resolved but not correct. */
+    public int resolvedVisibleCount() {
+        int total = 0;
+        for (int i = 0; i < size(); i++) {
+            if ("\n".equals(reference.get(i))) continue;
+            State result = state(i);
+            if (result == State.CORRECT || result == State.SKIPPED) total++;
+        }
+        return total;
+    }
+
     public int correctCount() {
         int count = 0;
         for (int i = 0; i < size(); i++) {
