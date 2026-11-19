@@ -217,6 +217,7 @@ public final class PreferencesWindow {
                                         "Cuadrícula", "Distribución simple en filas y columnas")),
                         current.graphLayoutMode(), mode -> {});
         graphLayout.getStyleClass().add("prefs-graph-layout");
+        graphLayout.setMaxWidth(javafx.scene.layout.Region.USE_PREF_SIZE);
         Label graphExplanation = new Label(
                 "Organizado distribuye los archivos según sus dependencias. "
                 + "La opción no modifica los imports ni los archivos originales. "
