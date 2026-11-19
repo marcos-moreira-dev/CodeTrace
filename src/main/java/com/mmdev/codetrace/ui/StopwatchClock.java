@@ -29,6 +29,14 @@ public final class StopwatchClock {
         running = false;
     }
 
+    /** Stop and reset to the initial idle state (00:00:00). */
+    public void stop() {
+        accumulated = 0;
+        resumedAt = 0;
+        started = false;
+        running = false;
+    }
+
     public void resume() {
         if (!started) start();
         else if (!running) {
