@@ -577,6 +577,10 @@ public final class ReferenceTree extends TreeView<Path> {
             actions.add(reveal);
         }
 
+        // Avoid a dangling divider for folders with no typing exercises.
+        while (!actions.isEmpty()
+                && actions.getLast() instanceof javafx.scene.control.SeparatorMenuItem)
+            actions.removeLast();
         return actions.isEmpty() ? null
                 : new ContextMenu(actions.toArray(MenuItem[]::new));
     }
