@@ -171,3 +171,14 @@ su huella y rechaza cualquier ruta que escape la carpeta seleccionada. No
 sigue enlaces simbólicos al verificar archivos. Estas precauciones protegen
 también a futuros consumidores del detector, aunque `SessionArchive` ya
 valide las rutas al leer el archivo `.ctrace`.
+
+## Cancelación de indexación y búsqueda del explorador
+
+`ReferenceTree` ahora conserva los `Task` activos y cancela el escaneo
+anterior al cambiar de referencia o actualizar el árbol, además de cancelar
+el filtro anterior al cambiar la consulta. El cierre de CodeTrace llama a
+`cancelPendingWork()` para no mantener indexación y filtros después de
+salir. `ReferenceTreeIndex`, `ReferenceCatalogue` y `TreeNameFilter`
+rechazan cancelaciones por interrupción en lugar de devolver resultados
+parciales aparentemente válidos. Sus resultados se siguen validando por
+generación y por identidad de tarea.

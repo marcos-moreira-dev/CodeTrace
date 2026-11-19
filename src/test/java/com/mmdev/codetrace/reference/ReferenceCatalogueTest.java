@@ -110,4 +110,17 @@ class ReferenceCatalogueTest {
         virtual.createFile("empty.txt");
         assertEquals(0, index.resolvedUnits(virtual, Map.of(), Map.of()));
     }
+
+    @org.junit.jupiter.api.Test
+    void interruptedCatalogueScanDoesNotPublishPartialCounts() throws Exception {
+        Thread.currentThread().interrupt();
+        try {
+            org.junit.jupiter.api.Assertions.assertThrows(
+                    java.util.concurrent.CancellationException.class,
+                    () -> ReferenceCatalogue.scan(folder));
+        } finally {
+            Thread.interrupted();
+        }
+    }
+
 }

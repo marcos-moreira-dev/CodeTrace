@@ -42,4 +42,18 @@ class TreeNameFilterTest {
         assertTrue(visible.contains("generated"));
         assertTrue(visible.contains("generated/Test.java"));
     }
+
+    @org.junit.jupiter.api.Test
+    void interruptedNameSearchDoesNotPublishPartialMatches() {
+        Thread.currentThread().interrupt();
+        try {
+            org.junit.jupiter.api.Assertions.assertThrows(
+                    java.util.concurrent.CancellationException.class,
+                    () -> TreeNameFilter.visible(null,
+                            new com.mmdev.codetrace.workspace.VirtualWorkspace(), "src"));
+        } finally {
+            Thread.interrupted();
+        }
+    }
+
 }

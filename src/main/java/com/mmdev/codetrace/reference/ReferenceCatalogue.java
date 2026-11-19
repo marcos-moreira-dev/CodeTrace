@@ -133,6 +133,7 @@ public final class ReferenceCatalogue {
     }
 
     public static Snapshot scan(Path referenceRoot) throws IOException {
+        abortIfInterrupted();
         if (!Files.isDirectory(referenceRoot)) {
             throw new IOException("Reference directory is missing");
         }
@@ -141,8 +142,7 @@ public final class ReferenceCatalogue {
             @Override
             public FileVisitResult preVisitDirectory(Path dir,
                                                      BasicFileAttributes attributes) {
-                if (Thread.currentThread().isInterrupted())
-                    return FileVisitResult.TERMINATE;
+                abortIfInterrupted();
                 if (!dir.equals(referenceRoot)
                         && IGNORED_FOLDERS.contains(dir.getFileName().toString())) {
                     return FileVisitResult.SKIP_SUBTREE;
@@ -152,8 +152,7 @@ public final class ReferenceCatalogue {
 
             @Override
             public FileVisitResult visitFile(Path file, BasicFileAttributes attributes) {
-                if (Thread.currentThread().isInterrupted())
-                    return FileVisitResult.TERMINATE;
+                abortIfInterrupted();
                 if (!attributes.isRegularFile()) {
                     return FileVisitResult.CONTINUE;
                 }
@@ -180,6 +179,12 @@ public final class ReferenceCatalogue {
                 return FileVisitResult.CONTINUE;
             }
         });
+        abortIfInterrupted();
         return new Snapshot(files);
+    }
+
+    private static void abortIfInterrupted() {
+        if (Thread.currentThread().isInterrupted())
+            throw new java.util.concurrent.CancellationException("Reference scan cancelled");
     }
 }

@@ -16,6 +16,7 @@ public final class TreeNameFilter {
      */
     public static Set<String> visible(ReferenceTreeIndex index,
                                       VirtualWorkspace workspace, String query) {
+        abortIfInterrupted();
         String wanted = fold(query == null ? "" : query.trim());
         if (wanted.isEmpty()) return Set.of();
         Set<String> candidates = new HashSet<>();
@@ -24,6 +25,7 @@ public final class TreeNameFilter {
             pending.add("");
             Set<String> visited = new HashSet<>();
             while (!pending.isEmpty()) {
+                abortIfInterrupted();
                 String folder = pending.removeFirst();
                 if (!visited.add(folder)) continue;
                 for (String child : index.children(folder)) {
@@ -33,11 +35,13 @@ public final class TreeNameFilter {
             }
         }
         for (VirtualWorkspace.Entry entry : workspace.entries()) {
+            abortIfInterrupted();
             if (!entry.path().isEmpty()) candidates.add(entry.path());
         }
         Set<String> visible = new HashSet<>();
         visible.add("");
         for (String path : candidates) {
+            abortIfInterrupted();
             String name = path.substring(path.lastIndexOf('/') + 1);
             if (!fold(name).contains(wanted)) continue;
             String ancestor = path;
@@ -47,6 +51,11 @@ public final class TreeNameFilter {
             }
         }
         return Set.copyOf(visible);
+    }
+
+    private static void abortIfInterrupted() {
+        if (Thread.currentThread().isInterrupted())
+            throw new java.util.concurrent.CancellationException("Tree filter cancelled");
     }
 
     public static String fold(String input) {

@@ -93,6 +93,7 @@ public final class ReferenceTreeIndex {
     }
 
     public static ReferenceTreeIndex scan(Path reference) throws IOException {
+        abortIfInterrupted();
         if (!Files.isDirectory(reference)) {
             throw new IOException("Carpeta de referencia no disponible");
         }
@@ -111,9 +112,7 @@ public final class ReferenceTreeIndex {
             @Override
             public FileVisitResult preVisitDirectory(Path directory,
                                                      BasicFileAttributes attributes) {
-                if (Thread.currentThread().isInterrupted()) {
-                    return FileVisitResult.TERMINATE;
-                }
+                abortIfInterrupted();
                 if (!directory.equals(root) && Files.isSymbolicLink(directory)) {
                     return FileVisitResult.SKIP_SUBTREE;
                 }
@@ -130,9 +129,7 @@ public final class ReferenceTreeIndex {
 
             @Override
             public FileVisitResult visitFile(Path file, BasicFileAttributes attributes) {
-                if (Thread.currentThread().isInterrupted()) {
-                    return FileVisitResult.TERMINATE;
-                }
+                abortIfInterrupted();
                 if (!attributes.isRegularFile() || Files.isSymbolicLink(file)) {
                     return FileVisitResult.CONTINUE;
                 }
@@ -166,6 +163,7 @@ public final class ReferenceTreeIndex {
             }
         });
 
+        abortIfInterrupted();
         Map<String, List<String>> stable = new HashMap<>();
         childPaths.forEach((path, values) -> {
             values.sort((left, right) -> {
@@ -178,6 +176,11 @@ public final class ReferenceTreeIndex {
         });
         return new ReferenceTreeIndex(stable, totals, folders, regularFiles,
                 workable, descendants);
+    }
+
+    private static void abortIfInterrupted() {
+        if (Thread.currentThread().isInterrupted())
+            throw new java.util.concurrent.CancellationException("Tree scan cancelled");
     }
 
     private static String relative(Path root, Path child) {

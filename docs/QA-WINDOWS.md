@@ -390,3 +390,12 @@ Consulta también [Auditoría de cierre](AUDITORIA-CIERRE-2026-11.md).
   la cantidad de referencias divergentes conservando la transcripción virtual.
 - Buscar una coincidencia y cambiar inmediatamente de proyecto: una navegación
   diferida no debe recuperar la pestaña cerrada ni resaltar código del anterior.
+
+## TREE-ASYNC-CANCEL — regresión de tareas obsoletas
+
+- Abrir un proyecto grande y cambiar de referencia mientras aún aparece
+  actividad en el explorador: jamás deben reaparecer carpetas anteriores.
+- Escribir tres consultas rápidamente en el filtro del explorador y borrarlo:
+  debe imponerse la última consulta, sin resultados rezagados.
+- Actualizar referencia durante un escaneo y cerrar la aplicación: cierre
+  sin bloqueo ni mensajes tardíos; no se publican índices parciales.

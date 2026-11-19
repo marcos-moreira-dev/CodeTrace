@@ -500,6 +500,7 @@ public final class CodeTraceApp extends Application {
                 consolePane.stop();
                 referenceChecks.cancel();
                 catalogueScanner.cancel();
+                tree.cancelPendingWork();
             }
         });
         refreshMetrics();

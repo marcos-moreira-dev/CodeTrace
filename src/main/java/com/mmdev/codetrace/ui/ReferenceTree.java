@@ -72,11 +72,13 @@ public final class ReferenceTree extends TreeView<Path> {
     private Function<String, State> statusLookup = ignored -> State.PENDING;
     private String progressFocusFolder = "";
     private long indexGeneration;
+    private Task<ReferenceTreeIndex> indexTask;
     private boolean loading;
     private final BatchedTreeExpander expander;
     private String nameFilter = "";
     private Set<String> filteredPaths = Set.of();
     private long filterGeneration;
+    private Task<Set<String>> nameSearchTask;
     private final PauseTransition searchDebounce = new PauseTransition(Duration.millis(160));
 
     public ReferenceTree(Consumer<Path> onOpen, Consumer<Change> onChange,
@@ -322,6 +324,7 @@ public final class ReferenceTree extends TreeView<Path> {
     private void scanReference() {
         if (referenceRoot == null) return;
         expander.cancel();
+        if (indexTask != null) indexTask.cancel(true);
         Path source = referenceRoot;
         long generation = ++indexGeneration;
         loading = true;
@@ -332,8 +335,11 @@ public final class ReferenceTree extends TreeView<Path> {
                 return ReferenceTreeIndex.scan(source);
             }
         };
+        indexTask = job;
         job.setOnSucceeded(event -> {
-            if (generation != indexGeneration || !source.equals(referenceRoot)) return;
+            if (generation != indexGeneration || indexTask != job
+                    || !source.equals(referenceRoot)) return;
+            indexTask = null;
             index = job.getValue();
             loading = false;
             if (nameFilter.isBlank()) refreshTree();
@@ -342,10 +348,17 @@ public final class ReferenceTree extends TreeView<Path> {
             onIndexReady.accept(index);
         });
         job.setOnFailed(event -> {
-            if (generation != indexGeneration) return;
+            if (generation != indexGeneration || indexTask != job) return;
+            indexTask = null;
             loading = false;
             notifyBusy();
             onStatus.accept("No se pudo analizar el árbol de archivos.");
+        });
+        job.setOnCancelled(event -> {
+            if (generation != indexGeneration || indexTask != job) return;
+            indexTask = null;
+            loading = false;
+            notifyBusy();
         });
         Thread worker = new Thread(job, "codetrace-tree-index");
         worker.setDaemon(true);
@@ -354,6 +367,7 @@ public final class ReferenceTree extends TreeView<Path> {
 
     /** Called by the explicit Refresh action, not on every keystroke. */
     public void reloadReference() {
+        cancelNameSearch();
         index = null;
         filteredPaths = Set.of();
         refreshTree();
@@ -374,20 +388,39 @@ public final class ReferenceTree extends TreeView<Path> {
     }
 
     public void open(Path folder) {
+        cancelNameSearch();
         referenceRoot = folder;
         index = null;
         filteredPaths = Set.of();
-        filterGeneration++;
-        searchDebounce.stop();
         refreshTree();
         scanReference();
     }
 
+    private void cancelNameSearch() {
+        filterGeneration++;
+        searchDebounce.stop();
+        Task<Set<String>> previous = nameSearchTask;
+        nameSearchTask = null;
+        if (previous != null) previous.cancel(true);
+    }
+
+    /** Stop indexing, searching and expansion when CodeTrace is closing. */
+    public void cancelPendingWork() {
+        indexGeneration++;
+        Task<ReferenceTreeIndex> previous = indexTask;
+        indexTask = null;
+        if (previous != null) previous.cancel(true);
+        cancelNameSearch();
+        expander.cancel();
+        loading = false;
+        notifyBusy();
+    }
+
     /** Search file/folder NAMES only; content searching is a separate service. */
     public void searchNames(String query) {
+        cancelNameSearch();
         nameFilter = query == null ? "" : query.strip();
-        long generation = ++filterGeneration;
-        searchDebounce.stop();
+        long generation = filterGeneration;
         if (nameFilter.isEmpty() || referenceRoot == null) {
             filteredPaths = Set.of();
             refreshTree();
@@ -395,17 +428,31 @@ public final class ReferenceTree extends TreeView<Path> {
         }
         ReferenceTreeIndex snapshot = index;
         VirtualWorkspace currentWorkspace = workspace;
+        Path root = referenceRoot;
         String requested = nameFilter;
         searchDebounce.setOnFinished(event -> {
+            if (generation != filterGeneration || !root.equals(referenceRoot)) return;
             Task<Set<String>> search = new Task<>() {
                 @Override protected Set<String> call() {
                     return TreeNameFilter.visible(snapshot, currentWorkspace, requested);
                 }
             };
+            nameSearchTask = search;
             search.setOnSucceeded(done -> {
-                if (generation != filterGeneration || referenceRoot == null) return;
+                if (generation != filterGeneration || nameSearchTask != search
+                        || !root.equals(referenceRoot)) return;
+                nameSearchTask = null;
                 filteredPaths = search.getValue();
                 refreshTree();
+            });
+            search.setOnFailed(done -> {
+                if (generation != filterGeneration || nameSearchTask != search) return;
+                nameSearchTask = null;
+                onStatus.accept("No se pudo filtrar el explorador.");
+            });
+            search.setOnCancelled(done -> {
+                if (generation == filterGeneration && nameSearchTask == search)
+                    nameSearchTask = null;
             });
             Thread worker = new Thread(search, "codetrace-tree-name-search");
             worker.setDaemon(true);

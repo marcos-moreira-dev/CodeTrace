@@ -64,4 +64,17 @@ class ReferenceTreeIndexTest {
         int child = nodes.indexOf(new ReferenceTreeIndex.Node("src/code/Main.java", false));
         assertTrue(parent >= 0 && child > parent, "Virtual folders must precede files");
     }
+
+    @org.junit.jupiter.api.Test
+    void interruptedTreeScanDoesNotPublishPartialIndex() throws Exception {
+        Thread.currentThread().interrupt();
+        try {
+            org.junit.jupiter.api.Assertions.assertThrows(
+                    java.util.concurrent.CancellationException.class,
+                    () -> ReferenceTreeIndex.scan(java.nio.file.Path.of(".")));
+        } finally {
+            Thread.interrupted();
+        }
+    }
+
 }
