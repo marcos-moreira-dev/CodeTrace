@@ -1172,3 +1172,32 @@
     -fx-text-fill: #536d7e;
     -fx-padding: 0 2px 0 2px;
 }
+
+
+/* About: one dialog for product information and modest author credit.
+   No oversized profile card and no external image requests. */
+.about-author {
+    -fx-padding: 12 0 4 0;
+    -fx-alignment: center-left;
+}
+.about-author-heading {
+    -fx-text-fill: #687f8f;
+    -fx-font-size: 10px;
+    -fx-font-weight: bold;
+}
+.about-author-name {
+    -fx-text-fill: #234962;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+.about-author-role {
+    -fx-text-fill: #415e71;
+    -fx-font-size: 12px;
+}
+.about-author-link {
+    -fx-text-fill: #416f8f;
+    -fx-font-size: 11px;
+}
+.about-author-portrait {
+    -fx-effect: dropshadow(gaussian, rgba(34,58,78,0.18), 5, 0, 0, 1);
+}
