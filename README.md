@@ -347,3 +347,24 @@ nodo ocupan anillos sucesivos para no sobreponer nombres. La distribución
 es una **heurística determinista**, no una promesa de óptimo global para
 cualquier grafo. Los nodos siguen siendo arrastrables y las posiciones
 manuales se guardan exclusivamente con la sesión.
+
+## Selección del grafo y acerca del autor
+
+- **Clic en un nodo:** violeta para el archivo seleccionado y turquesa para
+  los nodos **directamente** relacionados, tanto entrantes como salientes;
+  los demás conservan su color discreto. Las flechas directas también se
+  resaltan. No se resaltan relaciones transitivas inventadas.
+- **Clic en el fondo vacío, sin arrastrar:** deselecciona el nodo, elimina
+  todos los resaltados relacionados y restaura el resumen del mapa en la
+  barra de estado, sin modificar las posiciones.
+- **Clic derecho → Colapsar subcarpetas:** el directorio pulsado sigue
+  **abierto**, por lo que sus hijos inmediatos continúan visibles. Se cierran
+  recursivamente sus subcarpetas, para recuperar rápidamente una vista
+  compacta de la estructura, sin alterar el proyecto real.
+
+**Ayuda → Acerca de CodeTrace** concentra identidad del producto, objetivo
+didáctico y una sección pequeña de **Autor y desarrollo** con el nombre
+Marcos Moreira, su afiliación académica y un retrato JPEG optimizado. La
+fotografía se entrega como recurso local en
+`src/main/resources/icons/codetrace-author-marcos.jpg` y forma parte
+del repositorio público; no requiere conexiones de red ni permisos de cámara.

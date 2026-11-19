@@ -280,3 +280,30 @@ No se distribuye FFmpeg por defecto. La CI no reemplaza la auditoría de licenci
 - GRAPH-LEAF-02: En un grafo real con conexiones múltiples, verifica
   que el algoritmo mantiene etiquetas separadas y que las aristas
   pueden cruzarse sin tapar nombres.
+
+## Regresión: selección del grafo, colapso contextual y Acerca de
+
+- GRAPH-SELECT-01: Selecciona un nodo con dependencias. Debe verse violeta
+  y solo sus vecinos de primer grado en turquesa; los enlaces directamente
+  relacionados se distinguen del resto.
+- GRAPH-SELECT-02: Prueba un nodo con aristas entrantes y salientes: ambos
+  conjuntos de vecinos deben recibir resaltado. Los vecinos de segundo
+  grado NO deben resaltarse.
+- GRAPH-SELECT-03: Haz clic una sola vez sobre fondo vacío, sin arrastrar:
+  desaparecen los colores de selección, la ruta se sustituye por el
+  resumen «Mapa · carpeta» y el statusbar muestra totales.
+- GRAPH-SELECT-04: Un arrastre sobre fondo sigue paneando y no modifica
+  posiciones ni selecciona nodos por accidente. El doble clic sobre
+  un archivo continúa abriéndolo.
+- TREE-COLLAPSE-01: Expande `src`, `main`, `java`, `com`, etc.
+  Clic derecho en `main` → «Colapsar subcarpetas». `main` debe
+  permanecer expandida, con `java` y `resources` visibles, pero
+  todos sus subárboles internos cerrados.
+- TREE-COLLAPSE-02: Repite sobre un subárbol pequeño y verifica que
+  el menú funciona aunque otra carpeta estuviera seleccionada.
+- ABOUT-AUTHOR-01: Ayuda → Acerca de CodeTrace: logo, versión,
+  texto del producto y sección «Autor y desarrollo» con retrato del autor.
+  Debe desplazarse verticalmente cuando falte altura, sin texto truncado.
+- ABOUT-AUTHOR-02: Abre Acerca de sin internet. La imagen debe ser
+  local y no solicitar permisos externos; su recurso empaquetado tiene
+  resolución 112×112.
