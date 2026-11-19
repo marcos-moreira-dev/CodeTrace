@@ -703,6 +703,11 @@ public final class CodeTraceApp extends Application {
             if (ReferenceMediaPane.kindFor(file) != ReferenceMediaPane.Kind.UNSUPPORTED)
                 openMediaReference(file, relative);
             else openTextReference(file, relative);
+            // The tooltip also explains these files: make the double-click
+            // explicit while preserving the read-only preview for study.
+            javafx.application.Platform.runLater(() ->
+                    ProductDialogs.information(stage, "Archivo de consulta",
+                            "No requiere práctica de mecanografía."));
             return;
         }
         try {
