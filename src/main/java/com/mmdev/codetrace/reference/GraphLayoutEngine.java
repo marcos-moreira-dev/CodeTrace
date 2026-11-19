@@ -105,25 +105,38 @@ public final class GraphLayoutEngine {
                 for (int column = layers.size() - 2; column >= 0; column--)
                     sortNear(layers.get(column), layers.get(column + 1), adjacent);
             }
-            int heightSlots = layers.stream().mapToInt(List::size).max().orElse(1);
-            double blockHeight = Math.max(180, heightSlots * LANE_ROW);
-            // Wrap very deep chains into successive horizontal bands rather
-            // than asking JavaFX to allocate an enormous 50,000px canvas.
+            // Each automatic lane keeps complete labels apart, but a giant
+            // star must not become a 20,000px high canvas: its wide layer is
+            // split into parallel columns of at most 30 nodes each.
+            final int rowsPerColumn = 30;
             final int columnsPerBand = 12;
-            for (int column = 0; column < layers.size(); column++) {
-                List<String> layer = layers.get(column);
-                int band = column / columnsPerBand;
-                int inBand = column % columnsPerBand;
-                double top = nextY + band * (blockHeight + COMPONENT_GAP)
-                        + (blockHeight - layer.size() * LANE_ROW) * 0.5;
-                for (int row = 0; row < layer.size(); row++) {
-                    result.put(layer.get(row), new GraphLayout.Point(
-                            130 + inBand * LAYER_COLUMN,
+            int heightSlots = layers.stream()
+                    .mapToInt(layer -> Math.min(rowsPerColumn, layer.size()))
+                    .max().orElse(1);
+            double blockHeight = Math.max(180, heightSlots * LANE_ROW);
+            int visualColumn = 0;
+            int band = 0;
+            for (List<String> layer : layers) {
+                int slots = Math.max(1,
+                        (layer.size() + rowsPerColumn - 1) / rowsPerColumn);
+                if (visualColumn + slots > columnsPerBand) {
+                    visualColumn = 0;
+                    band++;
+                }
+                for (int index = 0; index < layer.size(); index++) {
+                    int lane = index / rowsPerColumn;
+                    int row = index % rowsPerColumn;
+                    int laneCount = Math.min(rowsPerColumn,
+                            layer.size() - lane * rowsPerColumn);
+                    double top = nextY + band * (blockHeight + COMPONENT_GAP)
+                            + (blockHeight - laneCount * LANE_ROW) * 0.5;
+                    result.put(layer.get(index), new GraphLayout.Point(
+                            130 + (visualColumn + lane) * LAYER_COLUMN,
                             top + row * LANE_ROW + LANE_ROW * 0.5));
                 }
+                visualColumn += slots;
             }
-            nextY += Math.max(1, (layers.size() + columnsPerBand - 1) / columnsPerBand)
-                    * (blockHeight + COMPONENT_GAP);
+            nextY += (band + 1) * (blockHeight + COMPONENT_GAP);
         }
         return Map.copyOf(result);
     }
