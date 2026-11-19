@@ -269,7 +269,7 @@ class CodeTraceAppSmokeTest {
                 graphSurface.getOnMouseDragged().handle(
                         new javafx.scene.input.MouseEvent(
                                 javafx.scene.input.MouseEvent.MOUSE_DRAGGED,
-                                bgX, bgY, 190, 130,
+                                bgX + 90, bgY + 30, 190, 130,
                                 javafx.scene.input.MouseButton.MIDDLE, 1,
                                 false, false, false, false, false, true, false,
                                 false, false, false,
@@ -278,7 +278,7 @@ class CodeTraceAppSmokeTest {
                 graphSurface.getOnMouseReleased().handle(
                         new javafx.scene.input.MouseEvent(
                                 javafx.scene.input.MouseEvent.MOUSE_RELEASED,
-                                bgX, bgY, 190, 130,
+                                bgX + 90, bgY + 30, 190, 130,
                                 javafx.scene.input.MouseButton.MIDDLE, 1,
                                 false, false, false, false, false, false, false,
                                 false, false, false,
