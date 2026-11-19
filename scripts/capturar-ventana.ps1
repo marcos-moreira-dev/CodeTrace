@@ -18,6 +18,10 @@ public static class CodeTraceWindowRect {
     }
     [DllImport("user32.dll")]
     public static extern bool GetWindowRect(IntPtr window, out RECT rectangle);
+    [DllImport("user32.dll")]
+    public static extern IntPtr GetForegroundWindow();
+    [DllImport("user32.dll")]
+    public static extern uint GetWindowThreadProcessId(IntPtr window, out uint processId);
 }
 '@
 
@@ -37,9 +41,22 @@ public static class CodeTraceWindowRect {
     }
 
     Start-Sleep -Seconds 2
+    # Prefer the currently focused window of the same CodeTrace process.
+    # This includes Preferences, About, Search and other modal windows,
+    # whereas MainWindowHandle alone can omit a separate dialog.
+    $captureHandle = $application.MainWindowHandle
+    $foreground = [CodeTraceWindowRect]::GetForegroundWindow()
+    if ($foreground -ne [IntPtr]::Zero) {
+        [uint32]$foregroundPid = 0
+        [void][CodeTraceWindowRect]::GetWindowThreadProcessId(
+                $foreground, [ref]$foregroundPid)
+        if ([int]$foregroundPid -eq $application.Id) {
+            $captureHandle = $foreground
+        }
+    }
     $rect = [CodeTraceWindowRect+RECT]::new()
     if (-not [CodeTraceWindowRect]::GetWindowRect(
-        $application.MainWindowHandle, [ref]$rect)) {
+        $captureHandle, [ref]$rect)) {
         throw "No se pudo consultar el rectangulo de la ventana."
     }
     # Only the visible CodeTrace rectangle, not the whole desktop.
