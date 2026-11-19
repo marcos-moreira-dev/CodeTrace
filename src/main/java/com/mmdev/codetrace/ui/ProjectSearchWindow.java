@@ -18,6 +18,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -35,9 +36,9 @@ public final class ProjectSearchWindow {
     private final Consumer<Hit> navigate;
     private final ComboBox<String> scope = new ComboBox<>();
     private final TextField expression = new TextField();
-    private final CheckBox caseSensitive = new CheckBox("Distinguir mayúsculas");
-    private final CheckBox wholeWords = new CheckBox("Solo palabras completas");
-    private final CheckBox regex = new CheckBox("Expresión regular");
+    private final CheckBox caseSensitive = AppControls.checkBox("Distinguir mayúsculas");
+    private final CheckBox wholeWords = AppControls.checkBox("Solo palabras completas");
+    private final CheckBox regex = AppControls.checkBox("Expresión regular");
     private final Label state = new Label("Introduce un texto para buscar.");
     private final ListView<Hit> results = new ListView<>();
     private final Button search = new Button("Buscar");
@@ -69,11 +70,13 @@ public final class ProjectSearchWindow {
         HBox form = new HBox(8, new Label("Qué buscar"), expression, search, stop);
         form.setAlignment(Pos.CENTER_LEFT);
         HBox.setHgrow(expression, Priority.ALWAYS);
-        HBox options = new HBox(15, caseSensitive, wholeWords, regex);
+        FlowPane options = new FlowPane(14, 6, caseSensitive, wholeWords, regex);
+        options.getStyleClass().add("search-filter-options");
         options.setAlignment(Pos.CENTER_LEFT);
-        HBox filter = new HBox(8, new Label("Ámbito"), scope, options);
+        HBox filter = new HBox(8, new Label("Ámbito"), scope);
         filter.setAlignment(Pos.CENTER_LEFT);
-        VBox header = new VBox(9, form, filter);
+        scope.setMaxWidth(240);
+        VBox header = new VBox(9, form, filter, options);
         header.setPadding(new Insets(12));
         header.getStyleClass().add("search-window-header");
 
