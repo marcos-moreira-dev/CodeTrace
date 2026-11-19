@@ -101,7 +101,10 @@ public final class CommandRunner {
                 }
             } finally {
                 Process process = current.getAndSet(null);
-                if (process != null && process.isAlive()) terminate(process);
+                // Windows can keep the command's working directory locked
+                // briefly after destroyForcibly(). Reap the OS process
+                // before telling observers that the command has finished.
+                if (process != null) reapOnWorker(process);
                 workerThread.set(null);
                 running.set(false);
                 finished.accept(code);
@@ -119,6 +122,33 @@ public final class CommandRunner {
         if (process != null) terminate(process);
         Thread worker = workerThread.get();
         if (worker != null) worker.interrupt();
+    }
+
+    private static void reapOnWorker(Process process) {
+        if (process.isAlive()) terminate(process);
+        // stop() interrupts this worker to unblock waitFor(). That interrupt
+        // must be cleared temporarily so process reaping can actually wait.
+        boolean interrupted = Thread.interrupted();
+        try {
+            if (!process.waitFor(4, java.util.concurrent.TimeUnit.SECONDS)) {
+                terminate(process);
+                process.waitFor(2, java.util.concurrent.TimeUnit.SECONDS);
+            }
+        } catch (InterruptedException cancelled) {
+            interrupted = true;
+            // A second cancellation should not keep the shell alive.
+            terminate(process);
+            try {
+                process.onExit().get(2, java.util.concurrent.TimeUnit.SECONDS);
+            } catch (InterruptedException again) {
+                interrupted = true;
+            } catch (java.util.concurrent.ExecutionException
+                     | java.util.concurrent.TimeoutException ignored) {
+                // Process may be stuck in native teardown. Worker still exits.
+            }
+        } finally {
+            if (interrupted) Thread.currentThread().interrupt();
+        }
     }
 
     private static void terminate(Process process) {
