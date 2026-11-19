@@ -176,9 +176,10 @@ class CodeTraceAppSmokeTest {
                         2, false, "a".repeat(64));
                 AtomicReference<com.mmdev.codetrace.reference.GraphLayout> graphChanges =
                         new AtomicReference<>();
+                AtomicReference<String> selectedGraphPath = new AtomicReference<>();
                 var graphPane = new com.mmdev.codetrace.ui.DependencyGraphPane(
                         graphModel, ignored -> {}, null, graphChanges::set,
-                        ignored -> {});
+                        selectedGraphPath::set);
                 assertEquals(com.mmdev.codetrace.reference.GraphLayoutEngine.Mode.ORGANIZED,
                         graphPane.getLayoutMode());
                 assertFalse(graphPane.isPannableByScrollPane(),
@@ -278,6 +279,25 @@ class CodeTraceAppSmokeTest {
                                 new javafx.scene.input.PickResult(
                                         graphSurface, backgroundX, backgroundY)));
                 assertEquals(javafx.scene.Cursor.OPEN_HAND, graphSurface.getCursor());
+                // Direct neighbors highlight in either import direction, but
+                // clicking blank workspace must clear selection AND neighbors.
+                assertEquals("src/Main.java", graphPane.getSelectedNode());
+                assertTrue(graphPane.getSelectedNeighbors().contains("src/Util.java"));
+                assertEquals("src/Main.java", selectedGraphPath.get());
+                graphSurface.getOnMouseClicked().handle(
+                        new javafx.scene.input.MouseEvent(
+                                javafx.scene.input.MouseEvent.MOUSE_CLICKED,
+                                backgroundX, backgroundY, 100, 100,
+                                javafx.scene.input.MouseButton.PRIMARY, 1,
+                                false, false, false, false, false, false, false,
+                                false, false, false,
+                                new javafx.scene.input.PickResult(
+                                        graphSurface, backgroundX, backgroundY)));
+                assertNull(graphPane.getSelectedNode());
+                assertTrue(graphPane.getSelectedNeighbors().isEmpty(),
+                        "Clearing selection must also remove all neighbor highlights");
+                assertNull(selectedGraphPath.get(),
+                        "Empty workspace should signal statusbar reset");
                 Slider fontSlider = (Slider) zoom.lookup(".slider");
                 assertNotNull(fontSlider);
                 assertEquals(Orientation.HORIZONTAL, fontSlider.getOrientation());
@@ -330,6 +350,16 @@ class CodeTraceAppSmokeTest {
                                 about.getDialogPane().lookup(".about-logo-large");
                 assertNotNull(aboutImage);
                 assertTrue(aboutImage.getImage().getWidth() >= 256);
+                javafx.scene.image.ImageView authorPortrait =
+                        (javafx.scene.image.ImageView)
+                                about.getDialogPane().lookup(".about-author-portrait");
+                assertNotNull(authorPortrait, "The About author portrait must be packaged locally");
+                assertEquals(112.0, authorPortrait.getImage().getWidth());
+                javafx.scene.control.Label authorName =
+                        (javafx.scene.control.Label)
+                                about.getDialogPane().lookup(".about-author-name");
+                assertNotNull(authorName);
+                assertEquals("Marcos Moreira", authorName.getText());
                 about.close();
                 Stage projectPrefs = PreferencesWindow.create(
                         stage, AppSettings.load(), next -> {}, sample -> true,
@@ -496,9 +526,27 @@ class CodeTraceAppSmokeTest {
                         .filter(item -> "Crear esta carpeta".equals(item.getText()))
                         .findFirst().orElseThrow().fire();
                 assertTrue(virtual.exists("src/ejemplos"));
-                // A recursive collapse does not alter tree contents.
-                fileTree.getRoot().setExpanded(true);
-                fileTree.collapseRecursively(src);
+                // Recursive collapse keeps the clicked parent expanded,
+                // while its already expanded child folders become collapsed.
+                fileTree.refreshTree();
+                var srcTree = fileTree.getRoot().getChildren().stream()
+                        .filter(item -> src.equals(item.getValue()))
+                        .findFirst().orElseThrow();
+                srcTree.setExpanded(true);
+                var nestedTree = srcTree.getChildren().stream()
+                        .filter(item -> nested.equals(item.getValue()))
+                        .findFirst().orElseThrow();
+                nestedTree.setExpanded(true);
+                assertTrue(nestedTree.isExpanded());
+                srcMenu.getItems().stream()
+                        .filter(item -> "Colapsar subcarpetas".equals(item.getText()))
+                        .findFirst().orElseThrow().fire();
+                assertTrue(srcTree.isExpanded(),
+                        "Colapsar subcarpetas must leave the clicked directory expanded");
+                assertFalse(nestedTree.isExpanded(),
+                        "Nested directories should be recursively collapsed");
+                assertTrue(srcTree.getChildren().contains(nestedTree),
+                        "Immediate subfolders must remain visible");
                 assertTrue(Files.exists(nestedFile));
                 ContextMenu fileMenu = (ContextMenu) menuFor.invoke(fileTree, nestedFile);
                 assertTrue(fileMenu.getItems().stream().anyMatch(
