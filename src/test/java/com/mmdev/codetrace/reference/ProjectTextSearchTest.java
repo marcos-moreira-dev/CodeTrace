@@ -85,4 +85,26 @@ class ProjectTextSearchTest {
         assertEquals(1, report.skippedLongLines());
         assertTrue(report.partial());
     }
+
+    @Test void limitsPathologicalRegexBacktrackingWithoutAlteringTheReference()
+            throws Exception {
+        String source = "a".repeat(2000) + "b";
+        Path file = Files.writeString(root.resolve("Regex.txt"), source);
+        var opts = new ProjectTextSearch.Options("(a+)+$", true, true, false);
+        long start = System.nanoTime();
+        var failure = assertThrows(IllegalArgumentException.class,
+                () -> ProjectTextSearch.searchWithReport(
+                        root, "Regex.txt", opts, () -> false));
+        assertTrue(failure.getMessage().contains("demasiado costosa"));
+        assertTrue(java.util.concurrent.TimeUnit.NANOSECONDS.toSeconds(
+                        System.nanoTime() - start) < 10);
+        assertEquals(source, Files.readString(file));
+    }
+
+    @Test void ordinaryRegexPatternsStillFindAccentedSourceLines() throws Exception {
+        Files.writeString(root.resolve("Code.java"), "acción 42\\nacción 7".replace("\\n", "\n"));
+        var opts = new ProjectTextSearch.Options("acción\\s+\\d+", true, false, false);
+        assertEquals(2, ProjectTextSearch.searchWithReport(
+                root, null, opts, () -> false).hits().size());
+    }
 }

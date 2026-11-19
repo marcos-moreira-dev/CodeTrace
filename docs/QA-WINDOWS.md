@@ -411,3 +411,11 @@ Consulta también [Auditoría de cierre](AUDITORIA-CIERRE-2026-11.md).
   resultados son exhaustivos.
 - Autocrear 1000 nodos y cambiar inmediatamente de proyecto: no debe
   completarse trabajo del proyecto anterior ni crearse archivos físicos.
+
+## SEARCH-REGEX-BUDGET — patrones costosos
+
+- Comprobar búsqueda regex normal de palabras y números con acentos.
+- Ejecutar una expresión de retroceso patológico en un proyecto de prueba:
+  debe informar patrón demasiado costoso y dejar responder la interfaz.
+- Ejecutar una búsqueda costosa y pulsar «Detener»: no deben quedar
+  resultados tardíos ni modificarse los archivos de referencia.

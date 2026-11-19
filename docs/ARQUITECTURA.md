@@ -226,3 +226,13 @@ expansión de subcarpetas y alcance de progreso. `ReferenceTree` se
 limita a construir los `MenuItem` JavaFX y delegar acciones. Los tests
 comprueban permisos antes y después de crear una carpeta y un archivo
 virtual, así como archivos no practicables.
+
+## Presupuesto de evaluación de expresiones regulares
+
+El motor `ProjectTextSearch` mantiene los patrones Java `Pattern`, pero
+en búsquedas regex usa un `CharSequence` vigilado, con comprobación de
+cancelación y presupuesto de unos 250 ms por línea (además del límite
+previo de 4096 caracteres por línea). Los patrones con retrocesos
+patológicos se rechazan con un mensaje legible, en lugar de bloquear
+indefinidamente un hilo de búsqueda. Las búsquedas literales no necesitan
+esta capa. La interrupción no borra resultados persistidos ni referencias.

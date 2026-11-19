@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.CancellationException;
+import java.util.concurrent.TimeUnit;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.BooleanSupplier;
@@ -25,6 +27,7 @@ public final class ProjectTextSearch {
     private static final int MAX_PATTERN = 256;
     private static final int MAX_HITS = 1500;
     private static final int MAX_LINE = 4096;
+    private static final long MAX_REGEX_LINE_NANOS = TimeUnit.MILLISECONDS.toNanos(250);
     private ProjectTextSearch() {}
 
     public record Options(String expression, boolean regex, boolean caseSensitive,
@@ -114,7 +117,12 @@ public final class ProjectTextSearch {
                     skippedLongLines++;
                     continue;
                 }
-                Matcher match = pattern.matcher(line);
+                // Java regex has no native timeout or reliable thread-interrupt
+                // hook during catastrophic backtracking. Bound access to the
+                // CharSequence so a pathological regex cannot hang a worker.
+                CharSequence searchable = options.regex()
+                        ? new BudgetedLine(line, cancelled) : line;
+                Matcher match = pattern.matcher(searchable);
                 while (match.find() && results.size() < MAX_HITS) {
                     int start = match.start();
                     int size = match.end() - start;
@@ -129,6 +137,48 @@ public final class ProjectTextSearch {
             }
         }
         return new Result(results, results.size() >= MAX_HITS, skippedLongLines);
+    }
+
+    /** Check cancellation/time budget during regex backtracking. */
+    private static final class BudgetedLine implements CharSequence {
+        private final String text;
+        private final BooleanSupplier cancelled;
+        private final long deadline;
+        private int examined;
+
+        BudgetedLine(String text, BooleanSupplier cancelled) {
+            this(text, cancelled, System.nanoTime() + MAX_REGEX_LINE_NANOS);
+        }
+
+        private BudgetedLine(String text, BooleanSupplier cancelled, long deadline) {
+            this.text = text;
+            this.cancelled = cancelled;
+            this.deadline = deadline;
+        }
+
+        private void guard() {
+            if ((++examined & 255) != 0) return;
+            if (cancelled.getAsBoolean() || Thread.currentThread().isInterrupted())
+                throw new CancellationException("Búsqueda cancelada.");
+            if (System.nanoTime() - deadline >= 0)
+                throw new IllegalArgumentException(
+                        "La expresión regular es demasiado costosa en una línea. "
+                        + "Simplifica el patrón.");
+        }
+
+        @Override public int length() { return text.length(); }
+
+        @Override public char charAt(int index) {
+            guard();
+            return text.charAt(index);
+        }
+
+        @Override public CharSequence subSequence(int start, int end) {
+            guard();
+            return new BudgetedLine(text.substring(start, end), cancelled, deadline);
+        }
+
+        @Override public String toString() { return text; }
     }
 
     private static Pattern compile(Options options) {
