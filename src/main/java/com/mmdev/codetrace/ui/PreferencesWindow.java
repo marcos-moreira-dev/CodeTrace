@@ -1,6 +1,7 @@
 package com.mmdev.codetrace.ui;
 
 import com.mmdev.codetrace.app.AppSettings;
+import com.mmdev.codetrace.reference.GraphLayoutEngine;
 import com.mmdev.codetrace.commands.ProjectCommandStore;
 import com.mmdev.codetrace.commands.ProjectCommandStore.Preset;
 import java.io.IOException;
@@ -103,7 +104,7 @@ public final class PreferencesWindow {
         root.setTop(header);
 
         ListView<String> navigation = new ListView<>(
-                FXCollections.observableArrayList("Editor", "Ventana", "Sonido", "Comandos"));
+                FXCollections.observableArrayList("Editor", "Ventana", "Grafo", "Sonido", "Comandos"));
         navigation.getStyleClass().add("prefs-navigation");
         navigation.setPrefWidth(168);
         navigation.setMinWidth(168);
@@ -119,6 +120,7 @@ public final class PreferencesWindow {
                     FontIcon icon = new FontIcon(switch (item) {
                         case "Editor" -> "fth-type";
                         case "Ventana" -> "fth-layout";
+                        case "Grafo" -> "fth-share-2";
                         case "Sonido" -> "fth-volume-2";
                         default -> "fth-terminal";
                     });
@@ -205,6 +207,27 @@ public final class PreferencesWindow {
         VBox windowPanel = section("Ventana");
         windowPanel.getChildren().addAll(groupHeading("Paneles"), explorer);
 
+        // Layout is an application preference, not permanent map toolbar clutter.
+        ExclusiveChoiceBar<GraphLayoutEngine.Mode> graphLayout =
+                new ExclusiveChoiceBar<>(
+                        List.of(
+                                new ExclusiveChoiceBar.Choice<>(GraphLayoutEngine.Mode.ORGANIZED,
+                                        "Organizado", "Agrupa archivos conectados y evita etiquetas superpuestas"),
+                                new ExclusiveChoiceBar.Choice<>(GraphLayoutEngine.Mode.GRID,
+                                        "Cuadrícula", "Distribución simple en filas y columnas")),
+                        current.graphLayoutMode(), mode -> {});
+        graphLayout.getStyleClass().add("prefs-graph-layout");
+        Label graphExplanation = new Label(
+                "Organizado distribuye los archivos según sus dependencias. "
+                + "La opción no modifica los imports ni los archivos originales. "
+                + "Puedes arrastrar nodos y guardar su posición en la sesión.");
+        graphExplanation.setWrapText(true);
+        graphExplanation.getStyleClass().add("prefs-feedback");
+        VBox graphPanel = section("Mapa de dependencias");
+        graphPanel.getChildren().addAll(
+                groupHeading("Distribución inicial"), graphLayout,
+                graphExplanation);
+
         CheckBox sounds = new CheckBox("Reproducir sonidos al escribir");
         sounds.setSelected(current.typingSounds());
         CheckBox completionSound = new CheckBox(
@@ -259,6 +282,7 @@ public final class PreferencesWindow {
         navigation.getSelectionModel().selectedItemProperty().addListener(
                 (obs, previous, selected) -> sectionContent.setCenter(
                         "Ventana".equals(selected) ? windowPanel
+                                : "Grafo".equals(selected) ? graphPanel
                                 : "Sonido".equals(selected) ? soundPanel
                                 : "Comandos".equals(selected) ? stableCommandsPage : editorPanel));
         navigation.getSelectionModel().selectFirst();
@@ -283,7 +307,7 @@ public final class PreferencesWindow {
                     (int) Math.round(size.getValue()),
                     explorer.isSelected(), current.keyboardLayout(), sounds.isSelected(),
                     (int) Math.round(opacity.getValue()), turbo.isSelected(),
-                    completionSound.isSelected()));
+                    completionSound.isSelected(), graphLayout.selected()));
             return true;
         };
         Button accept = new Button("Aceptar");
