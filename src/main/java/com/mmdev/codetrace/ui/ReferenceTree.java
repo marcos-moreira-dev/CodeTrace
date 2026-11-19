@@ -1,6 +1,7 @@
 package com.mmdev.codetrace.ui;
 
 import com.mmdev.codetrace.workspace.VirtualWorkspace;
+import com.mmdev.codetrace.workspace.VirtualChildrenIndex;
 import com.mmdev.codetrace.reference.ReferenceTreeIndex;
 import com.mmdev.codetrace.reference.TreeNameFilter;
 import com.mmdev.codetrace.reference.FolderProgressFocus;
@@ -59,6 +60,7 @@ public final class ReferenceTree extends TreeView<Path> {
     private final Consumer<Change> onChange;
     private final Consumer<String> onStatus;
     private VirtualWorkspace workspace = new VirtualWorkspace();
+    private VirtualChildrenIndex virtualChildren = VirtualChildrenIndex.snapshot(workspace);
     private Path referenceRoot;
     private String clipboard;
     private boolean cut;
@@ -463,6 +465,9 @@ public final class ReferenceTree extends TreeView<Path> {
         if (referenceRoot == null) {
             return;
         }
+        // One O(n) index per model refresh, not an O(n) workspace scan for
+        // every lazily expanded folder in a large reference tree.
+        virtualChildren = VirtualChildrenIndex.snapshot(workspace);
         Set<Path> expanded = new HashSet<>();
         collectExpanded(getRoot(), expanded);
         TreeItem<Path> node = item(referenceRoot);
@@ -529,10 +534,8 @@ public final class ReferenceTree extends TreeView<Path> {
                             children.add(referenceRoot.resolve(child));
                         }
                     }
-                    for (VirtualWorkspace.Entry entry : workspace.entries()) {
-                        if (!entry.path().isEmpty() && parentOf(entry.path()).equals(parent)) {
-                            children.add(referenceRoot.resolve(entry.path()));
-                        }
+                    for (String child : virtualChildren.childrenOf(parent)) {
+                        children.add(referenceRoot.resolve(child));
                     }
                     super.getChildren().setAll(children.stream()
                             .filter(child -> nameFilter.isBlank()
@@ -557,9 +560,7 @@ public final class ReferenceTree extends TreeView<Path> {
             boolean hasSubfolders = index.children(relative).stream()
                     .anyMatch(index::hasDirectory);
             if (!hasSubfolders) {
-                hasSubfolders = workspace.entries().stream()
-                        .anyMatch(entry -> entry.kind() == VirtualWorkspace.Kind.DIRECTORY
-                                && parentOf(entry.path()).equals(relative));
+                hasSubfolders = virtualChildren.hasDirectoryChild(relative);
             }
             if (hasSubfolders) {
                 MenuItem expandBranch = new MenuItem("Expandir todas las subcarpetas");

@@ -87,3 +87,12 @@ contadores y estados recursivos, no a la elegibilidad del código.
 - `ui/CodeLineGutter` proporciona una numeración 1-based uniforme, integrada en las celdas virtualizadas tanto de `TypingEditor` como de `ReferenceTextPane`. Los índices internos de `TypingSession` no cambian.
 - Buscar coloca Ámbito y sus opciones en una fila adaptable y navega al primer clic en resultados (sin modificar la transcripción).
 - Pendiente de aceptación visual Windows: scroll a coincidencias recién abiertas, foco, escalado DPI y pruebas de regresión de cierre con medios activos.
+
+## Índice de hijos del explorador
+
+`workspace/VirtualChildrenIndex` es una instantánea inmutable que agrupa
+archivos y carpetas virtuales por padre inmediato. `ReferenceTree` la
+reconstruye al actualizar su modelo y consulta hijos directos durante la
+expansión perezosa, evitando recorrer el workspace completo por cada carpeta.
+La fuente de verdad sigue siendo `VirtualWorkspace`; la caché no altera
+la lógica de reconstrucción ni el formato de sesiones.
