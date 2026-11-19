@@ -336,7 +336,7 @@ public final class CodeTraceApp extends Application {
         refreshButton.setDisable(true);
         refreshButton.getStyleClass().add("tree-header-action");
         refreshButton.setTooltip(new Tooltip("Actualizar referencia: volver a analizar "
-                + "los archivos originales sin modificar la sesión"));
+                + "los archivos originales sin modificar el proyecto guardado"));
         refreshButton.setAccessibleText("Actualizar referencia");
         refreshButton.setOnAction(event -> refreshReference());
         skipImportsButton.setOnAction(event -> skipImports());
@@ -1639,14 +1639,14 @@ public final class CodeTraceApp extends Application {
                 folder.setTitle("Buscar carpeta de referencia");
                 java.io.File replacement = folder.showDialog(stage);
                 if (replacement == null) {
-                    setStatus("Restauración cancelada: se conserva la sesión actual.");
+                    setStatus("Restauración cancelada: se conserva el proyecto actual.");
                     return;
                 }
                 restoredReference = replacement.toPath().toAbsolutePath().normalize();
             }
             // The user may have typed while the session was loading.
             if (!confirmDiscard()) {
-                setStatus("Restauración cancelada: se conserva la sesión actual.");
+                setStatus("Restauración cancelada: se conserva el proyecto actual.");
                 return;
             }
             applyProjectState(ProjectActivation.resumed(
@@ -1685,7 +1685,7 @@ public final class CodeTraceApp extends Application {
             setStatus("Proyecto guardado: " + destination.getFileName());
             return true;
         } catch (IOException failure) {
-            showFailure("No se pudo guardar la sesión", failure.getMessage());
+            showFailure("No se pudo guardar el proyecto", failure.getMessage());
             return false;
         }
     }
@@ -1725,7 +1725,7 @@ public final class CodeTraceApp extends Application {
         FileChooser chooser = new FileChooser();
         chooser.setTitle(title);
         chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter(
-                "Sesión CodeTrace (*.ctrace)", "*.ctrace"));
+                "Proyecto CodeTrace (*.ctrace)", "*.ctrace"));
         if (sessionFile != null && sessionFile.getParent() != null
                 && Files.isDirectory(sessionFile.getParent())) {
             chooser.setInitialDirectory(sessionFile.getParent().toFile());
@@ -1737,8 +1737,8 @@ public final class CodeTraceApp extends Application {
         if (!dirty) {
             return true;
         }
-        ButtonType answer = ProductDialogs.confirm(stage, "Sesión modificada",
-                "¿Guardar los cambios de la sesión antes de continuar?",
+        ButtonType answer = ProductDialogs.confirm(stage, "Proyecto modificado",
+                "¿Guardar los cambios del proyecto antes de continuar?",
                 ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
         if (answer == ButtonType.YES) {
             return saveSession(false);
