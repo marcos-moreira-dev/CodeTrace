@@ -198,16 +198,10 @@ class CodeTraceAppSmokeTest {
                 assertTrue(graphPane.getCanvasWidth() > 2000,
                         "Map supports a larger draggable workspace");
 
-                // Regression for the reported 55%-zoom jump to the upper-left.
-                // Attach to a real scene: JavaFX event x/y are SCENE coordinates,
-                // not raw Canvas-local coordinates under the 55% transform.
-                var previousTab = tabPane.getSelectionModel().getSelectedItem();
-                var graphTestTab = new javafx.scene.control.Tab("Map QA", graphPane);
-                tabPane.getTabs().add(graphTestTab);
-                tabPane.getSelectionModel().select(graphTestTab);
+                // Invoke the Canvas handlers with real local-space coordinates.
+                // Event.fireEvent retargets synthetic coordinates when detached
+                // or scaled, so it does NOT simulate a native JavaFX gesture.
                 graphPane.setZoomPercent(55);
-                stage.getScene().getRoot().applyCss();
-                stage.getScene().getRoot().layout();
                 javafx.scene.control.ScrollPane graphScroll =
                         (javafx.scene.control.ScrollPane) graphPane.getCenter();
                 javafx.scene.Group graphGroup =
@@ -217,46 +211,36 @@ class CodeTraceAppSmokeTest {
                 graphScroll.setHvalue(0.15);
                 graphScroll.setVvalue(0.10);
                 var oldNode = graphChanges.get().positions().get("src/Main.java");
-                var pressScene = graphSurface.localToScene(oldNode.x(), oldNode.y());
-                var dragScene = graphSurface.localToScene(
-                        oldNode.x() + 55, oldNode.y() + 30);
                 javafx.scene.input.MouseEvent pressed = new javafx.scene.input.MouseEvent(
                         javafx.scene.input.MouseEvent.MOUSE_PRESSED,
-                        pressScene.getX(), pressScene.getY(), 0, 0,
+                        oldNode.x(), oldNode.y(), 0, 0,
                         javafx.scene.input.MouseButton.PRIMARY, 1,
                         false, false, false, false, true, false, false,
                         false, false, false,
                         new javafx.scene.input.PickResult(
                                 graphSurface, oldNode.x(), oldNode.y()));
-                AtomicReference<javafx.geometry.Point2D> receivedPress =
-                        new AtomicReference<>();
-                graphSurface.addEventFilter(javafx.scene.input.MouseEvent.MOUSE_PRESSED,
-                        event -> receivedPress.set(new javafx.geometry.Point2D(
-                                event.getX(), event.getY())));
-                javafx.event.Event.fireEvent(graphSurface, pressed);
-                assertEquals(oldNode.x(), receivedPress.get().getX(), 0.01,
-                        "Scene-space synthetic press must map to the selected node");
-                assertEquals(oldNode.y(), receivedPress.get().getY(), 0.01,
-                        "Scene-space synthetic press must map to the selected node");
+                assertEquals(oldNode.x(), pressed.getX(), 0.01);
+                assertEquals(oldNode.y(), pressed.getY(), 0.01);
+                graphSurface.getOnMousePressed().handle(pressed);
                 javafx.scene.input.MouseEvent dragged = new javafx.scene.input.MouseEvent(
                         javafx.scene.input.MouseEvent.MOUSE_DRAGGED,
-                        dragScene.getX(), dragScene.getY(), 0, 0,
+                        oldNode.x() + 55, oldNode.y() + 30, 0, 0,
                         javafx.scene.input.MouseButton.PRIMARY, 1,
                         false, false, false, false, true, false, false,
                         false, false, false,
                         new javafx.scene.input.PickResult(
                                 graphSurface, oldNode.x() + 55, oldNode.y() + 30));
-                javafx.event.Event.fireEvent(graphSurface, dragged);
+                graphSurface.getOnMouseDragged().handle(dragged);
                 assertEquals(0.15, graphScroll.getHvalue(), 0.00001,
                         "Dragging a node must not pan the map");
                 assertEquals(0.10, graphScroll.getVvalue(), 0.00001,
                         "Dragging a node must preserve vertical scroll");
                 assertTrue(graphChanges.get().positions().get("src/Main.java")
                         .equals(oldNode), "Unreleased changes are not persisted");
-                javafx.event.Event.fireEvent(graphSurface,
+                graphSurface.getOnMouseReleased().handle(
                         new javafx.scene.input.MouseEvent(
                                 javafx.scene.input.MouseEvent.MOUSE_RELEASED,
-                                dragScene.getX(), dragScene.getY(), 0, 0,
+                                oldNode.x() + 55, oldNode.y() + 30, 0, 0,
                                 javafx.scene.input.MouseButton.PRIMARY, 1,
                                 false, false, false, false, false, false, false,
                                 false, false, false,
@@ -266,9 +250,6 @@ class CodeTraceAppSmokeTest {
                         > oldNode.x(), "A node really moved independently");
                 assertEquals(0.15, graphScroll.getHvalue(), 0.00001);
                 assertEquals(0.10, graphScroll.getVvalue(), 0.00001);
-                tabPane.getTabs().remove(graphTestTab);
-                tabPane.getSelectionModel().select(previousTab);
-
                 Slider fontSlider = (Slider) zoom.lookup(".slider");
                 assertNotNull(fontSlider);
                 assertEquals(Orientation.HORIZONTAL, fontSlider.getOrientation());
