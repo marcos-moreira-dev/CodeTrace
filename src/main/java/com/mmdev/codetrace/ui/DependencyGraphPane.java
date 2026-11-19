@@ -9,35 +9,32 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Consumer;
 import javafx.application.Platform;
-import javafx.geometry.Point2D;
-import javafx.scene.Cursor;
-import javafx.scene.Node;
-import javafx.scene.transform.Scale;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.scene.Group;
+import javafx.geometry.Point2D;
+import javafx.scene.Cursor;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuItem;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
 /**
- * Quiet graph workspace. Context lives in the application's statusbar,
- * layout choice in Preferences, and node positions in .ctrace sessions.
- *
- * Critically, ScrollPane native pannable mode and resizing DURING a drag are
- * disabled: either one can reposition the viewport while dragging a node.
+ * Read-only dependency graph on a viewport-sized Canvas with a logical camera.
+ * Unlike a giant scrollable bitmap, panning has no fixed edges, the graph is
+ * centered on opening, and large drawings do not allocate huge Canvas buffers.
  */
 public final class DependencyGraphPane extends BorderPane {
-    private static final double MAX_WIDTH = 5900;
-    private static final double MAX_HEIGHT = 9200;
     private static final double NODE_RADIUS = 10;
+    private static final double MAX_NODE_COORDINATE = 100_000;
+    private final Pane viewport = new Pane();
     private final Canvas canvas = new Canvas();
-    private final Group artwork = new Group(canvas);
-    private final ScrollPane scroll = new ScrollPane(artwork);
+    private final GraphCamera camera = new GraphCamera();
     private final Map<String, GraphLayout.Point> layout = new LinkedHashMap<>();
     private final ProjectDependencyGraph.Graph model;
     private final Consumer<GraphLayout> onLayoutChanged;
@@ -51,8 +48,7 @@ public final class DependencyGraphPane extends BorderPane {
     private GraphLayout.Point initialPosition;
     private double pressX, pressY;
     private boolean panning, moved;
-    private double panSceneX, panSceneY, panStartH, panStartV;
-    private long zoomRevision;
+    private double panSceneX, panSceneY, panStartX, panStartY;
 
     public DependencyGraphPane(ProjectDependencyGraph.Graph graph,
                                Consumer<String> openSource) {
@@ -80,38 +76,47 @@ public final class DependencyGraphPane extends BorderPane {
                                Consumer<GraphLayout> onLayoutChanged,
                                Consumer<String> onNodeSelected,
                                GraphLayoutEngine.Mode initialMode) {
-        this.model = graph;
+        model = graph;
         this.openSource = openSource;
         this.onLayoutChanged = onLayoutChanged;
         this.onNodeSelected = onNodeSelected;
+        layoutMode = initialMode == null
+                ? GraphLayoutEngine.Mode.ORGANIZED : initialMode;
         getStyleClass().add("dependency-map-pane");
 
+        layout.putAll(GraphLayoutEngine.arrange(graph, layoutMode));
         boolean compatible = restored != null
                 && restored.fingerprint().equals(graph.fingerprint());
-        layoutMode = compatible ? restored.mode() : initialMode;
-        layout.putAll(GraphLayoutEngine.arrange(graph, layoutMode));
-        if (compatible && !GraphLayoutEngine.hasOverlaps(restored.positions())) {
-            for (var item : restored.positions().entrySet())
-                if (layout.containsKey(item.getKey()))
-                    layout.put(item.getKey(), item.getValue());
-        } else if (compatible && layoutMode == GraphLayoutEngine.Mode.ORGANIZED) {
-            // Older organized implementations could save overlapping nodes.
-            // Rebuild a legible layout and make that repair persist on Save.
+        boolean sameMode = compatible && restored.mode() == layoutMode;
+        if (sameMode && !GraphLayoutEngine.hasOverlaps(restored.positions())) {
+            for (var entry : restored.positions().entrySet()) {
+                if (layout.containsKey(entry.getKey()))
+                    layout.put(entry.getKey(), entry.getValue());
+            }
+        } else if (compatible) {
+            // Old GRID sessions must not silently override a user's current
+            // Organized preference; repair invalid overlap layouts as well.
             Platform.runLater(this::notifyLayoutChanged);
         }
-        sizeCanvasForLayout();
-        redraw();
+        centerCameraOnGraph();
 
-        scroll.setPannable(false);
-        scroll.setFitToWidth(false);
-        scroll.setFitToHeight(false);
-        scroll.getStyleClass().add("dependency-map-scroll");
-        javafx.scene.control.MenuItem reset = new javafx.scene.control.MenuItem(
-                "Restablecer distribución");
-        reset.setOnAction(event -> resetLayout());
-        scroll.setContextMenu(new javafx.scene.control.ContextMenu(reset));
-        setCenter(scroll);
+        viewport.getStyleClass().add("dependency-map-viewport");
+        viewport.setMinSize(0, 0);
+        viewport.getChildren().add(canvas);
+        canvas.setManaged(false);
+        canvas.widthProperty().bind(viewport.widthProperty());
+        canvas.heightProperty().bind(viewport.heightProperty());
+        canvas.widthProperty().addListener((obs, old, value) -> redraw());
+        canvas.heightProperty().addListener((obs, old, value) -> redraw());
+        setCenter(viewport);
         canvas.setCursor(Cursor.OPEN_HAND);
+        canvas.setFocusTraversable(true);
+
+        MenuItem reset = new MenuItem("Restablecer distribución");
+        reset.setOnAction(event -> resetLayout());
+        viewport.setOnContextMenuRequested(event -> new ContextMenu(reset)
+                .show(viewport, event.getScreenX(), event.getScreenY()));
+
         canvas.setOnMouseMoved(event -> {
             if (!panning && pressed == null)
                 canvas.setCursor(pickNode(event.getX(), event.getY()) == null
@@ -120,13 +125,13 @@ public final class DependencyGraphPane extends BorderPane {
         canvas.setOnMouseExited(event -> {
             if (!panning && pressed == null) canvas.setCursor(Cursor.DEFAULT);
         });
-
         canvas.setOnMousePressed(event -> {
             pressed = null;
             panning = false;
             moved = false;
             if (event.getButton() != MouseButton.PRIMARY
                     && event.getButton() != MouseButton.MIDDLE) return;
+            canvas.requestFocus();
             String hit = event.getButton() == MouseButton.PRIMARY
                     ? pickNode(event.getX(), event.getY()) : null;
             if (hit != null) {
@@ -134,42 +139,35 @@ public final class DependencyGraphPane extends BorderPane {
                 initialPosition = layout.get(hit);
                 pressX = event.getX();
                 pressY = event.getY();
-                canvas.setCursor(Cursor.CLOSED_HAND);
             } else {
-                // Pan deliberately on empty background (left or middle button).
                 panning = true;
                 panSceneX = event.getSceneX();
                 panSceneY = event.getSceneY();
-                panStartH = scroll.getHvalue();
-                panStartV = scroll.getVvalue();
-                canvas.setCursor(Cursor.CLOSED_HAND);
+                panStartX = camera.centerX();
+                panStartY = camera.centerY();
             }
+            canvas.setCursor(Cursor.CLOSED_HAND);
             event.consume();
         });
         canvas.setOnMouseDragged(event -> {
             if (pressed != null && initialPosition != null) {
                 if (!event.isPrimaryButtonDown()) return;
-                double dx = event.getX() - pressX, dy = event.getY() - pressY;
+                double dx = event.getX() - pressX;
+                double dy = event.getY() - pressY;
                 if (!moved && Math.abs(dx) + Math.abs(dy) < 3) return;
                 moved = true;
-                // Never resize the Canvas here: doing so reanchors ScrollPane
-                // and makes a dragged node appear to jump to the upper-left.
-                double newX = clamp(initialPosition.x() + dx, 35, MAX_WIDTH - 290);
-                double newY = clamp(initialPosition.y() + dy, 35, MAX_HEIGHT - 110);
-                layout.put(pressed, new GraphLayout.Point(newX, newY));
+                double x = clamp(initialPosition.x() + dx / camera.scale(),
+                        -MAX_NODE_COORDINATE, MAX_NODE_COORDINATE);
+                double y = clamp(initialPosition.y() + dy / camera.scale(),
+                        -MAX_NODE_COORDINATE, MAX_NODE_COORDINATE);
+                layout.put(pressed, new GraphLayout.Point(x, y));
                 redraw();
                 event.consume();
             } else if (panning) {
-                double zoom = zoomPercent.get() / 100.0;
-                double horizontal = Math.max(1,
-                        canvas.getWidth() * zoom - scroll.getViewportBounds().getWidth());
-                double vertical = Math.max(1,
-                        canvas.getHeight() * zoom - scroll.getViewportBounds().getHeight());
-                scroll.setHvalue(clamp(panStartH
-                        - (event.getSceneX() - panSceneX) / horizontal, 0, 1));
-                scroll.setVvalue(clamp(panStartV
-                        - (event.getSceneY() - panSceneY) / vertical, 0, 1));
+                camera.center(panStartX - (event.getSceneX() - panSceneX) / camera.scale(),
+                        panStartY - (event.getSceneY() - panSceneY) / camera.scale());
                 moved = true;
+                redraw();
                 event.consume();
             }
         });
@@ -177,11 +175,6 @@ public final class DependencyGraphPane extends BorderPane {
             if (pressed != null && moved) {
                 selectNode(pressed);
                 notifyLayoutChanged();
-                // Growth happens AFTER release, retaining absolute scroll
-                // offsets; it never interferes with the drag gesture.
-                GraphLayout.Point at = layout.get(selected);
-                extendCanvasKeepingViewport(at.x() + 510, at.y() + 360);
-                redraw();
                 event.consume();
             }
             pressed = null;
@@ -195,93 +188,105 @@ public final class DependencyGraphPane extends BorderPane {
                 moved = false;
                 return;
             }
-            String node = pickNode(event.getX(), event.getY());
-            // A click on empty workspace clears the previous selection.
-            selectNode(node);
-            if (node != null && event.getClickCount() == 2) openSource.accept(node);
+            String hit = pickNode(event.getX(), event.getY());
+            selectNode(hit);
+            if (hit != null && event.getClickCount() == 2) openSource.accept(hit);
             event.consume();
         });
-        scroll.addEventFilter(javafx.scene.input.ScrollEvent.SCROLL, event -> {
+        viewport.addEventFilter(javafx.scene.input.ScrollEvent.SCROLL, event -> {
             if (!event.isControlDown() && !event.isShortcutDown()) return;
-            setZoomPercentAround(getZoomPercent() + (event.getDeltaY() > 0 ? 10 : -10),
-                    event.getSceneX(), event.getSceneY());
+            Point2D local = viewport.sceneToLocal(event.getSceneX(), event.getSceneY());
+            zoomAt(getZoomPercent() + (event.getDeltaY() > 0 ? 10 : -10),
+                    local.getX(), local.getY());
             event.consume();
         });
+        canvas.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ESCAPE) {
+                clearSelection();
+            } else if (event.getCode() == KeyCode.HOME) {
+                centerCameraOnGraph();
+                redraw();
+            } else if (event.getCode() == KeyCode.LEFT) {
+                panByPixels(65, 0);
+            } else if (event.getCode() == KeyCode.RIGHT) {
+                panByPixels(-65, 0);
+            } else if (event.getCode() == KeyCode.UP) {
+                panByPixels(0, 65);
+            } else if (event.getCode() == KeyCode.DOWN) {
+                panByPixels(0, -65);
+            } else return;
+            event.consume();
+        });
+        redraw();
+    }
+
+    private void centerCameraOnGraph() {
+        double minX = layout.values().stream().mapToDouble(GraphLayout.Point::x)
+                .min().orElse(0);
+        double maxX = layout.values().stream().mapToDouble(GraphLayout.Point::x)
+                .max().orElse(0);
+        double minY = layout.values().stream().mapToDouble(GraphLayout.Point::y)
+                .min().orElse(0);
+        double maxY = layout.values().stream().mapToDouble(GraphLayout.Point::y)
+                .max().orElse(0);
+        // Include filename labels to the right of each node.
+        camera.center((minX + maxX + 235) / 2, (minY + maxY) / 2);
     }
 
     public int getZoomPercent() { return zoomPercent.get(); }
     public IntegerProperty zoomPercentProperty() { return zoomPercent; }
-    /** The bottom statusbar slider zooms around the visible viewport center. */
+
+    /** The shared statusbar slider zooms around the visible viewport center. */
     public void setZoomPercent(int percent) {
-        Node viewport = scroll.lookup(".viewport");
-        if (viewport == null || viewport.getScene() == null) {
-            applyZoom(percent);
-            return;
-        }
-        Point2D center = viewport.localToScene(
-                viewport.getLayoutBounds().getWidth() / 2,
-                viewport.getLayoutBounds().getHeight() / 2);
-        setZoomPercentAround(percent, center.getX(), center.getY());
+        zoomAt(percent, canvas.getWidth() / 2, canvas.getHeight() / 2);
     }
 
-    /** Ctrl+wheel keeps the map point under the mouse at the same screen pixel. */
+    /** Ctrl+wheel keeps the map location below the cursor fixed on screen. */
     public void setZoomPercentAround(int percent, double sceneX, double sceneY) {
-        int next = Math.max(25, Math.min(400, percent));
-        if (next == zoomPercent.get()) return;
-        Node viewport = scroll.lookup(".viewport");
-        if (viewport == null || viewport.getScene() == null
-                || canvas.getScene() == null) {
-            applyZoom(next);
-            return;
-        }
-        Point2D logical = canvas.sceneToLocal(sceneX, sceneY);
-        Point2D location = viewport.sceneToLocal(sceneX, sceneY);
-        applyZoom(next);
-        long version = ++zoomRevision;
-        Platform.runLater(() -> {
-            if (version != zoomRevision) return;
-            scroll.applyCss();
-            scroll.layout();
-            double zoom = zoomPercent.get() / 100.0;
-            scroll.setHvalue(anchoredScrollValue(
-                    logical.getX(), location.getX(), canvas.getWidth(),
-                    scroll.getViewportBounds().getWidth(), zoom));
-            scroll.setVvalue(anchoredScrollValue(
-                    logical.getY(), location.getY(), canvas.getHeight(),
-                    scroll.getViewportBounds().getHeight(), zoom));
-        });
+        Point2D local = viewport.getScene() == null
+                ? new Point2D(canvas.getWidth() / 2, canvas.getHeight() / 2)
+                : viewport.sceneToLocal(sceneX, sceneY);
+        zoomAt(percent, local.getX(), local.getY());
     }
 
-    private void applyZoom(int percent) {
-        int value = Math.max(25, Math.min(400, percent));
-        if (value == zoomPercent.get()) return;
-        // Apply the zero-pivot transform to the Canvas INSIDE Group.
-        // ScrollPane measures the Group's layoutBounds, so the scrollable
-        // extent now reflects the transformed Canvas (unlike scaling the
-        // ScrollPane's content Group itself).
-        canvas.getTransforms().setAll(new Scale(value / 100.0,
-                value / 100.0, 0, 0));
+    private void zoomAt(int percent, double pixelX, double pixelY) {
+        int value = (int) clamp(percent, 25, 400);
+        if (zoomPercent.get() == value) return;
+        camera.zoomAt(value / 100.0, pixelX, pixelY,
+                canvas.getWidth(), canvas.getHeight());
         zoomPercent.set(value);
+        redraw();
     }
 
-    public static double anchoredScrollValue(double logical, double viewportPixel,
-                                              double contentExtent, double viewportExtent,
-                                              double factor) {
-        double scrollable = contentExtent * factor - viewportExtent;
-        if (scrollable <= 0) return 0;
-        return clamp((logical * factor - viewportPixel) / scrollable, 0, 1);
-    }
     public GraphLayoutEngine.Mode getLayoutMode() { return layoutMode; }
     public String getSelectedNode() { return selected; }
+    public Set<String> getSelectedNeighbors() { return selectedNeighbors; }
+    public double getCanvasWidth() { return canvas.getWidth(); }
+    public double getCanvasHeight() { return canvas.getHeight(); }
+    public double getCameraX() { return camera.centerX(); }
+    public double getCameraY() { return camera.centerY(); }
+    public boolean hasUnboundedPan() { return true; }
+    public int nodeCount() { return model.nodes().size(); }
+    public int connectionCount() { return model.edges().size(); }
+    public String folder() { return model.folder(); }
 
-    /** Distinct directly connected neighbors, regardless of arrow direction. */
-    public Set<String> getSelectedNeighbors() {
-        return selectedNeighbors;
+    /** Useful for keyboard movement and repeatable viewport tests. */
+    public void panByPixels(double dx, double dy) {
+        camera.panPixels(dx, dy);
+        redraw();
     }
 
-    public void clearSelection() {
-        selectNode(null);
+    public String selectedNodeSummary() {
+        if (selected == null) return nodeCount() + " nodos · "
+                + connectionCount() + " conexiones";
+        long outgoing = model.edges().stream()
+                .filter(e -> e.source().equals(selected)).count();
+        long incoming = model.edges().stream()
+                .filter(e -> e.target().equals(selected)).count();
+        return outgoing + " salientes · " + incoming + " entrantes";
     }
+
+    public void clearSelection() { selectNode(null); }
 
     private void selectNode(String path) {
         if (path != null && !layout.containsKey(path)) return;
@@ -301,22 +306,6 @@ public final class DependencyGraphPane extends BorderPane {
         onNodeSelected.accept(path);
         redraw();
     }
-    public double getCanvasWidth() { return canvas.getWidth(); }
-    public double getCanvasHeight() { return canvas.getHeight(); }
-    public boolean isPannableByScrollPane() { return scroll.isPannable(); }
-    public int nodeCount() { return model.nodes().size(); }
-    public int connectionCount() { return model.edges().size(); }
-    public String folder() { return model.folder(); }
-
-    public String selectedNodeSummary() {
-        if (selected == null) return nodeCount() + " nodos · "
-                + connectionCount() + " conexiones";
-        long outgoing = model.edges().stream()
-                .filter(e -> e.source().equals(selected)).count();
-        long incoming = model.edges().stream()
-                .filter(e -> e.target().equals(selected)).count();
-        return outgoing + " salientes · " + incoming + " entrantes";
-    }
 
     public void setLayoutMode(GraphLayoutEngine.Mode mode) {
         if (mode == null || mode == layoutMode) return;
@@ -327,7 +316,7 @@ public final class DependencyGraphPane extends BorderPane {
     public void resetLayout() {
         layout.clear();
         layout.putAll(GraphLayoutEngine.arrange(model, layoutMode));
-        sizeCanvasForLayout();
+        centerCameraOnGraph();
         redraw();
         notifyLayoutChanged();
     }
@@ -336,48 +325,16 @@ public final class DependencyGraphPane extends BorderPane {
         onLayoutChanged.accept(new GraphLayout(model.fingerprint(), layout, layoutMode));
     }
 
-    private void sizeCanvasForLayout() {
-        double right = layout.values().stream()
-                .mapToDouble(GraphLayout.Point::x).max().orElse(900);
-        double bottom = layout.values().stream()
-                .mapToDouble(GraphLayout.Point::y).max().orElse(550);
-        canvas.setWidth(Math.min(MAX_WIDTH, Math.max(2700, right + 550)));
-        canvas.setHeight(Math.min(MAX_HEIGHT, Math.max(1500, bottom + 440)));
-    }
-
-    private void extendCanvasKeepingViewport(double right, double bottom) {
-        double oldWidth = canvas.getWidth(), oldHeight = canvas.getHeight();
-        double nextWidth = right > oldWidth - 160
-                ? Math.min(MAX_WIDTH, Math.max(oldWidth + 460, right + 200)) : oldWidth;
-        double nextHeight = bottom > oldHeight - 130
-                ? Math.min(MAX_HEIGHT, Math.max(oldHeight + 380, bottom + 170)) : oldHeight;
-        if (nextWidth == oldWidth && nextHeight == oldHeight) return;
-        double zoom = zoomPercent.get() / 100.0;
-        double viewportWidth = scroll.getViewportBounds().getWidth();
-        double viewportHeight = scroll.getViewportBounds().getHeight();
-        double pixelLeft = scroll.getHvalue() * Math.max(0, oldWidth * zoom - viewportWidth);
-        double pixelTop = scroll.getVvalue() * Math.max(0, oldHeight * zoom - viewportHeight);
-        canvas.setWidth(nextWidth);
-        canvas.setHeight(nextHeight);
-        Platform.runLater(() -> {
-            double newHorizontal = Math.max(1, nextWidth * zoom
-                    - scroll.getViewportBounds().getWidth());
-            double newVertical = Math.max(1, nextHeight * zoom
-                    - scroll.getViewportBounds().getHeight());
-            scroll.setHvalue(clamp(pixelLeft / newHorizontal, 0, 1));
-            scroll.setVvalue(clamp(pixelTop / newVertical, 0, 1));
-        });
-    }
-
     private static double clamp(double value, double min, double max) {
         return Math.max(min, Math.min(max, value));
     }
 
-    private String pickNode(double x, double y) {
+    private String pickNode(double screenX, double screenY) {
+        double x = camera.worldX(screenX, canvas.getWidth());
+        double y = camera.worldY(screenY, canvas.getHeight());
         for (String path : model.nodes()) {
             GraphLayout.Point point = layout.get(path);
             if (point == null) continue;
-            // Hit targets include the filename, not only the tiny circle.
             if (x >= point.x() - NODE_RADIUS - 2 && x <= point.x() + 258
                     && Math.abs(y - point.y()) <= 16)
                 return path;
@@ -387,15 +344,21 @@ public final class DependencyGraphPane extends BorderPane {
 
     private void redraw() {
         GraphicsContext g = canvas.getGraphicsContext2D();
+        double w = canvas.getWidth(), h = canvas.getHeight();
+        g.setTransform(1, 0, 0, 1, 0, 0);
         g.setFill(Color.web("#f8fafb"));
-        g.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
+        g.fillRect(0, 0, w, h);
+        double zoom = camera.scale();
+        g.setTransform(zoom, 0, 0, zoom,
+                w / 2 - camera.centerX() * zoom,
+                h / 2 - camera.centerY() * zoom);
         g.setLineWidth(1.15);
         for (var edge : model.edges()) {
             GraphLayout.Point a = layout.get(edge.source());
             GraphLayout.Point b = layout.get(edge.target());
             if (a == null || b == null) continue;
-            boolean related = selected != null
-                    && (edge.source().equals(selected) || edge.target().equals(selected));
+            boolean related = selected != null && (edge.source().equals(selected)
+                    || edge.target().equals(selected));
             g.setStroke(Color.web(related ? "#168a97" : "#c1d2dd"));
             g.setLineWidth(related ? 2.05 : 1.1);
             g.strokeLine(a.x(), a.y(), b.x(), b.y());
@@ -403,15 +366,12 @@ public final class DependencyGraphPane extends BorderPane {
             double tipX = b.x() - NODE_RADIUS * Math.cos(angle);
             double tipY = b.y() - NODE_RADIUS * Math.sin(angle);
             g.strokeLine(tipX, tipY,
-                    tipX - 7 * Math.cos(angle - 0.50),
-                    tipY - 7 * Math.sin(angle - 0.50));
+                    tipX - 7 * Math.cos(angle - 0.5),
+                    tipY - 7 * Math.sin(angle - 0.5));
             g.strokeLine(tipX, tipY,
-                    tipX - 7 * Math.cos(angle + 0.50),
-                    tipY - 7 * Math.sin(angle + 0.50));
+                    tipX - 7 * Math.cos(angle + 0.5),
+                    tipY - 7 * Math.sin(angle + 0.5));
         }
-        g.setLineWidth(1.15);
-        // Draw labels last on opaque backing so crisscrossing edges never
-        // obscure their text, even in graphs with high-degree hubs.
         for (String path : model.nodes()) {
             GraphLayout.Point p = layout.get(path);
             if (p == null) continue;
@@ -422,10 +382,9 @@ public final class DependencyGraphPane extends BorderPane {
             double labelWidth = Math.min(241, Math.max(70, label.length() * 6.5 + 12));
             g.setFill(Color.web(active ? "#ede9fb" : neighbor ? "#dff6f5" : "#f8fafb"));
             g.fillRect(p.x() + 14, p.y() - 13, labelWidth, 26);
-            // Purple = selected, teal = direct neighbor, slate = unrelated.
             g.setFill(Color.web(active ? "#7254b5" : neighbor ? "#07919a" : "#4b7593"));
-            g.fillOval(p.x() - NODE_RADIUS, p.y() - NODE_RADIUS, NODE_RADIUS * 2,
-                    NODE_RADIUS * 2);
+            g.fillOval(p.x() - NODE_RADIUS, p.y() - NODE_RADIUS,
+                    NODE_RADIUS * 2, NODE_RADIUS * 2);
             g.setStroke(Color.WHITE);
             g.strokeOval(p.x() - NODE_RADIUS, p.y() - NODE_RADIUS,
                     NODE_RADIUS * 2, NODE_RADIUS * 2);
@@ -434,5 +393,6 @@ public final class DependencyGraphPane extends BorderPane {
             g.setFont(Font.font("Segoe UI", active ? 13 : 12));
             g.fillText(label, p.x() + 20, p.y() + 4, 226);
         }
+        g.setTransform(1, 0, 0, 1, 0, 0);
     }
 }
