@@ -16,6 +16,8 @@ import com.mmdev.codetrace.reference.ProgressExclusions;
 import com.mmdev.codetrace.reference.TextPreview;
 import com.mmdev.codetrace.ui.ReferenceTree;
 import com.mmdev.codetrace.ui.DocumentTabs;
+import com.mmdev.codetrace.ui.EmptyWorkspacePane;
+import com.mmdev.codetrace.ui.StatusStopwatch;
 import com.mmdev.codetrace.ui.TypingEditor;
 import com.mmdev.codetrace.ui.PreferencesWindow;
 import com.mmdev.codetrace.ui.MarkdownPracticePane;
@@ -86,6 +88,7 @@ import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.FlowPane;
@@ -105,6 +108,7 @@ public final class CodeTraceApp extends Application {
         refreshMetrics();
     });
     private final Label status = new Label("Listo");
+    private final StatusStopwatch stopwatch = new StatusStopwatch();
     private final Label fileInfo = new Label();
     private final Label projectInfo = new Label();
     private final ProgressBar fileProgress = new ProgressBar(0);
@@ -432,7 +436,9 @@ public final class CodeTraceApp extends Application {
         tree.setStatusLookup(path -> reconstructionStates.getOrDefault(path,
                 workspace.exists(path) ? State.CREATED : State.PENDING));
         tree.setWorkspace(workspace);
-        split.getItems().addAll(sidebar, tabs);
+        StackPane documentSurface = new StackPane(tabs, new EmptyWorkspacePane(tabs));
+        documentSurface.getStyleClass().add("document-workspace");
+        split.getItems().addAll(sidebar, documentSurface);
         if (!settings.showExplorer()) {
             split.getItems().remove(sidebar);
         } else {
@@ -458,7 +464,8 @@ public final class CodeTraceApp extends Application {
         mediaZoom.setVisible(false);
         mediaZoom.setManaged(false);
         HBox footer = new HBox(9, status, fileInfo, projectInfo, fileProgress,
-                new Separator(Orientation.VERTICAL), zoom, mediaZoom);
+                new Separator(Orientation.VERTICAL), zoom, mediaZoom,
+                new Separator(Orientation.VERTICAL), stopwatch);
         footer.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
         footer.setMinHeight(34);
         status.setMinWidth(80);
@@ -507,6 +514,7 @@ public final class CodeTraceApp extends Application {
                 catalogueScanner.cancel();
                 sessionLoader.cancel();
                 tree.cancelPendingWork();
+                stopwatch.dispose();
             }
         });
         refreshMetrics();
