@@ -39,4 +39,18 @@ class CompletionSummaryTest {
         assertTrue(message.contains("Aciertos finales: 1 de 3"));
         assertTrue(message.contains("Caracteres omitidos deliberadamente: 2"));
     }
+    @Test void restoredFileUsesOnlyNewTypingAttemptsForAverageSpeed() {
+        TypingSession typing = new TypingSession("123456789");
+        typing.type("12345678");
+        typing.type("9");
+        assertTrue(typing.finishedExercise());
+        // This opening only typed the last glyph: 1 accepted character over 6 s.
+        // Existing correct text must never inflate that measured speed.
+        String message = CompletionSummary.message("restaurado.java", typing,
+                6_000, 1, 1);
+        assertTrue(message.contains("Aciertos finales: 9 de 9"));
+        assertTrue(message.contains("10 caracteres por minuto (CPM)"));
+        assertTrue(message.contains("Errores al teclear durante esta práctica: 1"));
+    }
+
 }
