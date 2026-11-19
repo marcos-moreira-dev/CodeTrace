@@ -107,16 +107,23 @@ public final class GraphLayoutEngine {
             }
             int heightSlots = layers.stream().mapToInt(List::size).max().orElse(1);
             double blockHeight = Math.max(180, heightSlots * LANE_ROW);
+            // Wrap very deep chains into successive horizontal bands rather
+            // than asking JavaFX to allocate an enormous 50,000px canvas.
+            final int columnsPerBand = 12;
             for (int column = 0; column < layers.size(); column++) {
                 List<String> layer = layers.get(column);
-                double top = nextY + (blockHeight - layer.size() * LANE_ROW) * 0.5;
+                int band = column / columnsPerBand;
+                int inBand = column % columnsPerBand;
+                double top = nextY + band * (blockHeight + COMPONENT_GAP)
+                        + (blockHeight - layer.size() * LANE_ROW) * 0.5;
                 for (int row = 0; row < layer.size(); row++) {
                     result.put(layer.get(row), new GraphLayout.Point(
-                            130 + column * LAYER_COLUMN,
+                            130 + inBand * LAYER_COLUMN,
                             top + row * LANE_ROW + LANE_ROW * 0.5));
                 }
             }
-            nextY += blockHeight + COMPONENT_GAP;
+            nextY += Math.max(1, (layers.size() + columnsPerBand - 1) / columnsPerBand)
+                    * (blockHeight + COMPONENT_GAP);
         }
         return Map.copyOf(result);
     }
