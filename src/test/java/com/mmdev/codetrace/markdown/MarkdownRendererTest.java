@@ -164,4 +164,19 @@ class MarkdownRendererTest {
         assertEquals(1, page.localImages());
         assertTrue(page.html().contains("data:image/webp;base64,"));
     }
+    @Test
+    void emojiTextAndGlyphClustersSurviveSafeHtmlRendering() {
+        String page = MarkdownRenderer.toHtmlPage(
+                "# Prueba 😀 🇪🇨\n\nFamilia 👨‍👩‍👧‍👦, persona 👩🏽‍💻 "
+                + "y keycap 1️⃣.\n\n`1️⃣`\n\n:rocket:");
+        assertTrue(page.contains("😀"));
+        assertTrue(page.contains("🇪🇨"));
+        assertTrue(page.contains("👨‍👩‍👧‍👦"));
+        assertTrue(page.contains("👩🏽‍💻"));
+        assertTrue(page.contains("1️⃣"));
+        assertTrue(page.contains("Segoe UI Emoji"));
+        assertTrue(page.contains("🚀"));
+        assertFalse(page.contains("<script>"));
+    }
+
 }
