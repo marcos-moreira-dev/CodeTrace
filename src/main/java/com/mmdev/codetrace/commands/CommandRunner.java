@@ -47,25 +47,40 @@ public final class CommandRunner {
                 if (stopRequested.get()) terminate(process);
                 output.accept("[" + preset.name() + "] " + preset.shell().label()
                         + " · " + workdir + System.lineSeparator());
-                int emitted = 0;
-                char[] buffer = new char[1024];
-                try (Reader stream = new InputStreamReader(
-                        process.getInputStream(), Charset.defaultCharset())) {
-                    int count;
-                    while ((count = stream.read(buffer)) != -1) {
-                        if (emitted < OUTPUT_LIMIT) {
+                // Reading a child process pipe is blocking on some systems.
+                // Keep it in a dedicated daemon reader so cancellation always
+                // completes even when grandchildren inherited stdout handles.
+                AtomicBoolean outputActive = new AtomicBoolean(true);
+                Process activeProcess = process;
+                Thread outputReader = new Thread(() -> {
+                    int emitted = 0;
+                    char[] buffer = new char[1024];
+                    try (Reader stream = new InputStreamReader(
+                            activeProcess.getInputStream(), Charset.defaultCharset())) {
+                        int count;
+                        while (!stopRequested.get() && outputActive.get()
+                                && (count = stream.read(buffer)) != -1) {
+                            if (emitted >= OUTPUT_LIMIT) continue;
                             int limit = Math.min(count, OUTPUT_LIMIT - emitted);
-                            output.accept(new String(buffer, 0, limit));
+                            if (!stopRequested.get() && outputActive.get())
+                                output.accept(new String(buffer, 0, limit));
                             emitted += limit;
-                            if (emitted == OUTPUT_LIMIT) {
+                            if (emitted == OUTPUT_LIMIT && outputActive.get()) {
                                 output.accept(System.lineSeparator()
                                         + "[Salida acotada para proteger la interfaz]"
                                         + System.lineSeparator());
                             }
                         }
+                    } catch (IOException ignored) {
+                        // Process shutdown can close its output stream abruptly.
+                    } catch (RuntimeException ignored) {
+                        // UI callbacks must never prevent the command from exiting.
                     }
-                }
+                }, "codetrace-command-output");
+                outputReader.setDaemon(true);
+                outputReader.start();
                 code = process.waitFor();
+                outputActive.set(false);
                 if (stopRequested.get()) code = -2;
             } catch (InterruptedException cancelled) {
                 Thread.currentThread().interrupt();
