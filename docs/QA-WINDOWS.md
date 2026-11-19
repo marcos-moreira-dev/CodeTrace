@@ -544,3 +544,39 @@ Consulta también [Auditoría de cierre](AUDITORIA-CIERRE-2026-11.md).
   vídeo», «Reintentar» y «Abrir con otra aplicación»; reservar nombres de
   códecs, FFmpeg y detalles técnicos para el diagnóstico.
 - Cancelar y reintentar la preparación dentro de la misma pestaña.
+
+
+## Cierre final: workspace vacío, cronómetro, Full HD y EXE
+
+- **EMPTY-01:** Al iniciar sin pestañas se muestra el logotipo ORIGINAL en
+  escala de grises, centrado, con «Abre un archivo para comenzar». No sustituir
+  su geometría por una versión reinterpretada.
+- **EMPTY-02:** Abrir archivo y cerrar la última pestaña con X, menú Cerrar
+  todas y al cambiar de referencia. La pantalla vacía reaparece inmediatamente
+  y ninguna vista multimedia queda abierta.
+- **CLOCK-01:** Barra de estado muestra 00:00:00 aun sin referencia y en modo
+  concentración. Clic en Iniciar: avanza; Pausar: se detiene; Reanudar: continúa.
+  Botón de iniciar desde cero: vuelve a 00:00:00 y corre.
+- **CLOCK-02:** Pasar entre archivos, gráficos, vídeos, cerrar todas las
+  pestañas y guardar la sesión no debe reiniciar ni esconder el cronómetro.
+  Cerrar la aplicación detiene el temporizador; reiniciar comienza en cero.
+- **VIDEO-FHD-01:** MP4 H.264/AAC 1920×1080 real, duración completa,
+  audio/vídeo, pausa, línea de tiempo, seek, volumen y finalización.
+- **VIDEO-FHD-02:** MKV H.264 y vídeos HEVC, VP9 o AV1 con FFmpeg y ffprobe
+  disponibles: imagen visible, duración íntegra, máxima resolución 1080p
+  para conversiones, sin tocar el archivo de referencia.
+- **VIDEO-FHD-03:** MP4 cuyo códec reproduce sonido pero pantalla negra:
+  pulsar «¿No se ve la imagen? Mejorar reproducción» y comprobar que se
+  obtiene imagen H.264. Verificar cancelación/reintento y limpieza temporal.
+- **DIST-01:** El workflow «Windows portable package» entrega tanto
+  CodeTrace-Windows-portable.zip como el instalador CodeTrace-*.exe.
+- **DIST-02:** Instalar desde el EXE en un Windows x64 sin Java ni Maven,
+  abrir/cerrar, revisar accesos directos, desinstalar y repetir con ZIP.
+  Verificar carpeta de usuario y preservación de los archivos .ctrace.
+- **DIST-03:** Sin FFmpeg instalado, H.264 directo debe seguir disponible.
+  Para otros formatos, debe existir mensaje comprensible o abrir el original
+  con el reproductor del sistema. Antes de redistribuir FFmpeg, revisar
+  su licencia, avisos y fuentes correspondientes.
+
+**Gate:** no considerar publicada la v0.3.0 hasta registrar aceptación
+manual Windows real de los puntos anteriores y resolver los P0 de auditoría.
