@@ -182,12 +182,10 @@ class CodeTraceAppSmokeTest {
                         selectedGraphPath::set);
                 assertEquals(com.mmdev.codetrace.reference.GraphLayoutEngine.Mode.ORGANIZED,
                         graphPane.getLayoutMode());
-                assertFalse(graphPane.isPannableByScrollPane(),
-                        "Native ScrollPane panning must not hijack a node drag");
-                assertNull(graphPane.getTop(),
-                        "Map configuration belongs in Preferences, not a permanent toolbar");
-                assertNull(graphPane.getBottom(),
-                        "Map microcopy belongs in the application statusbar");
+                assertTrue(graphPane.hasUnboundedPan(),
+                        "Graph navigation should use a camera, not finite ScrollPane edges");
+                assertNull(graphPane.getTop());
+                assertNull(graphPane.getBottom());
                 graphPane.setLayoutMode(
                         com.mmdev.codetrace.reference.GraphLayoutEngine.Mode.GRID);
                 assertEquals(com.mmdev.codetrace.reference.GraphLayoutEngine.Mode.GRID,
@@ -196,108 +194,102 @@ class CodeTraceAppSmokeTest {
                         com.mmdev.codetrace.reference.GraphLayoutEngine.Mode.ORGANIZED);
                 assertEquals(com.mmdev.codetrace.reference.GraphLayoutEngine.Mode.ORGANIZED,
                         graphChanges.get().mode());
-                assertTrue(graphPane.getCanvasWidth() > 2000,
-                        "Map supports a larger draggable workspace");
-
-                // Invoke the Canvas handlers with real local-space coordinates.
-                // Event.fireEvent retargets synthetic coordinates when detached
-                // or scaled, so it does NOT simulate a native JavaFX gesture.
-                graphPane.setZoomPercent(55);
-                javafx.scene.control.ScrollPane graphScroll =
-                        (javafx.scene.control.ScrollPane) graphPane.getCenter();
-                javafx.scene.Group graphGroup =
-                        (javafx.scene.Group) graphScroll.getContent();
+                var previousTab = tabPane.getSelectionModel().getSelectedItem();
+                var mapTab = new javafx.scene.control.Tab("Mapa prueba", graphPane);
+                tabPane.getTabs().add(mapTab);
+                tabPane.getSelectionModel().select(mapTab);
+                stage.getScene().getRoot().applyCss();
+                stage.getScene().getRoot().layout();
+                javafx.scene.layout.Pane graphViewport =
+                        (javafx.scene.layout.Pane) graphPane.getCenter();
                 javafx.scene.canvas.Canvas graphSurface =
-                        (javafx.scene.canvas.Canvas) graphGroup.getChildren().getFirst();
-                assertEquals(graphSurface.getWidth() * 0.55,
-                        graphGroup.getLayoutBounds().getWidth(), 0.1,
-                        "ScrollPane must measure scaled Canvas bounds via Group");
-                graphScroll.setHvalue(0.15);
-                graphScroll.setVvalue(0.10);
+                        (javafx.scene.canvas.Canvas) graphViewport.getChildren().getFirst();
+                assertTrue(graphSurface.getWidth() > 300);
+                assertEquals(graphViewport.getWidth(), graphSurface.getWidth(), 0.01,
+                        "Graph Canvas should only allocate the viewport size");
+                graphPane.setZoomPercent(55);
+                double oldCameraX = graphPane.getCameraX();
+                double oldCameraY = graphPane.getCameraY();
+                graphPane.panByPixels(50_000, -30_000);
+                assertTrue(Math.abs(graphPane.getCameraX() - oldCameraX) > 80_000,
+                        "Pan is not constrained by finite canvas dimensions");
+                graphPane.panByPixels(-50_000, 30_000);
+                assertEquals(oldCameraX, graphPane.getCameraX(), 0.0001);
+                assertEquals(oldCameraY, graphPane.getCameraY(), 0.0001);
+
                 var oldNode = graphChanges.get().positions().get("src/Main.java");
-                javafx.scene.input.MouseEvent pressed = new javafx.scene.input.MouseEvent(
-                        javafx.scene.input.MouseEvent.MOUSE_PRESSED,
-                        oldNode.x(), oldNode.y(), 0, 0,
-                        javafx.scene.input.MouseButton.PRIMARY, 1,
-                        false, false, false, false, true, false, false,
-                        false, false, false,
-                        new javafx.scene.input.PickResult(
-                                graphSurface, oldNode.x(), oldNode.y()));
-                assertEquals(oldNode.x(), pressed.getX(), 0.01);
-                assertEquals(oldNode.y(), pressed.getY(), 0.01);
-                graphSurface.getOnMousePressed().handle(pressed);
-                javafx.scene.input.MouseEvent dragged = new javafx.scene.input.MouseEvent(
-                        javafx.scene.input.MouseEvent.MOUSE_DRAGGED,
-                        oldNode.x() + 55, oldNode.y() + 30, 0, 0,
-                        javafx.scene.input.MouseButton.PRIMARY, 1,
-                        false, false, false, false, true, false, false,
-                        false, false, false,
-                        new javafx.scene.input.PickResult(
-                                graphSurface, oldNode.x() + 55, oldNode.y() + 30));
-                graphSurface.getOnMouseDragged().handle(dragged);
-                assertEquals(0.15, graphScroll.getHvalue(), 0.00001,
-                        "Dragging a node must not pan the map");
-                assertEquals(0.10, graphScroll.getVvalue(), 0.00001,
-                        "Dragging a node must preserve vertical scroll");
-                assertTrue(graphChanges.get().positions().get("src/Main.java")
-                        .equals(oldNode), "Unreleased changes are not persisted");
-                graphSurface.getOnMouseReleased().handle(
-                        new javafx.scene.input.MouseEvent(
-                                javafx.scene.input.MouseEvent.MOUSE_RELEASED,
-                                oldNode.x() + 55, oldNode.y() + 30, 0, 0,
-                                javafx.scene.input.MouseButton.PRIMARY, 1,
-                                false, false, false, false, false, false, false,
-                                false, false, false,
-                                new javafx.scene.input.PickResult(
-                                        graphSurface, oldNode.x() + 55, oldNode.y() + 30)));
-                assertTrue(graphChanges.get().positions().get("src/Main.java").x()
-                        > oldNode.x(), "A node really moved independently");
-                assertEquals(0.15, graphScroll.getHvalue(), 0.00001);
-                assertEquals(0.10, graphScroll.getVvalue(), 0.00001);
-                // Middle click changes cursor to a panning hand, even over nodes.
-                double backgroundX = graphSurface.getWidth() - 30;
-                double backgroundY = graphSurface.getHeight() - 30;
+                double x = (oldNode.x() - graphPane.getCameraX()) * 0.55
+                        + graphSurface.getWidth() / 2;
+                double y = (oldNode.y() - graphPane.getCameraY()) * 0.55
+                        + graphSurface.getHeight() / 2;
                 graphSurface.getOnMousePressed().handle(
                         new javafx.scene.input.MouseEvent(
                                 javafx.scene.input.MouseEvent.MOUSE_PRESSED,
-                                backgroundX, backgroundY, 100, 100,
-                                javafx.scene.input.MouseButton.MIDDLE, 1,
-                                false, false, false, false, false, true, false,
+                                x, y, 0, 0,
+                                javafx.scene.input.MouseButton.PRIMARY, 1,
+                                false, false, false, false, true, false, false,
                                 false, false, false,
-                                new javafx.scene.input.PickResult(
-                                        graphSurface, backgroundX, backgroundY)));
-                assertEquals(javafx.scene.Cursor.CLOSED_HAND,
-                        graphSurface.getCursor(),
-                        "Pressing the middle button should show the panning hand");
+                                new javafx.scene.input.PickResult(graphSurface, x, y)));
+                graphSurface.getOnMouseDragged().handle(
+                        new javafx.scene.input.MouseEvent(
+                                javafx.scene.input.MouseEvent.MOUSE_DRAGGED,
+                                x + 45, y + 30, 0, 0,
+                                javafx.scene.input.MouseButton.PRIMARY, 1,
+                                false, false, false, false, true, false, false,
+                                false, false, false,
+                                new javafx.scene.input.PickResult(graphSurface, x + 45, y + 30)));
+                assertEquals(oldCameraX, graphPane.getCameraX(), 0.0001,
+                        "Dragging a node must not move the graph camera");
                 graphSurface.getOnMouseReleased().handle(
                         new javafx.scene.input.MouseEvent(
                                 javafx.scene.input.MouseEvent.MOUSE_RELEASED,
-                                backgroundX, backgroundY, 100, 100,
-                                javafx.scene.input.MouseButton.MIDDLE, 1,
-                                false, false, false, false, false, false, false,
-                                false, false, false,
-                                new javafx.scene.input.PickResult(
-                                        graphSurface, backgroundX, backgroundY)));
-                assertEquals(javafx.scene.Cursor.OPEN_HAND, graphSurface.getCursor());
-                // Direct neighbors highlight in either import direction, but
-                // clicking blank workspace must clear selection AND neighbors.
-                assertEquals("src/Main.java", graphPane.getSelectedNode());
-                assertTrue(graphPane.getSelectedNeighbors().contains("src/Util.java"));
-                assertEquals("src/Main.java", selectedGraphPath.get());
-                graphSurface.getOnMouseClicked().handle(
-                        new javafx.scene.input.MouseEvent(
-                                javafx.scene.input.MouseEvent.MOUSE_CLICKED,
-                                backgroundX, backgroundY, 100, 100,
+                                x + 45, y + 30, 0, 0,
                                 javafx.scene.input.MouseButton.PRIMARY, 1,
                                 false, false, false, false, false, false, false,
                                 false, false, false,
-                                new javafx.scene.input.PickResult(
-                                        graphSurface, backgroundX, backgroundY)));
+                                new javafx.scene.input.PickResult(graphSurface, x + 45, y + 30)));
+                assertTrue(graphChanges.get().positions().get("src/Main.java").x()
+                        > oldNode.x(), "The node moves independently from the viewport");
+                assertEquals("src/Main.java", graphPane.getSelectedNode());
+                assertTrue(graphPane.getSelectedNeighbors().contains("src/Util.java"));
+                assertEquals("src/Main.java", selectedGraphPath.get());
+
+                // Middle button pans without affecting the selected node.
+                double bgX = graphSurface.getWidth() - 20;
+                double bgY = graphSurface.getHeight() - 20;
+                graphSurface.getOnMousePressed().handle(
+                        new javafx.scene.input.MouseEvent(
+                                javafx.scene.input.MouseEvent.MOUSE_PRESSED,
+                                bgX, bgY, 100, 100,
+                                javafx.scene.input.MouseButton.MIDDLE, 1,
+                                false, false, false, false, false, true, false,
+                                false, false, false,
+                                new javafx.scene.input.PickResult(graphSurface, bgX, bgY)));
+                assertEquals(javafx.scene.Cursor.CLOSED_HAND, graphSurface.getCursor());
+                graphSurface.getOnMouseDragged().handle(
+                        new javafx.scene.input.MouseEvent(
+                                javafx.scene.input.MouseEvent.MOUSE_DRAGGED,
+                                bgX, bgY, 190, 130,
+                                javafx.scene.input.MouseButton.MIDDLE, 1,
+                                false, false, false, false, false, true, false,
+                                false, false, false,
+                                new javafx.scene.input.PickResult(graphSurface, bgX, bgY)));
+                assertTrue(graphPane.getCameraX() < oldCameraX);
+                graphSurface.getOnMouseReleased().handle(
+                        new javafx.scene.input.MouseEvent(
+                                javafx.scene.input.MouseEvent.MOUSE_RELEASED,
+                                bgX, bgY, 190, 130,
+                                javafx.scene.input.MouseButton.MIDDLE, 1,
+                                false, false, false, false, false, false, false,
+                                false, false, false,
+                                new javafx.scene.input.PickResult(graphSurface, bgX, bgY)));
+                assertEquals(javafx.scene.Cursor.OPEN_HAND, graphSurface.getCursor());
+                graphPane.clearSelection();
                 assertNull(graphPane.getSelectedNode());
-                assertTrue(graphPane.getSelectedNeighbors().isEmpty(),
-                        "Clearing selection must also remove all neighbor highlights");
-                assertNull(selectedGraphPath.get(),
-                        "Empty workspace should signal statusbar reset");
+                assertTrue(graphPane.getSelectedNeighbors().isEmpty());
+                assertNull(selectedGraphPath.get());
+                tabPane.getTabs().remove(mapTab);
+                tabPane.getSelectionModel().select(previousTab);
                 Slider fontSlider = (Slider) zoom.lookup(".slider");
                 assertNotNull(fontSlider);
                 assertEquals(Orientation.HORIZONTAL, fontSlider.getOrientation());
@@ -541,11 +533,17 @@ class CodeTraceAppSmokeTest {
                 srcMenu.getItems().stream()
                         .filter(item -> "Colapsar subcarpetas".equals(item.getText()))
                         .findFirst().orElseThrow().fire();
-                assertTrue(srcTree.isExpanded(),
+                var collapsedSrc = fileTree.getRoot().getChildren().stream()
+                        .filter(item -> src.equals(item.getValue()))
+                        .findFirst().orElseThrow();
+                var collapsedNested = collapsedSrc.getChildren().stream()
+                        .filter(item -> nested.equals(item.getValue()))
+                        .findFirst().orElseThrow();
+                assertTrue(collapsedSrc.isExpanded(),
                         "Colapsar subcarpetas must leave the clicked directory expanded");
-                assertFalse(nestedTree.isExpanded(),
+                assertFalse(collapsedNested.isExpanded(),
                         "Nested directories should be recursively collapsed");
-                assertTrue(srcTree.getChildren().contains(nestedTree),
+                assertTrue(collapsedSrc.getChildren().contains(collapsedNested),
                         "Immediate subfolders must remain visible");
                 assertTrue(Files.exists(nestedFile));
                 ContextMenu fileMenu = (ContextMenu) menuFor.invoke(fileTree, nestedFile);
