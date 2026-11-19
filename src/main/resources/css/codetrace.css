@@ -1115,3 +1115,14 @@
     -fx-background-color: #eaf0f4;
     -fx-border-color: #bdcbd5 transparent transparent transparent;
 }
+
+
+/* "Solo carpeta": visual focus, not a disabled TreeCell. Ancestor
+   directories remain full-strength for fast navigation/scope switching. */
+.tree-view .tree-cell.reference-outside-scope .reference-tree-row {
+    -fx-opacity: 0.36;
+}
+.tree-view .tree-cell.reference-outside-scope:selected .reference-tree-row,
+.tree-view:focused .tree-cell.reference-outside-scope:selected .reference-tree-row {
+    -fx-opacity: 0.68;
+}
