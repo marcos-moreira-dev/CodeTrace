@@ -41,6 +41,7 @@ import com.mmdev.codetrace.symbols.SymbolCatalog.Layout;
 import com.mmdev.codetrace.sound.TypingSounds;
 import com.mmdev.codetrace.sound.CompletionSound;
 import com.mmdev.codetrace.practice.CompletionTransition;
+import com.mmdev.codetrace.practice.CompletionSummary;
 import com.mmdev.codetrace.workspace.VirtualWorkspace;
 import com.mmdev.codetrace.workspace.VirtualTreeRecreator;
 import java.io.IOException;
@@ -779,9 +780,12 @@ public final class CodeTraceApp extends Application {
                             soundProblemReported = true;
                             setStatus("No se pudo reproducir el sonido de finalización.");
                         }
-                        ProductDialogs.information(stage, "Archivo terminado",
-                                "¡Bien hecho! Has completado «"
-                                        + file.getFileName() + "».");
+                        if (settings.completionDialog()) {
+                            ProductDialogs.success(stage, "Archivo terminado",
+                                    CompletionSummary.message(
+                                            file.getFileName().toString(),
+                                            current, editor.practiceElapsedMillis()));
+                        }
                     });
                 }
             }, file.getFileName().toString(), settings.fontFamily(), settings.fontSize(),
@@ -1596,7 +1600,8 @@ public final class CodeTraceApp extends Application {
         settings = new AppSettings(settings.fontFamily(), size,
                 settings.showExplorer(), settings.keyboardLayout(), settings.typingSounds(),
                 settings.templateOpacity(), settings.turboMode(),
-                settings.completionSound(), settings.graphLayoutMode());
+                settings.completionSound(), settings.completionDialog(),
+                settings.graphLayoutMode());
         settings.save();
         for (Tab tab : tabs.getTabs()) {
             if (tab.getContent() instanceof TypingEditor editor) {
@@ -1614,7 +1619,7 @@ public final class CodeTraceApp extends Application {
         settings = new AppSettings(next.fontFamily(), next.fontSize(),
                 next.showExplorer(), settings.keyboardLayout(), next.typingSounds(),
                 next.templateOpacity(), next.turboMode(), next.completionSound(),
-                next.graphLayoutMode());
+                next.completionDialog(), next.graphLayoutMode());
         settings.save();
         turboToggle.setSelected(settings.turboMode());
         turboMenu.setSelected(settings.turboMode());
