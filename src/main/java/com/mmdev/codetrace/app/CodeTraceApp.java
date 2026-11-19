@@ -12,7 +12,6 @@ import com.mmdev.codetrace.reference.ReferenceTreeIndex;
 import com.mmdev.codetrace.reference.GraphLayout;
 import com.mmdev.codetrace.reference.ProgressScope;
 import com.mmdev.codetrace.reference.ProgressExclusions;
-import com.mmdev.codetrace.reference.ReferenceFingerprint;
 import com.mmdev.codetrace.reference.TextPreview;
 import com.mmdev.codetrace.ui.ReferenceTree;
 import com.mmdev.codetrace.ui.DocumentTabs;
@@ -594,29 +593,43 @@ public final class CodeTraceApp extends Application {
         loader.start();
     }
 
-    /** Shared reference activation for an external folder or bundled pack. */
+    /** Starting a project and restoring one share the same activation lifecycle. */
     private void activateReference(Path folder) {
+        applyProjectState(ProjectActivation.fresh(folder), false);
+    }
+
+    /**
+     * Replace the active project in one place. The source tree is read-only;
+     * session state lives exclusively in the virtual workspace and .ctrace.
+     *
+     * Cancellation and generation increments precede any UI update, so
+     * asynchronous results from the previous project cannot revive it.
+     */
+    private void applyProjectState(ProjectActivation next, boolean resumed) {
         catalogueScanner.cancel();
         referenceRequest++;
-        workspace = new VirtualWorkspace();
-        sessions = new LinkedHashMap<>();
-        hashes = new LinkedHashMap<>();
+        autoCreateGeneration++;
+        clearOpenTabs();
+
+        reference = next.root();
+        workspace = next.workspace();
+        sessions = new LinkedHashMap<>(next.sessions());
+        hashes = new LinkedHashMap<>(next.hashes());
+        graphLayouts = new LinkedHashMap<>(next.graphLayouts());
+        sessionFile = next.sessionFile();
+        dirty = false;
         catalogue = null;
         reconstructionStates = Map.of();
+        referenceIndex = null;
         progressFolder = "";
         tree.setProgressFocusFolder("");
-        sessionFile = null;
-        graphLayouts.clear();
-        referenceIndex = null;
-        autoCreateGeneration++;
-        dirty = false;
-        clearOpenTabs();
-        reference = folder;
+
         if (searchWindow != null) searchWindow.projectChanged(reference);
         exclusions = ProgressExclusions.load(reference);
         if (explorerSearch != null) explorerSearch.clear();
         updateSelectedFolderExclusion();
-        selectPracticeMode(PracticeMode.forProject(reference));
+        selectPracticeMode(next.practiceMode());
+
         tree.setWorkspace(workspace);
         tree.open(reference);
         refreshReconstructionStatuses();
@@ -624,33 +637,26 @@ public final class CodeTraceApp extends Application {
         refreshCommandPresets();
         indexReference();
         refreshButton.setDisable(false);
-        setStatus("Referencia: " + reference);
         updateTitle();
         refreshMetrics();
+        if (resumed) reportReferenceChanges();
+        else setStatus("Referencia: " + reference);
     }
 
     private void refreshReference() {
-        if (reference == null) {
-            return;
-        }
+        if (reference == null) return;
         if (!Files.isDirectory(reference)) {
             setStatus("La carpeta de referencia no está disponible. Selecciona otra.");
             return;
         }
         tree.reloadReference();
         indexReference();
-        int changes = 0;
-        for (var pair : hashes.entrySet()) {
-            Path source = reference.resolve(pair.getKey());
-            try {
-                if (!Files.isRegularFile(source)
-                        || !ReferenceFingerprint.sha256(source).equals(pair.getValue())) {
-                    changes++;
-                }
-            } catch (IOException error) {
-                changes++;
-            }
-        }
+        reportReferenceChanges();
+    }
+
+    /** Reference verification does not re-index or mutate original files. */
+    private void reportReferenceChanges() {
+        int changes = ReferenceChangeDetector.changedCount(reference, hashes);
         setStatus(changes == 0 ? "Referencia actualizada"
                 : changes + " archivo(s) cambiaron; transcripciones conservadas");
     }
@@ -1370,14 +1376,10 @@ public final class CodeTraceApp extends Application {
     }
 
     private void openSession() {
-        if (!confirmDiscard()) {
-            return;
-        }
+        if (!confirmDiscard()) return;
         FileChooser chooser = sessionChooser("Abrir sesión CodeTrace");
         java.io.File selected = chooser.showOpenDialog(stage);
-        if (selected == null) {
-            return;
-        }
+        if (selected == null) return;
         try {
             SessionArchive.State data = SessionArchive.load(selected.toPath());
             Path restoredReference = data.referenceRoot();
@@ -1385,38 +1387,11 @@ public final class CodeTraceApp extends Application {
                 DirectoryChooser folder = new DirectoryChooser();
                 folder.setTitle("Buscar carpeta de referencia");
                 java.io.File replacement = folder.showDialog(stage);
-                if (replacement == null) {
-                    return;
-                }
+                if (replacement == null) return; // Current project remains intact.
                 restoredReference = replacement.toPath().toAbsolutePath().normalize();
             }
-            catalogueScanner.cancel();
-            referenceRequest++;
-            reference = restoredReference;
-            catalogue = null;
-            if (searchWindow != null) searchWindow.projectChanged(reference);
-            exclusions = ProgressExclusions.load(reference);
-            selectPracticeMode(data.practiceMode());
-            graphLayouts = new LinkedHashMap<>(data.graphs());
-            referenceIndex = null;
-            autoCreateGeneration++;
-            consolePane.setProject(reference);
-            refreshCommandPresets();
-            progressFolder = "";
-            tree.setProgressFocusFolder("");
-            workspace = data.workspace();
-            sessions = new LinkedHashMap<>(data.sessions());
-            hashes = new LinkedHashMap<>(data.referenceHashes());
-            sessionFile = selected.toPath();
-            dirty = false;
-            clearOpenTabs();
-            tree.setWorkspace(workspace);
-            tree.open(reference);
-            refreshReconstructionStatuses();
-            refreshButton.setDisable(false);
-            refreshReference();
-            updateTitle();
-            refreshMetrics();
+            applyProjectState(ProjectActivation.resumed(
+                    restoredReference, selected.toPath(), data), true);
         } catch (IOException | SecurityException failure) {
             showFailure("No se pudo abrir la sesión", failure.getMessage());
         }

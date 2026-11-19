@@ -141,3 +141,15 @@ obsoletos. El cambio de referencia o restauración de una sesión cancela la
 indexación previa. `ReferenceCatalogue.scan` consulta la interrupción del hilo
 entre entradas del árbol y termina el recorrido cuando se solicita cancelación.
 Los archivos del proyecto continúan siendo de solo lectura.
+
+## Activación unificada de proyectos y sesiones
+
+`app/ProjectActivation` es un estado de transición inmutable para abrir una
+referencia desde cero o retomar una sesión `.ctrace`, con huellas y progresos
+conservados. `CodeTraceApp.applyProjectState` realiza en un solo lugar la
+invalidación de tareas previas, limpieza de pestañas y refresco del explorador,
+consola, búsqueda y métricas. Al restaurar se indexa la referencia una sola vez.
+
+`app/ReferenceChangeDetector` compara las huellas guardadas de forma
+independiente de JavaFX; no escribe en los archivos originales. Reubicar una
+carpeta de referencia al abrir una sesión conserva el contenido virtual.
