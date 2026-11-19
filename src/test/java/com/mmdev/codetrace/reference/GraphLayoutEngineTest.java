@@ -64,6 +64,45 @@ class GraphLayoutEngineTest {
         assertNoOverlaps(GraphLayoutEngine.arrange(graph, GraphLayoutEngine.Mode.ORGANIZED));
     }
 
+    @Test
+    void singleConnectionSatellitesStayNextToTheirOnlyParent() {
+        List<String> nodes = List.of("src/Core.java", "src/LeafA.java",
+                "src/LeafB.java", "src/LeafC.java", "src/Other.java");
+        List<ProjectDependencyGraph.Edge> edges = List.of(
+                new ProjectDependencyGraph.Edge(nodes.get(0), nodes.get(1), "import"),
+                new ProjectDependencyGraph.Edge(nodes.get(0), nodes.get(2), "import"),
+                new ProjectDependencyGraph.Edge(nodes.get(0), nodes.get(3), "import"),
+                new ProjectDependencyGraph.Edge(nodes.get(0), nodes.get(4), "import"));
+        var graph = new ProjectDependencyGraph.Graph("src", nodes, edges,
+                nodes.size(), false, "a".repeat(64));
+        var layout = GraphLayoutEngine.arrange(graph, GraphLayoutEngine.Mode.ORGANIZED);
+        assertNoOverlaps(layout);
+        var center = layout.get(nodes.get(0));
+        for (int i = 1; i < nodes.size(); i++) {
+            var leaf = layout.get(nodes.get(i));
+            assertTrue(Math.abs(center.x() - leaf.x())
+                    <= GraphLayoutEngine.CELL_WIDTH + 0.01);
+            assertTrue(Math.abs(center.y() - leaf.y())
+                    <= GraphLayoutEngine.CELL_HEIGHT + 0.01,
+                    "A single-neighbor leaf must occupy a nearby cell, not orbit far away");
+        }
+    }
+
+    @Test
+    void twoFilesConnectedByOneImportRemainDirectNeighbors() {
+        var nodes = List.of("z/A.py", "z/B.py");
+        var graph = new ProjectDependencyGraph.Graph("z", nodes,
+                List.of(new ProjectDependencyGraph.Edge(
+                        nodes.get(0), nodes.get(1), "import")),
+                2, false, "a".repeat(64));
+        var result = GraphLayoutEngine.arrange(graph, GraphLayoutEngine.Mode.ORGANIZED);
+        assertEquals(GraphLayoutEngine.CELL_WIDTH,
+                Math.abs(result.get(nodes.get(0)).x()
+                        - result.get(nodes.get(1)).x()), 0.01);
+        assertEquals(result, GraphLayoutEngine.arrange(
+                graph, GraphLayoutEngine.Mode.ORGANIZED));
+    }
+
     private static void assertNoOverlaps(Map<String, GraphLayout.Point> points) {
         var entries = List.copyOf(points.entrySet());
         for (int i = 0; i < entries.size(); i++) {
