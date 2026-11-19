@@ -746,6 +746,10 @@ public final class CodeTraceApp extends Application {
             // asynchronous catalogue or progress-reporting infrastructure.
             CompletionTransition completion = new CompletionTransition(
                     current.finishedExercise());
+            // The onChange callback is invoked after editor construction;
+            // keep its reference outside the initializer for Java definite assignment.
+            java.util.concurrent.atomic.AtomicReference<TypingEditor> activeEditor =
+                    new java.util.concurrent.atomic.AtomicReference<>();
             TypingEditor editor = new TypingEditor(current, () -> {
                 String typed = current.enteredText();
                 // Direct mode virtualizes the source path on first writing,
@@ -784,7 +788,7 @@ public final class CodeTraceApp extends Application {
                             ProductDialogs.success(stage, "Archivo terminado",
                                     CompletionSummary.message(
                                             file.getFileName().toString(),
-                                            current, editor.practiceElapsedMillis()));
+                                            current, activeEditor.get().practiceElapsedMillis()));
                         }
                     });
                 }
@@ -796,6 +800,7 @@ public final class CodeTraceApp extends Application {
                             setStatus("Sonidos no disponibles en este dispositivo.");
                         }
                     });
+            activeEditor.set(editor);
             editor.setOnNotice(this::setStatus);
             editor.setPracticePermission(
                     () -> practiceMode == PracticeMode.DIRECT || virtualFileExists(relative),
