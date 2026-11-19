@@ -15,14 +15,15 @@ import java.util.function.BooleanSupplier;
  * Never writes into the reference project and never invokes a shell.
  */
 public final class MediaTranscoder {
-    public enum Output { AUDIO, VIDEO }
+    /** VIDEO_REMUX copies the original video bitstream (full length and quality).
+     * VIDEO encodes the full video into H.264, at most 1080p, preserving FPS. */
+    public enum Output { AUDIO, VIDEO, VIDEO_REMUX }
 
-    private static final long MAX_INPUT_BYTES = 512L * 1024 * 1024;
-    private static final long MAX_OUTPUT_BYTES = 512L * 1024 * 1024;
-    private static final long MAX_CONVERSION_SECONDS = 300;
-    private static final long MAX_VIDEO_PREVIEW_SECONDS = 75;
-    /** Video conversion is preview-only: never transcode a multi-hour movie eagerly. */
-    public static final int VIDEO_PREVIEW_SECONDS = 30;
+    private static final long MAX_INPUT_BYTES = 16L * 1024 * 1024 * 1024;
+    private static final long MAX_OUTPUT_BYTES = 12L * 1024 * 1024 * 1024;
+    private static final long MAX_AUDIO_SECONDS = 300;
+    private static final long MAX_VIDEO_REMUX_SECONDS = 180;
+    private static final long MAX_VIDEO_ENCODE_SECONDS = 10_800;
     private MediaTranscoder() {}
 
     public static boolean needsConversion(Path file) {
@@ -62,72 +63,87 @@ public final class MediaTranscoder {
     }
 
     /**
-     * Audio transcodes normally; video creates only a short, downscaled
-     * H.264 Baseline/AAC preview. Full video remains in its original file and
-     * can be opened explicitly with an external player. The caller owns the
-     * resulting temporary file and must delete it after disposing playback.
+     * Full-length media preparation. We first try a lossless, fast remux
+     * (video stream copy); H.264/AAC compatible sources retain all frames,
+     * resolution and duration. Other video codecs require explicit HD encode.
+     * No original reference file is ever modified.
      */
     public static Path transcode(Path original, Output output,
                                  BooleanSupplier cancelled) throws IOException {
         Path source = original.toRealPath();
-        if (!Files.isRegularFile(source) || Files.size(source) > MAX_INPUT_BYTES) {
-            throw new IOException("El medio supera el límite de 512 MB.");
-        }
-        if (cancelled.getAsBoolean()) throw new IOException("Conversión cancelada.");
-        Path temporary = Files.createTempFile("codetrace-preview-",
+        if (!Files.isRegularFile(source) || Files.size(source) > MAX_INPUT_BYTES)
+            throw new IOException("El archivo no es válido o supera el límite de 16 GB.");
+        if (cancelled.getAsBoolean() || Thread.currentThread().isInterrupted())
+            throw new IOException("Conversión cancelada.");
+
+        Path temporary = Files.createTempFile("codetrace-fullmedia-",
                 output == Output.AUDIO ? ".mp3" : ".mp4");
         Path errorLog = null;
         Process process = null;
         boolean success = false;
         try {
+            long usable = Files.getFileStore(temporary).getUsableSpace();
+            long needed = output == Output.VIDEO_REMUX
+                    ? Math.min(MAX_OUTPUT_BYTES, Files.size(source) + 128L * 1024 * 1024)
+                    : Math.min(MAX_OUTPUT_BYTES, Math.max(256L * 1024 * 1024,
+                            Files.size(source) / 2));
+            if (usable < needed)
+                throw new IOException("Espacio temporal insuficiente para el vídeo completo. "
+                        + "Puedes abrir el original con el reproductor externo.");
+
             errorLog = Files.createTempFile("codetrace-ffmpeg-errors-", ".txt");
             process = new ProcessBuilder(conversionCommand(source, temporary, output))
                     .redirectInput(ProcessBuilder.Redirect.PIPE)
                     .redirectOutput(ProcessBuilder.Redirect.DISCARD)
                     .redirectError(errorLog.toFile())
                     .start();
-            long timeoutSeconds = output == Output.VIDEO
-                    ? MAX_VIDEO_PREVIEW_SECONDS : MAX_CONVERSION_SECONDS;
-            long limit = System.nanoTime()
-                    + TimeUnit.SECONDS.toNanos(timeoutSeconds);
-            while (!process.waitFor(200, TimeUnit.MILLISECONDS)) {
-                if (cancelled.getAsBoolean() || Thread.currentThread().isInterrupted()) {
+            long seconds = switch (output) {
+                case AUDIO -> MAX_AUDIO_SECONDS;
+                case VIDEO_REMUX -> MAX_VIDEO_REMUX_SECONDS;
+                case VIDEO -> MAX_VIDEO_ENCODE_SECONDS;
+            };
+            long deadline = System.nanoTime() + TimeUnit.SECONDS.toNanos(seconds);
+            while (!process.waitFor(250, TimeUnit.MILLISECONDS)) {
+                if (cancelled.getAsBoolean() || Thread.currentThread().isInterrupted())
                     throw new IOException("Conversión cancelada.");
-                }
-                if (System.nanoTime() - limit >= 0) {
-                    throw new IOException(output == Output.VIDEO
-                            ? "La vista previa de vídeo tardó demasiado (75 s). "
-                              + "Abre el archivo con el reproductor del sistema."
-                            : "La conversión superó cinco minutos.");
-                }
+                if (Files.size(temporary) > MAX_OUTPUT_BYTES)
+                    throw new IOException("La conversión superó 12 GB de espacio temporal.");
+                if (System.nanoTime() - deadline >= 0)
+                    throw new IOException("La preparación del vídeo tardó demasiado. "
+                            + "Abre el original con el reproductor del sistema.");
             }
-            if (cancelled.getAsBoolean()) throw new IOException("Conversión cancelada.");
-            if (process.exitValue() != 0 || Files.size(temporary) == 0) {
-                throw new IOException("FFmpeg no pudo preparar este medio."
+            if (cancelled.getAsBoolean() || Thread.currentThread().isInterrupted())
+                throw new IOException("Conversión cancelada.");
+            if (process.exitValue() != 0 || Files.size(temporary) == 0)
+                throw new IOException("FFmpeg no pudo preparar el archivo completo."
                         + errorSummary(errorLog));
-            }
+            if (Files.size(temporary) > MAX_OUTPUT_BYTES)
+                throw new IOException("El vídeo preparado supera el límite de 12 GB.");
             success = true;
             return temporary;
         } catch (InterruptedException interrupted) {
             Thread.currentThread().interrupt();
             throw new IOException("Conversión cancelada.", interrupted);
         } catch (IOException problem) {
-            if (problem.getMessage() != null && problem.getMessage().contains("Cannot run")) {
+            if (problem.getMessage() != null && problem.getMessage().contains("Cannot run"))
                 throw new IOException("FFmpeg no está disponible. Instálalo o configúralo "
                         + "con -Dcodetrace.ffmpeg=ruta.", problem);
-            }
             throw problem;
         } finally {
-            if (process != null && process.isAlive()) process.destroyForcibly();
+            if (process != null && process.isAlive()) {
+                // Terminate process descendants as well as FFmpeg itself.
+                process.descendants().forEach(child -> child.destroyForcibly());
+                process.destroyForcibly();
+            }
             if (!success) deleteTemporary(temporary);
             deleteTemporary(errorLog);
         }
     }
 
     /**
-     * A short, low-resolution AVC Baseline/AAC segment is intentionally used
-     * rather than converting the entire reference into a temporary MP4.
-     * The source file is only read: output is always the given temp path.
+     * Do not limit duration or force an arbitrary 24 fps. Stream-copy is the
+     * default fast path for compatible MKV/AVI/MOV videos. A deliberate HD
+     * re-encode preserves source FPS and stays at or below 1080p.
      */
     static List<String> conversionCommand(Path source, Path temporary, Output output) {
         List<String> args = new ArrayList<>(List.of(
@@ -136,19 +152,19 @@ public final class MediaTranscoder {
         if (output == Output.AUDIO) {
             args.addAll(List.of("-map", "0:a:0", "-vn", "-c:a",
                     "libmp3lame", "-b:a", "160k"));
+        } else if (output == Output.VIDEO_REMUX) {
+            args.addAll(List.of("-map", "0:v:0", "-map", "0:a:0?",
+                    "-c:v", "copy", "-c:a", "aac", "-b:a", "160k",
+                    "-movflags", "+faststart"));
         } else {
-            args.addAll(List.of("-t", Integer.toString(VIDEO_PREVIEW_SECONDS),
-                    "-map", "0:v:0", "-map", "0:a:0?",
-                    "-vf", "scale=w=960:h=540:force_original_aspect_ratio=decrease:force_divisible_by=2",
-                    "-r", "24",
-                    "-c:v", "libx264", "-preset", "ultrafast", "-crf", "27",
-                    "-profile:v", "baseline", "-level:v", "3.1",
+            args.addAll(List.of("-map", "0:v:0", "-map", "0:a:0?",
+                    "-vf", "scale=w=1920:h=1080:force_original_aspect_ratio=decrease:force_divisible_by=2",
+                    "-c:v", "libx264", "-preset", "veryfast", "-crf", "20",
                     "-pix_fmt", "yuv420p",
-                    "-c:a", "aac", "-b:a", "128k", "-ar", "44100", "-ac", "2",
+                    "-c:a", "aac", "-b:a", "160k", "-ar", "48000", "-ac", "2",
                     "-movflags", "+faststart"));
         }
-        args.addAll(List.of("-fs", Long.toString(MAX_OUTPUT_BYTES),
-                temporary.toString()));
+        args.add(temporary.toString());
         return List.copyOf(args);
     }
 

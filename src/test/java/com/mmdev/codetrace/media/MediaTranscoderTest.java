@@ -18,18 +18,30 @@ import org.junit.jupiter.api.io.TempDir;
 class MediaTranscoderTest {
     @TempDir Path temp;
 
-    @Test void videoUsesBoundedCompatiblePreviewRatherThanConvertingEntireMovie() {
-        var video = MediaTranscoder.conversionCommand(
-                temp.resolve("long movie[1].mkv"), temp.resolve("sample.mp4"),
+    @Test void fullLengthRemuxCopiesVideoWithoutResizingOrDroppingFps() {
+        var remux = MediaTranscoder.conversionCommand(
+                temp.resolve("long movie[1].mkv"), temp.resolve("full.mp4"),
+                MediaTranscoder.Output.VIDEO_REMUX);
+        assertFalse(remux.contains("-t"), "Full playback cannot be limited to 30 seconds");
+        assertFalse(remux.contains("-r"), "Keep source frame cadence");
+        assertFalse(remux.contains("-vf"), "Do not rescale the original video");
+        assertEquals("copy", remux.get(remux.indexOf("-c:v") + 1));
+        assertEquals("aac", remux.get(remux.indexOf("-c:a") + 1));
+        assertEquals("+faststart", remux.get(remux.indexOf("-movflags") + 1));
+        assertEquals(temp.resolve("full.mp4").toString(), remux.getLast());
+    }
+
+    @Test void optionalFullHdConversionPreservesFrameRateAndFullDuration() {
+        var highDefinition = MediaTranscoder.conversionCommand(
+                temp.resolve("unplayable-hevc.mkv"), temp.resolve("full-hd.mp4"),
                 MediaTranscoder.Output.VIDEO);
-        int duration = video.indexOf("-t");
-        assertTrue(duration > 0);
-        assertEquals("30", video.get(duration + 1));
-        assertEquals("baseline", video.get(video.indexOf("-profile:v") + 1));
-        assertEquals("yuv420p", video.get(video.indexOf("-pix_fmt") + 1));
-        assertEquals("+faststart", video.get(video.indexOf("-movflags") + 1));
-        assertTrue(video.contains("scale=w=960:h=540:force_original_aspect_ratio=decrease:force_divisible_by=2"));
-        assertEquals(temp.resolve("sample.mp4").toString(), video.getLast());
+        assertFalse(highDefinition.contains("-t"), "Process the entire video");
+        assertFalse(highDefinition.contains("-r"), "Do not force 24 or 30 FPS");
+        assertTrue(highDefinition.contains(
+                "scale=w=1920:h=1080:force_original_aspect_ratio=decrease:force_divisible_by=2"));
+        assertEquals("20", highDefinition.get(highDefinition.indexOf("-crf") + 1));
+        assertEquals("yuv420p", highDefinition.get(highDefinition.indexOf("-pix_fmt") + 1));
+        assertTrue(highDefinition.contains("+faststart"));
 
         var audio = MediaTranscoder.conversionCommand(
                 temp.resolve("voice.ogg"), temp.resolve("sample.mp3"),
@@ -123,5 +135,51 @@ class MediaTranscoderTest {
             MediaTranscoder.deleteTemporary(mp3);
         }
         assertFalse(Files.exists(mp3));
+    }
+
+    @Test void fullSourceRemuxIsFastAndNeverEditsTheOriginalWhenFfmpegIsAvailable()
+            throws Exception {
+        Process available;
+        try {
+            available = new ProcessBuilder(MediaTranscoder.executable(), "-version")
+                    .redirectError(ProcessBuilder.Redirect.DISCARD)
+                    .redirectOutput(ProcessBuilder.Redirect.DISCARD).start();
+        } catch (IOException absent) {
+            Assumptions.assumeTrue(false, "FFmpeg not installed on CI host");
+            return;
+        }
+        try {
+            Assumptions.assumeTrue(available.waitFor(5, TimeUnit.SECONDS)
+                    && available.exitValue() == 0, "FFmpeg not available");
+        } finally {
+            if (available.isAlive()) available.destroyForcibly();
+        }
+        Path source = temp.resolve("movie.mkv");
+        Process create = new ProcessBuilder(MediaTranscoder.executable(),
+                "-hide_banner", "-loglevel", "error", "-y",
+                "-f", "lavfi", "-i", "testsrc2=size=640x360:rate=30:duration=2",
+                "-c:v", "libx264", "-preset", "ultrafast",
+                "-pix_fmt", "yuv420p", source.toString())
+                .redirectError(ProcessBuilder.Redirect.DISCARD)
+                .redirectOutput(ProcessBuilder.Redirect.DISCARD).start();
+        try {
+            Assumptions.assumeTrue(create.waitFor(25, TimeUnit.SECONDS)
+                    && create.exitValue() == 0,
+                    "This FFmpeg build lacks the fixture's H.264 encoder");
+        } finally {
+            if (create.isAlive()) create.destroyForcibly();
+        }
+        byte[] before = Files.readAllBytes(source);
+        Path ready = MediaTranscoder.transcode(source,
+                MediaTranscoder.Output.VIDEO_REMUX, () -> false);
+        try {
+            assertTrue(Files.size(ready) > 1024);
+            assertArrayEquals(before, Files.readAllBytes(source),
+                    "Reference-only playback never modifies the original film");
+            // The stream-copy command doesn't set any clipping duration or FPS.
+        } finally {
+            MediaTranscoder.deleteTemporary(ready);
+        }
+        assertFalse(Files.exists(ready));
     }
 }

@@ -280,17 +280,35 @@ Enlaces hacia fuera de la referencia cuentan como divergencias, sin
 leer contenidos externos. Se añade prueba portátil, condicionada a
 que Windows permita crear enlaces simbólicos.
 
-## Vista previa rápida de MKV y otros vídeos externos
+## Reproducción completa de vídeo y límites de códecs
 
-Para medios que JavaFX no reproduce directamente, `MediaTranscoder`
-genera solo **30 segundos de vista previa**, a un máximo aproximado de
-960×540, H.264 Baseline/AAC y 24 fps. La conversión de un vídeo completo
-de varias horas ya no es un requisito para abrir la pestaña; su trabajo
-tiene además un plazo máximo de 75 segundos. El archivo original no se
-modifica. El usuario puede abrirlo entero con su reproductor predeterminado,
-siempre tras pulsar el botón de forma explícita.
-Los mensajes de error de FFmpeg se capturan en un temporal separado,
-acotados en longitud y eliminados al terminar, para diagnosticar códecs
-ausentes sin inundar la consola. El reproductor integrado sigue dependiendo
-de los códecs compatibles con JavaFX/Windows y puede fallar pese a que
-FFmpeg haya generado correctamente el MP4.
+`MediaTranscoder` usa dos estrategias explícitas para vídeos que JavaFX
+no abre directamente:
+
+1. **Remultiplexación rápida por defecto** (`VIDEO_REMUX`): FFmpeg copia el
+   flujo de vídeo original sin recomprimirlo (`-c:v copy`), conserva todos
+   los fotogramas, la duración, la resolución y los FPS. Convierte solo el
+   audio a AAC si es necesario y crea un MP4 temporal con `+faststart`.
+   Esto funciona especialmente bien si la fuente ya contiene vídeo H.264.
+2. **Conversión HD completa bajo demanda** (`VIDEO`): si JavaFX no reconoce
+   el códec remultiplexado, el usuario puede solicitar una conversión
+   integral a H.264/AAC, manteniendo FPS y con resolución máxima de 1080p.
+   No se fuerza 24 fps, no se limita la película a 30 segundos y se
+   advierte que una transcodificación extensa puede tardar mucho.
+
+Si el vídeo es HEVC/AV1/VP9, no se promete compatibilidad de JavaFX sin
+recodificarlo. Si Windows no puede decodificarlo o el archivo es muy
+grande, siempre permanece disponible el botón que abre **el original
+completo** en el reproductor externo, únicamente por acción del usuario.
+La capacidad de reproducir HD fluido dentro de JavaFX depende también
+del hardware y de los decodificadores instalados; no puede garantizarse
+solo con mejores parámetros de FFmpeg.
+
+Los originales permanecen de solo lectura. El MP4 temporal se elimina
+al cerrar pestañas y al fallar/cancelar una conversión (o se agenda su
+eliminación al salir si Windows mantiene temporalmente el archivo
+abierto). Hay límites de 16 GB de origen y 12 GB de temporal, y se
+comprueba el espacio disponible antes de copiar. El FFmpeg externo
+mantiene mensajes de error acotados en un temporal eliminado al terminar.
+No se introduce vlcj porque requeriría una evaluación explícita de
+las condiciones GPL para el producto.

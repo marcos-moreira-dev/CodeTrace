@@ -471,15 +471,22 @@ Consulta también [Auditoría de cierre](AUDITORIA-CIERRE-2026-11.md).
 - Al cambiar de proyecto durante el comando, comprobar que no se agregan
   líneas de salida antiguas a la nueva consola.
 
-## MEDIA-QUICK-PREVIEW — MKV largo y códecs del sistema
+## MEDIA-FULL-PLAYBACK — MKV completo, calidad HD y cadencia
 
-- Abrir un MKV largo: CodeTrace indica que prepara **solo 30 segundos**
-  y no debe convertir la película completa ni crear un archivo en Descargas.
-- Probar vídeo 4K o de tasa de cuadros alta: salida temporal limitada
-  a 960×540 / 24 fps y cancelación utilizable.
-- Si JavaFX no admite el MP4 convertido, mostrar mensaje específico y
-  botón para abrir el original con el reproductor del sistema.
-- Cancelar la conversión, cerrar la pestaña y comprobar la limpieza
-  de archivos `codetrace-preview-*` temporales.
-- Archivo sin vídeo válido o FFmpeg sin `libx264`: informar el error
-  recogido de FFmpeg, sin bloquear indefinidamente la aplicación.
+- Abrir un MKV H.264/AAC de varios minutos: debe conservar **el vídeo
+  completo**, no solo 30 segundos, y mostrar la duración total en la
+  barra de tiempo; saltar al minuto final.
+- Comparar el vídeo original con el MP4 temporal remultiplexado: misma
+  resolución, FPS y duración. No debe existir `-r 24`, `-t 30` ni
+  escala forzada a 540p en el modo rápido.
+- Usar un archivo con códec HEVC/AV1/VP9 no admitido por JavaFX:
+  presentar opción para preparar **todo** el vídeo en H.264 HD hasta
+  1080p, conservando la frecuencia de fotogramas; no iniciar esta
+  recodificación pesada sin confirmación.
+- En caso de decodificación entrecortada, probar la apertura del
+  archivo original en el reproductor externo y comparar fluidez.
+  El éxito del remux no demuestra que JavaFX tenga aceleración por GPU.
+- Cancelar la preparación y cerrar la pestaña: eliminar los MP4
+  temporales `codetrace-fullmedia-*`; el original debe mantenerse intacto.
+- Con poco espacio libre o sin FFmpeg: mostrar aviso accionable y
+  permitir abrir el original sin que CodeTrace quede bloqueado.
