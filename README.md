@@ -237,3 +237,27 @@ ni se permite acceder fuera del proyecto. La vista se prepara en segundo plano.
 
 La [matriz de producto y cierre](docs/ROADMAP.md) distingue funciones verificadas, soporte parcial y trabajo pendiente.
 
+
+## Ergonomía de consultas y distribución del grafo
+
+El zoom tipográfico de la barra inferior controla **todos** los archivos de
+texto, tanto ejercicios como consultas de solo lectura: CSS, XML, TXT,
+JSON, YAML, Properties y similares. Permanece expresado en puntos (pt).
+
+El **mapa de dependencias** reutiliza la ubicación del zoom contextual
+multimedia, pero con el icono de relaciones y unidades porcentuales; ya
+no duplica un segundo deslizador dentro de la vista. Los nodos están más
+separados y pueden arrastrarse. Sus posiciones se guardan en la sesión
+`.ctrace` (formato v3, compatible con lectura de v1/v2), nunca en el
+repositorio original. Cuando cambia el contenido del proyecto analizado,
+CodeTrace vuelve a la distribución automática y conserva las transcripciones.
+
+La opción **Autocrear archivos y carpetas** reconstruye por lotes todos los
+nodos de la referencia, salvo directorios generados y cachés. Un archivo
+creado aparece en amarillo hasta terminar correctamente su transcripción,
+cuando pasa a verde. Los archivos no ejercitables se siguen mostrando
+como no aplicables. Las casillas de Reglas de práctica continúan decidiendo
+únicamente qué archivos puntúan en el porcentaje de progreso.
+
+El selector de pestañas desbordadas se presenta con una pequeña flecha
+en un botón rectangular, en lugar del círculo predeterminado de JavaFX.
