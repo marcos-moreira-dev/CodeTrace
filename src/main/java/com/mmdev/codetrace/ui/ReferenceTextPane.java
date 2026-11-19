@@ -117,6 +117,10 @@ public final class ReferenceTextPane extends BorderPane {
     private void addColoredText(TextFlow flow, String content,
                                        LanguageSupport.Kind kind, boolean selected) {
         if (content.isEmpty()) return;
+        if (!EmojiUnits.isEmoji(content)) {
+            appendTextRun(flow, content, kind, selected, false);
+            return;
+        }
         // Emit one Text node per ordinary run, not per character; only emoji
         // clusters receive a font fallback. This preserves virtualized speed.
         StringBuilder ordinary = new StringBuilder();

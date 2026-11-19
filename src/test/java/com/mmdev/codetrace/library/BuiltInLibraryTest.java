@@ -107,4 +107,27 @@ class BuiltInLibraryTest {
             }
         }
     }
+    @Test
+    void multiFileProjectsAndAssemblyAreActuallyBundled() throws Exception {
+        var library = new BuiltInLibrary(temp.resolve("architectures"));
+        assertEquals(14, library.packs().size());
+        var all = library.packs().stream().collect(
+                Collectors.toMap(BuiltInLibrary.Pack::id, p -> p));
+        assertTrue(library.entries(all.get("java21")).contains(
+                "07-proyectos/factory-method/DemoFactory.java"));
+        assertTrue(library.entries(all.get("java21")).contains(
+                "07-proyectos/observer/CentroEventos.java"));
+        assertTrue(library.entries(all.get("typescript")).contains(
+                "07-proyectos/observer/BusEventos.ts"));
+        assertTrue(library.entries(all.get("python")).contains(
+                "07-proyectos/factory-method/creadores.py"));
+        assertTrue(library.entries(all.get("c")).contains(
+                "07-proyectos/observer/Observer.h"));
+        assertTrue(library.entries(all.get("nasm-x64")).contains(
+                "05-algoritmos/euclides.asm"));
+        assertTrue(library.entries(all.get("java21")).contains(
+                "05-algoritmos/Dijkstra.java"));
+        assertEquals(160, library.packs().stream().mapToInt(library::size).sum());
+    }
+
 }

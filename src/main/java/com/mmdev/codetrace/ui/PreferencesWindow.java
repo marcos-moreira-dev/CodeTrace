@@ -300,6 +300,7 @@ public final class PreferencesWindow {
                 realFilesWarning, restoreWarnings, safetyNote,
                 new javafx.scene.control.Separator(), commandsPage);
         commandSection.getStyleClass().add("prefs-section");
+        VBox.setVgrow(commandsPage, Priority.ALWAYS);
         final javafx.scene.Node stableCommandsPage = commandSection;
 
         BorderPane sectionContent = new BorderPane();

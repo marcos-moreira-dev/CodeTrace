@@ -19,10 +19,12 @@ public final class EmojiUnits {
 
     public static boolean isEmoji(String unit) {
         if (unit == null || unit.isEmpty()) return false;
-        for (int cp : unit.codePoints().toArray()) {
+        for (int i = 0; i < unit.length();) {
+            int cp = unit.codePointAt(i);
             if (cp == 0xFE0F || cp == 0x20E3 || cp == 0x200D
                     || (cp >= 0x1F000 && cp <= 0x1FAFF)
                     || (cp >= 0x2600 && cp <= 0x27BF)) return true;
+            i += Character.charCount(cp);
         }
         return false;
     }
