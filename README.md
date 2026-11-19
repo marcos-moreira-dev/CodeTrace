@@ -261,3 +261,17 @@ como no aplicables. Las casillas de Reglas de práctica continúan decidiendo
 
 El selector de pestañas desbordadas se presenta con una pequeña flecha
 en un botón rectangular, en lugar del círculo predeterminado de JavaFX.
+
+## Ámbito «Solo carpeta» del explorador
+
+Al activar `Solo` para una carpeta, su subárbol y las carpetas
+antecesoras permanecen plenamente visibles. Las ramas hermanas y los
+archivos fuera del ámbito aparecen **atenuados**, pero nunca deshabilitados:
+siguen admitiendo navegación, consulta, doble clic y menú contextual.
+Seleccionar otra carpeta cambia inmediatamente el ámbito; seleccionar
+la raíz o desmarcar `Solo` devuelve el progreso a todo el proyecto.
+
+Este enfoque **solo afecta a la visualización y al cálculo de progreso**;
+no altera la creación virtual, los estados amarillo/verde ni las reglas
+de exclusión guardadas. Las ramas atenuadas muestran un tooltip que explica
+por qué no se contabilizan.
