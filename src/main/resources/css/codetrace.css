@@ -1293,3 +1293,15 @@
     -fx-icon-size: 12px;
     -fx-icon-color: #38566d;
 }
+
+
+/* Maintain subdued icon colors when hovering pale desktop controls.
+   Exclude video primary play button: it intentionally uses white on dark. */
+.tool-bar .toolbar-action:hover .ikonli-font-icon,
+.practice-rules-button:hover .ikonli-font-icon,
+.project-tree-header .tree-header-action:hover .ikonli-font-icon,
+.tab-pane .tab:hover .ikonli-font-icon,
+.context-menu .menu-item:focused .ikonli-font-icon,
+.prefs-navigation .list-cell:filled:hover .ikonli-font-icon {
+    -fx-icon-color: #344f66;
+}

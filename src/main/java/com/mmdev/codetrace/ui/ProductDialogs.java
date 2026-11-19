@@ -3,6 +3,7 @@ package com.mmdev.codetrace.ui;
 import com.mmdev.codetrace.app.AppVersion;
 import javafx.geometry.Insets;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
@@ -149,6 +150,21 @@ public final class ProductDialogs {
     public static void success(Window owner, String title, String message) {
         dialog(owner, title, title, message, Severity.SUCCESS, ButtonType.OK)
                 .showAndWait();
+    }
+
+    public record Confirmation(ButtonType choice, boolean doNotShowAgain) { }
+
+    /** User may opt out of the REAL FILE execution warning, never by default. */
+    public static Confirmation confirmRealFiles(Window owner, String title,
+                                                String message, ButtonType proceed) {
+        Dialog<ButtonType> prompt = dialog(owner, title, title, message,
+                Severity.QUESTION, proceed, ButtonType.CANCEL);
+        CheckBox omit = AppControls.checkBox("No volver a mostrar esta advertencia");
+        omit.setTooltip(new javafx.scene.control.Tooltip(
+                "Se puede volver a activar en Preferencias > Comandos."));
+        ((VBox) prompt.getDialogPane().getContent()).getChildren().add(omit);
+        ButtonType choice = prompt.showAndWait().orElse(ButtonType.CANCEL);
+        return new Confirmation(choice, choice == proceed && omit.isSelected());
     }
 
     public static void warning(Window owner, String title, String message) {

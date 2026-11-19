@@ -3,6 +3,7 @@ package com.mmdev.codetrace.ui;
 import com.mmdev.codetrace.app.AppSettings;
 import com.mmdev.codetrace.reference.GraphLayoutEngine;
 import com.mmdev.codetrace.commands.ProjectCommandStore;
+import com.mmdev.codetrace.commands.CommandWarningPreferences;
 import com.mmdev.codetrace.commands.ProjectCommandStore.Preset;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -282,7 +283,24 @@ public final class PreferencesWindow {
             commandsPage.getStyleClass().add("prefs-section");
         }
 
-        final javafx.scene.Node stableCommandsPage = commandsPage;
+        CheckBox realFilesWarning = AppControls.checkBox(
+                "Confirmar antes de ejecutar comandos sobre archivos reales");
+        realFilesWarning.setSelected(CommandWarningPreferences.mustConfirm());
+        realFilesWarning.setTooltip(new Tooltip(
+                "El programa externo podría modificar o eliminar originales."));
+        Button restoreWarnings = new Button("Restablecer avisos de seguridad");
+        restoreWarnings.setTooltip(new Tooltip(
+                "Vuelve a activar la confirmación para todos los proyectos."));
+        restoreWarnings.setOnAction(event -> realFilesWarning.setSelected(true));
+        Label safetyNote = new Label(
+                "Los comandos utilizan el proyecto original, nunca la reconstrucción virtual.");
+        safetyNote.setWrapText(true);
+        safetyNote.getStyleClass().add("prefs-feedback");
+        VBox commandSection = new VBox(12, groupHeading("Seguridad de los comandos"),
+                realFilesWarning, restoreWarnings, safetyNote,
+                new javafx.scene.control.Separator(), commandsPage);
+        commandSection.getStyleClass().add("prefs-section");
+        final javafx.scene.Node stableCommandsPage = commandSection;
 
         BorderPane sectionContent = new BorderPane();
         sectionContent.getStyleClass().add("prefs-content");
@@ -310,6 +328,7 @@ public final class PreferencesWindow {
                     return false;
                 }
             }
+            CommandWarningPreferences.setMustConfirm(realFilesWarning.isSelected());
             onApply.accept(new AppSettings(
                     families.getValue() == null ? current.fontFamily() : families.getValue(),
                     (int) Math.round(size.getValue()),

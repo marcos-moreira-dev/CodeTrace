@@ -1,6 +1,7 @@
 package com.mmdev.codetrace.ui;
 
 import com.mmdev.codetrace.commands.CommandRunner;
+import com.mmdev.codetrace.commands.CommandWarningPreferences;
 import com.mmdev.codetrace.commands.ProjectCommandStore.Preset;
 import java.nio.file.Path;
 import java.util.List;
@@ -158,10 +159,10 @@ public final class CommandConsolePane extends BorderPane {
         if (project == null || presets.getValue() == null) return;
         Preset selected = presets.getValue();
         Path currentRoot = project;
-        if (!commandExecutionAcknowledged) {
+        if (!commandExecutionAcknowledged && CommandWarningPreferences.mustConfirm()) {
             ButtonType runConfirmed = new ButtonType("Ejecutar comando",
                     ButtonBar.ButtonData.OK_DONE);
-            ButtonType accepted = ProductDialogs.confirm(
+            ProductDialogs.Confirmation decision = ProductDialogs.confirmRealFiles(
                     getScene() == null ? null : getScene().getWindow(),
                     "Confirmar ejecución sobre archivos reales",
                     "Este comando se ejecutará en el proyecto ORIGINAL: "
@@ -170,7 +171,8 @@ public final class CommandConsolePane extends BorderPane {
                     + "No ejecuta la reconstrucción virtual de CodeTrace. "
                     + "Utiliza una copia del proyecto si vas a probar operaciones de escritura.",
                     runConfirmed, ButtonType.CANCEL);
-            if (accepted != runConfirmed) return;
+            if (decision.choice() != runConfirmed) return;
+            if (decision.doNotShowAgain()) CommandWarningPreferences.setMustConfirm(false);
             commandExecutionAcknowledged = true;
         }
         long generation = ++outputGeneration;
