@@ -613,3 +613,39 @@ manual Windows real de los puntos anteriores y resolver los P0 de auditoría.
 La prueba unitaria de HLS confirma URLs, lista VOD, segmentos y acceso directo
 a la parte final. Solo la prueba GUI en Windows confirma que JavaFX reproduce
 HLS con imagen, sonido, seek y sincronía reales.
+
+
+## Auditoría del cierre: estadísticas, revelar originales, diálogos y capturas
+
+- **PRACTICE-METRICS-01:** Practica un .c o .ps1, comete un error y corrígelo.
+  Debe mostrarse felicitación (si está habilitada) con aciertos finales
+  correctos, tiempo transcurrido, velocidad media de esta apertura y errores
+  introducidos antes de corregirlos. Un archivo restaurado no puede inflar
+  la velocidad con los caracteres correctos de sesiones anteriores.
+- **PRACTICE-METRICS-02:** En Preferencias desactiva solo «Mostrar felicitación
+  y estadísticas al terminar un archivo». Completa otro .java/.ps1: no
+  aparece diálogo, pero el sonido success.mp3 sigue disponible si está
+  habilitado. Desactiva solo el sonido y comprueba lo contrario.
+- **PRACTICE-METRICS-03:** Audio, vídeo, imágenes, PDF y DOCX no deben generar
+  jamás el mensaje de finalización de mecanografía.
+- **DIALOG-ICONS-01:** Comprueba iconos discretos y legibles para información,
+  éxito, confirmación, advertencia y error; sin cortarse ni saturar el diseño.
+- **EXPLORER-01:** Abre un proyecto de referencia bajo un directorio con
+  espacios, acentos y comas. Botón derecho en un archivo, «Mostrar en el
+  Explorador»: debe abrir la carpeta CONTENEDORA exacta y seleccionar el
+  archivo. No debe abrir «Documentos» ni la raíz por defecto.
+- **AUTO-CAPTURE-01:** Ejecuta scripts/auditoria-visual.ps1 sin argumentos.
+  Cambia entre varias vistas de CodeTrace y abre al menos un diálogo:
+  genera ZIP con imágenes de los estados realmente mostrados y manifiesto.
+  No requiere pulsar Intro en cada pantalla.
+- **AUTO-CAPTURE-02:** Con la consola PowerShell en primer plano, la captura
+  debe RECHAZAR la ventana aunque su título diga CodeTrace. Verifica que
+  tampoco capture el navegador u otras aplicaciones. El ZIP no se envía
+  automáticamente.
+- **AUTO-CAPTURE-03:** Con -Guiado, comprueba el flujo opcional de 37 casos
+  y la opción S (omitir) / Q (terminar). Al cerrar la app en modo automático,
+  crea el ZIP y abre la carpeta reports correcta.
+
+La captura automática observa cambios visuales mientras se navega, pero
+NO recorre por sí misma casos de uso no abiertos. La cobertura completa de
+37 casos solo existe después de comprobar cada caso explícitamente.
