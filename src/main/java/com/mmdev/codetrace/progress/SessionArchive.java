@@ -2,6 +2,7 @@ package com.mmdev.codetrace.progress;
 
 import com.mmdev.codetrace.practice.TypingSession;
 import com.mmdev.codetrace.practice.PracticeMode;
+import com.mmdev.codetrace.reference.GraphLayout;
 import com.mmdev.codetrace.workspace.VirtualWorkspace;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -30,7 +31,7 @@ import java.util.Objects;
  */
 public final class SessionArchive {
     private static final int MAGIC = 0x43545243; // CTRC
-    private static final int VERSION = 2;
+    private static final int VERSION = 3;
     private static final int MAX_ITEMS = 200_000;
     private static final int MAX_STRING_BYTES = 8 * 1024 * 1024;
     private static final long MAX_ARCHIVE_BYTES = 256L * 1024 * 1024;
@@ -41,12 +42,19 @@ public final class SessionArchive {
     public record State(Path referenceRoot, VirtualWorkspace workspace,
                         Map<String, TypingSession> sessions,
                         Map<String, String> referenceHashes,
-                        PracticeMode practiceMode) {
+                        PracticeMode practiceMode, Map<String, GraphLayout> graphs) {
         public State(Path referenceRoot, VirtualWorkspace workspace,
                      Map<String, TypingSession> sessions,
                      Map<String, String> referenceHashes) {
             this(referenceRoot, workspace, sessions, referenceHashes,
-                    PracticeMode.RECONSTRUCTION);
+                    PracticeMode.RECONSTRUCTION, Map.of());
+        }
+
+        public State(Path referenceRoot, VirtualWorkspace workspace,
+                     Map<String, TypingSession> sessions,
+                     Map<String, String> referenceHashes, PracticeMode practiceMode) {
+            this(referenceRoot, workspace, sessions, referenceHashes,
+                    practiceMode, Map.of());
         }
 
         public State {
@@ -55,6 +63,8 @@ public final class SessionArchive {
             Objects.requireNonNull(practiceMode);
             sessions = Map.copyOf(sessions);
             referenceHashes = Map.copyOf(referenceHashes);
+            graphs = Map.copyOf(graphs);
+            if (graphs.size() > 100) throw new IllegalArgumentException("Demasiados mapas");
         }
     }
 
@@ -140,12 +150,25 @@ public final class SessionArchive {
             writeString(out, pair.getKey());
             writeString(out, pair.getValue());
         }
+
+        // v3: layout metadata is session-only, never written into the reference.
+        count(out, state.graphs().size());
+        for (var graph : state.graphs().entrySet()) {
+            writeString(out, graph.getKey());
+            writeString(out, graph.getValue().fingerprint());
+            count(out, graph.getValue().positions().size());
+            for (var point : graph.getValue().positions().entrySet()) {
+                writeString(out, point.getKey());
+                out.writeDouble(point.getValue().x());
+                out.writeDouble(point.getValue().y());
+            }
+        }
     }
 
     private static State read(DataInputStream in) throws IOException {
         int magic = in.readInt();
         int version = in.readInt();
-        if (magic != MAGIC || (version != 1 && version != VERSION)) {
+        if (magic != MAGIC || (version != 1 && version != 2 && version != VERSION)) {
             throw new IOException("Unsupported CodeTrace session header or version");
         }
         Path root = Path.of(readString(in));
@@ -201,7 +224,30 @@ public final class SessionArchive {
                 throw new IOException("Invalid or duplicate SHA-256 record");
             }
         }
-        return new State(root, workspace, sessions, hashes, mode);
+        Map<String, GraphLayout> graphs = new LinkedHashMap<>();
+        if (version >= 3) {
+            int graphCount = boundedCount(in);
+            if (graphCount > 100) throw new IOException("Too many graph layouts");
+            for (int i = 0; i < graphCount; i++) {
+                String folder = readString(in);
+                if (!folder.isEmpty()) VirtualWorkspace.checkPath(folder);
+                String fingerprint = readString(in);
+                int nodeCount = boundedCount(in);
+                if (nodeCount > 180) throw new IOException("Too many graph nodes");
+                Map<String, GraphLayout.Point> positions = new LinkedHashMap<>();
+                for (int n = 0; n < nodeCount; n++) {
+                    String node = readString(in);
+                    VirtualWorkspace.checkPath(node);
+                    GraphLayout.Point point = new GraphLayout.Point(
+                            in.readDouble(), in.readDouble());
+                    if (positions.putIfAbsent(node, point) != null)
+                        throw new IOException("Duplicate graph node");
+                }
+                if (graphs.putIfAbsent(folder, new GraphLayout(fingerprint, positions)) != null)
+                    throw new IOException("Duplicate graph scope");
+            }
+        }
+        return new State(root, workspace, sessions, hashes, mode, graphs);
     }
 
     private static void writeString(DataOutputStream out, String text) throws IOException {
