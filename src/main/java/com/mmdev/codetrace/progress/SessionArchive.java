@@ -3,6 +3,7 @@ package com.mmdev.codetrace.progress;
 import com.mmdev.codetrace.practice.TypingSession;
 import com.mmdev.codetrace.practice.PracticeMode;
 import com.mmdev.codetrace.reference.GraphLayout;
+import com.mmdev.codetrace.reference.GraphLayoutEngine;
 import com.mmdev.codetrace.workspace.VirtualWorkspace;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -31,7 +32,7 @@ import java.util.Objects;
  */
 public final class SessionArchive {
     private static final int MAGIC = 0x43545243; // CTRC
-    private static final int VERSION = 3;
+    private static final int VERSION = 4;
     private static final int MAX_ITEMS = 200_000;
     private static final int MAX_STRING_BYTES = 8 * 1024 * 1024;
     private static final long MAX_ARCHIVE_BYTES = 256L * 1024 * 1024;
@@ -162,13 +163,15 @@ public final class SessionArchive {
                 out.writeDouble(point.getValue().x());
                 out.writeDouble(point.getValue().y());
             }
+            // v4 appends presentation mode after v3 coordinates.
+            writeString(out, graph.getValue().mode().name());
         }
     }
 
     private static State read(DataInputStream in) throws IOException {
         int magic = in.readInt();
         int version = in.readInt();
-        if (magic != MAGIC || (version != 1 && version != 2 && version != VERSION)) {
+        if (magic != MAGIC || version < 1 || version > VERSION) {
             throw new IOException("Unsupported CodeTrace session header or version");
         }
         Path root = Path.of(readString(in));
@@ -243,7 +246,16 @@ public final class SessionArchive {
                     if (positions.putIfAbsent(node, point) != null)
                         throw new IOException("Duplicate graph node");
                 }
-                if (graphs.putIfAbsent(folder, new GraphLayout(fingerprint, positions)) != null)
+                GraphLayoutEngine.Mode layoutMode = GraphLayoutEngine.Mode.GRID;
+                if (version >= 4) {
+                    try {
+                        layoutMode = GraphLayoutEngine.Mode.valueOf(readString(in));
+                    } catch (IllegalArgumentException invalid) {
+                        throw new IOException("Unknown graph layout mode", invalid);
+                    }
+                }
+                if (graphs.putIfAbsent(folder,
+                        new GraphLayout(fingerprint, positions, layoutMode)) != null)
                     throw new IOException("Duplicate graph scope");
             }
         }
