@@ -4,6 +4,8 @@ on:
   workflow_dispatch:
   push:
     paths:
+      - "src/**"
+      - "pom.xml"
       - "scripts/package-windows.ps1"
       - ".github/workflows/package-windows.yml"
   pull_request:
@@ -28,9 +30,9 @@ jobs:
           distribution: temurin
           java-version: "21"
           cache: maven
-      - name: Build portable application with jpackage
+      - name: Build portable app and native Windows installer
         shell: pwsh
-        run: ./scripts/package-windows.ps1
+        run: ./scripts/package-windows.ps1 -Installer
       - name: Verify launcher and distribution ZIP
         shell: pwsh
         run: |
@@ -45,5 +47,19 @@ jobs:
         with:
           name: CodeTrace-Windows-portable
           path: dist/CodeTrace-Windows-portable.zip
+          if-no-files-found: error
+          retention-days: 7
+
+      - name: Verify native Windows EXE installer
+        shell: pwsh
+        run: |
+          $installers = @(Get-ChildItem -Path dist -Filter "CodeTrace-*.exe" -File)
+          if ($installers.Count -eq 0) { throw "Missing Windows installer EXE" }
+          Write-Host "Installer:" ($installers.Name -join ", ")
+      - name: Upload native Windows installer
+        uses: actions/upload-artifact@v4
+        with:
+          name: CodeTrace-Windows-installer
+          path: dist/CodeTrace-*.exe
           if-no-files-found: error
           retention-days: 7
