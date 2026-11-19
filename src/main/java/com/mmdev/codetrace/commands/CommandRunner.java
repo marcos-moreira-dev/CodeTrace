@@ -104,7 +104,7 @@ public final class CommandRunner {
                 // Windows can keep the command's working directory locked
                 // briefly after destroyForcibly(). Reap the OS process
                 // before telling observers that the command has finished.
-                if (process != null) reapOnWorker(process);
+                if (process != null) reapOnWorker(process, stopRequested.get());
                 workerThread.set(null);
                 running.set(false);
                 finished.accept(code);
@@ -124,7 +124,7 @@ public final class CommandRunner {
         if (worker != null) worker.interrupt();
     }
 
-    private static void reapOnWorker(Process process) {
+    private static void reapOnWorker(Process process, boolean wasCancelled) {
         if (process.isAlive()) terminate(process);
         // stop() interrupts this worker to unblock waitFor(). That interrupt
         // must be cleared temporarily so process reaping can actually wait.
@@ -147,6 +147,25 @@ public final class CommandRunner {
                 // Process may be stuck in native teardown. Worker still exits.
             }
         } finally {
+            // Windows can report process exit before its console/pipe
+            // handles release the process working directory. Cancellation
+            // completion must include this short native-teardown grace, or
+            // clients deleting an ephemeral project see AccessDeniedException.
+            if (wasCancelled && System.getProperty("os.name", "")
+                    .toLowerCase(java.util.Locale.ROOT).contains("win")) {
+                try {
+                    process.getInputStream().close();
+                    process.getErrorStream().close();
+                    process.getOutputStream().close();
+                } catch (IOException ignored) {
+                    // Pipes are often already closed by forced termination.
+                }
+                try {
+                    Thread.sleep(650);
+                } catch (InterruptedException again) {
+                    interrupted = true;
+                }
+            }
             if (interrupted) Thread.currentThread().interrupt();
         }
     }
