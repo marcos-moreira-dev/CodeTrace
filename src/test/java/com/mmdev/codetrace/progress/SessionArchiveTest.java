@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import com.mmdev.codetrace.practice.TypingSession;
 import com.mmdev.codetrace.practice.PracticeMode;
 import com.mmdev.codetrace.reference.GraphLayout;
+import com.mmdev.codetrace.reference.GraphLayoutEngine;
 import java.io.DataOutputStream;
 import com.mmdev.codetrace.workspace.VirtualWorkspace;
 import java.io.IOException;
@@ -111,10 +112,11 @@ class SessionArchiveTest {
     }
 
     @Test
-    void versionThreeRetainsGraphLayoutWithoutChangingTheReference() throws Exception {
+    void versionFourRetainsGraphLayoutModeWithoutChangingTheReference() throws Exception {
         var graph = new GraphLayout("a".repeat(64), Map.of(
                 "src/A.java", new GraphLayout.Point(154.5, 278),
-                "src/B.java", new GraphLayout.Point(460, 120)));
+                "src/B.java", new GraphLayout.Point(460, 120)),
+                GraphLayoutEngine.Mode.ORGANIZED);
         Path original = Files.writeString(directory.resolve("A.java"), "class A {}");
         Path destination = directory.resolve("graph-session.ctrace");
         SessionArchive.save(destination, new SessionArchive.State(directory,
@@ -146,4 +148,38 @@ class SessionArchiveTest {
         assertEquals(PracticeMode.DIRECT, restored.practiceMode());
         assertTrue(restored.graphs().isEmpty());
     }
+    @Test
+    void versionThreeLayoutsDefaultToGridOnRead() throws Exception {
+        Path archive = directory.resolve("v3-graph.ctrace");
+        try (DataOutputStream out = new DataOutputStream(Files.newOutputStream(archive))) {
+            out.writeInt(0x43545243);
+            out.writeInt(3);
+            writeLegacyString(out, directory.toString());
+            out.writeByte(1);
+            out.writeInt(1); // virtual root
+            writeLegacyString(out, "");
+            out.writeByte(1); // directory
+            out.writeInt(0); // sessions
+            out.writeInt(0); // hashes
+            out.writeInt(1); // layouts
+            writeLegacyString(out, "src");
+            writeLegacyString(out, "a".repeat(64));
+            out.writeInt(1);
+            writeLegacyString(out, "src/Main.java");
+            out.writeDouble(340);
+            out.writeDouble(415);
+        }
+        var state = SessionArchive.load(archive);
+        assertEquals(GraphLayoutEngine.Mode.GRID, state.graphs().get("src").mode());
+        assertEquals(new GraphLayout.Point(340, 415),
+                state.graphs().get("src").positions().get("src/Main.java"));
+    }
+
+    private static void writeLegacyString(DataOutputStream out, String value)
+            throws IOException {
+        byte[] text = value.getBytes(java.nio.charset.StandardCharsets.UTF_8);
+        out.writeInt(text.length);
+        out.write(text);
+    }
+
 }
