@@ -191,7 +191,7 @@ public final class PreferencesWindow {
         opacity.valueProperty().addListener((obs, previous, value) -> updatePreview.run());
         updatePreview.run();
 
-        CheckBox turbo = new CheckBox("Omitir automáticamente símbolos y puntuación");
+        CheckBox turbo = AppControls.checkBox("Omitir automáticamente símbolos y puntuación");
         turbo.setSelected(current.turboMode());
 
         VBox editorPanel = section("Editor");
@@ -202,7 +202,7 @@ public final class PreferencesWindow {
                 groupHeading("Práctica"), turbo,
                 groupHeading("Vista previa"), preview);
 
-        CheckBox explorer = new CheckBox("Mostrar explorador de proyectos");
+        CheckBox explorer = AppControls.checkBox("Mostrar explorador de proyectos");
         explorer.setSelected(current.showExplorer());
         VBox windowPanel = section("Ventana");
         windowPanel.getChildren().addAll(groupHeading("Paneles"), explorer);
@@ -229,7 +229,7 @@ public final class PreferencesWindow {
                 groupHeading("Distribución inicial"), graphLayout,
                 graphExplanation);
 
-        CheckBox sounds = new CheckBox("Reproducir sonidos al escribir");
+        CheckBox sounds = AppControls.checkBox("Reproducir sonidos al escribir");
         sounds.setSelected(current.typingSounds());
         CheckBox completionSound = new CheckBox(
                 "Reproducir sonido de éxito al completar cada archivo");
