@@ -1,87 +1,110 @@
 #Requires -Version 5.1
+<#
+Captura exclusivamente la ventana en primer plano de un PROCESO CodeTrace
+verificado. No compara el titulo con "CodeTrace": la terminal de QA tambien
+contiene ese nombre y anteriormente podia capturarse por equivocacion.
+Exit 2: ninguna ventana valida; no se escribe PNG.
+#>
 [CmdletBinding()]
 param(
     [Parameter(Mandatory = $true)][string]$OutputFile,
-    [int]$TimeoutSeconds = 45
+    [int]$TimeoutSeconds = 4
 )
 $ErrorActionPreference = "Stop"
 try {
     Add-Type -AssemblyName System.Drawing
     Add-Type -AssemblyName System.Windows.Forms
-    Add-Type -TypeDefinition @'
+    if (-not ("CodeTraceWindowCapture" -as [type])) {
+        Add-Type -TypeDefinition @'
 using System;
+using System.Text;
 using System.Runtime.InteropServices;
-public static class CodeTraceWindowRect {
+public static class CodeTraceWindowCapture {
     [StructLayout(LayoutKind.Sequential)]
-    public struct RECT {
-        public int Left, Top, Right, Bottom;
-    }
-    [DllImport("user32.dll")]
-    public static extern bool GetWindowRect(IntPtr window, out RECT rectangle);
-    [DllImport("user32.dll")]
-    public static extern IntPtr GetForegroundWindow();
-    [DllImport("user32.dll")]
-    public static extern uint GetWindowThreadProcessId(IntPtr window, out uint processId);
+    public struct RECT { public int Left, Top, Right, Bottom; }
+    [DllImport("user32.dll")] public static extern bool GetWindowRect(IntPtr hwnd, out RECT rect);
+    [DllImport("user32.dll")] public static extern IntPtr GetForegroundWindow();
+    [DllImport("user32.dll")] public static extern uint GetWindowThreadProcessId(IntPtr hwnd, out uint pid);
+    [DllImport("user32.dll", CharSet=CharSet.Unicode)]
+    public static extern int GetWindowText(IntPtr hwnd, StringBuilder title, int capacity);
+    [DllImport("user32.dll")] public static extern bool IsWindowVisible(IntPtr hwnd);
 }
 '@
-
-    $deadline = (Get-Date).AddSeconds($TimeoutSeconds)
-    $application = $null
-    while ((Get-Date) -lt $deadline) {
-        $application = Get-Process -ErrorAction SilentlyContinue | Where-Object {
-            $_.MainWindowHandle -ne [IntPtr]::Zero -and
-            $_.MainWindowTitle -match 'CodeTrace'
-        } | Select-Object -First 1
-        if ($application) { break }
-        Start-Sleep -Milliseconds 500
-    }
-    if (-not $application) {
-        Write-Output "No se encontro la ventana CodeTrace."
-        exit 1
     }
 
-    Start-Sleep -Seconds 2
-    # Prefer the currently focused window of the same CodeTrace process.
-    # This includes Preferences, About, Search and other modal windows,
-    # whereas MainWindowHandle alone can omit a separate dialog.
-    $captureHandle = $application.MainWindowHandle
-    $foreground = [CodeTraceWindowRect]::GetForegroundWindow()
-    if ($foreground -ne [IntPtr]::Zero) {
-        [uint32]$foregroundPid = 0
-        [void][CodeTraceWindowRect]::GetWindowThreadProcessId(
-                $foreground, [ref]$foregroundPid)
-        if ([int]$foregroundPid -eq $application.Id) {
-            $captureHandle = $foreground
+    # Never activate a terminal or a title-matched unrelated window.
+    # Only the foreground window of CodeTrace.exe or CodeTrace's JVM is valid.
+    $deadline = (Get-Date).AddSeconds([Math]::Max(0, $TimeoutSeconds))
+    $captureHandle = [IntPtr]::Zero
+    $windowTitle = ""
+    do {
+        $foreground = [CodeTraceWindowCapture]::GetForegroundWindow()
+        if ($foreground -ne [IntPtr]::Zero -and
+                [CodeTraceWindowCapture]::IsWindowVisible($foreground)) {
+            [uint32]$ownerPid = 0
+            [void][CodeTraceWindowCapture]::GetWindowThreadProcessId(
+                $foreground, [ref]$ownerPid)
+            if ($ownerPid -gt 0) {
+                # Win32_Process provides the actual executable and command line.
+                $proc = Get-CimInstance Win32_Process -Filter ("ProcessId=" + $ownerPid) -ErrorAction SilentlyContinue
+                if ($null -ne $proc) {
+                    $name = [string]$proc.Name
+                    $cmd = [string]$proc.CommandLine
+                    $nativeLauncher = $name -ieq "CodeTrace.exe"
+                    $jvm = ($name -ieq "java.exe" -or $name -ieq "javaw.exe") -and
+                        ($cmd -match '(?i)com[.]mmdev[.]codetrace' -or
+                         $cmd -match '(?i)codetrace[^\\ ]*[.]jar')
+                    if ($nativeLauncher -or $jvm) {
+                        $captureHandle = $foreground
+                        $title = New-Object System.Text.StringBuilder 512
+                        [void][CodeTraceWindowCapture]::GetWindowText(
+                            $foreground, $title, $title.Capacity)
+                        $windowTitle = $title.ToString()
+                        break
+                    }
+                }
+            }
         }
+        if ((Get-Date) -ge $deadline) { break }
+        Start-Sleep -Milliseconds 250
+    } while ($true)
+
+    if ($captureHandle -eq [IntPtr]::Zero) {
+        Write-Output "SIN_CAPTURA: enfoca una ventana de la aplicación CodeTrace."
+        exit 2
     }
-    $rect = [CodeTraceWindowRect+RECT]::new()
-    if (-not [CodeTraceWindowRect]::GetWindowRect(
-        $captureHandle, [ref]$rect)) {
-        throw "No se pudo consultar el rectangulo de la ventana."
+    $rect = [CodeTraceWindowCapture+RECT]::new()
+    if (-not [CodeTraceWindowCapture]::GetWindowRect(
+            $captureHandle, [ref]$rect)) {
+        throw "No se pudo determinar el rectangulo de CodeTrace."
     }
-    # Only the visible CodeTrace rectangle, not the whole desktop.
-    $bounds = [System.Windows.Forms.SystemInformation]::VirtualScreen
-    $left = [Math]::Max($rect.Left, $bounds.Left)
-    $top = [Math]::Max($rect.Top, $bounds.Top)
-    $right = [Math]::Min($rect.Right, $bounds.Right)
-    $bottom = [Math]::Min($rect.Bottom, $bounds.Bottom)
+    $screen = [System.Windows.Forms.SystemInformation]::VirtualScreen
+    $left = [Math]::Max($rect.Left, $screen.Left)
+    $top = [Math]::Max($rect.Top, $screen.Top)
+    $right = [Math]::Min($rect.Right, $screen.Right)
+    $bottom = [Math]::Min($rect.Bottom, $screen.Bottom)
     $width = $right - $left
     $height = $bottom - $top
     if ($width -lt 100 -or $height -lt 100) {
-        throw "CodeTrace no es visible en el escritorio."
+        throw "La ventana CodeTrace esta fuera de la pantalla o minimizada."
     }
-    $bitmap = [System.Drawing.Bitmap]::new($width, $height)
+    $bitmap = New-Object System.Drawing.Bitmap($width, $height)
     $graphics = [System.Drawing.Graphics]::FromImage($bitmap)
     try {
-        $size = [System.Drawing.Size]::new($width, $height)
-        $graphics.CopyFromScreen($left, $top, 0, 0, $size)
+        $graphics.CopyFromScreen($left, $top, 0, 0,
+            [System.Drawing.Size]::new($width, $height))
+        $directory = Split-Path -Parent $OutputFile
+        if ($directory -and -not (Test-Path -LiteralPath $directory)) {
+            New-Item -ItemType Directory -Path $directory -Force | Out-Null
+        }
         $bitmap.Save($OutputFile, [System.Drawing.Imaging.ImageFormat]::Png)
-        Write-Output ("Captura: " + $OutputFile)
+        Write-Output ("CAPTURA: " + $OutputFile)
+        Write-Output ("VENTANA: " + $windowTitle)
     } finally {
         $graphics.Dispose()
         $bitmap.Dispose()
     }
 } catch {
-    Write-Output ("No se pudo capturar CodeTrace: " + $_.Exception.Message)
-    exit 1
+    Write-Output ("SIN_CAPTURA: " + $_.Exception.Message)
+    exit 2
 }
