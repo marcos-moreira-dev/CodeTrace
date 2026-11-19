@@ -260,13 +260,19 @@ public final class ReferenceTree extends TreeView<Path> {
         node.setExpanded(false);
     }
 
-    /** Collapse this directory and every expanded descendant, not its parents. */
+    /**
+     * Close every nested branch while leaving the chosen folder OPEN.
+     * Its immediate children remain visible, which is the useful result of
+     * "Colapsar subcarpetas". Never collapse the selected folder itself.
+     */
     public void collapseRecursively(Path directory) {
         cancelExpansion();
         TreeItem<Path> node = findVisibleNode(getRoot(), directory);
         if (node == null || !isFolder(directory)) return;
-        collapseExpanded(node);
-        if (node == getRoot()) node.setExpanded(true);
+        for (TreeItem<Path> child : node.getChildren()) {
+            collapseExpanded(child);
+        }
+        node.setExpanded(true);
     }
 
     private static TreeItem<Path> findVisibleNode(TreeItem<Path> from, Path path) {
