@@ -125,3 +125,14 @@ Windows real.
 
 **No se declaran cerrados P0** hasta contar con las pruebas indicadas en
 Windows y una decisión sobre licencia y paquete de publicación.
+
+- **C-04 (parcial):** «Acerca de» ya obtiene la versión directamente
+  de la propiedad `project.version` del POM mediante
+  `codetrace-version.properties` filtrado por Maven, sin duplicar
+  una cadena fija. Sigue faltando acordar versión final, etiqueta,
+  notas de cambios y ensayo en Windows limpio.
+- **TREE-RECURSIVE (aclaración):** «Colapsar todas las subcarpetas»
+  contrae también la propia carpeta pulsada; «Expandir todas las
+  subcarpetas» abre toda su descendencia de forma progresiva. Son
+  operaciones inversas, con pruebas JavaFX que reabren la rama
+  y verifican que no reaparezcan niveles antiguos.
