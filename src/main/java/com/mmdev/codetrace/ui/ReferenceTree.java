@@ -63,6 +63,7 @@ public final class ReferenceTree extends TreeView<Path> {
     private String clipboard;
     private boolean cut;
     private Consumer<String> onProgressFolder = folder -> {};
+    private Consumer<Path> onDependencyGraph = ignored -> {};
     private Predicate<String> excluded = folder -> false;
     private Predicate<String> explicitlyExcluded = folder -> false;
     private BiConsumer<String, Boolean> onExcludedChanged = (folder, value) -> {};
@@ -200,6 +201,11 @@ public final class ReferenceTree extends TreeView<Path> {
         onProgressFolder = listener == null ? folder -> {} : listener;
     }
 
+    /** Map requests originate from the folder that was right-clicked. */
+    public void setOnDependencyGraph(Consumer<Path> listener) {
+        onDependencyGraph = listener == null ? ignored -> {} : listener;
+    }
+
     /**
      * Only de-emphasize the graphic of out-of-scope nodes. Do not disable the
      * TreeCell: users must remain free to browse, open files and switch folders.
@@ -252,6 +258,26 @@ public final class ReferenceTree extends TreeView<Path> {
         if (!node.isExpanded()) return;
         for (TreeItem<Path> child : node.getChildren()) collapseExpanded(child);
         node.setExpanded(false);
+    }
+
+    /** Collapse this directory and every expanded descendant, not its parents. */
+    public void collapseRecursively(Path directory) {
+        cancelExpansion();
+        TreeItem<Path> node = findVisibleNode(getRoot(), directory);
+        if (node == null || !isFolder(directory)) return;
+        collapseExpanded(node);
+        if (node == getRoot()) node.setExpanded(true);
+    }
+
+    private static TreeItem<Path> findVisibleNode(TreeItem<Path> from, Path path) {
+        if (from == null) return null;
+        if (path.equals(from.getValue())) return from;
+        if (!from.isExpanded()) return null;
+        for (TreeItem<Path> child : from.getChildren()) {
+            TreeItem<Path> match = findVisibleNode(child, path);
+            if (match != null) return match;
+        }
+        return null;
     }
 
     /**
@@ -483,6 +509,24 @@ public final class ReferenceTree extends TreeView<Path> {
         List<MenuItem> actions = new ArrayList<>();
 
         if (folder && index != null) {
+            boolean hasSubfolders = index.children(relative).stream()
+                    .anyMatch(index::hasDirectory);
+            if (!hasSubfolders) {
+                hasSubfolders = workspace.entries().stream()
+                        .anyMatch(entry -> entry.kind() == VirtualWorkspace.Kind.DIRECTORY
+                                && parentOf(entry.path()).equals(relative));
+            }
+            if (hasSubfolders) {
+                MenuItem collapseBranch = new MenuItem("Colapsar subcarpetas");
+                collapseBranch.setGraphic(new FontIcon("fth-minimize-2"));
+                collapseBranch.setOnAction(event -> collapseRecursively(path));
+                actions.add(collapseBranch);
+            }
+            MenuItem dependencies = new MenuItem("Mapa de dependencias...");
+            dependencies.setGraphic(new FontIcon("fth-map"));
+            dependencies.setOnAction(event -> onDependencyGraph.accept(path));
+            actions.add(dependencies);
+            actions.add(new javafx.scene.control.SeparatorMenuItem());
             boolean hasWorkable = index.hasWorkableDescendant(relative);
             boolean hasPendingDirectory = index.children(relative).stream()
                     .anyMatch(child -> index.hasDirectory(child)
