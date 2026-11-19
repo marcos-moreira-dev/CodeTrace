@@ -115,6 +115,6 @@ try {
     Write-Host ("ZIP: " + $zip) -ForegroundColor Cyan
     Write-Host "Revisa y elimina PNG con datos privados antes de compartir."
     if (-not $NoExplorer) {
-        Start-Process -FilePath explorer.exe -ArgumentList ('/select,"' + $zip + '"')
+        Invoke-Item -LiteralPath $reports
     }
 }
