@@ -56,6 +56,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import javafx.application.Application;
+import javafx.animation.PauseTransition;
+import javafx.util.Duration;
 import javafx.concurrent.Task;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
@@ -114,8 +116,10 @@ public final class CodeTraceApp extends Application {
     private final DocumentTabs documents = new DocumentTabs(tabs, () -> {
         refreshTabActions();
         refreshMetrics();
+        refreshContextStatus();
     });
     private final Label status = new Label("Listo");
+    private final PauseTransition statusReset = new PauseTransition(Duration.seconds(6));
     private final StatusStopwatch stopwatch = new StatusStopwatch();
     private final Label fileInfo = new Label();
     private final Label projectInfo = new Label();
@@ -199,6 +203,7 @@ public final class CodeTraceApp extends Application {
         FontResources.register();
         settings = AppSettings.load();
         stage = window;
+        statusReset.setOnFinished(event -> refreshContextStatus());
         BorderPane root = new BorderPane();
 
         MenuItem openReference = new MenuItem("Abrir referencia...");
@@ -508,12 +513,7 @@ public final class CodeTraceApp extends Application {
                     refreshMetrics();
                     refreshTabActions();
                     updateContextualZoom();
-                    if (selected != null
-                            && selected.getContent() instanceof DependencyGraphPane graph) {
-                        setStatus(graph.getSelectedNode() == null
-                                ? "Mapa · " + graph.folder()
-                                : graph.getSelectedNode());
-                    }
+                    refreshContextStatus();
                     // Once tab selection is processed, return focus to its
                     // typing surface rather than leaving it in the file tree.
                     if (selected != null) {
@@ -1817,7 +1817,43 @@ public final class CodeTraceApp extends Application {
         stage.setTitle((dirty ? "* " : "") + name + " — CodeTrace");
     }
 
+    /**
+     * Contextual status follows the selected tab, never the last tab opened.
+     * Progress and stopwatch are independent components in the footer.
+     */
+    private void refreshContextStatus() {
+        statusReset.stop();
+        Tab selected = tabs.getSelectionModel().getSelectedItem();
+        if (selected == null) {
+            status.setText(StatusBarText.empty(reference != null));
+            return;
+        }
+        if (selected.getContent() instanceof DependencyGraphPane graph) {
+            status.setText(StatusBarText.graph(graph.folder(), graph.getSelectedNode()));
+            return;
+        }
+        String registered = documents.pathOf(selected);
+        String name = registered == null || registered.startsWith("consulta://")
+                ? selected.getText() : registered;
+        if (editorIn(selected) != null) {
+            status.setText(StatusBarText.practice(name));
+        } else if (selected.getContent() instanceof ReferenceMediaPane) {
+            status.setText(StatusBarText.preview(name));
+        } else {
+            status.setText(StatusBarText.consultation(name));
+        }
+    }
+
+    /**
+     * Action notifications expire after six seconds, and navigation replaces
+     * them immediately. Thus a closed file cannot leave a stale status behind.
+     */
     private void setStatus(String value) {
+        if (value == null || value.isBlank()) {
+            refreshContextStatus();
+            return;
+        }
         status.setText(value);
+        statusReset.playFromStart();
     }
 }
