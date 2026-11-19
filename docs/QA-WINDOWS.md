@@ -714,3 +714,48 @@ de emojis ni la comprobación manual de los iconos al pasar el ratón.
 
 La compilación y los tests de componentes no certifican el aspecto final
 de fuentes ni las ventanas modales: se comprueban manualmente en Windows.
+
+
+## Auditoría final de reproductor y carpeta auxiliar (19 noviembre 2026)
+
+- **AUDIO-UI-01:** Abrir MP3/WAV/FLAC y reproducir unos segundos. No debe
+  aparecer «Audio de referencia · solo lectura» ni «ESPECTRO DE AUDIO ·
+  EN TIEMPO REAL». Debe mantenerse la animación del espectro y mostrar
+  datos verificados: formato, tamaño, duración al estar disponible y
+  etiquetas de artista/álbum si existen. Nunca inventar bitrate o códec.
+- **TREE-SECOND-01:** El ícono de maximizar expande las carpetas del
+  proyecto principal. El botón **+**, distinto, permite seleccionar una
+  carpeta auxiliar arbitraria; se crea una segunda sección del acordeón.
+  No puede agregarse una tercera sección ni duplicar el árbol auxiliar.
+- **TREE-SECOND-02:** Al agregar, cambiar y quitar la carpeta auxiliar,
+  el proyecto principal, las exclusiones y el porcentaje de práctica
+  permanecen intactos. Se pueden abrir MP3, videos, imágenes, TXT, fuentes
+  y Markdown desde el árbol auxiliar sin crear sesiones ni carpetas
+  virtuales. No hay comandos de crear, mover ni borrar en el auxiliar.
+- **TREE-SECOND-03:** Abrir audio desde carpeta auxiliar, iniciar
+  reproducción y cambiar a una pestaña Java de mecanografía.
+  El audio debe continuar hasta que se pause/detenga o se cierre su pestaña.
+  Una carpeta con miles de elementos debe cargar sin congelar la ventana.
+  Comprobar que enlaces simbólicos no permiten salir de la carpeta elegida.
+- **TREE-SECOND-04:** Archivos PDF o binarios sin visor integrado muestran
+  información y acceso al Explorador, sin intentar interpretarlos como
+  texto ni prometer edición deshabilitada en aplicaciones externas.
+- **TXT-GUTTER-01:** Abrir CodeTrace-Emojis-Prueba.txt; comparar sus
+  números de línea con C y Java. Los números deben alinearse a la derecha
+  y cada archivo debe mantener una fila por línea original, incluso cuando
+  contiene Unicode compuesto. Las líneas largas deben desplazarse en
+  horizontal en lugar de empujar la siguiente línea.
+- **EMOJI-SVG-01:** En Windows, preparar assets antes del instalador con
+  \`powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\preparar-emojis.ps1\`.
+  Son SVG oficiales de Twemoji (CC BY 4.0), fijados a una revisión
+  específica y empaquetados sin peticiones externas durante la lectura.
+  Verificar que el Markdown renderizado muestra caras, familias, banderas y
+  keycaps completos; en Fuente y TXT se conserva el Unicode original.
+  La ausencia de un recurso usa el fallback tipográfico, no un cuadro vacío.
+- **EMOJI-SVG-02:** Verificar que el visor no interpreta código embebido
+  ni incorpora solicitudes externas, que se mantiene su política CSP y
+  que los créditos Twemoji aparecen en Acerca de y licencias del paquete.
+
+El último cierre debe combinar Maven verify, diagnóstico Windows,
+empaquetado y una comprobación real en JavaFX. Las capturas no equivalen
+a una certificación de los estados que no se muestran.
