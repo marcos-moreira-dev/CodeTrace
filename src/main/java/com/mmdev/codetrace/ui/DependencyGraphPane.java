@@ -98,6 +98,10 @@ public final class DependencyGraphPane extends BorderPane {
         scroll.setFitToWidth(false);
         scroll.setFitToHeight(false);
         scroll.getStyleClass().add("dependency-map-scroll");
+        javafx.scene.control.MenuItem reset = new javafx.scene.control.MenuItem(
+                "Restablecer distribución");
+        reset.setOnAction(event -> resetLayout());
+        scroll.setContextMenu(new javafx.scene.control.ContextMenu(reset));
         setCenter(scroll);
 
         canvas.setOnMousePressed(event -> {
