@@ -15,6 +15,8 @@ import com.mmdev.codetrace.reference.ProgressScope;
 import com.mmdev.codetrace.reference.ProgressExclusions;
 import com.mmdev.codetrace.reference.TextPreview;
 import com.mmdev.codetrace.ui.ReferenceTree;
+import com.mmdev.codetrace.ui.ConsultationFolderTree;
+import com.mmdev.codetrace.ui.ConsultationFolderPolicy;
 import com.mmdev.codetrace.ui.DocumentTabs;
 import com.mmdev.codetrace.ui.EmptyWorkspacePane;
 import com.mmdev.codetrace.ui.StatusStopwatch;
@@ -58,6 +60,8 @@ import javafx.geometry.Orientation;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Accordion;
+import javafx.scene.control.TitledPane;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckMenuItem;
@@ -121,6 +125,12 @@ public final class CodeTraceApp extends Application {
     private final ReferenceTree tree = new ReferenceTree(
             this::openForPractice, this::onWorkspaceChanged, this::setStatus);
     private final VBox sidebar = new VBox();
+    private final Accordion folderAccordion = new Accordion();
+    private final ConsultationFolderTree consultationTree =
+            new ConsultationFolderTree(this::openConsultationFile, this::setStatus);
+    private TitledPane mainFolderPane;
+    private TitledPane consultationPane;
+    private Button addConsultationButton;
     private final ProjectCommandStore commandStore = new ProjectCommandStore();
     private final CommandConsolePane consolePane =
             new CommandConsolePane(() -> setConsoleVisible(false),
@@ -337,8 +347,6 @@ public final class CodeTraceApp extends Application {
         top.getChildren().addAll(menu, toolbar);
         root.setTop(top);
 
-        Label projectHeading = new Label("Proyecto");
-        projectHeading.getStyleClass().add("sidebar-title");
         onlySelectedFolder = com.mmdev.codetrace.ui.AppControls.checkBox("Solo");
         onlySelectedFolder.getStyleClass().add("tree-scope-checkbox");
         onlySelectedFolder.setTooltip(new Tooltip(
@@ -386,21 +394,28 @@ public final class CodeTraceApp extends Application {
         treeActivity.setVisible(false);
         treeActivity.managedProperty().bind(treeActivity.visibleProperty());
 
-        Button collapse = new Button("−");
+        Button collapse = new Button("", new FontIcon("fth-minimize-2"));
         collapse.getStyleClass().add("tree-header-action");
         collapse.setTooltip(new Tooltip("Contraer todas las carpetas"));
         collapse.setAccessibleText("Contraer árbol");
         collapse.setOnAction(event -> tree.collapseAll());
-        Button expand = new Button("+");
+        Button expand = new Button("", new FontIcon("fth-maximize-2"));
         expand.getStyleClass().add("tree-header-action");
         expand.setTooltip(new Tooltip("Expandir todas las carpetas"));
         expand.setAccessibleText("Expandir árbol");
         expand.setOnAction(event -> tree.expandAll());
 
+        addConsultationButton = new Button("", new FontIcon("fth-plus"));
+        addConsultationButton.getStyleClass().add("tree-header-action");
+        addConsultationButton.setTooltip(new Tooltip(
+                "Agregar una carpeta de consulta (máximo dos árboles)"));
+        addConsultationButton.setAccessibleText("Agregar carpeta de consulta");
+        addConsultationButton.setOnAction(event -> chooseConsultationFolder());
+
         Region headerFill = new Region();
         HBox.setHgrow(headerFill, Priority.ALWAYS);
-        HBox header = new HBox(4, projectHeading, headerFill,
-                treeActivity, refreshButton, collapse, expand);
+        HBox header = new HBox(4, headerFill,
+                treeActivity, refreshButton, collapse, expand, addConsultationButton);
         header.getStyleClass().add("project-tree-header");
         header.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
         explorerSearch = new TextField();
@@ -419,7 +434,16 @@ public final class CodeTraceApp extends Application {
         FlowPane optionsRow = new FlowPane(13, 5,
                 onlySelectedFolder, excludeSelectedFolder);
         optionsRow.getStyleClass().add("tree-options-row");
-        sidebar.getChildren().addAll(header, searchRow, optionsRow, tree);
+        VBox mainContent = new VBox(header, searchRow, optionsRow, tree);
+        VBox.setVgrow(tree, Priority.ALWAYS);
+        mainContent.getStyleClass().add("main-project-section");
+        mainFolderPane = new TitledPane("Proyecto principal", mainContent);
+        mainFolderPane.setCollapsible(true);
+        folderAccordion.getPanes().add(mainFolderPane);
+        folderAccordion.setExpandedPane(mainFolderPane);
+        folderAccordion.setMaxHeight(Double.MAX_VALUE);
+        VBox.setVgrow(folderAccordion, Priority.ALWAYS);
+        sidebar.getChildren().add(folderAccordion);
         tree.setOnProgressFolder(this::setProgressFolder);
         tree.setOnDependencyGraph(this::openDependencyGraphForFolder);
         tree.setOnIndexReady(index -> {
@@ -437,7 +461,6 @@ public final class CodeTraceApp extends Application {
         sidebar.getStyleClass().add("sidebar");
         sidebar.setMinWidth(165);
         sidebar.setPrefWidth(245);
-        VBox.setVgrow(tree, Priority.ALWAYS);
         tree.setStatusLookup(path -> reconstructionStates.getOrDefault(path,
                 workspace.exists(path) ? State.CREATED : State.PENDING));
         tree.setWorkspace(workspace);
@@ -831,6 +854,72 @@ public final class CodeTraceApp extends Application {
         }
     }
 
+    /**
+     * Opening supplementary resources never creates a TypingSession, workspace
+     * file, progress marker or automatic creation event.
+     */
+    private void openConsultationFile(Path file) {
+        Path folder = consultationTree.folder();
+        if (!ConsultationFolderPolicy.contains(folder, file)
+                || !Files.isRegularFile(file)) {
+            setStatus("La carpeta de consulta ya no contiene ese archivo.");
+            return;
+        }
+        String key = "consulta://" + file.toAbsolutePath().normalize();
+        if (ReferenceMediaPane.kindFor(file) != ReferenceMediaPane.Kind.UNSUPPORTED) {
+            openMediaReference(file, key, folder);
+        } else {
+            openTextReference(file, key);
+        }
+    }
+
+    private void chooseConsultationFolder() {
+        DirectoryChooser chooser = new DirectoryChooser();
+        chooser.setTitle("Agregar carpeta de consulta (solo lectura)");
+        Path previous = consultationTree.folder();
+        if (previous != null && Files.isDirectory(previous))
+            chooser.setInitialDirectory(previous.toFile());
+        java.io.File selected = chooser.showDialog(stage);
+        if (selected == null || !consultationTree.openFolder(selected.toPath()))
+            return;
+        if (consultationPane == null) {
+            Button change = new Button("", new FontIcon("fth-folder"));
+            change.getStyleClass().add("tree-header-action");
+            change.setTooltip(new Tooltip("Cambiar carpeta de consulta"));
+            change.setOnAction(event -> chooseConsultationFolder());
+            Button remove = new Button("", new FontIcon("fth-x"));
+            remove.getStyleClass().add("tree-header-action");
+            remove.setTooltip(new Tooltip("Quitar carpeta de consulta"));
+            remove.setOnAction(event -> removeConsultationFolder());
+            Label instruction = new Label("Doble clic para consultar un archivo");
+            instruction.getStyleClass().add("consultation-tree-hint");
+            Region space = new Region();
+            HBox.setHgrow(space, Priority.ALWAYS);
+            HBox controls = new HBox(5, instruction, space, change, remove);
+            controls.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
+            controls.getStyleClass().add("project-tree-header");
+            VBox content = new VBox(controls, consultationTree);
+            VBox.setVgrow(consultationTree, Priority.ALWAYS);
+            consultationPane = new TitledPane("Carpeta de consulta", content);
+            folderAccordion.getPanes().add(consultationPane);
+        }
+        consultationPane.setText("Consulta · " + selected.getName());
+        addConsultationButton.setDisable(true);
+        folderAccordion.setExpandedPane(consultationPane);
+        setStatus("Consulta de solo lectura: " + selected.getAbsolutePath());
+    }
+
+    private void removeConsultationFolder() {
+        consultationTree.clearFolder();
+        if (consultationPane != null) {
+            folderAccordion.getPanes().remove(consultationPane);
+            consultationPane = null;
+        }
+        addConsultationButton.setDisable(false);
+        folderAccordion.setExpandedPane(mainFolderPane);
+        setStatus("Carpeta de consulta retirada.");
+    }
+
     private void openTextReference(Path file, String relative) {
         Tab existing = documents.find(relative);
         if (existing != null) {
@@ -1006,12 +1095,16 @@ public final class CodeTraceApp extends Application {
     }
 
     private void openMediaReference(Path file, String relative) {
+        openMediaReference(file, relative, reference);
+    }
+
+    private void openMediaReference(Path file, String relative, Path referenceRoot) {
         Tab existing = documents.find(relative);
         if (existing != null) {
             tabs.getSelectionModel().select(existing);
             return;
         }
-        ReferenceMediaPane media = new ReferenceMediaPane(file, reference);
+        ReferenceMediaPane media = new ReferenceMediaPane(file, referenceRoot);
         media.zoomPercentProperty().addListener((obs, old, value) -> {
             if (tabs.getSelectionModel().getSelectedItem() != null
                     && tabs.getSelectionModel().getSelectedItem().getContent() == media
