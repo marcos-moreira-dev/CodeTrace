@@ -433,3 +433,14 @@ Consulta también [Auditoría de cierre](AUDITORIA-CIERRE-2026-11.md).
   no cambia el proyecto abierto.
 - Verificar que un escaneo de archivos grandes se interrumpe al cambiar de
   proyecto y que ninguna referencia se modifica físicamente.
+
+## SEARCH-QUERY-CHANGE — resultados anteriores obsoletos
+
+- Buscar «class», después escribir «interface» sin ejecutar de nuevo:
+  los resultados de la consulta anterior deben desaparecer y no navegarse.
+- Cambiar entre Archivo actual/Todo el proyecto, mayúsculas, palabras
+  completas y regex: no mantener coincidencias obsoletas de otro ámbito.
+- Tras una búsqueda válida, introducir una expresión regular inválida y
+  pulsar Buscar: mostrar el error de validación, no coincidencias antiguas.
+- Pulsar Detener durante una búsqueda y repetir con otro patrón: los
+  callbacks del trabajo cancelado no deben repoblar la lista.

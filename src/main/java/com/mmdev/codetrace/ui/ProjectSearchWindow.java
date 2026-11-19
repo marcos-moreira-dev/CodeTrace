@@ -128,6 +128,16 @@ public final class ProjectSearchWindow {
         });
         results.setAccessibleText("Coincidencias encontradas en archivos");
         stage.setScene(scene);
+        // An old result belongs to an old query: never leave it navigable
+        // after users change text, scope, or search options.
+        expression.textProperty().addListener((obs, old, next) -> invalidateResults());
+        scope.valueProperty().addListener((obs, old, next) -> invalidateResults());
+        caseSensitive.selectedProperty().addListener(
+                (obs, old, next) -> invalidateResults());
+        wholeWords.selectedProperty().addListener(
+                (obs, old, next) -> invalidateResults());
+        regex.selectedProperty().addListener(
+                (obs, old, next) -> invalidateResults());
         stage.setOnCloseRequest(event -> cancel());
     }
 
@@ -170,6 +180,8 @@ public final class ProjectSearchWindow {
     }
 
     private void runSearch() {
+        // Clear old hits even if a new query fails validation.
+        invalidateResults();
         Path root = project.get();
         if (root == null) {
             state.setText("Abre una referencia antes de buscar.");
@@ -189,9 +201,7 @@ public final class ProjectSearchWindow {
             state.setText(error.getMessage());
             return;
         }
-        cancel();
         long request = ++generation;
-        results.getItems().clear();
         state.setText("Buscando en archivos legibles…");
         search.setDisable(true);
         stop.setDisable(false);
@@ -229,6 +239,13 @@ public final class ProjectSearchWindow {
         Thread worker = new Thread(task, "codetrace-project-text-search");
         worker.setDaemon(true);
         worker.start();
+    }
+
+    private void invalidateResults() {
+        cancel();
+        results.getItems().clear();
+        currentHit = -1;
+        state.setText("Consulta modificada. Pulsa Buscar para actualizar.");
     }
 
     private void finish() {
