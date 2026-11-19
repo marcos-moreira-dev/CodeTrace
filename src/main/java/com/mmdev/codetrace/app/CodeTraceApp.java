@@ -757,24 +757,10 @@ public final class CodeTraceApp extends Application {
                 openMediaReference(file, relative);
                 return;
             }
-            // Reopening an already visible consultation tab is not a new notice.
-            boolean wasOpen = documents.find(relative) != null;
+            // Reopening an existing consultation tab does not repeat the notice.
+            boolean alreadyOpen = documents.find(relative) != null;
             openTextReference(file, relative);
-            if (!wasOpen && documents.find(relative) != null && settings.readOnlyNotice()) {
-                Path originalReference = reference;
-                long request = referenceRequest;
-                javafx.application.Platform.runLater(() -> {
-                    if (request != referenceRequest || !originalReference.equals(reference)
-                            || !settings.readOnlyNotice()) return;
-                    Tab opened = documents.find(relative);
-                    if (opened == null
-                            || opened != tabs.getSelectionModel().getSelectedItem()) return;
-                    if (ProductDialogs.showConsultationNotice(stage)) {
-                        settings = settings.withReadOnlyNotice(false);
-                        settings.save();
-                    }
-                });
-            }
+            if (!alreadyOpen) offerConsultationNotice(documents.find(relative));
             return;
         }
         try {
@@ -939,6 +925,23 @@ public final class CodeTraceApp extends Application {
         installTabContextMenu(tab);
         documents.open(key, tab);
         setStatus("Consulta de solo lectura: " + name);
+        if (viewer instanceof ReferenceTextPane || viewer instanceof ReadOnlyMarkdownPane)
+            offerConsultationNotice(tab);
+    }
+
+    /** Show informational guidance only for a newly opened, still-active view. */
+    private void offerConsultationNotice(Tab opened) {
+        if (opened == null || !settings.readOnlyNotice()) return;
+        long request = referenceRequest;
+        javafx.application.Platform.runLater(() -> {
+            if (request != referenceRequest || !settings.readOnlyNotice()
+                    || !tabs.getTabs().contains(opened)
+                    || tabs.getSelectionModel().getSelectedItem() != opened) return;
+            if (ProductDialogs.showConsultationNotice(stage)) {
+                settings = settings.withReadOnlyNotice(false);
+                settings.save();
+            }
+        });
     }
 
     private void chooseConsultationFolder() {
