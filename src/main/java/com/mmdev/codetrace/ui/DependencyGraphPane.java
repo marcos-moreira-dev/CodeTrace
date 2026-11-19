@@ -327,7 +327,7 @@ public final class DependencyGraphPane extends BorderPane {
                     NODE_RADIUS * 2, NODE_RADIUS * 2);
             g.setFill(Color.web("#263f51"));
             g.setFont(Font.font("Segoe UI", active ? 13 : 12));
-            g.fillText(label, p.x() + 20, p.y() + 4);
+            g.fillText(label, p.x() + 20, p.y() + 4, 226);
         }
     }
 }
