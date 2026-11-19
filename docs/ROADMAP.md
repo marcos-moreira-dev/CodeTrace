@@ -156,3 +156,17 @@ CodeTrace no pretende sustituir un IDE ni compilar o evaluar automáticamente la
   conteo de relaciones.
 - SessionArchive v4 persiste modo y coordenadas, compatible con v1-v3.
 - Verificación visual pendiente con proyectos de distintas densidades.
+
+## Iteración de ergonomía del mapa (19-nov-2026)
+
+- Organizado es el modo inicial; Cuadrícula pasa a Preferencias → Grafo
+  y se conserva en la configuración local de la aplicación.
+- Se elimina el segundo encabezado/pie de microcopias en el workspace.
+  La ruta y los contadores se presentan en el statusbar global.
+- La organización dirigida por fuerzas se estabiliza con celdas
+  libres para todas las etiquetas, especialmente los hubs de alto grado.
+- Se desacopla el arrastre de nodos del panning del ScrollPane y se
+  pospone el crecimiento del lienzo hasta soltar el nodo, manteniendo
+  la posición visible.
+- Restablecer distribución se traslada a un menú contextual discreto.
+- Validación visual y de arrastre en Windows aún necesaria.
