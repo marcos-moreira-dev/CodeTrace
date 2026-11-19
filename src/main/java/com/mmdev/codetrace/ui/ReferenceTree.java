@@ -76,6 +76,9 @@ public final class ReferenceTree extends TreeView<Path> {
     private boolean loading;
     private boolean expanding;
     private Timeline expansion;
+    private static final int EXPANSION_BATCH = 48;
+    private static final int MAX_RECURSIVELY_EXPANDED_FOLDERS = 12_000;
+    private int expansionVisited;
     private String nameFilter = "";
     private Set<String> filteredPaths = Set.of();
     private long filterGeneration;
@@ -261,9 +264,9 @@ public final class ReferenceTree extends TreeView<Path> {
     }
 
     /**
-     * Close every nested branch while leaving the chosen folder OPEN.
-     * Its immediate children remain visible, which is the useful result of
-     * "Colapsar subcarpetas". Never collapse the selected folder itself.
+     * Collapse ALL descendants, not merely the first level. The clicked
+     * folder remains open so its immediate children are visible and closed.
+     * Rebuild lazy TreeItems to discard stale nested expansion state.
      */
     public void collapseRecursively(Path directory) {
         cancelExpansion();
@@ -301,33 +304,53 @@ public final class ReferenceTree extends TreeView<Path> {
     }
 
     /**
-     * Expand a small batch every pulse. All file access was already performed
-     * off-thread by ReferenceTreeIndex. The JavaFX thread only changes TreeItems.
-     * The user can stop expansion immediately by choosing collapse.
+     * Expand EVERY nested directory in the selected branch, not only direct
+     * children. Small trees become visible immediately; larger trees expand in
+     * short batches so JavaFX remains responsive. Never follows symlinks:
+     * reference paths come from the indexed, read-only tree.
      */
-    public void expandAll() {
+    public void expandRecursively(Path directory) {
         cancelExpansion();
-        if (getRoot() == null) return;
-        getRoot().setExpanded(true);
+        TreeItem<Path> clicked = findVisibleNode(getRoot(), directory);
+        if (clicked == null || !isFolder(directory)) return;
         ArrayDeque<TreeItem<Path>> pending = new ArrayDeque<>();
-        pending.add(getRoot());
+        pending.add(clicked);
+        expansionVisited = 0;
         expanding = true;
         notifyBusy();
-        expansion = new Timeline(new KeyFrame(Duration.millis(20), event -> {
-            int processed = 0;
-            while (!pending.isEmpty() && processed++ < 18) {
-                TreeItem<Path> node = pending.removeFirst();
-                if (!node.isLeaf()) {
-                    node.setExpanded(true);
-                    for (TreeItem<Path> child : node.getChildren()) {
-                        if (!child.isLeaf()) pending.addLast(child);
-                    }
-                }
-            }
-            if (pending.isEmpty()) cancelExpansion();
-        }));
+        processExpansionBatch(pending);
+        if (pending.isEmpty() || !expanding) return;
+        expansion = new Timeline(new KeyFrame(Duration.millis(20),
+                event -> processExpansionBatch(pending)));
         expansion.setCycleCount(Animation.INDEFINITE);
         expansion.play();
+    }
+
+    /** Expand the entire reference, using the same recursive, bounded UI work. */
+    public void expandAll() {
+        if (referenceRoot != null) expandRecursively(referenceRoot);
+    }
+
+    private void processExpansionBatch(ArrayDeque<TreeItem<Path>> pending) {
+        int processed = 0;
+        while (!pending.isEmpty() && processed++ < EXPANSION_BATCH
+                && expansionVisited < MAX_RECURSIVELY_EXPANDED_FOLDERS) {
+            TreeItem<Path> node = pending.removeFirst();
+            if (node.isLeaf()) continue;
+            node.setExpanded(true);
+            expansionVisited++;
+            for (TreeItem<Path> child : node.getChildren()) {
+                if (!child.isLeaf()) pending.addLast(child);
+            }
+        }
+        if (pending.isEmpty() || expansionVisited >= MAX_RECURSIVELY_EXPANDED_FOLDERS) {
+            boolean limited = !pending.isEmpty();
+            int count = expansionVisited;
+            cancelExpansion();
+            onStatus.accept(limited
+                    ? "Se mostraron " + count + " carpetas; límite de seguridad alcanzado."
+                    : "Expansión recursiva terminada: " + count + " carpetas.");
+        }
     }
 
     private void cancelExpansion() {
@@ -537,7 +560,11 @@ public final class ReferenceTree extends TreeView<Path> {
                                 && parentOf(entry.path()).equals(relative));
             }
             if (hasSubfolders) {
-                MenuItem collapseBranch = new MenuItem("Colapsar subcarpetas");
+                MenuItem expandBranch = new MenuItem("Expandir todas las subcarpetas");
+                expandBranch.setGraphic(new FontIcon("fth-maximize-2"));
+                expandBranch.setOnAction(event -> expandRecursively(path));
+                actions.add(expandBranch);
+                MenuItem collapseBranch = new MenuItem("Colapsar todas las subcarpetas");
                 collapseBranch.setGraphic(new FontIcon("fth-minimize-2"));
                 collapseBranch.setOnAction(event -> collapseRecursively(path));
                 actions.add(collapseBranch);
