@@ -264,9 +264,10 @@ public final class ReferenceTree extends TreeView<Path> {
     }
 
     /**
-     * Collapse ALL descendants, not merely the first level. The clicked
-     * folder remains open so its immediate children are visible and closed.
-     * Rebuild lazy TreeItems to discard stale nested expansion state.
+     * Collapse the selected branch INCLUDING the clicked directory. This is
+     * the actual inverse of Expandir todas: a single click reduces the entire
+     * branch to its folder row. Rebuild lazy TreeItems to forget old nested
+     * expansion flags, so reopening does not re-expand grandchildren.
      */
     public void collapseRecursively(Path directory) {
         cancelExpansion();
@@ -277,13 +278,14 @@ public final class ReferenceTree extends TreeView<Path> {
         // lazy children and refreshes must not resurrect deep expansion flags.
         Set<Path> expanded = new HashSet<>();
         collectExpanded(getRoot(), expanded);
-        expanded.removeIf(path -> path.startsWith(directory) && !path.equals(directory));
-        expanded.add(directory);
+        // Remove the clicked folder too. Otherwise the visible branch still
+        // looks expanded, which made "Colapsar todas" feel ineffective.
+        expanded.removeIf(path -> path.startsWith(directory));
         Path selectedPath = getSelectionModel().getSelectedItem() == null ? null
                 : getSelectionModel().getSelectedItem().getValue();
         TreeItem<Path> refreshed = item(referenceRoot);
         setRoot(refreshed);
-        refreshed.setExpanded(true);
+        refreshed.setExpanded(!directory.equals(referenceRoot));
         restoreExpanded(refreshed, expanded);
         TreeItem<Path> selection = selectedPath == null ? null
                 : findVisibleNode(refreshed, selectedPath);
