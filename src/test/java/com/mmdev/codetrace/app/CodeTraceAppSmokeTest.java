@@ -78,6 +78,18 @@ class CodeTraceAppSmokeTest {
                 application.start(stage);
                 assertTrue(stage.isShowing(), "The main window was not shown");
                 assertNotNull(stage.getScene());
+                javafx.scene.control.ToolBar toolbar = (javafx.scene.control.ToolBar)
+                        stage.getScene().getRoot().lookup(".tool-bar");
+                assertNotNull(toolbar);
+                assertFalse(toolbar.getItems().stream()
+                        .filter(javafx.scene.control.Button.class::isInstance)
+                        .map(javafx.scene.control.Button.class::cast)
+                        .anyMatch(button -> "Abrir archivo".equals(button.getText())),
+                        "The redundant single-file action must not return");
+                assertTrue(toolbar.getItems().stream()
+                        .filter(javafx.scene.control.Button.class::isInstance)
+                        .map(javafx.scene.control.Button.class::cast)
+                        .anyMatch(button -> "Abrir proyecto".equals(button.getText())));
                 stage.getScene().getRoot().applyCss();
                 stage.getScene().getRoot().layout();
                 // Verify the compact gallery is present and copies without typing.
@@ -347,7 +359,21 @@ class CodeTraceAppSmokeTest {
                         "Radio choices must be stacked vertically");
                 assertEquals(2, ((javafx.scene.layout.VBox) choices)
                         .getChildren().size());
+                preferencesNavigation.getSelectionModel().select("Avisos");
+                preferences.getScene().getRoot().applyCss();
+                preferences.getScene().getRoot().layout();
+                assertNotNull(preferences.getScene().getRoot()
+                        .lookup(".read-only-consultation-notice"),
+                        "The notice can be reenabled in Preferences > Avisos");
                 preferences.close();
+                var consultationNotice = ProductDialogs.createConsultationNotice(stage);
+                consultationNotice.show();
+                CheckBox optOut = (CheckBox) consultationNotice
+                        .getDialogPane().lookup(".consultation-notice-optout");
+                assertNotNull(optOut, "Read-only warning includes a one-click opt-out");
+                assertFalse(optOut.isSelected(),
+                        "Do not preselect 'do not show again'");
+                consultationNotice.close();
                 var about = ProductDialogs.createAbout(stage);
                 about.show();
                 about.getDialogPane().getScene().getRoot().applyCss();
