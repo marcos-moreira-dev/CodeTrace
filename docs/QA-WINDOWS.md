@@ -256,3 +256,27 @@ No se distribuye FFmpeg por defecto. La CI no reemplaza la auditoría de licenci
   debe repararse al abrir el mismo grafo.
 - MAP-VISUAL-01: Valida el contraste del texto sobre su fondo, el
   zoom contextual y la ausencia de bandas o saltos al cambiar tamaño.
+
+## Revisión visual: zoom anclado, botón central y vecinos únicos
+
+- PREF-GRAPH-02: Abre Preferencias → Grafo. Organizado y Cuadrícula
+  aparecen **en vertical**, sin rectángulo exterior. Cambiar uno
+  desmarca el otro.
+- GRAPH-ZOOM-ANCHOR-01: Abre un grafo, desplázate al centro del mapa y
+  coloca el cursor sobre una etiqueta. Pulsa Ctrl+rueda varias veces.
+  Ese nodo debe permanecer prácticamente bajo el cursor, no viajar
+  hacia el ángulo superior izquierdo. Repite desde distintos lugares.
+- GRAPH-ZOOM-ANCHOR-02: Modifica el zoom desde el slider inferior.
+  Debe mantenerse el **centro del área visible** y seguir pudiendo
+  desplazarte hasta todos los bordes del contenido escalado.
+- GRAPH-PAN-MIDDLE-01: Pulsa el botón central sobre un nodo o el fondo:
+  el cursor muestra mano cerrada. Arrastra para panear; al soltar
+  vuelve a mano abierta o al cursor de nodo. No debe reubicar archivos.
+- GRAPH-PAN-MIDDLE-02: Arrastra un nodo con botón izquierdo después de
+  panear: solo cambia su posición, sin salto del viewport.
+- GRAPH-LEAF-01: Prueba un pequeño grafo con cuatro archivos que solo
+  referencian a un quinto. Los cuatro satélites deben aparecer en
+  celdas vecinas de su único padre, no al otro extremo del mapa.
+- GRAPH-LEAF-02: En un grafo real con conexiones múltiples, verifica
+  que el algoritmo mantiene etiquetas separadas y que las aristas
+  pueden cruzarse sin tapar nombres.
