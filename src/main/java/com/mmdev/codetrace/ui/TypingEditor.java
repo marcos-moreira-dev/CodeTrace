@@ -3,6 +3,7 @@ package com.mmdev.codetrace.ui;
 import com.mmdev.codetrace.languages.LanguageRegistry;
 import com.mmdev.codetrace.languages.LanguageSupport;
 import com.mmdev.codetrace.practice.TypingSession;
+import com.mmdev.codetrace.reference.SourceRange;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -148,6 +149,11 @@ public final class TypingEditor extends BorderPane {
      * Search navigation highlights immutable reference glyphs and scrolls to
      * the matching row. It intentionally does NOT move the typing caret.
      */
+    /** Navigation contract shared with read-only views (always 1-based). */
+    public void showSearchMatch(SourceRange location) {
+        showSearchMatch(location.lineIndex(), location.columnIndex(), location.length());
+    }
+
     public void showSearchMatch(int zeroBasedLine, int zeroBasedColumn, int length) {
         if (zeroBasedLine < 0 || zeroBasedLine >= sourceLines.size()) return;
         SourceLine line = sourceLines.get(zeroBasedLine);

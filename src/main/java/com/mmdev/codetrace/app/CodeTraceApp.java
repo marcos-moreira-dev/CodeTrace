@@ -906,15 +906,15 @@ public final class CodeTraceApp extends Application {
         openForPractice(file);
         Tab selected = documents.find(hit.relative());
         if (selected == null) return;
+        var location = hit.range();
         javafx.application.Platform.runLater(() -> {
             tabs.getSelectionModel().select(selected);
             if (selected.getContent() instanceof MarkdownPracticePane markdown)
                 markdown.showSource();
             TypingEditor editor = editorIn(selected);
-            if (editor != null) editor.showSearchMatch(
-                    hit.line() - 1, hit.column() - 1, hit.length());
+            if (editor != null) editor.showSearchMatch(location);
             else if (selected.getContent() instanceof ReferenceTextPane viewer)
-                viewer.showSearchMatch(hit.line(), hit.column(), hit.length());
+                viewer.showSearchMatch(location);
         });
     }
 

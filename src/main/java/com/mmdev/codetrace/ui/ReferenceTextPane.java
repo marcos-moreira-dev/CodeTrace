@@ -2,6 +2,7 @@ package com.mmdev.codetrace.ui;
 
 import com.mmdev.codetrace.languages.LanguageRegistry;
 import com.mmdev.codetrace.languages.LanguageSupport;
+import com.mmdev.codetrace.reference.SourceRange;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.collections.FXCollections;
@@ -167,6 +168,11 @@ public final class ReferenceTextPane extends BorderPane {
     }
 
     /** Search navigation selects a colored line without editing its contents. */
+    /** Canonical 1-based navigation, shared with practice view. */
+    public void showSearchMatch(SourceRange location) {
+        showSearchMatch(location.line(), location.column(), location.length());
+    }
+
     public void showSearchMatch(int line, int column, int length) {
         if (line < 1 || line > lines.getItems().size()) return;
         selectedMatchLine = line;

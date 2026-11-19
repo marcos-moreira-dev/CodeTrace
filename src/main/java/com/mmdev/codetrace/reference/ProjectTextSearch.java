@@ -40,7 +40,10 @@ public final class ProjectTextSearch {
     }
 
     /** 1-based line/column, with the original relative path and a short excerpt. */
-    public record Hit(String relative, int line, int column, int length, String excerpt) {}
+    public record Hit(String relative, int line, int column, int length, String excerpt) {
+        /** Canonical 1-based location for navigation in any source pane. */
+        public SourceRange range() { return new SourceRange(line, column, length); }
+    }
 
     public static List<Hit> search(Path root, String oneFile, Options options,
                                    BooleanSupplier cancelled) throws IOException {

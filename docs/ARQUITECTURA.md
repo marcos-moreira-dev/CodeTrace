@@ -104,3 +104,12 @@ los límites de trabajo para expandir carpetas de forma recursiva sin congelar
 la interfaz. `ReferenceTree` conserva la semántica de colapso, la selección,
 los nodos y los índices. Cambiar de referencia o iniciar otra expansión
 cancela la operación anterior.
+
+## Contrato de coordenadas de búsqueda
+
+`reference/SourceRange` representa una coincidencia con línea y columna
+**1-based**, tal como los resultados de `ProjectTextSearch`. `Hit.range()`
+convierte la coincidencia en un valor validado. `TypingEditor` adapta el
+rango a sus índices internos 0-based, mientras `ReferenceTextPane` usa
+líneas visibles 1-based. `CodeTraceApp` no tiene que conocer esa diferencia.
+Se conservan los métodos primitivos anteriores por compatibilidad de pruebas.
