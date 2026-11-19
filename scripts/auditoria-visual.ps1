@@ -9,8 +9,11 @@ mostrar rutas personales, proyectos, nombres o contenido privado.
 param([int]$SecondsToFocus = 3, [switch]$NoExplorer,
       [switch]$Guiado, [ValidateRange(30,3600)][int]$DurationSeconds = 300)
 if (-not $Guiado) {
+    $ErrorActionPreference = "Stop"
     & (Join-Path $PSScriptRoot "captura-automatica.ps1") -DurationSeconds $DurationSeconds -NoExplorer:$NoExplorer
-    exit $LASTEXITCODE
+    # Capturer intentionally returns 2 when a non-CodeTrace window has focus.
+    # That must not mark the completed ZIP collection itself as failed.
+    exit 0
 }
 $ErrorActionPreference = "Stop"
 $root = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..")).Path
