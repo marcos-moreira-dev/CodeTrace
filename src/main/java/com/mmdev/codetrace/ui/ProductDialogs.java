@@ -6,6 +6,7 @@ import javafx.scene.control.Dialog;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Separator;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -78,7 +79,38 @@ public final class ProductDialogs {
         body.setMinHeight(Region.USE_PREF_SIZE);
         body.getStyleClass().add("about-description");
 
-        VBox contents = new VBox(8, identity, body);
+        // One About dialog: product first, author credit second.
+        // A local image is used rather than a network/avatar request.
+        Label authorHeading = new Label("AUTOR Y DESARROLLO");
+        authorHeading.getStyleClass().add("about-author-heading");
+        Label authorName = new Label("Marcos Moreira");
+        authorName.getStyleClass().add("about-author-name");
+        Label authorRole = new Label("Ingeniería en Computación · ESPOL");
+        authorRole.getStyleClass().add("about-author-role");
+        Label authorAccount = new Label("github.com/marcos-moreira-dev");
+        authorAccount.getStyleClass().add("about-author-link");
+        VBox authorDetails = new VBox(5, authorHeading, authorName, authorRole,
+                authorAccount);
+        authorDetails.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
+        HBox.setHgrow(authorDetails, Priority.ALWAYS);
+        HBox author = new HBox(15);
+        author.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
+        author.getStyleClass().add("about-author");
+        var portraitResource = ProductDialogs.class.getResource(
+                "/icons/codetrace-author-marcos.jpg");
+        if (portraitResource != null) {
+            ImageView portrait = new ImageView(new Image(portraitResource.toExternalForm()));
+            portrait.setFitWidth(94);
+            portrait.setFitHeight(94);
+            portrait.setSmooth(true);
+            portrait.setPreserveRatio(true);
+            portrait.setAccessibleText("Retrato del autor, Marcos Moreira");
+            portrait.getStyleClass().add("about-author-portrait");
+            author.getChildren().add(portrait);
+        }
+        author.getChildren().add(authorDetails);
+
+        VBox contents = new VBox(15, identity, body, new Separator(), author);
         contents.getStyleClass().add("about-content");
         contents.setPadding(new Insets(10, 24, 20, 24));
         ScrollPane scroll = new ScrollPane(contents);
