@@ -210,8 +210,6 @@ public final class CodeTraceApp extends Application {
         openReference.setAccelerator(new KeyCodeCombination(
                 KeyCode.O, KeyCombination.SHORTCUT_DOWN));
         openReference.setOnAction(event -> chooseReference());
-        MenuItem openFile = new MenuItem("Abrir archivo...");
-        openFile.setOnAction(event -> chooseFile());
         MenuItem openSession = new MenuItem("Abrir proyecto CodeTrace (.ctrace)...");
         openSession.setOnAction(event -> openSession());
         MenuItem save = new MenuItem("Guardar proyecto");
@@ -223,7 +221,7 @@ public final class CodeTraceApp extends Application {
         MenuItem quit = new MenuItem("Salir");
         quit.setOnAction(event -> stage.close());
         Menu fileMenu = new Menu("Archivo", null,
-                openReference, openFile, openSession,
+                openReference, openSession,
                 new javafx.scene.control.SeparatorMenuItem(),
                 save, saveAs, quit);
 
@@ -319,11 +317,6 @@ public final class CodeTraceApp extends Application {
                 "Abrir referencia", ToolbarIcons.Icon.OPEN,
                 "Abrir una carpeta de referencia para explorar y practicar");
         openButton.setOnAction(event -> chooseReference());
-        Button openFileButton = new Button("Abrir archivo", new FontIcon("fth-file-text"));
-        openFileButton.getStyleClass().add("toolbar-action");
-        openFileButton.setTooltip(new Tooltip(
-                "Abrir un archivo; fuera de la referencia se consulta en solo lectura"));
-        openFileButton.setOnAction(event -> chooseFile());
         Button openProjectButton = new Button("Abrir proyecto", new FontIcon("fth-layers"));
         openProjectButton.getStyleClass().add("toolbar-action");
         openProjectButton.setTooltip(new Tooltip(
@@ -364,8 +357,7 @@ public final class CodeTraceApp extends Application {
         tabsActions.setGraphic(new FontIcon("fth-layers"));
         tabsActions.setTooltip(new Tooltip("Administrar pestañas abiertas"));
         installTabActions();
-        ToolBar toolbar = new ToolBar(openButton, openFileButton,
-                openProjectButton, saveButton,
+        ToolBar toolbar = new ToolBar(openButton, openProjectButton, saveButton,
                 new Separator(Orientation.VERTICAL), progressFilter, symbols,
                 new Separator(Orientation.VERTICAL), tabsActions, consoleButton);
         top.getChildren().addAll(menu, toolbar);
@@ -623,32 +615,6 @@ public final class CodeTraceApp extends Application {
         }
     }
 
-    /**
-     * Single-file entry point: use the current reference if the file belongs
-     * to it; otherwise open an independent, immutable consultation tab.
-     * Never replace or discard the active project to inspect one loose file.
-     */
-    private void chooseFile() {
-        FileChooser chooser = new FileChooser();
-        chooser.setTitle("Abrir archivo");
-        if (reference != null && Files.isDirectory(reference))
-            chooser.setInitialDirectory(reference.toFile());
-        java.io.File chosen = chooser.showOpenDialog(stage);
-        if (chosen == null) return;
-        Path file = chosen.toPath().toAbsolutePath().normalize();
-        if (file.getFileName().toString().toLowerCase(java.util.Locale.ROOT)
-                .endsWith(".ctrace")) {
-            openSession(file);
-        } else if (reference != null && file.startsWith(reference)
-                && Files.isRegularFile(file)) {
-            openForPractice(file);
-        } else if (Files.isRegularFile(file)) {
-            openReadOnlyFile(file, file.getParent());
-        } else {
-            setStatus("El archivo seleccionado no está disponible.");
-        }
-    }
-
     private void openPracticeLibrary() {
         final BuiltInLibrary library;
         try {
@@ -791,11 +757,24 @@ public final class CodeTraceApp extends Application {
                 openMediaReference(file, relative);
                 return;
             }
+            // Reopening an already visible consultation tab is not a new notice.
+            boolean wasOpen = documents.find(relative) != null;
             openTextReference(file, relative);
-            if (settings.readOnlyNotice())
-                javafx.application.Platform.runLater(() ->
-                        ProductDialogs.information(stage, "Archivo de consulta",
-                                "No requiere práctica de mecanografía."));
+            if (!wasOpen && documents.find(relative) != null && settings.readOnlyNotice()) {
+                Path originalReference = reference;
+                long request = referenceRequest;
+                javafx.application.Platform.runLater(() -> {
+                    if (request != referenceRequest || !originalReference.equals(reference)
+                            || !settings.readOnlyNotice()) return;
+                    Tab opened = documents.find(relative);
+                    if (opened == null
+                            || opened != tabs.getSelectionModel().getSelectedItem()) return;
+                    if (ProductDialogs.showConsultationNotice(stage)) {
+                        settings = settings.withReadOnlyNotice(false);
+                        settings.save();
+                    }
+                });
+            }
             return;
         }
         try {
