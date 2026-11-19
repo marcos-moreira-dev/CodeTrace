@@ -148,6 +148,27 @@ class CodeTraceAppSmokeTest {
                 assertNotNull(zoom, "The zoom belongs to the status bar");
                 assertSame(stage.getScene().getRoot().lookup(".statusbar"),
                         zoom.getParent());
+                // Every read-only text format must follow the global font slider.
+                com.mmdev.codetrace.ui.ReferenceTextPane xml =
+                        new com.mmdev.codetrace.ui.ReferenceTextPane(
+                                "<project><version>21</version></project>", "pom.xml");
+                xml.setFontSettings("Consolas", 23);
+                assertEquals(23, xml.fontSize());
+                xml.setFontSettings("Consolas", 13);
+                assertEquals(13, xml.fontSize());
+                com.mmdev.codetrace.ui.ReferenceTextPane plain =
+                        new com.mmdev.codetrace.ui.ReferenceTextPane("Hello", "notes.txt");
+                plain.setFontSettings("Consolas", 24);
+                assertEquals(24, plain.fontSize());
+
+                // Graph mode swaps the same zoom control, not an extra slider.
+                com.mmdev.codetrace.ui.MediaZoomControl graphZoom =
+                        new com.mmdev.codetrace.ui.MediaZoomControl(value -> {});
+                graphZoom.setGraphMode(true);
+                assertTrue(graphZoom.getStyleClass().contains("graph-zoom-control"));
+                graphZoom.setValue(175);
+                assertEquals(1, graphZoom.lookupAll(".slider").size());
+
                 Slider fontSlider = (Slider) zoom.lookup(".slider");
                 assertNotNull(fontSlider);
                 assertEquals(Orientation.HORIZONTAL, fontSlider.getOrientation());
