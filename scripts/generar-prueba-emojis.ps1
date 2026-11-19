@@ -23,7 +23,12 @@ foreach ($name in @('CodeTrace-Emojis-Prueba.txt','CodeTrace-Emojis-Prueba.md'))
         $timestamp = Get-Date -Format 'yyyyMMdd-HHmmss'
         $stem = [System.IO.Path]::GetFileNameWithoutExtension($name)
         $extension = [System.IO.Path]::GetExtension($name)
-        $out = Join-Path $downloads "$stem-$timestamp$extension"
+        $counter = 0
+        do {
+            $suffix = if ($counter -eq 0) { '' } else { "-$counter" }
+            $out = Join-Path $downloads "$stem-$timestamp$suffix$extension"
+            $counter++
+        } while (Test-Path -LiteralPath $out)
     }
     Copy-Item -LiteralPath $from -Destination $out -ErrorAction Stop
     Write-Host "Generado: $out" -ForegroundColor Green
