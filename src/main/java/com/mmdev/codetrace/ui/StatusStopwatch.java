@@ -16,6 +16,7 @@ public final class StatusStopwatch extends HBox {
     private final StopwatchClock clock = new StopwatchClock();
     private final Label time = new Label("00:00:00");
     private final Button playPause = new Button();
+    private final Button stop = new Button();
     private final Button restart = new Button();
     private final Timeline ticker = new Timeline(
             new KeyFrame(Duration.millis(200), event -> refresh()));
@@ -41,6 +42,16 @@ public final class StatusStopwatch extends HBox {
             refresh();
         });
 
+        stop.getStyleClass().add("stopwatch-action");
+        stop.setGraphic(new FontIcon("fth-square"));
+        stop.setTooltip(new Tooltip("Detener y poner en cero"));
+        stop.setAccessibleText("Detener cronómetro");
+        stop.setOnAction(event -> {
+            clock.stop();
+            ticker.stop();
+            refresh();
+        });
+
         restart.getStyleClass().add("stopwatch-action");
         restart.setGraphic(new FontIcon("fth-rotate-ccw"));
         restart.setTooltip(new Tooltip("Iniciar cronómetro desde cero"));
@@ -51,7 +62,7 @@ public final class StatusStopwatch extends HBox {
             refresh();
         });
 
-        getChildren().addAll(time, playPause, restart);
+        getChildren().addAll(time, playPause, stop, restart);
         refresh();
     }
 
@@ -62,6 +73,7 @@ public final class StatusStopwatch extends HBox {
         playPause.setGraphic(new FontIcon(running ? "fth-pause" : "fth-play"));
         playPause.setTooltip(new Tooltip(action + " cronómetro"));
         playPause.setAccessibleText(action + " cronómetro");
+        stop.setDisable(!clock.hasStarted());
     }
 
     public void dispose() { ticker.stop(); }
