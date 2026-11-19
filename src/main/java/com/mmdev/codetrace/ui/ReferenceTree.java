@@ -66,6 +66,7 @@ public final class ReferenceTree extends TreeView<Path> {
     private Predicate<String> explicitlyExcluded = folder -> false;
     private BiConsumer<String, Boolean> onExcludedChanged = (folder, value) -> {};
     private Consumer<Boolean> onBusyChange = busy -> {};
+    private Consumer<ReferenceTreeIndex> onIndexReady = ignored -> {};
     private ReferenceTreeIndex index;
     private Function<String, State> statusLookup = ignored -> State.PENDING;
     private long indexGeneration;
@@ -203,6 +204,10 @@ public final class ReferenceTree extends TreeView<Path> {
         onBusyChange.accept(loading || expanding);
     }
 
+    public void setOnIndexReady(Consumer<ReferenceTreeIndex> callback) {
+        onIndexReady = callback == null ? ignored -> {} : callback;
+    }
+
     private void notifyBusy() {
         onBusyChange.accept(loading || expanding);
     }
@@ -285,6 +290,7 @@ public final class ReferenceTree extends TreeView<Path> {
             if (nameFilter.isBlank()) refreshTree();
             else searchNames(nameFilter);
             notifyBusy();
+            onIndexReady.accept(index);
         });
         job.setOnFailed(event -> {
             if (generation != indexGeneration) return;
