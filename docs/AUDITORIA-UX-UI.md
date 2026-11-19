@@ -13,19 +13,25 @@ como auditoría heurística UX/UI y cobertura de casos de uso.
 
 ## Generar evidencia
 1. Compilar y abrir CodeTrace desde la rama de cierre.
-2. En otra consola: `powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\auditoria-visual.ps1`.
-3. El asistente de captura presenta **37 escenarios**; tecla Intro captura,
-   S omite un escenario, Q finaliza y crea un ZIP en `reports/`.
-4. Capturar usando un proyecto ficticio o de demostración, nunca contraseñas,
-   tokens, .env, datos privados de clientes ni rutas sensibles.
-5. Revisar imágenes y borrar las privadas **antes de compartir el ZIP**.
+2. **Modo automático por defecto:** en otra consola, ejecutar
+   `powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\auditoria-visual.ps1`.
+   Registra hasta 100 cambios visuales significativos de CodeTrace mientras el
+   usuario recorre normalmente la interfaz. Termina al cerrar la aplicación o
+   al superar el límite de duración. El ZIP se crea en `reports/`.
+3. **Modo guiado opcional:** `powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\auditoria-visual.ps1 -Guiado`.
+   Presenta **37 escenarios**; Intro captura, S omite, Q finaliza.
+4. **Restricción de seguridad:** solo se captura la ventana activa cuando
+   pertenece al proceso verificado de CodeTrace; nunca se elige una consola,
+   navegador ni ChatGPT por compartir el texto «CodeTrace» en su título.
+5. Capturar usando un proyecto ficticio o de demostración; nunca contraseñas,
+   tokens, archivos .env ni datos privados de clientes.
+6. Revisar las capturas y eliminar las privadas **antes de compartir el ZIP**.
    La herramienta no transmite datos a Internet.
-6. Completar los casos no representables con capturas adicionales y narrar
-   los pasos, resultado esperado, resultado observado y frecuencia.
 
-La captura de ventana activa intenta incluir diálogos y ventanas modales,
-sin grabar el escritorio completo. Es un muestreo guiado, no una navegación
-automática; los escenarios no visibles deben marcarse como pendientes.
+**Alcance real de la automatización:** recoge automáticamente cambios de
+pantalla, pestañas y diálogos que el usuario haya abierto. No pulsa controles
+ni recorre por sí sola todos los casos de uso. Los escenarios no visitados
+deben figurar pendientes, jamás como capturados o aprobados.
 
 ## Criterios de conservación de pantallas, opciones y casos de uso
 
