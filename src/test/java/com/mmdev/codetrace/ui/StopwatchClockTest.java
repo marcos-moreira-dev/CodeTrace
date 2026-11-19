@@ -36,6 +36,40 @@ class StopwatchClockTest {
         assertEquals("00:00:00", clock.display());
     }
 
+    @Test void stopResetsAndRemainsIdleUntilStartedAgain() {
+        AtomicLong now = new AtomicLong();
+        StopwatchClock clock = new StopwatchClock(now::get);
+        clock.resume();
+        now.set(TimeUnit.MINUTES.toNanos(9) + TimeUnit.SECONDS.toNanos(12));
+        assertEquals("00:09:12", clock.display());
+        clock.stop();
+        assertEquals("00:00:00", clock.display());
+        assertFalse(clock.isRunning());
+        assertFalse(clock.hasStarted());
+        now.addAndGet(TimeUnit.HOURS.toNanos(2));
+        assertEquals("00:00:00", clock.display());
+        clock.stop();
+        assertEquals("00:00:00", clock.display());
+        clock.resume();
+        assertTrue(clock.isRunning());
+        now.addAndGet(TimeUnit.SECONDS.toNanos(3));
+        assertEquals("00:00:03", clock.display());
+    }
+
+    @Test void stopFromPausedStateDiscardsAccumulatedTime() {
+        AtomicLong now = new AtomicLong();
+        StopwatchClock clock = new StopwatchClock(now::get);
+        clock.start();
+        now.set(TimeUnit.SECONDS.toNanos(42));
+        clock.pause();
+        clock.stop();
+        assertFalse(clock.hasStarted());
+        assertEquals("00:00:00", clock.display());
+        clock.start();
+        now.addAndGet(TimeUnit.SECONDS.toNanos(2));
+        assertEquals("00:00:02", clock.display());
+    }
+
     @Test void negativeClockDeltaIsNotCounted() {
         AtomicLong now = new AtomicLong(1000);
         StopwatchClock clock = new StopwatchClock(now::get);
