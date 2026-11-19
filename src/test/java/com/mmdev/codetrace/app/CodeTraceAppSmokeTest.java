@@ -78,6 +78,8 @@ class CodeTraceAppSmokeTest {
                 application.start(stage);
                 assertTrue(stage.isShowing(), "The main window was not shown");
                 assertNotNull(stage.getScene());
+                stage.getScene().getRoot().applyCss();
+                stage.getScene().getRoot().layout();
                 javafx.scene.control.ToolBar toolbar = (javafx.scene.control.ToolBar)
                         stage.getScene().getRoot().lookup(".tool-bar");
                 assertNotNull(toolbar);
@@ -90,8 +92,6 @@ class CodeTraceAppSmokeTest {
                         .filter(javafx.scene.control.Button.class::isInstance)
                         .map(javafx.scene.control.Button.class::cast)
                         .anyMatch(button -> "Abrir proyecto".equals(button.getText())));
-                stage.getScene().getRoot().applyCss();
-                stage.getScene().getRoot().layout();
                 // Verify the compact gallery is present and copies without typing.
                 SymbolPalette palette = (SymbolPalette) stage.getScene().getRoot()
                         .lookup(".symbol-menu-button");
