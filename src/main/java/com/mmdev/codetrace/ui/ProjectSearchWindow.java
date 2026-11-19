@@ -16,6 +16,8 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.FlowPane;
@@ -108,6 +110,19 @@ public final class ProjectSearchWindow {
         Scene scene = new Scene(root, 810, 510);
         scene.getStylesheets().add(ProjectSearchWindow.class.getResource(
                 "/css/codetrace.css").toExternalForm());
+        // Keyboard parity with familiar Windows find dialogs.
+        // Escape first cancels a running search; otherwise closes the tool.
+        scene.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+            if (event.getCode() == KeyCode.ESCAPE) {
+                if (active != null) cancel();
+                else stage.hide();
+                event.consume();
+            } else if (event.getCode() == KeyCode.ENTER && event.isControlDown()) {
+                runSearch();
+                event.consume();
+            }
+        });
+        results.setAccessibleText("Coincidencias encontradas en archivos");
         stage.setScene(scene);
         stage.setOnCloseRequest(event -> cancel());
     }
