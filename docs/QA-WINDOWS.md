@@ -580,3 +580,36 @@ Consulta también [Auditoría de cierre](AUDITORIA-CIERRE-2026-11.md).
 
 **Gate:** no considerar publicada la v0.3.0 hasta registrar aceptación
 manual Windows real de los puntos anteriores y resolver los P0 de auditoría.
+
+
+## Aceptación multimedia por segmentos (HLS local) y artefactos de consulta
+
+- **HLS-01:** Abrir un MKV/WebM/AVI/HEVC/VP9 real de 20–60 minutos.
+  Debe mostrarse el reproductor inmediatamente tras analizar metadatos;
+  pulsar Reproducir no debe esperar la conversión de todo el archivo.
+  Medir tiempo desde clic a primer fotograma para comparar con la ruta antigua.
+- **HLS-02:** Saltar de 00:10 a 22:00 y luego a 05:00. CodeTrace solo
+  debe procesar los intervalos solicitados; verificar vídeo Y audio tras
+  cada salto y que no requiera procesar los minutos intermedios.
+- **HLS-03:** Continuar más de dos fragmentos (6 segundos cada uno)
+  comprobando sincronía labial, ausencia de pantallas negras, continuidad
+  del audio y del reloj de reproducción. Repetir a 720p, 1080p y 60 fps.
+- **HLS-04:** Pausar, reanudar, arrastrar línea de tiempo, saltar durante
+  reproducción, y detener. Confirmar que conserva el control de volumen
+  y no se congelan explorador ni cronómetro general.
+- **HLS-05:** Cerrar la pestaña durante la transcodificación o cambiar
+  de referencia: ningún proceso FFmpeg queda en segundo plano ni el
+  puerto de loopback permanece abierto. Se eliminan los medios temporales.
+- **HLS-06:** Probar cuando FFmpeg o FFprobe no están disponibles,
+  cuando falla un segmento y cuando otro proceso ocupa muchos recursos.
+  La interfaz debe ofrecer recuperación y reproductor externo, sin bloquearse.
+- **HLS-07:** El servidor local escucha solo en 127.0.0.1, utiliza una
+  ruta aleatoria privada, no permite recorrer carpetas ni servir archivos
+  arbitrarios. Los originales mantienen exactamente el mismo hash.
+- **TREE-NOPRACTICE-01:** Doble clic en artefacto marcado «No requiere
+  práctica de mecanografía». Debe mostrar un diálogo de información con
+  ese mismo texto y permitir la consulta sin sumar progreso de mecanografía.
+
+La prueba unitaria de HLS confirma URLs, lista VOD, segmentos y acceso directo
+a la parte final. Solo la prueba GUI en Windows confirma que JavaFX reproduce
+HLS con imagen, sonido, seek y sincronía reales.
