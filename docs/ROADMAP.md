@@ -124,3 +124,20 @@ CodeTrace no pretende sustituir un IDE ni compilar o evaluar automáticamente la
   rutas generadas por frameworks ni importaciones dinámicas.
 - Próxima etapa: reducir cruces en diagramas grandes y ampliar resolución
   semántica por lenguaje con pruebas en repositorios reales.
+
+## Ergonomía del workspace, fase posterior al grafo
+
+- Zoom contextual único: puntos para código y consultas de texto, porcentaje
+  para imágenes, vídeos y grafos. Un solo deslizador visible a la vez.
+- Grafo interactivo: arrastre individual de nodos, posiciones persistidas en
+  sesión v3 y huella del contenido para restablecer cuando cambie la referencia.
+- Selección de carpeta, doble clic para abrir archivo, flechas y mapa sin
+  dibujar imports externos inventados.
+- Autocreación de la estructura virtual completa en lotes; excluye cachés
+  y artefactos de compilación, sin considerar completados los archivos vacíos
+  de transcripción.
+- Mantener evaluación de caracteres y selección de categorías separadas
+  del estado de existencia virtual.
+- Ajuste estilístico del botón de pestañas desbordadas.
+- Verificación manual de contraste, arrastre, zoom, formatos mixtos de texto
+  y reapertura de sesiones antiguas en Windows.
