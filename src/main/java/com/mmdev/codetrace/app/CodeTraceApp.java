@@ -733,6 +733,13 @@ public final class CodeTraceApp extends Application {
             setStatus("No hay archivo de referencia para esta entrada.");
             return;
         }
+        // A .ctrace inside the project explorer is a saved application
+        // session, not an arbitrary binary consultation document.
+        if (file.getFileName().toString().toLowerCase(
+                java.util.Locale.ROOT).endsWith(".ctrace")) {
+            openSession(file);
+            return;
+        }
         String relative = relative(file);
         if (!com.mmdev.codetrace.reference.PracticeEligibility.supports(file)) {
             // Multimedia has its own read-only playback controls; the notice
