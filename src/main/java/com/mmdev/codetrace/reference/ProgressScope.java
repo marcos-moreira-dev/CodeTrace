@@ -19,6 +19,7 @@ public record ProgressScope(boolean source, boolean configuration,
             "java", "kt", "scala", "groovy", "py", "pyw", "js", "jsx",
             "ts", "tsx", "c", "h", "cc", "cpp", "cxx", "hpp", "hh",
             "cs", "csx", "go", "rs", "rb", "rake", "php", "swift", "dart", "sql",
+            "asm", "nasm",
             "html", "htm", "css", "scss", "sass", "sh", "bash", "zsh",
             "ps1", "psm1", "psd1", "bat", "cmd");
     private static final Set<String> CONFIG_EXTENSIONS = Set.of(

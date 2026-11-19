@@ -4,6 +4,7 @@ import com.mmdev.codetrace.languages.LanguageRegistry;
 import com.mmdev.codetrace.languages.LanguageSupport;
 import com.mmdev.codetrace.practice.TypingSession;
 import com.mmdev.codetrace.practice.EmojiUnits;
+import com.mmdev.codetrace.practice.DependencyDeclarationRules;
 import com.mmdev.codetrace.reference.SourceRange;
 import com.mmdev.codetrace.reference.SourceLineIndex;
 import java.util.ArrayList;
@@ -44,6 +45,7 @@ public final class TypingEditor extends BorderPane {
     private static final Color KEYWORD = Color.web("#164D9F");
 
     private final TypingSession session;
+    private final String filename;
     private final Color[] syntaxColors;
     private final List<SourceLine> sourceLines = new ArrayList<>();
     private final SourceLineIndex lineIndex;
@@ -70,6 +72,7 @@ public final class TypingEditor extends BorderPane {
                         String filename, String fontFamily, int fontSize,
                         Consumer<Boolean> onTypedCharacter) {
         this.session = session;
+        this.filename = filename;
         this.onChange = onChange;
         this.onTypedCharacter = onTypedCharacter;
         this.fontFamily = fontFamily;
@@ -230,29 +233,37 @@ public final class TypingEditor extends BorderPane {
                 : Math.round(correctTypedEvents / minutes);
     }
 
-    public int skipJavaImports() {
-        if (!permitPractice()) return 0;
+    public int skipDependencyDeclarations() {
+        if (!permitPractice() || !DependencyDeclarationRules.supports(filename)) return 0;
         int omittedBefore = session.skippedCount();
         int start = 0;
+        boolean goBlock = false;
         StringBuilder line = new StringBuilder();
         for (int i = 0; i <= session.size(); i++) {
             boolean atEnd = i == session.size();
             String unit = atEnd ? "" : session.cell(i).expected();
             if (atEnd || "\n".equals(unit)) {
-                String trimmed = line.toString().stripLeading();
-                if (trimmed.startsWith("import ") || trimmed.startsWith("import\t")) {
-                    session.skip(start, Math.min(i + 1, session.size()));
-                }
+                String text = line.toString().strip();
+                boolean beginsBlock = DependencyDeclarationRules.startsGoImportBlock(
+                        filename, text);
+                boolean declaration = goBlock || beginsBlock
+                        || DependencyDeclarationRules.isDeclaration(filename, text);
+                if (declaration) session.skip(start, Math.min(i + 1, session.size()));
+                if (goBlock && text.equals(")")) goBlock = false;
+                if (beginsBlock) goBlock = true;
                 start = i + 1;
                 line.setLength(0);
             } else {
                 line.append(unit);
             }
         }
-        boolean changed = session.skippedCount() != omittedBefore;
-        refresh(changed);
-        return session.skippedCount() - omittedBefore;
+        int omitted = session.skippedCount() - omittedBefore;
+        refresh(omitted > 0);
+        return omitted;
     }
+
+    /** Compatibility with older callers; now applies to supported languages. */
+    public int skipJavaImports() { return skipDependencyDeclarations(); }
 
     public void focusEditor() {
         lines.requestFocus();

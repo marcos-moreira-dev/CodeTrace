@@ -80,6 +80,7 @@ public final class LanguageRegistry {
                             + "in|function|export|local|readonly|return|exit|"
                             + "source|echo|printf|cd|mkdir|grep|sed|awk")),
             new RegexSupport("Windows CMD", List.of(".bat", ".cmd"), cmdPattern()),
+            new RegexSupport("NASM x86-64", List.of(".asm", ".nasm"), assemblyPattern()),
             new RegexSupport("Markdown", List.of(".md", ".markdown"), markdownPattern()),
             new RegexSupport("CSS", List.of(".css", ".scss", ".less"), cssPattern()),
             new RegexSupport("JSON", List.of(".json", ".jsonc"), jsonPattern()),
@@ -223,6 +224,20 @@ public final class LanguageRegistry {
                 + "exit|start|cd|pushd|popd|copy|move|del|mkdir|rmdir|"
                 + "setlocal|endlocal|errorlevel)\\b)",
                 Pattern.MULTILINE | Pattern.CASE_INSENSITIVE);
+    }
+
+    private static Pattern assemblyPattern() {
+        return Pattern.compile(
+                "(?<comment>;[^\\r\\n]*)"
+                + "|(?<string>\"[^\"\\r\\n]*\"|'[^'\\r\\n]*')"
+                + "|(?<keyword>\\b(?:section|global|extern|bits|default|rel|"
+                + "mov|lea|add|sub|inc|dec|imul|mul|div|idiv|xor|and|or|not|"
+                + "cmp|test|jmp|je|jne|jg|jge|jl|jle|ja|jb|call|ret|"
+                + "push|pop|syscall|db|dw|dd|dq|resb|resq|equ)\\b)"
+                + "|(?<type>\\b(?:r(?:ax|bx|cx|dx|di|si|bp|sp|[89]|1[0-5])"
+                + "|e(?:ax|bx|cx|dx|di|si|bp|sp)|[abcd][lh])\\b)"
+                + "|(?<number>\\b(?:0x[0-9a-fA-F]+|[0-9]+)\\b)",
+                Pattern.CASE_INSENSITIVE | Pattern.MULTILINE);
     }
 
     private static Pattern markdownPattern() {

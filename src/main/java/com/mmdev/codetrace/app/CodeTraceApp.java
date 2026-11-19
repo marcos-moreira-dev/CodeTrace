@@ -42,6 +42,7 @@ import com.mmdev.codetrace.sound.TypingSounds;
 import com.mmdev.codetrace.sound.CompletionSound;
 import com.mmdev.codetrace.practice.CompletionTransition;
 import com.mmdev.codetrace.practice.CompletionSummary;
+import com.mmdev.codetrace.practice.DependencyDeclarationRules;
 import com.mmdev.codetrace.workspace.VirtualWorkspace;
 import com.mmdev.codetrace.workspace.VirtualTreeRecreator;
 import java.io.IOException;
@@ -140,8 +141,8 @@ public final class CodeTraceApp extends Application {
     private CheckBox autoCreateCheck;
     private final Button refreshButton = new Button("", new FontIcon("fth-refresh-cw"));
     private final Button skipImportsButton = ToolbarIcons.button(
-            "Imports", ToolbarIcons.Icon.SKIP, "Saltar imports de Java");
-    private final MenuItem skipImportsMenu = new MenuItem("Saltar imports");
+            "Dependencias", ToolbarIcons.Icon.SKIP, "Omitir declaraciones de dependencias");
+    private final MenuItem skipImportsMenu = new MenuItem("Omitir dependencias de código");
     private final VBox top = new VBox();
     private final MenuButton tabsActions = new MenuButton("Pestañas");
 
@@ -1131,9 +1132,9 @@ public final class CodeTraceApp extends Application {
         TypingEditor editor = selectedEditor();
         Tab selected = tabs.getSelectionModel().getSelectedItem();
         if (editor != null && selected != null
-                && selected.getText().toLowerCase().endsWith(".java")) {
-            int omitted = editor.skipJavaImports();
-            setStatus(omitted == 0 ? "No hay imports pendientes"
+                && DependencyDeclarationRules.supports(selected.getText())) {
+            int omitted = editor.skipDependencyDeclarations();
+            setStatus(omitted == 0 ? "No hay dependencias declaradas pendientes"
                     : omitted + " caracteres omitidos");
             editor.focusEditor();
         }
@@ -1226,8 +1227,8 @@ public final class CodeTraceApp extends Application {
     private void refreshMetrics() {
         TypingEditor editor = selectedEditor();
         boolean hasEditor = editor != null;
-        skipImportsButton.setDisable(!hasEditor || !selectedJavaFile());
-        skipImportsMenu.setDisable(!hasEditor || !selectedJavaFile());
+        skipImportsButton.setDisable(!hasEditor || !selectedDependencyFile());
+        skipImportsMenu.setDisable(!hasEditor || !selectedDependencyFile());
         Tab active = tabs.getSelectionModel().getSelectedItem();
         if (!hasEditor && active != null
                 && active.getContent() instanceof DependencyGraphPane map) {
@@ -1351,7 +1352,7 @@ public final class CodeTraceApp extends Application {
         addFilterOption(options, "Markdown", ProgressScope.Category.DOCUMENTATION);
         Label writingCaption = new Label("AYUDAS DE ESCRITURA");
         writingCaption.getStyleClass().add("palette-caption");
-        skipImportsButton.setText("Omitir imports de Java (archivo actual)");
+        skipImportsButton.setText("Omitir dependencias de código");
         autoCreateCheck = com.mmdev.codetrace.ui.AppControls.checkBox("Autocrear archivos y carpetas");
         autoCreateCheck.setTooltip(new Tooltip(
                 "Al activar, recrea virtualmente las carpetas y los archivos de referencia "
@@ -1404,9 +1405,9 @@ public final class CodeTraceApp extends Application {
         allScopes.setSelected(scopeChecks.values().stream().allMatch(CheckBox::isSelected));
     }
 
-    private boolean selectedJavaFile() {
+    private boolean selectedDependencyFile() {
         Tab selected = tabs.getSelectionModel().getSelectedItem();
-        return selected != null && selected.getText().toLowerCase().endsWith(".java");
+        return selected != null && DependencyDeclarationRules.supports(selected.getText());
     }
 
     private TypingEditor selectedEditor() {
