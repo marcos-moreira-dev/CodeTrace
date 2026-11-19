@@ -297,3 +297,28 @@ v1/v2/v3 se pueden leer, y v3 recupera Cuadrícula como modo inicial.
 Al seleccionar o arrastrar un nodo, la **ruta completa** aparece en la barra
 de estado de la aplicación (lado izquierdo). Dentro del propio mapa solo se
 muestran sus relaciones entrantes y salientes para evitar información duplicada.
+
+## Mapa de dependencias: comportamiento simplificado (19-nov)
+
+El **modo inicial es Organizado**. En lugar de colocar todos los archivos
+en una capa comprimida, calcula posiciones reproducibles a partir de relaciones
+internas y después asigna a cada nombre de archivo una celda libre; así evita
+que sus etiquetas se escriban unas encima de otras. La alternativa Cuadrícula
+se configura en **Herramientas → Preferencias → Grafo** mediante radios
+exclusivos y estilizados. El modo seleccionado se guarda en Preferencias y,
+si existe sesión, la configuración de esa sesión conserva su distribución.
+
+Se quitaron el encabezado con contadores y el pie de instrucciones dentro del
+mapa. Al abrirlo, la barra de estado muestra el ámbito; al seleccionar un
+nodo, la **ruta completa va a la izquierda**, y el número de aristas entrantes
+y salientes aparece junto a los demás datos de estado. Los totales del mapa
+están en el tooltip de esa zona, no como texto permanente en el workspace.
+**Restablecer distribución** está disponible con clic derecho sobre el mapa.
+
+El arrastre ya **no utiliza el desplazamiento automático de ScrollPane**:
+sobre un nodo mueve solo ese nodo; sobre el fondo mueve la vista.
+El lienzo no cambia de tamaño durante el arrastre y puede crecer después de
+soltar, preservando el desplazamiento actual. Las etiquetas usan fondo claro
+para seguir siendo legibles aun cuando una arista pase por detrás.
+
+El mapa nunca reescribe los imports reales ni cambia el progreso de mecanografía.
