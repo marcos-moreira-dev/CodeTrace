@@ -113,7 +113,27 @@ Compress-Archive -Path $portable -DestinationPath $zip -CompressionLevel Optimal
 Write-Host "Portable listo: $zip"
 if ($Installer) {
     Write-Host "Creando instalador EXE (requiere WiX Toolset compatible)..."
-    & $jpackage --type exe --app-image $portable --name CodeTrace --app-version $appVersion --dest $dist --win-menu --win-shortcut
+    # The currently supported session format is .ctrace (never .ctsession).
+    # jpackage registers its distinct icon and passes the selected file path.
+    $iconPath = Join-Path $target "codetrace-session.ico"
+    & (Join-Path $PSScriptRoot "crear-icono-sesion.ps1") -Destination $iconPath
+    if (-not (Test-Path -LiteralPath $iconPath -PathType Leaf)) {
+        throw "No se generó el icono de sesiones."
+    }
+    $association = Join-Path $target "session-association.properties"
+    $iconUri = $iconPath.Replace('\', '/')
+    $properties = @(
+        "extension=ctrace",
+        "mime-type=application/x-codetrace-session",
+        "description=Sesion de CodeTrace",
+        "icon=$iconUri"
+    ) -join [Environment]::NewLine
+    [IO.File]::WriteAllText($association, $properties,
+            [Text.UTF8Encoding]::new($false))
+    $installerArgs = @("--type", "exe", "--app-image", $portable,
+        "--name", "CodeTrace", "--app-version", $appVersion, "--dest", $dist,
+        "--win-menu", "--win-shortcut", "--file-associations", $association)
+    & $jpackage @installerArgs
     if ($LASTEXITCODE -ne 0) { throw "No se creó el instalador EXE; verifica WiX." }
 }
 Remove-Item -LiteralPath $toolchains -Force -ErrorAction SilentlyContinue
