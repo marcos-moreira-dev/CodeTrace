@@ -310,10 +310,17 @@ public final class PreferencesWindow {
             safetyNote.setText(
                     "Confirmaciones reactivadas. Pulsa Aplicar o Aceptar para guardar.");
         });
+        CheckBox readOnlyNotice = AppControls.checkBox(
+                "Mostrar aviso al abrir archivos solo de consulta");
+        readOnlyNotice.setSelected(current.readOnlyNotice());
+        readOnlyNotice.setTooltip(new Tooltip(
+                "Cuando está desactivado, los archivos de solo lectura se abren "
+                + "directamente sin interrumpir con una ventana informativa."));
         VBox noticesPanel = section("Avisos");
         noticesPanel.getChildren().addAll(
                 groupHeading("Confirmaciones de seguridad"),
-                realFilesWarning, restoreWarnings, safetyNote);
+                realFilesWarning, restoreWarnings, safetyNote,
+                groupHeading("Avisos informativos"), readOnlyNotice);
         final javafx.scene.Node stableCommandsPage = commandsPage;
 
         BorderPane sectionContent = new BorderPane();
@@ -350,7 +357,7 @@ public final class PreferencesWindow {
                     explorer.isSelected(), current.keyboardLayout(), sounds.isSelected(),
                     (int) Math.round(opacity.getValue()), turbo.isSelected(),
                     completionSound.isSelected(), completionDialog.isSelected(),
-                    graphLayout.selected()));
+                    readOnlyNotice.isSelected(), graphLayout.selected()));
             return true;
         };
         Button accept = new Button("Aceptar");
