@@ -399,3 +399,15 @@ Consulta también [Auditoría de cierre](AUDITORIA-CIERRE-2026-11.md).
   debe imponerse la última consulta, sin resultados rezagados.
 - Actualizar referencia durante un escaneo y cerrar la aplicación: cierre
   sin bloqueo ni mensajes tardíos; no se publican índices parciales.
+
+## SEARCH-LIMITS — límites explícitos y resultados de diagnóstico
+
+- Buscar dentro del proyecto CodeTrace: los resultados de `reports/` no
+  deben mezclarse con los archivos fuente y documentación.
+- Generar 1600 coincidencias en un proyecto temporal: Buscar presenta
+  1500 y avisa que llegó al límite.
+- Buscar una palabra dentro de un archivo que tenga líneas de más de 4096
+  caracteres: informar el número de líneas omitidas, nunca decir que los
+  resultados son exhaustivos.
+- Autocrear 1000 nodos y cambiar inmediatamente de proyecto: no debe
+  completarse trabajo del proyecto anterior ni crearse archivos físicos.

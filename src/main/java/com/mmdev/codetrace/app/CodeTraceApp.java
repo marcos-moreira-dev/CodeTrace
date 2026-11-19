@@ -39,6 +39,7 @@ import com.mmdev.codetrace.symbols.SymbolCatalog.Layout;
 import com.mmdev.codetrace.sound.TypingSounds;
 import com.mmdev.codetrace.sound.CompletionSound;
 import com.mmdev.codetrace.workspace.VirtualWorkspace;
+import com.mmdev.codetrace.workspace.VirtualTreeRecreator;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -1123,45 +1124,30 @@ public final class CodeTraceApp extends Application {
     private void autoCreateReferenceTree() {
         if (reference == null || referenceIndex == null
                 || practiceMode != PracticeMode.DIRECT) return;
-        var nodes = referenceIndex.recreationNodes();
+        VirtualTreeRecreator recreator = new VirtualTreeRecreator(
+                workspace, referenceIndex.recreationNodes());
         long generation = ++autoCreateGeneration;
         long request = referenceRequest;
         Path root = reference;
-        final int limit = Math.min(10_000, nodes.size());
-        final int[] cursor = {0};
-        final int[] added = {0};
-        final int[] skipped = {0};
         Runnable batch = new Runnable() {
             @Override public void run() {
                 if (generation != autoCreateGeneration
                         || request != referenceRequest
                         || !root.equals(reference)
                         || practiceMode != PracticeMode.DIRECT) return;
-                int stop = Math.min(limit, cursor[0] + 150);
-                while (cursor[0] < stop) {
-                    var node = nodes.get(cursor[0]++);
-                    if (workspace.exists(node.path())) continue;
-                    try {
-                        if (node.directory()) workspace.createDirectory(node.path());
-                        else workspace.createFile(node.path());
-                        added[0]++;
-                    } catch (IllegalArgumentException invalid) {
-                        skipped[0]++;
-                    }
-                }
-                if (cursor[0] < limit) {
+                VirtualTreeRecreator.Progress progress = recreator.nextBatch(150);
+                if (!progress.finished()) {
                     javafx.application.Platform.runLater(this);
                 } else {
-                    if (added[0] > 0) {
+                    if (progress.created() > 0) {
                         dirty = true;
                         updateTitle();
                         refreshReconstructionStatuses();
                         refreshMetrics();
                     }
                     tree.refreshStatuses();
-                    setStatus("Autocreación virtual: " + added[0]
-                            + " elementos nuevos · "
-                            + (nodes.size() - limit + skipped[0])
+                    setStatus("Autocreación virtual: " + progress.created()
+                            + " elementos nuevos · " + progress.omitted()
                             + " omitidos · transcripción pendiente");
                 }
             }

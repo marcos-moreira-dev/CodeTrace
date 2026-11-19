@@ -45,7 +45,7 @@ public final class ProjectSearchWindow {
     private final ListView<Hit> results = new ListView<>();
     private final Button search = new Button("Buscar");
     private final Button stop = new Button("Detener");
-    private Task<List<Hit>> active;
+    private Task<ProjectTextSearch.Result> active;
     private long generation;
     private Path lastProject;
     private int currentHit = -1;
@@ -195,20 +195,25 @@ public final class ProjectSearchWindow {
         state.setText("Buscando en archivos legibles…");
         search.setDisable(true);
         stop.setDisable(false);
-        Task<List<Hit>> task = new Task<>() {
-            @Override protected List<Hit> call() throws Exception {
-                return ProjectTextSearch.search(root, relative, opts, this::isCancelled);
+        Task<ProjectTextSearch.Result> task = new Task<>() {
+            @Override protected ProjectTextSearch.Result call() throws Exception {
+                return ProjectTextSearch.searchWithReport(
+                        root, relative, opts, this::isCancelled);
             }
         };
         active = task;
         task.setOnSucceeded(event -> {
             if (request != generation) return;
-            List<Hit> matches = task.getValue();
+            ProjectTextSearch.Result report = task.getValue();
+            List<Hit> matches = report.hits();
             results.getItems().setAll(matches);
             currentHit = -1;
-            state.setText(matches.size() + (matches.size() == 1
-                    ? " coincidencia" : " coincidencias")
-                    + (matches.size() >= 1500 ? " (límite alcanzado)" : ""));
+            String summary = matches.size() + (matches.size() == 1
+                    ? " coincidencia" : " coincidencias");
+            if (report.capped()) summary += " · límite de resultados alcanzado";
+            if (report.skippedLongLines() > 0)
+                summary += " · " + report.skippedLongLines() + " líneas largas omitidas";
+            state.setText(summary);
             finish();
         });
         task.setOnFailed(event -> {

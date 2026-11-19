@@ -182,3 +182,21 @@ salir. `ReferenceTreeIndex`, `ReferenceCatalogue` y `TreeNameFilter`
 rechazan cancelaciones por interrupción en lugar de devolver resultados
 parciales aparentemente válidos. Sus resultados se siguen validando por
 generación y por identidad de tarea.
+
+## Reconstrucción virtual por lotes
+
+`workspace/VirtualTreeRecreator` implementa el avance determinista de
+autocreación sin JavaFX: procesa como máximo 10 000 nodos ya ordenados,
+cuenta creaciones y omisiones, y no escribe en el disco de referencia.
+`CodeTraceApp` conserva solo la planificación `Platform.runLater`
+y las comprobaciones de generación al cambiar de proyecto.
+
+## Límites explícitos de búsqueda
+
+`ProjectTextSearch.searchWithReport` distingue coincidencias encontradas,
+límite de 1500 resultados y líneas omitidas por superar 4096 caracteres.
+`ProjectSearchWindow` presenta esos límites, de modo que el usuario no
+confunda una búsqueda parcial con una búsqueda exhaustiva. Se omiten carpetas
+generadas, incluidas las salidas de diagnóstico en `reports`.
+La API histórica `search` continúa devolviendo una lista para consumidores
+existentes.

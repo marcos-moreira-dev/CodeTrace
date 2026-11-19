@@ -24,7 +24,7 @@ import java.util.regex.PatternSyntaxException;
 public final class ProjectTextSearch {
     private static final Set<String> GENERATED = Set.of(
             ".git", ".idea", ".local", "node_modules", "target", "build",
-            "dist", "__pycache__", ".venv");
+            "dist", "reports", "__pycache__", ".venv");
     private static final int MAX_PATTERN = 256;
     private static final int MAX_HITS = 1500;
     private static final int MAX_LINE = 4096;
@@ -45,8 +45,23 @@ public final class ProjectTextSearch {
         public SourceRange range() { return new SourceRange(line, column, length); }
     }
 
+    /** Results may be incomplete when the display cap or line-length guard is reached. */
+    public record Result(List<Hit> hits, boolean capped, int skippedLongLines) {
+        public Result {
+            hits = List.copyOf(hits);
+            if (skippedLongLines < 0) throw new IllegalArgumentException("Negative skips");
+        }
+        public boolean partial() { return capped || skippedLongLines > 0; }
+    }
+
+    /** Compatible convenience API for programmatic callers. */
     public static List<Hit> search(Path root, String oneFile, Options options,
                                    BooleanSupplier cancelled) throws IOException {
+        return searchWithReport(root, oneFile, options, cancelled).hits();
+    }
+
+    public static Result searchWithReport(Path root, String oneFile, Options options,
+                                          BooleanSupplier cancelled) throws IOException {
         if (root == null || options == null || cancelled == null)
             throw new IllegalArgumentException("La búsqueda necesita una referencia.");
         Path realRoot = root.toRealPath();
@@ -83,6 +98,7 @@ public final class ProjectTextSearch {
         candidates.sort(Comparator.comparing(file ->
                 realRoot.relativize(file).toString(), String.CASE_INSENSITIVE_ORDER));
         List<Hit> results = new ArrayList<>();
+        int skippedLongLines = 0;
         for (Path file : candidates) {
             if (cancelled.getAsBoolean() || results.size() >= MAX_HITS) break;
             TextPreview.Result preview;
@@ -97,7 +113,10 @@ public final class ProjectTextSearch {
             for (int number = 0; number < lines.length && results.size() < MAX_HITS; number++) {
                 if (cancelled.getAsBoolean()) break;
                 String line = lines[number];
-                if (line.length() > MAX_LINE) continue;
+                if (line.length() > MAX_LINE) {
+                    skippedLongLines++;
+                    continue;
+                }
                 Matcher match = pattern.matcher(line);
                 while (match.find() && results.size() < MAX_HITS) {
                     int start = match.start();
@@ -112,7 +131,7 @@ public final class ProjectTextSearch {
                 }
             }
         }
-        return List.copyOf(results);
+        return new Result(results, results.size() >= MAX_HITS, skippedLongLines);
     }
 
     private static Pattern compile(Options options) {

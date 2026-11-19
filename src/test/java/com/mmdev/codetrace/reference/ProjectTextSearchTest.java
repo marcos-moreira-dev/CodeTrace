@@ -53,4 +53,36 @@ class ProjectTextSearchTest {
                 ProjectTextSearch.search(root, "../outside.java", options, () -> false));
         assertTrue(ProjectTextSearch.search(root, null, options, () -> true).isEmpty());
     }
+
+    @Test void disclosesTruncatedSearchesAndIgnoresGeneratedReports() throws Exception {
+        Path generated = Files.createDirectories(root.resolve("reports"));
+        Files.writeString(generated.resolve("CodeTrace-logs.xml"), "FINDME");
+        Files.writeString(root.resolve("Main.java"), "FINDME");
+        var options = new ProjectTextSearch.Options("FINDME", false, false, false);
+        var report = ProjectTextSearch.searchWithReport(root, null, options, () -> false);
+        assertEquals(1, report.hits().size());
+        assertFalse(report.partial());
+        assertEquals("Main.java", report.hits().getFirst().relative());
+
+        StringBuilder many = new StringBuilder();
+        for (int i = 0; i < 1550; i++) many.append("FINDME\\n");
+        Files.writeString(root.resolve("Large.java"), many.toString().replace("\\n", "\n"));
+        report = ProjectTextSearch.searchWithReport(root, null, options, () -> false);
+        assertEquals(1500, report.hits().size());
+        assertTrue(report.capped());
+        assertTrue(report.partial());
+        assertEquals(0, report.skippedLongLines());
+    }
+
+    @Test void reportsSkippedLongLinesInsteadOfSilentlyClaimingExhaustiveResults()
+            throws Exception {
+        Files.writeString(root.resolve("Long.txt"),
+                "a".repeat(4097) + "TOKEN" + "\nTOKEN");
+        var options = new ProjectTextSearch.Options("TOKEN", false, false, false);
+        var report = ProjectTextSearch.searchWithReport(root, null, options, () -> false);
+        assertEquals(1, report.hits().size());
+        assertEquals(2, report.hits().getFirst().line());
+        assertEquals(1, report.skippedLongLines());
+        assertTrue(report.partial());
+    }
 }
