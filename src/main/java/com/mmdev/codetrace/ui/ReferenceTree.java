@@ -3,6 +3,7 @@ package com.mmdev.codetrace.ui;
 import com.mmdev.codetrace.workspace.VirtualWorkspace;
 import com.mmdev.codetrace.workspace.VirtualChildrenIndex;
 import com.mmdev.codetrace.reference.ReferenceTreeIndex;
+import com.mmdev.codetrace.reference.ExplorerMenuPolicy;
 import com.mmdev.codetrace.reference.TreeNameFilter;
 import com.mmdev.codetrace.reference.FolderProgressFocus;
 import javafx.animation.PauseTransition;
@@ -552,17 +553,13 @@ public final class ReferenceTree extends TreeView<Path> {
 
     private ContextMenu contextFor(Path path) {
         String relative = relative(path);
-        boolean created = workspace.exists(relative);
         boolean folder = isFolder(path);
+        ExplorerMenuPolicy.Actions allowed = ExplorerMenuPolicy.forPath(
+                relative, folder, index, virtualChildren, workspace);
         List<MenuItem> actions = new ArrayList<>();
 
         if (folder && index != null) {
-            boolean hasSubfolders = index.children(relative).stream()
-                    .anyMatch(index::hasDirectory);
-            if (!hasSubfolders) {
-                hasSubfolders = virtualChildren.hasDirectoryChild(relative);
-            }
-            if (hasSubfolders) {
+            if (allowed.recursiveExpansion()) {
                 MenuItem expandBranch = new MenuItem("Expandir todas las subcarpetas");
                 expandBranch.setGraphic(new FontIcon("fth-maximize-2"));
                 expandBranch.setOnAction(event -> expandRecursively(path));
@@ -577,30 +574,22 @@ public final class ReferenceTree extends TreeView<Path> {
             dependencies.setOnAction(event -> onDependencyGraph.accept(path));
             actions.add(dependencies);
             actions.add(new javafx.scene.control.SeparatorMenuItem());
-            boolean hasWorkable = index.hasWorkableDescendant(relative);
-            boolean hasPendingDirectory = index.children(relative).stream()
-                    .anyMatch(child -> index.hasDirectory(child)
-                            && index.hasWorkableDescendant(child)
-                            && !workspace.exists(child));
-            boolean hasPendingFile = index.children(relative).stream()
-                    .anyMatch(child -> index.isWorkable(child)
-                            && !workspace.exists(child));
-            if (!created && !relative.isEmpty() && hasWorkable) {
+            if (allowed.createThisFolder()) {
                 MenuItem makeCurrent = new MenuItem("Crear esta carpeta");
                 makeCurrent.setOnAction(event -> recreateKnown(relative, true));
                 actions.add(makeCurrent);
             }
-            if (hasPendingDirectory) {
+            if (allowed.createSubfolder()) {
                 MenuItem newFolder = new MenuItem("Crear subcarpeta...");
                 newFolder.setOnAction(event -> create(relative, true));
                 actions.add(newFolder);
             }
-            if (hasPendingFile) {
+            if (allowed.createFile()) {
                 MenuItem newFile = new MenuItem("Crear archivo...");
                 newFile.setOnAction(event -> create(relative, false));
                 actions.add(newFile);
             }
-            if (hasWorkable) {
+            if (allowed.progressScope()) {
                 if (!actions.isEmpty()) actions.add(new javafx.scene.control.SeparatorMenuItem());
                 MenuItem scope = new MenuItem(relative.isEmpty()
                         ? "Progreso: todo el proyecto"
@@ -617,7 +606,7 @@ public final class ReferenceTree extends TreeView<Path> {
                 }
             }
         } else if (!folder) {
-            if (!created && index != null && index.isWorkable(relative)) {
+            if (allowed.createThisFile()) {
                 MenuItem createThis = new MenuItem("Crear este archivo");
                 createThis.setOnAction(event -> recreateKnown(relative, false));
                 actions.add(createThis);

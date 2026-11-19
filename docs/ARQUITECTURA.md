@@ -217,3 +217,12 @@ Evita que cada analizador mantenga un conjunto divergente de exclusiones.
 de codificar el nombre `codetrace-0.3.0-SNAPSHOT.jar`. No se ha cambiado
 la versión del producto: continúa en desarrollo hasta decidir licencia,
 avisos de terceros, aceptación Windows y release.
+
+## Política del menú contextual del explorador
+
+`reference/ExplorerMenuPolicy` calcula de forma pura las acciones
+permitidas por el índice real y el espacio virtual: creación de nodos,
+expansión de subcarpetas y alcance de progreso. `ReferenceTree` se
+limita a construir los `MenuItem` JavaFX y delegar acciones. Los tests
+comprueban permisos antes y después de crear una carpeta y un archivo
+virtual, así como archivos no practicables.
