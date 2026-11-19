@@ -3,6 +3,7 @@ package com.mmdev.codetrace.progress;
 import static org.junit.jupiter.api.Assertions.*;
 import com.mmdev.codetrace.practice.TypingSession;
 import com.mmdev.codetrace.practice.PracticeMode;
+import com.mmdev.codetrace.reference.GraphLayout;
 import java.io.DataOutputStream;
 import com.mmdev.codetrace.workspace.VirtualWorkspace;
 import java.io.IOException;
@@ -107,5 +108,42 @@ class SessionArchiveTest {
             out.writeByte(1); // PracticeMode.RECONSTRUCTION (unread)
         }
         assertThrows(IOException.class, () -> SessionArchive.load(archive));
+    }
+
+    @Test
+    void versionThreeRetainsGraphLayoutWithoutChangingTheReference() throws Exception {
+        var graph = new GraphLayout("a".repeat(64), Map.of(
+                "src/A.java", new GraphLayout.Point(154.5, 278),
+                "src/B.java", new GraphLayout.Point(460, 120)));
+        Path original = Files.writeString(directory.resolve("A.java"), "class A {}");
+        Path destination = directory.resolve("graph-session.ctrace");
+        SessionArchive.save(destination, new SessionArchive.State(directory,
+                new VirtualWorkspace(), Map.of(), Map.of(),
+                PracticeMode.DIRECT, Map.of("src", graph)));
+        var restored = SessionArchive.load(destination);
+        assertEquals(graph, restored.graphs().get("src"));
+        assertEquals("class A {}", Files.readString(original),
+                "Saving positions must never touch source references");
+    }
+
+    @Test
+    void versionTwoSessionsRemainReadableWithoutLayouts() throws Exception {
+        Path archive = directory.resolve("v2.ctrace");
+        try (DataOutputStream out = new DataOutputStream(Files.newOutputStream(archive))) {
+            out.writeInt(0x43545243);
+            out.writeInt(2);
+            byte[] root = directory.toString().getBytes(java.nio.charset.StandardCharsets.UTF_8);
+            out.writeInt(root.length);
+            out.write(root);
+            out.writeByte(1); // direct mode
+            out.writeInt(1); // root virtual directory
+            out.writeInt(0); // empty root path
+            out.writeByte(1); // directory
+            out.writeInt(0); // sessions
+            out.writeInt(0); // hashes
+        }
+        var restored = SessionArchive.load(archive);
+        assertEquals(PracticeMode.DIRECT, restored.practiceMode());
+        assertTrue(restored.graphs().isEmpty());
     }
 }
