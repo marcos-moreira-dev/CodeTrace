@@ -198,6 +198,49 @@ class CodeTraceAppSmokeTest {
                 assertTrue(graphPane.getCanvasWidth() > 2000,
                         "Map supports a larger draggable workspace");
 
+                // Regression for the reported 55%-zoom jump to the upper-left.
+                graphPane.setZoomPercent(55);
+                javafx.scene.control.ScrollPane graphScroll =
+                        (javafx.scene.control.ScrollPane) graphPane.getCenter();
+                javafx.scene.Group graphGroup =
+                        (javafx.scene.Group) graphScroll.getContent();
+                javafx.scene.canvas.Canvas graphSurface =
+                        (javafx.scene.canvas.Canvas) graphGroup.getChildren().getFirst();
+                graphScroll.setHvalue(0.65);
+                graphScroll.setVvalue(0.40);
+                var oldNode = graphChanges.get().positions().get("src/Main.java");
+                javafx.scene.input.MouseEvent pressed = new javafx.scene.input.MouseEvent(
+                        javafx.scene.input.MouseEvent.MOUSE_PRESSED,
+                        oldNode.x(), oldNode.y(), 0, 0,
+                        javafx.scene.input.MouseButton.PRIMARY, 1,
+                        false, false, false, false, true, false, false,
+                        false, false, false, null);
+                javafx.event.Event.fireEvent(graphSurface, pressed);
+                javafx.scene.input.MouseEvent dragged = new javafx.scene.input.MouseEvent(
+                        javafx.scene.input.MouseEvent.MOUSE_DRAGGED,
+                        oldNode.x() + 55, oldNode.y() + 30, 0, 0,
+                        javafx.scene.input.MouseButton.PRIMARY, 1,
+                        false, false, false, false, true, false, false,
+                        false, false, false, null);
+                javafx.event.Event.fireEvent(graphSurface, dragged);
+                assertEquals(0.65, graphScroll.getHvalue(), 0.00001,
+                        "Dragging a node must not pan the map");
+                assertEquals(0.40, graphScroll.getVvalue(), 0.00001,
+                        "Dragging a node must preserve vertical scroll");
+                assertTrue(graphChanges.get().positions().get("src/Main.java")
+                        .equals(oldNode), "Unreleased changes are not persisted");
+                javafx.event.Event.fireEvent(graphSurface,
+                        new javafx.scene.input.MouseEvent(
+                                javafx.scene.input.MouseEvent.MOUSE_RELEASED,
+                                oldNode.x() + 55, oldNode.y() + 30, 0, 0,
+                                javafx.scene.input.MouseButton.PRIMARY, 1,
+                                false, false, false, false, false, false, false,
+                                false, false, false, null));
+                assertTrue(graphChanges.get().positions().get("src/Main.java").x()
+                        > oldNode.x(), "A node really moved independently");
+                assertEquals(0.65, graphScroll.getHvalue(), 0.00001);
+                assertEquals(0.40, graphScroll.getVvalue(), 0.00001);
+
                 Slider fontSlider = (Slider) zoom.lookup(".slider");
                 assertNotNull(fontSlider);
                 assertEquals(Orientation.HORIZONTAL, fontSlider.getOrientation());
