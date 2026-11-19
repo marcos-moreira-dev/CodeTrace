@@ -426,10 +426,10 @@ public final class ReferenceMediaPane extends BorderPane {
                     volumeIcon, volume);
             controls.getStyleClass().add("media-playback-controls");
             controls.setAlignment(Pos.CENTER_LEFT);
-            if (converted && kindFor(original) == Kind.VIDEO) {
-                Label preview = new Label("Vídeo listo");
+            if (kindFor(original) == Kind.VIDEO) {
+                Label preview = new Label(converted ? "Vídeo listo" : "Vídeo de referencia");
                 HBox full = new HBox(12, preview);
-                if (conversionMode == MediaTranscoder.Output.VIDEO_REMUX) {
+                if (!converted || conversionMode == MediaTranscoder.Output.VIDEO_REMUX) {
                     // JavaFX can output audio without surfacing a video-decoding
                     // error. Expose recovery even if its error callback never runs.
                     Button fallback = new Button("¿No se ve la imagen? Mejorar reproducción");
