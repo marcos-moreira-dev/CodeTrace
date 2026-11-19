@@ -172,7 +172,7 @@ public final class DependencyGraphPane extends BorderPane {
                 "Recuperar la distribución automática del modo seleccionado"));
         HBox toolbar = new HBox(10, heading, layoutLabel, choices, reset);
         toolbar.setAlignment(Pos.CENTER_LEFT);
-        toolbar.setPadding(new Insets(10, 14));
+        toolbar.setPadding(new Insets(10, 14, 10, 14));
         toolbar.getStyleClass().add("dependency-map-toolbar");
         setTop(toolbar);
         setCenter(scroll);
@@ -185,7 +185,7 @@ public final class DependencyGraphPane extends BorderPane {
         note.getStyleClass().add("dependency-map-note");
         HBox footer = new HBox(12, info, note);
         HBox.setHgrow(info, Priority.ALWAYS);
-        footer.setPadding(new Insets(8, 12));
+        footer.setPadding(new Insets(8, 12, 8, 12));
         footer.getStyleClass().add("dependency-map-footer");
         setBottom(footer);
     }
