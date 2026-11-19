@@ -2,6 +2,7 @@ package com.mmdev.codetrace.ui;
 
 import com.mmdev.codetrace.markdown.MarkdownRenderer;
 import com.mmdev.codetrace.media.MediaTranscoder;
+import com.mmdev.codetrace.media.OnDemandHlsVideo;
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -47,6 +48,8 @@ public final class ReferenceMediaPane extends BorderPane {
     private MediaPlayer player;
     private AudioSpectrumPane spectrum;
     private Task<Path> conversion;
+    private Task<OnDemandHlsVideo> streamPreparation;
+    private OnDemandHlsVideo streaming;
     private Task<MarkdownRenderer.RenderedPage> imagePreparation;
     private WebView webImage;
     private Path temporaryMedia;
@@ -161,12 +164,85 @@ public final class ReferenceMediaPane extends BorderPane {
     }
 
     private void showMedia(Path original) {
-        if (MediaTranscoder.needsConversion(original)) {
-            convertAndPlay(original, kindFor(original) == Kind.VIDEO
-                    ? MediaTranscoder.Output.VIDEO_REMUX
-                    : MediaTranscoder.Output.AUDIO);
+        if (kindFor(original) == Kind.VIDEO
+                && MediaTranscoder.needsConversion(original)) {
+            startStreaming(original);
+        } else if (MediaTranscoder.needsConversion(original)) {
+            convertAndPlay(original, MediaTranscoder.Output.AUDIO);
         } else {
             playMedia(original, original, false);
+        }
+    }
+
+    /**
+     * Only probe metadata up front. HLS asks for a six-second segment when
+     * actually needed, including after a seek to a distant timestamp.
+     */
+    private void startStreaming(Path original) {
+        if (disposed) return;
+        if (conversion != null && !conversion.isDone()) conversion.cancel(true);
+        if (streamPreparation != null && !streamPreparation.isDone())
+            streamPreparation.cancel(true);
+        releasePlayer();
+        closeStreaming();
+        MediaTranscoder.deleteTemporary(temporaryMedia);
+        temporaryMedia = null;
+        message("Preparando reproducción por partes…");
+
+        ProgressIndicator spinner = new ProgressIndicator();
+        spinner.setPrefSize(44, 44);
+        Label info = new Label("Se preparará únicamente la parte que necesites ver.");
+        info.setWrapText(true);
+        VBox loading = new VBox(14, spinner, info);
+        loading.setAlignment(Pos.CENTER);
+        loading.setPadding(new Insets(24));
+        setCenter(new StackPane(loading));
+        Button cancel = new Button("Cancelar");
+        HBox actions = new HBox(10, cancel, openOriginalButton(original));
+        actions.getStyleClass().add("media-playback-controls");
+        setBottom(actions);
+
+        Task<OnDemandHlsVideo> task = new Task<>() {
+            @Override protected OnDemandHlsVideo call() throws IOException {
+                OnDemandHlsVideo ready = OnDemandHlsVideo.open(original);
+                if (isCancelled() || disposed) {
+                    ready.close();
+                    return null;
+                }
+                return ready;
+            }
+        };
+        streamPreparation = task;
+        cancel.setOnAction(event -> {
+            task.cancel(true);
+            message("Se canceló la apertura del vídeo.");
+            showPlaybackOptions(original, true);
+        });
+        task.setOnSucceeded(event -> {
+            OnDemandHlsVideo ready = task.getValue();
+            if (ready == null) return;
+            if (disposed || streamPreparation != task) {
+                ready.close();
+                return;
+            }
+            streaming = ready;
+            playMedia(ready.playlistUrl(), original, false);
+        });
+        task.setOnFailed(event -> {
+            if (disposed || streamPreparation != task) return;
+            System.err.println("[CodeTrace/HLS] " + task.getException());
+            message("No se pudo iniciar la reproducción por partes.");
+            showPlaybackOptions(original, true);
+        });
+        Thread worker = new Thread(task, "codetrace-hls-start");
+        worker.setDaemon(true);
+        worker.start();
+    }
+
+    private void closeStreaming() {
+        if (streaming != null) {
+            streaming.close();
+            streaming = null;
         }
     }
 
@@ -179,6 +255,7 @@ public final class ReferenceMediaPane extends BorderPane {
     private void convertAndPlay(Path original, MediaTranscoder.Output output) {
         if (disposed || (conversion != null && !conversion.isDone())) return;
         releasePlayer();
+        closeStreaming();
         MediaTranscoder.deleteTemporary(temporaryMedia);
         temporaryMedia = null;
         conversionMode = output;
@@ -273,19 +350,17 @@ public final class ReferenceMediaPane extends BorderPane {
         HBox actions = new HBox(10);
         actions.setAlignment(Pos.CENTER_LEFT);
         actions.getStyleClass().add("media-playback-controls");
-        Button retry = new Button("Reintentar");
-        retry.setOnAction(event -> convertAndPlay(original,
-                conversionMode == null
-                        ? (kindFor(original) == Kind.AUDIO
-                                ? MediaTranscoder.Output.AUDIO
-                                : MediaTranscoder.Output.VIDEO_REMUX)
-                        : conversionMode));
+        boolean video = kindFor(original) == Kind.VIDEO;
+        Button retry = new Button(video ? "Reproducir por partes" : "Reintentar");
+        retry.setOnAction(event -> {
+            if (video) startStreaming(original);
+            else convertAndPlay(original, MediaTranscoder.Output.AUDIO);
+        });
         actions.getChildren().add(retry);
-        if (allowHDConversion && kindFor(original) == Kind.VIDEO) {
-            Button compatible = new Button("Mejorar reproducción");
+        if (allowHDConversion && video) {
+            Button compatible = new Button("Convertir todo el vídeo");
             compatible.setTooltip(new Tooltip(
-                    "Prueba otra forma de reproducir el vídeo en CodeTrace. "
-                    + "Puede tardar unos minutos."));
+                    "Alternativa lenta: prepara todo el vídeo antes de mostrarlo."));
             compatible.setOnAction(event -> convertAndPlay(
                     original, MediaTranscoder.Output.VIDEO));
             actions.getChildren().add(compatible);
@@ -295,9 +370,13 @@ public final class ReferenceMediaPane extends BorderPane {
     }
 
     private void playMedia(Path file, Path original, boolean converted) {
+        playMedia(file.toUri().toString(), original, converted);
+    }
+
+    private void playMedia(String uri, Path original, boolean converted) {
         if (disposed) return;
         try {
-            Media media = new Media(file.toUri().toString());
+            Media media = new Media(uri);
             player = new MediaPlayer(media);
             player.setAutoPlay(false);
             MediaPlayer active = player;
@@ -427,17 +506,17 @@ public final class ReferenceMediaPane extends BorderPane {
             controls.getStyleClass().add("media-playback-controls");
             controls.setAlignment(Pos.CENTER_LEFT);
             if (kindFor(original) == Kind.VIDEO) {
-                Label preview = new Label(converted ? "Vídeo listo" : "Vídeo de referencia");
+                Label preview = new Label(streaming != null
+                        ? "Vídeo por partes · solo lectura"
+                        : (converted ? "Vídeo listo" : "Vídeo de referencia"));
                 HBox full = new HBox(12, preview);
-                if (!converted || conversionMode == MediaTranscoder.Output.VIDEO_REMUX) {
+                if (streaming == null && (!converted || conversionMode == MediaTranscoder.Output.VIDEO_REMUX)) {
                     // JavaFX can output audio without surfacing a video-decoding
                     // error. Expose recovery even if its error callback never runs.
                     Button fallback = new Button("¿No se ve la imagen? Mejorar reproducción");
                     fallback.setTooltip(new Tooltip(
-                            "Prueba otra forma de ver este vídeo en CodeTrace. "
-                            + "Puede tardar unos minutos."));
-                    fallback.setOnAction(event -> convertAndPlay(
-                            original, MediaTranscoder.Output.VIDEO));
+                            "Prepara solo los fragmentos que necesitas con FFmpeg."));
+                    fallback.setOnAction(event -> startStreaming(original));
                     full.getChildren().add(fallback);
                 }
                 full.getChildren().add(openOriginalButton(original));
@@ -497,6 +576,7 @@ public final class ReferenceMediaPane extends BorderPane {
                     + reason.getClass().getSimpleName() + ": " + reason.getMessage());
         }
         releasePlayer();
+        closeStreaming();
         MediaTranscoder.deleteTemporary(temporaryMedia);
         temporaryMedia = null;
         message(kindFor(original) == Kind.AUDIO
@@ -606,12 +686,14 @@ public final class ReferenceMediaPane extends BorderPane {
     public void dispose() {
         disposed = true;
         if (conversion != null) conversion.cancel(true);
+        if (streamPreparation != null) streamPreparation.cancel(true);
         if (imagePreparation != null) imagePreparation.cancel(true);
         if (webImage != null) {
             webImage.getEngine().loadContent("", "text/html");
             webImage = null;
         }
         releasePlayer();
+        closeStreaming();
         releaseViewport();
         MediaTranscoder.deleteTemporary(temporaryMedia);
         temporaryMedia = null;
