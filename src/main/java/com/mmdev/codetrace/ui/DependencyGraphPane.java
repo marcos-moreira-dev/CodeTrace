@@ -4,190 +4,191 @@ import com.mmdev.codetrace.reference.GraphLayout;
 import com.mmdev.codetrace.reference.GraphLayoutEngine;
 import com.mmdev.codetrace.reference.ProjectDependencyGraph;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
+import javafx.application.Platform;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
 /**
- * Read-only internal dependency graph. Both automatic layout modes retain
- * free dragging, source navigation and session-only persistence.
+ * Quiet graph workspace. Context lives in the application's statusbar,
+ * layout choice in Preferences, and node positions in .ctrace sessions.
+ *
+ * Critically, ScrollPane native pannable mode and resizing DURING a drag are
+ * disabled: either one can reposition the viewport while dragging a node.
  */
 public final class DependencyGraphPane extends BorderPane {
-    private static final double MAX_WIDTH = 6500;
-    private static final double MAX_HEIGHT = 14000;
+    private static final double MAX_WIDTH = 5900;
+    private static final double MAX_HEIGHT = 9200;
+    private static final double NODE_RADIUS = 10;
     private final Canvas canvas = new Canvas();
     private final Group artwork = new Group(canvas);
+    private final ScrollPane scroll = new ScrollPane(artwork);
     private final Map<String, GraphLayout.Point> layout = new LinkedHashMap<>();
-    private final Label info = new Label(
-            "Clic: seleccionar · Arrastrar: mover nodo · Doble clic: abrir archivo");
     private final ProjectDependencyGraph.Graph model;
     private final Consumer<GraphLayout> onLayoutChanged;
     private final Consumer<String> onNodeSelected;
+    private final Consumer<String> openSource;
     private final IntegerProperty zoomPercent = new SimpleIntegerProperty(100);
     private GraphLayoutEngine.Mode layoutMode;
     private String selected;
     private String pressed;
     private GraphLayout.Point initialPosition;
-    private double pressX;
-    private double pressY;
-    private boolean moved;
+    private double pressX, pressY;
+    private boolean panning, moved;
+    private double panSceneX, panSceneY, panStartH, panStartV;
 
     public DependencyGraphPane(ProjectDependencyGraph.Graph graph,
                                Consumer<String> openSource) {
-        this(graph, openSource, null, ignored -> {}, ignored -> {});
+        this(graph, openSource, null, ignored -> {}, ignored -> {},
+                GraphLayoutEngine.Mode.ORGANIZED);
     }
 
     public DependencyGraphPane(ProjectDependencyGraph.Graph graph,
                                Consumer<String> openSource, GraphLayout restored,
                                Consumer<GraphLayout> onLayoutChanged) {
-        this(graph, openSource, restored, onLayoutChanged, ignored -> {});
+        this(graph, openSource, restored, onLayoutChanged, ignored -> {},
+                GraphLayoutEngine.Mode.ORGANIZED);
     }
 
     public DependencyGraphPane(ProjectDependencyGraph.Graph graph,
                                Consumer<String> openSource, GraphLayout restored,
                                Consumer<GraphLayout> onLayoutChanged,
                                Consumer<String> onNodeSelected) {
-        model = graph;
+        this(graph, openSource, restored, onLayoutChanged, onNodeSelected,
+                GraphLayoutEngine.Mode.ORGANIZED);
+    }
+
+    public DependencyGraphPane(ProjectDependencyGraph.Graph graph,
+                               Consumer<String> openSource, GraphLayout restored,
+                               Consumer<GraphLayout> onLayoutChanged,
+                               Consumer<String> onNodeSelected,
+                               GraphLayoutEngine.Mode initialMode) {
+        this.model = graph;
+        this.openSource = openSource;
         this.onLayoutChanged = onLayoutChanged;
         this.onNodeSelected = onNodeSelected;
         getStyleClass().add("dependency-map-pane");
 
         boolean compatible = restored != null
                 && restored.fingerprint().equals(graph.fingerprint());
-        layoutMode = compatible ? restored.mode() : GraphLayoutEngine.Mode.GRID;
+        layoutMode = compatible ? restored.mode() : initialMode;
         layout.putAll(GraphLayoutEngine.arrange(graph, layoutMode));
-        if (compatible) {
-            for (var entry : restored.positions().entrySet()) {
-                if (layout.containsKey(entry.getKey())) layout.put(entry.getKey(), entry.getValue());
-            }
+        if (compatible && !GraphLayoutEngine.hasOverlaps(restored.positions())) {
+            for (var item : restored.positions().entrySet())
+                if (layout.containsKey(item.getKey()))
+                    layout.put(item.getKey(), item.getValue());
+        } else if (compatible && layoutMode == GraphLayoutEngine.Mode.ORGANIZED) {
+            // Older organized implementations could save overlapping nodes.
+            // Rebuild a legible layout and make that repair persist on Save.
+            Platform.runLater(this::notifyLayoutChanged);
         }
-        resizeCanvasToContent();
+        sizeCanvasForLayout();
         redraw();
 
+        scroll.setPannable(false);
+        scroll.setFitToWidth(false);
+        scroll.setFitToHeight(false);
+        scroll.getStyleClass().add("dependency-map-scroll");
+        setCenter(scroll);
+
         canvas.setOnMousePressed(event -> {
-            if (event.getButton() != MouseButton.PRIMARY) return;
-            pressX = event.getX();
-            pressY = event.getY();
-            pressed = nearest(pressX, pressY);
-            initialPosition = pressed == null ? null : layout.get(pressed);
+            pressed = null;
+            panning = false;
             moved = false;
-            if (pressed != null) event.consume();
+            if (event.getButton() != MouseButton.PRIMARY
+                    && event.getButton() != MouseButton.MIDDLE) return;
+            String hit = event.getButton() == MouseButton.PRIMARY
+                    ? pickNode(event.getX(), event.getY()) : null;
+            if (hit != null) {
+                pressed = hit;
+                initialPosition = layout.get(hit);
+                pressX = event.getX();
+                pressY = event.getY();
+            } else {
+                // Pan deliberately on empty background (left or middle button).
+                panning = true;
+                panSceneX = event.getSceneX();
+                panSceneY = event.getSceneY();
+                panStartH = scroll.getHvalue();
+                panStartV = scroll.getVvalue();
+            }
+            event.consume();
         });
         canvas.setOnMouseDragged(event -> {
-            if (!event.isPrimaryButtonDown() || pressed == null
-                    || initialPosition == null) return;
-            double dx = event.getX() - pressX;
-            double dy = event.getY() - pressY;
-            if (Math.abs(dx) + Math.abs(dy) <= 3 && !moved) return;
-            moved = true;
-            double x = Math.max(35, Math.min(MAX_WIDTH - 275,
-                    initialPosition.x() + dx));
-            double y = Math.max(35, Math.min(MAX_HEIGHT - 90,
-                    initialPosition.y() + dy));
-            // Extend the scrollable workspace as the user approaches an edge.
-            extendCanvas(x + 340, y + 240);
-            layout.put(pressed, new GraphLayout.Point(x, y));
-            redraw();
-            event.consume();
+            if (pressed != null && initialPosition != null) {
+                if (!event.isPrimaryButtonDown()) return;
+                double dx = event.getX() - pressX, dy = event.getY() - pressY;
+                if (!moved && Math.abs(dx) + Math.abs(dy) < 3) return;
+                moved = true;
+                // Never resize the Canvas here: doing so reanchors ScrollPane
+                // and makes a dragged node appear to jump to the upper-left.
+                double newX = clamp(initialPosition.x() + dx, 35, MAX_WIDTH - 290);
+                double newY = clamp(initialPosition.y() + dy, 35, MAX_HEIGHT - 110);
+                layout.put(pressed, new GraphLayout.Point(newX, newY));
+                redraw();
+                event.consume();
+            } else if (panning) {
+                double zoom = zoomPercent.get() / 100.0;
+                double horizontal = Math.max(1,
+                        canvas.getWidth() * zoom - scroll.getViewportBounds().getWidth());
+                double vertical = Math.max(1,
+                        canvas.getHeight() * zoom - scroll.getViewportBounds().getHeight());
+                scroll.setHvalue(clamp(panStartH
+                        - (event.getSceneX() - panSceneX) / horizontal, 0, 1));
+                scroll.setVvalue(clamp(panStartV
+                        - (event.getSceneY() - panSceneY) / vertical, 0, 1));
+                moved = true;
+                event.consume();
+            }
         });
         canvas.setOnMouseReleased(event -> {
             if (pressed != null && moved) {
                 selected = pressed;
-                info.setText(connectionCounts(selected));
                 onNodeSelected.accept(selected);
                 notifyLayoutChanged();
+                // Growth happens AFTER release, retaining absolute scroll
+                // offsets; it never interferes with the drag gesture.
+                GraphLayout.Point at = layout.get(selected);
+                extendCanvasKeepingViewport(at.x() + 510, at.y() + 360);
                 redraw();
                 event.consume();
             }
             pressed = null;
             initialPosition = null;
+            panning = false;
         });
         canvas.setOnMouseClicked(event -> {
             if (event.getButton() != MouseButton.PRIMARY || moved) {
                 moved = false;
                 return;
             }
-            String picked = nearest(event.getX(), event.getY());
-            if (picked == null) return;
-            selected = picked;
-            info.setText(connectionCounts(picked));
-            onNodeSelected.accept(picked);
+            String node = pickNode(event.getX(), event.getY());
+            if (node == null) return;
+            selected = node;
+            onNodeSelected.accept(node);
             redraw();
-            if (event.getClickCount() == 2) openSource.accept(picked);
+            if (event.getClickCount() == 2) openSource.accept(node);
             event.consume();
-        });
-
-        ScrollPane scroll = new ScrollPane(artwork);
-        scroll.setPannable(true);
-        scroll.setFitToWidth(false);
-        scroll.setFitToHeight(false);
-        scroll.getStyleClass().add("dependency-map-scroll");
-        zoomPercent.addListener((obs, old, value) -> {
-            double factor = value.doubleValue() / 100.0;
-            artwork.setScaleX(factor);
-            artwork.setScaleY(factor);
         });
         scroll.addEventFilter(javafx.scene.input.ScrollEvent.SCROLL, event -> {
             if (!event.isControlDown() && !event.isShortcutDown()) return;
             setZoomPercent(getZoomPercent() + (event.getDeltaY() > 0 ? 10 : -10));
             event.consume();
         });
-
-        Label heading = new Label("Dependencias internas · "
-                + graph.nodes().size() + " nodos · "
-                + graph.edges().size() + " conexiones");
-        heading.getStyleClass().add("dependency-map-heading");
-        HBox.setHgrow(heading, Priority.ALWAYS);
-        Label layoutLabel = new Label("Distribución");
-        layoutLabel.getStyleClass().add("dependency-map-mode-label");
-        ExclusiveChoiceBar<GraphLayoutEngine.Mode> choices = new ExclusiveChoiceBar<>(
-                List.of(
-                        new ExclusiveChoiceBar.Choice<>(GraphLayoutEngine.Mode.GRID,
-                                "Cuadrícula", "Distribución clásica, por filas y columnas"),
-                        new ExclusiveChoiceBar.Choice<>(GraphLayoutEngine.Mode.ORGANIZED,
-                                "Organizado",
-                                "Agrupa conexiones, reduce cruces y evita superposición de nodos")),
-                layoutMode, this::setLayoutMode);
-        choices.getStyleClass().add("graph-layout-modes");
-        Button reset = new Button("Restablecer");
-        reset.setOnAction(event -> resetLayout());
-        reset.getStyleClass().add("dependency-map-reset");
-        reset.setTooltip(new javafx.scene.control.Tooltip(
-                "Recuperar la distribución automática del modo seleccionado"));
-        HBox toolbar = new HBox(10, heading, layoutLabel, choices, reset);
-        toolbar.setAlignment(Pos.CENTER_LEFT);
-        toolbar.setPadding(new Insets(10, 14, 10, 14));
-        toolbar.getStyleClass().add("dependency-map-toolbar");
-        setTop(toolbar);
-        setCenter(scroll);
-
-        info.setWrapText(false);
-        info.getStyleClass().add("dependency-map-status");
-        Label note = new Label(graph.truncated()
-                ? "Vista parcial · se alcanzó el límite de análisis."
-                : "Solo imports internos · Ctrl+rueda o control inferior para acercar.");
-        note.getStyleClass().add("dependency-map-note");
-        HBox footer = new HBox(12, info, note);
-        HBox.setHgrow(info, Priority.ALWAYS);
-        footer.setPadding(new Insets(8, 12, 8, 12));
-        footer.getStyleClass().add("dependency-map-footer");
-        setBottom(footer);
+        zoomPercent.addListener((obs, old, value) -> {
+            double factor = value.doubleValue() / 100.0;
+            artwork.setScaleX(factor);
+            artwork.setScaleY(factor);
+        });
     }
 
     public int getZoomPercent() { return zoomPercent.get(); }
@@ -199,6 +200,20 @@ public final class DependencyGraphPane extends BorderPane {
     public String getSelectedNode() { return selected; }
     public double getCanvasWidth() { return canvas.getWidth(); }
     public double getCanvasHeight() { return canvas.getHeight(); }
+    public boolean isPannableByScrollPane() { return scroll.isPannable(); }
+    public int nodeCount() { return model.nodes().size(); }
+    public int connectionCount() { return model.edges().size(); }
+    public String folder() { return model.folder(); }
+
+    public String selectedNodeSummary() {
+        if (selected == null) return nodeCount() + " nodos · "
+                + connectionCount() + " conexiones";
+        long outgoing = model.edges().stream()
+                .filter(e -> e.source().equals(selected)).count();
+        long incoming = model.edges().stream()
+                .filter(e -> e.target().equals(selected)).count();
+        return outgoing + " salientes · " + incoming + " entrantes";
+    }
 
     public void setLayoutMode(GraphLayoutEngine.Mode mode) {
         if (mode == null || mode == layoutMode) return;
@@ -206,99 +221,109 @@ public final class DependencyGraphPane extends BorderPane {
         resetLayout();
     }
 
-    private void resetLayout() {
+    public void resetLayout() {
         layout.clear();
         layout.putAll(GraphLayoutEngine.arrange(model, layoutMode));
-        resizeCanvasToContent();
-        notifyLayoutChanged();
+        sizeCanvasForLayout();
         redraw();
+        notifyLayoutChanged();
     }
 
     private void notifyLayoutChanged() {
         onLayoutChanged.accept(new GraphLayout(model.fingerprint(), layout, layoutMode));
     }
 
-    /** Fresh layouts and restored coordinates get enough free area to pan. */
-    private void resizeCanvasToContent() {
+    private void sizeCanvasForLayout() {
         double right = layout.values().stream()
-                .mapToDouble(GraphLayout.Point::x).max().orElse(1000);
+                .mapToDouble(GraphLayout.Point::x).max().orElse(900);
         double bottom = layout.values().stream()
-                .mapToDouble(GraphLayout.Point::y).max().orElse(500);
-        double width = Math.max(2550, Math.min(MAX_WIDTH, right + 550));
-        double height = Math.max(1050, Math.min(MAX_HEIGHT, bottom + 420));
-        canvas.setWidth(width);
-        canvas.setHeight(height);
+                .mapToDouble(GraphLayout.Point::y).max().orElse(550);
+        canvas.setWidth(Math.min(MAX_WIDTH, Math.max(2700, right + 550)));
+        canvas.setHeight(Math.min(MAX_HEIGHT, Math.max(1500, bottom + 440)));
     }
 
-    private void extendCanvas(double right, double bottom) {
-        if (right > canvas.getWidth() - 120 && canvas.getWidth() < MAX_WIDTH)
-            canvas.setWidth(Math.min(MAX_WIDTH,
-                    Math.max(canvas.getWidth() + 480, right + 180)));
-        if (bottom > canvas.getHeight() - 100 && canvas.getHeight() < MAX_HEIGHT)
-            canvas.setHeight(Math.min(MAX_HEIGHT,
-                    Math.max(canvas.getHeight() + 400, bottom + 120)));
+    private void extendCanvasKeepingViewport(double right, double bottom) {
+        double oldWidth = canvas.getWidth(), oldHeight = canvas.getHeight();
+        double nextWidth = right > oldWidth - 160
+                ? Math.min(MAX_WIDTH, Math.max(oldWidth + 460, right + 200)) : oldWidth;
+        double nextHeight = bottom > oldHeight - 130
+                ? Math.min(MAX_HEIGHT, Math.max(oldHeight + 380, bottom + 170)) : oldHeight;
+        if (nextWidth == oldWidth && nextHeight == oldHeight) return;
+        double zoom = zoomPercent.get() / 100.0;
+        double viewportWidth = scroll.getViewportBounds().getWidth();
+        double viewportHeight = scroll.getViewportBounds().getHeight();
+        double pixelLeft = scroll.getHvalue() * Math.max(0, oldWidth * zoom - viewportWidth);
+        double pixelTop = scroll.getVvalue() * Math.max(0, oldHeight * zoom - viewportHeight);
+        canvas.setWidth(nextWidth);
+        canvas.setHeight(nextHeight);
+        Platform.runLater(() -> {
+            double newHorizontal = Math.max(1, nextWidth * zoom
+                    - scroll.getViewportBounds().getWidth());
+            double newVertical = Math.max(1, nextHeight * zoom
+                    - scroll.getViewportBounds().getHeight());
+            scroll.setHvalue(clamp(pixelLeft / newHorizontal, 0, 1));
+            scroll.setVvalue(clamp(pixelTop / newVertical, 0, 1));
+        });
     }
 
-    private String connectionCounts(String path) {
-        long outgoing = model.edges().stream()
-                .filter(e -> e.source().equals(path)).count();
-        long incoming = model.edges().stream()
-                .filter(e -> e.target().equals(path)).count();
-        return outgoing + " salientes · " + incoming
-                + " entrantes · Doble clic para abrir";
+    private static double clamp(double value, double min, double max) {
+        return Math.max(min, Math.min(max, value));
     }
 
-    private String nearest(double x, double y) {
-        String found = null;
-        double best = 16 * 16;
-        for (var entry : layout.entrySet()) {
-            GraphLayout.Point at = entry.getValue();
-            double dx = x - at.x(), dy = y - at.y();
-            double distance = dx * dx + dy * dy;
-            if (distance <= best) {
-                best = distance;
-                found = entry.getKey();
-            }
-        }
-        return found;
-    }
-
-    private void redraw() {
-        GraphicsContext graphics = canvas.getGraphicsContext2D();
-        graphics.setFill(Color.web("#f8fafb"));
-        graphics.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
-        graphics.setLineWidth(1.2);
-        for (ProjectDependencyGraph.Edge edge : model.edges()) {
-            GraphLayout.Point source = layout.get(edge.source());
-            GraphLayout.Point target = layout.get(edge.target());
-            if (source == null || target == null) continue;
-            boolean highlighted = edge.source().equals(selected)
-                    || edge.target().equals(selected);
-            graphics.setStroke(Color.web(highlighted ? "#43759f" : "#b7cbd8"));
-            graphics.strokeLine(source.x(), source.y(), target.x(), target.y());
-            double direction = Math.atan2(target.y() - source.y(), target.x() - source.x());
-            double tipX = target.x() - 14 * Math.cos(direction);
-            double tipY = target.y() - 14 * Math.sin(direction);
-            graphics.strokeLine(tipX, tipY,
-                    tipX - 7 * Math.cos(direction - 0.55),
-                    tipY - 7 * Math.sin(direction - 0.55));
-            graphics.strokeLine(tipX, tipY,
-                    tipX - 7 * Math.cos(direction + 0.55),
-                    tipY - 7 * Math.sin(direction + 0.55));
-        }
+    private String pickNode(double x, double y) {
         for (String path : model.nodes()) {
             GraphLayout.Point point = layout.get(path);
             if (point == null) continue;
+            // Hit targets include the filename, not only the tiny circle.
+            if (x >= point.x() - NODE_RADIUS - 2 && x <= point.x() + 258
+                    && Math.abs(y - point.y()) <= 16)
+                return path;
+        }
+        return null;
+    }
+
+    private void redraw() {
+        GraphicsContext g = canvas.getGraphicsContext2D();
+        g.setFill(Color.web("#f8fafb"));
+        g.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
+        g.setLineWidth(1.15);
+        for (var edge : model.edges()) {
+            GraphLayout.Point a = layout.get(edge.source());
+            GraphLayout.Point b = layout.get(edge.target());
+            if (a == null || b == null) continue;
+            boolean related = edge.source().equals(selected) || edge.target().equals(selected);
+            g.setStroke(Color.web(related ? "#477c9f" : "#c1d2dd"));
+            g.strokeLine(a.x(), a.y(), b.x(), b.y());
+            double angle = Math.atan2(b.y() - a.y(), b.x() - a.x());
+            double tipX = b.x() - NODE_RADIUS * Math.cos(angle);
+            double tipY = b.y() - NODE_RADIUS * Math.sin(angle);
+            g.strokeLine(tipX, tipY,
+                    tipX - 7 * Math.cos(angle - 0.50),
+                    tipY - 7 * Math.sin(angle - 0.50));
+            g.strokeLine(tipX, tipY,
+                    tipX - 7 * Math.cos(angle + 0.50),
+                    tipY - 7 * Math.sin(angle + 0.50));
+        }
+        // Draw labels last on opaque backing so crisscrossing edges never
+        // obscure their text, even in graphs with high-degree hubs.
+        for (String path : model.nodes()) {
+            GraphLayout.Point p = layout.get(path);
+            if (p == null) continue;
             boolean active = path.equals(selected);
-            graphics.setFill(Color.web(active ? "#c36c31" : "#4b7593"));
-            graphics.fillOval(point.x() - 10, point.y() - 10, 20, 20);
-            graphics.setStroke(Color.WHITE);
-            graphics.strokeOval(point.x() - 10, point.y() - 10, 20, 20);
-            graphics.setFill(Color.web("#273f50"));
-            graphics.setFont(Font.font("Segoe UI", active ? 13 : 12));
             String label = path.substring(path.lastIndexOf('/') + 1);
-            if (label.length() > 36) label = label.substring(0, 33) + "...";
-            graphics.fillText(label, point.x() + 17, point.y() + 4);
+            if (label.length() > 35) label = label.substring(0, 32) + "...";
+            double labelWidth = Math.min(241, Math.max(70, label.length() * 6.5 + 12));
+            g.setFill(Color.web(active ? "#e8f0f6" : "#f8fafb"));
+            g.fillRect(p.x() + 14, p.y() - 13, labelWidth, 26);
+            g.setFill(Color.web(active ? "#c36c31" : "#4b7593"));
+            g.fillOval(p.x() - NODE_RADIUS, p.y() - NODE_RADIUS, NODE_RADIUS * 2,
+                    NODE_RADIUS * 2);
+            g.setStroke(Color.WHITE);
+            g.strokeOval(p.x() - NODE_RADIUS, p.y() - NODE_RADIUS,
+                    NODE_RADIUS * 2, NODE_RADIUS * 2);
+            g.setFill(Color.web("#263f51"));
+            g.setFont(Font.font("Segoe UI", active ? 13 : 12));
+            g.fillText(label, p.x() + 20, p.y() + 4);
         }
     }
 }
