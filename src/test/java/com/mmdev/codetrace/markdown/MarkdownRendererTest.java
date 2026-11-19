@@ -15,7 +15,11 @@ class MarkdownRendererTest {
         String page = MarkdownRenderer.toHtmlPage(
                 "# Título :rocket:\n\n`x` and :white_check_mark:\n\n"
                 + "| A | B |\n|---|---|\n| 1 | 2 |");
-        assertTrue(page.contains("<h1>Título 🚀</h1>"), page);
+        // Packaged builds may render 🚀 with an offline Twemoji SVG;
+        // developer builds without the optional pack retain the Unicode glyph.
+        assertTrue(page.contains("<h1>Título 🚀</h1>")
+                || (page.contains("<h1>Título <img")
+                    && page.contains("alt=\"🚀\"")), page);
         assertTrue(page.contains("<code>x</code>"));
         assertTrue(page.contains("✅"), page);
         assertTrue(page.contains("<table>"));

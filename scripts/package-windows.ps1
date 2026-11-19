@@ -46,6 +46,13 @@ try {
 } catch {
     Write-Warning "No se pudieron preparar las fuentes incluidas: $_"
 }
+# Offline vectors are optional for development; the release image fetches
+# Twemoji once and bundles resources. CodeTrace never downloads on preview.
+try {
+    & (Join-Path $PSScriptRoot "preparar-emojis.ps1")
+} catch {
+    Write-Warning "No se pudieron preparar todos los emojis SVG: $_"
+}
 Write-Host "Verificando CodeTrace y preparando dependencias..."
 $mavenArgs = @("-B", "-ntp", "-t", $toolchains, "clean", "verify",
     "dependency:copy-dependencies", "-DincludeScope=runtime",
