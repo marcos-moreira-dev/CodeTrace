@@ -179,8 +179,18 @@ class CodeTraceAppSmokeTest {
                 var graphPane = new com.mmdev.codetrace.ui.DependencyGraphPane(
                         graphModel, ignored -> {}, null, graphChanges::set,
                         ignored -> {});
-                assertEquals(com.mmdev.codetrace.reference.GraphLayoutEngine.Mode.GRID,
+                assertEquals(com.mmdev.codetrace.reference.GraphLayoutEngine.Mode.ORGANIZED,
                         graphPane.getLayoutMode());
+                assertFalse(graphPane.isPannableByScrollPane(),
+                        "Native ScrollPane panning must not hijack a node drag");
+                assertNull(graphPane.getTop(),
+                        "Map configuration belongs in Preferences, not a permanent toolbar");
+                assertNull(graphPane.getBottom(),
+                        "Map microcopy belongs in the application statusbar");
+                graphPane.setLayoutMode(
+                        com.mmdev.codetrace.reference.GraphLayoutEngine.Mode.GRID);
+                assertEquals(com.mmdev.codetrace.reference.GraphLayoutEngine.Mode.GRID,
+                        graphChanges.get().mode());
                 graphPane.setLayoutMode(
                         com.mmdev.codetrace.reference.GraphLayoutEngine.Mode.ORGANIZED);
                 assertEquals(com.mmdev.codetrace.reference.GraphLayoutEngine.Mode.ORGANIZED,
@@ -212,6 +222,16 @@ class CodeTraceAppSmokeTest {
                 assertEquals(100.0, opacitySlider.getMax());
                 assertNull(preferences.getScene().getRoot().lookup(".prefs-opacity-spinner"));
                 assertNotNull(preferences.getScene().getRoot().lookup(".prefs-font-choice"));
+                @SuppressWarnings("unchecked")
+                ListView<String> preferencesNavigation = (ListView<String>)
+                        preferences.getScene().getRoot().lookup(".prefs-navigation");
+                assertTrue(preferencesNavigation.getItems().contains("Grafo"));
+                preferencesNavigation.getSelectionModel().select("Grafo");
+                preferences.getScene().getRoot().applyCss();
+                preferences.getScene().getRoot().layout();
+                assertNotNull(preferences.getScene().getRoot()
+                        .lookup(".prefs-graph-layout"),
+                        "Graph distribution should be configured in Preferences");
                 preferences.close();
                 var about = ProductDialogs.createAbout(stage);
                 about.show();
