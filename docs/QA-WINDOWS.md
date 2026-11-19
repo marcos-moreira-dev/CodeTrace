@@ -155,3 +155,36 @@ No se distribuye FFmpeg por defecto. La CI no reemplaza la auditoría de licenci
   comando PowerShell para comprobar/compilar/ejecutar, según tenga `main`.
 - VISUAL-01: Valida barra de menú pizarra contra barra de herramientas neutral
   cálida; comprobar legibilidad y contraste en Windows y al abrir submenús.
+
+## Aceptación: zoom global, autocreación y mapa arrastrable
+
+- ZOOM-TEXT-01: Abre `pom.xml`, `README.txt`, `config.json` y un CSS.
+  Usa el deslizador inferior de `pt`: todos los caracteres aumentan o disminuyen
+  manteniendo la coloración y el contenido de solo lectura.
+- ZOOM-TEXT-02: Cambia de archivo de consulta a Java o Markdown; el
+  deslizador conserva el tamaño de letra y no modifica las sesiones.
+- GRAPH-ZOOM-01: Abre un mapa con conexiones y comprueba que desaparece
+  el deslizador de letra y aparece el de porcentaje con icono de compartir.
+  Dentro del mapa NO debe haber otro deslizador. Al regresar al código
+  debe volver el control en puntos.
+- GRAPH-DRAG-01: Arrastra un nodo; la flecha debe seguirlo mientras lo mueves.
+  El doble clic sigue abriendo el archivo asociado.
+- GRAPH-SAVE-01: Guarda sesión, cierra, vuelve a abrir el archivo `.ctrace`,
+  genera el mapa de la misma carpeta y verifica las posiciones guardadas.
+- GRAPH-RESET-01: Usa `Restablecer distribución` y comprueba que recupera
+  la posición regular, guardable nuevamente.
+- GRAPH-REF-01: Cambia el código real de una copia de prueba, actualiza
+  referencia y genera mapa: las posiciones antiguas no deben restaurarse.
+  No se debe alterar ningún archivo original automáticamente.
+- AUTO-01: Activa `Autocrear archivos y carpetas`, espera el índice y
+  observa carpetas/archivos virtuales de práctica en estado creado amarillo.
+  Archivos de imagen/medios pueden indicar no aplicable.
+- AUTO-02: Verifica que un archivo con 0 caracteres transcritos sigue
+  aportando 0 % aunque esté creado. Termínalo y verifica verde.
+- AUTO-03: Alterna Código fuente/Markdown, Solo carpeta y Excluir carpeta:
+  los indicadores de creación no desaparecen, pero el porcentaje usa
+  exclusivamente el conjunto seleccionado.
+- AUTO-04: Desactiva autocreación: no desaparecen los archivos ya creados,
+  y la práctica manual sigue funcionando.
+- TABS-UI-01: Abre muchas pestañas, verifica que el menú de desbordamiento
+  sea rectangular, legible y consistente con el resto de controles.
