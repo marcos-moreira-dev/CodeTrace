@@ -67,7 +67,7 @@ public record AppSettings(String fontFamily, int fontSize, boolean showExplorer,
     }
 
     public static AppSettings load() {
-        String family = STORE.get("editor.font", "Consolas");
+        String family = STORE.get("editor.font", FontResources.codeFamily());
         int size = Math.max(10, Math.min(36, STORE.getInt("editor.size", 16)));
         String layout = STORE.get("keyboard.layout", "LATAM");
         if (!layout.equals("LATAM") && !layout.equals("US")) {

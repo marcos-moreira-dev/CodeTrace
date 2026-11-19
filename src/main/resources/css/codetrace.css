@@ -1,5 +1,5 @@
 .root {
-    -fx-font-family: "Segoe UI";
+    -fx-font-family: "IBM Plex Sans";
     -fx-font-size: 12px;
     -fx-base: #f5f6f7;
     -fx-background-color: #f5f6f7;
@@ -169,7 +169,7 @@
 }
 .context-menu .menu-item:focused .label { -fx-text-fill: #263747; }
 .source-file-badge {
-    -fx-font-family: "Segoe UI";
+    -fx-font-family: "IBM Plex Sans";
     -fx-font-size: 10px;
     -fx-font-weight: bold;
     -fx-padding: 0 2px;
@@ -548,7 +548,7 @@
 }
 .prefs-font-choice .list-cell .font-family-name {
     -fx-text-fill: #30485e;
-    -fx-font-family: "Segoe UI";
+    -fx-font-family: "IBM Plex Sans";
     -fx-font-size: 12px;
 }
 
@@ -815,7 +815,7 @@
     -fx-max-width: 18px;
     -fx-min-height: 18px;
     -fx-pref-height: 18px;
-    -fx-font-family: "Segoe UI";
+    -fx-font-family: "IBM Plex Sans";
     -fx-font-size: 9px;
     -fx-text-fill: #334f63;
 }
@@ -915,11 +915,11 @@
 }
 .record-list-row .ikonli-font-icon { -fx-icon-color: #56748d; }
 .record-list-title {
-    -fx-font-family: "Segoe UI"; -fx-font-size: 12px;
+    -fx-font-family: "IBM Plex Sans"; -fx-font-size: 12px;
     -fx-font-weight: bold; -fx-text-fill: #29465c;
 }
 .record-list-subtitle {
-    -fx-font-family: "Segoe UI"; -fx-font-size: 10px;
+    -fx-font-family: "IBM Plex Sans"; -fx-font-size: 10px;
     -fx-text-fill: #627a8e;
 }
 .record-list-description {
@@ -928,7 +928,7 @@
 }
 .search-results-list .record-list-row { -fx-min-height: 58px; }
 .command-preset-list .record-list-row { -fx-min-height: 43px; }
-.search-results-list .list-cell:filled { -fx-font-family: "Segoe UI"; }
+.search-results-list .list-cell:filled { -fx-font-family: "IBM Plex Sans"; }
 
 /* Airier explorer toolbar, with a borderless close/clear affordance. */
 .project-tree-header { -fx-padding: 7 9 4 11; }

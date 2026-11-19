@@ -165,7 +165,7 @@ public final class CodeTraceApp extends Application {
     private Path reference;
     private long referenceRequest;
     private Path sessionFile;
-    private AppSettings settings = AppSettings.load();
+    private AppSettings settings;
     private CheckMenuItem explorerToggle;
     private CheckMenuItem turboMenu;
     private ToggleButton turboToggle;
@@ -183,6 +183,9 @@ public final class CodeTraceApp extends Application {
 
     @Override
     public void start(Stage window) {
+        // Register bundled faces before reading defaults or laying out controls.
+        FontResources.register();
+        settings = AppSettings.load();
         stage = window;
         BorderPane root = new BorderPane();
 

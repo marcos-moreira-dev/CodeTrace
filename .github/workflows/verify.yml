@@ -60,7 +60,8 @@ jobs:
             "scripts/capturar-ventana.ps1",
             "scripts/captura-automatica.ps1",
             "scripts/auditoria-visual.ps1",
-            "scripts/generar-prueba-emojis.ps1"
+            "scripts/generar-prueba-emojis.ps1",
+            "scripts/preparar-fuentes.ps1"
           )
           foreach ($file in $files) {
             $tokens = $null

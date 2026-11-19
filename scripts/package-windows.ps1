@@ -39,6 +39,13 @@ $xml = @"
     [Text.UTF8Encoding]::new($false))
 New-Item -ItemType Directory -Force -Path $input,$dist | Out-Null
 
+# Package pinned IBM Plex fonts when the network or a local cache permits it.
+# Optional fonts must never prevent an offline build.
+try {
+    & (Join-Path $PSScriptRoot "preparar-fuentes.ps1")
+} catch {
+    Write-Warning "No se pudieron preparar las fuentes incluidas: $_"
+}
 Write-Host "Verificando CodeTrace y preparando dependencias..."
 $mavenArgs = @("-B", "-ntp", "-t", $toolchains, "clean", "verify",
     "dependency:copy-dependencies", "-DincludeScope=runtime",

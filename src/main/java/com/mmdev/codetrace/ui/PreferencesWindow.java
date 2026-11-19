@@ -1,6 +1,7 @@
 package com.mmdev.codetrace.ui;
 
 import com.mmdev.codetrace.app.AppSettings;
+import com.mmdev.codetrace.app.FontResources;
 import com.mmdev.codetrace.reference.GraphLayoutEngine;
 import com.mmdev.codetrace.commands.ProjectCommandStore;
 import com.mmdev.codetrace.commands.CommandWarningPreferences;
@@ -196,9 +197,16 @@ public final class PreferencesWindow {
         CheckBox turbo = AppControls.checkBox("Omitir automáticamente símbolos y puntuación");
         turbo.setSelected(current.turboMode());
 
+        Button recommendedFont = new Button("Usar IBM Plex Mono");
+        recommendedFont.setTooltip(new Tooltip(
+                "Fuente recomendada de CodeTrace. No instala nada en Windows."));
+        recommendedFont.setDisable(!FontResources.bundledCodeAvailable());
+        recommendedFont.setOnAction(event ->
+                families.setValue(FontResources.codeFamily()));
         VBox editorPanel = section("Editor");
         editorPanel.getChildren().addAll(
                 field("Fuente de código", families),
+                recommendedFont,
                 field("Tamaño de letra", new HBox(10, size, sizeValue)),
                 field("Opacidad de la plantilla", opacityRow),
                 groupHeading("Práctica"), turbo,
