@@ -8,7 +8,18 @@ public record AppSettings(String fontFamily, int fontSize, boolean showExplorer,
                           String keyboardLayout, boolean typingSounds,
                           int templateOpacity, boolean turboMode,
                           boolean completionSound, boolean completionDialog,
-                          GraphLayoutEngine.Mode graphLayoutMode) {
+                          boolean readOnlyNotice, GraphLayoutEngine.Mode graphLayoutMode) {
+    /** Retain the former 10-argument constructor for existing callers/tests. */
+    public AppSettings(String fontFamily, int fontSize, boolean showExplorer,
+                       String keyboardLayout, boolean typingSounds,
+                       int templateOpacity, boolean turboMode,
+                       boolean completionSound, boolean completionDialog,
+                       GraphLayoutEngine.Mode graphLayoutMode) {
+        this(fontFamily, fontSize, showExplorer, keyboardLayout, typingSounds,
+                templateOpacity, turboMode, completionSound, completionDialog,
+                false, graphLayoutMode);
+    }
+
     private static final Preferences STORE =
             Preferences.userNodeForPackage(AppSettings.class);
     public static final GraphLayoutEngine.Mode DEFAULT_GRAPH_MODE =
@@ -80,6 +91,7 @@ public record AppSettings(String fontFamily, int fontSize, boolean showExplorer,
                 STORE.getBoolean("practice.turbo", false),
                 STORE.getBoolean("practice.completionSound", true),
                 STORE.getBoolean("practice.completionDialog", true),
+                STORE.getBoolean("notice.readOnlyConsultation", false),
                 storedGraphMode());
     }
 
@@ -95,25 +107,31 @@ public record AppSettings(String fontFamily, int fontSize, boolean showExplorer,
     public AppSettings withGraphLayoutMode(GraphLayoutEngine.Mode mode) {
         return new AppSettings(fontFamily, fontSize, showExplorer,
                 keyboardLayout, typingSounds, templateOpacity, turboMode,
-                completionSound, completionDialog, mode);
+                completionSound, completionDialog, readOnlyNotice, mode);
     }
 
     public AppSettings withLayout(String layout) {
         return new AppSettings(fontFamily, fontSize, showExplorer, layout,
                 typingSounds, templateOpacity, turboMode, completionSound,
-                completionDialog, graphLayoutMode);
+                completionDialog, readOnlyNotice, graphLayoutMode);
     }
 
     public AppSettings withTurbo(boolean enabled) {
         return new AppSettings(fontFamily, fontSize, showExplorer,
                 keyboardLayout, typingSounds, templateOpacity, enabled,
-                completionSound, completionDialog, graphLayoutMode);
+                completionSound, completionDialog, readOnlyNotice, graphLayoutMode);
     }
 
     public AppSettings withCompletionDialog(boolean visible) {
         return new AppSettings(fontFamily, fontSize, showExplorer, keyboardLayout,
                 typingSounds, templateOpacity, turboMode, completionSound,
-                visible, graphLayoutMode);
+                visible, readOnlyNotice, graphLayoutMode);
+    }
+
+    public AppSettings withReadOnlyNotice(boolean enabled) {
+        return new AppSettings(fontFamily, fontSize, showExplorer, keyboardLayout,
+                typingSounds, templateOpacity, turboMode, completionSound,
+                completionDialog, enabled, graphLayoutMode);
     }
 
     public void save() {
@@ -126,6 +144,7 @@ public record AppSettings(String fontFamily, int fontSize, boolean showExplorer,
         STORE.putBoolean("practice.turbo", turboMode);
         STORE.putBoolean("practice.completionSound", completionSound);
         STORE.putBoolean("practice.completionDialog", completionDialog);
+        STORE.putBoolean("notice.readOnlyConsultation", readOnlyNotice);
         // v2 intentionally does not inherit the older experimental GRID choice.
         // New and migrated installations start organized until explicitly changed.
         STORE.put("graph.layout.v2", graphLayoutMode.name());
