@@ -161,7 +161,7 @@ public final class ProductDialogs {
                 Severity.QUESTION, proceed, ButtonType.CANCEL);
         CheckBox omit = AppControls.checkBox("No volver a mostrar esta advertencia");
         omit.setTooltip(new javafx.scene.control.Tooltip(
-                "Se puede volver a activar en Preferencias > Comandos."));
+                "Se puede volver a activar en Preferencias > Avisos."));
         ((VBox) prompt.getDialogPane().getContent()).getChildren().add(omit);
         ButtonType choice = prompt.showAndWait().orElse(ButtonType.CANCEL);
         return new Confirmation(choice, choice == proceed && omit.isSelected());

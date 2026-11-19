@@ -702,11 +702,13 @@ public final class CodeTraceApp extends Application {
         }
         String relative = relative(file);
         if (!com.mmdev.codetrace.reference.PracticeEligibility.supports(file)) {
-            if (ReferenceMediaPane.kindFor(file) != ReferenceMediaPane.Kind.UNSUPPORTED)
+            // Multimedia has its own read-only playback controls; the notice
+            // belongs to non-media consultation documents, NOT to media.
+            if (!com.mmdev.codetrace.ui.ConsultationNoticePolicy.requiresExplanation(file)) {
                 openMediaReference(file, relative);
-            else openTextReference(file, relative);
-            // The tooltip also explains these files: make the double-click
-            // explicit while preserving the read-only preview for study.
+                return;
+            }
+            openTextReference(file, relative);
             javafx.application.Platform.runLater(() ->
                     ProductDialogs.information(stage, "Archivo de consulta",
                             "No requiere práctica de mecanografía."));

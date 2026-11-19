@@ -105,7 +105,7 @@ public final class PreferencesWindow {
         root.setTop(header);
 
         ListView<String> navigation = new ListView<>(
-                FXCollections.observableArrayList("Editor", "Ventana", "Grafo", "Sonido", "Comandos"));
+                FXCollections.observableArrayList("Editor", "Ventana", "Grafo", "Sonido", "Avisos", "Comandos"));
         navigation.getStyleClass().add("prefs-navigation");
         navigation.setPrefWidth(168);
         navigation.setMinWidth(168);
@@ -123,6 +123,7 @@ public final class PreferencesWindow {
                         case "Ventana" -> "fth-layout";
                         case "Grafo" -> "fth-share-2";
                         case "Sonido" -> "fth-volume-2";
+                        case "Avisos" -> "fth-alert-triangle";
                         default -> "fth-terminal";
                     });
                     icon.setIconSize(16);
@@ -290,18 +291,22 @@ public final class PreferencesWindow {
                 "El programa externo podría modificar o eliminar originales."));
         Button restoreWarnings = new Button("Restablecer avisos de seguridad");
         restoreWarnings.setTooltip(new Tooltip(
-                "Vuelve a activar la confirmación para todos los proyectos."));
-        restoreWarnings.setOnAction(event -> realFilesWarning.setSelected(true));
+                "Reactiva las confirmaciones de ejecución real; guarda con Aplicar."));
         Label safetyNote = new Label(
-                "Los comandos utilizan el proyecto original, nunca la reconstrucción virtual.");
+                "Los comandos externos utilizan el proyecto original, no la reconstrucción virtual. "
+                + "Los cambios se guardan con Aplicar o Aceptar.");
         safetyNote.setWrapText(true);
         safetyNote.getStyleClass().add("prefs-feedback");
-        VBox commandSection = new VBox(12, groupHeading("Seguridad de los comandos"),
-                realFilesWarning, restoreWarnings, safetyNote,
-                new javafx.scene.control.Separator(), commandsPage);
-        commandSection.getStyleClass().add("prefs-section");
-        VBox.setVgrow(commandsPage, Priority.ALWAYS);
-        final javafx.scene.Node stableCommandsPage = commandSection;
+        restoreWarnings.setOnAction(event -> {
+            realFilesWarning.setSelected(true);
+            safetyNote.setText(
+                    "Confirmaciones reactivadas. Pulsa Aplicar o Aceptar para guardar.");
+        });
+        VBox noticesPanel = section("Avisos");
+        noticesPanel.getChildren().addAll(
+                groupHeading("Confirmaciones de seguridad"),
+                realFilesWarning, restoreWarnings, safetyNote);
+        final javafx.scene.Node stableCommandsPage = commandsPage;
 
         BorderPane sectionContent = new BorderPane();
         sectionContent.getStyleClass().add("prefs-content");
@@ -311,6 +316,7 @@ public final class PreferencesWindow {
                         "Ventana".equals(selected) ? windowPanel
                                 : "Grafo".equals(selected) ? graphPanel
                                 : "Sonido".equals(selected) ? soundPanel
+                                : "Avisos".equals(selected) ? noticesPanel
                                 : "Comandos".equals(selected) ? stableCommandsPage : editorPanel));
         navigation.getSelectionModel().selectFirst();
         root.setLeft(navigation);
