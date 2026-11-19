@@ -355,7 +355,16 @@ class CodeTraceAppSmokeTest {
                         "No new-folder action when all immediate folders already exist");
                 assertFalse(rootMenu.getItems().stream().anyMatch(
                         item -> "Crear archivo...".equals(item.getText())));
+                ContextMenu srcMenu = (ContextMenu) menuFor.invoke(fileTree, src);
+                assertTrue(srcMenu.getItems().stream().anyMatch(item ->
+                        "Colapsar subcarpetas".equals(item.getText())));
+                assertTrue(srcMenu.getItems().stream().anyMatch(item ->
+                        "Mapa de dependencias...".equals(item.getText())));
                 ContextMenu folderMenu = (ContextMenu) menuFor.invoke(fileTree, nested);
+                assertFalse(folderMenu.getItems().stream().anyMatch(item ->
+                        "Colapsar subcarpetas".equals(item.getText())));
+                assertTrue(folderMenu.getItems().stream().anyMatch(item ->
+                        "Mapa de dependencias...".equals(item.getText())));
                 assertTrue(folderMenu.getItems().stream().anyMatch(
                         item -> "Crear esta carpeta".equals(item.getText())));
                 assertFalse(folderMenu.getItems().stream().anyMatch(
@@ -364,6 +373,10 @@ class CodeTraceAppSmokeTest {
                         .filter(item -> "Crear esta carpeta".equals(item.getText()))
                         .findFirst().orElseThrow().fire();
                 assertTrue(virtual.exists("src/ejemplos"));
+                // A recursive collapse does not alter tree contents.
+                fileTree.getRoot().setExpanded(true);
+                fileTree.collapseRecursively(src);
+                assertTrue(Files.exists(nestedFile));
                 ContextMenu fileMenu = (ContextMenu) menuFor.invoke(fileTree, nestedFile);
                 assertTrue(fileMenu.getItems().stream().anyMatch(
                         item -> "Crear este archivo".equals(item.getText())));
