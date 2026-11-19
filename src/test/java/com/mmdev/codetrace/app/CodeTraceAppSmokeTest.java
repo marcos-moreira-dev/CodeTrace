@@ -228,7 +228,16 @@ class CodeTraceAppSmokeTest {
                         false, false, false,
                         new javafx.scene.input.PickResult(
                                 graphSurface, oldNode.x(), oldNode.y()));
+                AtomicReference<javafx.geometry.Point2D> receivedPress =
+                        new AtomicReference<>();
+                graphSurface.addEventFilter(javafx.scene.input.MouseEvent.MOUSE_PRESSED,
+                        event -> receivedPress.set(new javafx.geometry.Point2D(
+                                event.getX(), event.getY())));
                 javafx.event.Event.fireEvent(graphSurface, pressed);
+                assertEquals(oldNode.x(), receivedPress.get().getX(), 0.01,
+                        "Scene-space synthetic press must map to the selected node");
+                assertEquals(oldNode.y(), receivedPress.get().getY(), 0.01,
+                        "Scene-space synthetic press must map to the selected node");
                 javafx.scene.input.MouseEvent dragged = new javafx.scene.input.MouseEvent(
                         javafx.scene.input.MouseEvent.MOUSE_DRAGGED,
                         dragScene.getX(), dragScene.getY(), 0, 0,
