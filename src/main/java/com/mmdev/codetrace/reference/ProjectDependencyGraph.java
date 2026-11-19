@@ -3,6 +3,10 @@ package com.mmdev.codetrace.reference;
 import java.io.IOException;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.HexFormat;
 import java.util.*;
 import java.util.function.BooleanSupplier;
 import java.util.regex.*;
@@ -14,7 +18,7 @@ import java.util.regex.*;
 public final class ProjectDependencyGraph {
     public record Edge(String source, String target, String relation) {}
     public record Graph(String folder, List<String> nodes, List<Edge> edges,
-                        int inspected, boolean truncated) {}
+                        int inspected, boolean truncated, String fingerprint) {}
     private record ImportRef(String target, boolean dotted, String kind) {}
     private static final Set<String> SKIP = Set.of(".git", "node_modules",
             "target", "build", "dist", ".idea", ".venv", "__pycache__");
@@ -67,6 +71,13 @@ public final class ProjectDependencyGraph {
             if (m.find()) goModule = m.group(1);
         } catch (IOException ignored) {}
         Set<Edge> edges = new LinkedHashSet<>();
+        MessageDigest signature;
+        try {
+            signature = MessageDigest.getInstance("SHA-256");
+        } catch (NoSuchAlgorithmException impossible) {
+            throw new IllegalStateException(impossible);
+        }
+        signature.update(goModule.getBytes(StandardCharsets.UTF_8));
         for (Path file : source) {
             if (cancelled.getAsBoolean() || edges.size() >= 1200) {
                 limit[0] = true; break;
@@ -76,6 +87,10 @@ public final class ProjectDependencyGraph {
             catch (IOException | SecurityException error) { continue; }
             if (!data.readable() || data.content().length() > 500_000) continue;
             String from = relative(root, file);
+            signature.update(from.getBytes(StandardCharsets.UTF_8));
+            signature.update((byte) 0);
+            signature.update(data.content().getBytes(StandardCharsets.UTF_8));
+            signature.update((byte) 0);
             for (ImportRef imp : parse(file, data.content())) {
                 String target = resolve(root, file, known, imp, goModule);
                 if (target != null && !target.equals(from))
@@ -108,7 +123,8 @@ public final class ProjectDependencyGraph {
                 .limit(400).toList();
         boolean partial = limit[0] || allNodes.size() > 180 || edges.size() > 400;
         List<String> nodes = display.stream().sorted().toList();
-        return new Graph(relative(root, folder), nodes, visible, source.size(), partial);
+        return new Graph(relative(root, folder), nodes, visible, source.size(), partial,
+                HexFormat.of().formatHex(signature.digest()));
     }
 
     private static String ext(Path path) {
