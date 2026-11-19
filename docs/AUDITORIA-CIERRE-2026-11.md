@@ -165,3 +165,10 @@ se ejecuta como verificación independiente.
 El estado automático **no sustituye** las comprobaciones P0 de
 `QA-WINDOWS.md`. Mantener el PR #1 como borrador y la rama `main`
 sin alterar hasta registrar esa aceptación.
+
+## Cobertura adicional — cancelación real de comandos
+
+Se incorpora una prueba de integración del ejecutor externo que espera
+a que el comando haya empezado, verifica que se rechaza la concurrencia
+y solicita su detención antes del tiempo normal de salida. No reemplaza
+la aceptación manual de procesos hijos y comandos reales de Windows.

@@ -460,3 +460,13 @@ Consulta también [Auditoría de cierre](AUDITORIA-CIERRE-2026-11.md).
   debe contarse como referencia divergente, nunca leerse como original.
 - Mantener rutas normales y proyectos con la raíz seleccionada mediante
   un enlace interno funcionando como antes.
+
+## COMMAND-ACTIVE-STOP — proceso externo en ejecución
+
+- Lanzar un comando de larga duración con una salida inicial.
+- Mientras permanece activo, pulsar «Detener» y verificar que la consola
+  recupera el botón Ejecutar y el proceso deja de ejecutarse.
+- Intentar iniciar un segundo comando durante la primera ejecución: solo
+  debe ejecutarse uno.
+- Al cambiar de proyecto durante el comando, comprobar que no se agregan
+  líneas de salida antiguas a la nueva consola.
