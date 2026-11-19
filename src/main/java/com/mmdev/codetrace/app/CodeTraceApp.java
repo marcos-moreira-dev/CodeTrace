@@ -549,6 +549,11 @@ public final class CodeTraceApp extends Application {
         });
         refreshMetrics();
         stage.show();
+        // The installer supplies the selected .ctrace path on double-click.
+        // Defer until the stage and all asynchronous loaders are initialized.
+        javafx.application.Platform.runLater(() ->
+                SessionLaunchFile.fromArguments(getParameters().getRaw())
+                        .ifPresent(this::openSession));
     }
 
     private void openCommandPreferences() {
@@ -1559,7 +1564,13 @@ public final class CodeTraceApp extends Application {
         java.io.File selected = chooser.showOpenDialog(stage);
         if (selected == null) return;
 
-        Path archive = selected.toPath().toAbsolutePath().normalize();
+        openSession(selected.toPath());
+    }
+
+    private void openSession(Path selectedArchive) {
+        // Shared by the File menu and the Windows .ctrace association.
+        sessionLoader.cancel();
+        Path archive = selectedArchive.toAbsolutePath().normalize();
         long request = referenceRequest;
         setStatus("Leyendo sesión " + archive.getFileName() + "...");
         sessionLoader.submit(() -> SessionArchive.load(archive), state -> {

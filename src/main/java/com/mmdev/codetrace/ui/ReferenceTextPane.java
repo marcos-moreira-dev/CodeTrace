@@ -48,6 +48,8 @@ public final class ReferenceTextPane extends BorderPane {
         getStyleClass().add("reference-text-pane");
         lines.getStyleClass().add("reference-colored-lines");
         lines.setItems(FXCollections.observableArrayList(segment(original, filename)));
+        // Consistent full-height rows: no virtualized ListCell inset gaps.
+        lines.setFixedCellSize(CodeLineGutter.rowHeight(fontSize));
         lines.setCellFactory(view -> new ListCell<>() {
             @Override protected void updateItem(SourceLine line, boolean empty) {
                 super.updateItem(line, empty);
@@ -86,6 +88,7 @@ public final class ReferenceTextPane extends BorderPane {
                 row.setAlignment(Pos.CENTER_LEFT);
                 row.setMinHeight(height);
                 row.setPrefHeight(height);
+                row.setMaxHeight(height);
                 row.setMinWidth(Region.USE_PREF_SIZE);
                 row.getStyleClass().add("reference-text-row");
                 setGraphic(row);
@@ -112,6 +115,7 @@ public final class ReferenceTextPane extends BorderPane {
         if (fontFamily.equals(nextFamily) && fontSize == nextSize) return;
         fontFamily = nextFamily;
         fontSize = nextSize;
+        lines.setFixedCellSize(CodeLineGutter.rowHeight(fontSize));
         lines.refresh();
     }
 

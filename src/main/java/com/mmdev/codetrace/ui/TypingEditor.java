@@ -571,6 +571,9 @@ public final class TypingEditor extends BorderPane {
         HBox visualLine = new HBox(10,
                 CodeLineGutter.number(line.number() + 1, sourceLines.size(), fontSize), row);
         visualLine.setAlignment(Pos.CENTER_LEFT);
+        visualLine.setMinHeight(cellHeight());
+        visualLine.setPrefHeight(cellHeight());
+        visualLine.setMaxHeight(cellHeight());
         visualLine.getStyleClass().add("code-line-row");
         return visualLine;
     }

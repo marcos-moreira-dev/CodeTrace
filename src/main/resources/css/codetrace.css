@@ -1320,3 +1320,27 @@
     -fx-background-color: #f6f8fa;
     -fx-border-color: transparent;
 }
+
+/* One continuous background for all text/code rows, including the gutter.
+   JavaFX's default ListCell background insets used to create white hairlines. */
+.typing-lines .list-cell,
+.reference-colored-lines .list-cell,
+.typing-lines .list-cell:filled:selected,
+.reference-colored-lines .list-cell:filled:selected,
+.typing-lines .list-cell:empty,
+.reference-colored-lines .list-cell:empty {
+    -fx-background-insets: 0;
+    -fx-border-insets: 0;
+    -fx-border-width: 0;
+    -fx-padding: 0;
+}
+.typing-line-glyphs, .reference-text-row, .code-line-row {
+    -fx-background-insets: 0;
+    -fx-border-width: 0;
+    -fx-padding: 0;
+}
+.code-line-number {
+    -fx-background-insets: 0;
+    -fx-border-insets: 0;
+    -fx-padding: 0 9px 0 0;
+}

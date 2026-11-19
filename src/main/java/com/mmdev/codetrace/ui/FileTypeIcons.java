@@ -21,6 +21,7 @@ public final class FileTypeIcons {
         }
         String name = path.getFileName() == null ? "" :
                 path.getFileName().toString().toLowerCase(Locale.ROOT);
+        if (name.endsWith(".ctrace")) return sessionIcon();
         if (name.endsWith(".java")) return font("di-java", "#C75B38");
         if (name.endsWith(".kt") || name.endsWith(".kts"))
             return badge("Kt", "#8055B5");
@@ -76,6 +77,25 @@ public final class FileTypeIcons {
                 || name.endsWith(".yml") || name.endsWith(".properties"))
             return font("fth-settings", "#66798B");
         return font("fth-file-text", "#7A8B98");
+    }
+
+    private static Node sessionIcon() {
+        java.io.InputStream input = FileTypeIcons.class
+                .getResourceAsStream("/icons/codetrace-session.png");
+        if (input != null) {
+            try (input) {
+                javafx.scene.image.Image image = new javafx.scene.image.Image(input);
+                javafx.scene.image.ImageView view = new javafx.scene.image.ImageView(image);
+                view.setFitWidth(18);
+                view.setFitHeight(18);
+                view.setPreserveRatio(true);
+                view.setSmooth(true);
+                return view;
+            } catch (java.io.IOException error) {
+                // Fonts and generic symbols remain a graceful fallback.
+            }
+        }
+        return font("fth-save", "#42657d");
     }
 
     private static Node font(String literal, String color) {
