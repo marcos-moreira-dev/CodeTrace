@@ -1,13 +1,13 @@
 # CodeTrace | Referencia: Python 3.12
-# Comprobar en PowerShell: python -m py_compile ".\04-patrones-diseno\decorator\notificaciones\decorator_objetos.py"
-# Ejecutar: python -B ".\04-patrones-diseno\decorator\notificaciones\decorator_objetos.py"
+# Comprobar en COPIA: python -c "import ast,pathlib; ast.parse(pathlib.Path('decorator_objetos.py').read_text(encoding='utf-8'))"
+# Ejecutar desde la carpeta de unidad: python -B main.py
+# Con -B no se generan archivos __pycache__ en el proyecto.
 
-"""Cliente Decorator mediante composición de objetos en Python.
+"""Implementación del patrón Decorator sobre objetos.
 
-No confundir el patrón Decorator de GoF con la sintaxis @decorador
-para funciones: pueden relacionarse, pero no son la misma construcción.
-Una notificación puede envolverse para añadir etiquetas y auditoría.
-Las capas poseen el mismo método enviar y se llaman por composición.
+GoF Decorator no es idéntico a la sintaxis @decorador aplicada a
+funciones. Aquí se preserva el contrato enviar mediante Protocol
+y un objeto envolvente que delega.
 """
 from typing import Protocol
 
@@ -28,12 +28,3 @@ class ConPrefijo:
 
     def enviar(self, mensaje: str) -> None:
         self._interno.enviar(self._prefijo + mensaje)
-
-
-def main() -> None:
-    notificador: Notificador = ConPrefijo(Consola(), "[INFO] ")
-    notificador.enviar("Proceso terminado")
-
-
-if __name__ == "__main__":
-    main()
