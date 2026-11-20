@@ -4,6 +4,23 @@
 
 CodeTrace es una herramienta de escritorio para practicar la creación de estructuras y la escritura de código sobre una referencia existente. No es un curso, un asistente de IA ni un IDE completo.
 
+## Estado de publicación
+
+CodeTrace está en **validación de la versión 0.3**, no en una versión
+estable distribuida. La rama experimental
+`refactor/virtual-explorer-20261119` contiene el explorador virtualizado:
+expansión lógica fuera del hilo JavaFX y filas visibles mediante `ListView`,
+con mejoras confirmadas en pruebas reales de proyectos grandes.
+No se ha integrado todavía en `main`.
+
+La ampliación de la biblioteca de prácticas por lenguaje es una fase
+educativa posterior. Los requisitos pendientes de aceptación funcional,
+legal, accesibilidad y Windows están en
+[Condiciones de cierre v0.3](docs/CIERRE-V0.3.md).
+El hecho de que el código sea público en GitHub **no equivale** a tener
+una licencia de software libre: el archivo LICENSE está pendiente
+de la decisión del autor.
+
 ## Ejecutar en Windows 11
 
 Requisitos: **Eclipse Temurin JDK 21** y **Apache Maven** (mvn.cmd en PATH).
@@ -86,7 +103,7 @@ Al abrir imágenes, audio y vídeo, CodeTrace muestra una pestaña **solo de lec
 
 Para audio/vídeo, primero se intenta JavaFX. En formatos como MKV, WebM, AVI, FLAC y OGG, o si JavaFX no reconoce los códecs, hay una conversión **temporal y local** con FFmpeg. La conversión no se guarda dentro del proyecto, se ejecuta fuera del hilo gráfico y se cancela al cerrar la pestaña. FFmpeg puede proporcionarse mediante la propiedad Java `codetrace.ffmpeg`, la carpeta de herramientas de la aplicación, la carpeta local del usuario o `PATH`. **No se distribuye el binario de FFmpeg por defecto**: su redistribución exige cumplir la licencia del build elegido.
 
-En Windows, `scripts\package-windows.ps1` prepara un ZIP portable que incorpora el runtime Java con jpackage; `-Installer` solicita un instalador EXE si existe WiX. El parámetro `-IncludeFfmpeg` integra una copia facilitada por el distribuidor, junto con sus avisos de licencia, después de revisar obligaciones de distribución. El empaquetado automatizado y los códecs todavía requieren aceptación en Windows real. La matriz de pruebas está en [Aceptación de Windows](docs/QA-WINDOWS.md).
+En Windows, `scripts\package-windows.ps1` prepara un ZIP portable que incorpora el runtime Java con jpackage y un archivo `.zip.sha256` para verificar su integridad; `-Installer` solicita un instalador EXE si existe WiX. El parámetro `-IncludeFfmpeg` integra una copia facilitada por el distribuidor, junto con sus avisos de licencia, después de revisar obligaciones de distribución. El empaquetado automatizado y los códecs todavía requieren aceptación en Windows real. La matriz de pruebas está en [Aceptación de Windows](docs/QA-WINDOWS.md).
 
 ## Implementado (versión de desarrollo 0.3)
 
