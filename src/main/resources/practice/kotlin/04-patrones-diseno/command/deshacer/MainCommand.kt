@@ -23,6 +23,6 @@ fun main(){
 
 /*
  * Salida esperada de consola:
- *   Se imprime el valor o coleccion calculado por el cliente.
- * Verificacion: termina sin excepciones inesperadas.
+ *   Hola
+ * Undo revierte solamente el comando más reciente (« mundo»).
  */

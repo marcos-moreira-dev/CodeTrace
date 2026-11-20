@@ -33,6 +33,6 @@ int main(){
 
 /*
  * Salida esperada de consola:
- *   Se muestran los datos o el resultado calculado del ejemplo.
- * Verificacion: terminar sin excepciones inesperadas.
+ *   Hola
+ * unique_ptr libera el comando deshecho; el Editor conserva el estado anterior.
  */

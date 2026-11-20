@@ -23,6 +23,6 @@ console.log(editor.texto);
 
 /*
  * Salida esperada de consola:
- *   Se imprime el valor o coleccion calculado por el cliente.
- * Verificacion: termina sin excepciones inesperadas.
+ *   Hola
+ * La pila de comandos restablece el texto anterior sin cambiar el receptor.
  */

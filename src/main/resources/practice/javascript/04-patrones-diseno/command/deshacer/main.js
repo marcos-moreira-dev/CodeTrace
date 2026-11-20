@@ -25,6 +25,6 @@ if(require.main===module)main();
 
 /*
  * Salida esperada de consola:
- *   Se imprime el valor o coleccion calculado por el cliente.
- * Verificacion: termina sin excepciones inesperadas.
+ *   Hola
+ * El invocador retira la última acción; el receptor vuelve a «Hola».
  */

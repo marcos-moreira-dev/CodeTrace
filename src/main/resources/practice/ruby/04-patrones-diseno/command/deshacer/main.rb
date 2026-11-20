@@ -25,5 +25,5 @@ end
 main if __FILE__ == $PROGRAM_NAME
 
 # Salida esperada de consola:
-#   Se imprime el valor o coleccion calculado por el cliente.
-# Verificacion: termina sin excepciones inesperadas.
+#   Hola
+# El último comando se deshace en orden LIFO.
