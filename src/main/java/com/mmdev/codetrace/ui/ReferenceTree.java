@@ -364,7 +364,9 @@ public final class ReferenceTree extends TreeView<Path> {
             onStatus.accept("La carpeta no está visible en el explorador.");
             return;
         }
-        expander.expand(clicked);
+        boolean smallReference = index.directoryCount() <= 40
+                && index.fileCount() <= 1_000;
+        expander.expand(clicked, smallReference);
     }
 
     /** Expand the entire reference; queue the request if indexing is pending. */
