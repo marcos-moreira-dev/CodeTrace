@@ -47,6 +47,11 @@ public final class ReferenceTreeIndex {
         return recursiveCounts.getOrDefault(directory, 0L);
     }
 
+    /** Constant-time index sizes used to choose eager versus batched UI expansion. */
+    public int directoryCount() { return directories.size(); }
+
+    public int fileCount() { return files.size(); }
+
     public boolean hasDirectory(String relative) {
         return directories.contains(relative);
     }
