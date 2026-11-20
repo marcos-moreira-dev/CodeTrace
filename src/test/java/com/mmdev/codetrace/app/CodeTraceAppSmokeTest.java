@@ -864,29 +864,48 @@ class CodeTraceAppSmokeTest {
                 } else {
                     var virtualRows = (ListView<?>) projectedTree.get().projectedExplorer();
                     var ended = new java.util.concurrent.atomic.AtomicBoolean();
-                    // A JavaFX test must not block its own event thread while
-                    // waiting for Task.setOnSucceeded to publish the rows.
-                    var timer = new javafx.animation.Timeline();
-                    timer.getKeyFrames().add(new javafx.animation.KeyFrame(
-                            javafx.util.Duration.millis(60), event -> {
-                        if (!virtualRows.isVisible() || virtualRows.getItems().size() < 2)
-                            return;
-                        if (!ended.compareAndSet(false, true)) return;
-                        timer.stop();
-                        if (projectedTree.get().getRoot() != null)
-                            failure.set(new AssertionError(
-                                    "Mass expansion retained a hidden TreeItem hierarchy"));
-                        finishUi.run();
-                    }));
-                    timer.setCycleCount(100);
-                    timer.setOnFinished(event -> {
-                        if (ended.compareAndSet(false, true)) {
-                            failure.set(new AssertionError(
-                                    "Virtual explorer did not publish rows after Expandir todo"));
-                            finishUi.run();
+                    // A daemon observer polls the event queue; the JavaFX
+                    // application thread must never wait for its own Task.
+                    Thread observer = new Thread(() -> {
+                        try {
+                            for (int attempt = 0; attempt < 110; attempt++) {
+                                CountDownLatch checked = new CountDownLatch(1);
+                                Platform.runLater(() -> {
+                                    try {
+                                        if (virtualRows.isVisible()
+                                                && virtualRows.getItems().size() >= 2
+                                                && ended.compareAndSet(false, true)) {
+                                            if (projectedTree.get().getRoot() != null)
+                                                failure.set(new AssertionError(
+                                                        "Virtual publication retained old TreeItems"));
+                                            finishUi.run();
+                                        }
+                                    } catch (Throwable unexpected) {
+                                        failure.compareAndSet(null, unexpected);
+                                        if (ended.compareAndSet(false, true))
+                                            finishUi.run();
+                                    } finally {
+                                        checked.countDown();
+                                    }
+                                });
+                                if (!checked.await(500, TimeUnit.MILLISECONDS)) break;
+                                if (ended.get()) return;
+                                Thread.sleep(60);
+                            }
+                            failure.compareAndSet(null, new AssertionError(
+                                    "Async virtual explorer never published rows to JavaFX"));
+                        } catch (InterruptedException interrupted) {
+                            Thread.currentThread().interrupt();
+                            failure.compareAndSet(null, interrupted);
+                        } finally {
+                            if (ended.compareAndSet(false, true)) {
+                                Platform.exit();
+                                finished.countDown();
+                            }
                         }
-                    });
-                    timer.play();
+                    }, "codetrace-ui-smoke-observer");
+                    observer.setDaemon(true);
+                    observer.start();
                 }
             }
         });
