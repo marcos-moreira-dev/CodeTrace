@@ -36,6 +36,8 @@ public final class DependencyGraphPane extends BorderPane {
     private final Canvas canvas = new Canvas();
     private final GraphCamera camera = new GraphCamera();
     private final Map<String, GraphLayout.Point> layout = new LinkedHashMap<>();
+    /** Recompute edge curves on layout changes, not zoom, pan or selection. */
+    private Map<ProjectDependencyGraph.Edge, GraphEdgeRouting.Route> edgeRoutes;
     private final ProjectDependencyGraph.Graph model;
     private final Consumer<GraphLayout> onLayoutChanged;
     private final Consumer<String> onNodeSelected;
@@ -165,6 +167,7 @@ public final class DependencyGraphPane extends BorderPane {
                 double y = clamp(initialPosition.y() + dy / camera.scale(),
                         -MAX_NODE_COORDINATE, MAX_NODE_COORDINATE);
                 layout.put(pressed, new GraphLayout.Point(x, y));
+                edgeRoutes = null;
                 redraw();
                 event.consume();
             } else if (panning) {
@@ -357,6 +360,7 @@ public final class DependencyGraphPane extends BorderPane {
     public void resetLayout() {
         layout.clear();
         layout.putAll(GraphLayoutEngine.arrange(model, layoutMode));
+        edgeRoutes = null;
         fitToViewport();
         notifyLayoutChanged();
     }
@@ -393,6 +397,7 @@ public final class DependencyGraphPane extends BorderPane {
                 w / 2 - camera.centerX() * zoom,
                 h / 2 - camera.centerY() * zoom);
         g.setLineWidth(1.15);
+        if (edgeRoutes == null) edgeRoutes = GraphEdgeRouting.arrange(model.edges(), layout);
         for (var edge : model.edges()) {
             GraphLayout.Point a = layout.get(edge.source());
             GraphLayout.Point b = layout.get(edge.target());
@@ -401,8 +406,22 @@ public final class DependencyGraphPane extends BorderPane {
                     || edge.target().equals(selected));
             g.setStroke(Color.web(related ? "#168a97" : "#c1d2dd"));
             g.setLineWidth(related ? 2.05 : 1.1);
-            g.strokeLine(a.x(), a.y(), b.x(), b.y());
-            double angle = Math.atan2(b.y() - a.y(), b.x() - a.x());
+            GraphEdgeRouting.Route route = edgeRoutes.get(edge);
+            double tangentX = b.x() - a.x();
+            double tangentY = b.y() - a.y();
+            if (route != null && route.curved()) {
+                // Deterministic subtle Bezier lanes separate overlapping
+                // arrows, without noise in the user's saved node positions.
+                g.beginPath();
+                g.moveTo(a.x(), a.y());
+                g.quadraticCurveTo(route.controlX(), route.controlY(), b.x(), b.y());
+                g.stroke();
+                tangentX = b.x() - route.controlX();
+                tangentY = b.y() - route.controlY();
+            } else {
+                g.strokeLine(a.x(), a.y(), b.x(), b.y());
+            }
+            double angle = Math.atan2(tangentY, tangentX);
             double tipX = b.x() - NODE_RADIUS * Math.cos(angle);
             double tipY = b.y() - NODE_RADIUS * Math.sin(angle);
             g.strokeLine(tipX, tipY,
