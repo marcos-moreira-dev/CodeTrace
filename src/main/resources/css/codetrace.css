@@ -18,7 +18,7 @@
 }
 .button:hover { -fx-background-color: #e5eff6; -fx-border-color: #4a6076; }
 .button:disabled { -fx-opacity: 0.48; }
-.sidebar { -fx-background-color: #eef1f3; }
+.sidebar { -fx-background-color: #dfe7ec; }
 .sidebar-title {
     -fx-font-weight: bold;
     -fx-text-fill: #34495a;
@@ -38,7 +38,10 @@
 .typing-editor, .typing-scroll { -fx-background-color: white; }
 .typing-scroll > .viewport { -fx-background-color: white; }
 .typing-surface { -fx-background-color: white; }
-.statusbar { -fx-border-color: #b8c5cd transparent transparent transparent; }
+.statusbar {
+    -fx-background-color: linear-gradient(to bottom, #e1e9ee 0%, #d1dce4 100%);
+    -fx-border-color: #a8bac7 transparent transparent transparent;
+}
 .statusbar .label { -fx-text-fill: #455c6f; -fx-font-size: 11px; }
 .progress-info { -fx-text-fill: #304b60; }
 .typing-progress { -fx-pref-height: 9px; -fx-max-width: 160px; }
@@ -78,7 +81,7 @@
     -fx-border-color: transparent;
 }
 .product-dialog .button-bar {
-    -fx-background-color: #e7edf1;
+    -fx-background-color: linear-gradient(to bottom, #e2eaf0 0%, #cfdae3 100%);
     -fx-padding: 10px 12px;
 }
 .product-dialog .button-bar .button { -fx-min-width: 88px; }
@@ -185,30 +188,30 @@
     -fx-padding: 0 0 0 0;
 }
 .tab-pane .tab-header-background {
-    -fx-background-color: #e8edf1;
-    -fx-border-color: transparent transparent #b6c5cf transparent;
+    -fx-background-color: linear-gradient(to bottom, #dfe8ee 0%, #cfdae3 100%);
+    -fx-border-color: transparent transparent #9db2c2 transparent;
 }
 .tab-pane .tab {
     -fx-background-radius: 0;
     -fx-border-radius: 0;
-    -fx-background-color: #e3eaf0;
-    -fx-border-color: transparent #c4ced7 transparent transparent;
+    -fx-background-color: linear-gradient(to bottom, #e0e8ee 0%, #d1dce5 100%);
+    -fx-border-color: transparent #b2c1cc transparent transparent;
     -fx-padding: 6px 12px;
     -fx-focus-color: transparent;
     -fx-faint-focus-color: transparent;
 }
-.tab-pane .tab:hover { -fx-background-color: #d4e2eb; }
+.tab-pane .tab:hover { -fx-background-color: #c4d5e1; }
 .tab-pane .tab:selected {
     -fx-background-color: #ffffff;
-    -fx-border-color: #4a6076 #c4ced7 transparent transparent;
+    -fx-border-color: #496d85 #b2c1cc transparent transparent;
     -fx-border-width: 2px 1px 0 0;
 }
 .tab-pane .tab .tab-label {
-    -fx-text-fill: #4b6274;
+    -fx-text-fill: #344e62;
     -fx-font-size: 12px;
 }
 .tab-pane .tab:selected .tab-label {
-    -fx-text-fill: #243e54;
+    -fx-text-fill: #203c52;
     -fx-font-weight: bold;
 }
 .tab-pane .tab .tab-close-button {
@@ -380,45 +383,45 @@
     -fx-background-color: #f5f6f7;
 }
 .prefs-header {
-    -fx-background-color: #e7edf1;
-    -fx-border-color: transparent transparent #b8c6d0 transparent;
+    -fx-background-color: linear-gradient(to bottom, #586f82 0%, #41586c 100%);
+    -fx-border-color: transparent transparent #334c60 transparent;
     -fx-padding: 17px 23px;
 }
 .prefs-window-heading {
     -fx-font-size: 19px;
     -fx-font-weight: bold;
-    -fx-text-fill: #30485e;
+    -fx-text-fill: #ffffff;
 }
 .prefs-navigation {
-    -fx-background-color: #edf1f4;
-    -fx-control-inner-background: #edf1f4;
-    -fx-border-color: transparent #bac7d0 transparent transparent;
+    -fx-background-color: #d8e3eb;
+    -fx-control-inner-background: #d8e3eb;
+    -fx-border-color: transparent #a4b7c6 transparent transparent;
     -fx-border-width: 0 1px 0 0;
     -fx-background-insets: 0;
     -fx-padding: 8px 0;
 }
 .prefs-navigation .list-cell {
-    -fx-background-color: #edf1f4;
-    -fx-text-fill: #425a6d;
+    -fx-background-color: #d8e3eb;
+    -fx-text-fill: #304c61;
     -fx-padding: 12px 15px;
     -fx-font-size: 13px;
     -fx-graphic-text-gap: 11px;
     -fx-border-color: transparent;
 }
 .prefs-navigation .list-cell:filled:hover {
-    -fx-background-color: #e0eaf0;
+    -fx-background-color: #c5d7e3;
 }
 .prefs-navigation .list-cell:filled:selected,
 .prefs-navigation:focused .list-cell:filled:selected {
-    -fx-background-color: #d2e1eb;
-    -fx-text-fill: #263e51;
+    -fx-background-color: #b7cddd;
+    -fx-text-fill: #203d53;
     -fx-font-weight: bold;
     -fx-border-color: transparent transparent transparent #4a6076;
     -fx-border-width: 0 0 0 3px;
     -fx-padding: 12px 15px 12px 12px;
 }
 .prefs-navigation .list-cell:empty {
-    -fx-background-color: #edf1f4;
+    -fx-background-color: #d8e3eb;
 }
 .prefs-content {
     -fx-background-color: #ffffff;
@@ -457,8 +460,8 @@
 }
 .prefs-actions {
     -fx-padding: 12px 18px;
-    -fx-background-color: #e7edf1;
-    -fx-border-color: #b8c6d0 transparent transparent transparent;
+    -fx-background-color: linear-gradient(to bottom, #e2eaf0 0%, #d0dde6 100%);
+    -fx-border-color: #a9bdcb transparent transparent transparent;
 }
 .prefs-actions .button {
     -fx-min-width: 88px;
@@ -491,8 +494,8 @@
 
 /* Explorer header: clear structure actions and compact virtual status. */
 .project-tree-header {
-    -fx-background-color: #edf1f4;
-    -fx-border-color: transparent transparent #c3cdd5 transparent;
+    -fx-background-color: linear-gradient(to bottom, #e1e8ee 0%, #d0dce5 100%);
+    -fx-border-color: transparent transparent #aabcc9 transparent;
     -fx-padding: 4px 7px 4px 6px;
     -fx-spacing: 4px;
 }
@@ -646,13 +649,13 @@
     -fx-border-width: 1px 0 0 0;
 }
 .command-console-pane .console-header {
-    -fx-background-color: #e6edf2;
+    -fx-background-color: linear-gradient(to bottom, #e1e9ef 0%, #cbd8e2 100%);
     -fx-padding: 6px 10px;
     -fx-alignment: center-left;
 }
 .command-console-pane .console-header .label {
     -fx-font-weight: bold;
-    -fx-text-fill: #385369;
+    -fx-text-fill: #29485f;
 }
 .command-console-pane .console-header .button {
     -fx-min-height: 27px;
@@ -1067,14 +1070,14 @@
     -fx-text-fill: #ffffff;
 }
 .tool-bar {
-    -fx-background-color: #f0f0ec;
-    -fx-border-color: transparent transparent #c4ccc9 transparent;
+    -fx-background-color: linear-gradient(to bottom, #e7edf1 0%, #d2dde5 100%);
+    -fx-border-color: transparent transparent #a8bac7 transparent;
 }
 
 
 /* JavaFX tab overflow: native round notched dropdown replaced by square UI. */
 .tab-pane > .tab-header-area > .control-buttons-tab {
-    -fx-background-color: #e6edf2;
+    -fx-background-color: #cfdae3;
     -fx-padding: 0 6 0 4;
 }
 .tab-pane > .tab-header-area > .control-buttons-tab > .container {
@@ -1313,13 +1316,30 @@
 .consultation-tree-hint { -fx-text-fill: #637889; -fx-font-size: 10px; }
 .about-license-note { -fx-font-size: 11px; -fx-text-fill: #657989; }
 .accordion > .titled-pane > .title {
-    -fx-background-color: #e5edf2;
+    -fx-background-color: linear-gradient(to bottom, #e0e9ef 0%, #ccdae5 100%);
     -fx-border-color: transparent transparent #c5d0d8 transparent;
     -fx-background-radius: 0;
 }
 .accordion > .titled-pane > .content {
     -fx-background-color: #f6f8fa;
     -fx-border-color: transparent;
+}
+
+.command-console-pane .console-header {
+    -fx-border-color: transparent transparent #aabdc9 transparent;
+}
+.product-dialog .button-bar {
+    -fx-border-color: #a9bac8 transparent transparent transparent;
+}
+/* Reserved accent for About confirmation; content panels remain light. */
+.about-dialog .button-bar .button {
+    -fx-background-color: #4b6478;
+    -fx-border-color: #38546b;
+    -fx-text-fill: #ffffff;
+}
+.about-dialog .button-bar .button:hover {
+    -fx-background-color: #35536c;
+    -fx-border-color: #29465d;
 }
 
 /* One continuous background for all text/code rows, including the gutter.
