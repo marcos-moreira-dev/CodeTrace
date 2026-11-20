@@ -48,6 +48,9 @@ public final class ReferenceTreeIndex {
     }
 
     /** Constant-time index sizes used to choose eager versus batched UI expansion. */
+    /** Immutable directory paths for planning a logical expansion off the FX thread. */
+    public Set<String> directoryPaths() { return directories; }
+
     public int directoryCount() { return directories.size(); }
 
     public int fileCount() { return files.size(); }
