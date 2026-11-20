@@ -234,6 +234,38 @@ class SessionArchiveTest {
 
 
     @Test
+    void interruptedSaveDoesNotReplaceLastGoodSessionOrLeaveTemporaryFile() throws Exception {
+        Path destination = directory.resolve("recoverable.ctrace");
+        var original = new SessionArchive.State(
+                directory, new VirtualWorkspace(), Map.of(), Map.of());
+        SessionArchive.save(destination, original);
+        byte[] before = Files.readAllBytes(destination);
+        var updatedWorkspace = new VirtualWorkspace();
+        updatedWorkspace.createDirectory("src");
+        var updated = new SessionArchive.State(
+                directory, updatedWorkspace, Map.of(), Map.of());
+        Thread.currentThread().interrupt();
+        try {
+            assertThrows(java.util.concurrent.CancellationException.class,
+                    () -> SessionArchive.save(destination, updated));
+        } finally {
+            Thread.interrupted(); // never leak an interrupted JUnit thread
+        }
+        assertArrayEquals(before, Files.readAllBytes(destination),
+                "A cancelled write must not replace a valid .ctrace archive");
+        try (var temporaryFiles = Files.list(directory)) {
+            assertTrue(temporaryFiles.noneMatch(path ->
+                    path.getFileName().toString().startsWith(".codetrace-")),
+                    "An aborted save must not strand temporary session files");
+        }
+        assertTrue(SessionArchive.load(destination).workspace().exists(""));
+        assertFalse(SessionArchive.load(destination).workspace().exists("src"));
+        SessionArchive.save(destination, updated);
+        assertTrue(SessionArchive.load(destination).workspace().exists("src"),
+                "A later valid save must still succeed after cancellation");
+    }
+
+    @Test
     void interruptedReadDoesNotReturnPartialStateOrAlterSavedSession() throws Exception {
         Path archive = directory.resolve("interrupt.ctrace");
         SessionArchive.save(archive, new SessionArchive.State(
