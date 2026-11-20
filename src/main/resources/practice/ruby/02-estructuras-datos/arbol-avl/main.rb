@@ -17,3 +17,8 @@ def main
   puts "Altura AVL: #{arbol.validar}"
 end
 main if __FILE__ == $PROGRAM_NAME
+
+# Salida esperada de consola:
+#   Altura AVL: #{arbol.validar}
+#   (los valores variables completan los fragmentos anteriores)
+# Verificacion: termina sin excepciones inesperadas.
