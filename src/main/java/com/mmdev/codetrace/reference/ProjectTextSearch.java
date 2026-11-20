@@ -22,7 +22,8 @@ import java.util.regex.PatternSyntaxException;
 /**
  * Stateless read-only text search. No persistent index, file modifications,
  * progress changes or new virtual entries.
- */
+  * <p><strong>Engineering rationale.</strong> Project search is a bounded read-only service: cap results and line lengths, honor cancellation, and protect regex matching from pathological backtracking. Every result should retain an explicit source location, while the UI decides when and how to navigate there without counting the search as typing.</p>
+*/
 public final class ProjectTextSearch {
     private static final int MAX_PATTERN = 256;
     private static final int MAX_HITS = 1500;

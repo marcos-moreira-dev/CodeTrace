@@ -30,7 +30,8 @@ import java.util.concurrent.CancellationException;
  * Versioned binary .ctrace sessions, not JSON or serialized Java objects.
  * All writes use an adjacent temporary file followed by an atomic replacement
  * where the filesystem supports it.
- */
+  * <p><strong>Engineering rationale.</strong> A .ctrace file is a bounded, versioned data format with compatibility requirements, not an arbitrary Java object graph. Decode into validated domain values before switching the active project; write to a neighboring temporary file and replace only after successful completion, preserving the previous good session on interruption.</p>
+*/
 public final class SessionArchive {
     private static final int MAGIC = 0x43545243; // CTRC
     private static final int VERSION = 4;
