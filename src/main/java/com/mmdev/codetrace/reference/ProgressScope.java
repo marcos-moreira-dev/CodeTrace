@@ -7,7 +7,8 @@ import java.util.prefs.Preferences;
 /**
  * Select which text categories contribute to project-wide progress.
  * Visibility and the ability to practice files are not affected.
- */
+  * <p><strong>Engineering rationale.</strong> The selected content categories are an immutable evaluation policy rather than a filter that mutates source files. Making them first-class values lets both folder summaries and individual completion tests apply consistent rules.</p>
+*/
 public record ProgressScope(boolean source, boolean configuration,
                             boolean documentation, boolean otherText) {
     public enum Category { SOURCE, CONFIGURATION, DOCUMENTATION, OTHER_TEXT }

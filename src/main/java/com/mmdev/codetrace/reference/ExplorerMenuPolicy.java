@@ -8,7 +8,8 @@ import java.util.Objects;
  * Domain eligibility for the explorer's contextual actions. JavaFX owns the
  * actual menu controls; this policy only answers what the reference and
  * virtual workspace permit, without modifying either.
- */
+  * <p><strong>Engineering rationale.</strong> The available actions depend on both reference existence and virtual creation state. Compute permissions as a pure policy before constructing JavaFX MenuItems so the same operations can be tested without opening a window and no impossible action is advertised.</p>
+*/
 public final class ExplorerMenuPolicy {
     private ExplorerMenuPolicy() { }
 

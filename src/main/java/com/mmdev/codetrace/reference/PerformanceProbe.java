@@ -11,7 +11,8 @@ import java.util.logging.Logger;
  * no timestamps or formatted log messages are produced. Log only counts,
  * never absolute paths, source code or filenames. For CPU and file-I/O detail
  * use Java Flight Recorder instead of interpreting timings as benchmarks.</p>
- */
+  * <p><strong>Engineering rationale.</strong> Profiling is optional observability for expensive scans, expansions and JavaFX frame gaps. Keeping instrumentation behind a disabled-by-default boundary avoids mixing log generation with business decisions or making benchmark counters necessary for normal operation.</p>
+*/
 public final class PerformanceProbe {
     private static final boolean ENABLED = Boolean.getBoolean("codetrace.profile");
     private static final Logger LOG = Logger.getLogger(PerformanceProbe.class.getName());

@@ -5,7 +5,8 @@ import com.mmdev.codetrace.workspace.VirtualWorkspace;
 import java.util.Map;
 import java.util.Objects;
 
-/** Snapshot of the counts driving the progress bar, independent of JavaFX. */
+/** Snapshot of the counts driving the progress bar, independent of JavaFX.  * <p><strong>Engineering rationale.</strong> A progress percentage is a derived ratio of expected and correctly resolved typing units over an explicit scope. Computing it independently of JavaFX makes empty projects, changed references, exclusions and partial typing testable as mathematical cases.</p>
+*/
 public record ProgressSummary(long totalUnits, long correctUnits, long includedFiles) {
     public ProgressSummary {
         if (totalUnits < 0 || correctUnits < 0 || includedFiles < 0

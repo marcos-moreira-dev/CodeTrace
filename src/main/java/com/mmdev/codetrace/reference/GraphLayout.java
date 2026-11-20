@@ -6,7 +6,8 @@ import java.util.Objects;
 /**
  * Positions of graph nodes saved with a .ctrace session.
  * The layout is reused ONLY while the reference fingerprint is unchanged.
- */
+  * <p><strong>Engineering rationale.</strong> A saved layout contains positions in graph/world coordinates for a specific graph fingerprint and mode. It is session metadata, not a mutation of source imports or a snapshot of the current zoom/pan camera.</p>
+*/
 public record GraphLayout(String fingerprint, Map<String, Point> positions,
                           GraphLayoutEngine.Mode mode) {
     /** Sessions written before layout-selection support used the grid mode. */

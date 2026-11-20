@@ -10,7 +10,8 @@ import java.util.Objects;
  * Immutable mapping of virtual source paths to transcription sessions and
  * original reference hashes. The original project files are never touched.
  * This stays independent of JavaFX and the session file's binary format.
- */
+  * <p><strong>Engineering rationale.</strong> Virtual file operations can move or remove whole subtrees of typing sessions and fingerprints. Path membership must be segment-aware (src is not src2) and changes must remain in memory without rewriting source files; this service keeps that invariant outside the UI.</p>
+*/
 public record PracticeSessionPaths(Map<String, TypingSession> sessions,
                                    Map<String, String> hashes) {
     public PracticeSessionPaths {

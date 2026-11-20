@@ -7,7 +7,8 @@ import java.util.Arrays;
  * Finds the first source row ending at or after the caret in O(log lines).
  * Newline positions belong to the preceding row; the next grapheme belongs
  * to the following row. Empty source documents still contain one row.
- */
+  * <p><strong>Engineering rationale.</strong> Mapping a caret index to a line should not require scanning the complete document on every keystroke. Precomputed immutable line boundaries trade a small amount of memory for fast binary-search navigation while preserving the established newline convention.</p>
+*/
 public final class SourceLineIndex {
     private final int[] ends;
 

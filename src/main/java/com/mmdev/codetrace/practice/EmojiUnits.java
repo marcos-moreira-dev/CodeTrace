@@ -5,7 +5,8 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/** Unicode extended grapheme clusters, preserving ZWJ families and flags. */
+/** Unicode extended grapheme clusters, preserving ZWJ families and flags.  * <p><strong>Engineering rationale.</strong> User-perceived text does not always correspond to one UTF-16 char: combining marks and emoji sequences can span several code units. Centralizing grapheme segmentation prevents the typing engine, metrics and display from applying inconsistent character boundaries.</p>
+*/
 public final class EmojiUnits {
     private static final Pattern GRAPHEMES = Pattern.compile("\\X");
     private EmojiUnits() {}

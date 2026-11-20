@@ -9,7 +9,8 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.HexFormat;
 
-/** SHA-256 calculated without changing the reference file. */
+/** SHA-256 calculated without changing the reference file.  * <p><strong>Engineering rationale.</strong> Fingerprints bind a practice record to the bytes of a particular original file. Reading must remain bounded by the selected reference and honor cancellation, including symlink and real-path checks that prevent unexpectedly hashing a different external target.</p>
+*/
 public final class ReferenceFingerprint {
     private ReferenceFingerprint() {
     }
