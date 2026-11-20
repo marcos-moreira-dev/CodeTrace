@@ -7,13 +7,14 @@ CodeTrace es una herramienta de escritorio para practicar la creación de estruc
 ## Estado de publicación
 
 CodeTrace está en **validación de la versión 0.3**, no en una versión
-estable distribuida. La rama experimental
+estable distribuida. La rama base
 `refactor/virtual-explorer-20261119` contiene el explorador virtualizado:
 expansión lógica fuera del hilo JavaFX y filas visibles mediante `ListView`,
 con mejoras confirmadas en pruebas reales de proyectos grandes.
-No se ha integrado todavía en `main`.
+La rama candidata `feature/practice-curriculum-20261120` incorpora además
+la biblioteca v8 y todavía no se ha integrado en `main`.
 
-En esta rama de desarrollo, la biblioteca de práctica está ampliada a **813 archivos de referencia en 14 lenguajes**. Cada ejercicio puede tener varios archivos: la cifra no equivale a 347 ejercicios independientes. Es contenido educativo en validación y no implica una publicación estable. Los requisitos pendientes de aceptación funcional,
+En esta rama de desarrollo, la biblioteca de práctica está ampliada a **813 archivos de referencia en 14 lenguajes**. Cada ejercicio puede tener varios archivos: la cifra corresponde a archivos fuente, no a ejercicios independientes. Es contenido educativo en validación y no implica una publicación estable. Los requisitos pendientes de aceptación funcional,
 legal, accesibilidad y Windows están en
 [Condiciones de cierre v0.3](docs/CIERRE-V0.3.md).
 El hecho de que el código sea público en GitHub **no equivale** a tener

@@ -1,7 +1,8 @@
 # CodeTrace v0.3 — condiciones de cierre y publicación
 
-**Estado:** candidato de publicación, **no publicado**. La biblioteca de práctica
-ampliada queda deliberadamente fuera de v0.3 y se abordará por separado.
+**Estado:** candidato de publicación, **no publicado**. La biblioteca de práctica **v8 (813 archivos de referencia en 14 lenguajes)**
+forma parte del candidato en esta rama, sin equivaler a 813 ejercicios
+independientes. Se valida junto a la aplicación antes de publicar.
 
 La rama de trabajo `refactor/virtual-explorer-20261119` se basa en
 `fix/media-preview-and-release-20261118`; ninguna reemplaza todavía `main`.
@@ -37,6 +38,7 @@ sin herramientas de desarrollo, ni el uso con pantalla de 125/150 % DPI.
 | --- | --- | --- |
 | Compilación, JUnit y smoke JavaFX | Automatizada | `Verify` verde en commit de publicación |
 | ZIP portable, runtime Java y checksum | Automatizada | `package-windows` verde; `scripts/verificar-paquete.ps1` |
+| Biblioteca v8: catálogo, clientes y salidas esperadas | CI y revisión didáctica en curso | `practice-curriculum` verde; revisar ejemplos y documentación contra ejecución real |
 | Explorador masivo / trabajo habitual | Prueba de usuario parcialmente favorable | Expandir, desplazar, contraer y volver a expandir con >11.000 archivos; sin «No responde» |
 | Sesiones y recuperación | Falta cierre manual | Nueva/antigua/truncada, guardar/abrir, original modificado, progreso y grafo persistidos |
 | Audio, vídeo, Markdown y recursos | Falta cierre manual | MP3/WAV/MP4, MKV/FLAC opcionales, cierre y cancelación FFmpeg, sin modificación de originales |
@@ -77,9 +79,10 @@ Comparar con `dist\CodeTrace-Windows-portable.zip.sha256`.
 - El repositorio público **no** concede automáticamente permisos de
   reutilización del código. La licencia será una decisión de autor:
   evaluar MIT o Apache-2.0 y verificar los avisos de terceros.
-- La biblioteca actual puede permanecer como material inicial. Las carpetas
-  por algoritmo, estructura y patrón, y las bibliotecas estáticas/dinámicas
-  para C/C++, se planificarán en una etapa educativa posterior.
+- La biblioteca v8 ya está integrada en la rama candidata, organizada por
+  algoritmos, estructuras y patrones, con fuentes C/C++ para bibliotecas
+  estáticas y dinámicas. No ampliar el temario por volumen durante el cierre:
+  corregir contratos, ejemplos y salidas esperadas que no correspondan a la ejecución.
 
 ## Orden final de trabajo
 
@@ -87,4 +90,5 @@ Comparar con `dist\CodeTrace-Windows-portable.zip.sha256`.
 2. Ejecutar pruebas manuales de QA-WINDOWS y anotar PASS/FAIL/N/A.
 3. Revisar licencias, empaquetar/instalar sin herramientas de desarrollo.
 4. Decidir `v0.3.0`, fusionar rama y publicar Release cuando todo esté aprobado.
-5. **Después:** nueva biblioteca técnica, como trabajo independiente.
+5. Mantener el temario v8 congelado; cualquier futura expansión del currículo
+   será una entrega independiente después del cierre de la versión.
