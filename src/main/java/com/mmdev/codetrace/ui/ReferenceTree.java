@@ -247,61 +247,88 @@ public final class ReferenceTree extends TreeView<Path> {
         return loading || expander.isExpanding();
     }
 
-    /** Root's immediate children stay visible. Cancel any pending expansion. */
+    /**
+     * Collapse even a huge expanded tree in one structural update.
+     *
+     * <p>Walking every expanded TreeItem and calling setExpanded(false) used
+     * to synchronously recalculate thousands of visible rows on the JavaFX
+     * application thread, causing Windows to report "No responde". Instead
+     * discard the materialized expansion subtree and create one fresh lazy
+     * root. The immutable disk index is preserved, with zero disk I/O.</p>
+     */
     public void collapseAll() {
         expander.cancel();
-        TreeItem<Path> root = getRoot();
-        if (root == null) return;
-        collapseExpanded(root);
-        root.setExpanded(true);
-    }
-
-    private void collapseExpanded(TreeItem<Path> node) {
-        if (!node.isExpanded()) return;
-        for (TreeItem<Path> child : node.getChildren()) collapseExpanded(child);
-        node.setExpanded(false);
+        TreeItem<Path> oldRoot = getRoot();
+        if (oldRoot == null || referenceRoot == null) return;
+        TreeItem<Path> selected = getSelectionModel().getSelectedItem();
+        Path selectedPath = selected == null ? null : selected.getValue();
+        TreeItem<Path> freshRoot = item(referenceRoot);
+        setRoot(freshRoot);
+        freshRoot.setExpanded(true);
+        // Preserve a visible first-level selection without rebuilding the
+        // complete previously expanded tree.
+        TreeItem<Path> visible = freshRoot;
+        if (selectedPath != null && selectedPath.startsWith(referenceRoot)
+                && !selectedPath.equals(referenceRoot)) {
+            Path firstChild = referenceRoot.resolve(
+                    referenceRoot.relativize(selectedPath).getName(0));
+            for (TreeItem<Path> child : freshRoot.getChildren()) {
+                if (firstChild.equals(child.getValue())) {
+                    visible = child;
+                    break;
+                }
+            }
+        }
+        getSelectionModel().select(visible);
     }
 
     /**
-     * Collapse the selected branch INCLUDING the clicked directory. This is
-     * the actual inverse of Expandir todas: a single click reduces the entire
-     * branch to its folder row. Rebuild lazy TreeItems to forget old nested
-     * expansion flags, so reopening does not re-expand grandchildren.
+     * Reset only the requested branch. Other expanded branches retain their
+     * TreeItems, while descendants of the replaced node are released instead
+     * of being visited one by one on the UI thread.
      */
     public void collapseRecursively(Path directory) {
         expander.cancel();
         TreeItem<Path> clicked = findVisibleNode(getRoot(), directory);
         if (clicked == null || !isFolder(directory)) return;
-        // Rebuild from a snapshot of the entire expanded tree. This is more
-        // reliable than collapsing only the currently materialized TreeItems:
-        // lazy children and refreshes must not resurrect deep expansion flags.
-        Set<Path> expanded = new HashSet<>();
-        collectExpanded(getRoot(), expanded);
-        // Remove the clicked folder too. Otherwise the visible branch still
-        // looks expanded, which made "Colapsar todas" feel ineffective.
-        expanded.removeIf(path -> path.startsWith(directory));
-        Path selectedPath = getSelectionModel().getSelectedItem() == null ? null
-                : getSelectionModel().getSelectedItem().getValue();
-        TreeItem<Path> refreshed = item(referenceRoot);
-        setRoot(refreshed);
-        refreshed.setExpanded(!directory.equals(referenceRoot));
-        restoreExpanded(refreshed, expanded);
-        TreeItem<Path> selection = selectedPath == null ? null
-                : findVisibleNode(refreshed, selectedPath);
-        if (selection == null) selection = findVisibleNode(refreshed, directory);
-        if (selection != null) getSelectionModel().select(selection);
-        refresh();
+        if (clicked == getRoot()) {
+            collapseAll();
+            return;
+        }
+        TreeItem<Path> parent = clicked.getParent();
+        if (parent == null) return;
+        int slot = parent.getChildren().indexOf(clicked);
+        if (slot < 0) return;
+        TreeItem<Path> selected = getSelectionModel().getSelectedItem();
+        boolean selectedInside = selected != null && selected.getValue() != null
+                && selected.getValue().startsWith(directory);
+        TreeItem<Path> replacement = item(directory);
+        parent.getChildren().set(slot, replacement);
+        if (selectedInside) getSelectionModel().select(replacement);
     }
 
+    /**
+     * Follow just the requested path, not every visible branch: O(depth ×
+     * siblings) instead of O(all visible nodes) for contextual actions.
+     */
     private static TreeItem<Path> findVisibleNode(TreeItem<Path> from, Path path) {
-        if (from == null) return null;
-        if (path.equals(from.getValue())) return from;
-        if (!from.isExpanded()) return null;
-        for (TreeItem<Path> child : from.getChildren()) {
-            TreeItem<Path> match = findVisibleNode(child, path);
-            if (match != null) return match;
+        if (from == null || path == null || !path.startsWith(from.getValue())) return null;
+        TreeItem<Path> current = from;
+        Path walk = from.getValue();
+        for (Path segment : walk.relativize(path)) {
+            if (!current.isExpanded()) return null;
+            walk = walk.resolve(segment);
+            TreeItem<Path> childMatch = null;
+            for (TreeItem<Path> child : current.getChildren()) {
+                if (walk.equals(child.getValue())) {
+                    childMatch = child;
+                    break;
+                }
+            }
+            if (childMatch == null) return null;
+            current = childMatch;
         }
-        return null;
+        return current;
     }
 
     /**
