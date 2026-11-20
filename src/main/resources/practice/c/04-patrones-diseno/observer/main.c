@@ -11,7 +11,7 @@ int main(void) {
 }
 
 /*
- * Salida esperada de consola:
- *   Sin salida de texto: los casos correctos finalizan silenciosamente.
- * Verificacion: las aserciones se cumplen y el proceso termina sin error.
+ * Salida esperada de consola (exacta para los datos del cliente):
+ * Evento: Factura 001
+ * Verificacion: exit code 0 y ninguna excepcion inesperada.
  */

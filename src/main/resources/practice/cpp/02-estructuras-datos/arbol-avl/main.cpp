@@ -27,8 +27,7 @@ int main(){
 }
 
 /*
- * Salida esperada de consola:
- *   Altura AVL: 
- *   (los valores variables completan los fragmentos anteriores)
- * Verificacion: las aserciones se cumplen y el proceso termina sin error.
+ * Salida esperada de consola (exacta para los datos del cliente):
+ * Altura AVL: 4
+ * Verificacion: exit code 0 y ninguna excepcion inesperada.
  */

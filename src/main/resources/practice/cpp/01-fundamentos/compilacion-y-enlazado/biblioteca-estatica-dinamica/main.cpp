@@ -31,8 +31,7 @@ int main() {
 }
 
 /*
- * Salida esperada de consola:
- *   Suma=
- *   (los valores variables completan los fragmentos anteriores)
- * Verificacion: las aserciones se cumplen y el proceso termina sin error.
+ * Salida esperada de consola (exacta para los datos del cliente):
+ * Suma=7, producto=12
+ * Verificacion: exit code 0 y ninguna excepcion inesperada.
  */
