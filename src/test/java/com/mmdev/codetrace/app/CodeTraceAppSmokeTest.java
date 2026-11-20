@@ -758,21 +758,15 @@ class CodeTraceAppSmokeTest {
                         .noneMatch(javafx.scene.control.TreeItem::isExpanded),
                         "Only the root stays open; old descendant flags are discarded");
                 fileTree.expandAll();
-                assertSame(beforeCollapseAll, fileTree.getRoot(),
-                        "Collapse/re-expand must reuse the retained TreeItems, not rebuild them");
+                // Global expansion is now an asynchronous logical projection.
+                // The TreeView must remain shallow: thousands of expanded
+                // TreeItems are exactly what used to block the JavaFX pulse.
+                assertNotSame(beforeCollapseAll, fileTree.getRoot());
                 assertTrue(fileTree.getRoot().isExpanded());
-                // A root-only assertion missed the real regression: users
-                // pressed Expandir todo but nested branches did not reopen.
-                var reopenedSrc = fileTree.getRoot().getChildren().stream()
-                        .filter(item -> src.equals(item.getValue()))
-                        .findFirst().orElseThrow();
-                assertTrue(reopenedSrc.isExpanded(),
-                        "Expandir todo must reopen actual first-level folders");
-                var reopenedNested = reopenedSrc.getChildren().stream()
-                        .filter(item -> nested.equals(item.getValue()))
-                        .findFirst().orElseThrow();
-                assertTrue(reopenedNested.isExpanded(),
-                        "Expandir todo must reopen nested folders, not just the root");
+                assertTrue(fileTree.getRoot().getChildren().stream()
+                        .noneMatch(javafx.scene.control.TreeItem::isExpanded));
+                assertNotNull(fileTree.projectedExplorer(),
+                        "Large expansions use the ListView virtual-flow adapter");
                 Method toggleConsole = CodeTraceApp.class.getDeclaredMethod(
                         "setConsoleVisible", boolean.class);
                 toggleConsole.setAccessible(true);
