@@ -24,3 +24,10 @@ public static class MainComposite
         Console.WriteLine($"Bytes: {e.Bytes()}");
     }
 }
+
+/*
+ * Salida esperada de consola:
+ *   Bytes: {e.Bytes()}
+ *   (los valores variables completan los fragmentos anteriores)
+ * Verificacion: termina sin excepciones inesperadas.
+ */

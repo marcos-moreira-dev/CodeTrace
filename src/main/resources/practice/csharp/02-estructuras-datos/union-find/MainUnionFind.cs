@@ -21,3 +21,10 @@ public static class MainUnionFind
         Console.WriteLine($"Componentes: {uf.Componentes}");
     }
 }
+
+/*
+ * Salida esperada de consola:
+ *   Componentes: {uf.Componentes}
+ *   (los valores variables completan los fragmentos anteriores)
+ * Verificacion: termina sin excepciones inesperadas.
+ */

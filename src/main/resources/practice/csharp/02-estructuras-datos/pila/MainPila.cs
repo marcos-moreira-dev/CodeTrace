@@ -25,3 +25,10 @@ public static class MainPila
         Console.WriteLine("LIFO verificado");
     }
 }
+
+/*
+ * Salida esperada de consola:
+ *   LIFO verificado
+ *   (los valores variables completan los fragmentos anteriores)
+ * Verificacion: termina sin excepciones inesperadas.
+ */

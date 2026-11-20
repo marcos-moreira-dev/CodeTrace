@@ -22,3 +22,10 @@ public static class MainAdapter
         Console.WriteLine($"Temperatura: {sensor.Leer()} °C");
     }
 }
+
+/*
+ * Salida esperada de consola:
+ *   Temperatura: {sensor.Leer()} °C
+ *   (los valores variables completan los fragmentos anteriores)
+ * Verificacion: termina sin excepciones inesperadas.
+ */

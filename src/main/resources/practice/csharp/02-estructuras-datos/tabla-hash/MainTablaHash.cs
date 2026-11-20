@@ -25,3 +25,10 @@ public static class MainTablaHash
         Console.WriteLine($"A={a}, B={b}");
     }
 }
+
+/*
+ * Salida esperada de consola:
+ *   A={a}, B={b}
+ *   (los valores variables completan los fragmentos anteriores)
+ * Verificacion: termina sin excepciones inesperadas.
+ */

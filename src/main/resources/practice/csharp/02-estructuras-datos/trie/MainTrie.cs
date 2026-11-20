@@ -21,3 +21,10 @@ public static class MainTrie
         Console.WriteLine("Trie de prefijos correcto");
     }
 }
+
+/*
+ * Salida esperada de consola:
+ *   Trie de prefijos correcto
+ *   (los valores variables completan los fragmentos anteriores)
+ * Verificacion: termina sin excepciones inesperadas.
+ */
