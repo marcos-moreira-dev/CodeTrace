@@ -1,6 +1,6 @@
 # Biblioteca de práctica CodeTrace — catálogo v2
 
-**226 archivos de referencia en 14 paquetes**, incorporados en la aplicación. Un ejercicio con varios archivos cuenta varias entradas; no confundir cantidad de archivos con cantidad de ejercicios.
+**347 archivos de referencia en 14 paquetes**, incorporados en la aplicación. Un ejercicio con varios archivos cuenta varias entradas; no confundir cantidad de archivos con cantidad de ejercicios.
 
 ## Organización curricular
 
@@ -36,3 +36,26 @@ Los ejemplos se cargan como **recursos internos**, sin conexión ni compiladores
 Fuentes de orientación: los repositorios personales Estructuras-de-Datos-y-Algoritmos, Patrones-de-dise-o-Java y PrincipiosSOLID, además del libro facilitado *De las matemáticas a la computadora*. Las implementaciones integradas deben validarse contra sus comandos y contratos; una fuente original con complejidad anotada no se considera automáticamente correcta.
 
 **Estado:** desarrollo en rama `feature/practice-curriculum-20261120`. Publicación/merge sujetos a aceptación manual y condiciones de `CIERRE-V0.3.md`.
+
+## Ampliación de cobertura (347 fuentes)
+
+- Java 21: records, enum, Optional, genéricos con límites, iteradores, NIO.2,
+  recursos, hilos virtuales, vector dinámico, tabla hash, BST y grafo con
+  adyacencias. Algoritmos Merge Sort, BFS/DFS, 4 reinas, intervalos, mochila
+  y Fibonacci memoizado. Adapter y Decorator con clientes explicativos.
+- C17: punteros dobles, realloc, structs, bits y callbacks de qsort; cola,
+  lista enlazada y hash; Merge Sort, BFS sobre matriz, mochila y 4 reinas.
+- C++20: concepts, movimiento y propiedad, optional/variant, span, BST,
+  grafo, Merge Sort, BFS/DFS, mochila, 4 reinas y patrones.
+- Python 3.12: dataclasses, context managers, Protocol, funciones superiores,
+  BST, heap, ordenamiento, recorridos, backtracking, mochila, voraces y patrones.
+- TypeScript: tipos condicionales, unions exhaustivas, async/await, readonly,
+  heap, BST, Merge Sort, BFS/DFS, mochila y patrones.
+- Kotlin, C#, JavaScript, Go y Ruby: ampliación idiomática de funciones,
+  colecciones, concurrencia/asincronía, grafos, heaps y DP.
+- PowerShell, POSIX shell, CMD y NASM: ejercicios de sistemas, objetos,
+  procesado de registros, ciclos y memoria pertinentes a cada lenguaje.
+
+**Nota:** seguimos diferenciando archivos físicos de ejercicios completos.
+Esta ampliación es sustancial, pero no convierte la biblioteca en un curso
+exhaustivo ni certifica todas las posibilidades del temario maestro.

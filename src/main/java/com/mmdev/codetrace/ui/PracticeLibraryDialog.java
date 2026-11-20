@@ -48,7 +48,7 @@ public final class PracticeLibraryDialog {
                 }
                 Label title = new Label(pack.name());
                 title.getStyleClass().add("library-pack-title");
-                Label count = new Label(library.size(pack) + " ejercicios");
+                Label count = new Label(library.size(pack) + " archivos");
                 count.getStyleClass().add("library-pack-count");
                 javafx.scene.layout.Region fill = new javafx.scene.layout.Region();
                 HBox.setHgrow(fill, Priority.ALWAYS);
@@ -63,7 +63,7 @@ public final class PracticeLibraryDialog {
         Label title = new Label("Biblioteca de práctica");
         title.getStyleClass().add("prefs-section-heading");
         Label detail = new Label(
-                "Ejercicios de código incluidos en CodeTrace. Funciona sin conexión.");
+                "Código incluido y disponible sin conexión. Un ejercicio puede contener varios archivos.");
         detail.getStyleClass().add("prefs-feedback");
         detail.setWrapText(true);
 

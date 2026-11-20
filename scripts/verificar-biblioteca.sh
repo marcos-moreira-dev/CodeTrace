@@ -15,7 +15,7 @@ import sys
 base = Path(sys.argv[1])
 catalog = (base / "catalog.tsv").read_text(encoding="utf-8")
 items = [line.split("\t", 1) for line in catalog.splitlines() if line and not line.startswith("#")]
-assert len(items) == 226, len(items)
+assert len(items) == 347, len(items)
 assert len({x[0] for x in items}) == 14
 for pack, path in items:
     source = base / pack / path

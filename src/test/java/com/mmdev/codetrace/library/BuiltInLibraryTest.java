@@ -111,7 +111,7 @@ class BuiltInLibraryTest {
     void allFourCurriculumPurposesAndDocumentedJavaClientsArePresent() throws Exception {
         var library = new BuiltInLibrary(temp.resolve("curriculum"));
         assertEquals("v2", BuiltInLibrary.CATALOG_VERSION);
-        assertEquals(226, library.packs().stream().mapToInt(library::size).sum());
+        assertEquals(347, library.packs().stream().mapToInt(library::size).sum());
         for (var pack : library.packs()) {
             var entries = library.entries(pack);
             assertTrue(entries.stream().anyMatch(x -> x.startsWith("01-fundamentos/")), pack.id());
@@ -123,6 +123,12 @@ class BuiltInLibraryTest {
         assertTrue(library.entries(javaPack).contains("01-fundamentos/comparadores/ComparadoresEncadenados.java"));
         assertTrue(library.entries(javaPack).contains("03-algoritmos/programacion-dinamica/MainMonedas.java"));
         assertTrue(library.entries(javaPack).contains("04-patrones-diseno/strategy-tarifas/MainTarifas.java"));
+        assertTrue(library.entries(javaPack).contains("02-estructuras-datos/arbol-bst/MainArbol.java"));
+        assertTrue(library.entries(javaPack).contains("02-estructuras-datos/tabla-hash/MainHash.java"));
+        assertTrue(library.entries(javaPack).contains("03-algoritmos/backtracking/CuatroReinas.java"));
+        assertTrue(library.entries(javaPack).contains("03-algoritmos/programacion-dinamica/Mochila01.java"));
+        assertTrue(library.entries(javaPack).contains("04-patrones-diseno/adapter/MainAdapter.java"));
+        assertTrue(library.entries(javaPack).contains("04-patrones-diseno/decorator/MainDecorator.java"));
     }
 
     @Test
@@ -145,7 +151,7 @@ class BuiltInLibraryTest {
                 "03-algoritmos/euclides.asm"));
         assertTrue(library.entries(all.get("java21")).contains(
                 "03-algoritmos/Dijkstra.java"));
-        assertEquals(226, library.packs().stream().mapToInt(library::size).sum());
+        assertEquals(347, library.packs().stream().mapToInt(library::size).sum());
     }
 
 }
