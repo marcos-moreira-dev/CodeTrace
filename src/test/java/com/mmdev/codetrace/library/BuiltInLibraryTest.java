@@ -110,8 +110,8 @@ class BuiltInLibraryTest {
     @Test
     void allFourCurriculumPurposesAndDocumentedJavaClientsArePresent() throws Exception {
         var library = new BuiltInLibrary(temp.resolve("curriculum"));
-        assertEquals("v6", BuiltInLibrary.CATALOG_VERSION);
-        assertEquals(492, library.packs().stream().mapToInt(library::size).sum());
+        assertEquals("v7", BuiltInLibrary.CATALOG_VERSION);
+        assertEquals(762, library.packs().stream().mapToInt(library::size).sum());
         for (var pack : library.packs()) {
             var entries = library.entries(pack);
             assertTrue(entries.stream().allMatch(x -> x.split("/").length >= 3),
@@ -143,6 +143,28 @@ class BuiltInLibraryTest {
         assertTrue(library.entries(javaPack).contains("01-fundamentos/excepciones/unchecked-dominio/MainExcepcionUnchecked.java"));
         assertTrue(library.entries(javaPack).contains("02-estructuras-datos/cola-circular/MainColaCircular.java"));
         assertTrue(library.entries(javaPack).contains("04-patrones-diseno/strategy/basico/MainStrategy.java"));
+
+        for (String idioma : java.util.List.of("java21", "kotlin", "csharp", "typescript",
+                "python", "cpp", "ruby", "javascript")) {
+            var paquete = library.packs().stream()
+                    .filter(x -> x.id().equals(idioma)).findFirst().orElseThrow();
+            var rutas = library.entries(paquete);
+            for (String familia : java.util.List.of("linked-list/simple/", "linked-list/doble/",
+                    "linked-list/circular/", "linked-list/doble-circular/", "arbol-avl/",
+                    "union-find/", "trie/", "heap-maximo/", "deque/")) {
+                assertTrue(rutas.stream().anyMatch(x -> x.startsWith("02-estructuras-datos/" + familia)),
+                        idioma + " no contiene " + familia);
+            }
+            for (String patron : java.util.List.of("builder/", "abstract-factory/", "composite/",
+                    "command/", "template-method/")) {
+                assertTrue(rutas.stream().anyMatch(x -> x.startsWith("04-patrones-diseno/" + patron)),
+                        idioma + " no contiene patrón " + patron);
+            }
+        }
+        assertTrue(library.entries(javaPack).contains(
+                "02-estructuras-datos/linked-list/doble/MainListaDoble.java"));
+        assertTrue(library.entries(javaPack).contains(
+                "04-patrones-diseno/command/deshacer/MainCommand.java"));
         var cppPack = library.packs().stream().filter(x -> x.id().equals("cpp")).findFirst().orElseThrow();
         assertTrue(library.entries(cppPack).contains("01-fundamentos/compilacion-y-enlazado/biblioteca-estatica-dinamica/main.cpp"));
         assertTrue(library.entries(javaPack).contains("02-estructuras-datos/grafos/genericos/MainGrafoGenerico.java"));

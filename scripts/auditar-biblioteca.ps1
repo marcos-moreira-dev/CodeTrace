@@ -1,7 +1,7 @@
 #requires -Version 5.1
 <#
 .SYNOPSIS
-  Audita la biblioteca offline de CodeTrace v6 (466 referencias / 14 lenguajes).
+  Audita la biblioteca offline de CodeTrace v7 (762 referencias / 14 lenguajes).
 .DESCRIPTION
   Revisa el catálogo, archivos existentes, carpetas de ejercicio, versiones
   y comandos de compilación. Por defecto NO compila ni modifica referencias.
@@ -60,10 +60,10 @@ foreach ($linea in (Get-Content -LiteralPath $catalogo -Encoding UTF8)) {
 }
 
 $idiomas = @($referencias.Lenguaje | Sort-Object -Unique)
-if ($referencias.Count -ne 492 -or $idiomas.Count -ne 14) {
+if ($referencias.Count -ne 762 -or $idiomas.Count -ne 14) {
     throw "Catálogo inconsistente: $($referencias.Count) archivos, $($idiomas.Count) lenguajes"
 }
-Write-Host "CodeTrace v6 — catálogo íntegro: $($referencias.Count) archivos / $($idiomas.Count) lenguajes"
+Write-Host "CodeTrace v7 — catálogo íntegro: $($referencias.Count) archivos / $($idiomas.Count) lenguajes"
 foreach ($grupo in ($referencias | Group-Object Lenguaje | Sort-Object Name)) {
     $unidades = @($grupo.Group.Unidad | Sort-Object -Unique).Count
     Write-Host ("  {0,-16} {1,3} archivos  {2,3} carpetas con código" -f
@@ -96,7 +96,23 @@ try {
         'codetrace.practica.grafosmst.MainExpansionMinima',
         'codetrace.practica.grafostopologico.MainTopologico',
         'codetrace.practica.grafosscc.MainComponentesFuertes',
-        'MainFactoryBasica', 'MainObservadorBasico'
+        'MainFactoryBasica', 'MainObservadorBasico',
+        'codetrace.practica.estructuras.listadoble.MainListaDoble',
+        'codetrace.practica.estructuras.listacircular.MainListaCircular',
+        'codetrace.practica.estructuras.listadoblecircular.MainListaDobleCircular',
+        'codetrace.practica.estructuras.colaenlazada.MainColaEnlazada',
+        'codetrace.practica.estructuras.deque.MainDeque',
+        'codetrace.practica.estructuras.avl.MainArbolAVL',
+        'codetrace.practica.estructuras.trie.MainTrie',
+        'codetrace.practica.estructuras.unionfind.MainUnionFind',
+        'codetrace.practica.estructuras.heapmaximo.MainHeapMaximo',
+        'codetrace.practica.estructuras.hashabierto.MainHashAbierto',
+        'codetrace.practica.estructuras.grafoponderado.MainGrafoPonderado',
+        'codetrace.practica.patrones.builder.MainBuilder',
+        'codetrace.practica.patrones.abstractfactory.MainAbstractFactory',
+        'codetrace.practica.patrones.composite.MainComposite',
+        'codetrace.practica.patrones.command.MainCommand',
+        'codetrace.practica.patrones.templatemethod.MainTemplateMethod'
     )) {
         Write-Host ("Comprobando: " + $clase)
         & java -cp $temporal $clase

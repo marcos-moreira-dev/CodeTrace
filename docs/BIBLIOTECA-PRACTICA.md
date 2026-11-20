@@ -1,6 +1,6 @@
-# Biblioteca de práctica CodeTrace — catálogo v6
+# Biblioteca de práctica CodeTrace — catálogo v7
 
-**492 archivos de referencia en 14 paquetes**, incorporados en la aplicación. Un ejercicio con varios archivos cuenta varias entradas; no confundir cantidad de archivos con cantidad de ejercicios.
+**762 archivos de referencia en 14 paquetes**, incorporados en la aplicación. Un ejercicio con varios archivos cuenta varias entradas; no confundir cantidad de archivos con cantidad de ejercicios.
 
 ## Organización curricular
 
@@ -85,3 +85,11 @@ Java incorpora excepciones de negocio checked/unchecked y fallos suprimidos en A
 ## Ampliación orientada a objetos y paradigmas nativos (v6)
 
 Ruby 3.3 incluye clientes independientes para Factory Method, Strategy con bloques, Adapter con duck typing, Decorator por composición, Observer con suscripción/desuscripción, pila, cola circular, BST y excepción propia. JavaScript ES2022/Node 24 incorpora clientes CommonJS de esos cinco patrones con closures, callbacks y objetos compatibles por contrato dinámico, más cola circular. Se mantienen ejemplos separados de JS event loop, map/set, promesas y generadores. La biblioteca tiene **492 fuentes** en **14 lenguajes** y se estudia en consola; estas cifras no equivalen al número de ejercicios autónomos.
+
+## Revisión v7 — paridad curricular de ocho lenguajes orientados a objetos
+
+Se integran **762 archivos** en 14 paquetes. Java 21 es el modelo de referencia para listas enlazadas simple, doble, circular y doble circular; cola enlazada; deque; AVL; Trie; Union-Find; heap máximo; tabla hash por sondeo lineal; y grafos dirigidos ponderados. Se crean miniproyectos comparables en **Java, Kotlin, C#, TypeScript, Python, C++, Ruby y JavaScript**, sin renunciar a las peculiaridades de cada idioma (Javadoc, KDoc, TSDoc, docstrings, C# XML, RAII, duck typing, null safety). 
+
+Se añaden **cinco patrones GoF**: Builder, Abstract Factory, Composite, Command y Template Method, con cliente propio y dominio o interfaz cuando agrega valor. Es importante distinguir Factory Method de Abstract Factory, Strategy de Template Method y las listas lineales de las circulares. El cliente presenta contexto, contratos, invariantes, casos límite y complejidad. No imponer MVC a miniejercicios de consola.
+
+Se unifica `02-estructuras-datos/linked-list/simple/` para dejar juntas las variantes y evitar un `lista-simple/` paralelo. El catálogo se regenera a partir de los archivos reales; se valida su consistencia y se compilan los clientes por grupos. Los otros seis idiomas conservan un temario propio en vez de copiar indiscriminadamente las jerarquías Java.

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# CodeTrace | Referencia: biblioteca de práctica v5 / verificador GNU/Linux-WSL
+# CodeTrace | Referencia: biblioteca de práctica v7 / verificador GNU/Linux-WSL
 # Ejecutar en COPIA: bash scripts/verificar-biblioteca.sh
 # Artefactos de compilación aislados en mktemp, sin tocar referencias.
 set -euo pipefail
@@ -15,7 +15,7 @@ import sys
 root=Path(sys.argv[1])
 items=[x.split("\t",1) for x in (root/"catalog.tsv").read_text(encoding="utf-8").splitlines()
        if x and not x.startswith("#")]
-assert len(items)==492, len(items)
+assert len(items)==762, len(items)
 assert len({p for p,_ in items})==14
 assert len(set(map(tuple,items)))==len(items)
 assert all(len(path.split("/"))>=3 for _,path in items)
@@ -71,7 +71,7 @@ done
 echo "TypeScript: módulos y clientes separados"
 for unit in \
  02-estructuras-datos/pila/MainPila.ts \
- 02-estructuras-datos/lista-simple/MainListaSimple.ts \
+ 02-estructuras-datos/linked-list/simple/MainListaSimple.ts \
  02-estructuras-datos/arbol-bst/MainArbolBST.ts \
  02-estructuras-datos/heap/MainHeap.ts \
   04-patrones-diseno/factory/basico/MainFactory.ts \
@@ -90,7 +90,7 @@ echo "Python: módulos y main.py, sin bytecode"
 for unit in \
   01-fundamentos/excepciones-personalizadas/main.py \
   02-estructuras-datos/pila/main.py \
-  02-estructuras-datos/lista-simple/main.py \
+  02-estructuras-datos/linked-list/simple/main.py \
   02-estructuras-datos/heaps-y-prioridades/main.py \
   02-estructuras-datos/arbol-bst/main.py \
   04-patrones-diseno/observer/basico/main.py \
@@ -128,6 +128,114 @@ for dir in \
   ruby "$base/ruby/$dir/main.rb" >/dev/null
 done
 
+
+echo "v7: Java 21 — pruebas de las nuevas familias y patrones"
+for clase in \
+  codetrace.practica.estructuras.listadoble.MainListaDoble \
+  codetrace.practica.estructuras.listacircular.MainListaCircular \
+  codetrace.practica.estructuras.listadoblecircular.MainListaDobleCircular \
+  codetrace.practica.estructuras.colaenlazada.MainColaEnlazada \
+  codetrace.practica.estructuras.deque.MainDeque \
+  codetrace.practica.estructuras.avl.MainArbolAVL \
+  codetrace.practica.estructuras.trie.MainTrie \
+  codetrace.practica.estructuras.unionfind.MainUnionFind \
+  codetrace.practica.estructuras.heapmaximo.MainHeapMaximo \
+  codetrace.practica.estructuras.hashabierto.MainHashAbierto \
+  codetrace.practica.estructuras.grafoponderado.MainGrafoPonderado \
+  codetrace.practica.patrones.builder.MainBuilder \
+  codetrace.practica.patrones.abstractfactory.MainAbstractFactory \
+  codetrace.practica.patrones.composite.MainComposite \
+  codetrace.practica.patrones.command.MainCommand \
+  codetrace.practica.patrones.templatemethod.MainTemplateMethod; do
+  java -cp "$tmp/java" "$clase" >/dev/null
+done
+
+echo "v7: C++20 — miniproyectos completos por carpeta"
+for unidad in \
+  02-estructuras-datos/linked-list/simple \
+  02-estructuras-datos/linked-list/doble \
+  02-estructuras-datos/linked-list/circular \
+  02-estructuras-datos/linked-list/doble-circular \
+  02-estructuras-datos/cola-enlazada \
+  02-estructuras-datos/deque \
+  02-estructuras-datos/arbol-avl \
+  02-estructuras-datos/trie \
+  02-estructuras-datos/union-find \
+  02-estructuras-datos/heap-maximo \
+  02-estructuras-datos/tabla-hash/direccionamiento-abierto \
+  02-estructuras-datos/grafos/ponderados \
+  04-patrones-diseno/builder/solicitud \
+  04-patrones-diseno/abstract-factory/tema-consola \
+  04-patrones-diseno/composite/arbol-archivos \
+  04-patrones-diseno/command/deshacer \
+  04-patrones-diseno/template-method/reportes; do
+  ruta="$base/cpp/$unidad"
+  g++ -std=c++20 -Wall -Wextra -Werror "$ruta/"*.cpp -o "$tmp/cpp-v7"
+  "$tmp/cpp-v7" >/dev/null
+done
+
+echo "v7: TypeScript 5.9 — transpilar y ejecutar el cliente de cada unidad"
+tsc --strict --target ES2022 --module commonjs --outDir "$tmp/ts" "$base/typescript/02-estructuras-datos/linked-list/simple/MainListaSimple.ts"
+node "$tmp/ts/MainListaSimple.js" >/dev/null
+tsc --strict --target ES2022 --module commonjs --outDir "$tmp/ts" "$base/typescript/02-estructuras-datos/linked-list/doble/MainListaDoble.ts"
+node "$tmp/ts/MainListaDoble.js" >/dev/null
+tsc --strict --target ES2022 --module commonjs --outDir "$tmp/ts" "$base/typescript/02-estructuras-datos/linked-list/circular/MainListaCircular.ts"
+node "$tmp/ts/MainListaCircular.js" >/dev/null
+tsc --strict --target ES2022 --module commonjs --outDir "$tmp/ts" "$base/typescript/02-estructuras-datos/linked-list/doble-circular/MainListaDobleCircular.ts"
+node "$tmp/ts/MainListaDobleCircular.js" >/dev/null
+tsc --strict --target ES2022 --module commonjs --outDir "$tmp/ts" "$base/typescript/02-estructuras-datos/cola-enlazada/MainColaEnlazada.ts"
+node "$tmp/ts/MainColaEnlazada.js" >/dev/null
+tsc --strict --target ES2022 --module commonjs --outDir "$tmp/ts" "$base/typescript/02-estructuras-datos/deque/MainDeque.ts"
+node "$tmp/ts/MainDeque.js" >/dev/null
+tsc --strict --target ES2022 --module commonjs --outDir "$tmp/ts" "$base/typescript/02-estructuras-datos/arbol-avl/MainArbolAVL.ts"
+node "$tmp/ts/MainArbolAVL.js" >/dev/null
+tsc --strict --target ES2022 --module commonjs --outDir "$tmp/ts" "$base/typescript/02-estructuras-datos/trie/MainTrie.ts"
+node "$tmp/ts/MainTrie.js" >/dev/null
+tsc --strict --target ES2022 --module commonjs --outDir "$tmp/ts" "$base/typescript/02-estructuras-datos/union-find/MainUnionFind.ts"
+node "$tmp/ts/MainUnionFind.js" >/dev/null
+tsc --strict --target ES2022 --module commonjs --outDir "$tmp/ts" "$base/typescript/02-estructuras-datos/heap-maximo/MainHeapMaximo.ts"
+node "$tmp/ts/MainHeapMaximo.js" >/dev/null
+tsc --strict --target ES2022 --module commonjs --outDir "$tmp/ts" "$base/typescript/02-estructuras-datos/tabla-hash/direccionamiento-abierto/MainHashAbierto.ts"
+node "$tmp/ts/MainHashAbierto.js" >/dev/null
+tsc --strict --target ES2022 --module commonjs --outDir "$tmp/ts" "$base/typescript/02-estructuras-datos/grafos/ponderados/MainGrafoPonderado.ts"
+node "$tmp/ts/MainGrafoPonderado.js" >/dev/null
+tsc --strict --target ES2022 --module commonjs --outDir "$tmp/ts" "$base/typescript/04-patrones-diseno/builder/solicitud/MainBuilder.ts"
+node "$tmp/ts/MainBuilder.js" >/dev/null
+tsc --strict --target ES2022 --module commonjs --outDir "$tmp/ts" "$base/typescript/04-patrones-diseno/abstract-factory/tema-consola/MainAbstractFactory.ts"
+node "$tmp/ts/MainAbstractFactory.js" >/dev/null
+tsc --strict --target ES2022 --module commonjs --outDir "$tmp/ts" "$base/typescript/04-patrones-diseno/composite/arbol-archivos/MainComposite.ts"
+node "$tmp/ts/MainComposite.js" >/dev/null
+tsc --strict --target ES2022 --module commonjs --outDir "$tmp/ts" "$base/typescript/04-patrones-diseno/command/deshacer/MainCommand.ts"
+node "$tmp/ts/MainCommand.js" >/dev/null
+tsc --strict --target ES2022 --module commonjs --outDir "$tmp/ts" "$base/typescript/04-patrones-diseno/template-method/reportes/MainTemplateMethod.ts"
+node "$tmp/ts/MainTemplateMethod.js" >/dev/null
+
+echo "v7: Python, Ruby y JavaScript — todos los nuevos clientes"
+for unidad in \
+  02-estructuras-datos/linked-list/simple \
+  02-estructuras-datos/linked-list/doble \
+  02-estructuras-datos/linked-list/circular \
+  02-estructuras-datos/linked-list/doble-circular \
+  02-estructuras-datos/cola-enlazada \
+  02-estructuras-datos/deque \
+  02-estructuras-datos/arbol-avl \
+  02-estructuras-datos/trie \
+  02-estructuras-datos/union-find \
+  02-estructuras-datos/heap-maximo \
+  02-estructuras-datos/tabla-hash/direccionamiento-abierto \
+  02-estructuras-datos/grafos/ponderados \
+  04-patrones-diseno/builder/solicitud \
+  04-patrones-diseno/abstract-factory/tema-consola \
+  04-patrones-diseno/composite/arbol-archivos \
+  04-patrones-diseno/command/deshacer \
+  04-patrones-diseno/template-method/reportes; do
+  python3 -B "$base/python/$unidad/main.py" >/dev/null
+  ruby -c "$base/ruby/$unidad/main.rb" >/dev/null
+  ruby "$base/ruby/$unidad/main.rb" >/dev/null
+  node --check "$base/javascript/$unidad/main.js"
+  node "$base/javascript/$unidad/main.js" >/dev/null
+done
+
 echo "Resto de lenguajes: smoke tests reales"
 node "$base/javascript/03-algoritmos/cuatro-reinas/cuatro_reinas.js" >/dev/null
 go run "$base/go/01-fundamentos/goroutines-canales/goroutines_canales.go" >/dev/null
@@ -137,4 +245,4 @@ nasm -f elf64 "$base/nasm-x64/03-algoritmos/busqueda-lineal/busqueda_lineal.asm"
 ld "$tmp/a.o" -o "$tmp/a"
 "$tmp/a" >/dev/null
 
-echo "OK: catálogo v6, 14 paquetes, 492 fuentes y clientes seleccionados"
+echo "OK: catálogo v7, 14 paquetes, 762 fuentes y clientes seleccionados"
