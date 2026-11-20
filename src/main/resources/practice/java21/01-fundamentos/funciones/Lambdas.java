@@ -1,8 +1,6 @@
-// CodeTrace | Referencia: Java 21 LTS (JDK Temurin 21).
-// Desde PowerShell, en una COPIA del paquete: 
-// Compilar: javac -encoding UTF-8 -d "$env:TEMP\codetrace-java" '.\03-funciones\Lambdas.java'
-// Ejecutar: java -cp "$env:TEMP\codetrace-java" Lambdas
-
+// CodeTrace | Referencia: Java 21 LTS / JDK 21
+// Compilar: javac --release 21 -encoding UTF-8 -d "$env:TEMP\ct-java21" (Get-ChildItem -Recurse -Filter *.java).FullName
+// Ejecutar: java -cp "$env:TEMP\ct-java21" Lambdas
 import java.util.function.IntUnaryOperator;
 
 public class Lambdas {

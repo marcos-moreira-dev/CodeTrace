@@ -1,7 +1,6 @@
 // CodeTrace | Referencia: Java 21 LTS / JDK 21
-// Compilar/Comprobar: javac --release 21 -encoding UTF-8 -d "$env:TEMP\ct-biblioteca" (Get-ChildItem -Recurse -Filter *.java | ForEach-Object FullName)
-// Ejecutar: java -cp "$env:TEMP\ct-biblioteca" ComparadoresEncadenados
-
+// Compilar: javac --release 21 -encoding UTF-8 -d "$env:TEMP\ct-java21" (Get-ChildItem -Recurse -Filter *.java).FullName
+// Ejecutar: java -cp "$env:TEMP\ct-java21" ComparadoresEncadenados
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;

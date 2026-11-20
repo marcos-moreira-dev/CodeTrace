@@ -1,8 +1,6 @@
-// CodeTrace | Referencia: Java 21 LTS (JDK Temurin 21).
-// Desde PowerShell, en una COPIA del paquete: 
-// Compilar: javac -encoding UTF-8 -d "$env:TEMP\codetrace-java" '.\03-funciones\Excepciones.java'
-// Ejecutar: java -cp "$env:TEMP\codetrace-java" Excepciones
-
+// CodeTrace | Referencia: Java 21 LTS / JDK 21
+// Compilar: javac --release 21 -encoding UTF-8 -d "$env:TEMP\ct-java21" (Get-ChildItem -Recurse -Filter *.java).FullName
+// Ejecutar: java -cp "$env:TEMP\ct-java21" Excepciones
 public class Excepciones {
     public static int dividir(int a, int b) {
         if (b == 0) {
