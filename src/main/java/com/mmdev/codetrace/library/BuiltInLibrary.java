@@ -25,7 +25,8 @@ import java.util.Set;
   * <p><strong>Engineering rationale.</strong> Practice packs are bundled, offline teaching content distinct from the user's selected reference folder. Extraction must use controlled destinations and paths, and loading a lesson should still enter the usual read-only reference and transcription workflow instead of creating a second editor.</p>
 */
 public final class BuiltInLibrary {
-    public static final String CATALOG_VERSION = "v2";
+    /** v3 relocates study files; v2 cached copies are left untouched for prior sessions. */
+    public static final String CATALOG_VERSION = "v3";
 
     public record Pack(String id, String name, String extension) {
         public Pack {

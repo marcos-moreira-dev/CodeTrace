@@ -13,7 +13,7 @@ expansión lógica fuera del hilo JavaFX y filas visibles mediante `ListView`,
 con mejoras confirmadas en pruebas reales de proyectos grandes.
 No se ha integrado todavía en `main`.
 
-En esta rama de desarrollo, la biblioteca de práctica está ampliada a **347 archivos de referencia en 14 lenguajes**. Cada ejercicio puede tener varios archivos: la cifra no equivale a 347 ejercicios independientes. Es contenido educativo en validación y no implica una publicación estable. Los requisitos pendientes de aceptación funcional,
+En esta rama de desarrollo, la biblioteca de práctica está ampliada a **364 archivos de referencia en 14 lenguajes**. Cada ejercicio puede tener varios archivos: la cifra no equivale a 347 ejercicios independientes. Es contenido educativo en validación y no implica una publicación estable. Los requisitos pendientes de aceptación funcional,
 legal, accesibilidad y Windows están en
 [Condiciones de cierre v0.3](docs/CIERRE-V0.3.md).
 El hecho de que el código sea público en GitHub **no equivale** a tener
@@ -93,7 +93,7 @@ un análisis semántico completo.
 
 La barra de menú usa gris pizarra moderado y la barra de herramientas un
 neutral cálido para diferenciarlas sin imitar interfaces antiguas exageradas.
-Las versiones y comandos de los 347 archivos de referencia se describen en
+Las versiones y comandos de los 364 archivos de referencia se describen en
 [Versiones y CLI](docs/LENGUAJES-Y-COMANDOS.md).
 
 ## Navegación y búsqueda (versión en evaluación)
@@ -138,7 +138,7 @@ En Windows, `scripts\package-windows.ps1` prepara un ZIP portable que incorpora 
 - Iconografía transversal de carpetas y lenguajes con Ikonli/Devicons y Feather; controles desplegables con el mismo estilo rectangular.
 - Resaltado inicial para Java, Python, JavaScript/TypeScript, C, C++, Go, Ruby, C#, PowerShell, Shell (.sh/.bash/.zsh), CMD (.bat/.cmd) y Markdown.
 - **Modo Turbo opcional**: omite signos de puntuación consecutivos al mecanografiar. Las omisiones no cuentan como aciertos ni modifican la referencia.
-- **Biblioteca de práctica interna**: Práctica → Biblioteca de práctica. Incluye 108 ejercicios en 13 packs (Java 21, Kotlin 2.2, TypeScript, JavaScript, Python, C, C++, C#, Go, Ruby, PowerShell, Shell y CMD). Java, Kotlin y TypeScript cuentan con 16 ejercicios cada uno; los demás tienen seis, con fundamentos, estructuras, algoritmos y prácticas idiomáticas. Cada archivo indica una versión de referencia y cómo compilarlo, comprobarlo o ejecutarlo. Funciona offline, no requiere descargar un repositorio ni un compilador para transcribir.
+- **Biblioteca de práctica interna**: Práctica → Biblioteca de práctica. Incluye 14 lenguajes y 364 archivos de referencia organizados por unidades; un ejercicio puede tener varios archivos. Las prácticas de grafos, algoritmos y patrones se agrupan en carpetas semánticas y el progreso sigue siendo virtual y separado de las referencias.
 - **Consola plegable y redimensionable** desde Ver → Consola, Alt+F12 o la toolbar. Arrastra el divisor horizontal para ampliar/reducir la salida, como ya haces con el explorador. Permite ejecutar comandos preconfigurados, ver su salida y detenerlos.
 - **Comandos por proyecto** desde Herramientas → Preferencias → Comandos: múltiples perfiles con nombre, intérprete, instrucción y directorio relativo de trabajo.
 - Vista Markdown alternable entre fuente y renderizado en una misma pestaña.
@@ -194,7 +194,7 @@ opacidad, el modo Turbo, los filtros y las estadísticas funcionan igual que en
 los repositorios externos. El contenido original siempre permanece inmutable.
 
 Las plantillas se empaquetan dentro del JAR y, al abrirse, se materializan
-de forma determinista en `~/.codetrace/practice-library/v1/`. No hay conexión,
+de forma determinista en `~/.codetrace/practice-library/v3/`. No hay conexión,
 plugin o descarga de terceros. **Guarda tu progreso en una sesión `.ctrace`**
 para continuarlo después. Los packs se basan en ejemplos originales de
 mecanografía y no en ejercicios evaluados automáticamente.

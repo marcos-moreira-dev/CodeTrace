@@ -110,10 +110,12 @@ class BuiltInLibraryTest {
     @Test
     void allFourCurriculumPurposesAndDocumentedJavaClientsArePresent() throws Exception {
         var library = new BuiltInLibrary(temp.resolve("curriculum"));
-        assertEquals("v2", BuiltInLibrary.CATALOG_VERSION);
-        assertEquals(347, library.packs().stream().mapToInt(library::size).sum());
+        assertEquals("v3", BuiltInLibrary.CATALOG_VERSION);
+        assertEquals(364, library.packs().stream().mapToInt(library::size).sum());
         for (var pack : library.packs()) {
             var entries = library.entries(pack);
+            assertTrue(entries.stream().allMatch(x -> x.split("/").length >= 3),
+                    "Every reference must be inside a named exercise directory: " + pack.id());
             assertTrue(entries.stream().anyMatch(x -> x.startsWith("01-fundamentos/")), pack.id());
             assertTrue(entries.stream().anyMatch(x -> x.startsWith("03-algoritmos/")), pack.id());
             assertTrue(entries.stream().noneMatch(x -> x.contains("07-proyectos/")
@@ -121,14 +123,22 @@ class BuiltInLibraryTest {
         }
         var javaPack = library.packs().stream().filter(x -> x.id().equals("java21")).findFirst().orElseThrow();
         assertTrue(library.entries(javaPack).contains("01-fundamentos/comparadores/ComparadoresEncadenados.java"));
-        assertTrue(library.entries(javaPack).contains("03-algoritmos/programacion-dinamica/MainMonedas.java"));
+        assertTrue(library.entries(javaPack).contains("03-algoritmos/programacion-dinamica/cambio-monedas/MainMonedas.java"));
         assertTrue(library.entries(javaPack).contains("04-patrones-diseno/strategy-tarifas/MainTarifas.java"));
         assertTrue(library.entries(javaPack).contains("02-estructuras-datos/arbol-bst/MainArbol.java"));
         assertTrue(library.entries(javaPack).contains("02-estructuras-datos/tabla-hash/MainHash.java"));
         assertTrue(library.entries(javaPack).contains("03-algoritmos/backtracking/CuatroReinas.java"));
-        assertTrue(library.entries(javaPack).contains("03-algoritmos/programacion-dinamica/Mochila01.java"));
+        assertTrue(library.entries(javaPack).contains("03-algoritmos/programacion-dinamica/mochila-01/Mochila01.java"));
         assertTrue(library.entries(javaPack).contains("04-patrones-diseno/adapter/MainAdapter.java"));
         assertTrue(library.entries(javaPack).contains("04-patrones-diseno/decorator/MainDecorator.java"));
+        assertTrue(library.entries(javaPack).contains("02-estructuras-datos/grafos/tipos/MainTiposGrafo.java"));
+        assertTrue(library.entries(javaPack).contains("02-estructuras-datos/grafos/representaciones/MainRepresentaciones.java"));
+        assertTrue(library.entries(javaPack).contains("03-algoritmos/grafos/caminos-minimos/MainCaminosMinimos.java"));
+        assertTrue(library.entries(javaPack).contains("03-algoritmos/grafos/expansion-minima/MainExpansionMinima.java"));
+        assertTrue(library.entries(javaPack).contains("03-algoritmos/grafos/topologico/MainTopologico.java"));
+        assertTrue(library.entries(javaPack).contains("03-algoritmos/grafos/recorridos/MainCaminosSinPeso.java"));
+        assertTrue(library.entries(javaPack).contains("04-patrones-diseno/factory/basico/MainFactoryBasica.java"));
+        assertTrue(library.entries(javaPack).contains("04-patrones-diseno/observer/basico/MainObservadorBasico.java"));
     }
 
     @Test
@@ -148,10 +158,10 @@ class BuiltInLibraryTest {
         assertTrue(library.entries(all.get("c")).contains(
                 "04-patrones-diseno/observer/Observer.h"));
         assertTrue(library.entries(all.get("nasm-x64")).contains(
-                "03-algoritmos/euclides.asm"));
+                "03-algoritmos/euclides/euclides.asm"));
         assertTrue(library.entries(all.get("java21")).contains(
-                "03-algoritmos/Dijkstra.java"));
-        assertEquals(347, library.packs().stream().mapToInt(library::size).sum());
+                "03-algoritmos/dijkstra/Dijkstra.java"));
+        assertEquals(364, library.packs().stream().mapToInt(library::size).sum());
     }
 
 }
