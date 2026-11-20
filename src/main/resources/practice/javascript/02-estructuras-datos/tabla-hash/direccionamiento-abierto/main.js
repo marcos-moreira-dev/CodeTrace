@@ -22,3 +22,10 @@ function main(){
     console.log("Sondeo verificado");
 }
 if(require.main===module)main();
+
+/*
+ * Salida esperada de consola:
+ *   Sondeo verificado
+ *   (los valores variables completan los fragmentos anteriores)
+ * Verificacion: termina sin excepciones inesperadas.
+ */

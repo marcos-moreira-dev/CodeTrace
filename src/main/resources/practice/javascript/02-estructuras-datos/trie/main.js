@@ -19,3 +19,10 @@ function main(){
     console.log("Trie OK");
 }
 if(require.main===module)main();
+
+/*
+ * Salida esperada de consola:
+ *   Trie OK
+ *   (los valores variables completan los fragmentos anteriores)
+ * Verificacion: termina sin excepciones inesperadas.
+ */

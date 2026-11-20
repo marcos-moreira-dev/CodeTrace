@@ -19,3 +19,10 @@ function main(){
     console.log("Componentes:",d.componentes);
 }
 if(require.main===module)main();
+
+/*
+ * Salida esperada de consola:
+ *   Componentes:
+ *   (los valores variables completan los fragmentos anteriores)
+ * Verificacion: termina sin excepciones inesperadas.
+ */

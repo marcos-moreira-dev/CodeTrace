@@ -17,3 +17,10 @@ function main() {
     console.log("Celsius:", sensor.leer());
 }
 if (require.main === module) main();
+
+/*
+ * Salida esperada de consola:
+ *   Celsius:
+ *   (los valores variables completan los fragmentos anteriores)
+ * Verificacion: termina sin excepciones inesperadas.
+ */

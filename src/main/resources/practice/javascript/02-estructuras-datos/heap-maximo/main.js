@@ -19,3 +19,10 @@ function main(){
     console.log("Max heap correcto");
 }
 if(require.main===module)main();
+
+/*
+ * Salida esperada de consola:
+ *   Max heap correcto
+ *   (los valores variables completan los fragmentos anteriores)
+ * Verificacion: termina sin excepciones inesperadas.
+ */
