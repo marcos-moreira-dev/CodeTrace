@@ -16,3 +16,9 @@ public final class MainFactoryMethod {
         System.out.println(creador.preparar("Factura 001"));
     }
 }
+
+/*
+ * Salida esperada de consola:
+ *   Se imprime el valor o coleccion calculado por el cliente.
+ * Verificacion: termina sin excepciones inesperadas.
+ */

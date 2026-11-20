@@ -24,3 +24,9 @@ public final class MainTemplateMethod {
         System.out.println(a+b);
     }
 }
+
+/*
+ * Salida esperada de consola:
+ *   Se imprime el valor o coleccion calculado por el cliente.
+ * Verificacion: termina sin excepciones inesperadas.
+ */

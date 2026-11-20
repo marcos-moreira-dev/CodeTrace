@@ -23,3 +23,9 @@ public final class MainDecorator {
         emisor.enviar("Proceso finalizado");
     }
 }
+
+/*
+ * Salida esperada de consola:
+ *   Sin salida de texto; las pruebas del cliente se cumplen.
+ * Verificacion: termina sin excepciones inesperadas.
+ */

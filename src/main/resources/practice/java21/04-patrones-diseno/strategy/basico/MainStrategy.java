@@ -22,3 +22,11 @@ public final class MainStrategy {
         System.out.println("Fidelidad: " + esperado);
     }
 }
+
+/*
+ * Salida esperada de consola:
+ *   Normal: 
+ *   Fidelidad: 
+ *   (los valores variables completan los fragmentos anteriores)
+ * Verificacion: termina sin excepciones inesperadas.
+ */

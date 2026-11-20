@@ -24,3 +24,10 @@ public final class MainComposite {
         System.out.println("Bytes: "+raiz.bytes());
     }
 }
+
+/*
+ * Salida esperada de consola:
+ *   Bytes: 
+ *   (los valores variables completan los fragmentos anteriores)
+ * Verificacion: termina sin excepciones inesperadas.
+ */

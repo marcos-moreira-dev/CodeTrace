@@ -25,3 +25,9 @@ public final class MainTarifas {
         System.out.println(cobrar(100.0, Tarifas.descuento(0.15)));
     }
 }
+
+/*
+ * Salida esperada de consola:
+ *   Se imprime el valor o coleccion calculado por el cliente.
+ * Verificacion: termina sin excepciones inesperadas.
+ */

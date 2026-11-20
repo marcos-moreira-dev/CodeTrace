@@ -20,3 +20,10 @@ function main(){
     console.log("Cola enlazada correcta");
 }
 if(require.main===module)main();
+
+/*
+ * Salida esperada de consola:
+ *   Cola enlazada correcta
+ *   (los valores variables completan los fragmentos anteriores)
+ * Verificacion: termina sin excepciones inesperadas.
+ */

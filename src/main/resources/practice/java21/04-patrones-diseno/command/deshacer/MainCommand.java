@@ -31,3 +31,9 @@ public final class MainCommand {
         System.out.println(editor.texto());
     }
 }
+
+/*
+ * Salida esperada de consola:
+ *   Se imprime el valor o coleccion calculado por el cliente.
+ * Verificacion: termina sin excepciones inesperadas.
+ */

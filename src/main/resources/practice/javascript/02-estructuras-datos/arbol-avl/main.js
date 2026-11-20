@@ -18,3 +18,10 @@ function main(){
     console.log("Altura AVL:",t.validar());
 }
 if(require.main===module)main();
+
+/*
+ * Salida esperada de consola:
+ *   Altura AVL:
+ *   (los valores variables completan los fragmentos anteriores)
+ * Verificacion: termina sin excepciones inesperadas.
+ */
