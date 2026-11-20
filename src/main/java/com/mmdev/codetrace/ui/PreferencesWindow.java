@@ -292,24 +292,22 @@ public final class PreferencesWindow {
             commandsPage.getStyleClass().add("prefs-section");
         }
 
+        // One persistent choice controls both the warning dialog opt-out
+        // and restoration here; no redundant second "restore" action.
         CheckBox realFilesWarning = AppControls.checkBox(
                 "Confirmar antes de ejecutar comandos sobre archivos reales");
+        realFilesWarning.getStyleClass().add("prefs-real-file-warning");
         realFilesWarning.setSelected(CommandWarningPreferences.mustConfirm());
         realFilesWarning.setTooltip(new Tooltip(
-                "El programa externo podría modificar o eliminar originales."));
-        Button restoreWarnings = new Button("Restablecer avisos de seguridad");
-        restoreWarnings.setTooltip(new Tooltip(
-                "Reactiva las confirmaciones de ejecución real; guarda con Aplicar."));
+                "Se desactiva al marcar No volver a mostrar en el aviso. "
+                + "Vuelve a activarla aquí con Aplicar o Aceptar."));
         Label safetyNote = new Label(
-                "Los comandos externos utilizan el proyecto original, no la reconstrucción virtual. "
-                + "Los cambios se guardan con Aplicar o Aceptar.");
+                "Los comandos se ejecutan sobre archivos del proyecto original, "
+                + "no sobre la reconstrucción virtual. Si marcas «No volver a mostrar "
+                + "esta advertencia» en el diálogo, esta casilla se desactiva. "
+                + "Puedes reactivarla aquí cuando quieras; guarda con Aplicar o Aceptar.");
         safetyNote.setWrapText(true);
         safetyNote.getStyleClass().add("prefs-feedback");
-        restoreWarnings.setOnAction(event -> {
-            realFilesWarning.setSelected(true);
-            safetyNote.setText(
-                    "Confirmaciones reactivadas. Pulsa Aplicar o Aceptar para guardar.");
-        });
         CheckBox readOnlyNotice = AppControls.checkBox(
                 "Mostrar aviso al abrir archivos solo de consulta");
         readOnlyNotice.getStyleClass().add("read-only-consultation-notice");
@@ -320,7 +318,7 @@ public final class PreferencesWindow {
         VBox noticesPanel = section("Avisos");
         noticesPanel.getChildren().addAll(
                 groupHeading("Confirmaciones de seguridad"),
-                realFilesWarning, restoreWarnings, safetyNote,
+                realFilesWarning, safetyNote,
                 groupHeading("Avisos informativos"), readOnlyNotice);
         final javafx.scene.Node stableCommandsPage = commandsPage;
 
