@@ -208,6 +208,13 @@ public final class GraphLayoutEngine {
             occupied.add(key);
             cells.put(sorted.get(i), new int[]{bestColumn, bestRow});
         }
+        // The force layout may leave a vertex shared by two or more parents
+        // far from their geometric average after lattice quantization. Relax
+        // only backbone vertices with at least two actual placed neighbors,
+        // moving into free label-sized cells near their barycenter. A single
+        // occupied cell reserves the *whole* filename rectangle.
+        compactSharedNodes(cells, occupied, adjacent);
+
         // Degree-one nodes get the nearest unoccupied cell around their
         // single neighbor. In a star, the hub is laid out first and its
         // satellites fill expanding rings; there is no reason for an
@@ -267,6 +274,79 @@ public final class GraphLayoutEngine {
                     (cell[1] - minRow) * CELL_HEIGHT));
         }
         return output;
+    }
+
+    /**
+     * Barycentric local refinement for shared dependencies. For two linked
+     * parents, minimizing the sum of squared edge lengths places their child
+     * near the parents' midpoint, subject to label-cell occupancy. A small
+     * number of deterministic sweeps is sufficient for the bounded graph.
+     *
+     * <p>Each candidate cell is a 290 × 96 px rectangle containing the node
+     * and its filename label. Existing reservations are never overridden.</p>
+     */
+    private static void compactSharedNodes(Map<String, int[]> cells,
+                                           Set<Long> occupied,
+                                           Map<String, Set<String>> adjacent) {
+        List<String> movable = cells.keySet().stream()
+                .filter(node -> adjacent.get(node).size() >= 2)
+                .sorted(Comparator.<String>comparingInt(
+                        node -> adjacent.get(node).size())
+                        .thenComparing(Comparator.naturalOrder())).toList();
+        for (int pass = 0; pass < 4; pass++) {
+            boolean changed = false;
+            for (String node : movable) {
+                List<int[]> linked = adjacent.get(node).stream()
+                        .map(cells::get).filter(java.util.Objects::nonNull).toList();
+                if (linked.size() < 2) continue;
+                int[] current = cells.get(node);
+                double meanColumn = linked.stream().mapToInt(cell -> cell[0])
+                        .average().orElse(current[0]);
+                double meanRow = linked.stream().mapToInt(cell -> cell[1])
+                        .average().orElse(current[1]);
+                int baseColumn = (int) Math.round(meanColumn);
+                int baseRow = (int) Math.round(meanRow);
+                int bestColumn = current[0], bestRow = current[1];
+                double best = connectionCost(bestColumn, bestRow, linked);
+                // Search only near the average, never allocate arbitrary
+                // world-space cells or move an occupied label rectangle.
+                for (int dx = -5; dx <= 5; dx++) {
+                    for (int dy = -5; dy <= 5; dy++) {
+                        int col = baseColumn + dx, row = baseRow + dy;
+                        long key = cellKey(col, row);
+                        if (occupied.contains(key)
+                                && (col != current[0] || row != current[1])) continue;
+                        double score = connectionCost(col, row, linked);
+                        if (score + 0.001 < best) {
+                            best = score;
+                            bestColumn = col;
+                            bestRow = row;
+                        }
+                    }
+                }
+                if (bestColumn != current[0] || bestRow != current[1]) {
+                    occupied.remove(cellKey(current[0], current[1]));
+                    occupied.add(cellKey(bestColumn, bestRow));
+                    cells.put(node, new int[]{bestColumn, bestRow});
+                    changed = true;
+                }
+            }
+            if (!changed) break;
+        }
+    }
+
+    private static double connectionCost(int col, int row, List<int[]> neighbors) {
+        double total = 0;
+        for (int[] other : neighbors) {
+            double dx = (col - other[0]) * CELL_WIDTH;
+            double dy = (row - other[1]) * CELL_HEIGHT;
+            total += dx * dx + dy * dy;
+        }
+        return total;
+    }
+
+    private static long cellKey(int col, int row) {
+        return (((long) col) << 32) ^ (row & 0xffffffffL);
     }
 
     /** Used to reject saved arrangements that place long labels on each other. */
