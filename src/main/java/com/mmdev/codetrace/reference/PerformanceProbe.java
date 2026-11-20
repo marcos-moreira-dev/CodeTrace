@@ -22,6 +22,19 @@ public final class PerformanceProbe {
         return ENABLED ? System.nanoTime() : 0L;
     }
 
+    /**
+     * Detect unusually long gaps between JavaFX rendering pulses during
+     * interactive exploration. This is a symptom measurement, not the CPU
+     * time of an individual control. The caller ignores unfocused windows
+     * and limits reporting to avoid creating more work during a stall.
+     */
+    public static void fxFrameGap(double milliseconds, long entries) {
+        if (!ENABLED || milliseconds < 120) return;
+        LOG.info(() -> String.format(Locale.ROOT,
+                "Performance fx-frame-gap: %.1f ms, entries=%d",
+                milliseconds, entries));
+    }
+
     public static void finish(String operation, long startNanos, long entries) {
         if (!ENABLED || startNanos == 0L) return;
         double milliseconds = (System.nanoTime() - startNanos) / 1_000_000.0;
