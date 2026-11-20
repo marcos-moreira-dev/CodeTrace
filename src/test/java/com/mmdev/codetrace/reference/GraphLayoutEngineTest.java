@@ -89,6 +89,34 @@ class GraphLayoutEngineTest {
     }
 
     @Test
+    void sharedDependencyUsesNeighborBarycenterWithoutOverlappingLabels() {
+        var names = List.of("src/Alpha.java", "src/Beta.java",
+                "src/Shared.java", "src/AlphaLeaf.java", "src/BetaLeaf.java");
+        var edges = List.of(
+                new ProjectDependencyGraph.Edge(names.get(0), names.get(2), "import"),
+                new ProjectDependencyGraph.Edge(names.get(1), names.get(2), "import"),
+                new ProjectDependencyGraph.Edge(names.get(0), names.get(3), "import"),
+                new ProjectDependencyGraph.Edge(names.get(1), names.get(4), "import"));
+        var graph = new ProjectDependencyGraph.Graph("src", names, edges,
+                names.size(), false, "a".repeat(64));
+        var positions = GraphLayoutEngine.arrange(graph,
+                GraphLayoutEngine.Mode.ORGANIZED);
+        assertNoOverlaps(positions);
+        var alpha = positions.get(names.get(0));
+        var beta = positions.get(names.get(1));
+        var shared = positions.get(names.get(2));
+        double centroidX = (alpha.x() + beta.x()) / 2;
+        double centroidY = (alpha.y() + beta.y()) / 2;
+        assertTrue(Math.abs(shared.x() - centroidX)
+                        <= GraphLayoutEngine.CELL_WIDTH * 1.5
+                && Math.abs(shared.y() - centroidY)
+                        <= GraphLayoutEngine.CELL_HEIGHT * 2.0,
+                "A shared dependency should stay near its parents, not orbit far away");
+        assertEquals(positions, GraphLayoutEngine.arrange(graph,
+                GraphLayoutEngine.Mode.ORGANIZED), "Barycentric layout must be reproducible");
+    }
+
+    @Test
     void twoFilesConnectedByOneImportRemainDirectNeighbors() {
         var nodes = List.of("z/A.py", "z/B.py");
         var graph = new ProjectDependencyGraph.Graph("z", nodes,
