@@ -104,7 +104,7 @@ foreach ($name in @("OpenJFX-GPLv2-Classpath.txt", "EmojiJava-MIT.txt", "Devicon
     }
     Copy-Item -LiteralPath $source -Destination (Join-Path $legalDir $name) -Force
 }
-# Windows shell and taskbar must display the official CodeTrace mark,
+# Windows shell and taskbar must display the official transparent 512px CodeTrace mark,
 # not jpackage's fallback Java icon. Reuse the same ICO converter that
 # generates the distinct .ctrace document icon for the installer.
 $appIcon = Join-Path $target "codetrace-app.ico"
@@ -123,7 +123,9 @@ $packageArgs = @("--type", "app-image", "--name", "CodeTrace",
     "--input", $input, "--main-jar", $jarName,
     "--main-class", "com.mmdev.codetrace.app.Launcher",
     "--dest", $dist, "--java-options", "-Dfile.encoding=UTF-8",
-    "--app-version", $appVersion, "--vendor", "Marcos Moreira DEV",
+    "--app-version", $appVersion, "--vendor", "Marcos Moreira",
+    "--copyright", "Copyright (c) 2026 Marcos Moreira",
+    "--description", "CodeTrace - practica y estudio de codigo",
     "--icon", $appIcon)
 & $jpackage @packageArgs
 if ($LASTEXITCODE -ne 0) { throw "jpackage no pudo generar la aplicación." }
@@ -178,6 +180,9 @@ if ($Installer) {
             [Text.UTF8Encoding]::new($false))
     $installerArgs = @("--type", "exe", "--app-image", $portable,
         "--name", "CodeTrace", "--app-version", $appVersion, "--dest", $dist,
+        "--vendor", "Marcos Moreira",
+        "--copyright", "Copyright (c) 2026 Marcos Moreira",
+        "--description", "CodeTrace - practica y estudio de codigo",
         "--win-menu", "--win-shortcut", "--file-associations", $association)
     & $jpackage @installerArgs
     if ($LASTEXITCODE -ne 0) { throw "No se creó el instalador EXE; verifica WiX." }

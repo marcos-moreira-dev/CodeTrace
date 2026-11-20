@@ -1,5 +1,7 @@
 <div align="center">
 
+<img src="docs/media/00-portada-codetrace.jpg" alt="CodeTrace: símbolo de reconstrucción de código y logotipo oficial" width="100%">
+
 # CodeTrace
 
 ### Aprende código reconstruyéndolo. Explora proyectos sin alterar sus originales.
@@ -24,6 +26,16 @@ Java 21 · JavaFX · Windows 11 · 14 lenguajes en la biblioteca de práctica ·
 - **Explorar proyectos existentes.** Navega el árbol de archivos, busca contenido y consulta código o archivos de configuración de solo lectura. La navegación está optimizada para proyectos grandes.
 - **Comprender dependencias.** Visualiza relaciones estáticas entre archivos de una carpeta, acerca, desplaza y abre nodos desde el mapa. El análisis es aproximado: no sustituye a un compilador o analizador semántico.
 - **Estudiar recursos complementarios.** Abre README con Markdown renderizado e imágenes locales; consulta imágenes, audio y vídeo compatibles, y utiliza una consola para ejecutar **comandos explícitos** sobre el proyecto real.
+
+## Identidad de CodeTrace
+
+El símbolo de la aplicación utiliza ventanas de código superpuestas y una barra
+de progreso; es un PNG transparente integrado en la aplicación y el instalador.
+Las sesiones `.ctrace` tienen un **icono de documento independiente**, con
+indicadores pastel de práctica correcta e incorrecta. Ambos se convierten a
+ICO multirresolución durante el empaquetado Windows. El autor y editor del
+programa es **Marcos Moreira**, también identificado en sus metadatos.
+[Guía de identidad visual](docs/IDENTIDAD-VISUAL.md).
 
 ## Capturas de pantalla
 
@@ -55,13 +67,15 @@ La biblioteca integrada comprende **14 lenguajes y 813 archivos de referencia** 
 
 **Plataforma principal:** Windows 11.
 
-**Descargas oficiales:** [CodeTrace v0.3.0 — Windows](https://github.com/marcos-moreira-dev/CodeTrace/releases/tag/v0.3.0).
+**Descargas oficiales:** [CodeTrace v0.3.1 — Windows](https://github.com/marcos-moreira-dev/CodeTrace/releases/tag/v0.3.1).
 
 - **Instalador `.exe`:** instalación normal y asociación de sesiones `.ctrace`.
 - **Archivo `.zip` portable:** descomprime y ejecuta `CodeTrace.exe` sin instalar Java por separado.
 - **SHA-256:** se publica junto a ambos archivos para verificar sus descargas.
 
-Esta primera publicación es una **versión de prueba**. El instalador no tiene firma digital; Windows puede mostrar advertencias de SmartScreen. Se han realizado pruebas automatizadas y uso real del autor, pero no una certificación exhaustiva en todos los equipos. Consulta [los límites y las pruebas](docs/CIERRE-V0.3.md).
+Esta versión 0.3.1 es una **actualización visual de la versión pública de prueba**: iconos oficiales de alta resolución, asociación `.ctrace` y autoría consistente en los metadatos de Windows. Las funcionalidades de práctica no cambian. La publicación original v0.3.0 queda conservada como antecedente.
+
+CodeTrace es una **versión de prueba**. El instalador no tiene firma digital; Windows puede mostrar advertencias de SmartScreen. Se han realizado pruebas automatizadas y uso real del autor, pero no una certificación exhaustiva en todos los equipos. Consulta [los límites y las pruebas](docs/CIERRE-V0.3.md).
 
 Para probar el código fuente necesitas **Eclipse Temurin JDK 21**, **Maven** y un entorno gráfico de Windows:
 
@@ -99,7 +113,7 @@ Para generar un ZIP portable, y opcionalmente el instalador con las herramientas
 
 ## Estado del proyecto
 
-**CodeTrace v0.3.0 — primera versión pública de prueba.** El autor verificó informalmente las funciones habituales y el repositorio realiza pruebas automatizadas; no se afirma aceptación exhaustiva en todos los equipos Windows. La biblioteca contiene 813 archivos de referencia en 14 lenguajes, con anotaciones de consola. Algunas salidas de otros lenguajes se infirieron a partir del código y requieren comprobación en su entorno específico.
+**CodeTrace v0.3.1 — primera versión pública de prueba.** El autor verificó informalmente las funciones habituales y el repositorio realiza pruebas automatizadas; no se afirma aceptación exhaustiva en todos los equipos Windows. La biblioteca contiene 813 archivos de referencia en 14 lenguajes, con anotaciones de consola. Algunas salidas de otros lenguajes se infirieron a partir del código y requieren comprobación en su entorno específico.
 
 **Código fuente original:** licencia [MIT](LICENSE), © 2026 Marcos Moreira. Puedes usarlo, modificarlo y distribuirlo, incluso comercialmente, conservando el aviso y la licencia; no debes mostrar ningún contacto personal. Los elementos gráficos originales y los componentes de terceros tienen alcances distintos: [identidad y recursos](LICENSING.md) y [avisos de terceros](THIRD-PARTY-NOTICES.md). El nombre CodeTrace no se declara marca registrada.
 
@@ -109,6 +123,6 @@ Para generar un ZIP portable, y opcionalmente el instalador con las herramientas
 
 **CodeTrace** — una forma más deliberada de aprender cómo se construye el software.
 
-Desarrollado por Marcos Moreira DEV.
+Desarrollado por Marcos Moreira.
 
 </div>

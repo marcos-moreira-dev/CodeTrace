@@ -17,7 +17,7 @@ La interfaz y las funciones esenciales se encuentran en fase de aceptación manu
 | README promocional | Integrado en rama candidata con cinco capturas y otras vistas | Fusionarlo a main, enlazar release |
 | Tests automatizados | CI de v9 pasó y sigue verificándose con documentación y dependencias actualizadas | Comprobar CI del commit de publicación |
 | Licencia | **MIT seleccionada; © 2026 Marcos Moreira** | Verificar los avisos de terceros realmente empaquetados antes de release |
-| Versionado | `0.3.0` fijada en la rama candidata | Publicar etiqueta final y binarios comprobados desde main |
+| Versionado | `0.3.1` para ajuste de identidad visual, con autor Marcos Moreira | Publicar etiqueta final y binarios comprobados desde main |
 | Firma del instalador | No firmada | Opcional; sin firma, SmartScreen puede advertir |
 
 ## Orden recomendado de cierre (sin ampliar funcionalidades)
