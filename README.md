@@ -21,6 +21,26 @@ El hecho de que el código sea público en GitHub **no equivale** a tener
 una licencia de software libre: el archivo LICENSE está pendiente
 de la decisión del autor.
 
+## Estudiar la arquitectura y generar el Javadoc
+
+La [guía de arquitectura para estudiar CodeTrace](docs/GUIA-DE-ARQUITECTURA-CODETRACE.md)
+explica las decisiones de diseño, las fronteras JavaFX/dominio, los índices
+del explorador, la concurrencia, las sesiones y la complejidad algorítmica.
+Los **100 archivos Java de producción** incluyen Javadoc de nivel de clase
+sobre sus responsabilidades e invariantes. Los detalles técnicos de cada
+clase están documentados junto a su implementación.
+
+Con Temurin JDK 21 y Maven configurados, genera el sitio HTML local:
+
+```powershell
+mvn --batch-mode --no-transfer-progress javadoc:javadoc
+Start-Process ".\\target\\site\\apidocs\\index.html"
+```
+
+En GitHub Actions, el flujo **Verify** comprueba que se genera la documentación
+y conserva el HTML como artefacto descargable. Este sitio es documentación
+técnica para desarrolladores; no cambia el funcionamiento de la aplicación.
+
 ## Ejecutar en Windows 11
 
 Requisitos: **Eclipse Temurin JDK 21** y **Apache Maven** (mvn.cmd en PATH).
