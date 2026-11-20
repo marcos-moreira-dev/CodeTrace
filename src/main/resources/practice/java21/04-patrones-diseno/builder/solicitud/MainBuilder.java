@@ -19,12 +19,12 @@ public final class MainBuilder {
             .metodo("POST").cabecera("Content-Type: application/json").construir();
         if(!s.ruta().equals("/facturas")||s.cabeceras().size()!=1)
             throw new AssertionError("Builder");
-        System.out.println(s);
+        System.out.println(s.metodo()+" "+s.ruta()+" ("+s.cabeceras().size()+" cabecera)");
     }
 }
 
 /*
- * Salida esperada de consola (toString automático del record Solicitud):
- *   Solicitud[ruta=/facturas, metodo=POST, cabeceras=[Content-Type: application/json]]
- * El producto conserva una sola cabecera y valores válidos.
+ * Salida esperada de consola:
+ *   POST /facturas (1 cabecera)
+ * El record Solicitud es inmutable y el Builder valida sus opciones.
  */
