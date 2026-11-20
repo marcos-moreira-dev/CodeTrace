@@ -20,3 +20,8 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
+# Salida esperada de consola:
+#   Componentes:
+#   (los valores variables completan los fragmentos anteriores)
+# Verificacion: termina sin excepciones inesperadas.

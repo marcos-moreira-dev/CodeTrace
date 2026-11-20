@@ -25,3 +25,7 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
+# Salida esperada de consola:
+#   Se imprime el valor o coleccion calculado por el cliente.
+# Verificacion: termina sin excepciones inesperadas.
