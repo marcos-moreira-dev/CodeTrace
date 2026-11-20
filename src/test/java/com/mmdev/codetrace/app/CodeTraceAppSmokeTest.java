@@ -402,6 +402,12 @@ class CodeTraceAppSmokeTest {
                         about.getDialogPane().lookup(".about-description");
                 assertNotNull(aboutCopy);
                 assertTrue(aboutCopy.getText().contains("inteligencia artificial"));
+                assertTrue(about.getDialogPane().lookupAll(".about-license-note").stream()
+                        .filter(javafx.scene.control.Label.class::isInstance)
+                        .map(javafx.scene.control.Label.class::cast)
+                        .anyMatch(label -> label.getText().contains("WCAG 2.2")
+                                && label.getText().contains("sin certificación")),
+                        "About must mention the design reference without claiming conformity");
                 javafx.scene.image.ImageView aboutImage =
                         (javafx.scene.image.ImageView)
                                 about.getDialogPane().lookup(".about-logo-large");
