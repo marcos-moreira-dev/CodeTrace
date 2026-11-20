@@ -371,8 +371,11 @@ public final class GraphLayoutEngine {
                     && Math.abs(current[1] - center[1]) <= 1) continue;
             int bestCol = current[0], bestRow = current[1];
             double bestCost = connectionCost(bestCol, bestRow, List.of(center));
-            for (int dx = -2; dx <= 2; dx++) {
-                for (int dy = -2; dy <= 2; dy++) {
+            // First ring only: on a small star every leaf must remain an
+            // immediate visual neighbor; searching a second vertical ring
+            // can be shorter in pixels but violates that relationship.
+            for (int dx = -1; dx <= 1; dx++) {
+                for (int dy = -1; dy <= 1; dy++) {
                     int col = center[0] + dx, row = center[1] + dy;
                     if (occupied.contains(cellKey(col, row))
                             && (col != current[0] || row != current[1])) continue;
