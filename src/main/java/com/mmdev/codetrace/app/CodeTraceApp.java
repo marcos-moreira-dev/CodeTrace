@@ -457,7 +457,22 @@ public final class CodeTraceApp extends Application {
         // The legacy TreeView handles short/manual navigation; the logical
         // projection uses a ListView VirtualFlow only for mass expansion.
         // Both share the same reference index without duplicating file bytes.
-        StackPane explorerHost = new StackPane(tree, tree.projectedExplorer());
+        // Disk indexing begins before the first tree rows exist. Present a
+        // visible indeterminate indicator instead of a blank explorer. A mass
+        // expansion keeps its existing rows usable and uses the small header
+        // activity indicator instead of masking the list.
+        ProgressIndicator initialLoadIndicator = new ProgressIndicator();
+        initialLoadIndicator.setMaxSize(28, 28);
+        Label initialLoadMessage = new Label("Preparando el explorador...");
+        initialLoadMessage.getStyleClass().add("explorer-loading-label");
+        VBox explorerLoading = new VBox(10, initialLoadIndicator, initialLoadMessage);
+        explorerLoading.getStyleClass().add("explorer-loading");
+        explorerLoading.setAlignment(javafx.geometry.Pos.CENTER);
+        explorerLoading.setMouseTransparent(true);
+        explorerLoading.setVisible(false);
+        explorerLoading.managedProperty().bind(explorerLoading.visibleProperty());
+        StackPane explorerHost = new StackPane(
+                tree, tree.projectedExplorer(), explorerLoading);
         explorerHost.getStyleClass().add("reference-explorer-host");
         VBox mainContent = new VBox(header, searchRow, optionsRow, explorerHost);
         VBox.setVgrow(explorerHost, Priority.ALWAYS);
@@ -479,11 +494,32 @@ public final class CodeTraceApp extends Application {
         tree.setExclusionHandlers(folder -> exclusions.excludes(folder),
                 folder -> exclusions.explicitlyExcludes(folder),
                 this::changeFolderExclusion);
+        // Keep the spinner visible through the first presentation pulse after
+        // indexing, rather than declaring success immediately after the worker
+        // completes. This is UI feedback, not an artificial disk delay.
+        PauseTransition explorerReveal = new PauseTransition(Duration.millis(180));
+        explorerReveal.setOnFinished(event -> {
+            if (tree.isIndexing()) return;
+            explorerLoading.setVisible(false);
+            if (tabs.getTabs().isEmpty() && !tree.isBusy())
+                refreshContextStatus();
+        });
         tree.setOnBusyChange(busy -> {
             treeActivity.setVisible(busy);
-            // A click during indexing is queued by ReferenceTree. Disabling
-            // this button made "Expandir todo" appear broken on large roots.
-            // Repeated clicks during an active expansion display its status.
+            if (tree.isIndexing()) {
+                explorerReveal.stop();
+                explorerLoading.setVisible(true);
+                if (tabs.getTabs().isEmpty()) {
+                    statusReset.stop();
+                    status.setText("Preparando el explorador...");
+                }
+            } else if (explorerLoading.isVisible()) {
+                explorerReveal.playFromStart();
+            } else if (!busy && tabs.getTabs().isEmpty()) {
+                refreshContextStatus();
+            }
+            // Never block expansion or scrolling: logical rows are computed
+            // outside JavaFX, while existing rows stay interactive.
         });
         sidebar.getStyleClass().add("sidebar");
         sidebar.setMinWidth(165);
@@ -1893,7 +1929,11 @@ public final class CodeTraceApp extends Application {
         statusReset.stop();
         Tab selected = tabs.getSelectionModel().getSelectedItem();
         if (selected == null) {
-            status.setText(StatusBarText.empty(reference != null));
+            // A reference can already be active while its disk index and first
+            // visible rows are still pending. "Proyecto listo" must not win
+            // this race against the explorer's loading state.
+            status.setText(tree.isBusy() ? "Preparando el explorador..."
+                    : StatusBarText.empty(reference != null));
             return;
         }
         if (selected.getContent() instanceof DependencyGraphPane graph) {
