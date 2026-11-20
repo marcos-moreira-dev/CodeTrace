@@ -48,6 +48,10 @@ jobs:
           }
           & .\src\main\resources\practice\powershell\01-fundamentos\pipeline_objetos.ps1
           & .\src\main\resources\practice\powershell\03-algoritmos\busqueda_binaria.ps1
+
+          & .\src\main\resources\practice\powershell\01-fundamentos\json_y_objetos.ps1
+          & .\src\main\resources\practice\powershell\02-estructuras-datos\cola_generica.ps1
+          & .\src\main\resources\practice\powershell\03-algoritmos\frecuencias_objetos.ps1
       - name: Execute Windows CMD lessons
         shell: pwsh
         run: |
@@ -55,6 +59,11 @@ jobs:
           if ($LASTEXITCODE -ne 0) { throw "CMD variables" }
           & cmd /c "src\main\resources\practice\cmd\01-fundamentos\subrutinas.cmd"
           if ($LASTEXITCODE -ne 0) { throw "CMD subroutines" }
+
+          & cmd /c "src\main\resources\practice\cmd\01-fundamentos\for_f_registros.cmd"
+          if ($LASTEXITCODE -ne 0) { throw "CMD records" }
+          & cmd /c "src\main\resources\practice\cmd\03-algoritmos\maximo_iterativo.cmd"
+          if ($LASTEXITCODE -ne 0) { throw "CMD max" }
       - uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '8.0.x'
@@ -65,3 +74,19 @@ jobs:
           Copy-Item "src/main/resources/practice/csharp/01-fundamentos/linq.cs" "$env:RUNNER_TEMP\csharp-practice\Program.cs" -Force
           dotnet run --project "$env:RUNNER_TEMP\csharp-practice"
           if ($LASTEXITCODE -ne 0) { throw "C# lesson" }
+
+          $extra = @(
+            "01-fundamentos/nullable_records.cs",
+            "01-fundamentos/yield_iteradores.cs",
+            "01-fundamentos/async_tasks.cs",
+            "02-estructuras-datos/heap_prioridades.cs",
+            "03-algoritmos/bfs_grafo.cs",
+            "03-algoritmos/mochila_01.cs",
+            "04-patrones-diseno/adapter_unidades.cs"
+          )
+          foreach ($archivo in $extra) {
+            $fuente = Join-Path "src/main/resources/practice/csharp" $archivo
+            Copy-Item $fuente "$env:RUNNER_TEMP\csharp-practice\Program.cs" -Force
+            dotnet run --project "$env:RUNNER_TEMP\csharp-practice"
+            if ($LASTEXITCODE -ne 0) { throw "C# failed: $archivo" }
+          }
