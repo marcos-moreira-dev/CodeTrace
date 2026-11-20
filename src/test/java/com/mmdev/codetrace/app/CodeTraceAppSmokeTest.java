@@ -80,6 +80,16 @@ class CodeTraceAppSmokeTest {
                 assertNotNull(stage.getScene());
                 stage.getScene().getRoot().applyCss();
                 stage.getScene().getRoot().layout();
+                javafx.scene.control.Label statusContext = (javafx.scene.control.Label)
+                        stage.getScene().getRoot().lookup(".status-context");
+                assertNotNull(statusContext);
+                assertTrue(statusContext.getFont().getSize() >= 12.0,
+                        "Status text should not remain at its old microcopy size");
+                VBox mainProject = (VBox) stage.getScene().getRoot()
+                        .lookup(".main-project-section");
+                assertNotNull(mainProject);
+                assertEquals(javafx.geometry.Insets.EMPTY, mainProject.getPadding(),
+                        "Explorer action strip should no longer have an outer inset");
                 javafx.scene.control.ToolBar toolbar = (javafx.scene.control.ToolBar)
                         stage.getScene().getRoot().lookup(".tool-bar");
                 assertNotNull(toolbar);
@@ -122,6 +132,13 @@ class CodeTraceAppSmokeTest {
                 tabsField.setAccessible(true);
                 TabPane tabPane = (TabPane) tabsField.get(application);
                 assertEquals(1, tabPane.getTabs().size());
+                stage.getScene().getRoot().applyCss();
+                stage.getScene().getRoot().layout();
+                javafx.scene.control.Label tabCaption = (javafx.scene.control.Label)
+                        stage.getScene().getRoot().lookup(".tab-pane .tab .tab-label");
+                assertNotNull(tabCaption);
+                assertTrue(tabCaption.getFont().getSize() >= 13.0,
+                        "Tab titles should remain readable at desktop scale");
                 Path imageFile = src.resolve("image.png");
                 Files.write(imageFile, java.util.Base64.getDecoder().decode(
                         "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQIHWP4"
