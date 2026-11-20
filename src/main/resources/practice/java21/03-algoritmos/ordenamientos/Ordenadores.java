@@ -5,7 +5,7 @@
 package codetrace.practica.ordenamientos;
 
 /**
- * Dos ordenamientos que permiten contrastar estrategias algorítmicas.
+ * Cinco ordenamientos clasicos para contrastar complejidad y estabilidad.
  *
  * <p>Insertion Sort mantiene un prefijo ordenado: O(n^2) en peor caso,
  * O(n) con la entrada ya ordenada y O(1) memoria auxiliar.
@@ -43,4 +43,61 @@ public final class Ordenadores {
         }
         System.arraycopy(temp, lo, a, lo, hi - lo);
     }
+    /**
+     * Burbuja optimizada: frontera del ultimo intercambio. Estable.
+     * Mejor O(n); peor O(n^2); memoria O(1).
+     */
+    public static void burbuja(int[] a){
+        int limite=a.length;
+        while(limite>1){
+            int ultimo=0;
+            for(int i=1;i<limite;i++){
+                if(a[i-1]>a[i]){
+                    int t=a[i];a[i]=a[i-1];a[i-1]=t;
+                    ultimo=i;
+                }
+            }
+            limite=ultimo;
+        }
+    }
+
+    /** HeapSort in-place, O(n log n), no estable, memoria O(1). */
+    public static void heap(int[] a){
+        for(int i=a.length/2-1;i>=0;i--)hundir(a,a.length,i);
+        for(int fin=a.length-1;fin>0;fin--){
+            int t=a[0];a[0]=a[fin];a[fin]=t;
+            hundir(a,fin,0);
+        }
+    }
+    private static void hundir(int[] a,int n,int i){
+        while(true){
+            int mayor=i,iz=2*i+1,de=iz+1;
+            if(iz<n&&a[iz]>a[mayor])mayor=iz;
+            if(de<n&&a[de]>a[mayor])mayor=de;
+            if(mayor==i)return;
+            int t=a[i];a[i]=a[mayor];a[mayor]=t;
+            i=mayor;
+        }
+    }
+
+    /**
+     * QuickSort con pivote final: medio O(n log n), peor O(n^2)
+     * con entrada ya ordenada. La pila en peor caso es O(n).
+     * No estable. Demo determinista para estudiar la particion.
+     */
+    public static void rapido(int[] a){quick(a,0,a.length-1);}
+    private static void quick(int[] a,int lo,int hi){
+        if(lo>=hi)return;
+        int pivote=a[hi],i=lo;
+        for(int j=lo;j<hi;j++){
+            if(a[j]<=pivote){
+                int t=a[i];a[i]=a[j];a[j]=t;
+                i++;
+            }
+        }
+        int t=a[i];a[i]=a[hi];a[hi]=t;
+        quick(a,lo,i-1);
+        quick(a,i+1,hi);
+    }
+
 }
