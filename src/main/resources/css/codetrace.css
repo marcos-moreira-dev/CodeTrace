@@ -931,7 +931,8 @@
 .search-results-list .list-cell:filled { -fx-font-family: "IBM Plex Sans"; }
 
 /* Airier explorer toolbar, with a borderless close/clear affordance. */
-.project-tree-header { -fx-padding: 7 9 4 11; }
+/* Slightly more breathing room below the explorer actions; top and icons stay unchanged. */
+.project-tree-header { -fx-padding: 7 9 6 11; }
 .tree-search-row { -fx-padding: 6 10 7 10; }
 .tree-search-clear {
     -fx-background-color: transparent;
