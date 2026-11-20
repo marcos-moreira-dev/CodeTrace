@@ -1,21 +1,18 @@
-// CodeTrace | Referencia: TypeScript 5.9, compilación objetivo ES2022.
-// Desde PowerShell en una COPIA de la carpeta typescript:
-// Tipos/sintaxis: tsc --noEmit --target ES2022 --module commonjs '.\04-patrones-diseno\factory\basico\factory.ts'
-// Instalación del compilador si falta: npm install -g typescript@5.9.3
-// Estos módulos pueden no tener punto de entrada; no necesitan ejecutarse.
+// CodeTrace | Referencia: TypeScript 5.9 / ES2022 / Node.js 24
+// Comprobar desde COPIA de esta unidad: tsc --strict --target ES2022 --module commonjs --noEmit *.ts
+// Compilar: tsc --strict --target ES2022 --module commonjs --outDir "$env:TEMP\ct-ts-unit" *.ts
+// Ejecutar: desde el cliente Main... de la misma unidad
 
-interface Notificacion {
-  enviar(mensaje: string): string;
-}
+/**
+ * Fábrica simple de objetos detrás de un contrato.
+ *
+ * No equivale a Factory Method GoF: una sola función conoce la
+ * construcción de la clase concreta. Se requiere menos jerarquía.
+ */
+export interface Notificacion { enviar(mensaje: string): string; }
 
 class Correo implements Notificacion {
-  enviar(mensaje: string): string {
-    return "Correo: " + mensaje;
-  }
+    enviar(mensaje: string): string { return "Correo: " + mensaje; }
 }
 
-function crearNotificacion(): Notificacion {
-  return new Correo();
-}
-
-console.log(crearNotificacion().enviar("Listo"));
+export function crearNotificacion(): Notificacion { return new Correo(); }

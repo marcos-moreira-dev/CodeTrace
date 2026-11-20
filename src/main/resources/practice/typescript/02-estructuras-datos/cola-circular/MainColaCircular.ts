@@ -1,6 +1,6 @@
 // CodeTrace | Referencia: TypeScript 5.9 / ES2022 / Node 24
 // Compilar/Comprobar: tsc --strict --target ES2022 --module commonjs --noEmit ARCHIVO.ts
-// Ejecutar: node dist/Principal.js
+// Ejecutar: node dist/MainColaCircular.js
 
 import { ColaCircular } from "./ColaCircular";
 /**
@@ -10,7 +10,7 @@ import { ColaCircular } from "./ColaCircular";
  * para que la relación entre archivos pueda estudiarse en CodeTrace.
  *
  * Compilar desde la carpeta: tsc --strict --target ES2022 --module commonjs --outDir dist *.ts
- * Ejecutar: node dist/Principal.js
+ * Ejecutar: node dist/MainColaCircular.js
  */
 const cola = new ColaCircular<string>(3);
 cola.encolar("reporte");

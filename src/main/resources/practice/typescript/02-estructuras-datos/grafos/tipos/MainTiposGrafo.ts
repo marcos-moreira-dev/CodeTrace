@@ -1,6 +1,6 @@
 // CodeTrace | Referencia: TypeScript 5.9 / ES2022 / Node.js 24
-// Comprobar desde copia (PowerShell): tsc --strict --target ES2022 --module commonjs --noEmit '.\02-estructuras-datos\grafos\tipos\Principal.ts'
-// Ejecutar: tsc --strict --target ES2022 --module commonjs --outDir "$env:TEMP\ct-ts" '.\02-estructuras-datos\grafos\tipos\Principal.ts'; node "$env:TEMP\ct-ts\Principal.js"
+// Comprobar desde copia (PowerShell): tsc --strict --target ES2022 --module commonjs --noEmit '.\02-estructuras-datos\grafos\tipos\MainTiposGrafo.ts'
+// Ejecutar: tsc --strict --target ES2022 --module commonjs --outDir "$env:TEMP\ct-ts" '.\02-estructuras-datos\grafos\tipos\MainTiposGrafo.ts'; node "$env:TEMP\ct-ts\MainTiposGrafo.js"
 
 import { Grafo } from "./Grafo";
 

@@ -1,20 +1,21 @@
-// CodeTrace | Referencia: TypeScript 5.9, compilación objetivo ES2022.
-// Desde PowerShell en una COPIA de la carpeta typescript:
-// Tipos/sintaxis: tsc --noEmit --target ES2022 --module commonjs '.\04-patrones-diseno\strategy\basico\strategy.ts'
-// Instalación del compilador si falta: npm install -g typescript@5.9.3
-// Estos módulos pueden no tener punto de entrada; no necesitan ejecutarse.
+// CodeTrace | Referencia: TypeScript 5.9 / ES2022 / Node.js 24
+// Comprobar desde COPIA de esta unidad: tsc --strict --target ES2022 --module commonjs --noEmit *.ts
+// Compilar: tsc --strict --target ES2022 --module commonjs --outDir "$env:TEMP\ct-ts-unit" *.ts
+// Ejecutar: desde el cliente Main... de la misma unidad
 
-interface Descuento {
-  aplicar(total: number): number;
+/** Contrato Strategy; también admite funciones en lugar de clases. */
+export interface Descuento { aplicar(total: number): number; }
+
+export class DescuentoFijo implements Descuento {
+    constructor(private readonly porcentaje: number) {
+        if (porcentaje < 0 || porcentaje > 1) throw Error("Porcentaje");
+    }
+    aplicar(total: number): number { return total * (1 - this.porcentaje); }
 }
 
-class DescuentoFijo implements Descuento {
-  constructor(private porcentaje: number) {}
-
-  aplicar(total: number): number {
-    return total * (1 - this.porcentaje);
-  }
+export class Facturador {
+    cobrar(total: number, estrategia: Descuento): number {
+        if (total < 0) throw Error("Subtotal");
+        return estrategia.aplicar(total);
+    }
 }
-
-const estrategia: Descuento = new DescuentoFijo(0.10);
-console.log(estrategia.aplicar(100));

@@ -1,7 +1,7 @@
 // CodeTrace | Referencia: TypeScript 5.9 / ES2022 / Node.js 24
-// Comprobar desde la carpeta (PowerShell): tsc --strict --target ES2022 --module commonjs --noEmit observador.ts Principal.ts
-// Compilar: tsc --strict --target ES2022 --module commonjs --outDir "$env:TEMP\ct-ts-observer" observador.ts Principal.ts
-// Ejecutar: node "$env:TEMP\ct-ts-observer\Principal.js"
+// Comprobar desde la carpeta (PowerShell): tsc --strict --target ES2022 --module commonjs --noEmit observador.ts MainObserverBasico.ts
+// Compilar: tsc --strict --target ES2022 --module commonjs --outDir "$env:TEMP\ct-ts-observer" observador.ts MainObserverBasico.ts
+// Ejecutar: node "$env:TEMP\ct-ts-observer\MainObserverBasico.js"
 
 import { Observador } from "./observador";
 

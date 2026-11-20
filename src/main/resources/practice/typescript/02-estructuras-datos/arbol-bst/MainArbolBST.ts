@@ -1,6 +1,6 @@
 // CodeTrace | Referencia: TypeScript 5.9 / ES2022 / Node.js 24
-// Comprobar (PowerShell, copia del paquete): tsc --strict --target ES2022 --module commonjs --noEmit '.\02-estructuras-datos\arbol-bst\Principal.ts'
-// Ejecutar: tsc --strict --target ES2022 --module commonjs --outDir "$env:TEMP\ct-ts" '.\02-estructuras-datos\arbol-bst\Principal.ts'; node "$env:TEMP\ct-ts\Principal.js"
+// Comprobar (PowerShell, copia del paquete): tsc --strict --target ES2022 --module commonjs --noEmit '.\02-estructuras-datos\arbol-bst\MainArbolBST.ts'
+// Ejecutar: tsc --strict --target ES2022 --module commonjs --outDir "$env:TEMP\ct-ts" '.\02-estructuras-datos\arbol-bst\MainArbolBST.ts'; node "$env:TEMP\ct-ts\MainArbolBST.js"
 
 import { Arbol } from "./Arbol";
 

@@ -1,6 +1,6 @@
 // CodeTrace | Referencia: TypeScript 5.9 / ES2022 / Node.js 24
-// Comprobar (PowerShell, copia del paquete): tsc --strict --target ES2022 --module commonjs --noEmit '.\02-estructuras-datos\heap\Principal.ts'
-// Ejecutar: tsc --strict --target ES2022 --module commonjs --outDir "$env:TEMP\ct-ts" '.\02-estructuras-datos\heap\Principal.ts'; node "$env:TEMP\ct-ts\Principal.js"
+// Comprobar (PowerShell, copia del paquete): tsc --strict --target ES2022 --module commonjs --noEmit '.\02-estructuras-datos\heap\MainHeap.ts'
+// Ejecutar: tsc --strict --target ES2022 --module commonjs --outDir "$env:TEMP\ct-ts" '.\02-estructuras-datos\heap\MainHeap.ts'; node "$env:TEMP\ct-ts\MainHeap.js"
 
 import { MinHeap } from "./MinHeap";
 

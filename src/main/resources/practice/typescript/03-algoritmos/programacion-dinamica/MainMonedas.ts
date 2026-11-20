@@ -1,6 +1,6 @@
 // CodeTrace | Referencia: TypeScript 5.9 / ES2022 / Node 24
 // Compilar/Comprobar: tsc --strict --target ES2022 --module commonjs --noEmit ARCHIVO.ts
-// Ejecutar: node dist/Principal.js
+// Ejecutar: node dist/MainMonedas.js
 
 import { minimo } from "./Monedas";
 /**
@@ -10,6 +10,6 @@ import { minimo } from "./Monedas";
  * y obtiene dos (3+3), sin repetir todos los subproblemas.
  *
  * Compilar desde carpeta: tsc --strict --target ES2022 --module commonjs --outDir dist *.ts
- * Ejecutar: node dist/Principal.js
+ * Ejecutar: node dist/MainMonedas.js
  */
 console.log("Mínimo:", minimo([1,3,4], 6));
