@@ -194,7 +194,7 @@
 .tab-pane .tab {
     -fx-background-radius: 0;
     -fx-border-radius: 0;
-    -fx-background-color: linear-gradient(to bottom, #e0e8ee 0%, #d1dce5 100%);
+    -fx-background-color: linear-gradient(to bottom, #d5e1e9 0%, #c0d1dc 100%);
     -fx-border-color: transparent #b2c1cc transparent transparent;
     -fx-padding: 6px 12px;
     -fx-focus-color: transparent;
@@ -495,7 +495,7 @@
 
 /* Explorer header: clear structure actions and compact virtual status. */
 .project-tree-header {
-    -fx-background-color: linear-gradient(to bottom, #e1e8ee 0%, #d0dce5 100%);
+    -fx-background-color: linear-gradient(to bottom, #d2e0e9 0%, #b9cddc 100%);
     -fx-border-color: transparent transparent #aabcc9 transparent;
     -fx-padding: 4px 7px 4px 6px;
     -fx-spacing: 4px;
@@ -650,7 +650,7 @@
     -fx-border-width: 1px 0 0 0;
 }
 .command-console-pane .console-header {
-    -fx-background-color: linear-gradient(to bottom, #e1e9ef 0%, #cbd8e2 100%);
+    -fx-background-color: linear-gradient(to bottom, #d2e0e9 0%, #bacddb 100%);
     -fx-padding: 6px 10px;
     -fx-alignment: center-left;
 }
@@ -1071,7 +1071,7 @@
     -fx-text-fill: #ffffff;
 }
 .tool-bar {
-    -fx-background-color: linear-gradient(to bottom, #e7edf1 0%, #d2dde5 100%);
+    -fx-background-color: linear-gradient(to bottom, #d5e1ea 0%, #bdcedb 100%);
     -fx-border-color: transparent transparent #a8bac7 transparent;
 }
 
