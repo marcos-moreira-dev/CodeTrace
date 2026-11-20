@@ -22,3 +22,11 @@ public final class MainGrafo {
         System.out.println("Vecinos de B: " + grafo.vecinos("B"));
     }
 }
+
+/*
+ * Salida esperada de consola:
+ *   Vecinos de A: 
+ *   Vecinos de B: 
+ *   (los valores variables completan los fragmentos anteriores)
+ * Verificacion: termina sin excepciones inesperadas.
+ */

@@ -41,3 +41,11 @@ public final class MainGrafoGenerico {
             throw new AssertionError("Identidad de vértice incorrecta");
     }
 }
+
+/*
+ * Salida esperada de consola:
+ *   Vértices: 
+ *   Latencias desde GYE: 
+ *   (los valores variables completan los fragmentos anteriores)
+ * Verificacion: termina sin excepciones inesperadas.
+ */

@@ -25,3 +25,10 @@ public static class MainStrategy
         Console.WriteLine($"Normal={normal}; fidelidad={fidelidad}");
     }
 }
+
+/*
+ * Salida esperada de consola:
+ *   Normal={normal}; fidelidad={fidelidad}
+ *   (los valores variables completan los fragmentos anteriores)
+ * Verificacion: termina sin excepciones inesperadas.
+ */

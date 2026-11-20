@@ -28,3 +28,11 @@ public final class MainRecursosYSuppressed {
         }
     }
 }
+
+/*
+ * Salida esperada de consola:
+ *   Principal: 
+ *   Suprimidas: 
+ *   (los valores variables completan los fragmentos anteriores)
+ * Verificacion: termina sin excepciones inesperadas.
+ */

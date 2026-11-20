@@ -23,3 +23,9 @@ public static class MainTemplateMethod
         Console.WriteLine(b.Ejecutar("ventas",15));
     }
 }
+
+/*
+ * Salida esperada de consola:
+ *   Se imprime el valor o coleccion calculado por el cliente.
+ * Verificacion: termina sin excepciones inesperadas.
+ */

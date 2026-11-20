@@ -29,3 +29,10 @@ public final class MainExcepcionUnchecked {
             throw new AssertionError("El stock fue modificado en error");
     }
 }
+
+/*
+ * Salida esperada de consola:
+ *   Rechazo controlado: 
+ *   (los valores variables completan los fragmentos anteriores)
+ * Verificacion: termina sin excepciones inesperadas.
+ */

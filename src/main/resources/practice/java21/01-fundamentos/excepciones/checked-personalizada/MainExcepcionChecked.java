@@ -33,3 +33,11 @@ public final class MainExcepcionChecked {
         System.out.println("Saldo preservado: " + cuenta.saldo());
     }
 }
+
+/*
+ * Salida esperada de consola:
+ *   Saldo preservado: 
+ *   No se retiraron [valor]; hay [valor]%n
+ *   (los valores variables completan los fragmentos anteriores)
+ * Verificacion: termina sin excepciones inesperadas.
+ */

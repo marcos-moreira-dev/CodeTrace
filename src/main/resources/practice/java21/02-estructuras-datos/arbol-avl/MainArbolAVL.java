@@ -27,3 +27,10 @@ public final class MainArbolAVL {
         System.out.println("Altura del AVL: "+arbol.altura());
     }
 }
+
+/*
+ * Salida esperada de consola:
+ *   Altura del AVL: 
+ *   (los valores variables completan los fragmentos anteriores)
+ * Verificacion: termina sin excepciones inesperadas.
+ */

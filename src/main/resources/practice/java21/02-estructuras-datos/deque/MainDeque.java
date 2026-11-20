@@ -22,3 +22,10 @@ public final class MainDeque {
         System.out.println("Operaciones en ambos extremos OK");
     }
 }
+
+/*
+ * Salida esperada de consola:
+ *   Operaciones en ambos extremos OK
+ *   (los valores variables completan los fragmentos anteriores)
+ * Verificacion: termina sin excepciones inesperadas.
+ */

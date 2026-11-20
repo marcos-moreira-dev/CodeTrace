@@ -23,3 +23,11 @@ public final class MainVector {
         System.out.println("Tercero: " + vector.obtener(2));
     }
 }
+
+/*
+ * Salida esperada de consola:
+ *   Elementos: 
+ *   Capacidad: 
+ *   (los valores variables completan los fragmentos anteriores)
+ * Verificacion: termina sin excepciones inesperadas.
+ */

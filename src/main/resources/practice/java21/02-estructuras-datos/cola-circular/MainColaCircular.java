@@ -24,3 +24,10 @@ public final class MainColaCircular {
         System.out.println("FIFO y wrap-around verificados");
     }
 }
+
+/*
+ * Salida esperada de consola:
+ *   FIFO y wrap-around verificados
+ *   (los valores variables completan los fragmentos anteriores)
+ * Verificacion: termina sin excepciones inesperadas.
+ */

@@ -32,3 +32,10 @@ public static class MainObserver
         if (notificaciones != 1) throw new Exception("Desuscripción");
     }
 }
+
+/*
+ * Salida esperada de consola:
+ *   Pedido 
+ *   (los valores variables completan los fragmentos anteriores)
+ * Verificacion: termina sin excepciones inesperadas.
+ */
