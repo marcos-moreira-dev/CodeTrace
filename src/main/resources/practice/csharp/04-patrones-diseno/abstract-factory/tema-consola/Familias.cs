@@ -1,0 +1,27 @@
+// CodeTrace | Referencia: C# 12 / .NET 8
+// Compilar desde COPIA: dotnet new console -f net8.0 -o "$env:TEMP\ct-cs-patron" --force; Remove-Item "$env:TEMP\ct-cs-patron\Program.cs"; Copy-Item *.cs "$env:TEMP\ct-cs-patron"; dotnet build "$env:TEMP\ct-cs-patron"
+// Ejecutar: dotnet run --project "$env:TEMP\ct-cs-patron"
+
+namespace CodeTrace.Practica.Patrones.AbstractFactory;
+
+/// <summary>Familia con dos contratos de productos.</summary>
+public interface IBoton{string Pintar();}
+public interface IDialogo{string Pintar();}
+public interface IFabrica{IBoton Boton();IDialogo Dialogo();}
+
+public sealed class Texto:IBoton,IDialogo
+{
+    private readonly string _texto;
+    public Texto(string texto)=>_texto=texto;
+    public string Pintar()=>_texto;
+}
+public sealed class FabricaClara:IFabrica
+{
+    public IBoton Boton()=>new Texto("[ OK ]");
+    public IDialogo Dialogo()=>new Texto("Ventana clara");
+}
+public sealed class FabricaOscura:IFabrica
+{
+    public IBoton Boton()=>new Texto("< OK >");
+    public IDialogo Dialogo()=>new Texto("Ventana oscura");
+}
