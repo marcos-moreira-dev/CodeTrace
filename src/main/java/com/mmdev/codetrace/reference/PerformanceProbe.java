@@ -1,5 +1,6 @@
 package com.mmdev.codetrace.reference;
 
+import java.lang.management.ManagementFactory;
 import java.util.Locale;
 import java.util.logging.Logger;
 
@@ -24,7 +25,12 @@ public final class PerformanceProbe {
     public static void finish(String operation, long startNanos, long entries) {
         if (!ENABLED || startNanos == 0L) return;
         double milliseconds = (System.nanoTime() - startNanos) / 1_000_000.0;
+        var heap = ManagementFactory.getMemoryMXBean().getHeapMemoryUsage();
+        long usedMiB = heap.getUsed() / (1024 * 1024);
+        long committedMiB = heap.getCommitted() / (1024 * 1024);
+        // These are JVM heap metrics, NOT total OS process memory/RSS.
         LOG.info(() -> String.format(Locale.ROOT,
-                "Performance %s: %.1f ms, entries=%d", operation, milliseconds, entries));
+                "Performance %s: %.1f ms, entries=%d, heapUsedMiB=%d, heapCommittedMiB=%d",
+                operation, milliseconds, entries, usedMiB, committedMiB));
     }
 }
