@@ -2,7 +2,7 @@
 # Comprobar: ruby -c ".\02-estructuras-datos\arbol-bst\arbol_bst.rb"
 # Ejecutar: ruby ".\02-estructuras-datos\arbol-bst\arbol_bst.rb"
 
-# Cliente de un BST binario sin rotaciones de balanceo.
+# Implementación de BST sin balanceo; cliente en main.rb.
 #
 # Un nodo tiene valor e hijos. Los valores menores se insertan a la
 # izquierda, los mayores a la derecha. Buscar e insertar cuestan
@@ -40,6 +40,3 @@ class Arbol
     nodo
   end
 end
-arbol = Arbol.new
-[8, 3, 10, 1, 6, 4].each { |x| arbol.insertar(x) }
-p arbol.inorden

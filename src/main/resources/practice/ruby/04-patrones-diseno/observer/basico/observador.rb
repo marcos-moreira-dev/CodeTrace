@@ -1,22 +1,28 @@
-# CodeTrace | Referencia: Ruby 3.3.
-# Desde PowerShell en una COPIA del paquete:
-# Comprobar sintaxis: ruby -c '.\04-patrones-diseno\observer\basico\observador.rb'
-# Ejecutar: ruby '.\04-patrones-diseno\observer\basico\observador.rb'
+# CodeTrace | Referencia: Ruby 3.3
+# Comprobar en COPIA desde esta carpeta: ruby -c main.rb
+# Ejecutar desde esta carpeta: ruby main.rb
+# Archivos auxiliares: require_relative, sin gemas ni red externas.
 
+# Observer ligero: se publican cambios a bloques registrados.
+# Devolver un token permite desuscribir un callback para no retenerlo.
 class Emisor
   def initialize
-    @oyentes = []
+    @listeners = {}
+    @siguiente = 0
   end
 
-  def suscribir(&callback)
-    @oyentes << callback
+  def suscribir(&bloque)
+    raise ArgumentError, 'Falta bloque' unless bloque
+    @siguiente += 1
+    @listeners[@siguiente] = bloque
+    @siguiente
+  end
+
+  def desuscribir(token)
+    @listeners.delete(token)
   end
 
   def actualizar(valor)
-    @oyentes.each { |callback| callback.call(valor) }
+    @listeners.values.each { |callback| callback.call(valor) }
   end
 end
-
-emisor = Emisor.new
-emisor.suscribir { |valor| puts "Cambio: #{valor}" }
-emisor.actualizar(42)
