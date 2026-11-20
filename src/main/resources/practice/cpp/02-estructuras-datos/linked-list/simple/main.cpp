@@ -21,3 +21,10 @@ int main() {
     if(l.valores()!=std::vector<int>({3,2,1}))throw std::logic_error("Lista");
     std::cout<<"Linked list simple OK\n";
 }
+
+/*
+ * Salida esperada de consola:
+ *   Linked list simple OK\n
+ *   (los valores variables completan los fragmentos anteriores)
+ * Verificacion: las aserciones se cumplen y el proceso termina sin error.
+ */

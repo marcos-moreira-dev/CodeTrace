@@ -24,3 +24,10 @@ int main(){
         throw std::logic_error("Circular");
     std::cout<<"Lista circular OK\n";
 }
+
+/*
+ * Salida esperada de consola:
+ *   Lista circular OK\n
+ *   (los valores variables completan los fragmentos anteriores)
+ * Verificacion: las aserciones se cumplen y el proceso termina sin error.
+ */

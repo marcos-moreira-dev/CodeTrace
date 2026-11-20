@@ -29,3 +29,9 @@ int main(void) {
     pila_destruir(pila);
     return EXIT_SUCCESS;
 }
+
+/*
+ * Salida esperada de consola:
+ *   Sin salida de texto: los casos correctos finalizan silenciosamente.
+ * Verificacion: las aserciones se cumplen y el proceso termina sin error.
+ */

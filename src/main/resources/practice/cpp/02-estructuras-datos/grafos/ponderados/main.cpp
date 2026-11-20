@@ -22,3 +22,10 @@ int main(){
         throw std::logic_error("Arcos");
     std::cout<<"Arcos desde GYE: "<<g.vecinos("GYE").size()<<'\n';
 }
+
+/*
+ * Salida esperada de consola:
+ *   Arcos desde GYE: 
+ *   (los valores variables completan los fragmentos anteriores)
+ * Verificacion: las aserciones se cumplen y el proceso termina sin error.
+ */

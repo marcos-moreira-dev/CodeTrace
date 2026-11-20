@@ -21,3 +21,10 @@ int main(){
     if(q.desencolar()!="C"||!q.vacia())throw std::logic_error("Tail");
     std::cout<<"Cola enlazada OK\n";
 }
+
+/*
+ * Salida esperada de consola:
+ *   Cola enlazada OK\n
+ *   (los valores variables completan los fragmentos anteriores)
+ * Verificacion: las aserciones se cumplen y el proceso termina sin error.
+ */

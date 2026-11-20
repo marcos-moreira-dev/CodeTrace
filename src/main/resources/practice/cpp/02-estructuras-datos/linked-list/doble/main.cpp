@@ -23,3 +23,10 @@ int main(){
        l.quitarFinal()!=5)throw std::logic_error("Doble");
     std::cout<<"Lista doble OK\n";
 }
+
+/*
+ * Salida esperada de consola:
+ *   Lista doble OK\n
+ *   (los valores variables completan los fragmentos anteriores)
+ * Verificacion: las aserciones se cumplen y el proceso termina sin error.
+ */

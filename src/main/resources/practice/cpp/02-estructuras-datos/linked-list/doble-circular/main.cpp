@@ -23,3 +23,10 @@ int main(){
         throw std::logic_error("Doble circular");
     std::cout<<"Doble circular OK\n";
 }
+
+/*
+ * Salida esperada de consola:
+ *   Doble circular OK\n
+ *   (los valores variables completan los fragmentos anteriores)
+ * Verificacion: las aserciones se cumplen y el proceso termina sin error.
+ */

@@ -20,3 +20,10 @@ int main(){
     for(int x:{9,7,4,2,1})if(h.extraer()!=x)throw std::logic_error("Heap");
     std::cout<<"Max heap correcto\n";
 }
+
+/*
+ * Salida esperada de consola:
+ *   Max heap correcto\n
+ *   (los valores variables completan los fragmentos anteriores)
+ * Verificacion: las aserciones se cumplen y el proceso termina sin error.
+ */

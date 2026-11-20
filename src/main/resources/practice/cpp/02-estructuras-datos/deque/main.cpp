@@ -21,3 +21,10 @@ int main(){
        d.quitarUltimo()!="B")throw std::logic_error("Deque");
     std::cout<<"Deque correcta\n";
 }
+
+/*
+ * Salida esperada de consola:
+ *   Deque correcta\n
+ *   (los valores variables completan los fragmentos anteriores)
+ * Verificacion: las aserciones se cumplen y el proceso termina sin error.
+ */

@@ -9,3 +9,9 @@ int main(void) {
     publicar(&centro, "Factura 001");
     return 0;
 }
+
+/*
+ * Salida esperada de consola:
+ *   Sin salida de texto: los casos correctos finalizan silenciosamente.
+ * Verificacion: las aserciones se cumplen y el proceso termina sin error.
+ */

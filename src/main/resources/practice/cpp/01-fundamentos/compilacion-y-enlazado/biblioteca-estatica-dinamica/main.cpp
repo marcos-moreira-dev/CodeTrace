@@ -29,3 +29,10 @@ int main() {
     std::cout << "Suma=" << s << ", producto=" << p << '\n';
     return (s == 7 && p == 12) ? 0 : 1;
 }
+
+/*
+ * Salida esperada de consola:
+ *   Suma=
+ *   (los valores variables completan los fragmentos anteriores)
+ * Verificacion: las aserciones se cumplen y el proceso termina sin error.
+ */

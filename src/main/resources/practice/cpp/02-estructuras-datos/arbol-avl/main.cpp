@@ -25,3 +25,10 @@ int main(){
         throw std::logic_error("AVL");
     std::cout<<"Altura AVL: "<<arbol.altura()<<'\n';
 }
+
+/*
+ * Salida esperada de consola:
+ *   Altura AVL: 
+ *   (los valores variables completan los fragmentos anteriores)
+ * Verificacion: las aserciones se cumplen y el proceso termina sin error.
+ */

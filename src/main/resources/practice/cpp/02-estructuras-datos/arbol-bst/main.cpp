@@ -26,3 +26,9 @@ int main() {
     for (int x : resultado) std::cout << x << ' ';
     std::cout << '\n';
 }
+
+/*
+ * Salida esperada de consola:
+ *   Se muestran los valores o la coleccion calculada por este cliente.
+ * Verificacion: las aserciones se cumplen y el proceso termina sin error.
+ */

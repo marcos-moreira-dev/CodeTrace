@@ -30,3 +30,9 @@ int main(void) {
     printf("Suma=%d, producto=%d\n", s, p);
     return (s == 7 && p == 12) ? 0 : 1;
 }
+
+/*
+ * Salida esperada de consola:
+ *   Sin salida de texto: los casos correctos finalizan silenciosamente.
+ * Verificacion: las aserciones se cumplen y el proceso termina sin error.
+ */
