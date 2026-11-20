@@ -83,7 +83,7 @@ class CodeTraceAppSmokeTest {
                 javafx.scene.control.Label statusContext = (javafx.scene.control.Label)
                         stage.getScene().getRoot().lookup(".status-context");
                 assertNotNull(statusContext);
-                assertTrue(statusContext.getFont().getSize() >= 12.0,
+                assertTrue(statusContext.getFont().getSize() >= 13.0,
                         "Status text should not remain at its old microcopy size");
                 VBox mainProject = (VBox) stage.getScene().getRoot()
                         .lookup(".main-project-section");
@@ -137,7 +137,7 @@ class CodeTraceAppSmokeTest {
                 javafx.scene.control.Label tabCaption = (javafx.scene.control.Label)
                         stage.getScene().getRoot().lookup(".tab-pane .tab .tab-label");
                 assertNotNull(tabCaption);
-                assertTrue(tabCaption.getFont().getSize() >= 13.0,
+                assertTrue(tabCaption.getFont().getSize() >= 14.0,
                         "Tab titles should remain readable at desktop scale");
                 Path imageFile = src.resolve("image.png");
                 Files.write(imageFile, java.util.Base64.getDecoder().decode(
