@@ -21,6 +21,6 @@ fun main(){
 
 /*
  * Salida esperada de consola:
- *   Se imprime el valor o coleccion calculado por el cliente.
- * Verificacion: termina sin excepciones inesperadas.
+ *   220
+ * La suma incorpora los tamaños 120, 80 y 20, independientemente del tipo.
  */

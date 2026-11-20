@@ -22,7 +22,6 @@ if(require.main===module)main();
 
 /*
  * Salida esperada de consola:
- *   Bytes:
- *   (los valores variables completan los fragmentos anteriores)
- * Verificacion: termina sin excepciones inesperadas.
+ *   Bytes: 220
+ * Dos archivos de 120 y 80 y un README de 20 suman 220.
  */

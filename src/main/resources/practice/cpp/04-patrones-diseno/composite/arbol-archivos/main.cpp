@@ -29,7 +29,6 @@ int main(){
 
 /*
  * Salida esperada de consola:
- *   Bytes: 
- *   (los valores variables completan los fragmentos mostrados)
- * Verificacion: terminar sin excepciones inesperadas.
+ *   Bytes: 220
+ * La propiedad de los hijos corresponde a unique_ptr y termina con la raíz.
  */

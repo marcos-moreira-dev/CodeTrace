@@ -27,7 +27,6 @@ public static class MainComposite
 
 /*
  * Salida esperada de consola:
- *   Bytes: {e.Bytes()}
- *   (los valores variables completan los fragmentos anteriores)
- * Verificacion: termina sin excepciones inesperadas.
+ *   Bytes: 220
+ * IElemento permite consultar el tamaño de la carpeta completa.
  */

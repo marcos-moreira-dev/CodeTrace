@@ -22,6 +22,5 @@ end
 main if __FILE__ == $PROGRAM_NAME
 
 # Salida esperada de consola:
-#   Bytes: #{raiz.bytes}
-#   (los valores variables completan los fragmentos anteriores)
-# Verificacion: termina sin excepciones inesperadas.
+#   Bytes: 220
+# Archivo y Carpeta exponen bytes mediante duck typing.
