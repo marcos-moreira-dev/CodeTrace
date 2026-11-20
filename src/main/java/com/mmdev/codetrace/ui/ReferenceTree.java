@@ -266,7 +266,7 @@ public final class ReferenceTree extends TreeView<Path> {
 
     public void setOnBusyChange(Consumer<Boolean> listener) {
         onBusyChange = listener == null ? busy -> {} : listener;
-        onBusyChange.accept(loading || expander.isExpanding());
+        onBusyChange.accept(loading || expander.isBusy());
     }
 
     public void setOnIndexReady(Consumer<ReferenceTreeIndex> callback) {
@@ -274,11 +274,11 @@ public final class ReferenceTree extends TreeView<Path> {
     }
 
     private void notifyBusy() {
-        onBusyChange.accept(loading || expander.isExpanding());
+        onBusyChange.accept(loading || expander.isBusy());
     }
 
     public boolean isBusy() {
-        return loading || expander.isExpanding();
+        return loading || expander.isBusy();
     }
 
     /**
