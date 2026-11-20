@@ -170,6 +170,31 @@ del Administrador de tareas. Para estudiar el heap, `jcmd <PID> GC.heap_info`
 puede complementar el Administrador de tareas. La métrica relevante es la
 variación al ampliar la referencia, no solo el tamaño absoluto del proceso.
 
+## Revisión de expansión y flechas (19 de noviembre de 2026)
+
+El registro `CodeTrace-feedback-20261119-220448.zip` midió una referencia
+de 11.514 entradas: índice 1841 ms, catálogo 2102 ms,
+`graph-organized` de 76 nodos 75,8 ms y `collapse-all` 6,8 ms.
+Estos tiempos pertenecen a una sola ejecución en un equipo Windows;
+no representan percentiles ni benchmarks generalizables.
+
+**Expandir todo:** tomar el `TreeItem` realmente instalado en el `TreeView`.
+Una búsqueda por la ruta raíz podía producir «La carpeta no está visible en
+el explorador» después de un refresco. La operación global no depende ya
+de esa búsqueda; en proyectos pequeños es inmediata, en los grandes
+mantiene lotes con un máximo de trabajo por pulso JavaFX. Una solicitud
+durante la indexación se ejecuta al terminarla. El diagnóstico registra
+`expand-recursive` con tiempo y memoria Java cuando completa.
+
+**Aristas superpuestas:** el diseño de nodos y sus posiciones guardadas
+permanecen intactos. El renderizado clasifica trazos por dirección y
+proximidad a una recta, encuentra segmentos solapados y asigna pequeños
+carriles Bézier perpendiculares, deterministas. Las flechas se orientan
+por la tangente de la curva al llegar al nodo. No se introduce ruido
+aleatorio en las coordenadas; eso rompería la repetibilidad y la claridad
+de las etiquetas. La asignación se recalcula solo al cambiar posiciones,
+no cuando el usuario hace zoom o desplaza la cámara.
+
 ## Evolución posterior, sujeta a perfiles
 
 Consolidar los recorridos iniciales del árbol y del catálogo requiere un
