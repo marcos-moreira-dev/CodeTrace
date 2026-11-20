@@ -583,6 +583,15 @@ class CodeTraceAppSmokeTest {
                 Path deep = Files.createDirectories(nested.resolve("deep/layer"));
                 Files.writeString(deep.resolve("Example.java"), "class Example {}");
                 fileTree.open(root);
+                // During a real disk scan the tree has not yet published its
+                // children. The application must show a useful loading state,
+                // not an apparently empty and unresponsive explorer.
+                VBox explorerLoading = (VBox) stage.getScene().getRoot()
+                        .lookup(".explorer-loading");
+                assertNotNull(explorerLoading);
+                assertTrue(fileTree.isIndexing());
+                assertTrue(explorerLoading.isVisible(),
+                        "Cold indexing must expose the centered activity indicator");
                 // The smoke test owns the FX thread and installs a prebuilt
                 // index synchronously. Cancel the genuine background scan first;
                 // otherwise loading stays true and expansion is correctly
