@@ -364,6 +364,11 @@ public final class GraphLayoutEngine {
             int[] center = cells.get(parent);
             int[] current = cells.get(leaf);
             if (center == null || current == null) continue;
+            // Already in a neighboring cell: keep the stable horizontal/
+            // diagonal presentation instead of migrating to a vertical slot
+            // just because its pixel distance is numerically shorter.
+            if (Math.abs(current[0] - center[0]) <= 1
+                    && Math.abs(current[1] - center[1]) <= 1) continue;
             int bestCol = current[0], bestRow = current[1];
             double bestCost = connectionCost(bestCol, bestRow, List.of(center));
             for (int dx = -2; dx <= 2; dx++) {
