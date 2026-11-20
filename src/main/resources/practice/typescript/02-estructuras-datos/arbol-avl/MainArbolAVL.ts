@@ -17,3 +17,10 @@ if(avl.inorden().join(",")!==Array.from({length:15},(_,i)=>i+1).join(","))
     throw Error("Recorrido");
 if(avl.validar()>5)throw Error("Altura");
 console.log("Altura AVL:",avl.validar());
+
+/*
+ * Salida esperada de consola:
+ *   Altura AVL:
+ *   (los valores variables completan los fragmentos anteriores)
+ * Verificacion: termina sin excepciones inesperadas.
+ */

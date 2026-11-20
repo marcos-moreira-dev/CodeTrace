@@ -14,3 +14,9 @@ import { Arbol } from "./Arbol";
 const arbol = new Arbol<number>((a, b) => a - b);
 for (const numero of [8, 3, 10, 1, 6, 4, 7]) arbol.insertar(numero);
 console.log(arbol.inorden());
+
+/*
+ * Salida esperada de consola:
+ *   Se imprime el valor o coleccion calculado por el cliente.
+ * Verificacion: termina sin excepciones inesperadas.
+ */
