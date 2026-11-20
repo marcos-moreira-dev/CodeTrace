@@ -128,20 +128,26 @@ public final class ReferenceTreeIndex {
                 if (PracticeEligibility.supports(file) && attributes.size() > 0
                         && !ReferenceScanRules.generatedPath(relative)) {
                     workable.add(relative);
-                    String ancestor = parent(relative);
-                    while (true) {
-                        descendants.add(ancestor);
-                        if (ancestor.isEmpty()) break;
-                        ancestor = parent(ancestor);
-                    }
+                    // Mark the immediate parent; post-order directory visits
+                    // propagate eligibility to ancestors in O(directories).
+                    descendants.add(parent(relative));
                 }
                 childPaths.computeIfAbsent(parent(relative), ignored -> new ArrayList<>())
                         .add(relative);
-                String ancestor = parent(relative);
-                while (true) {
-                    totals.merge(ancestor, 1L, Long::sum);
-                    if (ancestor.isEmpty()) break;
-                    ancestor = parent(ancestor);
+                // Count locally, then propagate subtree totals only once
+                // per directory. Avoid O(n * depth) updates on deep trees.
+                totals.merge(parent(relative), 1L, Long::sum);
+                return FileVisitResult.CONTINUE;
+            }
+
+            @Override
+            public FileVisitResult postVisitDirectory(Path directory, IOException error) {
+                abortIfInterrupted();
+                String relative = relative(root, directory);
+                if (!relative.isEmpty()) {
+                    String parent = parent(relative);
+                    totals.merge(parent, totals.getOrDefault(relative, 0L), Long::sum);
+                    if (descendants.contains(relative)) descendants.add(parent);
                 }
                 return FileVisitResult.CONTINUE;
             }
