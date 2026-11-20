@@ -110,7 +110,15 @@ if ($IncludeFfmpeg) {
 $zip = Join-Path $dist "CodeTrace-Windows-portable.zip"
 if (Test-Path $zip) { Remove-Item $zip -Force }
 Compress-Archive -Path $portable -DestinationPath $zip -CompressionLevel Optimal
+# Publish a checksum beside the ZIP so users can verify downloaded artifacts
+# without installing Java, Maven or the application itself.
+$hash = (Get-FileHash -LiteralPath $zip -Algorithm SHA256).Hash.ToLowerInvariant()
+$checksumFile = "$zip.sha256"
+[IO.File]::WriteAllText($checksumFile,
+        "$hash  CodeTrace-Windows-portable.zip" + [Environment]::NewLine,
+        [Text.Encoding]::ASCII)
 Write-Host "Portable listo: $zip"
+Write-Host "SHA-256: $checksumFile"
 if ($Installer) {
     Write-Host "Creando instalador EXE (requiere WiX Toolset compatible)..."
     # The currently supported session format is .ctrace (never .ctsession).
