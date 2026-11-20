@@ -758,6 +758,8 @@ class CodeTraceAppSmokeTest {
                         .noneMatch(javafx.scene.control.TreeItem::isExpanded),
                         "Only the root stays open; old descendant flags are discarded");
                 fileTree.expandAll();
+                assertSame(beforeCollapseAll, fileTree.getRoot(),
+                        "Collapse/re-expand must reuse the retained TreeItems, not rebuild them");
                 assertTrue(fileTree.getRoot().isExpanded());
                 // A root-only assertion missed the real regression: users
                 // pressed Expandir todo but nested branches did not reopen.
