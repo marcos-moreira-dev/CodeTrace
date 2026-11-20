@@ -90,7 +90,7 @@ final class BatchedTreeExpander {
 
     private void processBatch(ArrayDeque<TreeItem<Path>> pending) {
         int processed = 0;
-        long started = System.nanoTime();
+        long pulseStarted = System.nanoTime();
         while (!pending.isEmpty() && processed < EXPANSION_BATCH
                 && visited < MAX_EXPANDED_FOLDERS) {
             TreeItem<Path> node = pending.removeFirst();
@@ -102,7 +102,7 @@ final class BatchedTreeExpander {
                     if (!child.isLeaf()) pending.addLast(child);
                 }
             }
-            if (System.nanoTime() - started >= FX_BATCH_BUDGET_NS) break;
+            if (System.nanoTime() - pulseStarted >= FX_BATCH_BUDGET_NS) break;
         }
         if (visited - lastReported >= 192) {
             lastReported = visited;
