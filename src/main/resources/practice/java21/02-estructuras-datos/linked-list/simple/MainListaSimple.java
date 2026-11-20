@@ -28,7 +28,6 @@ public final class MainListaSimple {
 
 /*
  * Salida esperada de consola:
- *   Elementos insertados: 
- *   (los valores variables completan los fragmentos anteriores)
- * Verificacion: termina sin excepciones inesperadas.
+ *   Elementos insertados: 3
+ * Insertar al inicio aumenta el tamaño de cero a tres elementos.
  */

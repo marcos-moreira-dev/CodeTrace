@@ -28,6 +28,7 @@ public final class MainTarifas {
 
 /*
  * Salida esperada de consola:
- *   Se imprime el valor o coleccion calculado por el cliente.
- * Verificacion: termina sin excepciones inesperadas.
+ *   100.0
+ *   85.0
+ * El primer importe usa la tarifa normal; el segundo aplica 15 % de descuento.
  */

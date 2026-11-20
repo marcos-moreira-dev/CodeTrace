@@ -24,7 +24,6 @@ public final class MainUnionFind {
 
 /*
  * Salida esperada de consola:
- *   Componentes: 
- *   (los valores variables completan los fragmentos anteriores)
- * Verificacion: termina sin excepciones inesperadas.
+ *   Componentes: 3
+ * Las uniones (0,1) y (1,2) dejan {0,1,2}, {3} y {4}.
  */

@@ -27,7 +27,6 @@ public final class MainComposite {
 
 /*
  * Salida esperada de consola:
- *   Bytes: 
- *   (los valores variables completan los fragmentos anteriores)
- * Verificacion: termina sin excepciones inesperadas.
+ *   Bytes: 220
+ * La suma recursiva incluye Main.java (120), App.java (80) y README.md (20).
  */

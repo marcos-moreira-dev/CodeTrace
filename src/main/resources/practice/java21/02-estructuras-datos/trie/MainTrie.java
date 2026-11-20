@@ -27,7 +27,6 @@ public final class MainTrie {
 
 /*
  * Salida esperada de consola:
- *   Prefijo 'cas': 
- *   (los valores variables completan los fragmentos anteriores)
- * Verificacion: termina sin excepciones inesperadas.
+ *   Prefijo 'cas': true
+ * El prefijo existe, aunque «cas» no fue insertada como palabra completa.
  */
