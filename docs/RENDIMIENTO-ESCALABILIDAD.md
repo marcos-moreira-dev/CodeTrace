@@ -116,9 +116,10 @@ mvn javafx:run
 Remove-Item Env:JAVA_TOOL_OPTIONS
 ```
 
-Los registros del perfilado solo incluyen la operación, el tiempo transcurrido
-y el número de entradas. Para comparar cambios de código, medir también p95,
-uso de heap, CPU e I/O con JFR y repetir los escenarios sobre el mismo equipo.
+Los registros del perfilado incluyen la operación, el tiempo, la cantidad de
+entradas y los MiB de heap JVM utilizados y comprometidos, sin archivos ni rutas.
+El heap no es toda la memoria del proceso Windows. Para comparar cambios de
+código, medir también p95, CPU e I/O con JFR en el mismo equipo.
 
 ## Interfaz reactiva: colapsar y distribuir grafos
 
@@ -142,8 +143,8 @@ el trabajo del usuario.
 En modo de diagnóstico (`-Dcodetrace.profile=true`) se registran eventos
 `Performance collapse-all`, `collapse-branch`, `graph-organized`,
 `graph-grid`, `reference-tree` y `reference-catalogue` en
-`logs/javafx-run.log` dentro del ZIP. Son tiempos de pared de cada operación,
-no tiempos de CPU ni mediciones de FPS. El script
+`logs/javafx-run.log` dentro del ZIP. Incluyen también el heap JVM usado y
+comprometido en MiB. Son tiempos de pared, no CPU, FPS ni memoria total. El script
 `scripts/diagnostico.bat` habilita temporalmente el perfilado al abrir la
 aplicación y restaura las opciones Java preexistentes cuando sale.
 
