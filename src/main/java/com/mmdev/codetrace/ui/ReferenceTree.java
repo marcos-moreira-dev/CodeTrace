@@ -98,6 +98,48 @@ public final class ReferenceTree extends TreeView<Path> {
         this.expander = new BatchedTreeExpander(onStatus, this::notifyBusy);
         setShowRoot(true);
         setCellFactory(view -> new TreeCell<>() {
+            // TreeView virtualizes cells, so each cell is reused on scroll.
+            // Construct its graphics and tooltip ONCE rather than allocating
+            // a fresh HBox, Labels, bindings and ContextMenu per visible row.
+            private final HBox row = new HBox(6);
+            private final Label nameLabel = new Label();
+            private final Label countLabel = new Label();
+            private final Tooltip rowTooltip = new Tooltip();
+            private boolean rowExcluded;
+            private boolean rowCreated;
+
+            {
+                row.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
+                row.getStyleClass().add("reference-tree-row");
+                row.setMinWidth(javafx.scene.layout.Region.USE_PREF_SIZE);
+                nameLabel.getStyleClass().add("reference-name");
+                nameLabel.setMinWidth(javafx.scene.layout.Region.USE_PREF_SIZE);
+                countLabel.getStyleClass().add("reference-file-count");
+                countLabel.setMinWidth(javafx.scene.layout.Region.USE_PREF_SIZE);
+                selectedProperty().addListener((obs, previous, selected) ->
+                        refreshTextColors());
+                // Context menus can be expensive: create one only on an
+                // actual right-click, never for every row during scrolling.
+                setOnContextMenuRequested(event -> {
+                    Path current = getItem();
+                    if (isEmpty() || current == null || referenceRoot == null) return;
+                    ContextMenu menu = contextFor(current);
+                    if (menu.getItems().isEmpty()) return;
+                    menu.setOnHidden(hidden -> menu.getItems().clear());
+                    menu.show(this, event.getScreenX(), event.getScreenY());
+                    event.consume();
+                });
+            }
+
+            private void refreshTextColors() {
+                nameLabel.setTextFill(isSelected() ? Color.web("#203748")
+                        : rowExcluded ? Color.web("#758997")
+                        : rowCreated ? Color.web("#263747")
+                        : Color.web("#667784"));
+                countLabel.setTextFill(isSelected()
+                        ? Color.web("#203748") : Color.web("#637889"));
+            }
+
             @Override
             protected void updateItem(Path path, boolean empty) {
                 super.updateItem(path, empty);
@@ -105,7 +147,6 @@ public final class ReferenceTree extends TreeView<Path> {
                     setText(null);
                     setGraphic(null);
                     setTooltip(null);
-                    setContextMenu(null);
                     getStyleClass().remove("reference-outside-scope");
                     return;
                 }
@@ -121,54 +162,39 @@ public final class ReferenceTree extends TreeView<Path> {
                                 : PracticeEligibility.supports(path));
                 State state = practiceable ? statusLookup.apply(relative)
                         : State.NOT_APPLICABLE;
-                boolean created = state == State.CREATED || state == State.COMPLETED;
-                long fileCount = isFolder(path) && index != null
+                rowExcluded = isExcluded;
+                rowCreated = state == State.CREATED || state == State.COMPLETED;
+                long fileCount = folder && index != null
                         ? index.recursiveFiles(relative) : -1L;
-                // Keep the icon in a dedicated cell graphic, not in the
-                // TreeCell's overrun-prone text layout. Long folder names can
-                // scroll horizontally without turning the icon into "...".
                 setText(null);
-                // A real Feather vector icon is kept in a fixed-size
-                // container. No "✓" / "○" text labels can collapse into "...".
-                var badge = state == State.NOT_APPLICABLE ? null
-                        : ReconstructionStateIcons.forState(state);
-                Label nameLabel = new Label(name(path));
+                nameLabel.setText(name(path));
+                nameLabel.getStyleClass().remove("reference-match-name");
+                nameLabel.getStyleClass().remove("reference-pending-name");
                 if (!nameFilter.isBlank() && TreeNameFilter.fold(name(path))
-                        .contains(TreeNameFilter.fold(nameFilter)))
+                        .contains(TreeNameFilter.fold(nameFilter))) {
                     nameLabel.getStyleClass().add("reference-match-name");
-                nameLabel.getStyleClass().add("reference-name");
+                }
                 if (state == State.PENDING)
                     nameLabel.getStyleClass().add("reference-pending-name");
-                nameLabel.textFillProperty().bind(javafx.beans.binding.Bindings
-                        .when(selectedProperty()).then(Color.web("#203748"))
-                        .otherwise(isExcluded ? Color.web("#758997")
-                                : created ? Color.web("#263747")
-                                : Color.web("#667784")));
-                nameLabel.setMinWidth(javafx.scene.layout.Region.USE_PREF_SIZE);
-                HBox graphic = new HBox(6);
-                graphic.getChildren().add(FileTypeIcons.forPath(path, folder));
-                if (badge != null) graphic.getChildren().add(badge);
+                refreshTextColors();
+
+                row.getChildren().clear();
+                row.getChildren().add(FileTypeIcons.forPath(path, folder));
+                if (state != State.NOT_APPLICABLE)
+                    row.getChildren().add(ReconstructionStateIcons.forState(state));
                 if (folder && isExcluded) {
                     FontIcon excludedIcon = new FontIcon("fth-eye-off");
                     excludedIcon.setIconSize(14);
                     excludedIcon.setIconColor(Color.web("#7A8B98"));
-                    graphic.getChildren().add(excludedIcon);
+                    row.getChildren().add(excludedIcon);
                 }
-                graphic.getChildren().add(nameLabel);
-                graphic.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
-                graphic.getStyleClass().add("reference-tree-row");
+                row.getChildren().add(nameLabel);
                 if (fileCount >= 0) {
-                    Label total = new Label("(" + fileCount
+                    countLabel.setText("(" + fileCount
                             + (fileCount == 1 ? " archivo)" : " archivos)"));
-                    total.getStyleClass().add("reference-file-count");
-                    total.textFillProperty().bind(javafx.beans.binding.Bindings
-                            .when(selectedProperty()).then(Color.web("#203748"))
-                            .otherwise(Color.web("#637889")));
-                    total.setMinWidth(javafx.scene.layout.Region.USE_PREF_SIZE);
-                    graphic.getChildren().add(total);
+                    row.getChildren().add(countLabel);
                 }
-                graphic.setMinWidth(javafx.scene.layout.Region.USE_PREF_SIZE);
-                setGraphic(graphic);
+                setGraphic(row);
                 setGraphicTextGap(0);
                 String status = switch (state) {
                     case NOT_APPLICABLE -> "No requiere práctica de mecanografía";
@@ -185,8 +211,8 @@ public final class ReferenceTree extends TreeView<Path> {
                             ? " archivo de referencia, incluidas subcarpetas"
                             : " archivos de referencia, incluidas subcarpetas");
                 }
-                setTooltip(new Tooltip(status));
-                setContextMenu(contextFor(path));
+                rowTooltip.setText(status);
+                setTooltip(rowTooltip);
             }
         });
         setOnMouseClicked(event -> {
