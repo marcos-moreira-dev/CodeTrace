@@ -42,6 +42,11 @@
     <plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-resources-plugin</artifactId><version>3.4.0</version><configuration><encoding>UTF-8</encoding><propertiesEncoding>UTF-8</propertiesEncoding></configuration></plugin>
     <plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-compiler-plugin</artifactId><version>3.16.0</version><configuration><release>21</release></configuration></plugin>
     <plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-surefire-plugin</artifactId><version>3.6.1</version><configuration><useModulePath>false</useModulePath></configuration></plugin>
+    <!-- The public API documentation is an optional development artifact.
+         Run mvn javadoc:javadoc; failures from invalid links/HTML are retained. -->
+    <plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-javadoc-plugin</artifactId><version>3.11.2</version>
+      <configuration><encoding>UTF-8</encoding><doclint>all,-missing</doclint></configuration>
+    </plugin>
     <plugin><groupId>org.openjfx</groupId><artifactId>javafx-maven-plugin</artifactId><version>0.0.8</version><configuration><mainClass>com.mmdev.codetrace.app.Launcher</mainClass></configuration></plugin>
   </plugins></build>
 </project>
