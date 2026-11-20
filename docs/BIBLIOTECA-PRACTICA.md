@@ -1,6 +1,6 @@
-# Biblioteca de práctica CodeTrace — catálogo v4
+# Biblioteca de práctica CodeTrace — catálogo v5
 
-**387 archivos de referencia en 14 paquetes**, incorporados en la aplicación. Un ejercicio con varios archivos cuenta varias entradas; no confundir cantidad de archivos con cantidad de ejercicios.
+**466 archivos de referencia en 14 paquetes**, incorporados en la aplicación. Un ejercicio con varios archivos cuenta varias entradas; no confundir cantidad de archivos con cantidad de ejercicios.
 
 ## Organización curricular
 
@@ -60,7 +60,7 @@ Fuentes de orientación: los repositorios personales Estructuras-de-Datos-y-Algo
 Esta ampliación es sustancial, pero no convierte la biblioteca en un curso
 exhaustivo ni certifica todas las posibilidades del temario maestro.
 
-## Reorganización semántica v4
+## Reorganización semántica v5
 
 Todos los fuentes de práctica están ubicados al menos tres niveles por debajo del paquete: `categoría/unidad/archivo`. Los patrones y algoritmos independientes tienen carpeta propia. Se mantienen diferenciados `observer/basico/` (ejemplo mínimo) y `observer/` (ejemplo multiarchivo). La fábrica simple **no** equivale a Factory Method.
 
@@ -68,7 +68,7 @@ Todos los fuentes de práctica están ubicados al menos tres niveles por debajo 
 
 Los comentarios conceptuales más completos están en los clientes; no se traslada código original de GitHub de forma indiscriminada. La migración exacta de los archivos originales se registra en `docs/MAPA-REORGANIZACION-BIBLIOTECA-V4.tsv`.
 
-La caché cambia a `v4` para no mezclar referencias antiguas con las nuevas. Las copias `v2`/`v3` del usuario y sus sesiones existentes **no se eliminan**. Esta rama continúa siendo un borrador sujeto a QA.
+La caché cambia a `v5` para no mezclar referencias antiguas con las nuevas. Las copias `v2`/`v3` del usuario y sus sesiones existentes **no se eliminan**. Esta rama continúa siendo un borrador sujeto a QA.
 
 ### Grafos: comparación entre lenguajes
 
@@ -77,3 +77,7 @@ Java incluye grafos genéricos con `Vertice<T>`, igualdad por id y latencias; Ko
 ### Auditoría local Windows
 
 Desde la raíz del repositorio se puede ejecutar `scripts/auditar-biblioteca.ps1` para revisar los 387 recursos, 14 lenguajes, carpetas y cabeceras sin instalar compiladores. Con `-EjecutarClientes` se compila el paquete Java 21 en TEMP y se ejecutan ejemplos de grafos y patrones. El script elimina ese directorio temporal al terminar y no modifica las referencias.
+
+## Ampliación de miniproyectos comparables v5
+
+Java incorpora excepciones de negocio checked/unchecked y fallos suprimidos en AutoCloseable. Kotlin enseña fun interface, null safety y excepciones propias; C# agrega eventos reales, Strategy, Factory Method, Adapter, Decorator y colecciones genéricas; TypeScript separa contratos en módulos y clientes Main; Python utiliza Protocol, funciones y main.py; C++ utiliza .hpp/.cpp, unique_ptr y RAII. C y C++ contienen `01-fundamentos/compilacion-y-enlazado/biblioteca-estatica-dinamica/` con compilación/enlace de bibliotecas .a y .so en Linux/WSL. Ninguna variante requiere MVC para estos ejemplos de consola.

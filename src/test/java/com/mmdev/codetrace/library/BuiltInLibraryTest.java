@@ -110,8 +110,8 @@ class BuiltInLibraryTest {
     @Test
     void allFourCurriculumPurposesAndDocumentedJavaClientsArePresent() throws Exception {
         var library = new BuiltInLibrary(temp.resolve("curriculum"));
-        assertEquals("v4", BuiltInLibrary.CATALOG_VERSION);
-        assertEquals(387, library.packs().stream().mapToInt(library::size).sum());
+        assertEquals("v5", BuiltInLibrary.CATALOG_VERSION);
+        assertEquals(466, library.packs().stream().mapToInt(library::size).sum());
         for (var pack : library.packs()) {
             var entries = library.entries(pack);
             assertTrue(entries.stream().allMatch(x -> x.split("/").length >= 3),
@@ -139,6 +139,12 @@ class BuiltInLibraryTest {
         assertTrue(library.entries(javaPack).contains("03-algoritmos/grafos/recorridos/caminos-sin-peso/MainCaminosSinPeso.java"));
         assertTrue(library.entries(javaPack).contains("04-patrones-diseno/factory/basico/MainFactoryBasica.java"));
         assertTrue(library.entries(javaPack).contains("04-patrones-diseno/observer/basico/MainObservadorBasico.java"));
+        assertTrue(library.entries(javaPack).contains("01-fundamentos/excepciones/checked-personalizada/MainExcepcionChecked.java"));
+        assertTrue(library.entries(javaPack).contains("01-fundamentos/excepciones/unchecked-dominio/MainExcepcionUnchecked.java"));
+        assertTrue(library.entries(javaPack).contains("02-estructuras-datos/cola-circular/MainColaCircular.java"));
+        assertTrue(library.entries(javaPack).contains("04-patrones-diseno/strategy/basico/MainStrategy.java"));
+        var cppPack = library.packs().stream().filter(x -> x.id().equals("cpp")).findFirst().orElseThrow();
+        assertTrue(library.entries(cppPack).contains("01-fundamentos/compilacion-y-enlazado/biblioteca-estatica-dinamica/main.cpp"));
         assertTrue(library.entries(javaPack).contains("02-estructuras-datos/grafos/genericos/MainGrafoGenerico.java"));
         assertTrue(library.entries(javaPack).contains("03-algoritmos/grafos/componentes-fuertes/MainComponentesFuertes.java"));
         assertTrue(library.entries(javaPack).contains("03-algoritmos/grafos/caminos-minimos/MainCasosLimite.java"));
@@ -156,7 +162,7 @@ class BuiltInLibraryTest {
         var all = library.packs().stream().collect(
                 Collectors.toMap(BuiltInLibrary.Pack::id, p -> p));
         assertTrue(library.entries(all.get("java21")).contains(
-                "04-patrones-diseno/factory-method/DemoFactory.java"));
+                "04-patrones-diseno/factory-method/MainFactoryMethod.java"));
         assertTrue(library.entries(all.get("java21")).contains(
                 "04-patrones-diseno/observer/CentroEventos.java"));
         assertTrue(library.entries(all.get("typescript")).contains(
@@ -169,7 +175,7 @@ class BuiltInLibraryTest {
                 "03-algoritmos/euclides/euclides.asm"));
         assertTrue(library.entries(all.get("java21")).contains(
                 "03-algoritmos/dijkstra/Dijkstra.java"));
-        assertEquals(387, library.packs().stream().mapToInt(library::size).sum());
+        assertEquals(466, library.packs().stream().mapToInt(library::size).sum());
     }
 
 }
