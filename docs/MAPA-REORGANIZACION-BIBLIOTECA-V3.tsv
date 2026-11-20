@@ -89,8 +89,8 @@ java21/03-algoritmos/Insercion.java	java21/03-algoritmos/insercion/Insercion.jav
 java21/03-algoritmos/programacion-dinamica/MainMonedas.java	java21/03-algoritmos/programacion-dinamica/cambio-monedas/MainMonedas.java
 java21/03-algoritmos/programacion-dinamica/Mochila01.java	java21/03-algoritmos/programacion-dinamica/mochila-01/Mochila01.java
 java21/03-algoritmos/programacion-dinamica/Monedas.java	java21/03-algoritmos/programacion-dinamica/cambio-monedas/Monedas.java
-java21/03-algoritmos/recorridos/MainRecorridos.java	java21/03-algoritmos/grafos/recorridos/MainRecorridos.java
-java21/03-algoritmos/recorridos/Recorridos.java	java21/03-algoritmos/grafos/recorridos/Recorridos.java
+java21/03-algoritmos/recorridos/MainRecorridos.java	java21/03-algoritmos/grafos/recorridos/orden-visita/MainRecorridos.java
+java21/03-algoritmos/recorridos/Recorridos.java	java21/03-algoritmos/grafos/recorridos/orden-visita/Recorridos.java
 java21/04-patrones-diseno/Factory.java	java21/04-patrones-diseno/factory/basico/Factory.java
 java21/04-patrones-diseno/Observador.java	java21/04-patrones-diseno/observer/basico/Observador.java
 java21/04-patrones-diseno/Strategy.java	java21/04-patrones-diseno/strategy/basico/Strategy.java

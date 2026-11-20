@@ -136,7 +136,7 @@ class BuiltInLibraryTest {
         assertTrue(library.entries(javaPack).contains("03-algoritmos/grafos/caminos-minimos/MainCaminosMinimos.java"));
         assertTrue(library.entries(javaPack).contains("03-algoritmos/grafos/expansion-minima/MainExpansionMinima.java"));
         assertTrue(library.entries(javaPack).contains("03-algoritmos/grafos/topologico/MainTopologico.java"));
-        assertTrue(library.entries(javaPack).contains("03-algoritmos/grafos/recorridos/MainCaminosSinPeso.java"));
+        assertTrue(library.entries(javaPack).contains("03-algoritmos/grafos/recorridos/caminos-sin-peso/MainCaminosSinPeso.java"));
         assertTrue(library.entries(javaPack).contains("04-patrones-diseno/factory/basico/MainFactoryBasica.java"));
         assertTrue(library.entries(javaPack).contains("04-patrones-diseno/observer/basico/MainObservadorBasico.java"));
         assertTrue(library.entries(javaPack).contains("02-estructuras-datos/grafos/genericos/MainGrafoGenerico.java"));
