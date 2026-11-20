@@ -3,7 +3,8 @@ package com.mmdev.codetrace.app;
 /**
  * Stable, contextual labels for the footer. Transient action notifications are
  * managed separately by the application and must not outlive the active view.
- */
+  * <p><strong>Engineering rationale.</strong> Keep enduring navigation context separate from short-lived action feedback. The application should not show a previous tab's message after a close, nor describe the reference as ready while its visible explorer model is still being prepared.</p>
+*/
 public final class StatusBarText {
     private StatusBarText() {
     }

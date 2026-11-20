@@ -11,7 +11,8 @@ import java.util.Objects;
  * Fixed-position transcription onto the reference itself, never a free editor.
  * Each reference grapheme has one input slot. Mistakes remain visible but do
  * not prevent the caret from advancing; untyped slots remain translucent.
- */
+  * <p><strong>Engineering rationale.</strong> A fixed reference-aligned sequence of Unicode grapheme slots models transcription rather than free-form editing. Distinguishing correctly typed, incorrect, skipped and pending units preserves observable learning progress while allowing the user to continue through errors.</p>
+*/
 public final class TypingSession {
     public enum State { PENDING, CORRECT, INCORRECT, SKIPPED }
 

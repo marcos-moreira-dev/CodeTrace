@@ -8,7 +8,8 @@ import java.nio.file.LinkOption;
 import java.util.Map;
 import java.util.Objects;
 
-/** Compare saved source fingerprints without touching the reference files. */
+/** Compare saved source fingerprints without touching the reference files.  * <p><strong>Engineering rationale.</strong> Saved fingerprints are evidence about a specific source revision, not authority to alter that source. Validate relative paths and resolved filesystem targets before hashing; report changed or unavailable files so that outdated transcription credit is not silently accepted.</p>
+*/
 public final class ReferenceChangeDetector {
     private ReferenceChangeDetector() { }
 

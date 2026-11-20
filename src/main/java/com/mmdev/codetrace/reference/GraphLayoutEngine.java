@@ -17,7 +17,8 @@ import java.util.Set;
  * graph layout, relaxes dependency springs, then assigns each node a nearby
  * unoccupied label-sized cell. The last step guarantees non-overlapping
  * labels, even around high-degree hubs and cycles.
- */
+  * <p><strong>Engineering rationale.</strong> Layout has two goals that can compete: minimize relationship lengths and preserve legible, non-overlapping node labels. The organized mode uses geometric relaxation followed by collision-aware placement, with deterministic inputs so a saved session can reproduce a useful arrangement.</p>
+*/
 public final class GraphLayoutEngine {
     public enum Mode { GRID, ORGANIZED }
 

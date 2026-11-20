@@ -14,7 +14,8 @@ import java.util.regex.*;
 /**
  * Scope-limited, read-only importer. Only links that can be resolved to
  * actual local files/folders are shown; no false external dependency nodes.
- */
+  * <p><strong>Engineering rationale.</strong> A dependency map is an exploratory approximation, not a compiler, resolver or proof that imports are valid. Keep traversal bounded, resolve relationships only to known local files, and separate graph extraction from the Canvas-based interaction and layout algorithm.</p>
+*/
 public final class ProjectDependencyGraph {
     public record Edge(String source, String target, String relation) {}
     public record Graph(String folder, List<String> nodes, List<Edge> edges,

@@ -111,7 +111,8 @@ import javafx.stage.Stage;
 /**
  * Desktop shell for reconstructing a project in memory.
  * Only the saved .ctrace file is written; source references remain untouched.
- */
+  * <p><strong>Engineering rationale.</strong> This is the composition root, not the domain model: it connects JavaFX events to dedicated services and pure reference/workspace/practice objects. Project changes invalidate in-flight work and release tabs before the replacement state becomes visible; keep long disk scans and binary decoding off the JavaFX application thread.</p>
+*/
 public final class CodeTraceApp extends Application {
     private final TabPane tabs = new TabPane();
     private final DocumentTabs documents = new DocumentTabs(tabs, () -> {

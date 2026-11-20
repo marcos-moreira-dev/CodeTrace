@@ -14,7 +14,8 @@ import java.util.Objects;
 /**
  * A prepared project transition: fresh project or an existing .ctrace session.
  * No JavaFX controls, disk mutations, or background jobs live in this model.
- */
+  * <p><strong>Engineering rationale.</strong> Treat activation as a prepared state-transfer boundary rather than a sequence of UI mutations. Grouping the reference root, virtual model, typing sessions and persisted layouts keeps fresh-project and restored-session flows consistent, even when the old project had pending asynchronous work.</p>
+*/
 public record ProjectActivation(
         Path root, VirtualWorkspace workspace,
         Map<String, TypingSession> sessions, Map<String, String> hashes,

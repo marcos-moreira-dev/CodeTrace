@@ -18,7 +18,8 @@ import java.util.Set;
  * Immutable file-tree index created OFF the JavaFX Application Thread.
  * Stores direct child paths and recursive file totals for every directory.
  * Symbolic links are excluded so a reference cannot escape its root.
- */
+  * <p><strong>Engineering rationale.</strong> Indexing is an explicit time-for-memory trade-off: retaining immediate-child adjacency and recursive totals allows repeated expansions and counters to avoid filesystem traversals. The snapshot is immutable and built off the UI thread; symbolic links are not traversed so inspection remains scoped to the selected reference.</p>
+*/
 public final class ReferenceTreeIndex {
     private final Map<String, List<String>> children;
     private final Map<String, Long> recursiveCounts;

@@ -18,7 +18,8 @@ import java.util.Set;
  * Only supported, bounded UTF-8 practice files are hashed. Other regular
  * files retain their size and path for navigation, with an empty SHA-256 and
  * no typeable units. Never load complete multimedia blobs just for progress.
- */
+  * <p><strong>Engineering rationale.</strong> This structure supplies semantic progress facts such as eligible character counts and source fingerprints; it does not own the virtual text entered by the student. The scan is bounded, read-only and asynchronous because hashing every file or preloading multimedia would make large-project startup prohibitively expensive.</p>
+*/
 public final class ReferenceCatalogue {
     public record FileInfo(String sha256, long bytes, int typeableUnits) {
         public boolean typeable() {

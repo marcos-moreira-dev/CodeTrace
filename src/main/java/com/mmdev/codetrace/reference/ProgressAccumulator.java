@@ -14,7 +14,8 @@ import java.util.Objects;
  * on every keystroke. This class does not watch mutable workspace structures:
  * callers MUST discard it after a virtual tree, scope, exclusion, or catalogue
  * mutation. Use {@link #matches} to detect filtering/catalogue changes.</p>
- */
+  * <p><strong>Engineering rationale.</strong> Progress is derived state, not a mutable counter stored in the source files. The accumulator caches per-file contributions for rapid typing updates, but its identity depends on the catalogue, filters and exclusions; structural or scope changes require rebuilding that cache.</p>
+*/
 public final class ProgressAccumulator {
     private final ReferenceCatalogue.Snapshot catalogue;
     private final ProgressScope scope;

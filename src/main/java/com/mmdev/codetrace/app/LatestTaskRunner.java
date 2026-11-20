@@ -12,7 +12,8 @@ import javafx.concurrent.Task;
  *
  * Submit/cancel are called on the JavaFX application thread. Work runs on
  * a named daemon thread; result callbacks return to the application thread.
- */
+  * <p><strong>Engineering rationale.</strong> A cancellation request is cooperative and does not prove that the worker has stopped. The monotonically increasing generation is therefore just as important as thread interruption: only the most recent task is allowed to publish a result to a live screen.</p>
+*/
 public final class LatestTaskRunner<T> {
     private Task<T> active;
     private long generation;
