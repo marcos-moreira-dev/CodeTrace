@@ -3,6 +3,7 @@ package com.mmdev.codetrace.ui;
 import com.mmdev.codetrace.workspace.VirtualWorkspace;
 import com.mmdev.codetrace.workspace.VirtualChildrenIndex;
 import com.mmdev.codetrace.reference.ReferenceTreeIndex;
+import com.mmdev.codetrace.reference.PerformanceProbe;
 import com.mmdev.codetrace.reference.ExplorerMenuPolicy;
 import com.mmdev.codetrace.reference.TreeNameFilter;
 import com.mmdev.codetrace.reference.FolderProgressFocus;
@@ -260,6 +261,7 @@ public final class ReferenceTree extends TreeView<Path> {
         expander.cancel();
         TreeItem<Path> oldRoot = getRoot();
         if (oldRoot == null || referenceRoot == null) return;
+        long started = PerformanceProbe.begin();
         TreeItem<Path> selected = getSelectionModel().getSelectedItem();
         Path selectedPath = selected == null ? null : selected.getValue();
         TreeItem<Path> freshRoot = item(referenceRoot);
@@ -280,6 +282,7 @@ public final class ReferenceTree extends TreeView<Path> {
             }
         }
         getSelectionModel().select(visible);
+        PerformanceProbe.finish("collapse-all", started, oldRoot.getExpandedDescendentCount());
     }
 
     /**
@@ -295,6 +298,7 @@ public final class ReferenceTree extends TreeView<Path> {
             collapseAll();
             return;
         }
+        long started = PerformanceProbe.begin();
         TreeItem<Path> parent = clicked.getParent();
         if (parent == null) return;
         int slot = parent.getChildren().indexOf(clicked);
@@ -305,6 +309,7 @@ public final class ReferenceTree extends TreeView<Path> {
         TreeItem<Path> replacement = item(directory);
         parent.getChildren().set(slot, replacement);
         if (selectedInside) getSelectionModel().select(replacement);
+        PerformanceProbe.finish("collapse-branch", started, 1);
     }
 
     /**
