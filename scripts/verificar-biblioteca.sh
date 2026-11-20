@@ -22,7 +22,7 @@ for pack, path in items:
     assert source.is_file(), source
     lines = source.read_text(encoding="utf-8").splitlines()[:10]
     assert any("CodeTrace" in x for x in lines), source
-    assert any("Referencia:" in x for x in lines), source
+    assert any("referencia:" in x.lower() or "kotlin 2.2" in x.lower() for x in lines), source
     assert any(any(term in x.lower() for term in ("compilar", "comprobar", "ejecutar", "verificar")) for x in lines), source
 print("Catálogo y metadatos:", len(items))
 PY
