@@ -16,7 +16,9 @@ import javafx.util.Duration;
  * This coordinator only schedules bounded work on the JavaFX thread.
  */
 final class BatchedTreeExpander {
-    private static final int EXPANSION_BATCH = 48;
+    private static final int EXPANSION_BATCH = 12;
+    // Time-box each FX pulse as well as limiting the number of directories.
+    private static final long FX_BATCH_BUDGET_NS = 8_000_000L;
     private static final int MAX_EXPANDED_FOLDERS = 12_000;
 
     private final Consumer<String> notice;
@@ -24,6 +26,7 @@ final class BatchedTreeExpander {
     private Timeline timeline;
     private boolean expanding;
     private int visited;
+    private int lastReported;
 
     BatchedTreeExpander(Consumer<String> notice, Runnable busyChanged) {
         this.notice = Objects.requireNonNull(notice);
@@ -40,11 +43,13 @@ final class BatchedTreeExpander {
         ArrayDeque<TreeItem<Path>> pending = new ArrayDeque<>();
         pending.add(node);
         visited = 0;
+        lastReported = 0;
         expanding = true;
         busyChanged.run();
+        notice.accept("Expandiendo carpetas en lotes; puedes seguir usando CodeTrace.");
         processBatch(pending);
         if (pending.isEmpty() || !expanding) return;
-        timeline = new Timeline(new KeyFrame(Duration.millis(20),
+        timeline = new Timeline(new KeyFrame(Duration.millis(30),
                 event -> processBatch(pending)));
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
@@ -61,15 +66,23 @@ final class BatchedTreeExpander {
 
     private void processBatch(ArrayDeque<TreeItem<Path>> pending) {
         int processed = 0;
-        while (!pending.isEmpty() && processed++ < EXPANSION_BATCH
+        long started = System.nanoTime();
+        while (!pending.isEmpty() && processed < EXPANSION_BATCH
                 && visited < MAX_EXPANDED_FOLDERS) {
             TreeItem<Path> node = pending.removeFirst();
-            if (node.isLeaf()) continue;
-            node.setExpanded(true);
-            visited++;
-            for (TreeItem<Path> child : node.getChildren()) {
-                if (!child.isLeaf()) pending.addLast(child);
+            processed++;
+            if (!node.isLeaf()) {
+                node.setExpanded(true);
+                visited++;
+                for (TreeItem<Path> child : node.getChildren()) {
+                    if (!child.isLeaf()) pending.addLast(child);
+                }
             }
+            if (System.nanoTime() - started >= FX_BATCH_BUDGET_NS) break;
+        }
+        if (visited - lastReported >= 192) {
+            lastReported = visited;
+            notice.accept("Expandiendo carpetas: " + visited + " procesadas...");
         }
         if (pending.isEmpty() || visited >= MAX_EXPANDED_FOLDERS) {
             boolean limited = !pending.isEmpty();
