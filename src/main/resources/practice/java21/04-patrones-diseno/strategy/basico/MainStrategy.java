@@ -25,8 +25,7 @@ public final class MainStrategy {
 
 /*
  * Salida esperada de consola:
- *   Normal: 
- *   Fidelidad: 
- *   (los valores variables completan los fragmentos anteriores)
- * Verificacion: termina sin excepciones inesperadas.
+ *   Normal: 100.0
+ *   Fidelidad: 90.0
+ * Se cambia la política de cobro sin modificar el contexto Strategy.
  */

@@ -43,8 +43,7 @@ public final class MainTopologico {
 
 /*
  * Salida esperada de consola:
- *   Orden permitido: 
+ *   Orden permitido: [Fuentes, Compilar, Pruebas, Empaquetar, Desplegar]
  *   Ciclo detectado correctamente
- *   (los valores variables completan los fragmentos anteriores)
- * Verificacion: termina sin excepciones inesperadas.
+ * Esta implementación de Kahn conserva el orden de inserción ante empates.
  */

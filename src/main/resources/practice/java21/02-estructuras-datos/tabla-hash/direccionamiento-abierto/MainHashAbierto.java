@@ -26,6 +26,5 @@ public final class MainHashAbierto {
 /*
  * Salida esperada de consola:
  *   Tabla llena controlada
- *   (los valores variables completan los fragmentos anteriores)
- * Verificacion: termina sin excepciones inesperadas.
+ * Se actualiza la clave A y se comprueba la saturación de dos cubetas.
  */

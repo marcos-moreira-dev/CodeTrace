@@ -44,8 +44,7 @@ public final class MainGrafoGenerico {
 
 /*
  * Salida esperada de consola:
- *   Vértices: 
- *   Latencias desde GYE: 
- *   (los valores variables completan los fragmentos anteriores)
- * Verificacion: termina sin excepciones inesperadas.
+ *   Vértices: 3
+ *   Latencias desde GYE: {UIO [Servidor[region=Quito, ip=10.0.0.2]]=12.0, CUE [Servidor[region=Cuenca, ip=10.0.0.3]]=18.0}
+ * El mapa mantiene orden de inserción y los records muestran sus componentes.
  */

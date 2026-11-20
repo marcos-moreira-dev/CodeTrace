@@ -19,6 +19,6 @@ public final class MainObserver {
 
 /*
  * Salida esperada de consola:
- *   Se imprime el valor o coleccion calculado por el cliente.
- * Verificacion: termina sin excepciones inesperadas.
+ *   Nueva venta
+ * La lambda suscrita recibe el Evento y presenta su mensaje.
  */
