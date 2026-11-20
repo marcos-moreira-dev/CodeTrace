@@ -84,6 +84,7 @@ public final class ReferenceTreeIndex {
 
     public static ReferenceTreeIndex scan(Path reference) throws IOException {
         abortIfInterrupted();
+        long scanStart = PerformanceProbe.begin();
         if (!Files.isDirectory(reference)) {
             throw new IOException("Carpeta de referencia no disponible");
         }
@@ -170,6 +171,7 @@ public final class ReferenceTreeIndex {
             });
             stable.put(path, List.copyOf(values));
         });
+        PerformanceProbe.finish("reference-tree", scanStart, regularFiles.size());
         return new ReferenceTreeIndex(stable, totals, folders, regularFiles,
                 workable, descendants);
     }
