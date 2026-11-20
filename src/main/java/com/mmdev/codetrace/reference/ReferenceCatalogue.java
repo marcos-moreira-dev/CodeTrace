@@ -15,7 +15,9 @@ import java.util.Set;
 
 /**
  * An index of a reference folder, scanned on a background worker.
- * Hashes cover all regular files; typeable counts cover compatible UTF-8 text.
+ * Only supported, bounded UTF-8 practice files are hashed. Other regular
+ * files retain their size and path for navigation, with an empty SHA-256 and
+ * no typeable units. Never load complete multimedia blobs just for progress.
  */
 public final class ReferenceCatalogue {
     public record FileInfo(String sha256, long bytes, int typeableUnits) {
