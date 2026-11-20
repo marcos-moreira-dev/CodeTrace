@@ -47,8 +47,27 @@ no_concretos=[str(x) for x in java_clientes
               if any(marca in x.read_text(encoding="utf-8")[-1500:] for marca in plantillas)]
 assert not no_concretos, ("Salidas Java genéricas o incorrectas:",no_concretos)
 assert len(java_clientes)>=50, len(java_clientes)
+# Los cinco patrones nuevos tienen un cliente equivalente en ocho lenguajes.
+# No bastan etiquetas «Salida esperada»: rechazar contenido de relleno.
+patrones_gof=(
+    "04-patrones-diseno/builder/solicitud/",
+    "04-patrones-diseno/abstract-factory/tema-consola/",
+    "04-patrones-diseno/composite/arbol-archivos/",
+    "04-patrones-diseno/command/deshacer/",
+    "04-patrones-diseno/template-method/reportes/",
+)
+clientes_gof=[x for x in clientes if any(unidad in x.as_posix() for unidad in patrones_gof)]
+assert len(clientes_gof)==40, ("Paridad GoF incompleta:",len(clientes_gof))
+plantillas_gof=plantillas+(
+    "Se muestran los datos o el resultado calculado del ejemplo.",
+    "(los valores variables completan los fragmentos mostrados)",
+)
+genericos_gof=[str(x) for x in clientes_gof
+              if any(marca in x.read_text(encoding="utf-8")[-1500:] for marca in plantillas_gof)]
+assert not genericos_gof, ("Salidas GoF sin concretar:", genericos_gof)
 print("OK catálogo:",len(items), "| clientes documentados:", len(clientes),
-      "| clientes Java sin plantillas genéricas:",len(java_clientes))
+      "| clientes Java sin plantillas genéricas:",len(java_clientes),
+      "| clientes GoF concretos:",len(clientes_gof))
 PY
 
 echo "Java 21: clases, contratos y clientes"
