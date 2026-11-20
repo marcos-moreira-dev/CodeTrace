@@ -25,3 +25,10 @@ public final class MainAdapter {
         mostrar(sensor);
     }
 }
+
+/*
+ * Salida esperada de consola:
+ *   Temperatura: %.1f °C%n
+ *   (los valores variables completan los fragmentos anteriores)
+ * Verificacion: termina sin excepciones inesperadas.
+ */

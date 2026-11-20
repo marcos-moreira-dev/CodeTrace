@@ -25,3 +25,11 @@ public final class MainMonedas {
         System.out.println("Óptimo DP: " + Monedas.dinamica(monedas, monto));
     }
 }
+
+/*
+ * Salida esperada de consola:
+ *   Voraz: 
+ *   Óptimo DP: 
+ *   (los valores variables completan los fragmentos anteriores)
+ * Verificacion: termina sin excepciones inesperadas.
+ */

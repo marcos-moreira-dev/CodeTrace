@@ -41,3 +41,11 @@ public final class MainCaminosSinPeso {
         System.out.println("Componentes: " + CaminosSinPeso.componentes(desconectado));
     }
 }
+
+/*
+ * Salida esperada de consola:
+ *   Saltos a E: 
+ *   Ruta a E: 
+ *   (los valores variables completan los fragmentos anteriores)
+ * Verificacion: termina sin excepciones inesperadas.
+ */

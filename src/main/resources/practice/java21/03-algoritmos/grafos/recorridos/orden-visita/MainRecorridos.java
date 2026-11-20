@@ -31,3 +31,11 @@ public final class MainRecorridos {
         System.out.println("DFS: " + Recorridos.dfs(grafo, "A"));
     }
 }
+
+/*
+ * Salida esperada de consola:
+ *   BFS: 
+ *   DFS: 
+ *   (los valores variables completan los fragmentos anteriores)
+ * Verificacion: termina sin excepciones inesperadas.
+ */

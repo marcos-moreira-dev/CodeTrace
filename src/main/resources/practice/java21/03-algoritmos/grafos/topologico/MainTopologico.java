@@ -40,3 +40,11 @@ public final class MainTopologico {
         }
     }
 }
+
+/*
+ * Salida esperada de consola:
+ *   Orden permitido: 
+ *   Ciclo detectado correctamente
+ *   (los valores variables completan los fragmentos anteriores)
+ * Verificacion: termina sin excepciones inesperadas.
+ */

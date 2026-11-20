@@ -59,3 +59,11 @@ public final class MainCaminosMinimos {
         }
     }
 }
+
+/*
+ * Salida esperada de consola:
+ *   Ruta A-E: 
+ *   Dijkstra: 
+ *   (los valores variables completan los fragmentos anteriores)
+ * Verificacion: termina sin excepciones inesperadas.
+ */

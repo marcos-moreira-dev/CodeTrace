@@ -41,3 +41,10 @@ public final class MainComponentesFuertes {
             throw new AssertionError("SCC incorrectas");
     }
 }
+
+/*
+ * Salida esperada de consola:
+ *   Componentes fuertes: 
+ *   (los valores variables completan los fragmentos anteriores)
+ * Verificacion: termina sin excepciones inesperadas.
+ */

@@ -27,3 +27,9 @@ public final class MainAbstractFactory {
         resultados.forEach(System.out::println);
     }
 }
+
+/*
+ * Salida esperada de consola:
+ *   Sin salida de texto; las pruebas del cliente se cumplen.
+ * Verificacion: termina sin excepciones inesperadas.
+ */

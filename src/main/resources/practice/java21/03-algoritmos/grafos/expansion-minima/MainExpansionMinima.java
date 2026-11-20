@@ -45,3 +45,11 @@ public final class MainExpansionMinima {
         if (bosque.componentes() != 2) throw new AssertionError("Bosque incorrecto");
     }
 }
+
+/*
+ * Salida esperada de consola:
+ *   Prim:    
+ *   Kruskal: 
+ *   (los valores variables completan los fragmentos anteriores)
+ * Verificacion: termina sin excepciones inesperadas.
+ */
