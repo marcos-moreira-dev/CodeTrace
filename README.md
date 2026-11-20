@@ -95,6 +95,8 @@ La barra de menú usa gris pizarra moderado y la barra de herramientas un
 neutral cálido para diferenciarlas sin imitar interfaces antiguas exageradas.
 Las versiones y comandos de los 387 archivos de referencia se describen en
 [Versiones y CLI](docs/LENGUAJES-Y-COMANDOS.md).
+La [auditoría de la biblioteca v4](docs/AUDITORIA-BIBLIOTECA-V4.md) recoge
+la distribución por lenguajes, la reorganización de carpetas y la cobertura de grafos.
 
 ## Navegación y búsqueda (versión en evaluación)
 
