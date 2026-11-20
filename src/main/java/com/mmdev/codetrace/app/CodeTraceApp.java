@@ -571,9 +571,14 @@ public final class CodeTraceApp extends Application {
         refreshMetrics();
         stage.show();
         // The installer supplies the selected .ctrace path on double-click.
-        // Defer until the stage and all asynchronous loaders are initialized.
+        // Some embedders and the JavaFX smoke test invoke start(Stage)
+        // directly without Application.launch, so getParameters() is null.
+        // Capturing an empty argument list is safe and avoids a late FX NPE.
+        var parameters = getParameters();
+        var launchArguments = parameters == null ? java.util.List.<String>of()
+                : java.util.List.copyOf(parameters.getRaw());
         javafx.application.Platform.runLater(() ->
-                SessionLaunchFile.fromArguments(getParameters().getRaw())
+                SessionLaunchFile.fromArguments(launchArguments)
                         .ifPresent(this::openSession));
     }
 
