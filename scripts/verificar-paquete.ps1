@@ -29,6 +29,12 @@ foreach ($required in @($executable, $runtime, $app, $zip)) {
 }
 $jar = @(Get-ChildItem -LiteralPath $app -Filter "codetrace-*.jar" -File)
 if ($jar.Count -lt 1) { throw "El paquete no contiene el JAR de CodeTrace." }
+if (-not (Test-Path -LiteralPath (Join-Path $app "json-20260814.jar"))) {
+    throw "Falta JSON-java actualizado (20260814) en la distribución."
+}
+if (Test-Path -LiteralPath (Join-Path $app "json-20170516.jar")) {
+    throw "Dependencia JSON-java de 2017 obsoleta incluida por error."
+}
 foreach ($legal in @("CodeTrace-MIT.txt", "LICENSING.md", "THIRD-PARTY-NOTICES.md", "IBM-Plex-OFL.txt", "Twemoji-CC-BY-4.0.txt")) {
     if (-not (Test-Path -LiteralPath (Join-Path (Join-Path $app "licenses") $legal) -PathType Leaf)) {
         throw "No se incluyó el aviso legal requerido: $legal"

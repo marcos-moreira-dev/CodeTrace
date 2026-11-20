@@ -10,6 +10,10 @@
     <dependency><groupId>org.commonmark</groupId><artifactId>commonmark</artifactId><version>0.32.0</version></dependency>
     <dependency><groupId>org.commonmark</groupId><artifactId>commonmark-ext-gfm-tables</artifactId><version>0.32.0</version></dependency>
     <dependency><groupId>com.vdurmont</groupId><artifactId>emoji-java</artifactId><version>5.1.1</version></dependency>
+    <!-- emoji-java declares org.json:20170516 transitively (legacy JSON license
+         with a use restriction). Prefer the modern, Public Domain JSON-java
+         release. The direct dependency wins Maven version mediation. -->
+    <dependency><groupId>org.json</groupId><artifactId>json</artifactId><version>20260814</version></dependency>
     <dependency><groupId>org.junit.jupiter</groupId><artifactId>junit-jupiter</artifactId><version>5.12.2</version><scope>test</scope></dependency>
       <dependency><groupId>org.openjfx</groupId><artifactId>javafx-media</artifactId><version>21.0.13</version></dependency>
     <dependency><groupId>org.kordamp.ikonli</groupId><artifactId>ikonli-javafx</artifactId><version>12.4.0</version></dependency>

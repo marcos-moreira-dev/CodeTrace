@@ -12,6 +12,7 @@ por cada componente**, especialmente antes de distribuir un binario.
 | OpenJFX / JavaFX 21 | UI, WebView y multimedia | GPL-2.0 with Classpath Exception |
 | commonmark-java | Render de Markdown y tablas | BSD-2-Clause |
 | emoji-java (vdurmont) | Resolución de nombres de emojis | MIT |
+| JSON-java (org.json) 20260814 | Parser requerido por emoji-java; actualización explícita frente a la dependencia transitiva de 2017 | Dominio público según el proyecto |
 | Ikonli (Kordamp) | Sistema de iconos | Apache-2.0 |
 | Devicons | Iconografía de lenguajes | MIT; identidades y marcas de lenguajes son de terceros |
 | Feather Icons | Iconografía de acciones | MIT |
@@ -23,6 +24,7 @@ Referencias oficiales:
 - OpenJDK: https://openjdk.org/legal/gplv2+ce.html
 - commonmark-java: https://github.com/commonmark/commonmark-java
 - emoji-java: https://github.com/vdurmont/emoji-java
+- JSON-java: https://github.com/stleary/JSON-java (licencia de dominio público para la versión 20260814)
 - Ikonli: https://github.com/kordamp/ikonli
 - Devicons: https://github.com/vorillaz/devicons
 - Feather: https://github.com/feathericons/feather
