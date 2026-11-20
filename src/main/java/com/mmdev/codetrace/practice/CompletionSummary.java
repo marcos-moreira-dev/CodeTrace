@@ -3,7 +3,8 @@ package com.mmdev.codetrace.practice;
 import java.util.Locale;
 import java.util.Objects;
 
-/** Final, per-file transcription metrics; read only, not a project-wide score. */
+/** Final, per-file transcription metrics; read only, not a project-wide score.  * <p><strong>Engineering rationale.</strong> A completion message reports exercise-level typing events and elapsed practice time, rather than pretending to certify that the original program compiles. Keeping summary calculation outside dialog construction makes success feedback testable without a JavaFX window.</p>
+*/
 public final class CompletionSummary {
     private CompletionSummary() {}
 

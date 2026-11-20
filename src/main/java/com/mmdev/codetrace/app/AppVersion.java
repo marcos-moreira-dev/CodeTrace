@@ -4,7 +4,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-/** One source of truth: version injected by Maven from pom.xml at packaging. */
+/** One source of truth: version injected by Maven from pom.xml at packaging.  * <p><strong>Engineering rationale.</strong> A single application-version source prevents About, diagnostics and packaged metadata from making contradictory claims. Maven's development SNAPSHOT still has release implications, so a public tag must be coordinated with the POM rather than inferred solely from a window title.</p>
+*/
 public final class AppVersion {
     private AppVersion() {}
 

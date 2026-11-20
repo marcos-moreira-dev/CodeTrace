@@ -3,7 +3,8 @@ package com.mmdev.codetrace.app;
 import java.util.prefs.Preferences;
 import com.mmdev.codetrace.reference.GraphLayoutEngine;
 
-/** Window-level preferences are separate from each .ctrace training session. */
+/** Window-level preferences are separate from each .ctrace training session.  * <p><strong>Engineering rationale.</strong> Application preferences describe persistent UX choices, not the state of a particular reconstructed project. The immutable settings value and its persistence boundary allow controls to apply changes consistently; avoid storing transient document, media or task state here.</p>
+*/
 public record AppSettings(String fontFamily, int fontSize, boolean showExplorer,
                           String keyboardLayout, boolean typingSounds,
                           int templateOpacity, boolean turboMode,

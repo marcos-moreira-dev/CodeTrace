@@ -3,7 +3,8 @@ package com.mmdev.codetrace.practice;
 import java.util.Locale;
 import java.util.Set;
 
-/** Conservative dependency declarations by language, never arbitrary calls. */
+/** Conservative dependency declarations by language, never arbitrary calls.  * <p><strong>Engineering rationale.</strong> Automatically omitting import or dependency declarations is an explicit training aid, not a change to the source file. Central rules make the feature predictable across language adapters and keep the underlying expected text available for inspection.</p>
+*/
 public final class DependencyDeclarationRules {
     private static final Set<String> SUPPORTED = Set.of(
             "java", "kt", "kts", "py", "pyw", "js", "jsx", "ts", "tsx",

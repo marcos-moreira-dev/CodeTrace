@@ -33,7 +33,8 @@ import org.w3c.dom.Node;
  * Offline, read-only Markdown preview of untrusted reference projects.
  * Relative image files are embedded as bounded data: URIs, without allowing
  * WebView to open file:// URLs or make network requests.
- */
+  * <p><strong>Engineering rationale.</strong> Markdown is interpreted as untrusted reference content, not as an unrestricted web page. Asset resolution, local-file boundaries and WebView policy must prevent arbitrary remote loads or script execution; rendering is independent of typing correctness.</p>
+*/
 public final class MarkdownRenderer {
     private static final List<Extension> EXTENSIONS = List.of(TablesExtension.create());
     private static final long MAX_IMAGE_BYTES = 8L * 1024 * 1024;

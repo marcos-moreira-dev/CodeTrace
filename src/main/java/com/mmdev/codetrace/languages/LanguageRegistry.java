@@ -9,7 +9,8 @@ import java.util.regex.Pattern;
 /**
  * Built-in syntactic adapters. Adding another language does not change the
  * typing engine, file explorer or session format.
- */
+  * <p><strong>Engineering rationale.</strong> Syntax metadata and extension recognition belong in a central registry, rather than scattered switch statements in UI cells. A registry enables language-specific formatting and eligibility without implying that CodeTrace compiles or semantically verifies every supported language.</p>
+*/
 public final class LanguageRegistry {
     private static final LanguageSupport PLAIN = new LanguageSupport() {
         @Override

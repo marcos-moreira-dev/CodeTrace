@@ -7,7 +7,8 @@ import javafx.scene.text.Font;
  * Bundled, unmodified IBM Plex typefaces. No OS font installation is needed:
  * Windows distributions obtain their pinned OFL files at packaging time.
  * If the fonts are absent, stock developer builds retain Windows fallbacks.
- */
+  * <p><strong>Engineering rationale.</strong> Bundled fonts make source-code alignment and the visual identity reproducible across machines, independent of whatever fonts Windows happens to install. Registration belongs at startup before rendering controls; a fallback remains necessary if a face cannot be loaded.</p>
+*/
 public final class FontResources {
     private static volatile String uiFamily = "Segoe UI";
     private static volatile String codeFamily = "Consolas";

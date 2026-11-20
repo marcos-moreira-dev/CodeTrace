@@ -14,7 +14,8 @@ import java.util.Map;
  * SVG files are official CC-BY-4.0 Twemoji graphics bundled at build time.
  * Only text between tags is changed; tag attributes, code/pre contents and
  * image URLs from user-authored Markdown remain untouched.
- */
+  * <p><strong>Engineering rationale.</strong> Emojis and SVGs are bundled presentation resources, not an online dependency required to study a repository. An offline lookup with predictable fallbacks avoids surprise downloads, network latency and mismatched rendering between installations.</p>
+*/
 public final class TwemojiSvgAssets {
     private static final int MAX_SVG_BYTES = 65_536;
     private static final Map<String, Optional<String>> CACHE = new ConcurrentHashMap<>();

@@ -8,7 +8,8 @@ package com.mmdev.codetrace.markdown;
  * sanitized MarkdownRenderer output unchanged and encode only non-ASCII
  * code points as HTML numeric character references at the WebView boundary.
  * The resulting transport is ASCII-only, independent of platform charset.
- */
+  * <p><strong>Engineering rationale.</strong> Preview decoding has to make text encoding choices explicit before markup rendering. Separating this boundary prevents a display concern from changing the immutable original bytes or from accidentally transforming the Unicode units used in transcription.</p>
+*/
 public final class MarkdownPreviewEncoding {
     private MarkdownPreviewEncoding() { }
 

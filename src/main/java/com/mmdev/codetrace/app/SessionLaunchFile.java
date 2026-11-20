@@ -6,7 +6,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 
-/** Selects the single session argument supplied by Windows file association. */
+/** Selects the single session argument supplied by Windows file association.  * <p><strong>Engineering rationale.</strong> A Windows file association passes a candidate session path as a process argument, not as a trusted command to execute. Parse and validate it separately before handing it to the normal session-opening flow so double-click and File-menu restoration share the same safeguards.</p>
+*/
 public final class SessionLaunchFile {
     private SessionLaunchFile() {}
 
