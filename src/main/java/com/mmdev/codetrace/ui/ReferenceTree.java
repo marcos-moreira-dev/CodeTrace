@@ -282,7 +282,7 @@ public final class ReferenceTree extends TreeView<Path> {
             }
         }
         getSelectionModel().select(visible);
-        PerformanceProbe.finish("collapse-all", started, oldRoot.getExpandedDescendentCount());
+        PerformanceProbe.finish("collapse-all", started, index == null ? 0 : index.recursiveFiles(""));
     }
 
     /**
