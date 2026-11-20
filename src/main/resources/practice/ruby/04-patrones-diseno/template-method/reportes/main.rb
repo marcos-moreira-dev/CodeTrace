@@ -18,6 +18,9 @@ def main
 end
 main if __FILE__ == $PROGRAM_NAME
 
-# Salida esperada de consola:
-#   Se imprime el valor o coleccion calculado por el cliente.
-# Verificacion: termina sin excepciones inesperadas.
+# Salida esperada de consola (cuatro líneas):
+#   == ventas ==
+#   Total: 15
+#   titulo,total
+#   ventas,15
+# El método plantilla valida y fija el orden; las subclases generan cada formato.

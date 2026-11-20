@@ -16,11 +16,14 @@ def main() -> None:
     b: ProcesoReporte=ReporteCsv()
     assert "Total: 15" in a.ejecutar("ventas",15)
     assert "ventas,15" in b.ejecutar("ventas",15)
-    print(a.ejecutar("ventas",15),b.ejecutar("ventas",15))
+    print(a.ejecutar("ventas",15)+b.ejecutar("ventas",15),end="")
 
 if __name__ == "__main__":
     main()
 
-# Salida esperada de consola:
-#   Se imprime el valor o coleccion calculado por el cliente.
-# Verificacion: termina sin excepciones inesperadas.
+# Salida esperada de consola (cuatro líneas):
+#   == ventas ==
+#   Total: 15
+#   titulo,total
+#   ventas,15
+# El método plantilla valida y fija el orden; las subclases generan cada formato.

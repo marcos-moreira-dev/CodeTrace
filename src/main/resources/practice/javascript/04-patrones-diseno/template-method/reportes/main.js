@@ -15,12 +15,15 @@ function main(){
     if(!a.ejecutar("ventas",15).includes("Total: 15")||
        !b.ejecutar("ventas",15).includes("ventas,15"))
         throw Error("Template Method");
-    console.log(a.ejecutar("ventas",15)+b.ejecutar("ventas",15));
+    console.log((a.ejecutar("ventas",15)+b.ejecutar("ventas",15)).trimEnd());
 }
 if(require.main===module)main();
 
 /*
- * Salida esperada de consola:
- *   Se imprime el valor o coleccion calculado por el cliente.
- * Verificacion: termina sin excepciones inesperadas.
+ * Salida esperada de consola (cuatro líneas):
+ *   == ventas ==
+ *   Total: 15
+ *   titulo,total
+ *   ventas,15
+ * El método plantilla fija validación y pasos; las subclases aportan el formato.
  */

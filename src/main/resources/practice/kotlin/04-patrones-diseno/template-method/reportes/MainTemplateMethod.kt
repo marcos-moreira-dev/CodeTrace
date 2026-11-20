@@ -12,11 +12,14 @@ fun main(){
     val csv:ProcesoReporte=ReporteCsv()
     check("Total: 15" in texto.ejecutar("ventas",15))
     check("ventas,15" in csv.ejecutar("ventas",15))
-    println(texto.ejecutar("ventas",15)+csv.ejecutar("ventas",15))
+    print(texto.ejecutar("ventas",15)+csv.ejecutar("ventas",15))
 }
 
 /*
- * Salida esperada de consola:
- *   Se imprime el valor o coleccion calculado por el cliente.
- * Verificacion: termina sin excepciones inesperadas.
+ * Salida esperada de consola (cuatro líneas):
+ *   == ventas ==
+ *   Total: 15
+ *   titulo,total
+ *   ventas,15
+ * El método plantilla fija validación y pasos; las subclases aportan el formato.
  */

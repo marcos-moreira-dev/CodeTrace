@@ -19,13 +19,16 @@ public static class MainTemplateMethod
         if(!a.Ejecutar("ventas",15).Contains("Total: 15")||
            !b.Ejecutar("ventas",15).Contains("ventas,15"))
             throw new Exception("Template Method");
-        Console.WriteLine(a.Ejecutar("ventas",15));
-        Console.WriteLine(b.Ejecutar("ventas",15));
+        Console.Write(a.Ejecutar("ventas",15));
+        Console.Write(b.Ejecutar("ventas",15));
     }
 }
 
 /*
- * Salida esperada de consola:
- *   Se imprime el valor o coleccion calculado por el cliente.
- * Verificacion: termina sin excepciones inesperadas.
+ * Salida esperada de consola (cuatro líneas):
+ *   == ventas ==
+ *   Total: 15
+ *   titulo,total
+ *   ventas,15
+ * El método plantilla fija validación y pasos; las subclases aportan el formato.
  */
