@@ -6,7 +6,8 @@ import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
 
-/** Name-only explorer filter. No file bytes are read and no state is changed. */
+/** Name-only explorer filter. No file bytes are read and no state is changed.  * <p><strong>Engineering rationale.</strong> Filtering a large explorer is a logical projection, not a request to mutate the filesystem or traverse it again. Include matching paths and their ancestors so the resulting hierarchy remains navigable, and honor cancellation when a newer search replaces the current one.</p>
+*/
 public final class TreeNameFilter {
     private TreeNameFilter() {}
 

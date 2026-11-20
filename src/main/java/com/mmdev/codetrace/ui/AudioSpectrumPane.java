@@ -11,7 +11,8 @@ import javafx.scene.paint.Color;
  * Lightweight real-time spectrum for JavaFX MediaPlayer audio.
  * A spectrum is NOT a precomputed waveform: bars represent frequency bands
  * and move only when the player reports new audio samples.
- */
+  * <p><strong>Engineering rationale.</strong> An audio visualization consumes playback samples and paints a bounded viewport; it is not responsible for choosing files or decoding unsupported formats. Separating the display from the player makes it possible to disable animation without stopping audio or transcription.</p>
+*/
 public final class AudioSpectrumPane extends Region {
     private static final int BANDS = 40;
     private final Canvas canvas = new Canvas();

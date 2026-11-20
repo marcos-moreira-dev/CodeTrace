@@ -8,7 +8,8 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-/** Bounded read-only preview, not the future typing editor. */
+/** Bounded read-only preview, not the future typing editor.  * <p><strong>Engineering rationale.</strong> A read-only text preview must reject binary, oversized or otherwise unsupported input before it reaches a typing session. Centralized bounded decoding prevents the editor from accidentally treating arbitrary resources as practiceable source text.</p>
+*/
 public final class TextPreview {
     private static final long MAX_BYTES = 2L * 1024 * 1024;
 

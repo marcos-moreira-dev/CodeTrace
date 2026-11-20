@@ -7,7 +7,8 @@ import java.util.Objects;
 /**
  * Stateful, UI-independent batch processing for direct virtual recreation.
  * The caller schedules batches; no real source file is ever created.
- */
+  * <p><strong>Engineering rationale.</strong> Direct mode may need to create thousands of virtual paths, but performing it in one FX callback would freeze input and painting. This stateful cursor processes bounded logical batches, leaving scheduling and cancellation to the caller and never touching source files.</p>
+*/
 public final class VirtualTreeRecreator {
     public static final int MAX_NODES = 10_000;
     private final VirtualWorkspace workspace;

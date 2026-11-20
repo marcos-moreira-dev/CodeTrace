@@ -3,7 +3,8 @@ package com.mmdev.codetrace.ui;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 
-/** Continuous, full-row line-number gutter in both virtualized code viewers. */
+/** Continuous, full-row line-number gutter in both virtualized code viewers.  * <p><strong>Engineering rationale.</strong> Line numbering is shared presentation infrastructure for editable practice and read-only text. A single 1-based rendering convention avoids inconsistent white separators, alignment and off-by-one errors across panes while preserving their underlying text models.</p>
+*/
 public final class CodeLineGutter {
     private static final double BASE_WIDTH = 44;
 

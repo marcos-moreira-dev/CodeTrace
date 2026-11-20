@@ -11,7 +11,8 @@ import java.util.Set;
 /**
  * Read-only snapshot of the virtual workspace's immediate children.
  * Built only when the explorer model refreshes, not for every expanded node.
- */
+  * <p><strong>Engineering rationale.</strong> Repeatedly scanning the complete in-memory reconstruction for each expanded folder would turn navigation into quadratic work. A snapshot of immediate children spends O(N) memory once per structural refresh to make subsequent parent lookups cheap and deterministic.</p>
+*/
 public final class VirtualChildrenIndex {
     private final Map<String, List<String>> byParent;
     private final Set<String> directories;

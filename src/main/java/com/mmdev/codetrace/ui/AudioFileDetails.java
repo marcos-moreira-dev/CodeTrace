@@ -9,7 +9,8 @@ import java.util.Locale;
 import java.util.Map;
 import javafx.util.Duration;
 
-/** Metadata we can actually verify for the original file. No guessed bitrate. */
+/** Metadata we can actually verify for the original file. No guessed bitrate.  * <p><strong>Engineering rationale.</strong> Audio metadata displayed to the user is descriptive preview information, not an editing instruction. Keep format, duration and size extraction separate from player lifecycle so a missing decoder does not accidentally change source files or practice metrics.</p>
+*/
 public final class AudioFileDetails {
     private AudioFileDetails() { }
 

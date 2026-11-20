@@ -21,7 +21,8 @@ import javafx.scene.input.MouseButton;
  * Independent supplementary folder browser. No workspace, progress,
  * transcription, file mutation commands or project-index side effects.
  * Directory contents are loaded asynchronously when expanded.
- */
+  * <p><strong>Engineering rationale.</strong> A consultation tree is an additional read-only browser, not a second reconstruction workspace. It coordinates file navigation and lazy folder display while leaving progress, typing sessions and virtual creation owned by the main project.</p>
+*/
 public final class ConsultationFolderTree extends TreeView<Path> {
     private final Consumer<Path> openForReading;
     private final Consumer<String> status;

@@ -18,7 +18,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
-/** Editable command presets on the Preferences > Comandos page. */
+/** Editable command presets on the Preferences > Comandos page.  * <p><strong>Engineering rationale.</strong> Saved commands are user-managed configuration with a real-filesystem security consequence. This pane edits presets and explanations but does not execute them, so applying preferences cannot accidentally launch a process.</p>
+*/
 public final class CommandSettingsPane extends VBox {
     private final ObservableList<Preset> profiles;
     private final ListView<Preset> list = new ListView<>();
