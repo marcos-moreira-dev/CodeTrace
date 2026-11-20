@@ -42,7 +42,7 @@
     -fx-background-color: linear-gradient(to bottom, #e1e9ee 0%, #d1dce4 100%);
     -fx-border-color: #a8bac7 transparent transparent transparent;
 }
-.statusbar .label { -fx-text-fill: #304b60; -fx-font-size: 12px; }
+.statusbar .label { -fx-text-fill: #243f54; -fx-font-size: 13px; }
 .statusbar .status-context { -fx-font-weight: bold; }
 .progress-info { -fx-text-fill: #304b60; }
 .typing-progress { -fx-pref-height: 9px; -fx-max-width: 160px; }
@@ -208,8 +208,8 @@
     -fx-border-width: 2px 1px 0 0;
 }
 .tab-pane .tab .tab-label {
-    -fx-text-fill: #2d495d;
-    -fx-font-size: 13px;
+    -fx-text-fill: #27465e;
+    -fx-font-size: 14px;
 }
 .tab-pane .tab:selected .tab-label {
     -fx-text-fill: #203c52;
@@ -1332,7 +1332,7 @@
     -fx-border-color: transparent transparent #aabdc9 transparent;
     -fx-background-radius: 0;
     -fx-padding: 6px 9px;
-    -fx-font-size: 13px;
+    -fx-font-size: 14px;
     -fx-text-fill: #29485c;
 }
 .accordion > .titled-pane:expanded > .title {
@@ -1351,16 +1351,6 @@
     -fx-padding: 0;
     -fx-spacing: 0;
 }
-/* Thin white contours keep small labels readable against blue-grey chrome.
-   Stroke is outside glyphs and under one pixel, never a heavy outlined font. */
-.statusbar .label .text,
-.accordion > .titled-pane > .title > .text,
-.tab-pane .tab .tab-label .text {
-    -fx-stroke: rgba(255, 255, 255, 0.88);
-    -fx-stroke-type: outside;
-    -fx-stroke-width: 0.65px;
-}
-
 .command-console-pane .console-header {
     -fx-border-color: transparent transparent #aabdc9 transparent;
 }
