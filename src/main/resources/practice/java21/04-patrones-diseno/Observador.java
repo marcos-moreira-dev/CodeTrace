@@ -1,6 +1,6 @@
-// CodeTrace | Referencia: Java 21 LTS (Temurin JDK 21).
-// Desde PowerShell en una COPIA de este paquete:
-// Compilar: javac -encoding UTF-8 -d "$env:TEMP\codetrace-java" '.\06-patrones\Observador.java'
+// CodeTrace | Referencia: Java 21 LTS / JDK 21
+// Compilar: javac --release 21 -encoding UTF-8 -d "$env:TEMP\ct-java21" (Get-ChildItem -Recurse -Filter *.java).FullName
+// Ejecutar: ejecutar desde el cliente que utiliza este componente
 // Sin main: compilación de clase reutilizable.
 
 import java.util.ArrayList;

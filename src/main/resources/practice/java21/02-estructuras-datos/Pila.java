@@ -1,6 +1,6 @@
-// CodeTrace | Referencia: Java 21 LTS (JDK Temurin 21).
-// Desde PowerShell, en una COPIA de la carpeta java21:
-// Compilar: javac -encoding UTF-8 -d "$env:TEMP\codetrace-java" '.\04-estructuras\Pila.java'
+// CodeTrace | Referencia: Java 21 LTS / JDK 21
+// Compilar: javac --release 21 -encoding UTF-8 -d "$env:TEMP\ct-java21" (Get-ChildItem -Recurse -Filter *.java).FullName
+// Ejecutar: ejecutar desde el cliente que utiliza este componente
 // Sin main: es una clase o interfaz para compilar y reutilizar.
 
 import java.util.NoSuchElementException;

@@ -1,8 +1,6 @@
-// CodeTrace | Referencia: Java 21 LTS (Temurin JDK 21).
-// Desde PowerShell en una COPIA de este paquete:
-// Compilar: javac -encoding UTF-8 -d "$env:TEMP\codetrace-java" '.\06-patrones\Strategy.java'
-// Ejecutar: java -cp "$env:TEMP\codetrace-java" Strategy
-
+// CodeTrace | Referencia: Java 21 LTS / JDK 21
+// Compilar: javac --release 21 -encoding UTF-8 -d "$env:TEMP\ct-java21" (Get-ChildItem -Recurse -Filter *.java).FullName
+// Ejecutar: java -cp "$env:TEMP\ct-java21" Strategy
 public final class Strategy {
     interface Descuento {
         double aplicar(double total);

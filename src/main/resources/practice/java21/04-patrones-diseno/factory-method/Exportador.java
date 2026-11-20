@@ -1,5 +1,6 @@
-// CodeTrace | Referencia: Java 21, proyecto Factory Method
-// Compilar: javac --release 21 -d out 07-proyectos/factory-method/*.java
+// CodeTrace | Referencia: Java 21 LTS / JDK 21
+// Compilar: javac --release 21 -encoding UTF-8 -d "$env:TEMP\ct-java21" (Get-ChildItem -Recurse -Filter *.java).FullName
+// Ejecutar: ejecutar desde el cliente que utiliza este componente
 package codetrace.factorymethod;
 public interface Exportador {
     String exportar(String contenido);

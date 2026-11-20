@@ -1,5 +1,6 @@
-// CodeTrace | Referencia: Java 21, grafos con pesos no negativos
-// Compilar: javac --release 21 Dijkstra.java && java Dijkstra
+// CodeTrace | Referencia: Java 21 LTS / JDK 21
+// Compilar: javac --release 21 -encoding UTF-8 -d "$env:TEMP\ct-java21" (Get-ChildItem -Recurse -Filter *.java).FullName
+// Ejecutar: java -cp "$env:TEMP\ct-java21" Dijkstra
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;

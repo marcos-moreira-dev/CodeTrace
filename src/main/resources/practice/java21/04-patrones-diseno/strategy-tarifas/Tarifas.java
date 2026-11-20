@@ -1,7 +1,6 @@
 // CodeTrace | Referencia: Java 21 LTS / JDK 21
-// Compilar/Comprobar: javac --release 21 -encoding UTF-8 -d "$env:TEMP\ct-biblioteca" (Get-ChildItem -Recurse -Filter *.java | ForEach-Object FullName)
-// Ejecutar: Consulte MainTarifas
-
+// Compilar: javac --release 21 -encoding UTF-8 -d "$env:TEMP\ct-java21" (Get-ChildItem -Recurse -Filter *.java).FullName
+// Ejecutar: ejecutar desde el cliente que utiliza este componente
 package codetrace.practica.tarifas;
 
 /** Dos estrategias intercambiables para el mismo contrato. */
