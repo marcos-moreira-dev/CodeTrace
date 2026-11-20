@@ -1,5 +1,6 @@
 package com.mmdev.codetrace.ui;
 
+import com.mmdev.codetrace.reference.PerformanceProbe;
 import java.nio.file.Path;
 import java.util.ArrayDeque;
 import java.util.Objects;
@@ -27,6 +28,7 @@ final class BatchedTreeExpander {
     private boolean expanding;
     private int visited;
     private int lastReported;
+    private long started;
 
     BatchedTreeExpander(Consumer<String> notice, Runnable busyChanged) {
         this.notice = Objects.requireNonNull(notice);
@@ -44,6 +46,7 @@ final class BatchedTreeExpander {
         pending.add(node);
         visited = 0;
         lastReported = 0;
+        started = PerformanceProbe.begin();
         expanding = true;
         busyChanged.run();
         notice.accept("Expandiendo carpetas en lotes; puedes seguir usando CodeTrace.");
@@ -94,6 +97,7 @@ final class BatchedTreeExpander {
         if (pending.isEmpty() || visited >= MAX_EXPANDED_FOLDERS) {
             boolean limited = !pending.isEmpty();
             int count = visited;
+            PerformanceProbe.finish("expand-recursive", started, count);
             cancel();
             notice.accept(limited
                     ? "Se mostraron " + count + " carpetas; límite de seguridad alcanzado."
