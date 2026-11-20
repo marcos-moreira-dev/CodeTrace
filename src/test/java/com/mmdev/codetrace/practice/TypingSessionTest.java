@@ -160,4 +160,77 @@ class TypingSessionTest {
         assertTrue(source.finishedExercise());
     }
 
+    /** Independent O(U) oracle for the cached O(1) production counters. */
+    private static void assertCountersMatchSlots(TypingSession session) {
+        int visible = 0, correctVisible = 0, resolvedVisible = 0;
+        int correct = 0, incorrect = 0;
+        for (int i = 0; i < session.size(); i++) {
+            var cell = session.cell(i);
+            boolean shown = !"\\n".equals(cell.expected())
+                    && !EmojiUnits.isEmoji(cell.expected());
+            if (cell.state() == TypingSession.State.CORRECT) correct++;
+            if (cell.state() == TypingSession.State.INCORRECT) incorrect++;
+            if (!shown) continue;
+            visible++;
+            if (cell.state() == TypingSession.State.CORRECT) correctVisible++;
+            if (cell.state() == TypingSession.State.CORRECT
+                    || cell.state() == TypingSession.State.SKIPPED) resolvedVisible++;
+        }
+        assertEquals(visible, session.visibleUnitCount());
+        assertEquals(correctVisible, session.correctVisibleCount());
+        assertEquals(resolvedVisible, session.resolvedVisibleCount());
+        assertEquals(correct, session.correctCount());
+        assertEquals(incorrect, session.incorrectCount());
+        assertEquals(visible > 0 && resolvedVisible == visible,
+                session.finishedExercise());
+    }
+
+    @Test
+    void incrementalCountersRemainExactAcrossEditsSkipsCombiningAndRestore() {
+        TypingSession session = new TypingSession("a🙂í{}\\nB");
+        assertCountersMatchSlots(session);
+        session.type("a🙂i");
+        assertCountersMatchSlots(session);
+        session.type("\\u0301");
+        assertCountersMatchSlots(session);
+        session.skip(3, 5);
+        assertCountersMatchSlots(session);
+        session.moveCaret(6);
+        session.type("B");
+        assertCountersMatchSlots(session);
+        assertTrue(session.finishedExercise());
+        session.undoSkip(4, 5);
+        assertCountersMatchSlots(session);
+        assertFalse(session.finishedExercise());
+        session.moveCaret(4);
+        session.type("}");
+        assertCountersMatchSlots(session);
+        session.backspace();
+        assertCountersMatchSlots(session);
+        session.type("}");
+        assertCountersMatchSlots(session);
+        session.deleteAtCaret();
+        assertCountersMatchSlots(session);
+
+        TypingSession restored = TypingSession.restore(session.expectedText(),
+                session.enteredSlots(), session.skippedSlots(), session.caret());
+        assertCountersMatchSlots(restored);
+        assertEquals(session.correctCount(), restored.correctCount());
+        assertEquals(session.correctVisibleCount(), restored.correctVisibleCount());
+    }
+
+    @Test
+    void incrementalCountersHandleTurboAndUndoWithoutFalseAciertos() {
+        TypingSession session = new TypingSession("{}abc");
+        session.skipTurboSymbols();
+        assertCountersMatchSlots(session);
+        assertEquals(0, session.correctVisibleCount());
+        session.undoSkip(0, 2);
+        assertCountersMatchSlots(session);
+        session.moveCaret(0);
+        session.type("{}abc");
+        assertCountersMatchSlots(session);
+        assertEquals(5, session.correctVisibleCount());
+    }
+
 }
