@@ -23,3 +23,9 @@ int main() {
     std::cout << salida << '\n';
     if (salida != "TXT: Factura 001") throw std::logic_error("Fábrica");
 }
+
+/*
+ * Salida esperada de consola:
+ *   Se muestran los datos o el resultado calculado del ejemplo.
+ * Verificacion: terminar sin excepciones inesperadas.
+ */

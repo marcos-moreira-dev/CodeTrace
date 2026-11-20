@@ -23,3 +23,10 @@ int main() {
         || pila.cantidad() != 1) throw std::logic_error("LIFO");
     std::cout << "Pila LIFO correcta\n";
 }
+
+/*
+ * Salida esperada de consola:
+ *   Pila LIFO correcta
+ *   (los valores variables completan los fragmentos mostrados)
+ * Verificacion: terminar sin excepciones inesperadas.
+ */

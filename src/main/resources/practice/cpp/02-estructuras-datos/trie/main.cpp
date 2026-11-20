@@ -21,3 +21,10 @@ int main(){
        !t.contiene("casa")||t.contiene("cama"))throw std::logic_error("Trie");
     std::cout<<"Trie de prefijos OK\n";
 }
+
+/*
+ * Salida esperada de consola:
+ *   Trie de prefijos OK
+ *   (los valores variables completan los fragmentos mostrados)
+ * Verificacion: terminar sin excepciones inesperadas.
+ */

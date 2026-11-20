@@ -30,3 +30,9 @@ int main(){
     if(editor.texto()!="Hola")throw std::logic_error("Undo");
     std::cout<<editor.texto()<<'\n';
 }
+
+/*
+ * Salida esperada de consola:
+ *   Se muestran los datos o el resultado calculado del ejemplo.
+ * Verificacion: terminar sin excepciones inesperadas.
+ */

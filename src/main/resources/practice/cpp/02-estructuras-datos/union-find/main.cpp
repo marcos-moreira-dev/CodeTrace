@@ -21,3 +21,10 @@ int main(){
         throw std::logic_error("DSU");
     std::cout<<"Componentes: "<<d.componentes()<<'\n';
 }
+
+/*
+ * Salida esperada de consola:
+ *   Componentes: 
+ *   (los valores variables completan los fragmentos mostrados)
+ * Verificacion: terminar sin excepciones inesperadas.
+ */

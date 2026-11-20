@@ -26,3 +26,10 @@ int main(){
     if(raiz->bytes()!=220)throw std::logic_error("Composite");
     std::cout<<"Bytes: "<<raiz->bytes()<<'\n';
 }
+
+/*
+ * Salida esperada de consola:
+ *   Bytes: 
+ *   (los valores variables completan los fragmentos mostrados)
+ * Verificacion: terminar sin excepciones inesperadas.
+ */

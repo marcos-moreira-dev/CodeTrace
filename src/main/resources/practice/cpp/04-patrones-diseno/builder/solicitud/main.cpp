@@ -21,3 +21,9 @@ int main(){
     if(s.ruta!="/facturas"||s.cabeceras.size()!=1)throw std::logic_error("Builder");
     std::cout<<s.metodo<<" "<<s.ruta<<'\n';
 }
+
+/*
+ * Salida esperada de consola:
+ *   Se muestran los datos o el resultado calculado del ejemplo.
+ * Verificacion: terminar sin excepciones inesperadas.
+ */

@@ -25,3 +25,9 @@ int main(){
         b.find("oscura")==std::string::npos)throw std::logic_error("Familias");
     std::cout<<a<<'\n'<<b<<'\n';
 }
+
+/*
+ * Salida esperada de consola:
+ *   Se muestran los datos o el resultado calculado del ejemplo.
+ * Verificacion: terminar sin excepciones inesperadas.
+ */

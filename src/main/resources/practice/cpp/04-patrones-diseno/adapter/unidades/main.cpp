@@ -25,3 +25,10 @@ int main() {
     std::cout << "Celsius: " << contrato.leer() << '\n';
     if (contrato.leer() != 25.0) throw std::logic_error("Conversión");
 }
+
+/*
+ * Salida esperada de consola:
+ *   Celsius: 
+ *   (los valores variables completan los fragmentos mostrados)
+ * Verificacion: terminar sin excepciones inesperadas.
+ */

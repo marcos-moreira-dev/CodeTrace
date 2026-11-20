@@ -23,3 +23,10 @@ int main(){
     try{t.poner("C",4);throw std::logic_error("Se aceptó tabla llena");}
     catch(const std::overflow_error&){std::cout<<"Tabla llena controlada\n";}
 }
+
+/*
+ * Salida esperada de consola:
+ *   Tabla llena controlada
+ *   (los valores variables completan los fragmentos mostrados)
+ * Verificacion: terminar sin excepciones inesperadas.
+ */

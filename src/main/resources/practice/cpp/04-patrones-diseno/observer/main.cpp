@@ -11,3 +11,9 @@ int main() {
     centro.registrar(pantalla);
     centro.publicar("Factura 001");
 }
+
+/*
+ * Salida esperada de consola:
+ *   Se muestran los datos o el resultado calculado del ejemplo.
+ * Verificacion: terminar sin excepciones inesperadas.
+ */

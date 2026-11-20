@@ -19,3 +19,9 @@ int main() {
         std::make_unique<Prefijo>(std::make_unique<Consola>(), "[INFO] ");
     emisor->enviar("Conexión disponible");
 }
+
+/*
+ * Salida esperada de consola:
+ *   Sin salida de texto; las comprobaciones se superan.
+ * Verificacion: terminar sin excepciones inesperadas.
+ */
