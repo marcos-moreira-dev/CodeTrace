@@ -222,6 +222,38 @@ public final class ReferenceTree extends TreeView<Path> {
                 onOpen.accept(selected.getValue());
             }
         });
+        installFrameProbe();
+    }
+
+    /** Diagnostics only: capture JavaFX rendering stalls without inspecting files. */
+    private void installFrameProbe() {
+        if (!Boolean.getBoolean("codetrace.profile")) return;
+        javafx.animation.AnimationTimer timer = new javafx.animation.AnimationTimer() {
+            private long previousPulse;
+            private int reported;
+            @Override public void handle(long now) {
+                var scene = getScene();
+                if (scene == null || scene.getWindow() == null
+                        || !scene.getWindow().isFocused()) {
+                    previousPulse = 0;
+                    return;
+                }
+                if (previousPulse > 0 && reported < 30) {
+                    double gapMs = (now - previousPulse) / 1_000_000.0;
+                    if (gapMs >= 120) {
+                        reported++;
+                        PerformanceProbe.fxFrameGap(gapMs,
+                                index == null ? 0 : index.fileCount());
+                    }
+                }
+                previousPulse = now;
+            }
+        };
+        sceneProperty().addListener((obs, oldScene, scene) -> {
+            if (scene == null) timer.stop();
+            else timer.start();
+        });
+        if (getScene() != null) timer.start();
     }
 
     public void setStatusLookup(Function<String, State> lookup) {
