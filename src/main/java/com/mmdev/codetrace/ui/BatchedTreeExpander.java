@@ -37,7 +37,7 @@ final class BatchedTreeExpander {
         return expanding;
     }
 
-    void expand(TreeItem<Path> node) {
+    void expand(TreeItem<Path> node, boolean safeToExpandImmediately) {
         cancel();
         if (node == null) return;
         ArrayDeque<TreeItem<Path>> pending = new ArrayDeque<>();
@@ -47,6 +47,13 @@ final class BatchedTreeExpander {
         expanding = true;
         busyChanged.run();
         notice.accept("Expandiendo carpetas en lotes; puedes seguir usando CodeTrace.");
+        if (safeToExpandImmediately) {
+            // Only small indexed references (< 40 folders, < 1,000 files)
+            // take the synchronous path. Avoid needless animation latency,
+            // including for tests that verify an immediate recursive action.
+            while (!pending.isEmpty() && expanding) processBatch(pending);
+            return;
+        }
         processBatch(pending);
         if (pending.isEmpty() || !expanding) return;
         timeline = new Timeline(new KeyFrame(Duration.millis(30),
