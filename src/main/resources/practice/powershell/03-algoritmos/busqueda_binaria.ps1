@@ -1,16 +1,25 @@
-# CodeTrace | Referencia: PowerShell 7.4.
-# En una COPIA del paquete, desde PowerShell o shell indicado:
-# Ejecutar: pwsh -NoProfile -File '.\05-algoritmos\busqueda_binaria.ps1'
+# CodeTrace | Referencia: PowerShell 7.4
+# Comprobar: pwsh -NoProfile -File ARCHIVO.ps1
+# Ejecutar: pwsh -NoProfile -File ARCHIVO.ps1
 
-function Find-Numero {
-    param([int[]]$Datos, [int]$Objetivo)
-    $izquierda = 0; $derecha = $Datos.Count - 1
-    while ($izquierda -le $derecha) {
-        $medio = [int][math]::Floor(($izquierda + $derecha) / 2)
-        if ($Datos[$medio] -eq $Objetivo) { return $medio }
-        if ($Datos[$medio] -lt $Objetivo) { $izquierda = $medio + 1 }
-        else { $derecha = $medio - 1 }
+<#
+Cliente de búsqueda binaria en una secuencia numérica ordenada.
+
+El algoritmo conserva un intervalo semiabierto de candidatos.
+Cada comparación descarta media región, por lo que su costo es
+O(log n) tiempo y O(1) espacio. No confundir este algoritmo
+con Where-Object, cuyo filtrado secuencial cuesta O(n).
+#>
+function Find-Binary {
+    param([int[]] $Datos, [int] $Objetivo)
+    $inicio = 0
+    $fin = $Datos.Count
+    while ($inicio -lt $fin) {
+        $mitad = $inicio + [int][math]::Floor(($fin - $inicio) / 2)
+        if ($Datos[$mitad] -eq $Objetivo) { return $mitad }
+        if ($Datos[$mitad] -lt $Objetivo) { $inicio = $mitad + 1 }
+        else { $fin = $mitad }
     }
     return -1
 }
-Write-Host (Find-Numero -Datos @(2,4,8,12,16) -Objetivo 12)
+Find-Binary -Datos @(2, 5, 8, 12, 21) -Objetivo 12
