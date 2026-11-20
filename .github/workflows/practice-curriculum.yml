@@ -94,6 +94,34 @@ jobs:
             if ($LASTEXITCODE -ne 0) { throw "C# failed: $archivo" }
           }
 
+
+      - name: Compile C# multi-file mini-projects
+        shell: pwsh
+        run: |
+          $root = "src/main/resources/practice/csharp"
+          $unidades = @(
+            "01-fundamentos/excepciones-propias",
+            "02-estructuras-datos/pila",
+            "02-estructuras-datos/cola-circular",
+            "02-estructuras-datos/arbol-bst",
+            "02-estructuras-datos/tabla-hash",
+            "02-estructuras-datos/grafos/representacion",
+            "04-patrones-diseno/strategy/tarifas",
+            "04-patrones-diseno/factory-method/exportadores",
+            "04-patrones-diseno/adapter/sensores",
+            "04-patrones-diseno/decorator/notificaciones",
+            "04-patrones-diseno/observer/eventos"
+          )
+          foreach ($unidad in $unidades) {
+            $destino = Join-Path $env:RUNNER_TEMP "curso-csharp-unit"
+            dotnet new console --framework net8.0 -o $destino --force | Out-Null
+            Remove-Item (Join-Path $destino "Program.cs") -Force
+            Copy-Item (Join-Path $root "$unidad/*.cs") $destino -Force
+            dotnet run --project $destino
+            if ($LASTEXITCODE -ne 0) { throw "Miniproyecto C# falló: $unidad" }
+            Remove-Item -Recurse -Force $destino
+          }
+
   kotlin-clients:
     runs-on: ubuntu-latest
     steps:
@@ -120,9 +148,7 @@ jobs:
             01-fundamentos/varianza-genericos/varianza_genericos.kt \
             02-estructuras-datos/heap-prioridades/heap_prioridades.kt \
             03-algoritmos/bfs-grafo/bfs_grafo.kt \
-            03-algoritmos/mochila-01/mochila_01.kt \
-            04-patrones-diseno/adapter/unidades/adapter_unidades.kt \
-            04-patrones-diseno/decorator/notificaciones/decorator_notificaciones.kt; do
+            03-algoritmos/mochila-01/mochila_01.kt; do
             kotlinc -jvm-target 21 "$base/$archivo" -include-runtime -d "$RUNNER_TEMP/kotlin-sample.jar"
             java -jar "$RUNNER_TEMP/kotlin-sample.jar" >/dev/null
           done
@@ -136,3 +162,20 @@ jobs:
             "$base/04-patrones-diseno/observer/basico/MainObservador.kt" \
             -include-runtime -d "$RUNNER_TEMP/observer.jar"
           java -jar "$RUNNER_TEMP/observer.jar" >/dev/null
+
+          for unidad in \
+            01-fundamentos/excepciones-personalizadas \
+            02-estructuras-datos/pila \
+            02-estructuras-datos/cola-circular \
+            02-estructuras-datos/lista-simple \
+            02-estructuras-datos/arbol-bst \
+            02-estructuras-datos/tabla-hash \
+            02-estructuras-datos/grafos/representacion \
+            04-patrones-diseno/adapter/unidades \
+            04-patrones-diseno/decorator/notificaciones \
+            04-patrones-diseno/strategy/basico \
+            04-patrones-diseno/factory-method; do
+            kotlinc -jvm-target 21 "$base/$unidad/"*.kt \
+              -include-runtime -d "$RUNNER_TEMP/kotlin-unit.jar"
+            java -jar "$RUNNER_TEMP/kotlin-unit.jar" >/dev/null
+          done

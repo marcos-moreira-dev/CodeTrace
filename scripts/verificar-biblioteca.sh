@@ -37,7 +37,7 @@ find "$base/java21" -name '*.java' -print0 | xargs -0 javac --release 21 -encodi
 for cls in \
  MainExcepcionChecked MainExcepcionUnchecked MainRecursosYSuppressed \
  MainColaCircular MainListaSimple MainPila MainBusquedaBinaria \
- MainFactoryMethod MainObserver MainStrategy \
+ codetrace.factorymethod.MainFactoryMethod codetrace.observer.MainObserver MainStrategy \
  codetrace.practica.heaps.MainColaPrioridad \
  codetrace.practica.grafostipos.MainTiposGrafo \
  codetrace.practica.grafosrepresentaciones.MainRepresentaciones \
