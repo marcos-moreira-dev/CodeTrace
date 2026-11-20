@@ -515,6 +515,13 @@ public final class ReferenceTree extends TreeView<Path> {
         projectionVisible = false;
         projectedView.setVisible(false);
         projectedView.setManaged(false);
+        // Restore just a lazy root; never resurrect the thousands of TreeItems
+        // that were intentionally discarded for mass expansion.
+        if (getRoot() == null && referenceRoot != null) {
+            TreeItem<Path> shallow = item(referenceRoot);
+            setRoot(shallow);
+            shallow.setExpanded(true);
+        }
         setVisible(true);
         setManaged(true);
         projectedSelectionChanged.run();
@@ -546,12 +553,17 @@ public final class ReferenceTree extends TreeView<Path> {
                     || !root.equals(referenceRoot) || snapshot != index) return;
             projectionTask = null;
             logicalExpansion = expanded;
+            if (!projectionVisible) {
+                setVisible(false);
+                setManaged(false);
+                // Free the old materialized TreeItems before showing the
+                // virtual list. This prevents duplicate UI trees in memory.
+                setRoot(null);
+            }
+            projectionVisible = true;
             projectedView.publish(task.getValue());
-            setVisible(false);
-            setManaged(false);
             projectedView.setVisible(true);
             projectedView.setManaged(true);
-            projectionVisible = true;
             projectionBusy = false;
             notifyBusy();
             projectedSelectionChanged.run();
