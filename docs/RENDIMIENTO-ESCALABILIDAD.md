@@ -195,6 +195,48 @@ aleatorio en las coordenadas; eso rompería la repetibilidad y la claridad
 de las etiquetas. La asignación se recalcula solo al cambiar posiciones,
 no cuando el usuario hace zoom o desplaza la cámara.
 
+## Regresión de scroll y ciclos de expansión (22:19–22:22, 19/11/2026)
+
+El ZIP `CodeTrace-feedback-20261119-221936.zip` registró:
+índice 1.349,5 ms (11.598 entradas), catálogo 1.746,8 ms (10.421
+archivos), colapso completo 4,8 ms y grafo organizado 62,3 ms (111 nodos).
+El heap JVM pasó de 181 MiB en la primera expansión a 250 MiB
+en la segunda; se observaron 692 MiB comprometidos. Son instantáneas
+del heap, **no** memoria RAM total de Windows.
+
+**Error de instrumentación detectado:** las antiguas mediciones
+`expand-recursive` de 4,4 y 10,2 ms tenían una variable local de inicio
+que ocultaba el cronómetro global. Medían solo el último pulso de
+expansión y NO el tiempo de las 1.007 carpetas. El nombre de variable
+se corrigió, de modo que el nuevo ZIP medirá la expansión completa.
+
+**Ajustes implementados:**
+
+- Un colapso total conserva temporalmente una sola instantánea
+  `TreeItem` en RAM (máximo 40.000 archivos y 12.000 directorios).
+  Al volver a expandir, se reutilizan esos objetos ya materializados
+  en vez de crearlos desde cero. Se descarta la instantánea al
+  modificar el proyecto virtual, el índice, los filtros, o una rama.
+  No se guardan bytes de multimedia o textos en esa caché.
+- Las celdas virtualizadas del `TreeView` reutilizan sus nodos
+  `HBox`, etiquetas y aviso flotante. Los menús contextuales se
+  crean únicamente cuando el usuario hace clic derecho. Antes se
+  reconstruían también durante el desplazamiento.
+- El indicador de actividad continúa visible brevemente durante
+  el asentamiento visual posterior a la última expansión grande.
+  El texto de terminado se muestra cuando se apaga el indicador,
+  no al terminar de modificar las propiedades `expanded`.
+- En diagnósticos, el evento `Performance fx-frame-gap` registra
+  intervalos de renderizado de al menos 120 ms en una ventana
+  enfocada, hasta 30 observaciones. Esto detecta síntomas de un
+  atasco gráfico, pero no identifica por sí solo qué método lo causó.
+
+El ajuste requiere **prueba manual con el ZIP nuevo**: expandir,
+desplazarse arriba y abajo, colapsar, volver a expandir y comparar
+uso de memoria, latencia y `fx-frame-gap`. La virtualización de filas
+sigue siendo responsabilidad de JavaFX y no debe reemplazarse con
+miles de controles gráficos siempre montados.
+
 ## Evolución posterior, sujeta a perfiles
 
 Consolidar los recorridos iniciales del árbol y del catálogo requiere un
