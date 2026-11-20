@@ -149,7 +149,21 @@ try {
                     $capture = Start-Process -FilePath (Join-Path $PSHOME "powershell.exe") -ArgumentList $args -WindowStyle Hidden -RedirectStandardOutput (Join-Path $logs "captura.log") -RedirectStandardError (Join-Path $logs "captura-errores.log") -PassThru
                 }
                 Note "La aplicacion se abre ahora. Cierra CodeTrace para completar el informe."
-                $appCode = Maven-Log $mvn @("-B","-ntp","-t",$tc,"javafx:run") (Join-Path $logs "javafx-run.log")
+                Note "Perfilado ligero activo: abre un proyecto, colapsa carpetas y restablece el grafo."
+                # Inherit this property only during the app run; restore even
+                # if Maven/JavaFX fails. The ZIP contains timings without paths.
+                $previousJavaOptions = $env:JAVA_TOOL_OPTIONS
+                try {
+                    $env:JAVA_TOOL_OPTIONS = (
+                        ($previousJavaOptions + " -Dcodetrace.profile=true").Trim())
+                    $appCode = Maven-Log $mvn @("-B","-ntp","-t",$tc,"javafx:run") (Join-Path $logs "javafx-run.log")
+                } finally {
+                    if ($null -eq $previousJavaOptions) {
+                        Remove-Item Env:JAVA_TOOL_OPTIONS -ErrorAction SilentlyContinue
+                    } else {
+                        $env:JAVA_TOOL_OPTIONS = $previousJavaOptions
+                    }
+                }
                 if ($appCode -ne 0) {
                     Note ("ERROR: javafx:run termino con codigo " + $appCode)
                     $code = 1
