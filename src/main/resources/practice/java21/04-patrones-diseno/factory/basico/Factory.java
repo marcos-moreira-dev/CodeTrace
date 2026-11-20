@@ -3,6 +3,14 @@
 // Ejecutar: ejecutar desde el cliente que utiliza este componente
 // Sin main: es una clase o interfaz para compilar y reutilizar.
 
+/**
+ * Fábrica simple de mensajes, no patrón Factory Method por herencia.
+ *
+ * <p>Su única responsabilidad es concentrar el conocimiento de la clase
+ * concreta Correo y devolverla mediante el contrato Mensaje. El cliente
+ * depende del contrato, no de la decisión de creación. La versión GoF
+ * con creadores polimórficos está en factory-method/.
+ */
 public final class Factory {
     interface Mensaje {
         String enviar();

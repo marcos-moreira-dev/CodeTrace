@@ -3,6 +3,13 @@
 // Compilar: kotlinc -jvm-target 21 '.\04-patrones-diseno\factory\basico\Factory.kt' -include-runtime -d "$env:TEMP\codetrace-kotlin.jar"
 // Este archivo declara tipos; se compila, pero no tiene punto de entrada main.
 
+/**
+ * Fábrica simple Kotlin: separa la decisión de construcción del cliente.
+ *
+ * <p>El object Factory actúa como instancia única de fábrica. No exige
+ * instanciar una jerarquía de creadores y no es idéntico a Factory Method.
+ * Véase el cliente MainFactory.kt en la misma carpeta.
+ */
 interface Mensaje {
     fun enviar(): String
 }

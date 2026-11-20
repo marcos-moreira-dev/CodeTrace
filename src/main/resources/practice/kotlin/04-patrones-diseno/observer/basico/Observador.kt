@@ -3,6 +3,13 @@
 // Compilar: kotlinc -jvm-target 21 '.\04-patrones-diseno\observer\basico\Observador.kt' -include-runtime -d "$env:TEMP\codetrace-kotlin.jar"
 // Este archivo declara tipos; se compila, pero no tiene punto de entrada main.
 
+/**
+ * Observable pequeño con listeners representados por fun interface.
+ *
+ * <p>El emisor mantiene el valor y notifica cambios sin conocer a sus
+ * consumidores. La colección mutable se utiliza para enseñanza; en
+ * aplicaciones reales habría que definir desuscripción y concurrencia.
+ */
 fun interface Escucha {
     fun alCambiar(nuevoValor: Int)
 }

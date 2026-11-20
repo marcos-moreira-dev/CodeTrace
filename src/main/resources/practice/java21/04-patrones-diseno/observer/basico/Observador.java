@@ -6,6 +6,14 @@
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Emisor Observer básico basado en una lista de interfaces funcionales.
+ *
+ * <p>No conoce las acciones ejecutadas por suscriptores, solo publica
+ * el nuevo valor. En este ejercicio la lista no está sincronizada y
+ * no hay desuscripción: en una aplicación real deben especificarse
+ * esas políticas de ciclo de vida y manejo de excepciones.
+ */
 public final class Observador {
     @FunctionalInterface
     public interface Escucha {
