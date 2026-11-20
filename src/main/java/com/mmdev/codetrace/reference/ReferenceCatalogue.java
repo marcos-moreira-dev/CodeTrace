@@ -153,17 +153,23 @@ public final class ReferenceCatalogue {
                     return FileVisitResult.CONTINUE;
                 }
                 try {
-                    String sha = ReferenceFingerprint.sha256(file);
-                    int units = -1; // Binary, unsupported, or too large for this editor.
-                    TextPreview.Result preview = PracticeEligibility.supports(file)
-                            ? TextPreview.load(file) : new TextPreview.Result(null,
-                                    "Tipo de archivo no incluido en la práctica.");
-                    if (preview.readable()) {
-                        units = new TypingSession(preview.content()).visibleUnitCount();
-                    }
                     String relative = referenceRoot.relativize(file)
                             .toString().replace('\\', '/');
-                    files.put(relative, new FileInfo(sha, attributes.size(), units));
+                    // Binary/multimedia files remain visible in the catalogue,
+                    // but never require a full SHA-256 pass just for progress.
+                    if (!PracticeEligibility.supports(file)) {
+                        files.put(relative, new FileInfo("", attributes.size(), -1));
+                        return FileVisitResult.CONTINUE;
+                    }
+                    // One bounded read validates UTF-8 and hashes the same bytes.
+                    // Empty SHA means unavailable/non-practicable source.
+                    TextPreview.Analysed analysed = TextPreview.loadWithHash(file);
+                    TextPreview.Result preview = analysed.preview();
+                    int units = preview.readable()
+                            ? new TypingSession(preview.content()).visibleUnitCount()
+                            : -1;
+                    files.put(relative, new FileInfo(analysed.sha256(),
+                            attributes.size(), units));
                 } catch (IOException | SecurityException ignored) {
                     // An unreadable file does not block indexing other files.
                 }
