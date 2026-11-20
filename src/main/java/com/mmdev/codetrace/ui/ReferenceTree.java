@@ -317,6 +317,16 @@ public final class ReferenceTree extends TreeView<Path> {
     }
 
     /**
+     * True while the immutable disk index is being constructed on a worker.
+     * The presentation layer uses this narrower state to distinguish the
+     * initially empty explorer from normal background expansion: existing
+     * rows should remain interactive while a projection is calculated.
+     */
+    public boolean isIndexing() {
+        return loading;
+    }
+
+    /**
      * Collapse even a huge expanded tree in one structural update.
      *
      * <p>Walking every expanded TreeItem and calling setExpanded(false) used
