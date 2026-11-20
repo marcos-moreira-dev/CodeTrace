@@ -1,4 +1,5 @@
-#requires -Version 5.1
+﻿#requires -Version 5.1
+# UTF-8 BOM required for the legacy Windows PowerShell 5.1 parser.
 <#
 .SYNOPSIS
   Audita la biblioteca offline de CodeTrace v7 (762 referencias / 14 lenguajes).

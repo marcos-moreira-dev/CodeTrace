@@ -36,6 +36,12 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Verify legacy Windows PowerShell 5.1 UTF-8 compatibility
+        shell: pwsh
+        run: |
+          # Invoke Windows PowerShell, not pwsh: this catches BOM-less UTF-8 parsing.
+          & powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\auditar-biblioteca.ps1
+          if ($LASTEXITCODE -ne 0) { throw "Windows PowerShell 5.1 audit failed" }
       - name: Audit grouped offline catalog with PowerShell
         shell: pwsh
         run: .\scripts\auditar-biblioteca.ps1
