@@ -1398,6 +1398,21 @@
 /* Large references: logical rows rendered through ListView VirtualFlow.
    Styling mirrors TreeView without materializing thousands of TreeItems. */
 .reference-explorer-host { -fx-background-color: #f6f8fa; }
+/* Indexing an unopened reference must not resemble an empty, finished tree.
+   Keep a readable loading indicator in the explorer itself, rather than
+   relying solely on the tiny activity icon in the project toolbar. */
+.explorer-loading {
+    -fx-background-color: rgba(246, 248, 250, 0.94);
+    -fx-alignment: center;
+    -fx-spacing: 10px;
+    -fx-padding: 18px;
+}
+.explorer-loading .progress-indicator { -fx-progress-color: #4d7895; }
+.explorer-loading-label {
+    -fx-text-fill: #3b5870;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+}
 .reference-flat-explorer {
     -fx-background-color: #f6f8fa;
     -fx-border-color: transparent;
