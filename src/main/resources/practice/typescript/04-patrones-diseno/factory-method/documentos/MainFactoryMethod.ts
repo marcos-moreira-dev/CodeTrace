@@ -16,3 +16,9 @@ const creador: Creador = new CreadorTexto();
 const resultado = creador.preparar("Factura 001");
 console.log(resultado);
 if (resultado !== "TXT: Factura 001") throw Error("Factory Method");
+
+/*
+ * Salida esperada de consola:
+ *   Se imprime el valor o coleccion calculado por el cliente.
+ * Verificacion: termina sin excepciones inesperadas.
+ */

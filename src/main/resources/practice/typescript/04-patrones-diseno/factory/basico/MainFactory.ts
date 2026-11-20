@@ -16,3 +16,9 @@ const mensaje: Notificacion = crearNotificacion();
 const salida = mensaje.enviar("Listo");
 if (salida !== "Correo: Listo") throw Error("Fábrica");
 console.log(salida);
+
+/*
+ * Salida esperada de consola:
+ *   Se imprime el valor o coleccion calculado por el cliente.
+ * Verificacion: termina sin excepciones inesperadas.
+ */

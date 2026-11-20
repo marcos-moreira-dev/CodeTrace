@@ -15,3 +15,9 @@ const a:ProcesoReporte=new ReporteTexto(),b:ProcesoReporte=new ReporteCsv();
 if(!a.ejecutar("ventas",15).includes("Total: 15")||
    !b.ejecutar("ventas",15).includes("ventas,15"))throw Error("Reportes");
 console.log(a.ejecutar("ventas",15),b.ejecutar("ventas",15));
+
+/*
+ * Salida esperada de consola:
+ *   Se imprime el valor o coleccion calculado por el cliente.
+ * Verificacion: termina sin excepciones inesperadas.
+ */

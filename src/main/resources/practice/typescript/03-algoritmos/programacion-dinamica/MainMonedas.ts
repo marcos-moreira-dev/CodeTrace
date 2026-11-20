@@ -13,3 +13,10 @@ import { minimo } from "./Monedas";
  * Ejecutar: node dist/MainMonedas.js
  */
 console.log("Mínimo:", minimo([1,3,4], 6));
+
+/*
+ * Salida esperada de consola:
+ *   Mínimo:
+ *   (los valores variables completan los fragmentos anteriores)
+ * Verificacion: termina sin excepciones inesperadas.
+ */

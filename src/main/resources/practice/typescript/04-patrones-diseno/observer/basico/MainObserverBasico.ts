@@ -23,3 +23,9 @@ sensor.suscribir(n => eventos.push("auditoria:" + n));
 sensor.actualizar(42);
 console.log(eventos);
 if (eventos.length !== 2) throw Error("Observer no notificó");
+
+/*
+ * Salida esperada de consola:
+ *   Se imprime el valor o coleccion calculado por el cliente.
+ * Verificacion: termina sin excepciones inesperadas.
+ */

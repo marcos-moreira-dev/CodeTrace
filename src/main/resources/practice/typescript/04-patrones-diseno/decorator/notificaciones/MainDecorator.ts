@@ -14,3 +14,9 @@ import { Consola, Prefijo, type Notificador } from "./decorator_notificaciones";
  */
 const emisor: Notificador = new Prefijo(new Consola(), "[INFO] ");
 emisor.enviar("Servicio activo");
+
+/*
+ * Salida esperada de consola:
+ *   Sin salida de texto; las pruebas del cliente se cumplen.
+ * Verificacion: termina sin excepciones inesperadas.
+ */

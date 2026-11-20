@@ -17,3 +17,9 @@ const reducido = new DescuentoFijo(0.10);
 const normal: Descuento = { aplicar: subtotal => subtotal };
 console.log(facturador.cobrar(100, normal), facturador.cobrar(100, reducido));
 if (facturador.cobrar(100, reducido) !== 90) throw Error("Descuento");
+
+/*
+ * Salida esperada de consola:
+ *   Se imprime el valor o coleccion calculado por el cliente.
+ * Verificacion: termina sin excepciones inesperadas.
+ */

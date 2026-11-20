@@ -15,3 +15,10 @@ import { Adaptador, Legado, type SensorCelsius } from "./adapter_unidades";
 const sensor: SensorCelsius = new Adaptador(new Legado());
 if (sensor.leer() !== 25) throw Error("Conversión");
 console.log("Celsius:", sensor.leer());
+
+/*
+ * Salida esperada de consola:
+ *   Celsius:
+ *   (los valores variables completan los fragmentos anteriores)
+ * Verificacion: termina sin excepciones inesperadas.
+ */

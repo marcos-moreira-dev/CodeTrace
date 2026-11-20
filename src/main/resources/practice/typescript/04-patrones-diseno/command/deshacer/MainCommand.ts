@@ -20,3 +20,9 @@ if(editor.texto!=="Hola mundo")throw Error("Ejecutar");
 historial.pop()!.deshacer();
 if(String(editor.texto)!=="Hola")throw Error("Deshacer");
 console.log(editor.texto);
+
+/*
+ * Salida esperada de consola:
+ *   Se imprime el valor o coleccion calculado por el cliente.
+ * Verificacion: termina sin excepciones inesperadas.
+ */

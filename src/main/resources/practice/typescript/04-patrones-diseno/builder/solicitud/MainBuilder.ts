@@ -16,3 +16,9 @@ const solicitud:Solicitud=new SolicitudBuilder().ruta("/facturas")
 if(solicitud.ruta!=="/facturas"||solicitud.cabeceras.length!==1)
     throw Error("Builder");
 console.log(solicitud);
+
+/*
+ * Salida esperada de consola:
+ *   Se imprime el valor o coleccion calculado por el cliente.
+ * Verificacion: termina sin excepciones inesperadas.
+ */

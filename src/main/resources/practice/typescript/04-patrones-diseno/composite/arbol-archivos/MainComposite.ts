@@ -17,3 +17,10 @@ raiz.agregar(src);raiz.agregar(new Archivo("README.md",20));
 const modelo:Elemento=raiz;
 if(modelo.bytes()!==220)throw Error("Composite");
 console.log("Bytes:",modelo.bytes());
+
+/*
+ * Salida esperada de consola:
+ *   Bytes:
+ *   (los valores variables completan los fragmentos anteriores)
+ * Verificacion: termina sin excepciones inesperadas.
+ */

@@ -15,3 +15,9 @@ function pantalla(f:Fabrica):string{return f.boton().pintar()+" / "+f.dialogo().
 const a=pantalla(new Claro()),b=pantalla(new Oscuro());
 if(a===b||!a.includes("clara")||!b.includes("oscura"))throw Error("Familias");
 console.log(a,b);
+
+/*
+ * Salida esperada de consola:
+ *   Se imprime el valor o coleccion calculado por el cliente.
+ * Verificacion: termina sin excepciones inesperadas.
+ */
