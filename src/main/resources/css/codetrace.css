@@ -1422,3 +1422,9 @@
     -fx-background-color: #dce8f0;
 }
 .reference-flat-explorer .reference-tree-row { -fx-alignment: center-left; }
+.reference-flat-explorer .list-cell.reference-outside-scope .reference-tree-row {
+    -fx-opacity: 0.36;
+}
+.reference-flat-explorer .list-cell.reference-outside-scope:selected .reference-tree-row {
+    -fx-opacity: 0.68;
+}
