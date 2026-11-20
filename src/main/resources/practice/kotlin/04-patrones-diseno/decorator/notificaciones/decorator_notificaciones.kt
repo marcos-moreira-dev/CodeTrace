@@ -1,23 +1,16 @@
 // CodeTrace | Referencia: Kotlin 2.2 / JVM 21
-// Compilar (PowerShell): kotlinc -jvm-target 21 '.\04-patrones-diseno\decorator\notificaciones\decorator_notificaciones.kt' -include-runtime -d "$env:TEMP\ct-kotlin.jar"
-// Ejecutar: java -jar "$env:TEMP\ct-kotlin.jar"
+// Compilar en COPIA desde esta carpeta: kotlinc -jvm-target 21 *.kt -include-runtime -d "$env:TEMP\ct-kotlin-unit.jar"
+// Ejecutar: java -jar "$env:TEMP\ct-kotlin-unit.jar"
+// El cliente Main... es el único punto de entrada en cada unidad.
 
-/**
- * Cliente Decorator mediante composición y delegación.
- *
- * Una notificación se envuelve para añadir una etiqueta, sin
- * modificar el componente original. El mismo contrato permite
- * encadenar otras capas según el dominio del programa.
- */
+/** Contrato para emitir mensajes desde diferentes implementaciones. */
 fun interface Notificador { fun enviar(texto: String) }
+
 class Consola : Notificador {
-    override fun enviar(texto: String) = println("Mensaje: $texto")
+    override fun enviar(texto: String) = println("Mensaje: " + texto)
 }
-class Prefijo(private val interno: Notificador, private val etiqueta: String) :
-    Notificador {
+
+/** Conserva el contrato y delega a otro Notificador. */
+class Prefijo(private val interno: Notificador, private val etiqueta: String) : Notificador {
     override fun enviar(texto: String) = interno.enviar(etiqueta + texto)
-}
-fun main() {
-    val emisor: Notificador = Prefijo(Consola(), "[INFO] ")
-    emisor.enviar("Servicio listo")
 }

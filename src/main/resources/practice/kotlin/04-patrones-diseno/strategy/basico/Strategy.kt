@@ -1,19 +1,15 @@
-// CodeTrace | Kotlin 2.2 | JVM 21 | Java JDK 21.
-// Desde PowerShell, en una copia de esta biblioteca:
-// Compilar: kotlinc -jvm-target 21 '.\04-patrones-diseno\strategy\basico\Strategy.kt' -include-runtime -d "$env:TEMP\codetrace-kotlin.jar"
-// Ejecutar: java -jar "$env:TEMP\codetrace-kotlin.jar"
+// CodeTrace | Referencia: Kotlin 2.2 / JVM 21
+// Compilar en COPIA desde esta carpeta: kotlinc -jvm-target 21 *.kt -include-runtime -d "$env:TEMP\ct-kotlin-unit.jar"
+// Ejecutar: java -jar "$env:TEMP\ct-kotlin-unit.jar"
+// El cliente Main... es el único punto de entrada en cada unidad.
 
-fun interface Descuento {
-    fun aplicar(total: Double): Double
-}
+/** Contrato intercambiable: fun interface permite implementar con lambda. */
+fun interface Descuento { fun aplicar(total: Double): Double }
 
+/** Contexto que delega su cálculo a una estrategia externa. */
 object Strategy {
-    fun calcular(total: Double, estrategia: Descuento): Double =
-        estrategia.aplicar(total)
-
-    @JvmStatic
-    fun main(args: Array<String>) {
-        val diezPorCiento = Descuento { subtotal -> subtotal * 0.9 }
-        println(calcular(100.0, diezPorCiento))
+    fun calcular(total: Double, estrategia: Descuento): Double {
+        require(total >= 0)
+        return estrategia.aplicar(total)
     }
 }
