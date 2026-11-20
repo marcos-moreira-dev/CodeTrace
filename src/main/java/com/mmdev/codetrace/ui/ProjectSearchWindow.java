@@ -28,7 +28,8 @@ import javafx.stage.Stage;
 /**
  * Non-modal Notepad++-style search without Replace: project or selected file.
  * Results are a read-only navigation overlay, not typing progress.
- */
+  * <p><strong>Engineering rationale.</strong> Search is intentionally a separate, non-modal read-only navigation workflow. File and project searches produce bounded results with explicit limits; selecting a hit asks the application to open and reveal the source location without counting the search as typing progress.</p>
+*/
 public final class ProjectSearchWindow {
     public enum Scope { FILE, PROJECT }
 

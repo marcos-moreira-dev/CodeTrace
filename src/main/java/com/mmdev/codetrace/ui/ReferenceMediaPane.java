@@ -42,7 +42,8 @@ import javafx.scene.media.MediaView;
 import javafx.scene.web.WebView;
 import javafx.util.Duration;
 
-/** Read-only media preview; neither modifies files nor advances typing progress. */
+/** Read-only media preview; neither modifies files nor advances typing progress.  * <p><strong>Engineering rationale.</strong> Media previews are optional read-only views with their own resource lifecycle: JavaFX handles supported formats, while conversion or streaming fallbacks are launched only when required. Close must stop playback, cancel preparation and clean temporary assets; the original reference must never become the conversion destination.</p>
+*/
 public final class ReferenceMediaPane extends BorderPane {
     public enum Kind { IMAGE, SVG, AUDIO, VIDEO, UNSUPPORTED }
     private MediaPlayer player;

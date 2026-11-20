@@ -18,7 +18,8 @@ import java.util.Set;
  * is a set of relative directory paths, not thousands of control mutations.
  * Build it on a worker and publish the immutable result once on the FX thread.
  * Cost O(visible paths + sorting sibling groups), memory O(visible paths).</p>
- */
+  * <p><strong>Engineering rationale.</strong> This is a functional projection stage between filesystem metadata and JavaFX: traverse only folders marked expanded, place directories before files, and emit one immutable list for the view to publish. Work and sibling sorting happen off the application thread; cancellation and a maximum-row budget prevent an obsolete expansion from monopolizing resources.</p>
+*/
 public final class ExplorerRows {
     public static final int MAX_ROWS = 150_000;
     public record Row(String relative, int depth, boolean directory) { }

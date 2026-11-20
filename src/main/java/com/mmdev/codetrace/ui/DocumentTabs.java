@@ -11,7 +11,8 @@ import javafx.scene.control.TabPane;
  * Owns document-tab identity and disposal, independently of application menus.
  * All closing paths (tab X, context menu, project change) release media and
  * Markdown resources exactly once and remove stale path registrations.
- */
+  * <p><strong>Engineering rationale.</strong> A tab has both visual identity and owned resources. Closing through any route must unregister its reference path and dispose media players or WebViews exactly once, so moving between projects cannot leave native decoders, callbacks or stale tabs running.</p>
+*/
 public final class DocumentTabs {
     private final TabPane pane;
     private final Runnable changed;

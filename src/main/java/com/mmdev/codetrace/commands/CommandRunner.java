@@ -15,7 +15,8 @@ import java.util.function.IntConsumer;
 /**
  * One external command at a time, off the JavaFX Application Thread.
  * Never executes a preset during project opening, import, or session loading.
- */
+  * <p><strong>Engineering rationale.</strong> Process ownership is an operating-system concern: pipes may block, descendants may outlive a shell and termination must not freeze JavaFX. A single worker controls execution, bounded output and cancellation; callers must explicitly authorize commands because they run against real project files.</p>
+*/
 public final class CommandRunner {
     private static final int OUTPUT_LIMIT = 180_000;
     private final AtomicBoolean running = new AtomicBoolean();

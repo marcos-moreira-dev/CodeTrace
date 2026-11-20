@@ -20,7 +20,8 @@ import org.kordamp.ikonli.javafx.FontIcon;
  *
  * <p>Only visible ListCell instances allocate graphics. Large expansions
  * never create TreeItem hierarchies or iterate files on the JavaFX thread.</p>
- */
+  * <p><strong>Engineering rationale.</strong> Only on-screen list cells should allocate icons, labels and disclosure controls; scrolling reuses those cells. The view delegates semantics to ReferenceTree rather than maintaining a second authoritative filesystem model, and publishes an entire projection in one UI update to avoid showing half-constructed folder hierarchies.</p>
+*/
 final class VirtualExplorerView extends ListView<ExplorerRows.Row> {
     private final ReferenceTree owner;
 

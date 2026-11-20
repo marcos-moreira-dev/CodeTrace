@@ -36,7 +36,8 @@ import javafx.scene.text.Text;
  *
  * ListView virtualizes lines, so refreshing a large document only recreates
  * visible cells instead of allocating a Text node for every character.
- */
+  * <p><strong>Engineering rationale.</strong> Input events update a TypingSession rather than modifying the immutable reference text. Rows are virtualized so rendering scales with visible lines instead of the full source length; caret navigation and auto-scroll belong to the presentation layer while Unicode correctness and skip rules stay in the practice model.</p>
+*/
 public final class TypingEditor extends BorderPane {
     // Unwritten reference characters must remain comfortably legible on white.
     // Existing opacity preferences still apply; correctness colors stay intact.

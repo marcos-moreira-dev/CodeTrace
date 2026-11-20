@@ -16,7 +16,8 @@ import javafx.util.Duration;
  * Owns the lifecycle and safety budget of recursive TreeView expansion.
  * The tree still owns items, selection, collapse semantics, and indexing.
  * This coordinator only schedules bounded work on the JavaFX thread.
- */
+  * <p><strong>Engineering rationale.</strong> Bounded per-pulse work makes the legacy TreeView tolerable for small branches, but does not replace the ListView projection for truly large expansions. Keeping the scheduler separate from tree structure makes cancellation and maximum-folder budgets explicit, preserving responsiveness on Windows.</p>
+*/
 final class BatchedTreeExpander {
     private static final int EXPANSION_BATCH = 48;
     // Time-box each FX pulse as well as limiting the number of directories.

@@ -6,7 +6,8 @@ package com.mmdev.codetrace.ui;
  *
  * World coordinates are session data. Camera coordinates are temporary UI
  * state and never rewrite sources or stored node positions.
- */
+  * <p><strong>Engineering rationale.</strong> Camera transforms are a view concern, not changes to the dependency graph's underlying positions. Keeping zoom, viewport center and coordinate conversion together avoids mixing screen pixels with persistent world coordinates and makes unconstrained panning possible.</p>
+*/
 public final class GraphCamera {
     private double centerX;
     private double centerY;

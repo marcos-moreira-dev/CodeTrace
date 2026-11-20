@@ -13,7 +13,8 @@ import java.util.function.BooleanSupplier;
 /**
  * Optional, local FFmpeg fallback for reference-only previews.
  * Never writes into the reference project and never invokes a shell.
- */
+  * <p><strong>Engineering rationale.</strong> FFmpeg is an optional process dependency, not a JavaFX decoder or shell script. Conversion chooses bounded temporary outputs and can remultiplex without video recompression when the codec permits; the UI must still handle unsupported codecs, cancellation and free-space limits.</p>
+*/
 public final class MediaTranscoder {
     /** VIDEO_REMUX copies the original video bitstream (full length and quality).
      * VIDEO encodes the full video into H.264, at most 1080p, preserving FPS. */

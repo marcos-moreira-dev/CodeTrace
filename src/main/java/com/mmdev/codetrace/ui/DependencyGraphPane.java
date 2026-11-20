@@ -28,7 +28,8 @@ import javafx.scene.text.Font;
  * Read-only dependency graph on a viewport-sized Canvas with a logical camera.
  * Unlike a giant scrollable bitmap, panning has no fixed edges, the graph is
  * centered on opening, and large drawings do not allocate huge Canvas buffers.
- */
+  * <p><strong>Engineering rationale.</strong> Keep the complete graph in model/world coordinates while drawing only a viewport-sized Canvas. A camera maps those coordinates to screen space for panning and zooming; the layout algorithm and persisted node positions remain independent of presentation scale. This is why very large diagrams do not need a correspondingly enormous bitmap.</p>
+*/
 public final class DependencyGraphPane extends BorderPane {
     private static final double NODE_RADIUS = 10;
     private static final double MAX_NODE_COORDINATE = 100_000;

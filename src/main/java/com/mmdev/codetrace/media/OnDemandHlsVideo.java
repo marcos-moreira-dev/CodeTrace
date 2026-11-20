@@ -29,7 +29,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * Private loopback HLS video source: no full-file transcode and no source writes.
  * A seek requests exactly the MPEG-TS segment containing that timestamp.
  * Encoding and HTTP happen off the JavaFX thread. Not an internet video server.
- */
+  * <p><strong>Engineering rationale.</strong> Segmenting a large video trades a potentially huge full-file conversion for bounded on-demand work and cache memory. The loopback server is local to the application, must shut down with the preview, and must not expose user files beyond the specifically selected reference media.</p>
+*/
 public final class OnDemandHlsVideo implements AutoCloseable {
     static final int SEGMENT_SECONDS = 6;
     private static final int MAX_SEGMENTS = 12_000;

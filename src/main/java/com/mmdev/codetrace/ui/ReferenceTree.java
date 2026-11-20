@@ -50,7 +50,8 @@ import javafx.scene.paint.Color;
 /**
  * A tree combining read-only reference entries with the in-memory workspace.
  * Items absent from the virtual workspace are shown as uncreated references.
- */
+  * <p><strong>Engineering rationale.</strong> The explorer joins a read-only indexed reference with a separate virtual reconstruction. Small, manually opened branches use lazy TreeItems; mass expansion switches to an immutable row projection and a virtualized ListView, preventing thousands of synchronous JavaFX control mutations. Selection, context actions and progress scope must behave equivalently in both presentations.</p>
+*/
 public final class ReferenceTree extends TreeView<Path> {
     public enum Operation { CREATE, DELETE, MOVE, COPY }
     public record Change(Operation operation, String source, String target) { }

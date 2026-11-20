@@ -26,7 +26,8 @@ import javafx.scene.text.Font;
 /**
  * Collapsible, read-only terminal output. External processes run only after
  * clicking Execute; they never receive virtual reconstruction files.
- */
+  * <p><strong>Engineering rationale.</strong> Console execution is deliberately separated from transcription and preview. Presets are selected explicitly, warnings refer to the real filesystem rather than the virtual workspace, and the UI can request cancellation without waiting on the JavaFX thread for a child process.</p>
+*/
 public final class CommandConsolePane extends BorderPane {
     private final CommandRunner executor = new CommandRunner();
     private final ComboBox<Preset> presets = new ComboBox<>();
