@@ -90,3 +90,46 @@ jobs:
             dotnet run --project "$env:RUNNER_TEMP\csharp-practice"
             if ($LASTEXITCODE -ne 0) { throw "C# failed: $archivo" }
           }
+
+  kotlin-clients:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Install and verify Kotlin 2.2.0 compiler
+        run: |
+          curl --retry 3 -fsSL \
+            "https://github.com/JetBrains/kotlin/releases/download/v2.2.0/kotlin-compiler-2.2.0.zip" \
+            -o "$RUNNER_TEMP/kotlin-compiler.zip"
+          echo "1adb6f1a5845ba0aa5a59e412e44c8e405236b957de1a9683619f1dca3b16932  $RUNNER_TEMP/kotlin-compiler.zip" | sha256sum -c -
+          unzip -q "$RUNNER_TEMP/kotlin-compiler.zip" -d "$RUNNER_TEMP"
+          echo "$RUNNER_TEMP/kotlinc/bin" >> "$GITHUB_PATH"
+      - name: Compile and execute idiomatic Kotlin 2.2 clients
+        shell: bash
+        run: |
+          set -euo pipefail
+          base="src/main/resources/practice/kotlin"
+          for archivo in \
+            01-fundamentos/secuencias-perezosas/secuencias_perezosas.kt \
+            01-fundamentos/varianza-genericos/varianza_genericos.kt \
+            02-estructuras-datos/heap-prioridades/heap_prioridades.kt \
+            03-algoritmos/bfs-grafo/bfs_grafo.kt \
+            03-algoritmos/mochila-01/mochila_01.kt \
+            04-patrones-diseno/adapter/unidades/adapter_unidades.kt \
+            04-patrones-diseno/decorator/notificaciones/decorator_notificaciones.kt; do
+            kotlinc -jvm-target 21 "$base/$archivo" -include-runtime -d "$RUNNER_TEMP/kotlin-sample.jar"
+            java -jar "$RUNNER_TEMP/kotlin-sample.jar" >/dev/null
+          done
+          kotlinc -jvm-target 21 \
+            "$base/04-patrones-diseno/factory/basico/Factory.kt" \
+            "$base/04-patrones-diseno/factory/basico/MainFactory.kt" \
+            -include-runtime -d "$RUNNER_TEMP/factory.jar"
+          java -jar "$RUNNER_TEMP/factory.jar" >/dev/null
+          kotlinc -jvm-target 21 \
+            "$base/04-patrones-diseno/observer/basico/Observador.kt" \
+            "$base/04-patrones-diseno/observer/basico/MainObservador.kt" \
+            -include-runtime -d "$RUNNER_TEMP/observer.jar"
+          java -jar "$RUNNER_TEMP/observer.jar" >/dev/null
