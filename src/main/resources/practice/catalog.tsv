@@ -1,4 +1,4 @@
-# CodeTrace | catálogo offline v3: archivo por línea; un ejercicio puede tener varias fuentes.
+# CodeTrace | catálogo offline v4: una línea por archivo; no por ejercicio.
 c	01-fundamentos/bits-y-mascaras/bits_y_mascaras.c
 c	01-fundamentos/callbacks-y-funciones/callbacks_y_funciones.c
 c	01-fundamentos/funciones/arreglos.c
@@ -161,10 +161,10 @@ java21	03-algoritmos/grafos/componentes-fuertes/MainComponentesFuertes.java
 java21	03-algoritmos/grafos/expansion-minima/ExpansionMinima.java
 java21	03-algoritmos/grafos/expansion-minima/MainExpansionMinima.java
 java21	03-algoritmos/grafos/expansion-minima/UnionFind.java
-java21	03-algoritmos/grafos/recorridos/CaminosSinPeso.java
-java21	03-algoritmos/grafos/recorridos/MainCaminosSinPeso.java
-java21	03-algoritmos/grafos/recorridos/MainRecorridos.java
-java21	03-algoritmos/grafos/recorridos/Recorridos.java
+java21	03-algoritmos/grafos/recorridos/caminos-sin-peso/CaminosSinPeso.java
+java21	03-algoritmos/grafos/recorridos/caminos-sin-peso/MainCaminosSinPeso.java
+java21	03-algoritmos/grafos/recorridos/orden-visita/MainRecorridos.java
+java21	03-algoritmos/grafos/recorridos/orden-visita/Recorridos.java
 java21	03-algoritmos/grafos/topologico/MainTopologico.java
 java21	03-algoritmos/grafos/topologico/OrdenTopologico.java
 java21	03-algoritmos/insercion/Insercion.java

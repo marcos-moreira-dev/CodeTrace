@@ -1,4 +1,4 @@
-# Biblioteca de práctica CodeTrace — catálogo v3
+# Biblioteca de práctica CodeTrace — catálogo v4
 
 **387 archivos de referencia en 14 paquetes**, incorporados en la aplicación. Un ejercicio con varios archivos cuenta varias entradas; no confundir cantidad de archivos con cantidad de ejercicios.
 
@@ -60,15 +60,15 @@ Fuentes de orientación: los repositorios personales Estructuras-de-Datos-y-Algo
 Esta ampliación es sustancial, pero no convierte la biblioteca en un curso
 exhaustivo ni certifica todas las posibilidades del temario maestro.
 
-## Reorganización semántica v3
+## Reorganización semántica v4
 
 Todos los fuentes de práctica están ubicados al menos tres niveles por debajo del paquete: `categoría/unidad/archivo`. Los patrones y algoritmos independientes tienen carpeta propia. Se mantienen diferenciados `observer/basico/` (ejemplo mínimo) y `observer/` (ejemplo multiarchivo). La fábrica simple **no** equivale a Factory Method.
 
 **Grafos Java:** `02-estructuras-datos/grafos/tipos/` distingue dirigido/no dirigido, ponderado/no ponderado, DAG, árbol, completo, bipartito y componentes. `02-estructuras-datos/grafos/representaciones/` contrasta matriz O(V²) y lista O(V+E). En `03-algoritmos/grafos/` viven recorridos BFS/DFS y rutas por saltos, Dijkstra (pesos no negativos), Bellman–Ford (admite pesos negativos sin ciclos negativos alcanzables), Floyd–Warshall (todos los pares), Prim, Kruskal, Union-Find y orden topológico. **MST y caminos mínimos resuelven problemas diferentes.**
 
-Los comentarios conceptuales más completos están en los clientes; no se traslada código original de GitHub de forma indiscriminada. La migración exacta de los archivos originales se registra en `docs/MAPA-REORGANIZACION-BIBLIOTECA-V3.tsv`.
+Los comentarios conceptuales más completos están en los clientes; no se traslada código original de GitHub de forma indiscriminada. La migración exacta de los archivos originales se registra en `docs/MAPA-REORGANIZACION-BIBLIOTECA-V4.tsv`.
 
-La caché cambia de `v2` a `v3` para no mezclar referencias antiguas con las nuevas. Las copias `v2` del usuario y sus sesiones existentes **no se eliminan**. Esta rama continúa siendo un borrador sujeto a QA.
+La caché cambia a `v4` para no mezclar referencias antiguas con las nuevas. Las copias `v2`/`v3` del usuario y sus sesiones existentes **no se eliminan**. Esta rama continúa siendo un borrador sujeto a QA.
 
 ### Grafos: comparación entre lenguajes
 

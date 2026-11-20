@@ -194,7 +194,7 @@ opacidad, el modo Turbo, los filtros y las estadísticas funcionan igual que en
 los repositorios externos. El contenido original siempre permanece inmutable.
 
 Las plantillas se empaquetan dentro del JAR y, al abrirse, se materializan
-de forma determinista en `~/.codetrace/practice-library/v3/`. No hay conexión,
+de forma determinista en `~/.codetrace/practice-library/v4/`. No hay conexión,
 plugin o descarga de terceros. **Guarda tu progreso en una sesión `.ctrace`**
 para continuarlo después. Los packs se basan en ejemplos originales de
 mecanografía y no en ejercicios evaluados automáticamente.

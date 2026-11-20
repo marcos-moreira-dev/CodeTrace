@@ -240,4 +240,4 @@ for archivo in \
   node "$destino/$js" >/dev/null
 done
 
-echo "OK: catálogo v3, 14 lenguajes y casos de grafos comprobados"
+echo "OK: catálogo v4, 14 lenguajes y casos de grafos comprobados"

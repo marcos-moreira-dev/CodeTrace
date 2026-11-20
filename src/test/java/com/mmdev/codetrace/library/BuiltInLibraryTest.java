@@ -110,7 +110,7 @@ class BuiltInLibraryTest {
     @Test
     void allFourCurriculumPurposesAndDocumentedJavaClientsArePresent() throws Exception {
         var library = new BuiltInLibrary(temp.resolve("curriculum"));
-        assertEquals("v3", BuiltInLibrary.CATALOG_VERSION);
+        assertEquals("v4", BuiltInLibrary.CATALOG_VERSION);
         assertEquals(387, library.packs().stream().mapToInt(library::size).sum());
         for (var pack : library.packs()) {
             var entries = library.entries(pack);

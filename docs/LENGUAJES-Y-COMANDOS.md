@@ -26,6 +26,6 @@ Para .NET 8 se puede usar un proyecto temporal creado con `dotnet new console`, 
 Se conservan ejemplos existentes siempre que puedan verificarse; al mejorar una cabecera actualizar la ruta y el contrato. Los comandos no se ejecutan automáticamente desde CodeTrace.
 
 
-## Convención de rutas v3
+## Convención de rutas v4
 
 Los comandos referenciales se leen desde la raíz del paquete de lenguaje y deben apuntar al archivo dentro de su **carpeta de unidad**. Para proyectos multiarchivo, compilar todas las fuentes de la unidad. La estructura de carpetas no modifica los estándares de compilación: Java 21, C17, C++20, TypeScript 5.9, etc. Las referencias son material de estudio; CodeTrace no ejecuta los comandos automáticamente.
