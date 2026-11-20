@@ -374,7 +374,7 @@ public final class CodeTraceApp extends Application {
         onlySelectedFolder.setDisable(true);
         onlySelectedFolder.setOnAction(event -> {
             if (syncingFolderScope) return;
-            var selected = tree.getSelectionModel().getSelectedItem();
+            var selected = tree.selectedExplorerItem();
             if (onlySelectedFolder.isSelected() && selected != null
                     && tree.isFolderPath(selected.getValue())) {
                 setProgressFolder(tree.relativePath(selected.getValue()));
@@ -389,23 +389,24 @@ public final class CodeTraceApp extends Application {
                 "No contabilizar la carpeta seleccionada; sus archivos siguen disponibles"));
         excludeSelectedFolder.setOnAction(event -> {
             if (syncingExclusion || reference == null) return;
-            var selected = tree.getSelectionModel().getSelectedItem();
+            var selected = tree.selectedExplorerItem();
             if (selected == null || selected.getValue() == null
                     || !tree.isFolderPath(selected.getValue())) return;
             String relative = tree.relativePath(selected.getValue());
             if (relative.isEmpty()) return;
             changeFolderExclusion(relative, excludeSelectedFolder.isSelected());
         });
+        Runnable updateExplorerSelection = () -> {
+            var selected = tree.selectedExplorerItem();
+            updateSelectedFolderExclusion();
+            boolean folder = selected != null && tree.isFolderPath(selected.getValue());
+            onlySelectedFolder.setDisable(!folder && !onlySelectedFolder.isSelected());
+            if (folder && onlySelectedFolder.isSelected())
+                setProgressFolder(tree.relativePath(selected.getValue()));
+        };
         tree.getSelectionModel().selectedItemProperty().addListener(
-                (obs, before, selected) -> {
-                    updateSelectedFolderExclusion();
-                    boolean folder = selected != null
-                            && tree.isFolderPath(selected.getValue());
-                    onlySelectedFolder.setDisable(!folder && !onlySelectedFolder.isSelected());
-                    if (folder && onlySelectedFolder.isSelected()) {
-                        setProgressFolder(tree.relativePath(selected.getValue()));
-                    }
-                });
+                (obs, before, selected) -> updateExplorerSelection.run());
+        tree.setOnProjectedSelectionChanged(updateExplorerSelection);
         ProgressIndicator treeActivity = new ProgressIndicator();
         treeActivity.setMaxSize(16, 16);
         treeActivity.setMinSize(16, 16);
@@ -453,8 +454,13 @@ public final class CodeTraceApp extends Application {
         FlowPane optionsRow = new FlowPane(13, 5,
                 onlySelectedFolder, excludeSelectedFolder);
         optionsRow.getStyleClass().add("tree-options-row");
-        VBox mainContent = new VBox(header, searchRow, optionsRow, tree);
-        VBox.setVgrow(tree, Priority.ALWAYS);
+        // The legacy TreeView handles short/manual navigation; the logical
+        // projection uses a ListView VirtualFlow only for mass expansion.
+        // Both share the same reference index without duplicating file bytes.
+        StackPane explorerHost = new StackPane(tree, tree.projectedExplorer());
+        explorerHost.getStyleClass().add("reference-explorer-host");
+        VBox mainContent = new VBox(header, searchRow, optionsRow, explorerHost);
+        VBox.setVgrow(explorerHost, Priority.ALWAYS);
         mainContent.getStyleClass().add("main-project-section");
         mainFolderPane = new TitledPane("Proyecto principal", mainContent);
         mainFolderPane.setCollapsible(true);
@@ -1037,7 +1043,7 @@ public final class CodeTraceApp extends Application {
             showGraphNotice("Abre primero un proyecto de referencia.");
             return;
         }
-        var item = tree.getSelectionModel().getSelectedItem();
+        var item = tree.selectedExplorerItem();
         if (item == null || item.getValue() == null
                 || !tree.isFolderPath(item.getValue())) {
             showGraphNotice("Selecciona una carpeta en el explorador antes de crear el mapa.");
@@ -1483,7 +1489,7 @@ public final class CodeTraceApp extends Application {
     /** Inherited exclusion is visible but cannot be changed on a child. */
     private void updateSelectedFolderExclusion() {
         if (excludeSelectedFolder == null) return;
-        var selected = tree.getSelectionModel().getSelectedItem();
+        var selected = tree.selectedExplorerItem();
         boolean folder = selected != null && selected.getValue() != null
                 && tree.isFolderPath(selected.getValue());
         String relative = folder ? tree.relativePath(selected.getValue()) : "";
@@ -1518,8 +1524,8 @@ public final class CodeTraceApp extends Application {
                                 + "\nLas demás carpetas se atenúan, pero siguen accesibles."
                                 + "\nSelecciona otra carpeta para cambiar el ámbito."));
                 onlySelectedFolder.setDisable(progressFolder.isEmpty()
-                        && !tree.isFolderPath(tree.getSelectionModel().getSelectedItem() == null
-                            ? null : tree.getSelectionModel().getSelectedItem().getValue()));
+                        && !tree.isFolderPath(tree.selectedExplorerItem() == null
+                            ? null : tree.selectedExplorerItem().getValue()));
             } finally {
                 syncingFolderScope = false;
             }
