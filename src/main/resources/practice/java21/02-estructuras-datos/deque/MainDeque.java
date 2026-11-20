@@ -26,6 +26,5 @@ public final class MainDeque {
 /*
  * Salida esperada de consola:
  *   Operaciones en ambos extremos OK
- *   (los valores variables completan los fragmentos anteriores)
- * Verificacion: termina sin excepciones inesperadas.
+ * El cliente extrae A por el principio, C por el final y luego B.
  */

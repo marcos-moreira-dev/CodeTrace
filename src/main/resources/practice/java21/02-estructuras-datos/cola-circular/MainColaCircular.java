@@ -28,6 +28,5 @@ public final class MainColaCircular {
 /*
  * Salida esperada de consola:
  *   FIFO y wrap-around verificados
- *   (los valores variables completan los fragmentos anteriores)
- * Verificacion: termina sin excepciones inesperadas.
+ * Se validan las extracciones 10, 20, 30, 40, pero solo se imprime esa línea.
  */

@@ -34,8 +34,8 @@ public final class MainRepresentaciones {
 
 /*
  * Salida esperada de consola:
- *   Matriz 0-2: 
- *   Lista 0-2: 
- *   (los valores variables completan los fragmentos anteriores)
- * Verificacion: termina sin excepciones inesperadas.
+ *   Matriz 0-2: true
+ *   Lista 0-2: true
+ *   Vecinos de 2: [0, 3]
+ * Ambas representaciones modelan el mismo grafo no dirigido.
  */

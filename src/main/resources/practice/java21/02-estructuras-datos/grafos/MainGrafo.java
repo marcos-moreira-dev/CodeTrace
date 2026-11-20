@@ -25,8 +25,7 @@ public final class MainGrafo {
 
 /*
  * Salida esperada de consola:
- *   Vecinos de A: 
- *   Vecinos de B: 
- *   (los valores variables completan los fragmentos anteriores)
- * Verificacion: termina sin excepciones inesperadas.
+ *   Vecinos de A: [B, C]
+ *   Vecinos de B: [D]
+ * Las aristas son dirigidas: conectar A→B no crea B→A.
  */

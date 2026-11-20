@@ -53,8 +53,10 @@ public final class MainTiposGrafo {
 
 /*
  * Salida esperada de consola:
- *   Dirigido acíclico (DAG): 
- *   Después de introducir un ciclo: 
- *   (los valores variables completan los fragmentos anteriores)
- * Verificacion: termina sin excepciones inesperadas.
+ *   Dirigido acíclico (DAG): true
+ *   Después de introducir un ciclo: false
+ *   Árbol=true, bipartito=true, componentes=1
+ *   Tras agregar un vértice aislado, componentes=2
+ *   Triángulo completo=true, bipartito=false
+ * El ciclo invalida un DAG; el vértice aislado crea otra componente.
  */
