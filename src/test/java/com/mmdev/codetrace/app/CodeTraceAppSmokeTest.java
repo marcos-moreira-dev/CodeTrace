@@ -359,6 +359,19 @@ class CodeTraceAppSmokeTest {
                         "Radio choices must be stacked vertically");
                 assertEquals(2, ((javafx.scene.layout.VBox) choices)
                         .getChildren().size());
+                // The active navigation category must contrast with the
+                // pale sidebar in both text and its associated vector icon.
+                javafx.scene.control.ListCell<?> selectedCategory =
+                        preferencesNavigation.lookupAll(".list-cell").stream()
+                        .filter(node -> node instanceof javafx.scene.control.ListCell<?> cell
+                                && "Grafo".equals(cell.getItem()))
+                        .map(node -> (javafx.scene.control.ListCell<?>) node)
+                        .findFirst().orElseThrow();
+                assertEquals(javafx.scene.paint.Color.WHITE,
+                        selectedCategory.getTextFill());
+                assertTrue(selectedCategory.getGraphic() instanceof FontIcon);
+                assertEquals(javafx.scene.paint.Color.WHITE,
+                        ((FontIcon) selectedCategory.getGraphic()).getIconColor());
                 preferencesNavigation.getSelectionModel().select("Avisos");
                 preferences.getScene().getRoot().applyCss();
                 preferences.getScene().getRoot().layout();
