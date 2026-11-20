@@ -13,6 +13,23 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Block accidental unlicensed or snapshot releases
+        if: startsWith(github.ref, 'refs/tags/v')
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import os
+          from pathlib import Path
+          import xml.etree.ElementTree as ET
+          project = ET.parse("pom.xml").getroot()
+          version = project.findtext("{http://maven.apache.org/POM/4.0.0}version")
+          tag = os.environ["GITHUB_REF_NAME"]
+          if not Path("LICENSE").is_file() or not Path("LICENSE").read_text().strip():
+              raise SystemExit("A release tag requires a reviewed LICENSE file.")
+          if version is None or "SNAPSHOT" in version or tag != f"v{version}":
+              raise SystemExit(f"Release tag {tag} differs from Maven version {version}.")
+          print(f"Release metadata matches {tag}.")
+          PY
       - name: Eclipse Temurin JDK 21 and Maven toolchain
         uses: actions/setup-java@v4
         with:
