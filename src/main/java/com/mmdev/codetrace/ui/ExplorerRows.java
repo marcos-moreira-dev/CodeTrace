@@ -1,6 +1,7 @@
 package com.mmdev.codetrace.ui;
 
 import com.mmdev.codetrace.reference.ReferenceTreeIndex;
+import com.mmdev.codetrace.reference.PerformanceProbe;
 import com.mmdev.codetrace.workspace.VirtualChildrenIndex;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -35,6 +36,7 @@ public final class ExplorerRows {
 
     public static Result project(ReferenceTreeIndex index, VirtualChildrenIndex virtual,
                                  Set<String> expanded, Set<String> filter) {
+        long started = PerformanceProbe.begin();
         Objects.requireNonNull(index);
         Objects.requireNonNull(virtual);
         Objects.requireNonNull(expanded);
@@ -65,6 +67,7 @@ public final class ExplorerRows {
             for (int i = ordered.size() - 1; i >= 0; i--)
                 pending.add(new Pending(ordered.get(i), current.depth() + 1));
         }
+        PerformanceProbe.finish("explorer-projection", started, rows.size());
         return new Result(List.copyOf(rows), truncated);
     }
 }
