@@ -35,6 +35,8 @@ public final class GraphLayoutEngine {
 
     public static Map<String, GraphLayout.Point> arrange(
             ProjectDependencyGraph.Graph graph, Mode mode) {
+        long started = PerformanceProbe.begin();
+        Map<String, GraphLayout.Point> result;
         if (mode == Mode.GRID) {
             Map<String, GraphLayout.Point> grid = new LinkedHashMap<>();
             for (int i = 0; i < graph.nodes().size(); i++) {
@@ -42,9 +44,13 @@ public final class GraphLayoutEngine {
                         130 + (i % 4) * GRID_COLUMN,
                         130 + (i / 4) * GRID_ROW));
             }
-            return Map.copyOf(grid);
+            result = Map.copyOf(grid);
+        } else {
+            result = organized(graph);
         }
-        return organized(graph);
+        PerformanceProbe.finish(mode == Mode.GRID ? "graph-grid" : "graph-organized",
+                started, graph.nodes().size());
+        return result;
     }
 
     private static Map<String, GraphLayout.Point> organized(ProjectDependencyGraph.Graph graph) {
