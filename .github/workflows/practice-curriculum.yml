@@ -184,7 +184,7 @@ jobs:
             01-fundamentos/excepciones-personalizadas \
             02-estructuras-datos/pila \
             02-estructuras-datos/cola-circular \
-            02-estructuras-datos/lista-simple \
+            02-estructuras-datos/linked-list/simple \
             02-estructuras-datos/arbol-bst \
             02-estructuras-datos/tabla-hash \
             02-estructuras-datos/grafos/representacion \
