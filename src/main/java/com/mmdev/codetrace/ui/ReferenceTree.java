@@ -480,7 +480,7 @@ public final class ReferenceTree extends TreeView<Path> {
         }
     }
 
-    public VirtualExplorerView projectedExplorer() { return projectedView; }
+    public javafx.scene.Node projectedExplorer() { return projectedView; }
 
     public TreeItem<Path> selectedExplorerItem() {
         if (!projectionVisible) return getSelectionModel().getSelectedItem();
