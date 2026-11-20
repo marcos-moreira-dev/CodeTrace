@@ -39,6 +39,27 @@ class ReferenceCatalogueTest {
     }
 
     @Test
+    void mediaAndOversizedSourcesDoNotGetContentFingerprints() throws Exception {
+        byte[] media = new byte[4096];
+        java.util.Arrays.fill(media, (byte) 23);
+        Files.write(folder.resolve("song.mp3"), media);
+        Files.write(folder.resolve("movie.mkv"), new byte[8192]);
+        Files.write(folder.resolve("TooLarge.java"), new byte[2 * 1024 * 1024 + 1]);
+        Files.write(folder.resolve("Invalid.java"), new byte[] { (byte) 0xFF });
+        Files.writeString(folder.resolve("Valid.java"), "class Valid { }");
+
+        var catalogue = ReferenceCatalogue.scan(folder);
+        for (String excluded : java.util.List.of(
+                "song.mp3", "movie.mkv", "TooLarge.java", "Invalid.java")) {
+            assertFalse(catalogue.files().get(excluded).typeable(), excluded);
+            assertEquals("", catalogue.files().get(excluded).sha256(), excluded);
+        }
+        assertEquals(ReferenceFingerprint.sha256(folder.resolve("Valid.java")),
+                catalogue.files().get("Valid.java").sha256());
+        assertEquals(15, catalogue.files().get("Valid.java").typeableUnits());
+    }
+
+    @Test
     void onlySourceFilesCountUnlessOtherCategoriesAreEnabled() throws Exception {
         Files.writeString(folder.resolve("App.java"), "abc");
         Files.writeString(folder.resolve("README.md"), "mucho texto");
