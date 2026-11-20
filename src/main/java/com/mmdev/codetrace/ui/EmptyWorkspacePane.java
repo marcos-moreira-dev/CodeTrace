@@ -47,7 +47,7 @@ public final class EmptyWorkspacePane extends StackPane {
             logo.setPreserveRatio(true);
             logo.setSmooth(true);
             // Keep the official monochrome artwork as a subtle watermark.
-            logo.setOpacity(0.32);
+            logo.setOpacity(0.27);
             logo.setMouseTransparent(true);
             logo.setAccessibleText("Logotipo monocromático oficial de CodeTrace");
             logo.getStyleClass().add("empty-workspace-logo");
