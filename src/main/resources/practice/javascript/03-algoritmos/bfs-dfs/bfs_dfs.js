@@ -1,6 +1,6 @@
 // CodeTrace | Referencia: JavaScript ES2022 / Node.js 24
-// Comprobar: node --check ".\03-algoritmos\bfs_dfs.js"
-// Ejecutar: node ".\03-algoritmos\bfs_dfs.js"
+// Comprobar: node --check ".\03-algoritmos\bfs-dfs\bfs_dfs.js"
+// Ejecutar: node ".\03-algoritmos\bfs-dfs\bfs_dfs.js"
 
 /**
  * Cliente de búsqueda en anchura (BFS) y profundidad (DFS).

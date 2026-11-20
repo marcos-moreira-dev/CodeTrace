@@ -1,6 +1,6 @@
 // CodeTrace | Referencia: JavaScript ES2022 / Node.js 24
-// Compilar/Comprobar: node --check ARCHIVO.js
-// Ejecutar: node ARCHIVO.js
+// Compilar/Comprobar: node --check 03-algoritmos/cuatro-reinas/cuatro_reinas.js
+// Ejecutar: node 03-algoritmos/cuatro-reinas/cuatro_reinas.js
 
 /**
  * Cliente de backtracking para cuatro reinas.

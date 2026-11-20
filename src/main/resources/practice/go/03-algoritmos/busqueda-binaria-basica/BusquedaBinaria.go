@@ -1,6 +1,6 @@
 // CodeTrace | Referencia: Go 1.24.
 // Desde PowerShell en una COPIA del paquete:
-// Compilar y ejecutar: go run '.\03-algoritmos\BusquedaBinaria.go'
+// Compilar y ejecutar: go run '.\03-algoritmos\busqueda-binaria-basica\BusquedaBinaria.go'
 
 package main
 import "fmt"

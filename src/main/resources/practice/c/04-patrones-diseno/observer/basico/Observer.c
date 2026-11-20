@@ -1,6 +1,6 @@
 // CodeTrace | Referencia: C17, GCC 13+.
 // Desde PowerShell en una COPIA del paquete:
-// Compilar: gcc -std=c17 -Wall -Wextra '.\04-patrones-diseno\Observer.c' -o "$env:TEMP\codetrace-c.exe"
+// Compilar: gcc -std=c17 -Wall -Wextra '.\04-patrones-diseno\observer\basico\Observer.c' -o "$env:TEMP\codetrace-c.exe"
 // Ejecutar: & "$env:TEMP\codetrace-c.exe"
 
 #include <stdio.h>

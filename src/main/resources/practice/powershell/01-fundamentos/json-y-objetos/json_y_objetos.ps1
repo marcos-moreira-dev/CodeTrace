@@ -1,6 +1,6 @@
 # CodeTrace | Referencia: PowerShell 7.4
-# Comprobar: pwsh -NoProfile -File ".\01-fundamentos\json_y_objetos.ps1"
-# Ejecutar: pwsh -NoProfile -File ".\01-fundamentos\json_y_objetos.ps1"
+# Comprobar: pwsh -NoProfile -File ".\01-fundamentos\json-y-objetos\json_y_objetos.ps1"
+# Ejecutar: pwsh -NoProfile -File ".\01-fundamentos\json-y-objetos\json_y_objetos.ps1"
 
 <#
 Cliente de JSON, PSCustomObject y objetos del pipeline.

@@ -1,6 +1,6 @@
 # CodeTrace | Referencia: Python 3.12
-# Comprobar en PowerShell: python -m py_compile ".\03-algoritmos\merge_sort.py"
-# Ejecutar: python -B ".\03-algoritmos\merge_sort.py"
+# Comprobar en PowerShell: python -m py_compile ".\03-algoritmos\merge-sort\merge_sort.py"
+# Ejecutar: python -B ".\03-algoritmos\merge-sort\merge_sort.py"
 
 """Cliente de Merge Sort: dividir, resolver y combinar.
 

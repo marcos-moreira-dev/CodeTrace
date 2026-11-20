@@ -1,6 +1,6 @@
 // CodeTrace | Referencia: JavaScript ES2022 / Node.js 24
-// Comprobar: node --check ".\03-algoritmos\mochila_01.js"
-// Ejecutar: node ".\03-algoritmos\mochila_01.js"
+// Comprobar: node --check ".\03-algoritmos\mochila-01\mochila_01.js"
+// Ejecutar: node ".\03-algoritmos\mochila-01\mochila_01.js"
 
 /**
  * Cliente de mochila 0/1 y subproblemas de programación dinámica.

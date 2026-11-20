@@ -1,6 +1,6 @@
 # CodeTrace | Referencia: POSIX sh (Linux/WSL)
-# Comprobar: sh -n ".\01-fundamentos/argumentos_getopts.sh"
-# Ejecutar: sh ".\01-fundamentos/argumentos_getopts.sh"
+# Comprobar: sh -n ".\01-fundamentos/argumentos-getopts/argumentos_getopts.sh"
+# Ejecutar: sh ".\01-fundamentos/argumentos-getopts/argumentos_getopts.sh"
 
 #!/bin/sh
 # Cliente de argumentos, funciones y getopts POSIX.

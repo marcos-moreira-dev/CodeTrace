@@ -1,6 +1,6 @@
 // CodeTrace | Referencia: TypeScript 5.9 / ES2022 / Node 24
-// Compilar/Comprobar: tsc --strict --target ES2022 --module commonjs --noEmit ARCHIVO.ts
-// Ejecutar: tsc --strict --target ES2022 --module commonjs --outDir dist ARCHIVO.ts; node dist/ARCHIVO.js
+// Compilar/Comprobar: tsc --strict --target ES2022 --module commonjs --noEmit 01-fundamentos/genericos-y-comparadores/genericos_y_comparadores.ts
+// Ejecutar: tsc --strict --target ES2022 --module commonjs --outDir dist 01-fundamentos/genericos-y-comparadores/genericos_y_comparadores.ts; node dist/ARCHIVO.js
 
 /**
  * Cliente de genéricos y funciones de comparación.

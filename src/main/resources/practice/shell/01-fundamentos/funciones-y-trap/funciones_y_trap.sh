@@ -1,6 +1,6 @@
 # CodeTrace | Referencia: POSIX sh (Linux/WSL)
-# Comprobar: sh -n ARCHIVO.sh
-# Ejecutar: sh ARCHIVO.sh
+# Comprobar: sh -n 01-fundamentos/funciones-y-trap/funciones_y_trap.sh
+# Ejecutar: sh 01-fundamentos/funciones-y-trap/funciones_y_trap.sh
 
 #!/bin/sh
 # Cliente de funciones, estado de salida y limpieza de recursos.

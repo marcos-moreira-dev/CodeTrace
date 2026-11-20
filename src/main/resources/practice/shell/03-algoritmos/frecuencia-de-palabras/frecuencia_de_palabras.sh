@@ -1,6 +1,6 @@
 # CodeTrace | Referencia: POSIX sh (Linux/WSL)
-# Comprobar: sh -n ARCHIVO.sh
-# Ejecutar: sh ARCHIVO.sh
+# Comprobar: sh -n 03-algoritmos/frecuencia-de-palabras/frecuencia_de_palabras.sh
+# Ejecutar: sh 03-algoritmos/frecuencia-de-palabras/frecuencia_de_palabras.sh
 
 #!/bin/sh
 # Cliente de procesamiento de texto con tuberías POSIX.

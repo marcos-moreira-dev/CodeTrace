@@ -1,5 +1,5 @@
 // CodeTrace | Referencia: C++20 / GCC 13+
-// Compilar/Comprobar: g++ -std=c++20 -Wall -Wextra ARCHIVO.cpp -o app.exe
+// Compilar/Comprobar: g++ -std=c++20 -Wall -Wextra 03-algoritmos/busqueda-binaria-stl/busqueda_binaria_stl.cpp -o app.exe
 // Ejecutar: ./app.exe
 
 #include <algorithm>

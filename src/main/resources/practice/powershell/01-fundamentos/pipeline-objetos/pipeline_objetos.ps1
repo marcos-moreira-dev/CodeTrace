@@ -1,6 +1,6 @@
 # CodeTrace | Referencia: PowerShell 7.4
-# Comprobar: pwsh -NoProfile -File ARCHIVO.ps1
-# Ejecutar: pwsh -NoProfile -File ARCHIVO.ps1
+# Comprobar: pwsh -NoProfile -File 01-fundamentos/pipeline-objetos/pipeline_objetos.ps1
+# Ejecutar: pwsh -NoProfile -File 01-fundamentos/pipeline-objetos/pipeline_objetos.ps1
 
 <#
 Cliente de filtrado y ordenamiento del pipeline de PowerShell.

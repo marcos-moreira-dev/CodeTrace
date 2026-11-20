@@ -1,6 +1,6 @@
 # CodeTrace | Referencia: POSIX sh (Linux/WSL)
-# Comprobar: sh -n ".\03-algoritmos/seleccion_registros.sh"
-# Ejecutar: sh ".\03-algoritmos/seleccion_registros.sh"
+# Comprobar: sh -n ".\03-algoritmos/seleccion-registros/seleccion_registros.sh"
+# Ejecutar: sh ".\03-algoritmos/seleccion-registros/seleccion_registros.sh"
 
 #!/bin/sh
 # Cliente de procesamiento secuencial de registros.

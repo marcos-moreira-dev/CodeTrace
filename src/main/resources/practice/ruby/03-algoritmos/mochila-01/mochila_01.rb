@@ -1,6 +1,6 @@
 # CodeTrace | Referencia: Ruby 3.3
-# Comprobar: ruby -c ".\03-algoritmos\mochila_01.rb"
-# Ejecutar: ruby ".\03-algoritmos\mochila_01.rb"
+# Comprobar: ruby -c ".\03-algoritmos\mochila-01\mochila_01.rb"
+# Ejecutar: ruby ".\03-algoritmos\mochila-01\mochila_01.rb"
 
 # Cliente de programación dinámica para mochila 0/1.
 #

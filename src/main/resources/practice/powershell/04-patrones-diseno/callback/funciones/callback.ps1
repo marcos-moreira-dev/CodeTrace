@@ -1,6 +1,6 @@
 # CodeTrace | Referencia: PowerShell 7.4.
 # En una COPIA del paquete, desde PowerShell o shell indicado:
-# Ejecutar: pwsh -NoProfile -File '.\04-patrones-diseno\callback.ps1'
+# Ejecutar: pwsh -NoProfile -File '.\04-patrones-diseno\callback\funciones\callback.ps1'
 
 function Invoke-Cambio {
     param([int]$Valor, [scriptblock]$Escucha)

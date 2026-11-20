@@ -1,7 +1,7 @@
 # CodeTrace | Referencia: Ruby 3.3.
 # Desde PowerShell en una COPIA del paquete:
-# Comprobar sintaxis: ruby -c '.\03-algoritmos\euclides.rb'
-# Ejecutar: ruby '.\03-algoritmos\euclides.rb'
+# Comprobar sintaxis: ruby -c '.\03-algoritmos\euclides\euclides.rb'
+# Ejecutar: ruby '.\03-algoritmos\euclides\euclides.rb'
 
 def mcd(a, b)
   until b.zero?

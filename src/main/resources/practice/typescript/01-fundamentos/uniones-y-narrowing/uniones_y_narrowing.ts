@@ -1,6 +1,6 @@
 // CodeTrace | Referencia: TypeScript 5.9 / ES2022 / Node 24
-// Compilar/Comprobar: tsc --strict --target ES2022 --module commonjs --noEmit ARCHIVO.ts
-// Ejecutar: tsc --strict --target ES2022 --module commonjs --outDir dist ARCHIVO.ts; node dist/ARCHIVO.js
+// Compilar/Comprobar: tsc --strict --target ES2022 --module commonjs --noEmit 01-fundamentos/uniones-y-narrowing/uniones_y_narrowing.ts
+// Ejecutar: tsc --strict --target ES2022 --module commonjs --outDir dist 01-fundamentos/uniones-y-narrowing/uniones_y_narrowing.ts; node dist/ARCHIVO.js
 
 /**
  * Cliente de tipos unión discriminados y narrowing.

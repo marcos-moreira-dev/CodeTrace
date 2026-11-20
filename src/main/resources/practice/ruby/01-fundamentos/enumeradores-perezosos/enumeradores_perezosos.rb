@@ -1,6 +1,6 @@
 # CodeTrace | Referencia: Ruby 3.3
-# Comprobar: ruby -c ".\01-fundamentos\enumeradores_perezosos.rb"
-# Ejecutar: ruby ".\01-fundamentos\enumeradores_perezosos.rb"
+# Comprobar: ruby -c ".\01-fundamentos\enumeradores-perezosos\enumeradores_perezosos.rb"
+# Ejecutar: ruby ".\01-fundamentos\enumeradores-perezosos\enumeradores_perezosos.rb"
 
 # Cliente de Enumerator::Lazy y evaluación bajo demanda.
 #

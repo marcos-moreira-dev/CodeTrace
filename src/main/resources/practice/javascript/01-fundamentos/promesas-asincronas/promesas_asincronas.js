@@ -1,6 +1,6 @@
 // CodeTrace | Referencia: JavaScript ES2022 / Node.js 24
-// Comprobar: node --check ".\01-fundamentos\promesas_asincronas.js"
-// Ejecutar: node ".\01-fundamentos\promesas_asincronas.js"
+// Comprobar: node --check ".\01-fundamentos\promesas-asincronas\promesas_asincronas.js"
+// Ejecutar: node ".\01-fundamentos\promesas-asincronas\promesas_asincronas.js"
 
 /**
  * Cliente de Promise.all y errores asíncronos.

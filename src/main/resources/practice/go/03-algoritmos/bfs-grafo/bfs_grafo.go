@@ -1,6 +1,6 @@
 // CodeTrace | Referencia: Go 1.24
-// Comprobar: go run ".\03-algoritmos\bfs_grafo.go"
-// Ejecutar: go run ".\03-algoritmos\bfs_grafo.go"
+// Comprobar: go run ".\03-algoritmos\bfs-grafo\bfs_grafo.go"
+// Ejecutar: go run ".\03-algoritmos\bfs-grafo\bfs_grafo.go"
 
 package main
 import "fmt"

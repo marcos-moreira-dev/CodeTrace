@@ -1,5 +1,5 @@
 // CodeTrace | Referencia: C++20 / GCC 13+
-// Compilar/Comprobar: g++ -std=c++20 -Wall -Wextra ARCHIVO.cpp -o app.exe
+// Compilar/Comprobar: g++ -std=c++20 -Wall -Wextra 01-fundamentos/lambdas-y-stl/lambdas_y_stl.cpp -o app.exe
 // Ejecutar: ./app.exe
 
 #include <algorithm>

@@ -1,6 +1,6 @@
 // CodeTrace | Referencia: TypeScript 5.9 / ES2022 / Node.js 24
-// Comprobar (PowerShell, copia del paquete): tsc --strict --target ES2022 --module commonjs --noEmit '.\03-algoritmos\cuatro_reinas.ts'
-// Ejecutar: tsc --strict --target ES2022 --module commonjs --outDir "$env:TEMP\ct-ts" '.\03-algoritmos\cuatro_reinas.ts'; node "$env:TEMP\ct-ts\cuatro_reinas.js"
+// Comprobar (PowerShell, copia del paquete): tsc --strict --target ES2022 --module commonjs --noEmit '.\03-algoritmos\cuatro-reinas\cuatro_reinas.ts'
+// Ejecutar: tsc --strict --target ES2022 --module commonjs --outDir "$env:TEMP\ct-ts" '.\03-algoritmos\cuatro-reinas\cuatro_reinas.ts'; node "$env:TEMP\ct-ts\cuatro_reinas.js"
 
 /**
  * Cliente de backtracking con cuatro reinas.

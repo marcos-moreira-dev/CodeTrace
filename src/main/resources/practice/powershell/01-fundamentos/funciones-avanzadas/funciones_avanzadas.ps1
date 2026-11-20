@@ -1,6 +1,6 @@
 # CodeTrace | Referencia: PowerShell 7.4
-# Comprobar: pwsh -NoProfile -File ARCHIVO.ps1
-# Ejecutar: pwsh -NoProfile -File ARCHIVO.ps1
+# Comprobar: pwsh -NoProfile -File 01-fundamentos/funciones-avanzadas/funciones_avanzadas.ps1
+# Ejecutar: pwsh -NoProfile -File 01-fundamentos/funciones-avanzadas/funciones_avanzadas.ps1
 
 <#
 Cliente de parámetros tipados, validación y funciones avanzadas.

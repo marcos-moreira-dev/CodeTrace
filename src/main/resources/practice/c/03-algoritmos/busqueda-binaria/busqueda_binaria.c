@@ -1,5 +1,5 @@
 /* CodeTrace | Referencia: C17 / GCC 13+
- * Compilar: gcc -std=c17 -Wall -Wextra ARCHIVO.c -o "$env:TEMP\ct-ejemplo.exe"
+ * Compilar: gcc -std=c17 -Wall -Wextra 03-algoritmos/busqueda-binaria/busqueda_binaria.c -o "$env:TEMP\ct-ejemplo.exe"
  * Ejecutar: & "$env:TEMP\ct-ejemplo.exe"
  */
 

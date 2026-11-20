@@ -1,6 +1,6 @@
 // CodeTrace | Referencia: Go 1.24
-// Comprobar: go run ".\02-estructuras-datos\heap_minimo.go"
-// Ejecutar: go run ".\02-estructuras-datos\heap_minimo.go"
+// Comprobar: go run ".\02-estructuras-datos\heap-minimo\heap_minimo.go"
+// Ejecutar: go run ".\02-estructuras-datos\heap-minimo\heap_minimo.go"
 
 package main
 import (

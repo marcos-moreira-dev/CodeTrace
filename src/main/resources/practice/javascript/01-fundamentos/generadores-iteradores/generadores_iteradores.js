@@ -1,6 +1,6 @@
 // CodeTrace | Referencia: JavaScript ES2022 / Node.js 24
-// Comprobar: node --check ".\01-fundamentos\generadores_iteradores.js"
-// Ejecutar: node ".\01-fundamentos\generadores_iteradores.js"
+// Comprobar: node --check ".\01-fundamentos\generadores-iteradores\generadores_iteradores.js"
+// Ejecutar: node ".\01-fundamentos\generadores-iteradores\generadores_iteradores.js"
 
 /**
  * Cliente de iteradores y funciones generadoras.

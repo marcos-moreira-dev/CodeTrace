@@ -1,7 +1,7 @@
 # CodeTrace | Referencia: Ruby 3.3.
 # Desde PowerShell en una COPIA del paquete:
-# Comprobar sintaxis: ruby -c '.\04-patrones-diseno\observador.rb'
-# Ejecutar: ruby '.\04-patrones-diseno\observador.rb'
+# Comprobar sintaxis: ruby -c '.\04-patrones-diseno\observer\basico\observador.rb'
+# Ejecutar: ruby '.\04-patrones-diseno\observer\basico\observador.rb'
 
 class Emisor
   def initialize

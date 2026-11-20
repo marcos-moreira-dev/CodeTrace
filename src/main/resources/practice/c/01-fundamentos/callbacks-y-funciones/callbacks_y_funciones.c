@@ -1,5 +1,5 @@
 /* CodeTrace | Referencia: C17 / GCC 13+
- * Compilar: gcc -std=c17 -Wall -Wextra ARCHIVO.c -o "$env:TEMP\ct-ejemplo.exe"
+ * Compilar: gcc -std=c17 -Wall -Wextra 01-fundamentos/callbacks-y-funciones/callbacks_y_funciones.c -o "$env:TEMP\ct-ejemplo.exe"
  * Ejecutar: & "$env:TEMP\ct-ejemplo.exe"
  */
 

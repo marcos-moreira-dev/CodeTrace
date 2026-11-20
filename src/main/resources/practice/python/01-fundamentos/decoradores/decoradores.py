@@ -1,6 +1,6 @@
 # CodeTrace | Referencia: Python 3.12
-# Compilar/Comprobar: python -B ARCHIVO.py
-# Ejecutar: python -B .\01-fundamentos\decoradores.py
+# Compilar/Comprobar: python -B 01-fundamentos/decoradores/decoradores.py
+# Ejecutar: python -B .\01-fundamentos\decoradores\decoradores.py
 
 """Cliente de decoradores: envolver comportamiento sin editar la función.
 

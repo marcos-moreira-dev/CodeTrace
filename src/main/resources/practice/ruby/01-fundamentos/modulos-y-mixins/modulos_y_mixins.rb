@@ -1,6 +1,6 @@
 # CodeTrace | Referencia: Ruby 3.3
-# Compilar/Comprobar: ruby -c ARCHIVO.rb
-# Ejecutar: ruby ARCHIVO.rb
+# Compilar/Comprobar: ruby -c 01-fundamentos/modulos-y-mixins/modulos_y_mixins.rb
+# Ejecutar: ruby 01-fundamentos/modulos-y-mixins/modulos_y_mixins.rb
 
 # Cliente de módulos y mixins.
 #

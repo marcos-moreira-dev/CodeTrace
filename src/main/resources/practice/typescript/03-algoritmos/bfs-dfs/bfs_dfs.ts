@@ -1,6 +1,6 @@
 // CodeTrace | Referencia: TypeScript 5.9 / ES2022 / Node.js 24
-// Comprobar (PowerShell, copia del paquete): tsc --strict --target ES2022 --module commonjs --noEmit '.\03-algoritmos\bfs_dfs.ts'
-// Ejecutar: tsc --strict --target ES2022 --module commonjs --outDir "$env:TEMP\ct-ts" '.\03-algoritmos\bfs_dfs.ts'; node "$env:TEMP\ct-ts\bfs_dfs.js"
+// Comprobar (PowerShell, copia del paquete): tsc --strict --target ES2022 --module commonjs --noEmit '.\03-algoritmos\bfs-dfs\bfs_dfs.ts'
+// Ejecutar: tsc --strict --target ES2022 --module commonjs --outDir "$env:TEMP\ct-ts" '.\03-algoritmos\bfs-dfs\bfs_dfs.ts'; node "$env:TEMP\ct-ts\bfs_dfs.js"
 
 /**
  * Cliente de BFS y DFS: recorrer grafos con cola y pila.

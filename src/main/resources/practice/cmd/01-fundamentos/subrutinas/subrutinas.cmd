@@ -1,6 +1,6 @@
 REM CodeTrace | Referencia: Windows 10/11 CMD
-REM Comprobar: cmd /c ARCHIVO.cmd
-REM Ejecutar: cmd /c ARCHIVO.cmd
+REM Comprobar: cmd /c 01-fundamentos/subrutinas/subrutinas.cmd
+REM Ejecutar: cmd /c 01-fundamentos/subrutinas/subrutinas.cmd
 
 @echo off
 setlocal EnableExtensions

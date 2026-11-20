@@ -1,6 +1,6 @@
 // CodeTrace | Referencia: Go 1.24
-// Compilar/Comprobar: go run ARCHIVO.go
-// Ejecutar: go run ARCHIVO.go
+// Compilar/Comprobar: go run 01-fundamentos/interfaces-implicitas/interfaces_implicitas.go
+// Ejecutar: go run 01-fundamentos/interfaces-implicitas/interfaces_implicitas.go
 
 package main
 import "fmt"

@@ -1,6 +1,6 @@
 // CodeTrace | Referencia: TypeScript 5.9 / ES2022 / Node.js 24
-// Comprobar (PowerShell, copia del paquete): tsc --strict --target ES2022 --module commonjs --noEmit '.\01-fundamentos\readonly_e_inmutabilidad.ts'
-// Ejecutar: tsc --strict --target ES2022 --module commonjs --outDir "$env:TEMP\ct-ts" '.\01-fundamentos\readonly_e_inmutabilidad.ts'; node "$env:TEMP\ct-ts\readonly_e_inmutabilidad.js"
+// Comprobar (PowerShell, copia del paquete): tsc --strict --target ES2022 --module commonjs --noEmit '.\01-fundamentos\readonly-e-inmutabilidad\readonly_e_inmutabilidad.ts'
+// Ejecutar: tsc --strict --target ES2022 --module commonjs --outDir "$env:TEMP\ct-ts" '.\01-fundamentos\readonly-e-inmutabilidad\readonly_e_inmutabilidad.ts'; node "$env:TEMP\ct-ts\readonly_e_inmutabilidad.js"
 
 /**
  * Cliente de readonly frente a inmutabilidad real.

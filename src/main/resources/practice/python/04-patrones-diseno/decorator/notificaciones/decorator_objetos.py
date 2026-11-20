@@ -1,6 +1,6 @@
 # CodeTrace | Referencia: Python 3.12
-# Comprobar en PowerShell: python -m py_compile ".\04-patrones-diseno\decorator_objetos.py"
-# Ejecutar: python -B ".\04-patrones-diseno\decorator_objetos.py"
+# Comprobar en PowerShell: python -m py_compile ".\04-patrones-diseno\decorator\notificaciones\decorator_objetos.py"
+# Ejecutar: python -B ".\04-patrones-diseno\decorator\notificaciones\decorator_objetos.py"
 
 """Cliente Decorator mediante composición de objetos en Python.
 

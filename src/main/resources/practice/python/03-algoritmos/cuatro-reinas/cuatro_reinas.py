@@ -1,6 +1,6 @@
 # CodeTrace | Referencia: Python 3.12
-# Comprobar en PowerShell: python -m py_compile ".\03-algoritmos\cuatro_reinas.py"
-# Ejecutar: python -B ".\03-algoritmos\cuatro_reinas.py"
+# Comprobar en PowerShell: python -m py_compile ".\03-algoritmos\cuatro-reinas\cuatro_reinas.py"
+# Ejecutar: python -B ".\03-algoritmos\cuatro-reinas\cuatro_reinas.py"
 
 """Cliente de backtracking: cuatro reinas sin atacarse.
 

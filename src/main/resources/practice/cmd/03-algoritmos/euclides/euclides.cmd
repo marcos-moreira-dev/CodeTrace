@@ -1,6 +1,6 @@
 @REM CodeTrace | Referencia: Windows CMD de Windows 10/11.
 @REM En una COPIA del paquete, desde PowerShell o shell indicado:
-@REM Ejecutar: cmd /c '.\03-algoritmos\euclides.cmd'
+@REM Ejecutar: cmd /c '.\03-algoritmos\euclides\euclides.cmd'
 
 @echo off
 setlocal EnableDelayedExpansion

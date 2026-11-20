@@ -1,6 +1,6 @@
 # CodeTrace | Referencia: PowerShell 7.4
-# Comprobar: pwsh -NoProfile -File ".\03-algoritmos\frecuencias_objetos.ps1"
-# Ejecutar: pwsh -NoProfile -File ".\03-algoritmos\frecuencias_objetos.ps1"
+# Comprobar: pwsh -NoProfile -File ".\03-algoritmos\frecuencias-objetos\frecuencias_objetos.ps1"
+# Ejecutar: pwsh -NoProfile -File ".\03-algoritmos\frecuencias-objetos\frecuencias_objetos.ps1"
 
 <#
 Cliente de frecuencia de valores mediante Group-Object.

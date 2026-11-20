@@ -1,5 +1,5 @@
 // CodeTrace | Referencia: Kotlin 2.2 / JVM 21
-// Compilar/Comprobar: kotlinc -jvm-target 21 ARCHIVO.kt -include-runtime -d app.jar
+// Compilar/Comprobar: kotlinc -jvm-target 21 03-algoritmos/cambio-monedas/cambio_monedas.kt -include-runtime -d app.jar
 // Ejecutar: java -jar app.jar
 
 /**

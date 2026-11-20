@@ -1,6 +1,6 @@
 REM CodeTrace | Referencia: Windows 10/11 CMD
-REM Comprobar: cmd /c ".\03-algoritmos\maximo_iterativo.cmd"
-REM Ejecutar: cmd /c ".\03-algoritmos\maximo_iterativo.cmd"
+REM Comprobar: cmd /c ".\03-algoritmos\maximo-iterativo\maximo_iterativo.cmd"
+REM Ejecutar: cmd /c ".\03-algoritmos\maximo-iterativo\maximo_iterativo.cmd"
 
 @echo off
 setlocal EnableExtensions EnableDelayedExpansion

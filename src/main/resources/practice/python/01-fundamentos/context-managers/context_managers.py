@@ -1,6 +1,6 @@
 # CodeTrace | Referencia: Python 3.12
-# Comprobar en PowerShell: python -m py_compile ".\01-fundamentos\context_managers.py"
-# Ejecutar: python -B ".\01-fundamentos\context_managers.py"
+# Comprobar en PowerShell: python -m py_compile ".\01-fundamentos\context-managers\context_managers.py"
+# Ejecutar: python -B ".\01-fundamentos\context-managers\context_managers.py"
 
 """Cliente de with y context managers para recursos temporales.
 

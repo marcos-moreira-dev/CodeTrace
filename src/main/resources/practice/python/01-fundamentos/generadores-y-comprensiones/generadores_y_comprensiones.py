@@ -1,6 +1,6 @@
 # CodeTrace | Referencia: Python 3.12
-# Compilar/Comprobar: python -B ARCHIVO.py
-# Ejecutar: python -B .\01-fundamentos\generadores_y_comprensiones.py
+# Compilar/Comprobar: python -B 01-fundamentos/generadores-y-comprensiones/generadores_y_comprensiones.py
+# Ejecutar: python -B .\01-fundamentos\generadores-y-comprensiones\generadores_y_comprensiones.py
 
 """Cliente de repaso: comprensiones, generadores y evaluación diferida.
 

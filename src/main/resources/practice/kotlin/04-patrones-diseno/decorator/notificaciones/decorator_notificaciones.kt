@@ -1,5 +1,5 @@
 // CodeTrace | Referencia: Kotlin 2.2 / JVM 21
-// Compilar (PowerShell): kotlinc -jvm-target 21 '.\04-patrones-diseno\decorator_notificaciones.kt' -include-runtime -d "$env:TEMP\ct-kotlin.jar"
+// Compilar (PowerShell): kotlinc -jvm-target 21 '.\04-patrones-diseno\decorator\notificaciones\decorator_notificaciones.kt' -include-runtime -d "$env:TEMP\ct-kotlin.jar"
 // Ejecutar: java -jar "$env:TEMP\ct-kotlin.jar"
 
 /**

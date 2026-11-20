@@ -1,6 +1,6 @@
 // CodeTrace | Referencia: TypeScript 5.9 / ES2022 / Node.js 24
-// Comprobar (PowerShell, copia del paquete): tsc --strict --target ES2022 --module commonjs --noEmit '.\01-fundamentos\tipos_condicionales.ts'
-// Ejecutar: tsc --strict --target ES2022 --module commonjs --outDir "$env:TEMP\ct-ts" '.\01-fundamentos\tipos_condicionales.ts'; node "$env:TEMP\ct-ts\tipos_condicionales.js"
+// Comprobar (PowerShell, copia del paquete): tsc --strict --target ES2022 --module commonjs --noEmit '.\01-fundamentos\tipos-condicionales\tipos_condicionales.ts'
+// Ejecutar: tsc --strict --target ES2022 --module commonjs --outDir "$env:TEMP\ct-ts" '.\01-fundamentos\tipos-condicionales\tipos_condicionales.ts'; node "$env:TEMP\ct-ts\tipos_condicionales.js"
 
 /**
  * Cliente de mapped types, tipos condicionales y utilidades estándar.

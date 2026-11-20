@@ -1,6 +1,6 @@
 REM CodeTrace | Referencia: Windows 10/11 CMD
-REM Comprobar: cmd /c ".\01-fundamentos\for_f_registros.cmd"
-REM Ejecutar: cmd /c ".\01-fundamentos\for_f_registros.cmd"
+REM Comprobar: cmd /c ".\01-fundamentos\for-f-registros\for_f_registros.cmd"
+REM Ejecutar: cmd /c ".\01-fundamentos\for-f-registros\for_f_registros.cmd"
 
 @echo off
 setlocal EnableExtensions EnableDelayedExpansion

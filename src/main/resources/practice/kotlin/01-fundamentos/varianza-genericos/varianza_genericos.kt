@@ -1,5 +1,5 @@
 // CodeTrace | Referencia: Kotlin 2.2 / JVM 21
-// Compilar (PowerShell): kotlinc -jvm-target 21 '.\01-fundamentos\varianza_genericos.kt' -include-runtime -d "$env:TEMP\ct-kotlin.jar"
+// Compilar (PowerShell): kotlinc -jvm-target 21 '.\01-fundamentos\varianza-genericos\varianza_genericos.kt' -include-runtime -d "$env:TEMP\ct-kotlin.jar"
 // Ejecutar: java -jar "$env:TEMP\ct-kotlin.jar"
 
 /**

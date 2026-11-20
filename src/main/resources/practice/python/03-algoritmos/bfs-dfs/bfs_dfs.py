@@ -1,6 +1,6 @@
 # CodeTrace | Referencia: Python 3.12
-# Comprobar en PowerShell: python -m py_compile ".\03-algoritmos\bfs_dfs.py"
-# Ejecutar: python -B ".\03-algoritmos\bfs_dfs.py"
+# Comprobar en PowerShell: python -m py_compile ".\03-algoritmos\bfs-dfs\bfs_dfs.py"
+# Ejecutar: python -B ".\03-algoritmos\bfs-dfs\bfs_dfs.py"
 
 """Cliente de BFS y DFS con listas de adyacencia.
 

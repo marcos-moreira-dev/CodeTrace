@@ -1,6 +1,6 @@
 // CodeTrace | Referencia: TypeScript 5.9 / ES2022 / Node.js 24
-// Comprobar (PowerShell, copia del paquete): tsc --strict --target ES2022 --module commonjs --noEmit '.\04-patrones-diseno\adapter_unidades.ts'
-// Ejecutar: tsc --strict --target ES2022 --module commonjs --outDir "$env:TEMP\ct-ts" '.\04-patrones-diseno\adapter_unidades.ts'; node "$env:TEMP\ct-ts\adapter_unidades.js"
+// Comprobar (PowerShell, copia del paquete): tsc --strict --target ES2022 --module commonjs --noEmit '.\04-patrones-diseno\adapter\unidades\adapter_unidades.ts'
+// Ejecutar: tsc --strict --target ES2022 --module commonjs --outDir "$env:TEMP\ct-ts" '.\04-patrones-diseno\adapter\unidades\adapter_unidades.ts'; node "$env:TEMP\ct-ts\adapter_unidades.js"
 
 /**
  * Cliente Adapter: integrar una API Fahrenheit en dominio Celsius.

@@ -1,5 +1,5 @@
 // CodeTrace | Referencia: C# 12 / .NET 8
-// Compilar: dotnet new console -o "$env:TEMP\ct-csharp"; Copy-Item '.\03-algoritmos\bfs_grafo.cs' "$env:TEMP\ct-csharp\Program.cs" -Force; dotnet build "$env:TEMP\ct-csharp"
+// Compilar: dotnet new console -o "$env:TEMP\ct-csharp"; Copy-Item '.\03-algoritmos\bfs-grafo\bfs_grafo.cs' "$env:TEMP\ct-csharp\Program.cs" -Force; dotnet build "$env:TEMP\ct-csharp"
 // Ejecutar: dotnet run --project "$env:TEMP\ct-csharp"
 
 using System;

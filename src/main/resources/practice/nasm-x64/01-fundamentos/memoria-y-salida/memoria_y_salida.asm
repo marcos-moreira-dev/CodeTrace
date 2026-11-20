@@ -1,5 +1,5 @@
 ; CodeTrace | Referencia: NASM x86-64 / Linux ELF64 (WSL)
-; Comprobar: nasm -f elf64 ".\01-fundamentos/memoria_y_salida.asm" -o app.o; ld app.o -o app
+; Comprobar: nasm -f elf64 ".\01-fundamentos/memoria-y-salida/memoria_y_salida.asm" -o app.o; ld app.o -o app
 ; Ejecutar: ./app
 
 ; Cliente de secciones .data, registros y syscall write.

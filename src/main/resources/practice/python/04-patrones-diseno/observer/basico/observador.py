@@ -1,7 +1,7 @@
 # CodeTrace | Referencia: Python 3.12.
 # Desde PowerShell en una COPIA del paquete:
-# Comprobar sin escribir archivos: python -c "import ast,pathlib; ast.parse(pathlib.Path('04-patrones-diseno/observador.py').read_text(encoding='utf-8'))"
-# Ejecutar sin bytecode: python -B '.\04-patrones-diseno\observador.py'
+# Comprobar sin escribir archivos: python -c "import ast,pathlib; ast.parse(pathlib.Path('04-patrones-diseno/observer/basico/observador.py').read_text(encoding='utf-8'))"
+# Ejecutar sin bytecode: python -B '.\04-patrones-diseno\observer\basico\observador.py'
 
 from collections.abc import Callable
 

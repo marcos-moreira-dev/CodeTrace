@@ -1,6 +1,6 @@
 // CodeTrace | Referencia: JavaScript ES2022 / Node.js 24
-// Compilar/Comprobar: node --check ARCHIVO.js
-// Ejecutar: node ARCHIVO.js
+// Compilar/Comprobar: node --check 01-fundamentos/closures/closures.js
+// Ejecutar: node 01-fundamentos/closures/closures.js
 
 /**
  * Cliente de closures: las funciones conservan las variables de su

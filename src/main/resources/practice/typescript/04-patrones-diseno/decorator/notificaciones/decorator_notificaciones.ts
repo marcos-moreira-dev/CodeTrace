@@ -1,6 +1,6 @@
 // CodeTrace | Referencia: TypeScript 5.9 / ES2022 / Node.js 24
-// Comprobar (PowerShell, copia del paquete): tsc --strict --target ES2022 --module commonjs --noEmit '.\04-patrones-diseno\decorator_notificaciones.ts'
-// Ejecutar: tsc --strict --target ES2022 --module commonjs --outDir "$env:TEMP\ct-ts" '.\04-patrones-diseno\decorator_notificaciones.ts'; node "$env:TEMP\ct-ts\decorator_notificaciones.js"
+// Comprobar (PowerShell, copia del paquete): tsc --strict --target ES2022 --module commonjs --noEmit '.\04-patrones-diseno\decorator\notificaciones\decorator_notificaciones.ts'
+// Ejecutar: tsc --strict --target ES2022 --module commonjs --outDir "$env:TEMP\ct-ts" '.\04-patrones-diseno\decorator\notificaciones\decorator_notificaciones.ts'; node "$env:TEMP\ct-ts\decorator_notificaciones.js"
 
 /**
  * Cliente Decorator: añadir funciones sin modificar el objeto original.

@@ -1,6 +1,6 @@
 // CodeTrace | Referencia: TypeScript 5.9 / ES2022 / Node.js 24
-// Comprobar (PowerShell, copia del paquete): tsc --strict --target ES2022 --module commonjs --noEmit '.\01-fundamentos\discriminated_unions.ts'
-// Ejecutar: tsc --strict --target ES2022 --module commonjs --outDir "$env:TEMP\ct-ts" '.\01-fundamentos\discriminated_unions.ts'; node "$env:TEMP\ct-ts\discriminated_unions.js"
+// Comprobar (PowerShell, copia del paquete): tsc --strict --target ES2022 --module commonjs --noEmit '.\01-fundamentos\discriminated-unions\discriminated_unions.ts'
+// Ejecutar: tsc --strict --target ES2022 --module commonjs --outDir "$env:TEMP\ct-ts" '.\01-fundamentos\discriminated-unions\discriminated_unions.ts'; node "$env:TEMP\ct-ts\discriminated_unions.js"
 
 /**
  * Cliente de uniones discriminadas y exhaustividad con never.

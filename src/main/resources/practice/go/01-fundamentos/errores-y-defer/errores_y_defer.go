@@ -1,6 +1,6 @@
 // CodeTrace | Referencia: Go 1.24
-// Comprobar: go run ".\01-fundamentos\errores_y_defer.go"
-// Ejecutar: go run ".\01-fundamentos\errores_y_defer.go"
+// Comprobar: go run ".\01-fundamentos\errores-y-defer\errores_y_defer.go"
+// Ejecutar: go run ".\01-fundamentos\errores-y-defer\errores_y_defer.go"
 
 package main
 import (

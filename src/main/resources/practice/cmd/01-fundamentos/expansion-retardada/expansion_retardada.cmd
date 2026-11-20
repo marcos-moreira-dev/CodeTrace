@@ -1,6 +1,6 @@
 REM CodeTrace | Referencia: Windows 10/11 CMD
-REM Comprobar: cmd /c ARCHIVO.cmd
-REM Ejecutar: cmd /c ARCHIVO.cmd
+REM Comprobar: cmd /c 01-fundamentos/expansion-retardada/expansion_retardada.cmd
+REM Ejecutar: cmd /c 01-fundamentos/expansion-retardada/expansion_retardada.cmd
 
 @echo off
 setlocal EnableExtensions EnableDelayedExpansion

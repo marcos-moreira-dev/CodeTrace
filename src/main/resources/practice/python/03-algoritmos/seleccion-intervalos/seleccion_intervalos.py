@@ -1,6 +1,6 @@
 # CodeTrace | Referencia: Python 3.12
-# Comprobar en PowerShell: python -m py_compile ".\03-algoritmos\seleccion_intervalos.py"
-# Ejecutar: python -B ".\03-algoritmos\seleccion_intervalos.py"
+# Comprobar en PowerShell: python -m py_compile ".\03-algoritmos\seleccion-intervalos\seleccion_intervalos.py"
+# Ejecutar: python -B ".\03-algoritmos\seleccion-intervalos\seleccion_intervalos.py"
 
 """Cliente de voraces: máximo número de intervalos compatibles.
 

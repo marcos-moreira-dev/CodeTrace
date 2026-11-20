@@ -1,6 +1,6 @@
 # CodeTrace | Referencia: Python 3.12
-# Comprobar en PowerShell: python -m py_compile ".\01-fundamentos\dataclasses_y_propiedades.py"
-# Ejecutar: python -B ".\01-fundamentos\dataclasses_y_propiedades.py"
+# Comprobar en PowerShell: python -m py_compile ".\01-fundamentos\dataclasses-y-propiedades\dataclasses_y_propiedades.py"
+# Ejecutar: python -B ".\01-fundamentos\dataclasses-y-propiedades\dataclasses_y_propiedades.py"
 
 """Cliente de dataclasses, atributos y validación de invariantes.
 

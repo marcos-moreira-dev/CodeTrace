@@ -1,5 +1,5 @@
 // CodeTrace | Referencia: C++20 / g++ 13+
-// Compilar desde copia (PowerShell): g++ -std=c++20 -Wall -Wextra ".\03-algoritmos\mochila_01.cpp" -o "$env:TEMP\ct-cpp-ejemplo.exe"
+// Compilar desde copia (PowerShell): g++ -std=c++20 -Wall -Wextra ".\03-algoritmos\mochila-01\mochila_01.cpp" -o "$env:TEMP\ct-cpp-ejemplo.exe"
 // Ejecutar: & "$env:TEMP\ct-cpp-ejemplo.exe"
 
 #include <algorithm>

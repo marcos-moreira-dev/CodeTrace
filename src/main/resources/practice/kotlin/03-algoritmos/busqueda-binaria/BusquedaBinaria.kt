@@ -1,6 +1,6 @@
 // CodeTrace | Kotlin 2.2 | JVM 21 | Java JDK 21.
 // Desde PowerShell, en una copia de esta biblioteca:
-// Compilar: kotlinc -jvm-target 21 '.\03-algoritmos\BusquedaBinaria.kt' -include-runtime -d "$env:TEMP\codetrace-kotlin.jar"
+// Compilar: kotlinc -jvm-target 21 '.\03-algoritmos\busqueda-binaria\BusquedaBinaria.kt' -include-runtime -d "$env:TEMP\codetrace-kotlin.jar"
 // Este archivo declara tipos; se compila, pero no tiene punto de entrada main.
 
 object BusquedaBinaria {

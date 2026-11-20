@@ -1,6 +1,6 @@
 # CodeTrace | Referencia: PowerShell 7.4
-# Comprobar: pwsh -NoProfile -File ARCHIVO.ps1
-# Ejecutar: pwsh -NoProfile -File ARCHIVO.ps1
+# Comprobar: pwsh -NoProfile -File 03-algoritmos/busqueda-binaria/busqueda_binaria.ps1
+# Ejecutar: pwsh -NoProfile -File 03-algoritmos/busqueda-binaria/busqueda_binaria.ps1
 
 <#
 Cliente de búsqueda binaria en una secuencia numérica ordenada.

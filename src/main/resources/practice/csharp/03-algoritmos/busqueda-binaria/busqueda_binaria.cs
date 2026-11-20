@@ -1,5 +1,5 @@
 // CodeTrace | Referencia: C# 12 / .NET 8
-// Compilar/Comprobar: dotnet new console -o $env:TEMP\ct-csharp; Copy-Item ARCHIVO.cs $env:TEMP\ct-csharp\Program.cs -Force; dotnet build $env:TEMP\ct-csharp
+// Compilar/Comprobar: dotnet new console -o $env:TEMP\ct-csharp; Copy-Item 03-algoritmos/busqueda-binaria/busqueda_binaria.cs $env:TEMP\ct-csharp\Program.cs -Force; dotnet build $env:TEMP\ct-csharp
 // Ejecutar: dotnet run --project $env:TEMP\ct-csharp
 
 using System;

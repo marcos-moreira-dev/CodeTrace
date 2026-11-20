@@ -1,5 +1,5 @@
 // CodeTrace | Referencia: Kotlin 2.2 / JVM 21
-// Compilar/Comprobar: kotlinc -jvm-target 21 ARCHIVO.kt -include-runtime -d app.jar
+// Compilar/Comprobar: kotlinc -jvm-target 21 01-fundamentos/extensiones-y-lambdas/extensiones_y_lambdas.kt -include-runtime -d app.jar
 // Ejecutar: java -jar app.jar
 
 /**

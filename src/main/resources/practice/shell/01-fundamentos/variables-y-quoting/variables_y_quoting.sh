@@ -1,6 +1,6 @@
 # CodeTrace | Referencia: POSIX sh (Linux/WSL)
-# Comprobar: sh -n ARCHIVO.sh
-# Ejecutar: sh ARCHIVO.sh
+# Comprobar: sh -n 01-fundamentos/variables-y-quoting/variables_y_quoting.sh
+# Ejecutar: sh 01-fundamentos/variables-y-quoting/variables_y_quoting.sh
 
 #!/bin/sh
 # Cliente de expansión de variables y quoting POSIX.

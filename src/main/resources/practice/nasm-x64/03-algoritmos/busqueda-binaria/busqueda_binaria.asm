@@ -1,5 +1,5 @@
 ; CodeTrace | Referencia: NASM x86-64 / Linux ELF64 (WSL)
-; Comprobar: nasm -f elf64 ".\03-algoritmos/busqueda_binaria.asm" -o app.o; ld app.o -o app
+; Comprobar: nasm -f elf64 ".\03-algoritmos/busqueda-binaria/busqueda_binaria.asm" -o app.o; ld app.o -o app
 ; Ejecutar: ./app
 
 ; Cliente de búsqueda binaria sobre una región contigua de memoria.

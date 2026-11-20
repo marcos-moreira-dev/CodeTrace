@@ -1,6 +1,6 @@
 # CodeTrace | Referencia: Python 3.12
-# Comprobar en PowerShell: python -m py_compile ".\03-algoritmos\mochila_01.py"
-# Ejecutar: python -B ".\03-algoritmos\mochila_01.py"
+# Comprobar en PowerShell: python -m py_compile ".\03-algoritmos\mochila-01\mochila_01.py"
+# Ejecutar: python -B ".\03-algoritmos\mochila-01\mochila_01.py"
 
 """Cliente de programación dinámica: mochila 0/1.
 

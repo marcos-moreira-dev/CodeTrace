@@ -1,6 +1,6 @@
 # CodeTrace | Referencia: Ruby 3.3
-# Comprobar: ruby -c ".\02-estructuras-datos\arbol_bst.rb"
-# Ejecutar: ruby ".\02-estructuras-datos\arbol_bst.rb"
+# Comprobar: ruby -c ".\02-estructuras-datos\arbol-bst\arbol_bst.rb"
+# Ejecutar: ruby ".\02-estructuras-datos\arbol-bst\arbol_bst.rb"
 
 # Cliente de un BST binario sin rotaciones de balanceo.
 #

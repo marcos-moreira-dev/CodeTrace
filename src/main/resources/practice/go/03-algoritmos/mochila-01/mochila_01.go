@@ -1,6 +1,6 @@
 // CodeTrace | Referencia: Go 1.24
-// Comprobar: go run ".\03-algoritmos\mochila_01.go"
-// Ejecutar: go run ".\03-algoritmos\mochila_01.go"
+// Comprobar: go run ".\03-algoritmos\mochila-01\mochila_01.go"
+// Ejecutar: go run ".\03-algoritmos\mochila-01\mochila_01.go"
 
 package main
 import "fmt"

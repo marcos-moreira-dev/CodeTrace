@@ -1,6 +1,6 @@
 // CodeTrace | Referencia: JavaScript ES2022 / Node.js 24
-// Comprobar: node --check ".\02-estructuras-datos\heap_minimo.js"
-// Ejecutar: node ".\02-estructuras-datos\heap_minimo.js"
+// Comprobar: node --check ".\02-estructuras-datos\heap-minimo\heap_minimo.js"
+// Ejecutar: node ".\02-estructuras-datos\heap-minimo\heap_minimo.js"
 
 /**
  * Cliente de un heap mínimo implementado sobre Array.

@@ -1,6 +1,6 @@
 // CodeTrace | Referencia: Go 1.24
-// Comprobar: go run ".\01-fundamentos\slices_y_capacidad.go"
-// Ejecutar: go run ".\01-fundamentos\slices_y_capacidad.go"
+// Comprobar: go run ".\01-fundamentos\slices-y-capacidad\slices_y_capacidad.go"
+// Ejecutar: go run ".\01-fundamentos\slices-y-capacidad\slices_y_capacidad.go"
 
 package main
 import "fmt"

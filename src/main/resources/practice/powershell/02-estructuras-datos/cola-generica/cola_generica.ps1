@@ -1,6 +1,6 @@
 # CodeTrace | Referencia: PowerShell 7.4
-# Comprobar: pwsh -NoProfile -File ".\02-estructuras-datos\cola_generica.ps1"
-# Ejecutar: pwsh -NoProfile -File ".\02-estructuras-datos\cola_generica.ps1"
+# Comprobar: pwsh -NoProfile -File ".\02-estructuras-datos\cola-generica\cola_generica.ps1"
+# Ejecutar: pwsh -NoProfile -File ".\02-estructuras-datos\cola-generica\cola_generica.ps1"
 
 <#
 Cliente de una cola FIFO .NET desde PowerShell 7.4.

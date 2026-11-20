@@ -1,6 +1,6 @@
 # CodeTrace | Referencia: Ruby 3.3
-# Compilar/Comprobar: ruby -c ARCHIVO.rb
-# Ejecutar: ruby ARCHIVO.rb
+# Compilar/Comprobar: ruby -c 01-fundamentos/bloques-y-enumerables/bloques_y_enumerables.rb
+# Ejecutar: ruby 01-fundamentos/bloques-y-enumerables/bloques_y_enumerables.rb
 
 # Cliente de bloques, símbolos y Enumerable.
 #

@@ -1,5 +1,5 @@
 // CodeTrace | Referencia: C17 / GCC 13+
-// Compilar en copia del paquete, PowerShell: gcc -std=c17 -Wall -Wextra ".\01-fundamentos\structs_y_enums.c" -o "$env:TEMP\ct-c-ejemplo.exe"
+// Compilar en copia del paquete, PowerShell: gcc -std=c17 -Wall -Wextra ".\01-fundamentos\structs-y-enums\structs_y_enums.c" -o "$env:TEMP\ct-c-ejemplo.exe"
 // Ejecutar: & "$env:TEMP\ct-c-ejemplo.exe"
 
 #include <stdio.h>

@@ -1,6 +1,6 @@
 // CodeTrace | Referencia: Go 1.24
-// Compilar/Comprobar: go run ARCHIVO.go
-// Ejecutar: go run ARCHIVO.go
+// Compilar/Comprobar: go run 03-algoritmos/busqueda-binaria/busqueda_binaria.go
+// Ejecutar: go run 03-algoritmos/busqueda-binaria/busqueda_binaria.go
 
 package main
 import "fmt"

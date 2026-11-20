@@ -1,5 +1,5 @@
 // CodeTrace | Referencia: C17 / GCC 13+
-// Compilar en copia del paquete, PowerShell: gcc -std=c17 -Wall -Wextra ".\01-fundamentos\qsort_callbacks.c" -o "$env:TEMP\ct-c-ejemplo.exe"
+// Compilar en copia del paquete, PowerShell: gcc -std=c17 -Wall -Wextra ".\01-fundamentos\qsort-callbacks\qsort_callbacks.c" -o "$env:TEMP\ct-c-ejemplo.exe"
 // Ejecutar: & "$env:TEMP\ct-c-ejemplo.exe"
 
 #include <stdio.h>

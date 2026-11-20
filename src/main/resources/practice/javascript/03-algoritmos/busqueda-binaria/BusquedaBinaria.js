@@ -1,7 +1,7 @@
 // CodeTrace | Referencia: JavaScript ES2022, Node.js 24.
 // Desde PowerShell en una COPIA del paquete:
-// Comprobar sintaxis: node --check '.\03-algoritmos\BusquedaBinaria.js'
-// Ejecutar: node '.\03-algoritmos\BusquedaBinaria.js'
+// Comprobar sintaxis: node --check '.\03-algoritmos\busqueda-binaria\BusquedaBinaria.js'
+// Ejecutar: node '.\03-algoritmos\busqueda-binaria\BusquedaBinaria.js'
 
 function buscar(datos, objetivo) {
   let izquierda = 0, derecha = datos.length - 1;

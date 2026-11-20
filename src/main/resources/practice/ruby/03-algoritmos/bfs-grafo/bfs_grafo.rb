@@ -1,6 +1,6 @@
 # CodeTrace | Referencia: Ruby 3.3
-# Comprobar: ruby -c ".\03-algoritmos\bfs_grafo.rb"
-# Ejecutar: ruby ".\03-algoritmos\bfs_grafo.rb"
+# Comprobar: ruby -c ".\03-algoritmos\bfs-grafo\bfs_grafo.rb"
+# Ejecutar: ruby ".\03-algoritmos\bfs-grafo\bfs_grafo.rb"
 
 # Cliente de BFS en Ruby con Hash y Array.
 #

@@ -1,5 +1,5 @@
 // CodeTrace | Referencia: C++20 / g++ 13+
-// Compilar desde copia (PowerShell): g++ -std=c++20 -Wall -Wextra ".\01-fundamentos\templates_y_concepts.cpp" -o "$env:TEMP\ct-cpp-ejemplo.exe"
+// Compilar desde copia (PowerShell): g++ -std=c++20 -Wall -Wextra ".\01-fundamentos\templates-y-concepts\templates_y_concepts.cpp" -o "$env:TEMP\ct-cpp-ejemplo.exe"
 // Ejecutar: & "$env:TEMP\ct-cpp-ejemplo.exe"
 
 #include <concepts>

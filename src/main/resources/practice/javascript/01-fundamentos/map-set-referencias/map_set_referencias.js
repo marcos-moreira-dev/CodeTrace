@@ -1,6 +1,6 @@
 // CodeTrace | Referencia: JavaScript ES2022 / Node.js 24
-// Comprobar: node --check ".\01-fundamentos\map_set_referencias.js"
-// Ejecutar: node ".\01-fundamentos\map_set_referencias.js"
+// Comprobar: node --check ".\01-fundamentos\map-set-referencias\map_set_referencias.js"
+// Ejecutar: node ".\01-fundamentos\map-set-referencias\map_set_referencias.js"
 
 /**
  * Cliente de Map, Set y semántica de referencias.

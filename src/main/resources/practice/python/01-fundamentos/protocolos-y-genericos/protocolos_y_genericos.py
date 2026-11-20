@@ -1,6 +1,6 @@
 # CodeTrace | Referencia: Python 3.12
-# Comprobar en PowerShell: python -m py_compile ".\01-fundamentos\protocolos_y_genericos.py"
-# Ejecutar: python -B ".\01-fundamentos\protocolos_y_genericos.py"
+# Comprobar en PowerShell: python -m py_compile ".\01-fundamentos\protocolos-y-genericos\protocolos_y_genericos.py"
+# Ejecutar: python -B ".\01-fundamentos\protocolos-y-genericos\protocolos_y_genericos.py"
 
 """Cliente de typing.Protocol, contratos estructurales y duck typing.
 

@@ -1,6 +1,6 @@
 // CodeTrace | Referencia: Go 1.24
-// Compilar/Comprobar: go run ARCHIVO.go
-// Ejecutar: go run ARCHIVO.go
+// Compilar/Comprobar: go run 01-fundamentos/goroutines-canales/goroutines_canales.go
+// Ejecutar: go run 01-fundamentos/goroutines-canales/goroutines_canales.go
 
 package main
 import "fmt"

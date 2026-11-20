@@ -1,6 +1,6 @@
 # CodeTrace | Referencia: Ruby 3.3
-# Compilar/Comprobar: ruby -c ARCHIVO.rb
-# Ejecutar: ruby ARCHIVO.rb
+# Compilar/Comprobar: ruby -c 03-algoritmos/busqueda-binaria/busqueda_binaria.rb
+# Ejecutar: ruby 03-algoritmos/busqueda-binaria/busqueda_binaria.rb
 
 # Cliente de búsqueda binaria sobre un arreglo ordenado.
 #

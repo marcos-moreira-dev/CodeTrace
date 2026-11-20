@@ -1,6 +1,6 @@
 # CodeTrace | Referencia: Python 3.12
-# Comprobar en PowerShell: python -m py_compile ".\02-estructuras-datos\heaps_y_prioridades.py"
-# Ejecutar: python -B ".\02-estructuras-datos\heaps_y_prioridades.py"
+# Comprobar en PowerShell: python -m py_compile ".\02-estructuras-datos\heaps-y-prioridades\heaps_y_prioridades.py"
+# Ejecutar: python -B ".\02-estructuras-datos\heaps-y-prioridades\heaps_y_prioridades.py"
 
 """Cliente de una cola de prioridad con heapq.
 

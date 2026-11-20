@@ -1,6 +1,6 @@
 # CodeTrace | Referencia: Python 3.12
-# Comprobar en PowerShell: python -m py_compile ".\01-fundamentos\funciones_orden_superior.py"
-# Ejecutar: python -B ".\01-fundamentos\funciones_orden_superior.py"
+# Comprobar en PowerShell: python -m py_compile ".\01-fundamentos\funciones-orden-superior\funciones_orden_superior.py"
+# Ejecutar: python -B ".\01-fundamentos\funciones-orden-superior\funciones_orden_superior.py"
 
 """Cliente de funciones de orden superior y funciones parciales.
 
