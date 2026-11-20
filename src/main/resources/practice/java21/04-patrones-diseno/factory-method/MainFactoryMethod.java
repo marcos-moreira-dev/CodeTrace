@@ -19,6 +19,6 @@ public final class MainFactoryMethod {
 
 /*
  * Salida esperada de consola:
- *   Se imprime el valor o coleccion calculado por el cliente.
- * Verificacion: termina sin excepciones inesperadas.
+ *   TEXTO: Factura 001
+ * La subclase creadora escoge ExportadorTexto por Factory Method.
  */

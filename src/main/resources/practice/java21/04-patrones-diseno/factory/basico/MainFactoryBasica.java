@@ -25,6 +25,6 @@ public final class MainFactoryBasica {
 
 /*
  * Salida esperada de consola:
- *   Se imprime el valor o coleccion calculado por el cliente.
- * Verificacion: termina sin excepciones inesperadas.
+ *   Correo a cliente@example.invalid
+ * El cliente recibe el contrato Mensaje sin construir Correo directamente.
  */

@@ -28,8 +28,7 @@ public final class MainMonedas {
 
 /*
  * Salida esperada de consola:
- *   Voraz: 
- *   Óptimo DP: 
- *   (los valores variables completan los fragmentos anteriores)
- * Verificacion: termina sin excepciones inesperadas.
+ *   Voraz: 3
+ *   Óptimo DP: 2
+ * Para formar 6, el voraz usa 4+1+1 y la solución óptima usa 3+3.
  */

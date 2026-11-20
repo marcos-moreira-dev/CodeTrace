@@ -26,6 +26,9 @@ public final class MainDecorator {
 
 /*
  * Salida esperada de consola:
- *   Sin salida de texto; las pruebas del cliente se cumplen.
- * Verificacion: termina sin excepciones inesperadas.
+ *   Enviado: [INFO] Servicio disponible
+ *   Envíos acumulados: 1
+ *   Enviado: [INFO] Proceso finalizado
+ *   Envíos acumulados: 2
+ * El decorador de contador imprime después de delegar al notificador.
  */

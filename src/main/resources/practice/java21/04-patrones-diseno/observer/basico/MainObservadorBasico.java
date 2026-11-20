@@ -30,6 +30,6 @@ public final class MainObservadorBasico {
 
 /*
  * Salida esperada de consola:
- *   Se imprime el valor o coleccion calculado por el cliente.
- * Verificacion: termina sin excepciones inesperadas.
+ *   consola=42 log=42
+ * Dos suscriptores reciben el mismo valor mediante callbacks.
  */
