@@ -1,6 +1,7 @@
 package com.mmdev.codetrace.ui;
 
 import java.nio.file.Path;
+import com.mmdev.codetrace.practice.ReconstructionStatus.State;
 import javafx.collections.FXCollections;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -88,15 +89,34 @@ final class VirtualExplorerView extends ListView<ExplorerRows.Row> {
                         ? path.toString() : path.getFileName().toString());
                 filename.setTextFill(isSelected()
                         ? Color.web("#203748") : Color.web("#354f64"));
+                State state = owner.projectedState(entry.relative());
+                getStyleClass().remove("reference-outside-scope");
+                if (owner.projectedOutsideScope(entry.relative()))
+                    getStyleClass().add("reference-outside-scope");
+                filename.getStyleClass().remove("reference-pending-name");
+                if (state == State.PENDING)
+                    filename.getStyleClass().add("reference-pending-name");
                 row.getChildren().setAll(indentation, disclosure);
                 row.getChildren().add(FileTypeIcons.forPath(path, entry.directory()));
+                if (state != State.NOT_APPLICABLE)
+                    row.getChildren().add(ReconstructionStateIcons.forState(state));
                 row.getChildren().add(filename);
                 if (entry.directory()) {
                     fileCount.setText(owner.projectedFileCount(entry.relative()));
                     row.getChildren().add(fileCount);
                 }
-                tooltip.setText(entry.relative().isEmpty()
-                        ? path.toString() : entry.relative());
+                String help = switch (state) {
+                    case NOT_APPLICABLE -> "Archivo de consulta";
+                    case PENDING -> "Pendiente de recrear";
+                    case CREATED -> "Creado virtualmente";
+                    case COMPLETED -> "Práctica terminada";
+                };
+                if (owner.projectedExcluded(entry.relative()))
+                    help += "\nExcluida del progreso";
+                if (owner.projectedOutsideScope(entry.relative()))
+                    help += "\nFuera del ámbito Solo";
+                tooltip.setText((entry.relative().isEmpty()
+                        ? path.toString() : entry.relative()) + "\n" + help);
                 setTooltip(tooltip);
                 setText(null);
                 setGraphic(row);
