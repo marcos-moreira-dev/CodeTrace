@@ -34,7 +34,7 @@ Con Temurin JDK 21 y Maven configurados, genera el sitio HTML local:
 
 ```powershell
 mvn --batch-mode --no-transfer-progress javadoc:javadoc
-Start-Process ".\\target\\site\\apidocs\\index.html"
+Start-Process ".\\target\\reports\\apidocs\\index.html"
 ```
 
 En GitHub Actions, el flujo **Verify** comprueba que se genera la documentación
