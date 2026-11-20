@@ -26,3 +26,10 @@ public static class MainGrafo
         Console.WriteLine("Adyacencias GYE: " + g.Vecinos("GYE").Count);
     }
 }
+
+/*
+ * Salida esperada de consola:
+ *   Adyacencias GYE: 
+ *   (los valores variables completan los fragmentos anteriores)
+ * Verificacion: termina sin excepciones inesperadas.
+ */

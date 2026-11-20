@@ -24,3 +24,10 @@ public static class MainGrafoPonderado
         Console.WriteLine($"Arcos desde GYE: {g.Vecinos("GYE").Count}");
     }
 }
+
+/*
+ * Salida esperada de consola:
+ *   Arcos desde GYE: {g.Vecinos(
+ *   (los valores variables completan los fragmentos anteriores)
+ * Verificacion: termina sin excepciones inesperadas.
+ */

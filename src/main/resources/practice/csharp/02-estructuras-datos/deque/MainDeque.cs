@@ -21,3 +21,10 @@ public static class MainDeque
         Console.WriteLine("Deque comprobado");
     }
 }
+
+/*
+ * Salida esperada de consola:
+ *   Deque comprobado
+ *   (los valores variables completan los fragmentos anteriores)
+ * Verificacion: termina sin excepciones inesperadas.
+ */

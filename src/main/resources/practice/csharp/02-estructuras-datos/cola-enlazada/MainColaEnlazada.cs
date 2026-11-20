@@ -22,3 +22,10 @@ public static class MainColaEnlazada
         Console.WriteLine("FIFO enlazada verificada");
     }
 }
+
+/*
+ * Salida esperada de consola:
+ *   FIFO enlazada verificada
+ *   (los valores variables completan los fragmentos anteriores)
+ * Verificacion: termina sin excepciones inesperadas.
+ */

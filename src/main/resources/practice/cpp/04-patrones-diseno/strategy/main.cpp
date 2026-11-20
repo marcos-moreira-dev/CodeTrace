@@ -18,3 +18,9 @@ int main() {
     auto a = normal(), b = descuento();
     std::cout << a->total(100) << '\n' << b->total(100) << '\n';
 }
+
+/*
+ * Salida esperada de consola:
+ *   Se imprime el valor o coleccion calculado por el cliente.
+ * Verificacion: termina sin excepciones inesperadas.
+ */

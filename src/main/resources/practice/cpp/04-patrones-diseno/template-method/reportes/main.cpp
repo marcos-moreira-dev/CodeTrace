@@ -23,3 +23,9 @@ int main(){
         throw std::logic_error("Reportes");
     std::cout<<a.ejecutar("ventas",15)<<b.ejecutar("ventas",15);
 }
+
+/*
+ * Salida esperada de consola:
+ *   Se imprime el valor o coleccion calculado por el cliente.
+ * Verificacion: termina sin excepciones inesperadas.
+ */

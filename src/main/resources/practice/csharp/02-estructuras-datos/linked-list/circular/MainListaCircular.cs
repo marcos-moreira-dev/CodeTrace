@@ -24,3 +24,9 @@ public static class MainListaCircular
         Console.WriteLine(string.Join(", ",l.Valores()));
     }
 }
+
+/*
+ * Salida esperada de consola:
+ *   Se imprime el valor o coleccion calculado por el cliente.
+ * Verificacion: termina sin excepciones inesperadas.
+ */

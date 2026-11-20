@@ -22,3 +22,10 @@ public static class MainArbolAVL
         Console.WriteLine($"Altura AVL: {arbol.Validar()}");
     }
 }
+
+/*
+ * Salida esperada de consola:
+ *   Altura AVL: {arbol.Validar()}
+ *   (los valores variables completan los fragmentos anteriores)
+ * Verificacion: termina sin excepciones inesperadas.
+ */

@@ -32,3 +32,10 @@ public static class MainExcepciones
         if (inventario.Disponible != 3) throw new Exception("Invariante");
     }
 }
+
+/*
+ * Salida esperada de consola:
+ *   Rechazo: 
+ *   (los valores variables completan los fragmentos anteriores)
+ * Verificacion: termina sin excepciones inesperadas.
+ */

@@ -26,3 +26,10 @@ public static class MainColaCircular
         Console.WriteLine("Cola circular: prueba de wrap-around OK");
     }
 }
+
+/*
+ * Salida esperada de consola:
+ *   Cola circular: prueba de wrap-around OK
+ *   (los valores variables completan los fragmentos anteriores)
+ * Verificacion: termina sin excepciones inesperadas.
+ */

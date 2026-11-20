@@ -23,3 +23,10 @@ public static class MainHeapMaximo
         Console.WriteLine("Max heap correcto");
     }
 }
+
+/*
+ * Salida esperada de consola:
+ *   Max heap correcto
+ *   (los valores variables completan los fragmentos anteriores)
+ * Verificacion: termina sin excepciones inesperadas.
+ */
