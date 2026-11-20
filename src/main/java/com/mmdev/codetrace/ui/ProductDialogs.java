@@ -114,13 +114,22 @@ public final class ProductDialogs {
         }
         author.getChildren().add(authorDetails);
 
+        Label standardsHeading = new Label("ACCESIBILIDAD Y LICENCIAS");
+        standardsHeading.getStyleClass().add("about-author-heading");
+        Label standards = new Label(
+                "Contraste y legibilidad guiados por WCAG 2.2 y WCAG2ICT (W3C), "
+                + "como referencias de diseño para escritorio; sin certificación.");
+        standards.setWrapText(true);
+        standards.getStyleClass().add("about-license-note");
         Label licenses = new Label(
                 "Fuentes IBM Plex · SIL OFL 1.1  |  Emojis Twemoji · CC BY 4.0\n"
-                + "Créditos y licencias: IBM/plex y jdecked/twemoji.");
+                + "Créditos y licencias: IBM/plex y jdecked/twemoji. "
+                + "Licencia del código: aún por definir.");
         licenses.setWrapText(true);
         licenses.getStyleClass().add("about-license-note");
+        VBox credits = new VBox(6, standardsHeading, standards, licenses);
         VBox contents = new VBox(15, identity, body, new Separator(), author,
-                new Separator(), licenses);
+                new Separator(), credits);
         contents.getStyleClass().add("about-content");
         contents.setPadding(new Insets(10, 24, 20, 24));
         ScrollPane scroll = new ScrollPane(contents);
