@@ -77,6 +77,23 @@ $jarName = "$artifact-$version.jar"
 $jar = Join-Path $target $jarName
 if (-not (Test-Path -LiteralPath $jar)) { throw "No existe el JAR compilado: $jarName" }
 Copy-Item -LiteralPath $jar -Destination $input -Force
+# Include licensing and third-party attribution in both portable and installer.
+# jpackage copies all files from --input into the image's app directory.
+$legalDir = Join-Path $input "licenses"
+New-Item -ItemType Directory -Force -Path $legalDir | Out-Null
+$legalFiles = @(
+    @((Join-Path $root "LICENSE"), "CodeTrace-MIT.txt"),
+    @((Join-Path $root "LICENSING.md"), "LICENSING.md"),
+    @((Join-Path $root "THIRD-PARTY-NOTICES.md"), "THIRD-PARTY-NOTICES.md"),
+    @((Join-Path $root "src\main\resources\fonts\OFL.txt"), "IBM-Plex-OFL.txt"),
+    @((Join-Path $root "src\main\resources\emojis\twemoji\LICENSE-GRAPHICS"), "Twemoji-CC-BY-4.0.txt")
+)
+foreach ($item in $legalFiles) {
+    if (-not (Test-Path -LiteralPath $item[0] -PathType Leaf)) {
+        throw "Falta el aviso legal para empaquetar: $($item[0])"
+    }
+    Copy-Item -LiteralPath $item[0] -Destination (Join-Path $legalDir $item[1]) -Force
+}
 # Windows shell and taskbar must display the official CodeTrace mark,
 # not jpackage's fallback Java icon. Reuse the same ICO converter that
 # generates the distinct .ctrace document icon for the installer.

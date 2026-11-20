@@ -1,6 +1,6 @@
 # CodeTrace v0.3.0 — notas de publicación (BORRADOR)
 
-> Aún no publicar: faltan aprobación del autor, validación manual de Windows y licencia.
+> No es una release publicada: faltan comprobaciones finales de distribución, avisos transitivos de terceros y artefactos de la versión final. El autor acepta el nivel actual de pruebas funcionales, sin afirmar una certificación exhaustiva.
 
 ## Una nueva forma de practicar código
 
@@ -32,4 +32,4 @@ Anexar enlaces oficiales y huellas SHA-256 reales del commit publicado. No reuti
 
 ### Licencias y colaboradores
 
-Añadir licencia seleccionada y atribuciones exactas de terceros antes de liberar este borrador.
+Código fuente original bajo MIT, © 2026 Marcos Moreira. Identidad visual separada de MIT; consultar LICENSING.md. Comprobar avisos completos de terceros antes de distribuir el binario.

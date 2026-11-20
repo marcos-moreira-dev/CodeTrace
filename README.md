@@ -6,7 +6,7 @@
 
 **Un espacio de práctica de mecanografía para código real, con explorador, lectura, progreso y mapa de dependencias.**
 
-Java 21 · JavaFX · Windows 11 · 14 lenguajes en la biblioteca de práctica
+Java 21 · JavaFX · Windows 11 · 14 lenguajes en la biblioteca de práctica · [Licencia MIT](LICENSE)
 
 [Qué puedes hacer](#qué-puedes-hacer) · [Capturas](#capturas-de-pantalla) · [Instalación](#instalación-y-primeros-pasos) · [Desarrollo](#desarrollo) · [Estado del proyecto](#estado-del-proyecto)
 
@@ -99,9 +99,9 @@ Para generar un ZIP portable, y opcionalmente el instalador con las herramientas
 
 ## Estado del proyecto
 
-**CodeTrace v0.3 — candidato en validación.** La rama `feature/practice-curriculum-20261120` no equivale a una publicación. Están pendientes la aceptación manual del instalador y de las sesiones en Windows limpio, el repaso de atribuciones de terceros, la decisión de licencia y la etiqueta/release definitiva. La biblioteca con comentarios de consola v9 está integrada en esta rama, pero todavía requiere CI del commit final y validación cruzada de algunas salidas inferidas.
+**CodeTrace v0.3 — candidato de publicación, no versión estable.** La rama `feature/practice-curriculum-20261120` no equivale a una publicación. Están pendientes la aceptación manual del instalador y de las sesiones en Windows limpio, el repaso de atribuciones de terceros, la auditoría final de avisos de terceros y la etiqueta/release definitiva. La biblioteca con comentarios de consola v9 está integrada en esta rama, pero todavía requiere CI del commit final y validación cruzada de algunas salidas inferidas.
 
-El código está disponible para consulta, pero **todavía no se ha seleccionado una licencia de uso o redistribución**; que el repositorio sea visible no concede por sí solo una licencia de software libre.
+**Código fuente original:** licencia [MIT](LICENSE), © 2026 Marcos Moreira. Puedes usarlo, modificarlo y distribuirlo, incluso comercialmente, conservando el aviso y la licencia; no debes mostrar ningún contacto personal. Los elementos gráficos originales y los componentes de terceros tienen alcances distintos: [identidad y recursos](LICENSING.md) y [avisos de terceros](THIRD-PARTY-NOTICES.md). El nombre CodeTrace no se declara marca registrada.
 
 ---
 

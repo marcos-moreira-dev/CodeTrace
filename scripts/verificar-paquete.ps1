@@ -29,6 +29,11 @@ foreach ($required in @($executable, $runtime, $app, $zip)) {
 }
 $jar = @(Get-ChildItem -LiteralPath $app -Filter "codetrace-*.jar" -File)
 if ($jar.Count -lt 1) { throw "El paquete no contiene el JAR de CodeTrace." }
+foreach ($legal in @("CodeTrace-MIT.txt", "LICENSING.md", "THIRD-PARTY-NOTICES.md", "IBM-Plex-OFL.txt", "Twemoji-CC-BY-4.0.txt")) {
+    if (-not (Test-Path -LiteralPath (Join-Path (Join-Path $app "licenses") $legal) -PathType Leaf)) {
+        throw "No se incluyó el aviso legal requerido: $legal"
+    }
+}
 $zipInfo = Get-Item -LiteralPath $zip
 if ($zipInfo.Length -lt 1048576) {
     throw "ZIP portable demasiado pequeño para contener un runtime Java."
@@ -50,6 +55,11 @@ try {
     }
     if (-not @($entries | Where-Object { $_ -like "*/app/codetrace-*.jar" }).Count) {
         throw "El ZIP no contiene el artefacto compilado."
+    }
+    foreach ($legal in @("CodeTrace-MIT.txt", "LICENSING.md", "THIRD-PARTY-NOTICES.md", "IBM-Plex-OFL.txt", "Twemoji-CC-BY-4.0.txt")) {
+        if (-not @($entries | Where-Object { $_.EndsWith("/app/licenses/$legal") }).Count) {
+            throw "El ZIP no contiene el aviso legal requerido: $legal"
+        }
     }
 } finally {
     $archive.Dispose()

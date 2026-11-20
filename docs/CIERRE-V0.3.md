@@ -7,7 +7,8 @@ independientes. Se valida junto a la aplicación antes de publicar.
 La rama de trabajo `refactor/virtual-explorer-20261119` se basa en
 `fix/media-preview-and-release-20261118`; ninguna reemplaza todavía `main`.
 No fusionar, quitar `-SNAPSHOT` ni crear una etiqueta/release antes de
-completar los controles manuales y resolver la licencia.
+verificar el empaquetado y los avisos de terceros. La licencia del código
+original ya está decidida: MIT, copyright de Marcos Moreira.
 
 ## Evidencia que sí existe
 
@@ -45,7 +46,7 @@ sin herramientas de desarrollo, ni el uso con pantalla de 125/150 % DPI.
 | Consola y comandos externos | Falta cierre manual | Comando inofensivo, proceso largo, detener, cambiar de referencia y cerrar |
 | UX, accesibilidad y escalas Windows | Falta cierre manual | 100 %, 125 % y 150 %; teclado, foco, pestañas, diálogo y mensajes |
 | Instalación en Windows sin JDK/Maven | Falta cierre manual | ZIP portable limpio; instalador, asociación y icono `.ctrace` |
-| Licencia de CodeTrace y avisos de terceros | **Decisión pendiente** | Elegir licencia, incorporar archivo LICENSE y avisos verificables antes de publicar |
+| Licencia de CodeTrace y avisos de terceros | **MIT adoptada; avisos de terceros pendientes de auditoría final** | LICENSE, LICENSING.md y THIRD-PARTY-NOTICES.md presentes; verificar el binario y obligaciones por componente |
 | Versión y GitHub Release | Pendiente | Quitar `-SNAPSHOT`, etiqueta `v0.3.0`, notas y artefactos validados |
 
 ## Reproducir y registrar el cierre en Windows
@@ -76,9 +77,10 @@ Comparar con `dist\CodeTrace-Windows-portable.zip.sha256`.
   mediante FFmpeg instalado por el usuario puede permanecer opcional.
 - `docs/ICONOS-Y-ATRIBUCIONES.md` registra algunas fuentes e iconos,
   pero **no sustituye** un inventario completo de licencias redistribuidas.
-- El repositorio público **no** concede automáticamente permisos de
-  reutilización del código. La licencia será una decisión de autor:
-  evaluar MIT o Apache-2.0 y verificar los avisos de terceros.
+- El código fuente original se distribuye bajo MIT, © 2026 Marcos Moreira.
+  El nombre no se presenta como marca registrada; las imágenes originales
+  y los componentes de terceros se delimitan por separado en LICENSING.md
+  y THIRD-PARTY-NOTICES.md. Verificar aún los avisos en los binarios.
 - La biblioteca v8 ya está integrada en la rama candidata, organizada por
   algoritmos, estructuras y patrones, con fuentes C/C++ para bibliotecas
   estáticas y dinámicas. No ampliar el temario por volumen durante el cierre:

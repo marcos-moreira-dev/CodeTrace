@@ -16,7 +16,7 @@ La interfaz y las funciones esenciales se encuentran en fase de aceptación manu
 | Instalador EXE | Artefacto de CI generado, sin firma digital | Instalar/desinstalar y comprobar accesos e icono `.ctrace` |
 | README promocional | Preparado con cinco capturas seleccionadas y rutas anonimizadas | Integrar imágenes y Markdown en GitHub |
 | Tests automatizados | CI del commit base `3143ca0e...` terminó verde | Ejecutar CI del commit final posterior a v9 |
-| Licencia | **Sin decisión de autor** | Elegir licencia, `LICENSE`, avisos de terceros; sin release hasta resolver |
+| Licencia | **MIT seleccionada; © 2026 Marcos Moreira** | Verificar los avisos de terceros realmente empaquetados antes de release |
 | Versionado | `0.3.0-SNAPSHOT` | Fijar `0.3.0`, generar artefactos con etiqueta final |
 | Firma del instalador | No firmada | Opcional; sin firma, SmartScreen puede advertir |
 
