@@ -61,9 +61,12 @@ public final class MainCaminosMinimos {
 }
 
 /*
- * Salida esperada de consola:
- *   Ruta A-E: 
- *   Dijkstra: 
- *   (los valores variables completan los fragmentos anteriores)
- * Verificacion: termina sin excepciones inesperadas.
+ * Salida esperada de consola (seis líneas):
+ *   Ruta A-E: [0, 2, 1, 3, 4]
+ *   Dijkstra: 7.0
+ *   Bellman-Ford: 7.0
+ *   Floyd-Warshall: 7.0
+ *   Bellman-Ford con arista negativa: 2.0
+ *   Dijkstra rechaza pesos negativos correctamente
+ * Verificación: las rutas y las distancias también se comprueban mediante aserciones.
  */

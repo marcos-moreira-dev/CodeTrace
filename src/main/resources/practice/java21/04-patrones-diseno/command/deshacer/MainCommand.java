@@ -34,6 +34,7 @@ public final class MainCommand {
 
 /*
  * Salida esperada de consola:
- *   Se imprime el valor o coleccion calculado por el cliente.
- * Verificacion: termina sin excepciones inesperadas.
+ *   Hola
+ * Después de ejecutar «Hola» y « mundo», deshacer el último comando
+ * restaura el texto «Hola». Ninguna excepción debe propagarse.
  */

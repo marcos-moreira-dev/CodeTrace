@@ -28,7 +28,6 @@ public final class MainAdapter {
 
 /*
  * Salida esperada de consola:
- *   Temperatura: %.1f °C%n
- *   (los valores variables completan los fragmentos anteriores)
- * Verificacion: termina sin excepciones inesperadas.
+ *   Temperatura: 25.0 °C
+ * El proveedor legado entrega 77 °F y el adaptador convierte a Celsius.
  */

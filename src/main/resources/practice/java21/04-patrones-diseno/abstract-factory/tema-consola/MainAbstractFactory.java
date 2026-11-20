@@ -30,6 +30,7 @@ public final class MainAbstractFactory {
 
 /*
  * Salida esperada de consola:
- *   Sin salida de texto; las pruebas del cliente se cumplen.
- * Verificacion: termina sin excepciones inesperadas.
+ *   [ OK ] / Ventana clara
+ *   < OK > / Ventana oscura
+ * Las dos fábricas producen familias coherentes y distinguibles.
  */

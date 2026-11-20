@@ -52,6 +52,6 @@ public final class MainCasosLimite {
  * Salida esperada de consola:
  *   Destino inaccesible: infinito y sin ruta
  *   Bellman-Ford detectó ciclo negativo
- *   (los valores variables completan los fragmentos anteriores)
- * Verificacion: termina sin excepciones inesperadas.
+ *   Floyd-Warshall detectó ciclo negativo
+ * Verificación: el cliente termina sin excepciones inesperadas.
  */
