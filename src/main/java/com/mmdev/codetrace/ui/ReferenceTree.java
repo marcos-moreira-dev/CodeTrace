@@ -369,13 +369,44 @@ public final class ReferenceTree extends TreeView<Path> {
         expander.expand(clicked, smallReference);
     }
 
-    /** Expand the entire reference; queue the request if indexing is pending. */
+    /**
+     * Expand from the ACTUAL TreeView root, not from a path lookup.
+     *
+     * <p>After a refresh or a full collapse the visible TreeItem is replaced.
+     * Looking it up again via findVisibleNode(referenceRoot) could incorrectly
+     * report that the folder is not visible. Global expansion always starts
+     * from the root currently installed in the TreeView.</p>
+     */
     public void expandAll() {
         if (referenceRoot == null) {
             onStatus.accept("Abre una referencia antes de expandir sus carpetas.");
             return;
         }
-        expandRecursively(referenceRoot);
+        if (index == null || loading) {
+            pendingExpandAll = true;
+            onStatus.accept("Indexando archivos; expansión programada al terminar.");
+            return;
+        }
+        if (expander.isExpanding()) {
+            onStatus.accept("La expansión de carpetas ya está en curso.");
+            return;
+        }
+        TreeItem<Path> visualRoot = getRoot();
+        if (visualRoot == null || !referenceRoot.equals(visualRoot.getValue())) {
+            // Self-heal a stale visual root while keeping the immutable index.
+            refreshTree();
+            visualRoot = getRoot();
+        }
+        if (visualRoot == null) {
+            onStatus.accept("No se pudo reconstruir la raíz del explorador.");
+            return;
+        }
+        if (!nameFilter.isBlank()) {
+            onStatus.accept("La expansión incluye solo carpetas visibles en el filtro.");
+        }
+        boolean smallReference = index.directoryCount() <= 40
+                && index.fileCount() <= 1_000;
+        expander.expand(visualRoot, smallReference);
     }
 
     private void scanReference() {
