@@ -1,5 +1,5 @@
 # CodeTrace | Referencia: PowerShell 7+, callbacks en dos archivos
-# Compilar: pwsh -NoProfile -File 07-proyectos/observer/main.ps1
+# Compilar: pwsh -NoProfile -File 04-patrones-diseno/observer/main.ps1
 . "$PSScriptRoot/Eventos.ps1"
 Registrar-Observador -Handler {
     param([string]$evento)

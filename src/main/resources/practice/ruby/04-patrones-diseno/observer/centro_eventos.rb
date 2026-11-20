@@ -1,5 +1,5 @@
 # CodeTrace | Referencia: Ruby 3+, Observer
-# Compilar: ruby 07-proyectos/observer/main.rb
+# Compilar: ruby 04-patrones-diseno/observer/main.rb
 class CentroEventos
   def initialize
     @observadores = []

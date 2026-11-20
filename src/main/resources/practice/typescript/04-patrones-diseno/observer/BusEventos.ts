@@ -1,5 +1,5 @@
 // CodeTrace | Referencia: TypeScript 5+, proyecto Observer
-// Compilar: npx tsc --target ES2022 --module commonjs 07-proyectos/observer/*.ts
+// Compilar: npx tsc --target ES2022 --module commonjs 04-patrones-diseno/observer/*.ts
 import type { Evento, Observador } from "./Evento";
 export class BusEventos {
     private readonly observadores: Observador[] = [];

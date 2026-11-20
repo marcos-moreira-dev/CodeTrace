@@ -1,5 +1,5 @@
 # CodeTrace | Referencia: Bash 5+, modularizacion y pipelines
-# Compilar: bash 07-proyectos/tuberias/main.sh
+# Compilar: bash 01-fundamentos/composicion/tuberias/main.sh
 #!/usr/bin/env bash
 set -euo pipefail
 directorio="$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)"
