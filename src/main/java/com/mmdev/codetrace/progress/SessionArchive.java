@@ -73,6 +73,7 @@ public final class SessionArchive {
     public static void save(Path destination, State state) throws IOException {
         Objects.requireNonNull(destination);
         Objects.requireNonNull(state);
+        checkInterrupted();
         Path absolute = destination.toAbsolutePath().normalize();
         Path directory = absolute.getParent();
         if (directory == null || !Files.isDirectory(directory)) {
@@ -122,6 +123,7 @@ public final class SessionArchive {
         List<VirtualWorkspace.Entry> entries = state.workspace().entries();
         count(out, entries.size());
         for (var entry : entries) {
+            checkInterrupted();
             writeString(out, entry.path());
             out.writeByte(entry.kind() == VirtualWorkspace.Kind.DIRECTORY ? 1 : 2);
             if (entry.kind() == VirtualWorkspace.Kind.FILE) {
@@ -131,12 +133,14 @@ public final class SessionArchive {
 
         count(out, state.sessions().size());
         for (var pair : state.sessions().entrySet()) {
+            checkInterrupted();
             writeString(out, pair.getKey());
             TypingSession typing = pair.getValue();
             writeString(out, typing.expectedText());
             out.writeInt(typing.caret());
             count(out, typing.enteredSlots().size());
             for (String value : typing.enteredSlots()) {
+                checkInterrupted();
                 out.writeBoolean(value != null);
                 if (value != null) {
                     writeString(out, value);
@@ -144,12 +148,14 @@ public final class SessionArchive {
             }
             count(out, typing.skippedSlots().size());
             for (int index : typing.skippedSlots()) {
+                checkInterrupted();
                 out.writeInt(index);
             }
         }
 
         count(out, state.referenceHashes().size());
         for (var pair : state.referenceHashes().entrySet()) {
+            checkInterrupted();
             writeString(out, pair.getKey());
             writeString(out, pair.getValue());
         }
@@ -157,10 +163,12 @@ public final class SessionArchive {
         // v3: layout metadata is session-only, never written into the reference.
         count(out, state.graphs().size());
         for (var graph : state.graphs().entrySet()) {
+            checkInterrupted();
             writeString(out, graph.getKey());
             writeString(out, graph.getValue().fingerprint());
             count(out, graph.getValue().positions().size());
             for (var point : graph.getValue().positions().entrySet()) {
+                checkInterrupted();
                 writeString(out, point.getKey());
                 out.writeDouble(point.getValue().x());
                 out.writeDouble(point.getValue().y());
