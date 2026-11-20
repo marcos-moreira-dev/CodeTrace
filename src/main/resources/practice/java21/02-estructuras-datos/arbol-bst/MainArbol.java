@@ -1,0 +1,25 @@
+// CodeTrace | Referencia: Java 21 LTS / JDK 21
+// Compilar desde copia del paquete, PowerShell: New-Item -ItemType Directory -Force "$env:TEMP\ct-java21" | Out-Null; javac --release 21 -encoding UTF-8 -d "$env:TEMP\ct-java21" (Get-ChildItem -Recurse -Filter *.java | ForEach-Object FullName)
+// Ejecutar: java -cp "$env:TEMP\ct-java21" codetrace.practica.bst.MainArbol
+
+package codetrace.practica.bst;
+
+/**
+ * Cliente del árbol de búsqueda binaria: estructura, invariante y recorrido.
+ *
+ * <p>Insertar valores desordenados determina la forma del árbol. El
+ * recorrido inorden devuelve los datos ascendentes gracias a la
+ * propiedad izquierda-menor/derecha-mayor; no realiza un sort separado.
+ * Buscar cuesta O(h), así que un BST sin balancear puede caer a O(n).
+ *
+ * <p>La clase cliente invoca operaciones sin manipular los nodos.
+ */
+public final class MainArbol {
+    public static void main(String[] args) {
+        ArbolBusqueda arbol = new ArbolBusqueda();
+        for (int n : new int[]{8, 3, 10, 1, 6, 14, 4, 7}) arbol.insertar(n);
+        System.out.println(arbol.recorridoInorden());
+        System.out.println("Existe 6: " + arbol.contiene(6));
+        System.out.println("Existe 2: " + arbol.contiene(2));
+    }
+}
