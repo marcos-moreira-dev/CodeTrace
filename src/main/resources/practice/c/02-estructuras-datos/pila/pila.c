@@ -4,6 +4,7 @@
  */
 
 #include "pila.h"
+#include <stdint.h>
 #include <stdlib.h>
 
 struct Pila {
