@@ -16,3 +16,18 @@ function ordenar<T>(items: readonly T[], cmp: Comparador<T>): T[] {
 }
 const datos: Producto[] = [{id:"B", precio:2},{id:"A", precio:2},{id:"C", precio:1}];
 console.log(ordenar(datos, (a, b) => a.precio - b.precio || a.id.localeCompare(b.id)));
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   tsc --strict --target ES2022 --module commonjs --outDir "$env:TEMP\ct-ejemplo-ts" .\01-fundamentos\genericos-y-comparadores\genericos_y_comparadores.ts
+ *   node "$env:TEMP\ct-ejemplo-ts\genericos_y_comparadores.js"
+ * Salida esperada:
+ *   [
+ *     { id: 'C', precio: 1 },
+ *     { id: 'A', precio: 2 },
+ *     { id: 'B', precio: 2 }
+ *   ]
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

@@ -15,3 +15,14 @@ class CreadorTexto extends Creador {
     crear() { return new ExportadorTexto(); }
 }
 module.exports = { Creador, CreadorTexto };
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   node .\04-patrones-diseno\factory-method\exportadores\main.js
+ * Nota: creadores.js es un componente; la salida corresponde al cliente main.js.
+ * Salida esperada:
+ *   TXT: Factura 001
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

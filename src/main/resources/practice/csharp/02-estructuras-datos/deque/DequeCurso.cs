@@ -26,3 +26,19 @@ public sealed class DequeCurso<T>
         var v=_datos.Last.Value;_datos.RemoveLast();return v;
     }
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   $d=Join-Path $env:TEMP "ct-ejemplo-csharp"
+ *   if (Test-Path $d) { Remove-Item $d -Recurse -Force }
+ *   dotnet new console -f net8.0 -o $d --force
+ *   Remove-Item "$d\Program.cs" -ErrorAction SilentlyContinue
+ *   Copy-Item .\02-estructuras-datos\deque\*.cs $d -Force
+ *   dotnet run --project $d
+ * Nota: DequeCurso.cs es un componente; la salida corresponde al cliente MainDeque.cs.
+ * Salida esperada:
+ *   Deque comprobado
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

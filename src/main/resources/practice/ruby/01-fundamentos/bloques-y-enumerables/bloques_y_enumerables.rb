@@ -17,3 +17,11 @@ def main
   puts precios_con_impuesto(valores).inspect
 end
 main if __FILE__ == $PROGRAM_NAME
+
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   ruby .\01-fundamentos\bloques-y-enumerables\bloques_y_enumerables.rb
+# Salida esperada:
+#   [5.04, 8.96]
+# CodeTrace | FIN EJEMPLO DE CONSOLA

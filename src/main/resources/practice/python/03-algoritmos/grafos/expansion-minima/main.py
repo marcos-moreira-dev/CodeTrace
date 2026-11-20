@@ -30,8 +30,11 @@ def main() -> None:
 if __name__ == "__main__":
     main()
 
-# Salida esperada de consola:
-#   Prim:
-#   Kruskal:
-#   (los valores variables completan los fragmentos anteriores)
-# Verificacion: termina sin excepciones inesperadas.
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   python -B .\03-algoritmos\grafos\expansion-minima\main.py
+# Salida esperada:
+#   Prim: (8, [Arista(a=0, b=2, costo=1), Arista(a=2, b=1, costo=2), Arista(a=1, b=3, costo=4), Arista(a=3, b=4, costo=1)], 1)
+#   Kruskal: (8, [Arista(a=0, b=2, costo=1), Arista(a=3, b=4, costo=1), Arista(a=1, b=2, costo=2), Arista(a=1, b=3, costo=4)], 1)
+# CodeTrace | FIN EJEMPLO DE CONSOLA

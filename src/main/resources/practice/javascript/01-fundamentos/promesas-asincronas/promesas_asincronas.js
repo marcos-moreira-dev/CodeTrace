@@ -23,3 +23,13 @@ async function main() {
     }
 }
 void main();
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   node .\01-fundamentos\promesas-asincronas\promesas_asincronas.js
+ * Salida esperada:
+ *   [ { id: 1, estado: 'listo' }, { id: 2, estado: 'listo' } ]
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

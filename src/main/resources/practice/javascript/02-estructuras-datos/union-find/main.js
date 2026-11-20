@@ -21,8 +21,11 @@ function main(){
 if(require.main===module)main();
 
 /*
- * Salida esperada de consola:
- *   Componentes:
- *   (los valores variables completan los fragmentos anteriores)
- * Verificacion: termina sin excepciones inesperadas.
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   node .\02-estructuras-datos\union-find\main.js
+ * Salida esperada:
+ *   Componentes: 3
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
  */

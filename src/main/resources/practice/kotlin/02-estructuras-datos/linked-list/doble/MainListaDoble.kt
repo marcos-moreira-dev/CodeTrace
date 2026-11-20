@@ -19,7 +19,12 @@ fun main(){
 }
 
 /*
- * Salida esperada de consola:
- *   Se imprime el valor o coleccion calculado por el cliente.
- * Verificacion: termina sin excepciones inesperadas.
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   kotlinc .\02-estructuras-datos\linked-list\doble\*.kt -jvm-target 21 -include-runtime -d "$env:TEMP\ct-kotlin.jar"
+ *   java -jar "$env:TEMP\ct-kotlin.jar"
+ * Salida esperada:
+ *   [A, B]
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
  */

@@ -26,3 +26,12 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   python -B .\01-fundamentos\funciones-orden-superior\funciones_orden_superior.py
+# Salida esperada:
+#   [13.8, 5.17, 10.35]
+#   [{'codigo': 'A', 'precio': 4}, {'codigo': 'B', 'precio': 4}]
+# CodeTrace | FIN EJEMPLO DE CONSOLA

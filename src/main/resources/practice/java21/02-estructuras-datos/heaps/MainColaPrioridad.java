@@ -29,3 +29,20 @@ public final class MainColaPrioridad {
  *   9
  * El min-heap extrae de menor a mayor, no en orden FIFO.
  */
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   $out=Join-Path $env:TEMP "ct-practica-java"
+ *   New-Item -ItemType Directory -Force -Path $out | Out-Null
+ *   javac --release 21 -encoding UTF-8 -d $out (Get-ChildItem -Recurse -Filter *.java).FullName
+ *   java -cp $out codetrace.practica.heaps.MainColaPrioridad
+ * Salida esperada:
+ *   1
+ *   2
+ *   5
+ *   7
+ *   9
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

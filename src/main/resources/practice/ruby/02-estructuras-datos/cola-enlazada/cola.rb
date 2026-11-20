@@ -26,3 +26,12 @@ class ColaEnlazada
     valor
   end
 end
+
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   ruby .\02-estructuras-datos\cola-enlazada\main.rb
+# Nota: cola.rb es un componente; la salida corresponde al cliente main.rb.
+# Salida esperada:
+#   Cola enlazada correcta
+# CodeTrace | FIN EJEMPLO DE CONSOLA

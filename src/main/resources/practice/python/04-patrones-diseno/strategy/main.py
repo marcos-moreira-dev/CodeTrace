@@ -24,8 +24,11 @@ def main() -> None:
 if __name__ == "__main__":
     main()
 
-# Salida esperada de consola:
-#   Normal:
-#   Promoción:
-#   (los valores variables completan los fragmentos anteriores)
-# Verificacion: termina sin excepciones inesperadas.
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   python -B .\04-patrones-diseno\strategy\main.py
+# Salida esperada:
+#   Normal: 100
+#   Promoción: 90.0
+# CodeTrace | FIN EJEMPLO DE CONSOLA

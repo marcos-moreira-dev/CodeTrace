@@ -39,3 +39,12 @@ class HeapMaximo:
                 a[i],a[m]=a[m],a[i]
                 i=m
         return mayor
+
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   python -B .\02-estructuras-datos\heap-maximo\main.py
+# Nota: heap.py es un componente; la salida corresponde al cliente main.py.
+# Salida esperada:
+#   Max heap correcto
+# CodeTrace | FIN EJEMPLO DE CONSOLA

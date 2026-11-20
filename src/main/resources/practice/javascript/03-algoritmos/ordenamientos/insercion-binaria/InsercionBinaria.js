@@ -15,3 +15,14 @@ function ordenar(a){
     }
 }
 module.exports={ordenar};
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   node .\03-algoritmos\ordenamientos\insercion-binaria\main.js
+ * Nota: InsercionBinaria.js es un componente; la salida corresponde al cliente main.js.
+ * Salida esperada:
+ *   Insercion binaria: [1, 2, 3, 3, 5]
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

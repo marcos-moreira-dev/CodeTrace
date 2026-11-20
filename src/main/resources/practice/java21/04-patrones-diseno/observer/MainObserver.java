@@ -22,3 +22,16 @@ public final class MainObserver {
  *   Nueva venta
  * La lambda suscrita recibe el Evento y presenta su mensaje.
  */
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   $out=Join-Path $env:TEMP "ct-practica-java"
+ *   New-Item -ItemType Directory -Force -Path $out | Out-Null
+ *   javac --release 21 -encoding UTF-8 -d $out (Get-ChildItem -Recurse -Filter *.java).FullName
+ *   java -cp $out codetrace.observer.MainObserver
+ * Salida esperada:
+ *   Nueva venta
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

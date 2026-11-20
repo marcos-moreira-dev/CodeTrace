@@ -32,3 +32,18 @@ for(const [nombre,fn] of metodos){
  * HeapSort: [1, 2, 3, 5, 7, 8, 9]
  * QuickSort: [1, 2, 3, 5, 7, 8, 9]
  */
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   tsc --strict --target ES2022 --module commonjs --outDir "$env:TEMP\ct-ejemplo-ts" .\03-algoritmos\ordenamientos\comparativa-cinco\MainOrdenamientos.ts
+ *   node "$env:TEMP\ct-ejemplo-ts\MainOrdenamientos.js"
+ * Salida esperada:
+ *   Insercion: [1, 2, 3, 5, 7, 8, 9]
+ *   Burbuja: [1, 2, 3, 5, 7, 8, 9]
+ *   Mezcla: [1, 2, 3, 5, 7, 8, 9]
+ *   HeapSort: [1, 2, 3, 5, 7, 8, 9]
+ *   QuickSort: [1, 2, 3, 5, 7, 8, 9]
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

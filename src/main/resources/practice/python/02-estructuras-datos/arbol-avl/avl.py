@@ -83,3 +83,12 @@ class AVL:
             assert abs(a-b) <= 1 and n.altura == 1 + max(a,b)
             return n.altura
         return validar(self.raiz)
+
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   python -B .\02-estructuras-datos\arbol-avl\main.py
+# Nota: avl.py es un componente; la salida corresponde al cliente main.py.
+# Salida esperada:
+#   Altura AVL: 4
+# CodeTrace | FIN EJEMPLO DE CONSOLA

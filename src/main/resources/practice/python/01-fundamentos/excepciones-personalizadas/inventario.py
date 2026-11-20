@@ -32,3 +32,12 @@ class Inventario:
         if cantidad > self._cantidad:
             raise StockInsuficienteError(cantidad, self._cantidad)
         self._cantidad -= cantidad
+
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   python -B .\01-fundamentos\excepciones-personalizadas\main.py
+# Nota: inventario.py es un componente; la salida corresponde al cliente main.py.
+# Salida esperada:
+#   Rechazo: Solicitadas=10, disponibles=3
+# CodeTrace | FIN EJEMPLO DE CONSOLA

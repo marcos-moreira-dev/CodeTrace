@@ -12,3 +12,13 @@ set -eu
 printf '%s\n' manzana pera manzana naranja pera manzana |
     sort |
     uniq -c
+
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   wsl sh 03-algoritmos/frecuencia-de-palabras/frecuencia_de_palabras.sh
+# Salida esperada:
+#         3 manzana
+#         1 naranja
+#         2 pera
+# CodeTrace | FIN EJEMPLO DE CONSOLA

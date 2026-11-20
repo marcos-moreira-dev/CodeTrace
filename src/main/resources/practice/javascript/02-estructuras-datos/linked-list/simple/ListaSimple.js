@@ -20,3 +20,14 @@ class ListaSimple{
     }
 }
 module.exports={ListaSimple};
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   node .\02-estructuras-datos\linked-list\simple\main.js
+ * Nota: ListaSimple.js es un componente; la salida corresponde al cliente main.js.
+ * Salida esperada:
+ *   [ 'C', 'B', 'A' ]
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

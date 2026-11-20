@@ -36,3 +36,14 @@ int main(void) {
  * Suma=7, producto=12
  * Verificacion: exit code 0 y ninguna excepcion inesperada.
  */
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   gcc -std=c17 -Wall -Wextra .\01-fundamentos\compilacion-y-enlazado\biblioteca-estatica-dinamica\*.c -o "$env:TEMP\ct-ejemplo-c.exe"
+ *   & "$env:TEMP\ct-ejemplo-c.exe"
+ * Salida esperada:
+ *   Suma=7, producto=12
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

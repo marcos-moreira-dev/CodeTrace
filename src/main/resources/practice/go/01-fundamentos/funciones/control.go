@@ -17,3 +17,13 @@ func sumaPares(limite int) int {
 func main() {
     fmt.Println(sumaPares(10))
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   go run (Get-ChildItem .\01-fundamentos\funciones\*.go).FullName
+ * Salida esperada:
+ *   30
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

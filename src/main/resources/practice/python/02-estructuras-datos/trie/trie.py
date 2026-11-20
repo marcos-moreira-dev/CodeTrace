@@ -38,3 +38,12 @@ class Trie:
 
     def prefijo(self, texto: str) -> bool:
         return self._nodo(texto) is not None
+
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   python -B .\02-estructuras-datos\trie\main.py
+# Nota: trie.py es un componente; la salida corresponde al cliente main.py.
+# Salida esperada:
+#   Trie de prefijos OK
+# CodeTrace | FIN EJEMPLO DE CONSOLA

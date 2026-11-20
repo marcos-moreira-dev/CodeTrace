@@ -20,3 +20,15 @@ object InsercionBinaria{
         }
     }
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   kotlinc .\03-algoritmos\ordenamientos\insercion-binaria\*.kt -jvm-target 21 -include-runtime -d "$env:TEMP\ct-kotlin.jar"
+ *   java -jar "$env:TEMP\ct-kotlin.jar"
+ * Nota: InsercionBinaria.kt es un componente; la salida corresponde al cliente MainInsercionBinaria.kt.
+ * Salida esperada:
+ *   Insercion binaria: [1, 2, 3, 3, 5]
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

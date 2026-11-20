@@ -71,3 +71,12 @@ class ArbolAVL
     n
   end
 end
+
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   ruby .\02-estructuras-datos\arbol-avl\main.rb
+# Nota: avl.rb es un componente; la salida corresponde al cliente main.rb.
+# Salida esperada:
+#   Altura AVL: 4
+# CodeTrace | FIN EJEMPLO DE CONSOLA

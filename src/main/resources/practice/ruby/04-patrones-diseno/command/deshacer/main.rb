@@ -27,3 +27,11 @@ main if __FILE__ == $PROGRAM_NAME
 # Salida esperada de consola:
 #   Hola
 # El último comando se deshace en orden LIFO.
+
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   ruby .\04-patrones-diseno\command\deshacer\main.rb
+# Salida esperada:
+#   Hola
+# CodeTrace | FIN EJEMPLO DE CONSOLA

@@ -10,3 +10,14 @@ data class Persona(val nombre: String, val edad: Int) {
 
     fun esAdulta(): Boolean = edad >= 18
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   kotlinc .\01-fundamentos\tipos\*.kt -jvm-target 21 -include-runtime -d "$env:TEMP\ct-kotlin.jar"
+ * Nota: archivo reutilizable sin entrada; el comando solo verifica la compilación o sintaxis.
+ * Salida esperada:
+ *   (sin salida de consola; la comprobación termina correctamente)
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

@@ -22,3 +22,14 @@ _start:
     mov eax, 60
     xor edi, edi
     syscall
+
+; CodeTrace | EJEMPLO DE CONSOLA (practica)
+; 
+; Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+;   wsl nasm -f elf64 01-fundamentos/memoria-y-salida/memoria_y_salida.asm -o /tmp/ct-ejemplo.o
+;   wsl ld /tmp/ct-ejemplo.o -o /tmp/ct-ejemplo
+;   wsl sh -c '/tmp/ct-ejemplo; printf "codigo-de-salida:%s\n" "$?"'
+; Salida esperada:
+;   Hola desde NASM
+;   codigo-de-salida:0
+; CodeTrace | FIN EJEMPLO DE CONSOLA

@@ -18,3 +18,15 @@ notificar("Hola", mostrar);
 notificar("Lista", (mensaje) => console.log(mensaje));
 
 export { notificar };
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   tsc --strict --target ES2022 --module commonjs --outDir "$env:TEMP\ct-ejemplo-ts" .\01-fundamentos\funciones\async.ts
+ *   node "$env:TEMP\ct-ejemplo-ts\async.js"
+ * Nota: callbacks.ts es un componente; la salida corresponde al cliente async.ts.
+ * Salida esperada:
+ *   21
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

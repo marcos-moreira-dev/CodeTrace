@@ -14,3 +14,18 @@ public class Control {
         return total;
     }
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   $out=Join-Path $env:TEMP "ct-practica-java"
+ *   New-Item -ItemType Directory -Force -Path $out | Out-Null
+ *   javac --release 21 -encoding UTF-8 -d $out (Get-ChildItem -Recurse -Filter *.java).FullName
+ *   java -cp $out Tipos
+ * Nota: Control.java es un componente; la salida corresponde al cliente Tipos.java.
+ * Salida esperada:
+ *   Cuaderno: 62.5
+ *   true
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

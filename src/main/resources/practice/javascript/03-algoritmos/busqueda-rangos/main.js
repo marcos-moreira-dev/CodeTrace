@@ -20,3 +20,14 @@ if(require.main===module)main();
  * Valor 3: [1, 4)
  * Insertar 4 en indice: 4
  */
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   node .\03-algoritmos\busqueda-rangos\main.js
+ * Salida esperada:
+ *   Valor 3: [1, 4)
+ *   Insertar 4 en indice: 4
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

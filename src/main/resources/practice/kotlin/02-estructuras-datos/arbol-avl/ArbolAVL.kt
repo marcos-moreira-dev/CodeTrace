@@ -68,3 +68,15 @@ class ArbolAVL{
         return recorrer(raiz)
     }
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   kotlinc .\02-estructuras-datos\arbol-avl\*.kt -jvm-target 21 -include-runtime -d "$env:TEMP\ct-kotlin.jar"
+ *   java -jar "$env:TEMP\ct-kotlin.jar"
+ * Nota: ArbolAVL.kt es un componente; la salida corresponde al cliente MainArbolAVL.kt.
+ * Salida esperada:
+ *   Altura AVL: 4
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

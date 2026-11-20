@@ -12,3 +12,13 @@ set -eu
 printf '%s\n' 'Ana 20' 'Luis 10' 'Eva 30' 'Ana 25' |
     awk '$2 >= 20 { print $2, $1 }' |
     sort -n
+
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   wsl sh 03-algoritmos/seleccion-registros/seleccion_registros.sh
+# Salida esperada:
+#   20 Ana
+#   25 Ana
+#   30 Eva
+# CodeTrace | FIN EJEMPLO DE CONSOLA

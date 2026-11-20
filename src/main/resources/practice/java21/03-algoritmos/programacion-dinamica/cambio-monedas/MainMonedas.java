@@ -32,3 +32,17 @@ public final class MainMonedas {
  *   Óptimo DP: 2
  * Para formar 6, el voraz usa 4+1+1 y la solución óptima usa 3+3.
  */
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   $out=Join-Path $env:TEMP "ct-practica-java"
+ *   New-Item -ItemType Directory -Force -Path $out | Out-Null
+ *   javac --release 21 -encoding UTF-8 -d $out (Get-ChildItem -Recurse -Filter *.java).FullName
+ *   java -cp $out codetrace.practica.monedas.MainMonedas
+ * Salida esperada:
+ *   Voraz: 3
+ *   Óptimo DP: 2
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

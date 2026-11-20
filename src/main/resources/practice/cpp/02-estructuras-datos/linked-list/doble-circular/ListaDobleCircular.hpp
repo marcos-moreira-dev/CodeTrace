@@ -47,3 +47,15 @@ public:
         return r;
     }
 };
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   g++ -std=c++20 -Wall -Wextra .\02-estructuras-datos\linked-list\doble-circular\*.cpp -o "$env:TEMP\ct-ejemplo-cpp.exe"
+ *   & "$env:TEMP\ct-ejemplo-cpp.exe"
+ * Nota: ListaDobleCircular.hpp es un componente; la salida corresponde al cliente main.cpp.
+ * Salida esperada:
+ *   Doble circular OK
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

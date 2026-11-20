@@ -22,3 +22,15 @@ int Carpeta::bytes()const{
     for(const auto& e:hijos)total+=e->bytes();
     return total;
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   g++ -std=c++20 -Wall -Wextra .\04-patrones-diseno\composite\arbol-archivos\*.cpp -o "$env:TEMP\ct-ejemplo-cpp.exe"
+ *   & "$env:TEMP\ct-ejemplo-cpp.exe"
+ * Nota: Elementos.cpp es un componente; la salida corresponde al cliente main.cpp.
+ * Salida esperada:
+ *   Bytes: 220
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

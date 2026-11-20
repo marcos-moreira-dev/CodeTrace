@@ -25,3 +25,12 @@ class Inventario
     @disponible -= cantidad
   end
 end
+
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   ruby .\01-fundamentos\excepciones-personalizadas\main.rb
+# Nota: inventario.rb es un componente; la salida corresponde al cliente main.rb.
+# Salida esperada:
+#   Solicitado 10, disponible 3
+# CodeTrace | FIN EJEMPLO DE CONSOLA

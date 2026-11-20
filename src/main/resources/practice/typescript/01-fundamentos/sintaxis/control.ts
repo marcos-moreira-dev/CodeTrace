@@ -12,3 +12,14 @@ function sumarPares(limite: number): number {
 }
 
 console.log(sumarPares(10));
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   tsc --strict --target ES2022 --module commonjs --outDir "$env:TEMP\ct-ejemplo-ts" .\01-fundamentos\sintaxis\control.ts
+ *   node "$env:TEMP\ct-ejemplo-ts\control.js"
+ * Salida esperada:
+ *   30
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

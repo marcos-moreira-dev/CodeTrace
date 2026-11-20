@@ -22,3 +22,11 @@ if __name__ == "__main__":
 # Salida esperada de consola:
 #   POST /facturas (1 cabecera)
 # La validación del Builder entrega un producto inmutable con una cabecera.
+
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   python -B .\04-patrones-diseno\builder\solicitud\main.py
+# Salida esperada:
+#   POST /facturas (1 cabecera)
+# CodeTrace | FIN EJEMPLO DE CONSOLA

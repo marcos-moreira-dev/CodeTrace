@@ -25,3 +25,14 @@ int main() {
     const std::vector<int> enteros{1, 2, 3, 4};
     std::cout << "Suma: " << sumar(enteros) << '\n';
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   g++ -std=c++20 -Wall -Wextra .\01-fundamentos\templates-y-concepts\*.cpp -o "$env:TEMP\ct-ejemplo-cpp.exe"
+ *   & "$env:TEMP\ct-ejemplo-cpp.exe"
+ * Salida esperada:
+ *   Suma: 10
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

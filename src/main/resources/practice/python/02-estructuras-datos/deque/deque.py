@@ -25,3 +25,12 @@ class Deque:
 
     def quitar_ultimo(self) -> str:
         return self._datos.pop()
+
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   python -B .\02-estructuras-datos\deque\main.py
+# Nota: deque.py es un componente; la salida corresponde al cliente main.py.
+# Salida esperada:
+#   Deque verificada
+# CodeTrace | FIN EJEMPLO DE CONSOLA

@@ -30,3 +30,15 @@ int main(void) {
     arreglo = NULL;
     return EXIT_SUCCESS;
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   gcc -std=c17 -Wall -Wextra .\01-fundamentos\punteros-y-memoria\*.c -o "$env:TEMP\ct-ejemplo-c.exe"
+ *   & "$env:TEMP\ct-ejemplo-c.exe"
+ * Salida esperada:
+ *   Original=7, por puntero=7
+ *   0 2 4 
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

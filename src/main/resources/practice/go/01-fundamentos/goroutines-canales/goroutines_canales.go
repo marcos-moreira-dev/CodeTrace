@@ -19,3 +19,16 @@ func main() {
     go producir(canal)
     for n := range canal { fmt.Println(n) }
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   go run (Get-ChildItem .\01-fundamentos\goroutines-canales\*.go).FullName
+ * Salida esperada:
+ *   2
+ *   3
+ *   5
+ *   7
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

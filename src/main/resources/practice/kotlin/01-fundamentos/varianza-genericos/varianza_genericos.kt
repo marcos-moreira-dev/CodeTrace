@@ -17,3 +17,14 @@ fun mostrar(fuente: Productor<CharSequence>) {
     println(fuente.obtener())
 }
 fun main() = mostrar(Texto("Kotlin"))
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   kotlinc .\01-fundamentos\varianza-genericos\*.kt -jvm-target 21 -include-runtime -d "$env:TEMP\ct-kotlin.jar"
+ *   java -jar "$env:TEMP\ct-kotlin.jar"
+ * Salida esperada:
+ *   Kotlin
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

@@ -27,3 +27,12 @@ class UnionFind
   end
   def conectados(a, b); raiz(a) == raiz(b); end
 end
+
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   ruby .\02-estructuras-datos\union-find\main.rb
+# Nota: union_find.rb es un componente; la salida corresponde al cliente main.rb.
+# Salida esperada:
+#   Componentes: 3
+# CodeTrace | FIN EJEMPLO DE CONSOLA

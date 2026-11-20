@@ -34,3 +34,16 @@ public final class MainArbolAVL {
  * Los valores 1..15 se equilibran en cuatro niveles; un BST simple
  * sin balanceo alcanzaría altura 15 con esa inserción ascendente.
  */
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   $out=Join-Path $env:TEMP "ct-practica-java"
+ *   New-Item -ItemType Directory -Force -Path $out | Out-Null
+ *   javac --release 21 -encoding UTF-8 -d $out (Get-ChildItem -Recurse -Filter *.java).FullName
+ *   java -cp $out codetrace.practica.estructuras.avl.MainArbolAVL
+ * Salida esperada:
+ *   Altura del AVL: 4
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

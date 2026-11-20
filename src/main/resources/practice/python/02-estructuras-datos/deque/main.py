@@ -22,7 +22,10 @@ def main() -> None:
 if __name__ == "__main__":
     main()
 
-# Salida esperada de consola:
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   python -B .\02-estructuras-datos\deque\main.py
+# Salida esperada:
 #   Deque verificada
-#   (los valores variables completan los fragmentos anteriores)
-# Verificacion: termina sin excepciones inesperadas.
+# CodeTrace | FIN EJEMPLO DE CONSOLA

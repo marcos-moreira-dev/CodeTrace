@@ -35,3 +35,19 @@ public sealed class UnionFind
     }
     public bool Conectados(int a,int b)=>Raiz(a)==Raiz(b);
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   $d=Join-Path $env:TEMP "ct-ejemplo-csharp"
+ *   if (Test-Path $d) { Remove-Item $d -Recurse -Force }
+ *   dotnet new console -f net8.0 -o $d --force
+ *   Remove-Item "$d\Program.cs" -ErrorAction SilentlyContinue
+ *   Copy-Item .\02-estructuras-datos\union-find\*.cs $d -Force
+ *   dotnet run --project $d
+ * Nota: UnionFind.cs es un componente; la salida corresponde al cliente MainUnionFind.cs.
+ * Salida esperada:
+ *   Componentes: 3
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

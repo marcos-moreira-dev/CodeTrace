@@ -19,3 +19,12 @@ class Pila
     @datos.length
   end
 end
+
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   ruby .\02-estructuras-datos\pila\main.rb
+# Nota: pila.rb es un componente; la salida corresponde al cliente main.rb.
+# Salida esperada:
+#   Pila correcta
+# CodeTrace | FIN EJEMPLO DE CONSOLA

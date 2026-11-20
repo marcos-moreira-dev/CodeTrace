@@ -11,7 +11,7 @@ La interfaz y las funciones esenciales se encuentran en fase de aceptación manu
 | Entregable | Situación comprobada | Pendiente |
 |---|---|---|
 | Código fuente | Rama candidata `feature/practice-curriculum-20261120` | Integrar cambios v9, revisión y merge tras aceptación |
-| Biblioteca v9 | Paquete de 812 fuentes en 14 lenguajes, 813 entradas en catálogo | Subir al repositorio y validar salida inferida en entornos faltantes |
+| Biblioteca v9 | 813 fuentes documentadas en 14 lenguajes, 813 entradas en catálogo e integración en rama candidata | Ejecutar CI final y validar salidas inferidas en entornos faltantes |
 | Portable ZIP de Windows | Artefacto de CI construido y con checksum, incluye runtime Java | Probar en Windows limpio, sin JDK/Maven |
 | Instalador EXE | Artefacto de CI generado, sin firma digital | Instalar/desinstalar y comprobar accesos e icono `.ctrace` |
 | README promocional | Preparado con cinco capturas seleccionadas y rutas anonimizadas | Integrar imágenes y Markdown en GitHub |
@@ -22,7 +22,7 @@ La interfaz y las funciones esenciales se encuentran en fase de aceptación manu
 
 ## Orden recomendado de cierre (sin ampliar funcionalidades)
 
-1. Aplicar este paquete a una copia limpia de la rama candidata. Ejecutar `python scripts/documentar_consola_practica.py --check`, Maven verify y la verificación del currículo.
+1. Revisar la integración v9 en una copia limpia de la rama candidata. Ejecutar `python scripts/documentar_consola_practica.py --check`, Maven verify y la verificación del currículo.
 2. Revisar el README completo **con las imágenes efectivamente presentes**; comprobar que no incluye nombres de usuario ni rutas personales.
 3. Verificar manualmente los casos esenciales de `docs/QA-WINDOWS.md`: crear/retomar sesión, audio/vídeo y Markdown, grafo, comando que se puede detener, vista a diferentes DPI.
 4. Probar instalador y portable en Windows 11 sin JDK ni Maven. Probar instalación, asociación de `.ctrace`, apertura, guardado, desinstalación y copia portable.

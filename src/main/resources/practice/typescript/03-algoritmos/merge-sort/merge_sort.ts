@@ -22,3 +22,14 @@ function ordenar(datos: readonly number[]): number[] {
     return [...salida, ...izq.slice(i), ...der.slice(j)];
 }
 console.log(ordenar([9, 5, 2, 8, 1, 3]));
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   tsc --strict --target ES2022 --module commonjs --outDir "$env:TEMP\ct-ejemplo-ts" .\03-algoritmos\merge-sort\merge_sort.ts
+ *   node "$env:TEMP\ct-ejemplo-ts\merge_sort.js"
+ * Salida esperada:
+ *   [ 1, 2, 3, 5, 8, 9 ]
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

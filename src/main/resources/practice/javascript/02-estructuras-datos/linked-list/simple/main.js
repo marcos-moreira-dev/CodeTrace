@@ -20,7 +20,11 @@ function main(){
 if(require.main===module)main();
 
 /*
- * Salida esperada de consola:
- *   Se imprime el valor o coleccion calculado por el cliente.
- * Verificacion: termina sin excepciones inesperadas.
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   node .\02-estructuras-datos\linked-list\simple\main.js
+ * Salida esperada:
+ *   [ 'C', 'B', 'A' ]
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
  */

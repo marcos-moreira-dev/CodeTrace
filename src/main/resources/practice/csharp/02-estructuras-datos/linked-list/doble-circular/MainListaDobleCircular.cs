@@ -25,7 +25,16 @@ public static class MainListaDobleCircular
 }
 
 /*
- * Salida esperada de consola:
- *   Se imprime el valor o coleccion calculado por el cliente.
- * Verificacion: termina sin excepciones inesperadas.
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   $d=Join-Path $env:TEMP "ct-ejemplo-csharp"
+ *   if (Test-Path $d) { Remove-Item $d -Recurse -Force }
+ *   dotnet new console -f net8.0 -o $d --force
+ *   Remove-Item "$d\Program.cs" -ErrorAction SilentlyContinue
+ *   Copy-Item .\02-estructuras-datos\linked-list\doble-circular\*.cs $d -Force
+ *   dotnet run --project $d
+ * Salida esperada:
+ *   2, 3, 5
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
  */

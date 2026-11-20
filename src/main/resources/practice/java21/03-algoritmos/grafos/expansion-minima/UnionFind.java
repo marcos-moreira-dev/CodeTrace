@@ -50,3 +50,19 @@ public final class UnionFind {
 
     public int componentes() { return componentes; }
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   $out=Join-Path $env:TEMP "ct-practica-java"
+ *   New-Item -ItemType Directory -Force -Path $out | Out-Null
+ *   javac --release 21 -encoding UTF-8 -d $out (Get-ChildItem -Recurse -Filter *.java).FullName
+ *   java -cp $out codetrace.practica.grafosmst.MainExpansionMinima
+ * Nota: UnionFind.java es un componente; la salida corresponde al cliente MainExpansionMinima.java.
+ * Salida esperada:
+ *   Prim:    [Arista[a=0, b=2, peso=1], Arista[a=2, b=1, peso=2], Arista[a=1, b=3, peso=4], Arista[a=3, b=4, peso=1]] = 8
+ *   Kruskal: [Arista[a=0, b=2, peso=1], Arista[a=3, b=4, peso=1], Arista[a=1, b=2, peso=2], Arista[a=1, b=3, peso=4]] = 8
+ *   Seis vértices, dos componentes: 2
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

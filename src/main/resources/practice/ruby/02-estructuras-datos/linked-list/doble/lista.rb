@@ -42,3 +42,12 @@ class ListaDoble
     salida
   end
 end
+
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   ruby .\02-estructuras-datos\linked-list\doble\main.rb
+# Nota: lista.rb es un componente; la salida corresponde al cliente main.rb.
+# Salida esperada:
+#   ["A", "B"]
+# CodeTrace | FIN EJEMPLO DE CONSOLA

@@ -18,8 +18,12 @@ lista.insertarInicio("B");
 console.log("Lista con dos nodos insertados");
 
 /*
- * Salida esperada de consola:
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   tsc --strict --target ES2022 --module commonjs --outDir "$env:TEMP\ct-ejemplo-ts" .\02-estructuras-datos\linked-list\simple\MainListaSimple.ts
+ *   node "$env:TEMP\ct-ejemplo-ts\MainListaSimple.js"
+ * Salida esperada:
  *   Lista con dos nodos insertados
- *   (los valores variables completan los fragmentos anteriores)
- * Verificacion: termina sin excepciones inesperadas.
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
  */

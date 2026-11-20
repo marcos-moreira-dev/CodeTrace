@@ -36,3 +36,19 @@ public final class MainHash {
  *   Claves distintas=2
  * Las claves FB y Ea colisionan, pero conservan valores independientes.
  */
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   $out=Join-Path $env:TEMP "ct-practica-java"
+ *   New-Item -ItemType Directory -Force -Path $out | Out-Null
+ *   javac --release 21 -encoding UTF-8 -d $out (Get-ChildItem -Recurse -Filter *.java).FullName
+ *   java -cp $out codetrace.practica.hash.MainHash
+ * Salida esperada:
+ *   FB=15
+ *   Ea=20
+ *   Ausente=null
+ *   Claves distintas=2
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

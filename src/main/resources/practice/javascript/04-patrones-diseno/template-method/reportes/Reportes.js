@@ -25,3 +25,17 @@ class ReporteCsv extends ProcesoReporte{
     detalle(total){return "ventas,"+total;}
 }
 module.exports={ProcesoReporte,ReporteTexto,ReporteCsv};
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   node .\04-patrones-diseno\template-method\reportes\main.js
+ * Nota: Reportes.js es un componente; la salida corresponde al cliente main.js.
+ * Salida esperada:
+ *   == ventas ==
+ *   Total: 15
+ *   titulo,total
+ *   ventas,15
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

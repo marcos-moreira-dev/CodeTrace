@@ -17,3 +17,15 @@ console.log(historial.get(objeto));
 console.log(historial.get({ codigo: "A" })); // undefined
 const claves = new Set(["A", "B", "A"]);
 console.log([...claves]);
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   node .\01-fundamentos\map-set-referencias\map_set_referencias.js
+ * Salida esperada:
+ *   42
+ *   undefined
+ *   [ 'A', 'B' ]
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

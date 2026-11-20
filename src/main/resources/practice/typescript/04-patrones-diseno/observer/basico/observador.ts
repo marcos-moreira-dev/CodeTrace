@@ -19,3 +19,15 @@ export class Observador {
     for (const escucha of this.oyentes) escucha(this.valor);
   }
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   tsc --strict --target ES2022 --module commonjs --outDir "$env:TEMP\ct-ejemplo-ts" .\04-patrones-diseno\observer\basico\MainObserverBasico.ts
+ *   node "$env:TEMP\ct-ejemplo-ts\MainObserverBasico.js"
+ * Nota: observador.ts es un componente; la salida corresponde al cliente MainObserverBasico.ts.
+ * Salida esperada:
+ *   [ 'pantalla:42', 'auditoria:42' ]
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

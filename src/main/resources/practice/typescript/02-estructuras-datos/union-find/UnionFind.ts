@@ -32,3 +32,15 @@ export class UnionFind{
     }
     conectados(a:number,b:number):boolean{return this.raiz(a)===this.raiz(b);}
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   tsc --strict --target ES2022 --module commonjs --outDir "$env:TEMP\ct-ejemplo-ts" .\02-estructuras-datos\union-find\MainUnionFind.ts
+ *   node "$env:TEMP\ct-ejemplo-ts\MainUnionFind.js"
+ * Nota: UnionFind.ts es un componente; la salida corresponde al cliente MainUnionFind.ts.
+ * Salida esperada:
+ *   Componentes: 3
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

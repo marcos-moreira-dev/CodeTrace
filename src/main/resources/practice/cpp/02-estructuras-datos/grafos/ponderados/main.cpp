@@ -24,8 +24,12 @@ int main(){
 }
 
 /*
- * Salida esperada de consola:
- *   Arcos desde GYE: 
- *   (los valores variables completan los fragmentos anteriores)
- * Verificacion: las aserciones se cumplen y el proceso termina sin error.
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   g++ -std=c++20 -Wall -Wextra .\02-estructuras-datos\grafos\ponderados\*.cpp -o "$env:TEMP\ct-ejemplo-cpp.exe"
+ *   & "$env:TEMP\ct-ejemplo-cpp.exe"
+ * Salida esperada:
+ *   Arcos desde GYE: 2
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
  */

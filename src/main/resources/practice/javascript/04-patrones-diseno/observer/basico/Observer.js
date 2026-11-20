@@ -16,3 +16,14 @@ class Emisor {
     }
 }
 module.exports = { Emisor };
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   node .\04-patrones-diseno\observer\basico\main.js
+ * Nota: Observer.js es un componente; la salida corresponde al cliente main.js.
+ * Salida esperada:
+ *   [ 42 ]
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

@@ -9,3 +9,14 @@ const activo: boolean = true;
 
 archivos += 2;
 console.log(nombre, archivos, activo);
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   tsc --strict --target ES2022 --module commonjs --outDir "$env:TEMP\ct-ejemplo-ts" .\01-fundamentos\sintaxis\variables.ts
+ *   node "$env:TEMP\ct-ejemplo-ts\variables.js"
+ * Salida esperada:
+ *   CodeTrace 5 true
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

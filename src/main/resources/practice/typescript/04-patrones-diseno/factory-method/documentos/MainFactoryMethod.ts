@@ -18,7 +18,12 @@ console.log(resultado);
 if (resultado !== "TXT: Factura 001") throw Error("Factory Method");
 
 /*
- * Salida esperada de consola:
- *   Se imprime el valor o coleccion calculado por el cliente.
- * Verificacion: termina sin excepciones inesperadas.
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   tsc --strict --target ES2022 --module commonjs --outDir "$env:TEMP\ct-ejemplo-ts" .\04-patrones-diseno\factory-method\documentos\MainFactoryMethod.ts
+ *   node "$env:TEMP\ct-ejemplo-ts\MainFactoryMethod.js"
+ * Salida esperada:
+ *   TXT: Factura 001
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
  */

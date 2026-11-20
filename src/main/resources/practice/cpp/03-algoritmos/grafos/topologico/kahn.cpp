@@ -55,3 +55,18 @@ int main() {
     };
     for (const auto& paso : ordenar(g)) std::cout << paso << '\n';
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   g++ -std=c++20 -Wall -Wextra .\03-algoritmos\grafos\topologico\*.cpp -o "$env:TEMP\ct-ejemplo-cpp.exe"
+ *   & "$env:TEMP\ct-ejemplo-cpp.exe"
+ * Salida esperada:
+ *   Fuentes
+ *   Compilar
+ *   Pruebas
+ *   Empaquetar
+ *   Desplegar
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

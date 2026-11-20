@@ -48,3 +48,12 @@ class ListaDobleCircular(Generic[T]):
             r.append(actual.dato)
             actual = actual.anterior if inverso else actual.siguiente
         return r
+
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   python -B .\02-estructuras-datos\linked-list\doble-circular\main.py
+# Nota: lista.py es un componente; la salida corresponde al cliente main.py.
+# Salida esperada:
+#   [2, 3, 5] [5, 3, 2]
+# CodeTrace | FIN EJEMPLO DE CONSOLA

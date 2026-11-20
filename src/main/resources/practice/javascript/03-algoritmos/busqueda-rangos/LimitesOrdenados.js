@@ -20,3 +20,15 @@ function upper(a,x){
     return lo;
 }
 module.exports={lower,upper};
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   node .\03-algoritmos\busqueda-rangos\main.js
+ * Nota: LimitesOrdenados.js es un componente; la salida corresponde al cliente main.js.
+ * Salida esperada:
+ *   Valor 3: [1, 4)
+ *   Insertar 4 en indice: 4
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

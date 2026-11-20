@@ -8,6 +8,10 @@ def main() -> None:
 if __name__ == "__main__":
     main()
 
-# Salida esperada de consola:
-#   Se imprime el valor o coleccion calculado por el cliente.
-# Verificacion: termina sin excepciones inesperadas.
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   python -B .\04-patrones-diseno\factory-method\main.py
+# Salida esperada:
+#   TEXTO: Factura 001
+# CodeTrace | FIN EJEMPLO DE CONSOLA

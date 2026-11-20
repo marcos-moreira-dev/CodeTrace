@@ -20,3 +20,14 @@ class Carpeta{
     bytes(){return this.hijos.reduce((total,x)=>total+x.bytes(),0);}
 }
 module.exports={Archivo,Carpeta};
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   node .\04-patrones-diseno\composite\arbol-archivos\main.js
+ * Nota: Elementos.js es un componente; la salida corresponde al cliente main.js.
+ * Salida esperada:
+ *   Bytes: 220
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

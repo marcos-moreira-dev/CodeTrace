@@ -35,3 +35,16 @@ int main() {
     resolver(0, columnas, soluciones);
     std::cout << "Soluciones: " << soluciones << '\n';
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   g++ -std=c++20 -Wall -Wextra .\03-algoritmos\cuatro-reinas\*.cpp -o "$env:TEMP\ct-ejemplo-cpp.exe"
+ *   & "$env:TEMP\ct-ejemplo-cpp.exe"
+ * Salida esperada:
+ *   1 3 0 2 
+ *   2 0 3 1 
+ *   Soluciones: 2
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

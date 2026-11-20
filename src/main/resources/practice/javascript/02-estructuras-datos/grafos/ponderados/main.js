@@ -22,7 +22,11 @@ function main(){
 if(require.main===module)main();
 
 /*
- * Salida esperada de consola:
- *   Se imprime el valor o coleccion calculado por el cliente.
- * Verificacion: termina sin excepciones inesperadas.
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   node .\02-estructuras-datos\grafos\ponderados\main.js
+ * Salida esperada:
+ *   [ { destino: 'UIO', peso: 12 }, { destino: 'CUE', peso: 18 } ]
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
  */

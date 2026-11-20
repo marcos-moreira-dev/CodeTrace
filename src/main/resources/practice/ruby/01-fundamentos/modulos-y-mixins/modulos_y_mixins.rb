@@ -20,3 +20,11 @@ class Sensor
   end
 end
 puts Sensor.new("LM35").describir
+
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   ruby .\01-fundamentos\modulos-y-mixins\modulos_y_mixins.rb
+# Salida esperada:
+#   Código: LM35
+# CodeTrace | FIN EJEMPLO DE CONSOLA

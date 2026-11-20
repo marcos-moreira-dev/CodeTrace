@@ -18,8 +18,12 @@ if(Array.from({length:5},()=>heap.extraer()).join(",")!=="9,7,4,2,1")
 console.log("Heap máximo OK");
 
 /*
- * Salida esperada de consola:
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   tsc --strict --target ES2022 --module commonjs --outDir "$env:TEMP\ct-ejemplo-ts" .\02-estructuras-datos\heap-maximo\MainHeapMaximo.ts
+ *   node "$env:TEMP\ct-ejemplo-ts\MainHeapMaximo.js"
+ * Salida esperada:
  *   Heap máximo OK
- *   (los valores variables completan los fragmentos anteriores)
- * Verificacion: termina sin excepciones inesperadas.
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
  */

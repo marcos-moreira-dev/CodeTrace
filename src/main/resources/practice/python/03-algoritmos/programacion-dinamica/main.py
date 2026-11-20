@@ -23,8 +23,11 @@ def main() -> None:
 if __name__ == "__main__":
     main()
 
-# Salida esperada de consola:
-#   Voraz:
-#   Dinámica:
-#   (los valores variables completan los fragmentos anteriores)
-# Verificacion: termina sin excepciones inesperadas.
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   python -B .\03-algoritmos\programacion-dinamica\main.py
+# Salida esperada:
+#   Voraz: 3
+#   Dinámica: 2
+# CodeTrace | FIN EJEMPLO DE CONSOLA

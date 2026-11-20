@@ -26,3 +26,15 @@ export class SolicitudBuilder{
         });
     }
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   tsc --strict --target ES2022 --module commonjs --outDir "$env:TEMP\ct-ejemplo-ts" .\04-patrones-diseno\builder\solicitud\MainBuilder.ts
+ *   node "$env:TEMP\ct-ejemplo-ts\MainBuilder.js"
+ * Nota: Solicitud.ts es un componente; la salida corresponde al cliente MainBuilder.ts.
+ * Salida esperada:
+ *   POST /facturas (1 cabecera)
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

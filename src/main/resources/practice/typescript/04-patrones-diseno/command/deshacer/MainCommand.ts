@@ -26,3 +26,14 @@ console.log(editor.texto);
  *   Hola
  * La pila de comandos restablece el texto anterior sin cambiar el receptor.
  */
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   tsc --strict --target ES2022 --module commonjs --outDir "$env:TEMP\ct-ejemplo-ts" .\04-patrones-diseno\command\deshacer\MainCommand.ts
+ *   node "$env:TEMP\ct-ejemplo-ts\MainCommand.js"
+ * Salida esperada:
+ *   Hola
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

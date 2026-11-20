@@ -33,3 +33,13 @@ def dinamica(monedas: list[int], monto: int) -> int:
 def validar(monedas: list[int], monto: int) -> None:
     if not monedas or monto < 0 or any(moneda <= 0 for moneda in monedas):
         raise ValueError("Monedas y monto deben ser positivos/no negativos")
+
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   python -B .\03-algoritmos\programacion-dinamica\main.py
+# Nota: monedas.py es un componente; la salida corresponde al cliente main.py.
+# Salida esperada:
+#   Voraz: 3
+#   Dinámica: 2
+# CodeTrace | FIN EJEMPLO DE CONSOLA

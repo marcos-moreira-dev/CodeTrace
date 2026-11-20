@@ -21,3 +21,15 @@ fun main(){
  * Valor 3: [1, 4)
  * Insertar 4 en indice: 4
  */
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   kotlinc .\03-algoritmos\busqueda-rangos\*.kt -jvm-target 21 -include-runtime -d "$env:TEMP\ct-kotlin.jar"
+ *   java -jar "$env:TEMP\ct-kotlin.jar"
+ * Salida esperada:
+ *   Valor 3: [1, 4)
+ *   Insertar 4 en indice: 4
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

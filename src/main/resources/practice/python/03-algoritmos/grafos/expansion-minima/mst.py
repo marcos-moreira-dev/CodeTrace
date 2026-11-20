@@ -94,3 +94,13 @@ def validar(vertices: int, aristas: list[Arista]) -> None:
     for e in aristas:
         if not (0 <= e.a < vertices and 0 <= e.b < vertices and e.a != e.b):
             raise ValueError("Arista no válida")
+
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   python -B .\03-algoritmos\grafos\expansion-minima\main.py
+# Nota: mst.py es un componente; la salida corresponde al cliente main.py.
+# Salida esperada:
+#   Prim: (8, [Arista(a=0, b=2, costo=1), Arista(a=2, b=1, costo=2), Arista(a=1, b=3, costo=4), Arista(a=3, b=4, costo=1)], 1)
+#   Kruskal: (8, [Arista(a=0, b=2, costo=1), Arista(a=3, b=4, costo=1), Arista(a=1, b=2, costo=2), Arista(a=1, b=3, costo=4)], 1)
+# CodeTrace | FIN EJEMPLO DE CONSOLA

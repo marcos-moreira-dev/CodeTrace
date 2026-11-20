@@ -16,3 +16,11 @@ fibonacci = Enumerator.new do |salida|
   end
 end
 p fibonacci.lazy.select(&:even?).first(5)
+
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   ruby .\01-fundamentos\enumeradores-perezosos\enumeradores_perezosos.rb
+# Salida esperada:
+#   [0, 2, 8, 34, 144]
+# CodeTrace | FIN EJEMPLO DE CONSOLA

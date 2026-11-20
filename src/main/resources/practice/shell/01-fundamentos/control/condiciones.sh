@@ -10,3 +10,11 @@ if [ "$numero" -gt 5 ]; then
 else
     printf 'Cinco o menos\n'
 fi
+
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   wsl sh 01-fundamentos/control/condiciones.sh
+# Salida esperada:
+#   Mayor que cinco
+# CodeTrace | FIN EJEMPLO DE CONSOLA

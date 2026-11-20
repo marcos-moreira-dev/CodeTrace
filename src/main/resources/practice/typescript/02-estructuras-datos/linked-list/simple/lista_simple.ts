@@ -18,3 +18,15 @@ export class ListaSimple<T> {
     this.primero = nuevo;
   }
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   tsc --strict --target ES2022 --module commonjs --outDir "$env:TEMP\ct-ejemplo-ts" .\02-estructuras-datos\linked-list\simple\MainListaSimple.ts
+ *   node "$env:TEMP\ct-ejemplo-ts\MainListaSimple.js"
+ * Nota: lista_simple.ts es un componente; la salida corresponde al cliente MainListaSimple.ts.
+ * Salida esperada:
+ *   Lista con dos nodos insertados
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

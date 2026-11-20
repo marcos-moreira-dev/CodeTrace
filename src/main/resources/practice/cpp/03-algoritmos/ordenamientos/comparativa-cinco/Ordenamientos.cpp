@@ -69,3 +69,19 @@ void Ordenamientos::rapido(std::vector<int>& a){
     };
     ordenar(ordenar,0,static_cast<int>(a.size())-1);
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   g++ -std=c++20 -Wall -Wextra .\03-algoritmos\ordenamientos\comparativa-cinco\*.cpp -o "$env:TEMP\ct-ejemplo-cpp.exe"
+ *   & "$env:TEMP\ct-ejemplo-cpp.exe"
+ * Nota: Ordenamientos.cpp es un componente; la salida corresponde al cliente main.cpp.
+ * Salida esperada:
+ *   Insercion: [1, 2, 3, 5, 7, 8, 9]
+ *   Burbuja: [1, 2, 3, 5, 7, 8, 9]
+ *   Mezcla: [1, 2, 3, 5, 7, 8, 9]
+ *   HeapSort: [1, 2, 3, 5, 7, 8, 9]
+ *   QuickSort: [1, 2, 3, 5, 7, 8, 9]
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

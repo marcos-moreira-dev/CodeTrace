@@ -37,3 +37,12 @@ class ColaCircular:
 
     def __len__(self) -> int:
         return self._cantidad
+
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   python -B .\02-estructuras-datos\cola-circular\main.py
+# Nota: cola.py es un componente; la salida corresponde al cliente main.py.
+# Salida esperada:
+#   correo respaldo
+# CodeTrace | FIN EJEMPLO DE CONSOLA

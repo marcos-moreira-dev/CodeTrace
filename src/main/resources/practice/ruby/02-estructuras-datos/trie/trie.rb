@@ -34,3 +34,12 @@ class Trie
     n
   end
 end
+
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   ruby .\02-estructuras-datos\trie\main.rb
+# Nota: trie.rb es un componente; la salida corresponde al cliente main.rb.
+# Salida esperada:
+#   Trie correcto
+# CodeTrace | FIN EJEMPLO DE CONSOLA

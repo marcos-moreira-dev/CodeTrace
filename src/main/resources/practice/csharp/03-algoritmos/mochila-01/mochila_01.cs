@@ -30,3 +30,18 @@ public static class Program
     public static void Main() =>
         Console.WriteLine(Resolver(new[] {2, 3, 4, 5}, new[] {3, 4, 5, 8}, 8));
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   $d=Join-Path $env:TEMP "ct-ejemplo-csharp"
+ *   if (Test-Path $d) { Remove-Item $d -Recurse -Force }
+ *   dotnet new console -f net8.0 -o $d --force
+ *   Remove-Item "$d\Program.cs" -ErrorAction SilentlyContinue
+ *   Copy-Item .\03-algoritmos\mochila-01\*.cs $d -Force
+ *   dotnet run --project $d
+ * Salida esperada:
+ *   12
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

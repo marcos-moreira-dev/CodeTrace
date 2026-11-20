@@ -27,3 +27,12 @@ class CreadorTexto < Creador
     ExportadorTexto.new
   end
 end
+
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   ruby .\04-patrones-diseno\factory-method\exportadores\main.rb
+# Nota: fabrica.rb es un componente; la salida corresponde al cliente main.rb.
+# Salida esperada:
+#   TXT: Factura 001
+# CodeTrace | FIN EJEMPLO DE CONSOLA

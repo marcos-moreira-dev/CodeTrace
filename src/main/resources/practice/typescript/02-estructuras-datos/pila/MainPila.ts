@@ -19,8 +19,12 @@ if (pila.desapilar() !== "C" || pila.desapilar() !== "B" ||
 console.log("Pila correcta");
 
 /*
- * Salida esperada de consola:
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   tsc --strict --target ES2022 --module commonjs --outDir "$env:TEMP\ct-ejemplo-ts" .\02-estructuras-datos\pila\MainPila.ts
+ *   node "$env:TEMP\ct-ejemplo-ts\MainPila.js"
+ * Salida esperada:
  *   Pila correcta
- *   (los valores variables completan los fragmentos anteriores)
- * Verificacion: termina sin excepciones inesperadas.
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
  */

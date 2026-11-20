@@ -19,7 +19,12 @@ if(lista.quitarFinal()!=="C"||lista.cantidad!==2)throw Error("Quitar");
 console.log(lista.adelante());
 
 /*
- * Salida esperada de consola:
- *   Se imprime el valor o coleccion calculado por el cliente.
- * Verificacion: termina sin excepciones inesperadas.
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   tsc --strict --target ES2022 --module commonjs --outDir "$env:TEMP\ct-ejemplo-ts" .\02-estructuras-datos\linked-list\doble\MainListaDoble.ts
+ *   node "$env:TEMP\ct-ejemplo-ts\MainListaDoble.js"
+ * Salida esperada:
+ *   [ 'A', 'B' ]
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
  */

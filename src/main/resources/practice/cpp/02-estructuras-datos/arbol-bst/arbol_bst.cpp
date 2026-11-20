@@ -17,3 +17,15 @@ void inorden(const std::unique_ptr<Nodo>& nodo, std::vector<int>& salida) {
     salida.push_back(nodo->dato);
     inorden(nodo->der, salida);
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   g++ -std=c++20 -Wall -Wextra .\02-estructuras-datos\arbol-bst\*.cpp -o "$env:TEMP\ct-ejemplo-cpp.exe"
+ *   & "$env:TEMP\ct-ejemplo-cpp.exe"
+ * Nota: arbol_bst.cpp es un componente; la salida corresponde al cliente main.cpp.
+ * Salida esperada:
+ *   1 3 4 6 7 8 10 
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

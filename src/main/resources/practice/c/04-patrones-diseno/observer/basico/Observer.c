@@ -13,3 +13,14 @@ int main(void) {
     informar(42, consola);
     return 0;
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   gcc -std=c17 -Wall -Wextra .\04-patrones-diseno\observer\basico\*.c -o "$env:TEMP\ct-ejemplo-c.exe"
+ *   & "$env:TEMP\ct-ejemplo-c.exe"
+ * Salida esperada:
+ *   Cambio: 42
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

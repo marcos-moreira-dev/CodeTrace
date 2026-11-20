@@ -26,3 +26,15 @@ export class AgregarTexto implements Comando{
         this.anterior=undefined;
     }
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   tsc --strict --target ES2022 --module commonjs --outDir "$env:TEMP\ct-ejemplo-ts" .\04-patrones-diseno\command\deshacer\MainCommand.ts
+ *   node "$env:TEMP\ct-ejemplo-ts\MainCommand.js"
+ * Nota: Comandos.ts es un componente; la salida corresponde al cliente MainCommand.ts.
+ * Salida esperada:
+ *   Hola
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

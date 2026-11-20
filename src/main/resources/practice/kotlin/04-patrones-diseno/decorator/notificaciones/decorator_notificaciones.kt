@@ -14,3 +14,15 @@ class Consola : Notificador {
 class Prefijo(private val interno: Notificador, private val etiqueta: String) : Notificador {
     override fun enviar(texto: String) = interno.enviar(etiqueta + texto)
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   kotlinc .\04-patrones-diseno\decorator\notificaciones\*.kt -jvm-target 21 -include-runtime -d "$env:TEMP\ct-kotlin.jar"
+ *   java -jar "$env:TEMP\ct-kotlin.jar"
+ * Nota: decorator_notificaciones.kt es un componente; la salida corresponde al cliente MainDecorator.kt.
+ * Salida esperada:
+ *   Mensaje: [INFO] Pedido despachado
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

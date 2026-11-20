@@ -24,3 +24,11 @@ main if __FILE__ == $PROGRAM_NAME
 # Salida esperada de consola:
 #   Bytes: 220
 # Archivo y Carpeta exponen bytes mediante duck typing.
+
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   ruby .\04-patrones-diseno\composite\arbol-archivos\main.rb
+# Salida esperada:
+#   Bytes: 220
+# CodeTrace | FIN EJEMPLO DE CONSOLA

@@ -58,3 +58,18 @@ public final class Recorridos {
         return orden;
     }
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   $out=Join-Path $env:TEMP "ct-practica-java"
+ *   New-Item -ItemType Directory -Force -Path $out | Out-Null
+ *   javac --release 21 -encoding UTF-8 -d $out (Get-ChildItem -Recurse -Filter *.java).FullName
+ *   java -cp $out codetrace.practica.recorridos.MainRecorridos
+ * Nota: Recorridos.java es un componente; la salida corresponde al cliente MainRecorridos.java.
+ * Salida esperada:
+ *   BFS: [A, B, C, D, E]
+ *   DFS: [A, B, D, C, E]
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

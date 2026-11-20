@@ -44,3 +44,19 @@ export class MinHeap {
 
     get vacio(): boolean { return this.datos.length === 0; }
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   tsc --strict --target ES2022 --module commonjs --outDir "$env:TEMP\ct-ejemplo-ts" .\02-estructuras-datos\heap\MainHeap.ts
+ *   node "$env:TEMP\ct-ejemplo-ts\MainHeap.js"
+ * Nota: MinHeap.ts es un componente; la salida corresponde al cliente MainHeap.ts.
+ * Salida esperada:
+ *   1
+ *   2
+ *   5
+ *   7
+ *   9
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

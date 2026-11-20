@@ -23,3 +23,15 @@ int main(void) {
     printf("Incremento=%d\n", aplicar(7, aumentar));
     return 0;
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   gcc -std=c17 -Wall -Wextra .\01-fundamentos\callbacks-y-funciones\*.c -o "$env:TEMP\ct-ejemplo-c.exe"
+ *   & "$env:TEMP\ct-ejemplo-c.exe"
+ * Salida esperada:
+ *   Doble=14
+ *   Incremento=17
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

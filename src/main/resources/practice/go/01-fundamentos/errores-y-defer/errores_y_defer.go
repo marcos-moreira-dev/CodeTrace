@@ -30,3 +30,15 @@ func main() {
         fmt.Println("Error controlado:", err)
     }
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   go run (Get-ChildItem .\01-fundamentos\errores-y-defer\*.go).FullName
+ * Salida esperada:
+ *   Cociente: 4
+ *   Error controlado: divisor cero
+ *   Fin del cliente
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

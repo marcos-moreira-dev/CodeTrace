@@ -16,8 +16,12 @@ fun main(){
 }
 
 /*
- * Salida esperada de consola:
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   kotlinc .\02-estructuras-datos\deque\*.kt -jvm-target 21 -include-runtime -d "$env:TEMP\ct-kotlin.jar"
+ *   java -jar "$env:TEMP\ct-kotlin.jar"
+ * Salida esperada:
  *   Deque verificado
- *   (los valores variables completan los fragmentos anteriores)
- * Verificacion: termina sin excepciones inesperadas.
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
  */

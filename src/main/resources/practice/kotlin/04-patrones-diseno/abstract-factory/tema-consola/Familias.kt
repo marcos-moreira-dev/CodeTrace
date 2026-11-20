@@ -14,3 +14,16 @@ class Oscuro:Fabrica{
     override fun boton()=Boton{"< OK >"}
     override fun dialogo()=Dialogo{"Ventana oscura"}
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   kotlinc .\04-patrones-diseno\abstract-factory\tema-consola\*.kt -jvm-target 21 -include-runtime -d "$env:TEMP\ct-kotlin.jar"
+ *   java -jar "$env:TEMP\ct-kotlin.jar"
+ * Nota: Familias.kt es un componente; la salida corresponde al cliente MainAbstractFactory.kt.
+ * Salida esperada:
+ *   [ OK ] / Ventana clara
+ *   < OK > / Ventana oscura
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

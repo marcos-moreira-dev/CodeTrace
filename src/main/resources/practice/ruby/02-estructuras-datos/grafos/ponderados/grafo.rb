@@ -17,3 +17,12 @@ class GrafoPonderado
     @ady.fetch(origen).dup
   end
 end
+
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   ruby .\02-estructuras-datos\grafos\ponderados\main.rb
+# Nota: grafo.rb es un componente; la salida corresponde al cliente main.rb.
+# Salida esperada:
+#   [#<struct GrafoPonderado::Arista destino="UIO", peso=12.0>, #<struct GrafoPonderado::Arista destino="CUE", peso=18.0>]
+# CodeTrace | FIN EJEMPLO DE CONSOLA

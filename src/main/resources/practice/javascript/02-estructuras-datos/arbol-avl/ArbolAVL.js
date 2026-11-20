@@ -58,3 +58,14 @@ class ArbolAVL{
     }
 }
 module.exports={ArbolAVL};
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   node .\02-estructuras-datos\arbol-avl\main.js
+ * Nota: ArbolAVL.js es un componente; la salida corresponde al cliente main.js.
+ * Salida esperada:
+ *   Altura AVL: 4
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

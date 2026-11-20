@@ -16,3 +16,12 @@ sumar_arreglo:
     jmp .bucle
 .fin:
     ret
+
+; CodeTrace | EJEMPLO DE CONSOLA (practica)
+; 
+; Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+;   wsl nasm -f elf64 02-estructuras-datos/arreglo/arreglo.asm -o /tmp/ct-ejemplo.o
+; Nota: archivo reutilizable sin entrada; el comando solo verifica la compilación o sintaxis.
+; Salida esperada:
+;   (sin salida de consola; la comprobación termina correctamente)
+; CodeTrace | FIN EJEMPLO DE CONSOLA

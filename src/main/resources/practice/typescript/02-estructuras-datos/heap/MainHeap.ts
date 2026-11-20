@@ -16,7 +16,16 @@ for (const prioridad of [7, 2, 9, 1, 5]) prioridades.insertar(prioridad);
 while (!prioridades.vacio) console.log(prioridades.extraer());
 
 /*
- * Salida esperada de consola:
- *   Se imprime el valor o coleccion calculado por el cliente.
- * Verificacion: termina sin excepciones inesperadas.
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   tsc --strict --target ES2022 --module commonjs --outDir "$env:TEMP\ct-ejemplo-ts" .\02-estructuras-datos\heap\MainHeap.ts
+ *   node "$env:TEMP\ct-ejemplo-ts\MainHeap.js"
+ * Salida esperada:
+ *   1
+ *   2
+ *   5
+ *   7
+ *   9
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
  */

@@ -18,3 +18,15 @@ class ListaSimple<T> {
     fun obtenerPrimero(): T =
         primero?.dato ?: throw NoSuchElementException("Lista vacía")
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   kotlinc .\02-estructuras-datos\linked-list\simple\*.kt -jvm-target 21 -include-runtime -d "$env:TEMP\ct-kotlin.jar"
+ *   java -jar "$env:TEMP\ct-kotlin.jar"
+ * Nota: ListaSimple.kt es un componente; la salida corresponde al cliente MainListaSimple.kt.
+ * Salida esperada:
+ *   Primero: Estructuras
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

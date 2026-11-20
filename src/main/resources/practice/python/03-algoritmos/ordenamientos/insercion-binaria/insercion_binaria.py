@@ -19,3 +19,12 @@ def ordenar(a: list[int]) -> None:
         for j in range(i,lo,-1):
             a[j]=a[j-1]
         a[lo]=clave
+
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   python -B .\03-algoritmos\ordenamientos\insercion-binaria\main.py
+# Nota: insercion_binaria.py es un componente; la salida corresponde al cliente main.py.
+# Salida esperada:
+#   Insercion binaria: [1, 2, 3, 3, 5]
+# CodeTrace | FIN EJEMPLO DE CONSOLA

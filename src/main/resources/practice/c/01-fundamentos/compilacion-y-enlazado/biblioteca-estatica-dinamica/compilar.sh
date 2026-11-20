@@ -27,3 +27,12 @@ salida_dinamica=$("$tmp/dinamica/app")
 printf 'Estática: %s\nDinámica: %s\n' "$salida_estatica" "$salida_dinamica"
 test "$salida_estatica" = "$salida_dinamica"
 echo 'OK: enlazado estático y compartido equivalentes'
+
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   gcc -std=c17 -Wall -Wextra .\01-fundamentos\compilacion-y-enlazado\biblioteca-estatica-dinamica\*.c -o "$env:TEMP\ct-ejemplo-c.exe"
+#   & "$env:TEMP\ct-ejemplo-c.exe"
+# Salida esperada:
+#   Suma=7, producto=12
+# CodeTrace | FIN EJEMPLO DE CONSOLA

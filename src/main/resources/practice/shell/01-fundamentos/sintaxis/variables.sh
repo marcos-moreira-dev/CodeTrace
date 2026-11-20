@@ -7,3 +7,11 @@
 nombre="CodeTrace"
 cantidad=3
 printf '%s: %s\n' "$nombre" "$cantidad"
+
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   wsl sh 01-fundamentos/sintaxis/variables.sh
+# Salida esperada:
+#   CodeTrace: 3
+# CodeTrace | FIN EJEMPLO DE CONSOLA

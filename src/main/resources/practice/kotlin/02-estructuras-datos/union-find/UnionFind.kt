@@ -22,3 +22,15 @@ class UnionFind(n:Int){
     }
     fun conectados(a:Int,b:Int)=raiz(a)==raiz(b)
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   kotlinc .\02-estructuras-datos\union-find\*.kt -jvm-target 21 -include-runtime -d "$env:TEMP\ct-kotlin.jar"
+ *   java -jar "$env:TEMP\ct-kotlin.jar"
+ * Nota: UnionFind.kt es un componente; la salida corresponde al cliente MainUnionFind.kt.
+ * Salida esperada:
+ *   Componentes: 3
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

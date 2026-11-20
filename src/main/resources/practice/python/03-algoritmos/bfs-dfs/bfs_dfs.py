@@ -52,3 +52,12 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   python -B .\03-algoritmos\bfs-dfs\bfs_dfs.py
+# Salida esperada:
+#   BFS: ['A', 'B', 'C', 'D', 'E']
+#   DFS: ['A', 'B', 'D', 'C', 'E']
+# CodeTrace | FIN EJEMPLO DE CONSOLA

@@ -22,3 +22,14 @@ async function main(): Promise<void> {
     }
 }
 void main();
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   tsc --strict --target ES2022 --module commonjs --outDir "$env:TEMP\ct-ejemplo-ts" .\01-fundamentos\promesas-async\promesas_async.ts
+ *   node "$env:TEMP\ct-ejemplo-ts\promesas_async.js"
+ * Salida esperada:
+ *   Total: 23
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

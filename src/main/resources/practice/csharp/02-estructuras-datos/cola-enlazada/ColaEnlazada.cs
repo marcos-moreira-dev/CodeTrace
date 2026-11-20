@@ -32,3 +32,19 @@ public sealed class ColaEnlazada<T>
         Cantidad--;return valor;
     }
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   $d=Join-Path $env:TEMP "ct-ejemplo-csharp"
+ *   if (Test-Path $d) { Remove-Item $d -Recurse -Force }
+ *   dotnet new console -f net8.0 -o $d --force
+ *   Remove-Item "$d\Program.cs" -ErrorAction SilentlyContinue
+ *   Copy-Item .\02-estructuras-datos\cola-enlazada\*.cs $d -Force
+ *   dotnet run --project $d
+ * Nota: ColaEnlazada.cs es un componente; la salida corresponde al cliente MainColaEnlazada.cs.
+ * Salida esperada:
+ *   FIFO enlazada verificada
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

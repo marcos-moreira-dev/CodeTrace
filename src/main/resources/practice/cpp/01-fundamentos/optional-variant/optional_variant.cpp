@@ -24,3 +24,15 @@ int main() {
     std::visit([](const auto& x) { std::cout << x << '\n'; }, resultado);
     if (auto id = leer_id("42")) std::cout << "ID: " << *id << '\n';
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   g++ -std=c++20 -Wall -Wextra .\01-fundamentos\optional-variant\*.cpp -o "$env:TEMP\ct-ejemplo-cpp.exe"
+ *   & "$env:TEMP\ct-ejemplo-cpp.exe"
+ * Salida esperada:
+ *   pendiente
+ *   ID: 42
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

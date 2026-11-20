@@ -17,3 +17,15 @@ class Carpeta(val nombre:String):Elemento{
     fun agregar(e:Elemento){require(e!==this);hijos.add(e)}
     override fun bytes()=hijos.sumOf(Elemento::bytes)
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   kotlinc .\04-patrones-diseno\composite\arbol-archivos\*.kt -jvm-target 21 -include-runtime -d "$env:TEMP\ct-kotlin.jar"
+ *   java -jar "$env:TEMP\ct-kotlin.jar"
+ * Nota: Elementos.kt es un componente; la salida corresponde al cliente MainComposite.kt.
+ * Salida esperada:
+ *   220
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

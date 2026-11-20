@@ -55,3 +55,13 @@ class Grafo:
                         visitados.add(vecino)
                         cola.append(vecino)
         return cantidad
+
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   python -B .\02-estructuras-datos\grafos\tipos\main.py
+# Nota: grafo.py es un componente; la salida corresponde al cliente main.py.
+# Salida esperada:
+#   Aristas dirigidas: {'A': {'B': 3.5}, 'B': {}}
+#   Componentes no dirigidas: 2
+# CodeTrace | FIN EJEMPLO DE CONSOLA

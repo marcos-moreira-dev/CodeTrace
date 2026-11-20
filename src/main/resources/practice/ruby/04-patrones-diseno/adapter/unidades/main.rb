@@ -18,7 +18,10 @@ end
 
 main if __FILE__ == $PROGRAM_NAME
 
-# Salida esperada de consola:
-#   Celsius: #{sensor.celsius}
-#   (los valores variables completan los fragmentos anteriores)
-# Verificacion: termina sin excepciones inesperadas.
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   ruby .\04-patrones-diseno\adapter\unidades\main.rb
+# Salida esperada:
+#   Celsius: 25.0
+# CodeTrace | FIN EJEMPLO DE CONSOLA

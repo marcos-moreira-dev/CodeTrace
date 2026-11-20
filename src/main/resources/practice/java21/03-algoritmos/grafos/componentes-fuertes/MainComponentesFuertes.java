@@ -51,3 +51,16 @@ public final class MainComponentesFuertes {
  *   Componentes fuertes: [[A, B, C], [D, E], [F]]
  * La canonización ordena la impresión; no altera las tres SCC calculadas.
  */
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   $out=Join-Path $env:TEMP "ct-practica-java"
+ *   New-Item -ItemType Directory -Force -Path $out | Out-Null
+ *   javac --release 21 -encoding UTF-8 -d $out (Get-ChildItem -Recurse -Filter *.java).FullName
+ *   java -cp $out codetrace.practica.grafosscc.MainComponentesFuertes
+ * Salida esperada:
+ *   Componentes fuertes: [[A, B, C], [D, E], [F]]
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

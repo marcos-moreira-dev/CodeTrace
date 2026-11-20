@@ -20,3 +20,12 @@ class SolicitudBuilder
     Solicitud.new(@ruta, @metodo, @cabeceras.dup.freeze)
   end
 end
+
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   ruby .\04-patrones-diseno\builder\solicitud\main.rb
+# Nota: solicitud.rb es un componente; la salida corresponde al cliente main.rb.
+# Salida esperada:
+#   POST /facturas (1 cabecera)
+# CodeTrace | FIN EJEMPLO DE CONSOLA

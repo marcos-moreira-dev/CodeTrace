@@ -13,3 +13,14 @@ fun main() {
     val numeros = listOf(1, 2, 3, 4, 5, 6)
     println(numeros.filter(Int::esPar).map { it * it })
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   kotlinc .\01-fundamentos\extensiones-y-lambdas\*.kt -jvm-target 21 -include-runtime -d "$env:TEMP\ct-kotlin.jar"
+ *   java -jar "$env:TEMP\ct-kotlin.jar"
+ * Salida esperada:
+ *   [4, 16, 36]
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

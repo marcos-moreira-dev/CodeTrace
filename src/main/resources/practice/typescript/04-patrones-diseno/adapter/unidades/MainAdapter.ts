@@ -17,8 +17,12 @@ if (sensor.leer() !== 25) throw Error("Conversión");
 console.log("Celsius:", sensor.leer());
 
 /*
- * Salida esperada de consola:
- *   Celsius:
- *   (los valores variables completan los fragmentos anteriores)
- * Verificacion: termina sin excepciones inesperadas.
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   tsc --strict --target ES2022 --module commonjs --outDir "$env:TEMP\ct-ejemplo-ts" .\04-patrones-diseno\adapter\unidades\MainAdapter.ts
+ *   node "$env:TEMP\ct-ejemplo-ts\MainAdapter.js"
+ * Salida esperada:
+ *   Celsius: 25
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
  */

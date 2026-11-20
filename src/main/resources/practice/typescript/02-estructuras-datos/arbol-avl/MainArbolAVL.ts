@@ -19,8 +19,12 @@ if(avl.validar()>5)throw Error("Altura");
 console.log("Altura AVL:",avl.validar());
 
 /*
- * Salida esperada de consola:
- *   Altura AVL:
- *   (los valores variables completan los fragmentos anteriores)
- * Verificacion: termina sin excepciones inesperadas.
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   tsc --strict --target ES2022 --module commonjs --outDir "$env:TEMP\ct-ejemplo-ts" .\02-estructuras-datos\arbol-avl\MainArbolAVL.ts
+ *   node "$env:TEMP\ct-ejemplo-ts\MainArbolAVL.js"
+ * Salida esperada:
+ *   Altura AVL: 4
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
  */

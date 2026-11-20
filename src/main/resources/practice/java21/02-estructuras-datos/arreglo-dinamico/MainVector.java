@@ -31,3 +31,18 @@ public final class MainVector {
  *   Tercero: 30
  * La capacidad crece geométricamente 2 -> 4 -> 8, sin cambiar el tamaño lógico.
  */
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   $out=Join-Path $env:TEMP "ct-practica-java"
+ *   New-Item -ItemType Directory -Force -Path $out | Out-Null
+ *   javac --release 21 -encoding UTF-8 -d $out (Get-ChildItem -Recurse -Filter *.java).FullName
+ *   java -cp $out codetrace.practica.vector.MainVector
+ * Salida esperada:
+ *   Elementos: 6
+ *   Capacidad: 8
+ *   Tercero: 30
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

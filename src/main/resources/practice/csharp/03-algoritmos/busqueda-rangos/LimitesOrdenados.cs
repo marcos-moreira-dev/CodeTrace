@@ -26,3 +26,20 @@ public static class LimitesOrdenados{
         return lo;
     }
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   $d=Join-Path $env:TEMP "ct-ejemplo-csharp"
+ *   if (Test-Path $d) { Remove-Item $d -Recurse -Force }
+ *   dotnet new console -f net8.0 -o $d --force
+ *   Remove-Item "$d\Program.cs" -ErrorAction SilentlyContinue
+ *   Copy-Item .\03-algoritmos\busqueda-rangos\*.cs $d -Force
+ *   dotnet run --project $d
+ * Nota: LimitesOrdenados.cs es un componente; la salida corresponde al cliente MainLimitesOrdenados.cs.
+ * Salida esperada:
+ *   Valor 3: [1, 4)
+ *   Insertar 4 en indice: 4
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

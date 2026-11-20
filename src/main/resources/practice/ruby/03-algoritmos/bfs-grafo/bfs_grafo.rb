@@ -27,3 +27,11 @@ def bfs(grafo, origen)
 end
 grafo = { "A" => %w[B C], "B" => ["D"], "C" => ["E"], "D" => [], "E" => [] }
 p bfs(grafo, "A")
+
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   ruby .\03-algoritmos\bfs-grafo\bfs_grafo.rb
+# Salida esperada:
+#   ["A", "B", "C", "D", "E"]
+# CodeTrace | FIN EJEMPLO DE CONSOLA

@@ -13,3 +13,14 @@ object Tipos {
         println("${producto}: ${unidades * precio}, disponible=${disponible}")
     }
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   kotlinc .\01-fundamentos\sintaxis\Tipos.kt -jvm-target 21 -include-runtime -d "$env:TEMP\ct-kotlin.jar"
+ *   java -jar "$env:TEMP\ct-kotlin.jar"
+ * Salida esperada:
+ *   Cuaderno: 62.5, disponible=true
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

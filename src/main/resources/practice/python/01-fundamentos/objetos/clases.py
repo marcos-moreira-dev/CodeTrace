@@ -13,3 +13,11 @@ class Contador:
 
 contador = Contador()
 print(contador.incrementar())
+
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   python -B .\01-fundamentos\objetos\clases.py
+# Salida esperada:
+#   1
+# CodeTrace | FIN EJEMPLO DE CONSOLA

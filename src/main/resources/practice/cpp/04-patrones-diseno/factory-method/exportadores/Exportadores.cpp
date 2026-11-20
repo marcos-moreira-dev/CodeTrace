@@ -22,3 +22,15 @@ std::string Creador::preparar(const std::string& d) const {
 std::unique_ptr<Exportador> CreadorTexto::crear() const {
     return std::make_unique<ExportadorTexto>();
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   g++ -std=c++20 -Wall -Wextra .\04-patrones-diseno\factory-method\exportadores\*.cpp -o "$env:TEMP\ct-ejemplo-cpp.exe"
+ *   & "$env:TEMP\ct-ejemplo-cpp.exe"
+ * Nota: Exportadores.cpp es un componente; la salida corresponde al cliente main.cpp.
+ * Salida esperada:
+ *   TXT: Factura 001
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

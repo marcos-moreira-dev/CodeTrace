@@ -27,3 +27,12 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   python -B .\01-fundamentos\generadores-y-comprensiones\generadores_y_comprensiones.py
+# Salida esperada:
+#   Lista materializada: [0, 4, 16, 36, 64]
+#   Generador consumido: [0, 4, 16, 36, 64]
+# CodeTrace | FIN EJEMPLO DE CONSOLA

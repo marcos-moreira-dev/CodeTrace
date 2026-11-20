@@ -28,3 +28,16 @@ public final class MainHashAbierto {
  *   Tabla llena controlada
  * Se actualiza la clave A y se comprueba la saturación de dos cubetas.
  */
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   $out=Join-Path $env:TEMP "ct-practica-java"
+ *   New-Item -ItemType Directory -Force -Path $out | Out-Null
+ *   javac --release 21 -encoding UTF-8 -d $out (Get-ChildItem -Recurse -Filter *.java).FullName
+ *   java -cp $out codetrace.practica.estructuras.hashabierto.MainHashAbierto
+ * Salida esperada:
+ *   Tabla llena controlada
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

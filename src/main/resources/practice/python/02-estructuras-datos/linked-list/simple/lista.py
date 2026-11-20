@@ -37,3 +37,12 @@ class ListaSimple(Generic[T]):
             salida.append(actual.dato)
             actual = actual.siguiente
         return salida
+
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   python -B .\02-estructuras-datos\linked-list\simple\main.py
+# Nota: lista.py es un componente; la salida corresponde al cliente main.py.
+# Salida esperada:
+#   ['Redes', 'Estructuras', 'Matemática']
+# CodeTrace | FIN EJEMPLO DE CONSOLA

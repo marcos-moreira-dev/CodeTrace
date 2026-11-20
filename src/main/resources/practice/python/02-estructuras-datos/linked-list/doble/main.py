@@ -23,6 +23,10 @@ def main() -> None:
 if __name__ == "__main__":
     main()
 
-# Salida esperada de consola:
-#   Se imprime el valor o coleccion calculado por el cliente.
-# Verificacion: termina sin excepciones inesperadas.
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   python -B .\02-estructuras-datos\linked-list\doble\main.py
+# Salida esperada:
+#   ['A', 'B']
+# CodeTrace | FIN EJEMPLO DE CONSOLA

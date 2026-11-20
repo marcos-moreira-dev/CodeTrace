@@ -20,7 +20,13 @@ cola.encolar("factura");
 console.log(cola.extraer(), cola.extraer());
 
 /*
- * Salida esperada de consola:
- *   Se imprime el valor o coleccion calculado por el cliente.
- * Verificacion: termina sin excepciones inesperadas.
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   tsc --strict --target ES2022 --module commonjs --outDir "$env:TEMP\ct-ejemplo-ts" .\02-estructuras-datos\cola-circular\MainColaCircular.ts
+ *   node "$env:TEMP\ct-ejemplo-ts\MainColaCircular.js"
+ * Salida esperada:
+ *   reporte
+ *   correo factura
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
  */

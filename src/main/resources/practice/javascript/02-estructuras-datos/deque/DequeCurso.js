@@ -35,3 +35,14 @@ class DequeCurso{
     }
 }
 module.exports={DequeCurso};
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   node .\02-estructuras-datos\deque\main.js
+ * Nota: DequeCurso.js es un componente; la salida corresponde al cliente main.js.
+ * Salida esperada:
+ *   [ 'A', 'C', 'B' ]
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

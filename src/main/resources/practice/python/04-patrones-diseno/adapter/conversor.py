@@ -29,3 +29,12 @@ class Adaptador:
 
     def leer_celsius(self) -> float:
         return (self._proveedor.lectura_fahrenheit() - 32) * 5 / 9
+
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   python -B .\04-patrones-diseno\adapter\main.py
+# Nota: conversor.py es un componente; la salida corresponde al cliente main.py.
+# Salida esperada:
+#   Lectura: 25.0 °C
+# CodeTrace | FIN EJEMPLO DE CONSOLA

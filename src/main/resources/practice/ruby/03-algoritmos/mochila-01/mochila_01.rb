@@ -20,3 +20,11 @@ def mochila(pesos, valores, capacidad)
   tabla[capacidad]
 end
 puts mochila([2, 3, 4, 5], [3, 4, 5, 8], 8)
+
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   ruby .\03-algoritmos\mochila-01\mochila_01.rb
+# Salida esperada:
+#   12
+# CodeTrace | FIN EJEMPLO DE CONSOLA

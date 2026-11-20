@@ -33,3 +33,18 @@ fun main(){
  * HeapSort: [1, 2, 3, 5, 7, 8, 9]
  * QuickSort: [1, 2, 3, 5, 7, 8, 9]
  */
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   kotlinc .\03-algoritmos\ordenamientos\comparativa-cinco\*.kt -jvm-target 21 -include-runtime -d "$env:TEMP\ct-kotlin.jar"
+ *   java -jar "$env:TEMP\ct-kotlin.jar"
+ * Salida esperada:
+ *   Insercion: [1, 2, 3, 5, 7, 8, 9]
+ *   Burbuja: [1, 2, 3, 5, 7, 8, 9]
+ *   Mezcla: [1, 2, 3, 5, 7, 8, 9]
+ *   HeapSort: [1, 2, 3, 5, 7, 8, 9]
+ *   QuickSort: [1, 2, 3, 5, 7, 8, 9]
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

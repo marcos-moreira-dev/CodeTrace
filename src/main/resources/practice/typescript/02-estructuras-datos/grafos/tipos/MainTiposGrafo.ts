@@ -25,9 +25,14 @@ console.log("Componentes:", red.componentes());
 if (red.componentes() !== 2) throw Error("Conteo incorrecto");
 
 /*
- * Salida esperada de consola:
- *   Arco A->B:
- *   Arco B->A:
- *   (los valores variables completan los fragmentos anteriores)
- * Verificacion: termina sin excepciones inesperadas.
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   tsc --strict --target ES2022 --module commonjs --outDir "$env:TEMP\ct-ejemplo-ts" .\02-estructuras-datos\grafos\tipos\MainTiposGrafo.ts
+ *   node "$env:TEMP\ct-ejemplo-ts\MainTiposGrafo.js"
+ * Salida esperada:
+ *   Arco A->B: Map(1) { 'B' => 4.5 }
+ *   Arco B->A: Map(0) {}
+ *   Componentes: 2
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
  */

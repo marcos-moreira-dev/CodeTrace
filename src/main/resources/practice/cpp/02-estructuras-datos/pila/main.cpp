@@ -25,8 +25,12 @@ int main() {
 }
 
 /*
- * Salida esperada de consola:
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   g++ -std=c++20 -Wall -Wextra .\02-estructuras-datos\pila\*.cpp -o "$env:TEMP\ct-ejemplo-cpp.exe"
+ *   & "$env:TEMP\ct-ejemplo-cpp.exe"
+ * Salida esperada:
  *   Pila LIFO correcta
- *   (los valores variables completan los fragmentos mostrados)
- * Verificacion: terminar sin excepciones inesperadas.
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
  */

@@ -34,3 +34,18 @@ public class ComparadoresEncadenados {
         productos.forEach(System.out::println);
     }
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   $out=Join-Path $env:TEMP "ct-practica-java"
+ *   New-Item -ItemType Directory -Force -Path $out | Out-Null
+ *   javac --release 21 -encoding UTF-8 -d $out (Get-ChildItem -Recurse -Filter *.java).FullName
+ *   java -cp $out ComparadoresEncadenados
+ * Salida esperada:
+ *   Producto[codigo=B, nombre=Resistencia, precio=0.1]
+ *   Producto[codigo=C, nombre=Cable, precio=0.1]
+ *   Producto[codigo=A, nombre=Sensor, precio=3.5]
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

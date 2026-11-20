@@ -21,8 +21,12 @@ if(!lleno)throw Error("Debería estar llena");
 console.log("Sondeo comprobado");
 
 /*
- * Salida esperada de consola:
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   tsc --strict --target ES2022 --module commonjs --outDir "$env:TEMP\ct-ejemplo-ts" .\02-estructuras-datos\tabla-hash\direccionamiento-abierto\MainHashAbierto.ts
+ *   node "$env:TEMP\ct-ejemplo-ts\MainHashAbierto.js"
+ * Salida esperada:
  *   Sondeo comprobado
- *   (los valores variables completan los fragmentos anteriores)
- * Verificacion: termina sin excepciones inesperadas.
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
  */

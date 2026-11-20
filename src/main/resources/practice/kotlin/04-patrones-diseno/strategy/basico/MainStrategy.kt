@@ -20,9 +20,13 @@ fun main() {
 }
 
 /*
- * Salida esperada de consola:
- *   Total normal: 
- *   Total fidelidad: 
- *   (los valores variables completan los fragmentos anteriores)
- * Verificacion: termina sin excepciones inesperadas.
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   kotlinc .\04-patrones-diseno\strategy\basico\*.kt -jvm-target 21 -include-runtime -d "$env:TEMP\ct-kotlin.jar"
+ *   java -jar "$env:TEMP\ct-kotlin.jar"
+ * Salida esperada:
+ *   Total normal: 100.0
+ *   Total fidelidad: 90.0
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
  */

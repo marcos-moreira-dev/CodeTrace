@@ -24,3 +24,13 @@ if(require.main===module)main();
  *   [ OK ] / Ventana clara < OK > / Ventana oscura
  * Ambos valores se escriben separados por un espacio.
  */
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   node .\04-patrones-diseno\abstract-factory\tema-consola\main.js
+ * Salida esperada:
+ *   [ OK ] / Ventana clara < OK > / Ventana oscura
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

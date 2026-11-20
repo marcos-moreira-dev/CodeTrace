@@ -16,3 +16,15 @@ $palabras |
     Sort-Object Count -Descending |
     Select-Object Name, Count |
     Format-Table -AutoSize
+
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   pwsh -NoProfile -File .\03-algoritmos\frecuencias-objetos\frecuencias_objetos.ps1
+# Salida esperada:
+#   Name       Count
+#   ----       -----
+#   red            3
+#   datos          2
+#   algoritmo      1
+# CodeTrace | FIN EJEMPLO DE CONSOLA

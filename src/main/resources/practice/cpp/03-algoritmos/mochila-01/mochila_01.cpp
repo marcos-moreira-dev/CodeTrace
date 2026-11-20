@@ -28,3 +28,14 @@ int maximo(const std::vector<int>& peso, const std::vector<int>& valor, int C) {
 int main() {
     std::cout << maximo({2, 3, 4, 5}, {3, 4, 5, 8}, 8) << '\n';
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   g++ -std=c++20 -Wall -Wextra .\03-algoritmos\mochila-01\*.cpp -o "$env:TEMP\ct-ejemplo-cpp.exe"
+ *   & "$env:TEMP\ct-ejemplo-cpp.exe"
+ * Salida esperada:
+ *   12
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

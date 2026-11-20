@@ -29,3 +29,19 @@ public sealed class CreadorTexto : Creador
 {
     protected override IExportador Crear() => new ExportadorTexto();
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   $d=Join-Path $env:TEMP "ct-ejemplo-csharp"
+ *   if (Test-Path $d) { Remove-Item $d -Recurse -Force }
+ *   dotnet new console -f net8.0 -o $d --force
+ *   Remove-Item "$d\Program.cs" -ErrorAction SilentlyContinue
+ *   Copy-Item .\04-patrones-diseno\factory-method\exportadores\*.cs $d -Force
+ *   dotnet run --project $d
+ * Nota: Exportadores.cs es un componente; la salida corresponde al cliente MainFactoryMethod.cs.
+ * Salida esperada:
+ *   TXT: Factura 001
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

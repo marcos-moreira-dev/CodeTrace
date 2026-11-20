@@ -14,3 +14,11 @@ exit /b 0
 :doble
 set /a resultado=%~1 * 2 >nul
 exit /b 0
+
+REM CodeTrace | EJEMPLO DE CONSOLA (practica)
+REM 
+REM Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+REM   cmd /c .\01-fundamentos\subrutinas\subrutinas.cmd
+REM Salida esperada:
+REM   Resultado: 14
+REM CodeTrace | FIN EJEMPLO DE CONSOLA

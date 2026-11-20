@@ -16,3 +16,14 @@ object Insercion {
         }
     }
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   kotlinc .\03-algoritmos\insercion\*.kt -jvm-target 21 -include-runtime -d "$env:TEMP\ct-kotlin.jar"
+ * Nota: archivo reutilizable sin entrada; el comando solo verifica la compilación o sintaxis.
+ * Salida esperada:
+ *   (sin salida de consola; la comprobación termina correctamente)
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

@@ -49,3 +49,18 @@ public final class MainCaminosSinPeso {
  *   Componentes: 2
  * BFS encuentra una ruta mínima por número de aristas en este grafo sin pesos.
  */
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   $out=Join-Path $env:TEMP "ct-practica-java"
+ *   New-Item -ItemType Directory -Force -Path $out | Out-Null
+ *   javac --release 21 -encoding UTF-8 -d $out (Get-ChildItem -Recurse -Filter *.java).FullName
+ *   java -cp $out codetrace.practica.recorridos.MainCaminosSinPeso
+ * Salida esperada:
+ *   Saltos a E: 2
+ *   Ruta a E: [A, C, E]
+ *   Componentes: 2
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

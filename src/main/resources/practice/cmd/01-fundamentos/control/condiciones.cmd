@@ -11,3 +11,11 @@ if %numero% GTR 5 (
     echo Cinco o menos
 )
 endlocal
+
+REM CodeTrace | EJEMPLO DE CONSOLA (practica)
+REM 
+REM Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+REM   cmd /c .\01-fundamentos\control\condiciones.cmd
+REM Salida esperada:
+REM   Mayor que cinco
+REM CodeTrace | FIN EJEMPLO DE CONSOLA

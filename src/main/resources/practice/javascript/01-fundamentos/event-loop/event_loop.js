@@ -11,3 +11,15 @@
 console.log("1. Síncrono");
 setTimeout(() => console.log("3. Timer"), 0);
 Promise.resolve().then(() => console.log("2. Microtarea"));
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   node .\01-fundamentos\event-loop\event_loop.js
+ * Salida esperada:
+ *   1. Síncrono
+ *   2. Microtarea
+ *   3. Timer
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

@@ -16,3 +16,15 @@ class Correo implements Notificacion {
 }
 
 export function crearNotificacion(): Notificacion { return new Correo(); }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   tsc --strict --target ES2022 --module commonjs --outDir "$env:TEMP\ct-ejemplo-ts" .\04-patrones-diseno\factory\basico\MainFactory.ts
+ *   node "$env:TEMP\ct-ejemplo-ts\MainFactory.js"
+ * Nota: factory.ts es un componente; la salida corresponde al cliente MainFactory.ts.
+ * Salida esperada:
+ *   Correo: Listo
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

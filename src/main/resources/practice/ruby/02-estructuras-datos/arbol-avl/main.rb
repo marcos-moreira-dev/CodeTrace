@@ -18,7 +18,10 @@ def main
 end
 main if __FILE__ == $PROGRAM_NAME
 
-# Salida esperada de consola:
-#   Altura AVL: #{arbol.validar}
-#   (los valores variables completan los fragmentos anteriores)
-# Verificacion: termina sin excepciones inesperadas.
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   ruby .\02-estructuras-datos\arbol-avl\main.rb
+# Salida esperada:
+#   Altura AVL: 4
+# CodeTrace | FIN EJEMPLO DE CONSOLA

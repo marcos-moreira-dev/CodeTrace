@@ -30,3 +30,19 @@ public sealed class Carpeta:IElemento
     }
     public int Bytes()=>_hijos.Sum(x=>x.Bytes());
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   $d=Join-Path $env:TEMP "ct-ejemplo-csharp"
+ *   if (Test-Path $d) { Remove-Item $d -Recurse -Force }
+ *   dotnet new console -f net8.0 -o $d --force
+ *   Remove-Item "$d\Program.cs" -ErrorAction SilentlyContinue
+ *   Copy-Item .\04-patrones-diseno\composite\arbol-archivos\*.cs $d -Force
+ *   dotnet run --project $d
+ * Nota: Elementos.cs es un componente; la salida corresponde al cliente MainComposite.cs.
+ * Salida esperada:
+ *   Bytes: 220
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

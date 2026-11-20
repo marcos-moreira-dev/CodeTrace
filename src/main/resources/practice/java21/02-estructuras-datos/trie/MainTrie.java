@@ -30,3 +30,16 @@ public final class MainTrie {
  *   Prefijo 'cas': true
  * El prefijo existe, aunque «cas» no fue insertada como palabra completa.
  */
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   $out=Join-Path $env:TEMP "ct-practica-java"
+ *   New-Item -ItemType Directory -Force -Path $out | Out-Null
+ *   javac --release 21 -encoding UTF-8 -d $out (Get-ChildItem -Recurse -Filter *.java).FullName
+ *   java -cp $out codetrace.practica.estructuras.trie.MainTrie
+ * Salida esperada:
+ *   Prefijo 'cas': true
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

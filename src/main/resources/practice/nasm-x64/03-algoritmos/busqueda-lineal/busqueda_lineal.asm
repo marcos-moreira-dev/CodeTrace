@@ -33,3 +33,13 @@ no_encontrado:
     mov eax, 60
     mov edi, 1
     syscall
+
+; CodeTrace | EJEMPLO DE CONSOLA (practica)
+; 
+; Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+;   wsl nasm -f elf64 03-algoritmos/busqueda-lineal/busqueda_lineal.asm -o /tmp/ct-ejemplo.o
+;   wsl ld /tmp/ct-ejemplo.o -o /tmp/ct-ejemplo
+;   wsl sh -c '/tmp/ct-ejemplo; printf "codigo-de-salida:%s\n" "$?"'
+; Salida esperada:
+;   codigo-de-salida:0
+; CodeTrace | FIN EJEMPLO DE CONSOLA

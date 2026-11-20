@@ -30,3 +30,16 @@ public final class MainHeapMaximo {
  *   Max heap verificado
  * La extracción validada es 9, 7, 4, 2, 1; no se imprimen esos valores.
  */
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   $out=Join-Path $env:TEMP "ct-practica-java"
+ *   New-Item -ItemType Directory -Force -Path $out | Out-Null
+ *   javac --release 21 -encoding UTF-8 -d $out (Get-ChildItem -Recurse -Filter *.java).FullName
+ *   java -cp $out codetrace.practica.estructuras.heapmaximo.MainHeapMaximo
+ * Salida esperada:
+ *   Max heap verificado
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

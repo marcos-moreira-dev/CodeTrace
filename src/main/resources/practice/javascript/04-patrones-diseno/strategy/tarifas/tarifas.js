@@ -14,3 +14,14 @@ function cobrar(subtotal, estrategia) {
     return estrategia(subtotal);
 }
 module.exports = { cobrar, conDescuento };
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   node .\04-patrones-diseno\strategy\tarifas\main.js
+ * Nota: tarifas.js es un componente; la salida corresponde al cliente main.js.
+ * Salida esperada:
+ *   100 90
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

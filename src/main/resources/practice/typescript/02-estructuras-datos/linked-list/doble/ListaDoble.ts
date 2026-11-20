@@ -47,3 +47,15 @@ export class ListaDoble<T> {
         return r;
     }
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   tsc --strict --target ES2022 --module commonjs --outDir "$env:TEMP\ct-ejemplo-ts" .\02-estructuras-datos\linked-list\doble\MainListaDoble.ts
+ *   node "$env:TEMP\ct-ejemplo-ts\MainListaDoble.js"
+ * Nota: ListaDoble.ts es un componente; la salida corresponde al cliente MainListaDoble.ts.
+ * Salida esperada:
+ *   [ 'A', 'B' ]
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

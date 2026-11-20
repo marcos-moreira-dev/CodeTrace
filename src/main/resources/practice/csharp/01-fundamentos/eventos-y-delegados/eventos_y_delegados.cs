@@ -23,3 +23,18 @@ public static class Program
         sensor.Emitir(28);
     }
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   $d=Join-Path $env:TEMP "ct-ejemplo-csharp"
+ *   if (Test-Path $d) { Remove-Item $d -Recurse -Force }
+ *   dotnet new console -f net8.0 -o $d --force
+ *   Remove-Item "$d\Program.cs" -ErrorAction SilentlyContinue
+ *   Copy-Item .\01-fundamentos\eventos-y-delegados\*.cs $d -Force
+ *   dotnet run --project $d
+ * Salida esperada:
+ *   Lectura: 28
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

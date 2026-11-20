@@ -14,3 +14,15 @@ class DequeCurso<T>{
     fun quitarPrimero():T=datos.removeFirst()
     fun quitarUltimo():T=datos.removeLast()
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   kotlinc .\02-estructuras-datos\deque\*.kt -jvm-target 21 -include-runtime -d "$env:TEMP\ct-kotlin.jar"
+ *   java -jar "$env:TEMP\ct-kotlin.jar"
+ * Nota: DequeCurso.kt es un componente; la salida corresponde al cliente MainDeque.kt.
+ * Salida esperada:
+ *   Deque verificado
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

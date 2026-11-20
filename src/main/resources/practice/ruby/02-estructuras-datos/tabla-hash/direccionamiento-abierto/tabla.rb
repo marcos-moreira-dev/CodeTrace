@@ -38,3 +38,12 @@ class HashAbierto
     nil
   end
 end
+
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   ruby .\02-estructuras-datos\tabla-hash\direccionamiento-abierto\main.rb
+# Nota: tabla.rb es un componente; la salida corresponde al cliente main.rb.
+# Salida esperada:
+#   Tabla llena controlada
+# CodeTrace | FIN EJEMPLO DE CONSOLA

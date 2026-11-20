@@ -28,3 +28,15 @@ class Grafo {
     fun vecinos(id: String): Map<String, Double> = adj.getValue(id).toMap()
     fun vertices(): Set<String> = adj.keys.toSet()
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   kotlinc .\02-estructuras-datos\grafos\representacion\*.kt -jvm-target 21 -include-runtime -d "$env:TEMP\ct-kotlin.jar"
+ *   java -jar "$env:TEMP\ct-kotlin.jar"
+ * Nota: Grafo.kt es un componente; la salida corresponde al cliente MainGrafo.kt.
+ * Salida esperada:
+ *   Desde Guayaquil: {UIO=12.0, CUE=18.0}
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

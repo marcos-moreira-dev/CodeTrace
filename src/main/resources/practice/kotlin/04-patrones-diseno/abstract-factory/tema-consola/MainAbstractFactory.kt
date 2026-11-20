@@ -22,3 +22,15 @@ fun main(){
  *   < OK > / Ventana oscura
  * Una fábrica cambia ambos productos de la familia.
  */
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   kotlinc .\04-patrones-diseno\abstract-factory\tema-consola\*.kt -jvm-target 21 -include-runtime -d "$env:TEMP\ct-kotlin.jar"
+ *   java -jar "$env:TEMP\ct-kotlin.jar"
+ * Salida esperada:
+ *   [ OK ] / Ventana clara
+ *   < OK > / Ventana oscura
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

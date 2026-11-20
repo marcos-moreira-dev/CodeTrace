@@ -12,3 +12,14 @@ int main() {
     std::cout << nombre << ": " << ejercicios << '\n';
     return 0;
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   g++ -std=c++20 -Wall -Wextra .\01-fundamentos\sintaxis\*.cpp -o "$env:TEMP\ct-ejemplo-cpp.exe"
+ *   & "$env:TEMP\ct-ejemplo-cpp.exe"
+ * Salida esperada:
+ *   CodeTrace: 5
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

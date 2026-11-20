@@ -25,3 +25,14 @@ int main(){
  * Salida esperada:
  * Insercion binaria: [1, 2, 3, 3, 5]
  */
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   g++ -std=c++20 -Wall -Wextra .\03-algoritmos\ordenamientos\insercion-binaria\*.cpp -o "$env:TEMP\ct-ejemplo-cpp.exe"
+ *   & "$env:TEMP\ct-ejemplo-cpp.exe"
+ * Salida esperada:
+ *   Insercion binaria: [1, 2, 3, 3, 5]
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

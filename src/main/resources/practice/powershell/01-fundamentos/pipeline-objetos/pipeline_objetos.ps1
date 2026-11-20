@@ -20,3 +20,15 @@ $baratos = $productos |
     Sort-Object Precio, Codigo |
     Select-Object Codigo, Precio
 $baratos | Format-Table -AutoSize
+
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   pwsh -NoProfile -File .\01-fundamentos\pipeline-objetos\pipeline_objetos.ps1
+# Salida esperada:
+#   Codigo Precio
+#   ------ ------
+#   A        1.00
+#   B        1.00
+#   C        2.50
+# CodeTrace | FIN EJEMPLO DE CONSOLA

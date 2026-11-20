@@ -53,3 +53,18 @@ public final class Monedas {
             if (valor <= 0) throw new IllegalArgumentException("Moneda no positiva");
     }
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   $out=Join-Path $env:TEMP "ct-practica-java"
+ *   New-Item -ItemType Directory -Force -Path $out | Out-Null
+ *   javac --release 21 -encoding UTF-8 -d $out (Get-ChildItem -Recurse -Filter *.java).FullName
+ *   java -cp $out codetrace.practica.monedas.MainMonedas
+ * Nota: Monedas.java es un componente; la salida corresponde al cliente MainMonedas.java.
+ * Salida esperada:
+ *   Voraz: 3
+ *   Óptimo DP: 2
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

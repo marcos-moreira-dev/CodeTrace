@@ -32,3 +32,15 @@ int main(){
  *   < OK > / Ventana oscura
  * La fábrica y los dos productos se liberan mediante RAII.
  */
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   g++ -std=c++20 -Wall -Wextra .\04-patrones-diseno\abstract-factory\tema-consola\*.cpp -o "$env:TEMP\ct-ejemplo-cpp.exe"
+ *   & "$env:TEMP\ct-ejemplo-cpp.exe"
+ * Salida esperada:
+ *   [ OK ] / Ventana clara
+ *   < OK > / Ventana oscura
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

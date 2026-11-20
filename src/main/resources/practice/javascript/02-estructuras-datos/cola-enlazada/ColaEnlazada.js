@@ -21,3 +21,14 @@ class ColaEnlazada{
     }
 }
 module.exports={ColaEnlazada};
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   node .\02-estructuras-datos\cola-enlazada\main.js
+ * Nota: ColaEnlazada.js es un componente; la salida corresponde al cliente main.js.
+ * Salida esperada:
+ *   Cola enlazada correcta
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

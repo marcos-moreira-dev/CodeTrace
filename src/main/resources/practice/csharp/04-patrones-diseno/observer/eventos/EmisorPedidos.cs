@@ -28,3 +28,19 @@ public sealed class EmisorPedidos
         Despachado?.Invoke(this, new PedidoEventArgs(codigo));
     }
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   $d=Join-Path $env:TEMP "ct-ejemplo-csharp"
+ *   if (Test-Path $d) { Remove-Item $d -Recurse -Force }
+ *   dotnet new console -f net8.0 -o $d --force
+ *   Remove-Item "$d\Program.cs" -ErrorAction SilentlyContinue
+ *   Copy-Item .\04-patrones-diseno\observer\eventos\*.cs $d -Force
+ *   dotnet run --project $d
+ * Nota: EmisorPedidos.cs es un componente; la salida corresponde al cliente MainObserver.cs.
+ * Salida esperada:
+ *   Pedido A-001
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

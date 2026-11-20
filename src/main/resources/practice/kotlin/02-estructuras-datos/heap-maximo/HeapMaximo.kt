@@ -31,3 +31,15 @@ class HeapMaximo{
         return resultado
     }
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   kotlinc .\02-estructuras-datos\heap-maximo\*.kt -jvm-target 21 -include-runtime -d "$env:TEMP\ct-kotlin.jar"
+ *   java -jar "$env:TEMP\ct-kotlin.jar"
+ * Nota: HeapMaximo.kt es un componente; la salida corresponde al cliente MainHeapMaximo.kt.
+ * Salida esperada:
+ *   Max heap correcto
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

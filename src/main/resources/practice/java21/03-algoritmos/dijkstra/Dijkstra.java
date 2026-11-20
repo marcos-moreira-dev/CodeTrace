@@ -42,3 +42,16 @@ public final class Dijkstra {
         System.out.println(Arrays.toString(menoresDistancias(grafo, 0)));
     }
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   $out=Join-Path $env:TEMP "ct-practica-java"
+ *   New-Item -ItemType Directory -Force -Path $out | Out-Null
+ *   javac --release 21 -encoding UTF-8 -d $out (Get-ChildItem -Recurse -Filter *.java).FullName
+ *   java -cp $out Dijkstra
+ * Salida esperada:
+ *   [0, 2, 5]
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

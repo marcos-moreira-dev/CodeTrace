@@ -21,3 +21,14 @@ fun mochila(pesos: IntArray, valores: IntArray, capacidad: Int): Int {
 }
 fun main() = println(mochila(intArrayOf(2, 3, 4, 5),
     intArrayOf(3, 4, 5, 8), 8))
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   kotlinc .\03-algoritmos\mochila-01\*.kt -jvm-target 21 -include-runtime -d "$env:TEMP\ct-kotlin.jar"
+ *   java -jar "$env:TEMP\ct-kotlin.jar"
+ * Salida esperada:
+ *   12
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

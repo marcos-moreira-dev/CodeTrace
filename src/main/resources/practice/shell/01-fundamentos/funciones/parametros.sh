@@ -9,3 +9,11 @@ saludar() {
     printf 'Hola, %s\n' "$nombre"
 }
 saludar "CodeTrace"
+
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   wsl sh 01-fundamentos/funciones/parametros.sh
+# Salida esperada:
+#   Hola, CodeTrace
+# CodeTrace | FIN EJEMPLO DE CONSOLA

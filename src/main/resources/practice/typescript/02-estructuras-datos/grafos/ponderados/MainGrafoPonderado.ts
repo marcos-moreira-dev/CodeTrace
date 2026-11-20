@@ -18,7 +18,12 @@ if(g.vecinos("GYE").length!==2||g.vecinos("CUE").length!==0)
 console.log(g.vecinos("GYE"));
 
 /*
- * Salida esperada de consola:
- *   Se imprime el valor o coleccion calculado por el cliente.
- * Verificacion: termina sin excepciones inesperadas.
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   tsc --strict --target ES2022 --module commonjs --outDir "$env:TEMP\ct-ejemplo-ts" .\02-estructuras-datos\grafos\ponderados\MainGrafoPonderado.ts
+ *   node "$env:TEMP\ct-ejemplo-ts\MainGrafoPonderado.js"
+ * Salida esperada:
+ *   [ { destino: 'UIO', peso: 12 }, { destino: 'CUE', peso: 18 } ]
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
  */

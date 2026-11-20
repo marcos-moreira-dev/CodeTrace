@@ -32,3 +32,15 @@ class TablaHash<V>(capacidad: Int) {
     fun obtener(clave: String): V? =
         cubetas[indice(clave)].firstOrNull { it.first == clave }?.second
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   kotlinc .\02-estructuras-datos\tabla-hash\*.kt -jvm-target 21 -include-runtime -d "$env:TEMP\ct-kotlin.jar"
+ *   java -jar "$env:TEMP\ct-kotlin.jar"
+ * Nota: TablaHash.kt es un componente; la salida corresponde al cliente MainTablaHash.kt.
+ * Salida esperada:
+ *   Tabla hash: A=3
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

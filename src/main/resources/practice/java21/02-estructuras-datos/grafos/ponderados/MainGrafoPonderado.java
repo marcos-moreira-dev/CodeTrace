@@ -27,3 +27,16 @@ public final class MainGrafoPonderado {
  *   Aristas de origen: [Arista[destino=1, peso=4.5], Arista[destino=2, peso=7.0]]
  * El record Arista imprime sus componentes; no aparece el arco inverso 1→0.
  */
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   $out=Join-Path $env:TEMP "ct-practica-java"
+ *   New-Item -ItemType Directory -Force -Path $out | Out-Null
+ *   javac --release 21 -encoding UTF-8 -d $out (Get-ChildItem -Recurse -Filter *.java).FullName
+ *   java -cp $out codetrace.practica.estructuras.grafoponderado.MainGrafoPonderado
+ * Salida esperada:
+ *   Aristas de origen: [Arista[destino=1, peso=4.5], Arista[destino=2, peso=7.0]]
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

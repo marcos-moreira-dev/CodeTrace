@@ -5,6 +5,10 @@ centro = CentroEventos.new
 centro.registrar { |evento| puts "Evento: #{evento}" }
 centro.publicar("Factura 001")
 
-# Salida esperada de consola:
-#   Se imprime el valor o coleccion calculado por el cliente.
-# Verificacion: termina sin excepciones inesperadas.
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   ruby .\04-patrones-diseno\observer\main.rb
+# Salida esperada:
+#   Evento: Factura 001
+# CodeTrace | FIN EJEMPLO DE CONSOLA

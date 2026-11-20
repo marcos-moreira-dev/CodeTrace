@@ -31,3 +31,12 @@ class UnionFind:
 
     def conectados(self, a: int, b: int) -> bool:
         return self.raiz(a) == self.raiz(b)
+
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   python -B .\02-estructuras-datos\union-find\main.py
+# Nota: union_find.py es un componente; la salida corresponde al cliente main.py.
+# Salida esperada:
+#   Componentes: 3
+# CodeTrace | FIN EJEMPLO DE CONSOLA

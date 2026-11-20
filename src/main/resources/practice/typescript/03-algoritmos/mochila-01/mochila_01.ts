@@ -23,3 +23,14 @@ function optimizar(pesos: number[], valores: number[], C: number): number {
     return dp[C];
 }
 console.log("Valor máximo:", optimizar([2, 3, 4, 5], [3, 4, 5, 8], 8));
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   tsc --strict --target ES2022 --module commonjs --outDir "$env:TEMP\ct-ejemplo-ts" .\03-algoritmos\mochila-01\mochila_01.ts
+ *   node "$env:TEMP\ct-ejemplo-ts\mochila_01.js"
+ * Salida esperada:
+ *   Valor máximo: 12
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

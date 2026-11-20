@@ -18,8 +18,12 @@ fun main() {
 }
 
 /*
- * Salida esperada de consola:
- *   Inorden: 
- *   (los valores variables completan los fragmentos anteriores)
- * Verificacion: termina sin excepciones inesperadas.
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   kotlinc .\02-estructuras-datos\arbol-bst\*.kt -jvm-target 21 -include-runtime -d "$env:TEMP\ct-kotlin.jar"
+ *   java -jar "$env:TEMP\ct-kotlin.jar"
+ * Salida esperada:
+ *   Inorden: [1, 3, 4, 6, 7, 8, 10]
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
  */

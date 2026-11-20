@@ -16,3 +16,14 @@ class FabricaOscura{
     dialogo(){return new Texto("Ventana oscura");}
 }
 module.exports={FabricaClara,FabricaOscura};
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   node .\04-patrones-diseno\abstract-factory\tema-consola\main.js
+ * Nota: Familias.js es un componente; la salida corresponde al cliente main.js.
+ * Salida esperada:
+ *   [ OK ] / Ventana clara < OK > / Ventana oscura
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

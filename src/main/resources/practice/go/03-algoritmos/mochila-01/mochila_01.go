@@ -25,3 +25,13 @@ func mochila(pesos, valores []int, capacidad int) int {
     return dp[capacidad]
 }
 func main() { fmt.Println(mochila([]int{2,3,4,5}, []int{3,4,5,8}, 8)) }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   go run (Get-ChildItem .\03-algoritmos\mochila-01\*.go).FullName
+ * Salida esperada:
+ *   12
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

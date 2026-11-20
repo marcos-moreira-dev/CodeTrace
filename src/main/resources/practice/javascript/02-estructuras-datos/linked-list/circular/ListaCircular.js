@@ -25,3 +25,14 @@ class ListaCircular{
     }
 }
 module.exports={ListaCircular};
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   node .\02-estructuras-datos\linked-list\circular\main.js
+ * Nota: ListaCircular.js es un componente; la salida corresponde al cliente main.js.
+ * Salida esperada:
+ *   [ 'Luis', 'Mia', 'Ana' ]
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

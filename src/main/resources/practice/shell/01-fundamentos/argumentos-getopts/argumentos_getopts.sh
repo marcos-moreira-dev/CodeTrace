@@ -24,3 +24,13 @@ while [ "$i" -lt "$cantidad" ]; do
     printf 'Iteración %s\n' "$i"
     i=$((i + 1))
 done
+
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   wsl sh 01-fundamentos/argumentos-getopts/argumentos_getopts.sh
+# Salida esperada:
+#   Iteración 0
+#   Iteración 1
+#   Iteración 2
+# CodeTrace | FIN EJEMPLO DE CONSOLA

@@ -25,3 +25,15 @@ object Factory {
             else -> throw IllegalArgumentException("Tipo desconocido")
         }
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   kotlinc .\04-patrones-diseno\factory\basico\*.kt -jvm-target 21 -include-runtime -d "$env:TEMP\ct-kotlin.jar"
+ *   java -jar "$env:TEMP\ct-kotlin.jar"
+ * Nota: Factory.kt es un componente; la salida corresponde al cliente MainFactory.kt.
+ * Salida esperada:
+ *   Correo: Ejemplo de Kotlin
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

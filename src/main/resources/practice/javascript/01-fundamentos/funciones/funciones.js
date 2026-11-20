@@ -9,3 +9,13 @@ function total(precio, cantidad) {
 
 const aplicarDescuento = (valor) => valor * 0.9;
 console.log(aplicarDescuento(total(12, 3)));
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   node .\01-fundamentos\funciones\funciones.js
+ * Salida esperada:
+ *   32.4
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

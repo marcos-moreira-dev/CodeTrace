@@ -16,7 +16,12 @@ const emisor: Notificador = new Prefijo(new Consola(), "[INFO] ");
 emisor.enviar("Servicio activo");
 
 /*
- * Salida esperada de consola:
- *   Sin salida de texto; las pruebas del cliente se cumplen.
- * Verificacion: termina sin excepciones inesperadas.
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   tsc --strict --target ES2022 --module commonjs --outDir "$env:TEMP\ct-ejemplo-ts" .\04-patrones-diseno\decorator\notificaciones\MainDecorator.ts
+ *   node "$env:TEMP\ct-ejemplo-ts\MainDecorator.js"
+ * Salida esperada:
+ *   Enviado: [INFO] Servicio activo
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
  */

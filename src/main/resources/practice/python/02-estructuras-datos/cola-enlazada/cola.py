@@ -39,3 +39,12 @@ class ColaEnlazada:
             self.ultimo = None
         self.cantidad -= 1
         return dato
+
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   python -B .\02-estructuras-datos\cola-enlazada\main.py
+# Nota: cola.py es un componente; la salida corresponde al cliente main.py.
+# Salida esperada:
+#   FIFO enlazada correcta
+# CodeTrace | FIN EJEMPLO DE CONSOLA

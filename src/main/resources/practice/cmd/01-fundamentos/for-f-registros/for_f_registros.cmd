@@ -14,3 +14,12 @@ for /f "tokens=1,2 delims=," %%A in ("!registro!") do (
     echo Lectura: %%B
 )
 endlocal
+
+REM CodeTrace | EJEMPLO DE CONSOLA (practica)
+REM 
+REM Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+REM   cmd /c .\01-fundamentos\for-f-registros\for_f_registros.cmd
+REM Salida esperada:
+REM   Componente: Sensor
+REM   Lectura: 42
+REM CodeTrace | FIN EJEMPLO DE CONSOLA

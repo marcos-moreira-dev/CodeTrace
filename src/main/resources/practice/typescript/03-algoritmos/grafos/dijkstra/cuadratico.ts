@@ -45,3 +45,14 @@ const red: Grafo = new Map([
 ]);
 console.log("A->E =", dijkstra(red, "A").get("E"));
 if (dijkstra(red, "A").get("E") !== 7) throw Error("Ruta incorrecta");
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   tsc --strict --target ES2022 --module commonjs --outDir "$env:TEMP\ct-ejemplo-ts" .\03-algoritmos\grafos\dijkstra\cuadratico.ts
+ *   node "$env:TEMP\ct-ejemplo-ts\cuadratico.js"
+ * Salida esperada:
+ *   A->E = 7
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

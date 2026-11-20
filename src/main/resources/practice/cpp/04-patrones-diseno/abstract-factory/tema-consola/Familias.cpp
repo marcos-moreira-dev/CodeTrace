@@ -38,3 +38,16 @@ struct Oscuro final:Fabrica {
 }
 std::unique_ptr<Fabrica> fabricaClara(){return std::make_unique<Claro>();}
 std::unique_ptr<Fabrica> fabricaOscura(){return std::make_unique<Oscuro>();}
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   g++ -std=c++20 -Wall -Wextra .\04-patrones-diseno\abstract-factory\tema-consola\*.cpp -o "$env:TEMP\ct-ejemplo-cpp.exe"
+ *   & "$env:TEMP\ct-ejemplo-cpp.exe"
+ * Nota: Familias.cpp es un componente; la salida corresponde al cliente main.cpp.
+ * Salida esperada:
+ *   [ OK ] / Ventana clara
+ *   < OK > / Ventana oscura
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

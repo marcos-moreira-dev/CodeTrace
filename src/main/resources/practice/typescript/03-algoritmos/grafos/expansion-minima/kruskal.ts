@@ -65,3 +65,23 @@ const resultado = kruskal(5, red);
 console.log(resultado);
 if (resultado.total !== 8 || resultado.componentes !== 1
     || resultado.elegidas.length !== 4) throw Error("MST incorrecto");
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   tsc --strict --target ES2022 --module commonjs --outDir "$env:TEMP\ct-ejemplo-ts" .\03-algoritmos\grafos\expansion-minima\kruskal.ts
+ *   node "$env:TEMP\ct-ejemplo-ts\kruskal.js"
+ * Salida esperada:
+ *   {
+ *     elegidas: [
+ *       { a: 0, b: 2, peso: 1 },
+ *       { a: 3, b: 4, peso: 1 },
+ *       { a: 1, b: 2, peso: 2 },
+ *       { a: 1, b: 3, peso: 4 }
+ *     ],
+ *     total: 8,
+ *     componentes: 1
+ *   }
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

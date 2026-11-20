@@ -21,3 +21,14 @@ const producto: Producto = { codigo: "A", precio: 12, disponible: true };
 const publico: Publico = producto;
 const respuesta: Respuesta<number> = { valor: 42 };
 console.log(actualizar(producto, { disponible: false }), publico, respuesta);
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   tsc --strict --target ES2022 --module commonjs --outDir "$env:TEMP\ct-ejemplo-ts" .\01-fundamentos\tipos-condicionales\tipos_condicionales.ts
+ *   node "$env:TEMP\ct-ejemplo-ts\tipos_condicionales.js"
+ * Salida esperada:
+ *   { codigo: 'A', precio: 12, disponible: false } { codigo: 'A', precio: 12, disponible: true } { valor: 42 }
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

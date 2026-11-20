@@ -25,3 +25,12 @@ class ListaSimple
     r
   end
 end
+
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   ruby .\02-estructuras-datos\linked-list\simple\main.rb
+# Nota: lista.rb es un componente; la salida corresponde al cliente main.rb.
+# Salida esperada:
+#   ["C", "B", "A"]
+# CodeTrace | FIN EJEMPLO DE CONSOLA

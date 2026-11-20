@@ -40,3 +40,14 @@ const g: Grafo = new Map([
     ["A", ["B", "C"]], ["B", ["D"]], ["C", ["E"]], ["D", []], ["E", []]
 ]);
 console.log("BFS:", bfs(g, "A"), "DFS:", dfs(g, "A"));
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   tsc --strict --target ES2022 --module commonjs --outDir "$env:TEMP\ct-ejemplo-ts" .\03-algoritmos\bfs-dfs\bfs_dfs.ts
+ *   node "$env:TEMP\ct-ejemplo-ts\bfs_dfs.js"
+ * Salida esperada:
+ *   BFS: [ 'A', 'B', 'C', 'D', 'E' ] DFS: [ 'A', 'B', 'D', 'C', 'E' ]
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

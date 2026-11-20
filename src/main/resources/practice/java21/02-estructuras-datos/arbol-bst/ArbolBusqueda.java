@@ -55,3 +55,19 @@ public final class ArbolBusqueda {
         inorden(nodo.derecha, salida);
     }
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   $out=Join-Path $env:TEMP "ct-practica-java"
+ *   New-Item -ItemType Directory -Force -Path $out | Out-Null
+ *   javac --release 21 -encoding UTF-8 -d $out (Get-ChildItem -Recurse -Filter *.java).FullName
+ *   java -cp $out codetrace.practica.bst.MainArbol
+ * Nota: ArbolBusqueda.java es un componente; la salida corresponde al cliente MainArbol.java.
+ * Salida esperada:
+ *   [1, 3, 4, 6, 7, 8, 10, 14]
+ *   Existe 6: true
+ *   Existe 2: false
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

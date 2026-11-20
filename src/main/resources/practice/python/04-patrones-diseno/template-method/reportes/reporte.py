@@ -32,3 +32,15 @@ class ReporteTexto(ProcesoReporte):
 class ReporteCsv(ProcesoReporte):
     def encabezado(self, titulo: str) -> str: return "titulo,total\n"
     def detalle(self, total: int) -> str: return f"ventas,{total}"
+
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   python -B .\04-patrones-diseno\template-method\reportes\main.py
+# Nota: reporte.py es un componente; la salida corresponde al cliente main.py.
+# Salida esperada:
+#   == ventas ==
+#   Total: 15
+#   titulo,total
+#   ventas,15
+# CodeTrace | FIN EJEMPLO DE CONSOLA

@@ -46,3 +46,12 @@ class ListaCircular(Generic[T]):
             r.append(actual.dato)
             actual = actual.siguiente
         return r
+
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   python -B .\02-estructuras-datos\linked-list\circular\main.py
+# Nota: lista.py es un componente; la salida corresponde al cliente main.py.
+# Salida esperada:
+#   ['Luis', 'Mia', 'Ana']
+# CodeTrace | FIN EJEMPLO DE CONSOLA

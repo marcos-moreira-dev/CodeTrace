@@ -63,3 +63,17 @@ export class Grafo {
         return n;
     }
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   tsc --strict --target ES2022 --module commonjs --outDir "$env:TEMP\ct-ejemplo-ts" .\02-estructuras-datos\grafos\tipos\MainTiposGrafo.ts
+ *   node "$env:TEMP\ct-ejemplo-ts\MainTiposGrafo.js"
+ * Nota: Grafo.ts es un componente; la salida corresponde al cliente MainTiposGrafo.ts.
+ * Salida esperada:
+ *   Arco A->B: Map(1) { 'B' => 4.5 }
+ *   Arco B->A: Map(0) {}
+ *   Componentes: 2
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

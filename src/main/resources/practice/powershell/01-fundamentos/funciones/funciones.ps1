@@ -12,3 +12,11 @@ function Sumar-Pares {
 }
 
 Write-Host (Sumar-Pares -Limite 10)
+
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   pwsh -NoProfile -File .\01-fundamentos\funciones\funciones.ps1
+# Salida esperada:
+#   30
+# CodeTrace | FIN EJEMPLO DE CONSOLA

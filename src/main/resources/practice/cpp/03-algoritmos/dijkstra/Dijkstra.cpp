@@ -35,3 +35,14 @@ int main() {
     for (int valor : dijkstra(grafo, 0)) std::cout << valor << ' ';
     std::cout << '\n';
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   g++ -std=c++20 -Wall -Wextra .\03-algoritmos\dijkstra\*.cpp -o "$env:TEMP\ct-ejemplo-cpp.exe"
+ *   & "$env:TEMP\ct-ejemplo-cpp.exe"
+ * Salida esperada:
+ *   0 2 5 
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

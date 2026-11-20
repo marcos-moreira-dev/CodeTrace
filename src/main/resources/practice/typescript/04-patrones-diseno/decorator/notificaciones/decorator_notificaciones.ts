@@ -15,3 +15,15 @@ export class Prefijo implements Notificador {
     constructor(private readonly interno: Notificador, private readonly etiqueta: string) {}
     enviar(mensaje: string): void { this.interno.enviar(this.etiqueta + mensaje); }
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   tsc --strict --target ES2022 --module commonjs --outDir "$env:TEMP\ct-ejemplo-ts" .\04-patrones-diseno\decorator\notificaciones\MainDecorator.ts
+ *   node "$env:TEMP\ct-ejemplo-ts\MainDecorator.js"
+ * Nota: decorator_notificaciones.ts es un componente; la salida corresponde al cliente MainDecorator.ts.
+ * Salida esperada:
+ *   Enviado: [INFO] Servicio activo
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

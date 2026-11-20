@@ -16,7 +16,15 @@ for (const numero of [8, 3, 10, 1, 6, 4, 7]) arbol.insertar(numero);
 console.log(arbol.inorden());
 
 /*
- * Salida esperada de consola:
- *   Se imprime el valor o coleccion calculado por el cliente.
- * Verificacion: termina sin excepciones inesperadas.
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   tsc --strict --target ES2022 --module commonjs --outDir "$env:TEMP\ct-ejemplo-ts" .\02-estructuras-datos\arbol-bst\MainArbolBST.ts
+ *   node "$env:TEMP\ct-ejemplo-ts\MainArbolBST.js"
+ * Salida esperada:
+ *   [
+ *     1, 3,  4, 6,
+ *     7, 8, 10
+ *   ]
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
  */

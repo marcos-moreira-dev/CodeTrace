@@ -21,3 +21,11 @@ function Get-PrecioFinal {
     return [math]::Round($Subtotal * (1 - $Descuento), 2)
 }
 Get-PrecioFinal -Subtotal 120 -Descuento 0.15
+
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   pwsh -NoProfile -File .\01-fundamentos\funciones-avanzadas\funciones_avanzadas.ps1
+# Salida esperada:
+#   102
+# CodeTrace | FIN EJEMPLO DE CONSOLA

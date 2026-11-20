@@ -28,3 +28,12 @@ class Emisor:
         self.valor = valor
         for escucha in tuple(self.oyentes):
             escucha(valor)
+
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   python -B .\04-patrones-diseno\observer\basico\main.py
+# Nota: observador.py es un componente; la salida corresponde al cliente main.py.
+# Salida esperada:
+#   Observer y desuscripción verificados
+# CodeTrace | FIN EJEMPLO DE CONSOLA

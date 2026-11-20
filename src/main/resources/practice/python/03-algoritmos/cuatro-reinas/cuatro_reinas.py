@@ -35,3 +35,11 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   python -B .\03-algoritmos\cuatro-reinas\cuatro_reinas.py
+# Salida esperada:
+#   Soluciones: [(1, 3, 0, 2), (2, 0, 3, 1)]
+# CodeTrace | FIN EJEMPLO DE CONSOLA

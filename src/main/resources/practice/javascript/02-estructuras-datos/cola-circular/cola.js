@@ -24,3 +24,14 @@ class ColaCircular {
     }
 }
 module.exports = { ColaCircular };
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   node .\02-estructuras-datos\cola-circular\main.js
+ * Nota: cola.js es un componente; la salida corresponde al cliente main.js.
+ * Salida esperada:
+ *   [ 2, 3, 4 ]
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

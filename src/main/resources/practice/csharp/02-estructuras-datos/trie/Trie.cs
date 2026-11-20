@@ -45,3 +45,19 @@ public sealed class Trie
     public bool Contiene(string palabra)=>BuscarNodo(palabra)?.Fin==true;
     public bool Prefijo(string texto)=>BuscarNodo(texto) is not null;
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   $d=Join-Path $env:TEMP "ct-ejemplo-csharp"
+ *   if (Test-Path $d) { Remove-Item $d -Recurse -Force }
+ *   dotnet new console -f net8.0 -o $d --force
+ *   Remove-Item "$d\Program.cs" -ErrorAction SilentlyContinue
+ *   Copy-Item .\02-estructuras-datos\trie\*.cs $d -Force
+ *   dotnet run --project $d
+ * Nota: Trie.cs es un componente; la salida corresponde al cliente MainTrie.cs.
+ * Salida esperada:
+ *   Trie de prefijos correcto
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

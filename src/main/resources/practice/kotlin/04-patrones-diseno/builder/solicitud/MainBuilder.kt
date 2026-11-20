@@ -21,3 +21,14 @@ fun main(){
  *   POST /facturas (1 cabecera)
  * La validación del Builder entrega un producto con una cabecera.
  */
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   kotlinc .\04-patrones-diseno\builder\solicitud\*.kt -jvm-target 21 -include-runtime -d "$env:TEMP\ct-kotlin.jar"
+ *   java -jar "$env:TEMP\ct-kotlin.jar"
+ * Salida esperada:
+ *   POST /facturas (1 cabecera)
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

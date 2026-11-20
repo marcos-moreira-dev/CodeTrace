@@ -19,3 +19,15 @@ export class Pila<T> {
     return this.datos.length;
   }
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   tsc --strict --target ES2022 --module commonjs --outDir "$env:TEMP\ct-ejemplo-ts" .\02-estructuras-datos\pila\MainPila.ts
+ *   node "$env:TEMP\ct-ejemplo-ts\MainPila.js"
+ * Nota: pila.ts es un componente; la salida corresponde al cliente MainPila.ts.
+ * Salida esperada:
+ *   Pila correcta
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

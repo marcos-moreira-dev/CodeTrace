@@ -41,3 +41,15 @@ export class HashAbierto {
         return undefined;
     }
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   tsc --strict --target ES2022 --module commonjs --outDir "$env:TEMP\ct-ejemplo-ts" .\02-estructuras-datos\tabla-hash\direccionamiento-abierto\MainHashAbierto.ts
+ *   node "$env:TEMP\ct-ejemplo-ts\MainHashAbierto.js"
+ * Nota: HashAbierto.ts es un componente; la salida corresponde al cliente MainHashAbierto.ts.
+ * Salida esperada:
+ *   Sondeo comprobado
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

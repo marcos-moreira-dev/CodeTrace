@@ -34,3 +34,12 @@ class TablaHashAbierta:
             if par is None: return None
             if par[0]==clave: return par[1]
         return None
+
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   python -B .\02-estructuras-datos\tabla-hash\direccionamiento-abierto\main.py
+# Nota: tabla.py es un componente; la salida corresponde al cliente main.py.
+# Salida esperada:
+#   Tabla llena controlada
+# CodeTrace | FIN EJEMPLO DE CONSOLA

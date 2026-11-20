@@ -17,3 +17,13 @@ func main() {
     e.Suscribir(func(v int) { fmt.Println("Cambio:", v) })
     e.Actualizar(42)
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   go run (Get-ChildItem .\04-patrones-diseno\observer\basico\*.go).FullName
+ * Salida esperada:
+ *   Cambio: 42
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

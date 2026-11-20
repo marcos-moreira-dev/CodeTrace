@@ -15,3 +15,11 @@ while [ "$divisor" -lt "$numero" ]; do
     divisor=$((divisor + 1))
 done
 printf 'Primo: %s\n' "$primo"
+
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   wsl sh 03-algoritmos/primos/primos.sh
+# Salida esperada:
+#   Primo: 1
+# CodeTrace | FIN EJEMPLO DE CONSOLA

@@ -46,3 +46,17 @@ public final class DequeEnlazado<T> {
     }
     public int cantidad() { return cantidad; }
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   $out=Join-Path $env:TEMP "ct-practica-java"
+ *   New-Item -ItemType Directory -Force -Path $out | Out-Null
+ *   javac --release 21 -encoding UTF-8 -d $out (Get-ChildItem -Recurse -Filter *.java).FullName
+ *   java -cp $out codetrace.practica.estructuras.deque.MainDeque
+ * Nota: DequeEnlazado.java es un componente; la salida corresponde al cliente MainDeque.java.
+ * Salida esperada:
+ *   Operaciones en ambos extremos OK
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

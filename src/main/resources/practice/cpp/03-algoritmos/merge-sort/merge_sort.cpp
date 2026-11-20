@@ -29,3 +29,14 @@ int main() {
     for (int x : datos) std::cout << x << ' ';
     std::cout << '\n';
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   g++ -std=c++20 -Wall -Wextra .\03-algoritmos\merge-sort\*.cpp -o "$env:TEMP\ct-ejemplo-cpp.exe"
+ *   & "$env:TEMP\ct-ejemplo-cpp.exe"
+ * Salida esperada:
+ *   1 2 4 6 8 9 
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

@@ -12,3 +12,11 @@ function Get-Mcd {
     return $A
 }
 Write-Host ("MCD: " + (Get-Mcd -A 48 -B 18))
+
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   pwsh -NoProfile -File .\03-algoritmos\euclides\euclides.ps1
+# Salida esperada:
+#   MCD: 6
+# CodeTrace | FIN EJEMPLO DE CONSOLA

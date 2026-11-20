@@ -28,3 +28,12 @@ class ColaPrioridad:
 
     def vacia(self) -> bool:
         return not self._pendientes
+
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   python -B .\02-estructuras-datos\heaps-y-prioridades\main.py
+# Nota: cola_prioridad.py es un componente; la salida corresponde al cliente main.py.
+# Salida esperada:
+#   ['factura', 'correo', 'informe']
+# CodeTrace | FIN EJEMPLO DE CONSOLA

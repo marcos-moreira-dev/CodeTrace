@@ -41,3 +41,14 @@ const fases = new Map<string, string[]>([
     ["Desplegar", []]
 ]);
 console.log("Orden permitido:", ordenar(fases));
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   tsc --strict --target ES2022 --module commonjs --outDir "$env:TEMP\ct-ejemplo-ts" .\03-algoritmos\grafos\topologico\kahn.ts
+ *   node "$env:TEMP\ct-ejemplo-ts\kahn.js"
+ * Salida esperada:
+ *   Orden permitido: [ 'Fuentes', 'Compilar', 'Pruebas', 'Empaquetar', 'Desplegar' ]
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

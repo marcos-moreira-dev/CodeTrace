@@ -14,3 +14,13 @@ class Pila {
 const pila = new Pila();
 pila.apilar(12); pila.apilar(8);
 console.log(pila.desapilar());
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   node .\02-estructuras-datos\pila\Pila.js
+ * Salida esperada:
+ *   8
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

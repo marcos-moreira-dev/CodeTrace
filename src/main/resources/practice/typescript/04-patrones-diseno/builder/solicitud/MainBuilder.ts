@@ -22,3 +22,14 @@ console.log(solicitud.metodo+" "+solicitud.ruta+" ("+solicitud.cabeceras.length+
  *   POST /facturas (1 cabecera)
  * La validación del Builder entrega un producto con una cabecera.
  */
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   tsc --strict --target ES2022 --module commonjs --outDir "$env:TEMP\ct-ejemplo-ts" .\04-patrones-diseno\builder\solicitud\MainBuilder.ts
+ *   node "$env:TEMP\ct-ejemplo-ts\MainBuilder.js"
+ * Salida esperada:
+ *   POST /facturas (1 cabecera)
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

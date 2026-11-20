@@ -12,3 +12,13 @@ const normal = total => total;
 const promocion = tasa => total => total * (1 - tasa);
 function cobrar(subtotal, estrategia) { return estrategia(subtotal); }
 console.log(cobrar(100, normal), cobrar(100, promocion(0.15)));
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   node .\04-patrones-diseno\strategy\basico\strategy_funciones.js
+ * Salida esperada:
+ *   100 85
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

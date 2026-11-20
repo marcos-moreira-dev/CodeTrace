@@ -18,7 +18,12 @@ if(l.valores().join(",")!=="2,3,5"||l.valores(true).join(",")!=="5,3,2")
 console.log(l.valores());
 
 /*
- * Salida esperada de consola:
- *   Se imprime el valor o coleccion calculado por el cliente.
- * Verificacion: termina sin excepciones inesperadas.
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   tsc --strict --target ES2022 --module commonjs --outDir "$env:TEMP\ct-ejemplo-ts" .\02-estructuras-datos\linked-list\doble-circular\MainListaDobleCircular.ts
+ *   node "$env:TEMP\ct-ejemplo-ts\MainListaDobleCircular.js"
+ * Salida esperada:
+ *   [ 2, 3, 5 ]
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
  */

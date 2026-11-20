@@ -32,3 +32,16 @@ func main() {
     for _, x := range []int{7, 1, 5, 2} { heap.Push(q, x) }
     for q.Len() > 0 { fmt.Println(heap.Pop(q)) }
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   go run (Get-ChildItem .\02-estructuras-datos\heap-minimo\*.go).FullName
+ * Salida esperada:
+ *   1
+ *   2
+ *   5
+ *   7
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

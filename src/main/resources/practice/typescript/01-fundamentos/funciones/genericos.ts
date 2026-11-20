@@ -11,3 +11,14 @@ function primero<T>(datos: readonly T[]): T | undefined {
 const numero = primero<number>([4, 5, 6]);
 const palabra = primero<string>(["uno", "dos"]);
 console.log(numero, palabra);
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   tsc --strict --target ES2022 --module commonjs --outDir "$env:TEMP\ct-ejemplo-ts" .\01-fundamentos\funciones\genericos.ts
+ *   node "$env:TEMP\ct-ejemplo-ts\genericos.js"
+ * Salida esperada:
+ *   4 uno
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

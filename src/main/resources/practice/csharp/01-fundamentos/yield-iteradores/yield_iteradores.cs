@@ -27,3 +27,18 @@ public static class Program
     public static void Main() =>
         Console.WriteLine(string.Join(", ", Fibonacci().Take(8)));
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   $d=Join-Path $env:TEMP "ct-ejemplo-csharp"
+ *   if (Test-Path $d) { Remove-Item $d -Recurse -Force }
+ *   dotnet new console -f net8.0 -o $d --force
+ *   Remove-Item "$d\Program.cs" -ErrorAction SilentlyContinue
+ *   Copy-Item .\01-fundamentos\yield-iteradores\*.cs $d -Force
+ *   dotnet run --project $d
+ * Salida esperada:
+ *   0, 1, 1, 2, 3, 5, 8, 13
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

@@ -18,7 +18,10 @@ def main
 end
 main if __FILE__ == $PROGRAM_NAME
 
-# Salida esperada de consola:
-#   Componentes: #{uf.componentes}
-#   (los valores variables completan los fragmentos anteriores)
-# Verificacion: termina sin excepciones inesperadas.
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   ruby .\02-estructuras-datos\union-find\main.rb
+# Salida esperada:
+#   Componentes: 3
+# CodeTrace | FIN EJEMPLO DE CONSOLA

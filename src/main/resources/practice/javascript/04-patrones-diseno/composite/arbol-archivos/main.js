@@ -25,3 +25,13 @@ if(require.main===module)main();
  *   Bytes: 220
  * Dos archivos de 120 y 80 y un README de 20 suman 220.
  */
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   node .\04-patrones-diseno\composite\arbol-archivos\main.js
+ * Salida esperada:
+ *   Bytes: 220
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

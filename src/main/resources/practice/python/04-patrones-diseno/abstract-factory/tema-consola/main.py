@@ -26,3 +26,12 @@ if __name__ == "__main__":
 #   [ OK ] / Ventana clara
 #   < OK > / Ventana oscura
 # Los Protocol definen los contratos, no la presentación del resultado.
+
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   python -B .\04-patrones-diseno\abstract-factory\tema-consola\main.py
+# Salida esperada:
+#   [ OK ] / Ventana clara
+#   < OK > / Ventana oscura
+# CodeTrace | FIN EJEMPLO DE CONSOLA

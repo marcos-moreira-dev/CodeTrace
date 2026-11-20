@@ -35,3 +35,12 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   python -B .\01-fundamentos\decoradores\decoradores.py
+# Salida esperada:
+#   Ejecutando sumar
+#   Resultado: 11
+# CodeTrace | FIN EJEMPLO DE CONSOLA

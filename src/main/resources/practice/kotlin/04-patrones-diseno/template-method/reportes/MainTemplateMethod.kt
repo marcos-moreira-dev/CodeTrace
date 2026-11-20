@@ -23,3 +23,17 @@ fun main(){
  *   ventas,15
  * El método plantilla fija validación y pasos; las subclases aportan el formato.
  */
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   kotlinc .\04-patrones-diseno\template-method\reportes\*.kt -jvm-target 21 -include-runtime -d "$env:TEMP\ct-kotlin.jar"
+ *   java -jar "$env:TEMP\ct-kotlin.jar"
+ * Salida esperada:
+ *   == ventas ==
+ *   Total: 15
+ *   titulo,total
+ *   ventas,15
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

@@ -14,3 +14,11 @@ for %%I in (8 12 3 25 10) do (
 )
 echo Maximo: !maximo!
 endlocal
+
+REM CodeTrace | EJEMPLO DE CONSOLA (practica)
+REM 
+REM Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+REM   cmd /c .\03-algoritmos\maximo-iterativo\maximo_iterativo.cmd
+REM Salida esperada:
+REM   Maximo: 25
+REM CodeTrace | FIN EJEMPLO DE CONSOLA

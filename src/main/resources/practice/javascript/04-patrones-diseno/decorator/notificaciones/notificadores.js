@@ -13,3 +13,14 @@ class Prefijo {
     enviar(m) { this.interno.enviar(this.etiqueta + m); }
 }
 module.exports = { Consola, Prefijo };
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   node .\04-patrones-diseno\decorator\notificaciones\main.js
+ * Nota: notificadores.js es un componente; la salida corresponde al cliente main.js.
+ * Salida esperada:
+ *   [INFO] Servicio activo
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

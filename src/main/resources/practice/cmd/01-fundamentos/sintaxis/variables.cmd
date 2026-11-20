@@ -8,3 +8,11 @@ set "nombre=CodeTrace"
 set /a cantidad=2+3
 echo %nombre%: %cantidad%
 endlocal
+
+REM CodeTrace | EJEMPLO DE CONSOLA (practica)
+REM 
+REM Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+REM   cmd /c .\01-fundamentos\sintaxis\variables.cmd
+REM Salida esperada:
+REM   CodeTrace: 5
+REM CodeTrace | FIN EJEMPLO DE CONSOLA

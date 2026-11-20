@@ -18,3 +18,11 @@ def buscar(datos: list[int], objetivo: int) -> int:
 
 if __name__ == "__main__":
     print(buscar([2, 4, 8, 12, 16], 12))
+
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   python -B .\03-algoritmos\busqueda-binaria\busqueda_binaria.py
+# Salida esperada:
+#   3
+# CodeTrace | FIN EJEMPLO DE CONSOLA

@@ -21,3 +21,15 @@ class ListaCircular<T>{
         return r
     }
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   kotlinc .\02-estructuras-datos\linked-list\circular\*.kt -jvm-target 21 -include-runtime -d "$env:TEMP\ct-kotlin.jar"
+ *   java -jar "$env:TEMP\ct-kotlin.jar"
+ * Nota: ListaCircular.kt es un componente; la salida corresponde al cliente MainListaCircular.kt.
+ * Salida esperada:
+ *   [Luis, Mia, Ana]
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

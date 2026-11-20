@@ -24,3 +24,14 @@ main if __FILE__ == $PROGRAM_NAME
 #   titulo,total
 #   ventas,15
 # El método plantilla valida y fija el orden; las subclases generan cada formato.
+
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   ruby .\04-patrones-diseno\template-method\reportes\main.rb
+# Salida esperada:
+#   == ventas ==
+#   Total: 15
+#   titulo,total
+#   ventas,15
+# CodeTrace | FIN EJEMPLO DE CONSOLA

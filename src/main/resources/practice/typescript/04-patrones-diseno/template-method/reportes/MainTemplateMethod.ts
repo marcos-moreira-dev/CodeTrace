@@ -24,3 +24,17 @@ console.log((a.ejecutar("ventas",15)+b.ejecutar("ventas",15)).trimEnd());
  *   ventas,15
  * El método plantilla fija validación y pasos; las subclases aportan el formato.
  */
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   tsc --strict --target ES2022 --module commonjs --outDir "$env:TEMP\ct-ejemplo-ts" .\04-patrones-diseno\template-method\reportes\MainTemplateMethod.ts
+ *   node "$env:TEMP\ct-ejemplo-ts\MainTemplateMethod.js"
+ * Salida esperada:
+ *   == ventas ==
+ *   Total: 15
+ *   titulo,total
+ *   ventas,15
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

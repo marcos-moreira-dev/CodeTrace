@@ -47,3 +47,15 @@ int main() {
     std::cout << "\nDFS: "; dfs(g, "A");
     std::cout << '\n';
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   g++ -std=c++20 -Wall -Wextra .\03-algoritmos\bfs-dfs\*.cpp -o "$env:TEMP\ct-ejemplo-cpp.exe"
+ *   & "$env:TEMP\ct-ejemplo-cpp.exe"
+ * Salida esperada:
+ *   BFS: A B C D E 
+ *   DFS: A B D C E 
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

@@ -29,3 +29,15 @@ export class ListaCircular<T> {
         return resultado;
     }
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   tsc --strict --target ES2022 --module commonjs --outDir "$env:TEMP\ct-ejemplo-ts" .\02-estructuras-datos\linked-list\circular\MainListaCircular.ts
+ *   node "$env:TEMP\ct-ejemplo-ts\MainListaCircular.js"
+ * Nota: ListaCircular.ts es un componente; la salida corresponde al cliente MainListaCircular.ts.
+ * Salida esperada:
+ *   [ 'Luis', 'Mia', 'Ana' ]
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

@@ -25,3 +25,14 @@ class UnionFind{
     conectados(a,b){return this.raiz(a)===this.raiz(b);}
 }
 module.exports={UnionFind};
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   node .\02-estructuras-datos\union-find\main.js
+ * Nota: UnionFind.js es un componente; la salida corresponde al cliente main.js.
+ * Salida esperada:
+ *   Componentes: 3
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

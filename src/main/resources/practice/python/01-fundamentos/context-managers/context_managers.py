@@ -23,3 +23,12 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   python -B .\01-fundamentos\context-managers\context_managers.py
+# Salida esperada:
+#   Ejemplo sin archivos persistentes
+#   El contexto eliminó la carpeta temporal
+# CodeTrace | FIN EJEMPLO DE CONSOLA

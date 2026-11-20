@@ -37,3 +37,19 @@ public final class MainRecursosYSuppressed {
  *   Suprimidas: 1
  * close() falla, pero su excepción queda asociada a la principal.
  */
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   $out=Join-Path $env:TEMP "ct-practica-java"
+ *   New-Item -ItemType Directory -Force -Path $out | Out-Null
+ *   javac --release 21 -encoding UTF-8 -d $out (Get-ChildItem -Recurse -Filter *.java).FullName
+ *   java -cp $out MainRecursosYSuppressed
+ * Salida esperada:
+ *   Abrir: demostración
+ *   Cerrar: demostración
+ *   Principal: Error del proceso demostración
+ *   Suprimidas: 1
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

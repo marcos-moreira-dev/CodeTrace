@@ -9,3 +9,13 @@ func mcd(a, b int) int {
     return a
 }
 func main() { fmt.Println("MCD:", mcd(48, 18)) }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   go run (Get-ChildItem .\03-algoritmos\euclides\*.go).FullName
+ * Salida esperada:
+ *   MCD: 6
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

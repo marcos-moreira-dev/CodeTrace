@@ -30,3 +30,14 @@ fun main() {
         "C" to listOf("E"), "D" to emptyList(), "E" to emptyList())
     println(bfs(grafo, "A"))
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   kotlinc .\03-algoritmos\bfs-grafo\*.kt -jvm-target 21 -include-runtime -d "$env:TEMP\ct-kotlin.jar"
+ *   java -jar "$env:TEMP\ct-kotlin.jar"
+ * Salida esperada:
+ *   [A, B, C, D, E]
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

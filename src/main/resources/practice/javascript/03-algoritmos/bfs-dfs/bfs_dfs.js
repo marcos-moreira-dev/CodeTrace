@@ -36,3 +36,13 @@ function dfs(g, origen) {
     return salida;
 }
 console.log(bfs(grafo, "A"), dfs(grafo, "A"));
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   node .\03-algoritmos\bfs-dfs\bfs_dfs.js
+ * Salida esperada:
+ *   [ 'A', 'B', 'C', 'D', 'E' ] [ 'A', 'B', 'D', 'C', 'E' ]
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

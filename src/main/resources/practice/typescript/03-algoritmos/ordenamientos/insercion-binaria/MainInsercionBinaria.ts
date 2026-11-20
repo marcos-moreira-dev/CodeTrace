@@ -15,3 +15,14 @@ console.log("Insercion binaria: ["+datos.join(", ")+"]");
  * Salida esperada:
  * Insercion binaria: [1, 2, 3, 3, 5]
  */
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   tsc --strict --target ES2022 --module commonjs --outDir "$env:TEMP\ct-ejemplo-ts" .\03-algoritmos\ordenamientos\insercion-binaria\MainInsercionBinaria.ts
+ *   node "$env:TEMP\ct-ejemplo-ts\MainInsercionBinaria.js"
+ * Salida esperada:
+ *   Insercion binaria: [1, 2, 3, 3, 5]
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

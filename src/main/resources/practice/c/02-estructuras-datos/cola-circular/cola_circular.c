@@ -40,3 +40,16 @@ int main(void) {
     while (extraer(&cola, &x)) printf("%d\n", x);
     return 0;
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   gcc -std=c17 -Wall -Wextra .\02-estructuras-datos\cola-circular\*.c -o "$env:TEMP\ct-ejemplo-c.exe"
+ *   & "$env:TEMP\ct-ejemplo-c.exe"
+ * Salida esperada:
+ *   10
+ *   20
+ *   30
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

@@ -24,3 +24,14 @@ function describir(e: Estado): string {
     }
 }
 console.log(describir({ tipo: "listo", archivo: "reporte.pdf" }));
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   tsc --strict --target ES2022 --module commonjs --outDir "$env:TEMP\ct-ejemplo-ts" .\01-fundamentos\discriminated-unions\discriminated_unions.ts
+ *   node "$env:TEMP\ct-ejemplo-ts\discriminated_unions.js"
+ * Salida esperada:
+ *   Archivo: reporte.pdf
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

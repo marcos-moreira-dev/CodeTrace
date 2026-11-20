@@ -21,6 +21,10 @@ def main() -> None:
 if __name__ == "__main__":
     main()
 
-# Salida esperada de consola:
-#   Sin salida de texto; las pruebas del cliente se cumplen.
-# Verificacion: termina sin excepciones inesperadas.
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   python -B .\04-patrones-diseno\decorator\notificaciones\main.py
+# Salida esperada:
+#   Mensaje: [INFO] Proceso terminado
+# CodeTrace | FIN EJEMPLO DE CONSOLA

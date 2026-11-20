@@ -40,3 +40,15 @@ class ArbolBST<T>(private val orden: Comparator<T>) {
         return salida
     }
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   kotlinc .\02-estructuras-datos\arbol-bst\*.kt -jvm-target 21 -include-runtime -d "$env:TEMP\ct-kotlin.jar"
+ *   java -jar "$env:TEMP\ct-kotlin.jar"
+ * Nota: ArbolBST.kt es un componente; la salida corresponde al cliente MainArbolBST.kt.
+ * Salida esperada:
+ *   Inorden: [1, 3, 4, 6, 7, 8, 10]
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

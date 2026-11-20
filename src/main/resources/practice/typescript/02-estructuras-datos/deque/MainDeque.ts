@@ -18,8 +18,12 @@ if(d.quitarPrimero()!=="A"||d.quitarUltimo()!=="C"||d.quitarUltimo()!=="B")
 console.log("Deque correcta");
 
 /*
- * Salida esperada de consola:
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   tsc --strict --target ES2022 --module commonjs --outDir "$env:TEMP\ct-ejemplo-ts" .\02-estructuras-datos\deque\MainDeque.ts
+ *   node "$env:TEMP\ct-ejemplo-ts\MainDeque.js"
+ * Salida esperada:
  *   Deque correcta
- *   (los valores variables completan los fragmentos anteriores)
- * Verificacion: termina sin excepciones inesperadas.
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
  */

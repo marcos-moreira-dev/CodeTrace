@@ -23,3 +23,15 @@ export class Carpeta implements Elemento{
     }
     bytes():number{return this.hijos.reduce((n,e)=>n+e.bytes(),0);}
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   tsc --strict --target ES2022 --module commonjs --outDir "$env:TEMP\ct-ejemplo-ts" .\04-patrones-diseno\composite\arbol-archivos\MainComposite.ts
+ *   node "$env:TEMP\ct-ejemplo-ts\MainComposite.js"
+ * Nota: Elementos.ts es un componente; la salida corresponde al cliente MainComposite.ts.
+ * Salida esperada:
+ *   Bytes: 220
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

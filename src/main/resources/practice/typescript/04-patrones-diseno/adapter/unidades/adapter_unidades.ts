@@ -16,3 +16,15 @@ export class Adaptador implements SensorCelsius {
     constructor(private readonly antiguo: Legado) {}
     leer(): number { return (this.antiguo.fahrenheit() - 32) * 5 / 9; }
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   tsc --strict --target ES2022 --module commonjs --outDir "$env:TEMP\ct-ejemplo-ts" .\04-patrones-diseno\adapter\unidades\MainAdapter.ts
+ *   node "$env:TEMP\ct-ejemplo-ts\MainAdapter.js"
+ * Nota: adapter_unidades.ts es un componente; la salida corresponde al cliente MainAdapter.ts.
+ * Salida esperada:
+ *   Celsius: 25
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

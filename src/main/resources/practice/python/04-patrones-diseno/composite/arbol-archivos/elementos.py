@@ -33,3 +33,12 @@ class Carpeta:
 
     def bytes(self) -> int:
         return sum(h.bytes() for h in self.hijos)
+
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   python -B .\04-patrones-diseno\composite\arbol-archivos\main.py
+# Nota: elementos.py es un componente; la salida corresponde al cliente main.py.
+# Salida esperada:
+#   Bytes: 220
+# CodeTrace | FIN EJEMPLO DE CONSOLA

@@ -29,3 +29,14 @@ class ListaDobleCircular{
     }
 }
 module.exports={ListaDobleCircular};
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   node .\02-estructuras-datos\linked-list\doble-circular\main.js
+ * Nota: ListaDobleCircular.js es un componente; la salida corresponde al cliente main.js.
+ * Salida esperada:
+ *   [ 2, 3, 5 ]
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

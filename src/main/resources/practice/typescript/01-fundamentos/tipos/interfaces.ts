@@ -15,3 +15,14 @@ function subtotal(producto: Producto, cantidad: number): number {
 
 const libro: Producto = { id: "L1", precio: 12 };
 console.log(subtotal(libro, 2));
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   tsc --strict --target ES2022 --module commonjs --outDir "$env:TEMP\ct-ejemplo-ts" .\01-fundamentos\tipos\interfaces.ts
+ *   node "$env:TEMP\ct-ejemplo-ts\interfaces.js"
+ * Salida esperada:
+ *   24
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

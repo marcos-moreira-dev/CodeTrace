@@ -23,3 +23,12 @@ if __name__=="__main__": main()
 # Salida esperada:
 # Valor 3: [1, 4)
 # Insertar 4 en indice: 4
+
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   python -B .\03-algoritmos\busqueda-rangos\main.py
+# Salida esperada:
+#   Valor 3: [1, 4)
+#   Insertar 4 en indice: 4
+# CodeTrace | FIN EJEMPLO DE CONSOLA

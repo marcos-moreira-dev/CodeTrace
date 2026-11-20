@@ -26,3 +26,19 @@ public sealed class SolicitudBuilder
         return new Solicitud(_ruta,_metodo,_cabeceras.ToArray());
     }
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   $d=Join-Path $env:TEMP "ct-ejemplo-csharp"
+ *   if (Test-Path $d) { Remove-Item $d -Recurse -Force }
+ *   dotnet new console -f net8.0 -o $d --force
+ *   Remove-Item "$d\Program.cs" -ErrorAction SilentlyContinue
+ *   Copy-Item .\04-patrones-diseno\builder\solicitud\*.cs $d -Force
+ *   dotnet run --project $d
+ * Nota: Solicitud.cs es un componente; la salida corresponde al cliente MainBuilder.cs.
+ * Salida esperada:
+ *   POST /facturas (1 cabecera)
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

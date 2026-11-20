@@ -26,3 +26,14 @@ int main(void) {
     putchar('\n');
     return 0;
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   gcc -std=c17 -Wall -Wextra .\01-fundamentos\qsort-callbacks\*.c -o "$env:TEMP\ct-ejemplo-c.exe"
+ *   & "$env:TEMP\ct-ejemplo-c.exe"
+ * Salida esperada:
+ *   1 3 5 7 9 
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

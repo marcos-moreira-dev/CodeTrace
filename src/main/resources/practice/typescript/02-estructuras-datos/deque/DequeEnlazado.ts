@@ -40,3 +40,15 @@ export class DequeEnlazado<T>{
         return valor;
     }
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   tsc --strict --target ES2022 --module commonjs --outDir "$env:TEMP\ct-ejemplo-ts" .\02-estructuras-datos\deque\MainDeque.ts
+ *   node "$env:TEMP\ct-ejemplo-ts\MainDeque.js"
+ * Nota: DequeEnlazado.ts es un componente; la salida corresponde al cliente MainDeque.ts.
+ * Salida esperada:
+ *   Deque correcta
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

@@ -8,3 +8,14 @@ class BusEventos {
     }
 }
 module.exports = { BusEventos };
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   node .\04-patrones-diseno\observer\main.js
+ * Nota: BusEventos.js es un componente; la salida corresponde al cliente main.js.
+ * Salida esperada:
+ *   Factura 001
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

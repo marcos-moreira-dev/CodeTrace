@@ -14,3 +14,11 @@ limpiar() { rm -f "$temporal"; }
 trap limpiar EXIT HUP INT TERM
 printf 'registro\n' > "$temporal"
 cat "$temporal"
+
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   wsl sh 01-fundamentos/funciones-y-trap/funciones_y_trap.sh
+# Salida esperada:
+#   registro
+# CodeTrace | FIN EJEMPLO DE CONSOLA

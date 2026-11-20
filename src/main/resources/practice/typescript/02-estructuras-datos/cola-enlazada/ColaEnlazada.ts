@@ -27,3 +27,15 @@ export class ColaEnlazada<T> {
         return dato;
     }
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   tsc --strict --target ES2022 --module commonjs --outDir "$env:TEMP\ct-ejemplo-ts" .\02-estructuras-datos\cola-enlazada\MainColaEnlazada.ts
+ *   node "$env:TEMP\ct-ejemplo-ts\MainColaEnlazada.js"
+ * Nota: ColaEnlazada.ts es un componente; la salida corresponde al cliente MainColaEnlazada.ts.
+ * Salida esperada:
+ *   Cola enlazada verificada
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

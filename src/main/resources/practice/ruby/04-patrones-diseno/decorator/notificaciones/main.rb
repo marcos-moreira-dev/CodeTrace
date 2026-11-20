@@ -17,6 +17,10 @@ end
 
 main if __FILE__ == $PROGRAM_NAME
 
-# Salida esperada de consola:
-#   Sin salida de texto; las pruebas del cliente se cumplen.
-# Verificacion: termina sin excepciones inesperadas.
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   ruby .\04-patrones-diseno\decorator\notificaciones\main.rb
+# Salida esperada:
+#   [INFO] Pedido confirmado
+# CodeTrace | FIN EJEMPLO DE CONSOLA

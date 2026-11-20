@@ -40,3 +40,14 @@ class HashAbierto{
     }
 }
 module.exports={HashAbierto};
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   node .\02-estructuras-datos\tabla-hash\direccionamiento-abierto\main.js
+ * Nota: HashAbierto.js es un componente; la salida corresponde al cliente main.js.
+ * Salida esperada:
+ *   Sondeo verificado
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

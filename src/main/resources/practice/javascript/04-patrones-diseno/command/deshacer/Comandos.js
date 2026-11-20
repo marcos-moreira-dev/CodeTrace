@@ -28,3 +28,14 @@ class AgregarTexto{
     }
 }
 module.exports={Editor,AgregarTexto};
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   node .\04-patrones-diseno\command\deshacer\main.js
+ * Nota: Comandos.js es un componente; la salida corresponde al cliente main.js.
+ * Salida esperada:
+ *   Hola
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

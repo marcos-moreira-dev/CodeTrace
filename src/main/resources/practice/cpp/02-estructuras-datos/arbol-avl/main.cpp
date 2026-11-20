@@ -31,3 +31,14 @@ int main(){
  * Altura AVL: 4
  * Verificacion: exit code 0 y ninguna excepcion inesperada.
  */
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   g++ -std=c++20 -Wall -Wextra .\02-estructuras-datos\arbol-avl\*.cpp -o "$env:TEMP\ct-ejemplo-cpp.exe"
+ *   & "$env:TEMP\ct-ejemplo-cpp.exe"
+ * Salida esperada:
+ *   Altura AVL: 4
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

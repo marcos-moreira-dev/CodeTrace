@@ -38,3 +38,18 @@ public final class Vertice<T> {
     @Override public int hashCode() { return id.hashCode(); }
     @Override public String toString() { return id + " [" + dato + "]"; }
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   $out=Join-Path $env:TEMP "ct-practica-java"
+ *   New-Item -ItemType Directory -Force -Path $out | Out-Null
+ *   javac --release 21 -encoding UTF-8 -d $out (Get-ChildItem -Recurse -Filter *.java).FullName
+ *   java -cp $out codetrace.practica.grafosgenericos.MainGrafoGenerico
+ * Nota: Vertice.java es un componente; la salida corresponde al cliente MainGrafoGenerico.java.
+ * Salida esperada:
+ *   Vértices: 3
+ *   Latencias desde GYE: {UIO [Servidor[region=Quito, ip=10.0.0.2]]=12.0, CUE [Servidor[region=Cuenca, ip=10.0.0.3]]=18.0}
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

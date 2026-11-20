@@ -19,3 +19,15 @@ export class GrafoPonderado{
         return l.map(e=>({...e}));
     }
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   tsc --strict --target ES2022 --module commonjs --outDir "$env:TEMP\ct-ejemplo-ts" .\02-estructuras-datos\grafos\ponderados\MainGrafoPonderado.ts
+ *   node "$env:TEMP\ct-ejemplo-ts\MainGrafoPonderado.js"
+ * Nota: GrafoPonderado.ts es un componente; la salida corresponde al cliente MainGrafoPonderado.ts.
+ * Salida esperada:
+ *   [ { destino: 'UIO', peso: 12 }, { destino: 'CUE', peso: 18 } ]
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

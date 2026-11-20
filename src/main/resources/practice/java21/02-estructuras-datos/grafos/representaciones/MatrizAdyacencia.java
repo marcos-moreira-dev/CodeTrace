@@ -40,3 +40,19 @@ public final class MatrizAdyacencia {
         if (a < 0 || a >= aristas.length) throw new IndexOutOfBoundsException(a);
     }
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   $out=Join-Path $env:TEMP "ct-practica-java"
+ *   New-Item -ItemType Directory -Force -Path $out | Out-Null
+ *   javac --release 21 -encoding UTF-8 -d $out (Get-ChildItem -Recurse -Filter *.java).FullName
+ *   java -cp $out codetrace.practica.grafosrepresentaciones.MainRepresentaciones
+ * Nota: MatrizAdyacencia.java es un componente; la salida corresponde al cliente MainRepresentaciones.java.
+ * Salida esperada:
+ *   Matriz 0-2: true
+ *   Lista 0-2: true
+ *   Vecinos de 2: [0, 3]
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

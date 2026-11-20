@@ -16,3 +16,15 @@ class Pila<T> {
 
     fun cantidad(): Int = datos.size
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   kotlinc .\02-estructuras-datos\pila\*.kt -jvm-target 21 -include-runtime -d "$env:TEMP\ct-kotlin.jar"
+ *   java -jar "$env:TEMP\ct-kotlin.jar"
+ * Nota: Pila.kt es un componente; la salida corresponde al cliente MainPila.kt.
+ * Salida esperada:
+ *   Pila LIFO verificada
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

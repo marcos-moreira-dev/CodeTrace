@@ -15,3 +15,14 @@ export function busquedaBinaria(datos: readonly number[], x: number): number {
   }
   return -1;
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   tsc --strict --target ES2022 --module commonjs --outDir "$env:TEMP\ct-ejemplo-ts" .\03-algoritmos\busqueda-binaria\busqueda_binaria.ts
+ * Nota: archivo reutilizable sin entrada; el comando solo verifica la compilación o sintaxis.
+ * Salida esperada:
+ *   (sin salida de consola; la comprobación termina correctamente)
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

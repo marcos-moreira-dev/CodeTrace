@@ -13,3 +13,15 @@ class GrafoPonderado{
     }
     fun vecinos(x:String):List<Arista> = ady.getValue(x).toList()
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   kotlinc .\02-estructuras-datos\grafos\ponderados\*.kt -jvm-target 21 -include-runtime -d "$env:TEMP\ct-kotlin.jar"
+ *   java -jar "$env:TEMP\ct-kotlin.jar"
+ * Nota: GrafoPonderado.kt es un componente; la salida corresponde al cliente MainGrafoPonderado.kt.
+ * Salida esperada:
+ *   [Arista(destino=UIO, peso=12.0), Arista(destino=CUE, peso=18.0)]
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

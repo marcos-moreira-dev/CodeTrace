@@ -29,3 +29,19 @@ public sealed class Pila<T>
         return valor;
     }
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   $d=Join-Path $env:TEMP "ct-ejemplo-csharp"
+ *   if (Test-Path $d) { Remove-Item $d -Recurse -Force }
+ *   dotnet new console -f net8.0 -o $d --force
+ *   Remove-Item "$d\Program.cs" -ErrorAction SilentlyContinue
+ *   Copy-Item .\02-estructuras-datos\pila\*.cs $d -Force
+ *   dotnet run --project $d
+ * Nota: Pila.cs es un componente; la salida corresponde al cliente MainPila.cs.
+ * Salida esperada:
+ *   LIFO verificado
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

@@ -14,3 +14,13 @@ function buscar(datos, objetivo) {
   return -1;
 }
 console.log(buscar([2, 4, 8, 12, 16], 12));
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   node .\03-algoritmos\busqueda-binaria\BusquedaBinaria.js
+ * Salida esperada:
+ *   3
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

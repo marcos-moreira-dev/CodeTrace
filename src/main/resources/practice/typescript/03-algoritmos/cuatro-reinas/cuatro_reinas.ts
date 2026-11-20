@@ -26,3 +26,14 @@ function resolver(n: number): number[][] {
     return soluciones;
 }
 console.log(resolver(4));
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   tsc --strict --target ES2022 --module commonjs --outDir "$env:TEMP\ct-ejemplo-ts" .\03-algoritmos\cuatro-reinas\cuatro_reinas.ts
+ *   node "$env:TEMP\ct-ejemplo-ts\cuatro_reinas.js"
+ * Salida esperada:
+ *   [ [ 1, 3, 0, 2 ], [ 2, 0, 3, 1 ] ]
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

@@ -27,3 +27,15 @@ public:
     }
     std::size_t cantidad() const { return datos.size(); }
 };
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   g++ -std=c++20 -Wall -Wextra .\02-estructuras-datos\pila\*.cpp -o "$env:TEMP\ct-ejemplo-cpp.exe"
+ *   & "$env:TEMP\ct-ejemplo-cpp.exe"
+ * Nota: Pila.hpp es un componente; la salida corresponde al cliente main.cpp.
+ * Salida esperada:
+ *   Pila LIFO correcta
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

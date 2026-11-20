@@ -20,3 +20,13 @@ func main() {
     valor, ok := pila.Desapilar()
     if ok { fmt.Println(valor) }
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   go run (Get-ChildItem .\02-estructuras-datos\pila\*.go).FullName
+ * Salida esperada:
+ *   8
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

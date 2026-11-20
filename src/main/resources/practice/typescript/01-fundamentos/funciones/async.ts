@@ -14,3 +14,14 @@ async function iniciar(): Promise<void> {
 }
 
 void iniciar();
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   tsc --strict --target ES2022 --module commonjs --outDir "$env:TEMP\ct-ejemplo-ts" .\01-fundamentos\funciones\async.ts
+ *   node "$env:TEMP\ct-ejemplo-ts\async.js"
+ * Salida esperada:
+ *   21
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

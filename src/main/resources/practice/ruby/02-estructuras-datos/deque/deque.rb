@@ -33,3 +33,12 @@ class DequeCurso
     valor
   end
 end
+
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   ruby .\02-estructuras-datos\deque\main.rb
+# Nota: deque.rb es un componente; la salida corresponde al cliente main.rb.
+# Salida esperada:
+#   ["A", "C", "B"]
+# CodeTrace | FIN EJEMPLO DE CONSOLA

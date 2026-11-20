@@ -29,3 +29,13 @@ func main() {
     g:=map[string][]string{"A":{"B","C"}, "B":{"D"}, "C":{"E"}, "D":{}, "E":{}}
     fmt.Println(bfs(g, "A"))
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   go run (Get-ChildItem .\03-algoritmos\bfs-grafo\*.go).FullName
+ * Salida esperada:
+ *   [A B C D E]
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

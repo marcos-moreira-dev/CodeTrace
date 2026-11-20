@@ -10,3 +10,14 @@ class Adaptador {
     leer() { return (this.legado.fahrenheit() - 32) * 5 / 9; }
 }
 module.exports = { Legado, Adaptador };
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   node .\04-patrones-diseno\adapter\unidades\main.js
+ * Nota: sensores.js es un componente; la salida corresponde al cliente main.js.
+ * Salida esperada:
+ *   Celsius: 25
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

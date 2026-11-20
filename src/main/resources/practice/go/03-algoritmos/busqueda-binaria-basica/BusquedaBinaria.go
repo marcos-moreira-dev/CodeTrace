@@ -14,3 +14,13 @@ func buscar(datos []int, objetivo int) int {
     return -1
 }
 func main() { fmt.Println(buscar([]int{2,4,8,12,16}, 12)) }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   go run (Get-ChildItem .\03-algoritmos\busqueda-binaria-basica\*.go).FullName
+ * Salida esperada:
+ *   3
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

@@ -20,3 +20,15 @@ int main() {
     const std::vector<int> muestras{3, 5, 8};
     std::cout << sensor->lectura << ", " << muestras.at(1) << '\n';
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   g++ -std=c++20 -Wall -Wextra .\01-fundamentos\raii-y-propiedad\*.cpp -o "$env:TEMP\ct-ejemplo-cpp.exe"
+ *   & "$env:TEMP\ct-ejemplo-cpp.exe"
+ * Salida esperada:
+ *   42, 5
+ *   Sensor liberado
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

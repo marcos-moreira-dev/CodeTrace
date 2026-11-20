@@ -27,3 +27,14 @@ if __name__ == "__main__":
 #   titulo,total
 #   ventas,15
 # El método plantilla valida y fija el orden; las subclases generan cada formato.
+
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   python -B .\04-patrones-diseno\template-method\reportes\main.py
+# Salida esperada:
+#   == ventas ==
+#   Total: 15
+#   titulo,total
+#   ventas,15
+# CodeTrace | FIN EJEMPLO DE CONSOLA

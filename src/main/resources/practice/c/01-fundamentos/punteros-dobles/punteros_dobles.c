@@ -29,3 +29,14 @@ int main(void) {
     dato = NULL;
     return EXIT_SUCCESS;
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   gcc -std=c17 -Wall -Wextra .\01-fundamentos\punteros-dobles\*.c -o "$env:TEMP\ct-ejemplo-c.exe"
+ *   & "$env:TEMP\ct-ejemplo-c.exe"
+ * Salida esperada:
+ *   Valor: 42
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

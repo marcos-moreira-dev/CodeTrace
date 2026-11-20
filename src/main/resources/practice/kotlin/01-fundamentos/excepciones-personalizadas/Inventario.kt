@@ -24,3 +24,15 @@ class Inventario(private var stock: Int) {
 
     fun disponible(): Int = stock
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   kotlinc .\01-fundamentos\excepciones-personalizadas\*.kt -jvm-target 21 -include-runtime -d "$env:TEMP\ct-kotlin.jar"
+ *   java -jar "$env:TEMP\ct-kotlin.jar"
+ * Nota: Inventario.kt es un componente; la salida corresponde al cliente MainExcepciones.kt.
+ * Salida esperada:
+ *   Pedido=8, disponible=3
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

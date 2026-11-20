@@ -17,3 +17,14 @@ int main() {
  *   Se muestran los datos o el resultado calculado del ejemplo.
  * Verificacion: terminar sin excepciones inesperadas.
  */
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   g++ -std=c++20 -Wall -Wextra .\04-patrones-diseno\observer\*.cpp -o "$env:TEMP\ct-ejemplo-cpp.exe"
+ *   & "$env:TEMP\ct-ejemplo-cpp.exe"
+ * Salida esperada:
+ *   Factura 001
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

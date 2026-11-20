@@ -15,3 +15,14 @@ object Callbacks {
         notificar("Hola", Receptor { println(it) })
     }
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   kotlinc .\01-fundamentos\funciones\Callbacks.kt -jvm-target 21 -include-runtime -d "$env:TEMP\ct-kotlin.jar"
+ *   java -jar "$env:TEMP\ct-kotlin.jar"
+ * Salida esperada:
+ *   Hola
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

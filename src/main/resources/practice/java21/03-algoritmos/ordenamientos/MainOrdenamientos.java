@@ -54,3 +54,20 @@ public final class MainOrdenamientos {
  * HeapSort: [1, 2, 3, 5, 7, 8, 9]
  * QuickSort: [1, 2, 3, 5, 7, 8, 9]
  */
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   $out=Join-Path $env:TEMP "ct-practica-java"
+ *   New-Item -ItemType Directory -Force -Path $out | Out-Null
+ *   javac --release 21 -encoding UTF-8 -d $out (Get-ChildItem -Recurse -Filter *.java).FullName
+ *   java -cp $out codetrace.practica.ordenamientos.MainOrdenamientos
+ * Salida esperada:
+ *   Insercion: [1, 2, 3, 5, 7, 8, 9]
+ *   Burbuja: [1, 2, 3, 5, 7, 8, 9]
+ *   Mezcla: [1, 2, 3, 5, 7, 8, 9]
+ *   HeapSort: [1, 2, 3, 5, 7, 8, 9]
+ *   QuickSort: [1, 2, 3, 5, 7, 8, 9]
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

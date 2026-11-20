@@ -70,3 +70,15 @@ export class ArbolAVL{
         return validar(this.raiz);
     }
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   tsc --strict --target ES2022 --module commonjs --outDir "$env:TEMP\ct-ejemplo-ts" .\02-estructuras-datos\arbol-avl\MainArbolAVL.ts
+ *   node "$env:TEMP\ct-ejemplo-ts\MainArbolAVL.js"
+ * Nota: ArbolAVL.ts es un componente; la salida corresponde al cliente MainArbolAVL.ts.
+ * Salida esperada:
+ *   Altura AVL: 4
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

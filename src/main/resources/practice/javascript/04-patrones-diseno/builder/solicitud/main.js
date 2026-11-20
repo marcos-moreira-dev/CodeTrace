@@ -23,3 +23,13 @@ if(require.main===module)main();
  *   POST /facturas (1 cabecera)
  * La validación del Builder entrega un producto con una cabecera.
  */
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   node .\04-patrones-diseno\builder\solicitud\main.js
+ * Salida esperada:
+ *   POST /facturas (1 cabecera)
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

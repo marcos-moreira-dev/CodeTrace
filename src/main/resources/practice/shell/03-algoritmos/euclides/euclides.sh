@@ -12,3 +12,11 @@ while [ "$b" -ne 0 ]; do
     b=$resto
 done
 printf 'MCD: %s\n' "$a"
+
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   wsl sh 03-algoritmos/euclides/euclides.sh
+# Salida esperada:
+#   MCD: 6
+# CodeTrace | FIN EJEMPLO DE CONSOLA

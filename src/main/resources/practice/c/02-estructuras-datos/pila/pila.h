@@ -16,3 +16,16 @@ int pila_extraer(Pila *pila, int *valor);
 void pila_destruir(Pila *pila);
 
 #endif
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   gcc -std=c17 -Wall -Wextra .\02-estructuras-datos\pila\*.c -o "$env:TEMP\ct-ejemplo-c.exe"
+ *   & "$env:TEMP\ct-ejemplo-c.exe"
+ * Nota: pila.h es un componente; la salida corresponde al cliente main.c.
+ * Salida esperada:
+ *   20
+ *   10
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

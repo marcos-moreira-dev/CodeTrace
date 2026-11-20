@@ -11,3 +11,15 @@ function mostrar(resultado: Resultado): string {
   if (resultado.ok) return String(resultado.valor);
   return resultado.error;
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   tsc --strict --target ES2022 --module commonjs --outDir "$env:TEMP\ct-ejemplo-ts" .\01-fundamentos\tipos\interfaces.ts
+ *   node "$env:TEMP\ct-ejemplo-ts\interfaces.js"
+ * Nota: narrowing.ts es un componente; la salida corresponde al cliente interfaces.ts.
+ * Salida esperada:
+ *   24
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

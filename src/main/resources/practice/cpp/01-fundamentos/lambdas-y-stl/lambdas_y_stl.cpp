@@ -20,3 +20,16 @@ int main() {
     });
     for (const auto& p : datos) std::cout << p.id << ": " << p.precio << '\n';
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   g++ -std=c++20 -Wall -Wextra .\01-fundamentos\lambdas-y-stl\*.cpp -o "$env:TEMP\ct-ejemplo-cpp.exe"
+ *   & "$env:TEMP\ct-ejemplo-cpp.exe"
+ * Salida esperada:
+ *   C: 0.2
+ *   A: 0.5
+ *   B: 0.5
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

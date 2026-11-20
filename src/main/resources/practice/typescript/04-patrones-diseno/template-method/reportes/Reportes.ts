@@ -26,3 +26,18 @@ export class ReporteCsv extends ProcesoReporte {
     protected encabezado(_t:string):string{return "titulo,total\n";}
     protected detalle(n:number):string{return "ventas,"+n;}
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   tsc --strict --target ES2022 --module commonjs --outDir "$env:TEMP\ct-ejemplo-ts" .\04-patrones-diseno\template-method\reportes\MainTemplateMethod.ts
+ *   node "$env:TEMP\ct-ejemplo-ts\MainTemplateMethod.js"
+ * Nota: Reportes.ts es un componente; la salida corresponde al cliente MainTemplateMethod.ts.
+ * Salida esperada:
+ *   == ventas ==
+ *   Total: 15
+ *   titulo,total
+ *   ventas,15
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

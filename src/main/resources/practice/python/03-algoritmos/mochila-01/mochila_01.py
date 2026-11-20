@@ -27,3 +27,11 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   python -B .\03-algoritmos\mochila-01\mochila_01.py
+# Salida esperada:
+#   Beneficio máximo: 12
+# CodeTrace | FIN EJEMPLO DE CONSOLA

@@ -46,3 +46,14 @@ int main(void) {
     free(v.datos);
     return EXIT_SUCCESS;
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   gcc -std=c17 -Wall -Wextra .\01-fundamentos\realloc-vector\*.c -o "$env:TEMP\ct-ejemplo-c.exe"
+ *   & "$env:TEMP\ct-ejemplo-c.exe"
+ * Salida esperada:
+ *   Cantidad=10, capacidad=16, último=30
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

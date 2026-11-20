@@ -31,3 +31,15 @@ export class Trie{
     contiene(texto:string):boolean{return this.nodo(texto)?.terminal??false;}
     prefijo(texto:string):boolean{return this.nodo(texto)!==undefined;}
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   tsc --strict --target ES2022 --module commonjs --outDir "$env:TEMP\ct-ejemplo-ts" .\02-estructuras-datos\trie\MainTrie.ts
+ *   node "$env:TEMP\ct-ejemplo-ts\MainTrie.js"
+ * Nota: Trie.ts es un componente; la salida corresponde al cliente MainTrie.ts.
+ * Salida esperada:
+ *   Prefijos comprobados
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

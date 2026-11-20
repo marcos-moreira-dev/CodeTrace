@@ -17,3 +17,14 @@ fun main() {
         .toList()
     println(cuadrados)
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   kotlinc .\01-fundamentos\secuencias-perezosas\*.kt -jvm-target 21 -include-runtime -d "$env:TEMP\ct-kotlin.jar"
+ *   java -jar "$env:TEMP\ct-kotlin.jar"
+ * Salida esperada:
+ *   [4, 16, 36, 64, 100]
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

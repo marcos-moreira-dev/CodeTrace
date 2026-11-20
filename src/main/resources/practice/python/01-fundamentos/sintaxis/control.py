@@ -11,3 +11,11 @@ def sumar_pares(limite: int) -> int:
     return total
 
 print(sumar_pares(10))
+
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   python -B .\01-fundamentos\sintaxis\control.py
+# Salida esperada:
+#   30
+# CodeTrace | FIN EJEMPLO DE CONSOLA

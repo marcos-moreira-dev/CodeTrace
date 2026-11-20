@@ -23,3 +23,14 @@ function dijkstra(grafo: Arista[][], inicio: number): number[] {
     return distancia;
 }
 console.log(dijkstra([[{ destino: 1, costo: 2 }], []], 0));
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   tsc --strict --target ES2022 --module commonjs --outDir "$env:TEMP\ct-ejemplo-ts" .\03-algoritmos\dijkstra\dijkstra.ts
+ *   node "$env:TEMP\ct-ejemplo-ts\dijkstra.js"
+ * Salida esperada:
+ *   [ 0, 2 ]
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

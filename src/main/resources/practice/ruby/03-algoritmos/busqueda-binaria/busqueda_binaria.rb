@@ -21,3 +21,11 @@ def buscar(arreglo, objetivo)
   -1
 end
 puts buscar([1, 2, 5, 8, 13], 8)
+
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   ruby .\03-algoritmos\busqueda-binaria\busqueda_binaria.rb
+# Salida esperada:
+#   3
+# CodeTrace | FIN EJEMPLO DE CONSOLA

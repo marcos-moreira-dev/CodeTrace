@@ -28,3 +28,16 @@ public final class MainDeque {
  *   Operaciones en ambos extremos OK
  * El cliente extrae A por el principio, C por el final y luego B.
  */
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   $out=Join-Path $env:TEMP "ct-practica-java"
+ *   New-Item -ItemType Directory -Force -Path $out | Out-Null
+ *   javac --release 21 -encoding UTF-8 -d $out (Get-ChildItem -Recurse -Filter *.java).FullName
+ *   java -cp $out codetrace.practica.estructuras.deque.MainDeque
+ * Salida esperada:
+ *   Operaciones en ambos extremos OK
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

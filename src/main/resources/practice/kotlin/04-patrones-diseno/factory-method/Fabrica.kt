@@ -8,3 +8,15 @@ abstract class Fabrica {
 class FabricaTexto : Fabrica() {
     override fun crear(): Exportador = ExportadorTexto()
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   kotlinc .\04-patrones-diseno\factory-method\*.kt -jvm-target 21 -include-runtime -d "$env:TEMP\ct-kotlin.jar"
+ *   java -jar "$env:TEMP\ct-kotlin.jar"
+ * Nota: Fabrica.kt es un componente; la salida corresponde al cliente MainFactoryMethod.kt.
+ * Salida esperada:
+ *   TEXTO: Factura 001
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

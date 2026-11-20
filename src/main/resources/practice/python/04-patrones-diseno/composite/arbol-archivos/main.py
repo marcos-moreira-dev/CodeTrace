@@ -25,3 +25,11 @@ if __name__ == "__main__":
 # Salida esperada de consola:
 #   Bytes: 220
 # El total incluye dos archivos fuente y un README en la carpeta raíz.
+
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   python -B .\04-patrones-diseno\composite\arbol-archivos\main.py
+# Salida esperada:
+#   Bytes: 220
+# CodeTrace | FIN EJEMPLO DE CONSOLA

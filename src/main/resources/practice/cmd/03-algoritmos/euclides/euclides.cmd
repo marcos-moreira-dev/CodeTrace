@@ -13,3 +13,11 @@ goto repetir
 :mostrar
 echo MCD: !a!
 endlocal
+
+REM CodeTrace | EJEMPLO DE CONSOLA (practica)
+REM 
+REM Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+REM   cmd /c .\03-algoritmos\euclides\euclides.cmd
+REM Salida esperada:
+REM   MCD: 6
+REM CodeTrace | FIN EJEMPLO DE CONSOLA

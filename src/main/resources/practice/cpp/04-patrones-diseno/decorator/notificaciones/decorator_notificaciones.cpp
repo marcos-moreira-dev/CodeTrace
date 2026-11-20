@@ -17,3 +17,15 @@ Prefijo::Prefijo(std::unique_ptr<Notificador> n, std::string texto)
 void Prefijo::enviar(const std::string& m) const {
     interno->enviar(etiqueta + m);
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   g++ -std=c++20 -Wall -Wextra .\04-patrones-diseno\decorator\notificaciones\*.cpp -o "$env:TEMP\ct-ejemplo-cpp.exe"
+ *   & "$env:TEMP\ct-ejemplo-cpp.exe"
+ * Nota: decorator_notificaciones.cpp es un componente; la salida corresponde al cliente main.cpp.
+ * Salida esperada:
+ *   [INFO] Conexión disponible
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

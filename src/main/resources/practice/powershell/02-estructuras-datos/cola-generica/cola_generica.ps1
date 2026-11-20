@@ -16,3 +16,15 @@ $cola.Enqueue('respaldo')
 while ($cola.Count -gt 0) {
     [pscustomobject]@{ Trabajo = $cola.Dequeue() }
 }
+
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   pwsh -NoProfile -File .\02-estructuras-datos\cola-generica\cola_generica.ps1
+# Salida esperada:
+#   Trabajo
+#   -------
+#   factura
+#   correo
+#   respaldo
+# CodeTrace | FIN EJEMPLO DE CONSOLA

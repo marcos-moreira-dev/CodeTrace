@@ -28,3 +28,15 @@ class HashAbierto(capacidad:Int){
         return null
     }
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   kotlinc .\02-estructuras-datos\tabla-hash\direccionamiento-abierto\*.kt -jvm-target 21 -include-runtime -d "$env:TEMP\ct-kotlin.jar"
+ *   java -jar "$env:TEMP\ct-kotlin.jar"
+ * Nota: HashAbierto.kt es un componente; la salida corresponde al cliente MainHashAbierto.kt.
+ * Salida esperada:
+ *   Hash lleno controlado
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

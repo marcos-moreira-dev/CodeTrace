@@ -33,3 +33,12 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   python -B .\03-algoritmos\merge-sort\merge_sort.py
+# Salida esperada:
+#   [1, 2, 4, 7, 8, 9]
+#   La entrada permanece intacta: [9, 1, 8, 4, 2, 7]
+# CodeTrace | FIN EJEMPLO DE CONSOLA

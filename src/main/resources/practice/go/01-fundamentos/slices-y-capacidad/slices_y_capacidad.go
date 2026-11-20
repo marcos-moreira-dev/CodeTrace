@@ -22,3 +22,13 @@ func main() {
     copia[0] = 7
     fmt.Printf("original=%v copia=%v cap=%d\n", numeros, copia, cap(numeros))
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   go run (Get-ChildItem .\01-fundamentos\slices-y-capacidad\*.go).FullName
+ * Salida esperada:
+ *   original=[99 20] copia=[7 20] cap=4
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

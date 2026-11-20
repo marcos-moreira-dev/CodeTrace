@@ -38,3 +38,11 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   python -B .\03-algoritmos\seleccion-intervalos\seleccion_intervalos.py
+# Salida esperada:
+#   [Intervalo(inicio=1, fin=4), Intervalo(inicio=5, fin=7), Intervalo(inicio=8, fin=9)]
+# CodeTrace | FIN EJEMPLO DE CONSOLA

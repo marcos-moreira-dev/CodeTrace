@@ -99,7 +99,7 @@ Para generar un ZIP portable, y opcionalmente el instalador con las herramientas
 
 ## Estado del proyecto
 
-**CodeTrace v0.3 — candidato en validación.** La rama `feature/practice-curriculum-20261120` no equivale a una publicación. Están pendientes la aceptación manual del instalador y de las sesiones en Windows limpio, el repaso de atribuciones de terceros, la decisión de licencia y la etiqueta/release definitiva. La biblioteca con comentarios de consola v9 también debe integrarse y validarse antes del corte final.
+**CodeTrace v0.3 — candidato en validación.** La rama `feature/practice-curriculum-20261120` no equivale a una publicación. Están pendientes la aceptación manual del instalador y de las sesiones en Windows limpio, el repaso de atribuciones de terceros, la decisión de licencia y la etiqueta/release definitiva. La biblioteca con comentarios de consola v9 está integrada en esta rama, pero todavía requiere CI del commit final y validación cruzada de algunas salidas inferidas.
 
 El código está disponible para consulta, pero **todavía no se ha seleccionado una licencia de uso o redistribución**; que el repositorio sea visible no concede por sí solo una licencia de software libre.
 

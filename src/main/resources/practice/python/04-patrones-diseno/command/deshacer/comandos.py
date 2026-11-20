@@ -33,3 +33,12 @@ class AgregarTexto:
         if self.anterior is None: raise ValueError("No ejecutado")
         self.editor.texto=self.anterior
         self.anterior=None
+
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   python -B .\04-patrones-diseno\command\deshacer\main.py
+# Nota: comandos.py es un componente; la salida corresponde al cliente main.py.
+# Salida esperada:
+#   Hola
+# CodeTrace | FIN EJEMPLO DE CONSOLA

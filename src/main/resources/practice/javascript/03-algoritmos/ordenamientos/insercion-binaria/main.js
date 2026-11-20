@@ -18,3 +18,13 @@ if(require.main===module)main();
  * Salida esperada:
  * Insercion binaria: [1, 2, 3, 3, 5]
  */
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   node .\03-algoritmos\ordenamientos\insercion-binaria\main.js
+ * Salida esperada:
+ *   Insercion binaria: [1, 2, 3, 3, 5]
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

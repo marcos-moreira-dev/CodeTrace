@@ -33,3 +33,14 @@ class ListaDoble{
     }
 }
 module.exports={ListaDoble};
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   node .\02-estructuras-datos\linked-list\doble\main.js
+ * Nota: ListaDoble.js es un componente; la salida corresponde al cliente main.js.
+ * Salida esperada:
+ *   [ 'A', 'B' ]
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

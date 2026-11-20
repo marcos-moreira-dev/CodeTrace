@@ -23,3 +23,14 @@ int main() {
     std::vector<int> vector{7, 8, 9, 10};
     std::cout << contar_pares(arreglo) << " y " << contar_pares(vector) << '\n';
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   g++ -std=c++20 -Wall -Wextra .\01-fundamentos\span-y-iteradores\*.cpp -o "$env:TEMP\ct-ejemplo-cpp.exe"
+ *   & "$env:TEMP\ct-ejemplo-cpp.exe"
+ * Salida esperada:
+ *   3 y 2
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

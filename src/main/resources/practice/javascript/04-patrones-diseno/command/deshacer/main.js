@@ -28,3 +28,13 @@ if(require.main===module)main();
  *   Hola
  * El invocador retira la última acción; el receptor vuelve a «Hola».
  */
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   node .\04-patrones-diseno\command\deshacer\main.js
+ * Salida esperada:
+ *   Hola
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

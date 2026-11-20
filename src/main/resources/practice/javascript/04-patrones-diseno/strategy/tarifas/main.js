@@ -20,7 +20,11 @@ function main() {
 if (require.main === module) main();
 
 /*
- * Salida esperada de consola:
- *   Se imprime el valor o coleccion calculado por el cliente.
- * Verificacion: termina sin excepciones inesperadas.
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   node .\04-patrones-diseno\strategy\tarifas\main.js
+ * Salida esperada:
+ *   100 90
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
  */

@@ -1,6 +1,6 @@
 // CodeTrace | Referencia: C17, GCC 13+.
 // Desde PowerShell en una COPIA del paquete:
-// Compilar: gcc -std=c17 -Wall -Wextra '.\02-estructuras-datos\pila\Pila.c' -o "$env:TEMP\codetrace-c.exe"
+// Compilar: gcc -std=c17 -Wall -Wextra '.\02-estructuras-datos\pila-capacidad-fija\Pila.c' -o "$env:TEMP\codetrace-c.exe"
 // Ejecutar: & "$env:TEMP\codetrace-c.exe"
 
 #include <stdio.h>
@@ -21,3 +21,19 @@ int main(void) {
     if (desapilar(&p, &valor)) printf("%d\n", valor);
     return 0;
 }
+
+/*
+ * Salida esperada:
+ * 8
+ */
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   gcc -std=c17 -Wall -Wextra .\02-estructuras-datos\pila-capacidad-fija\*.c -o "$env:TEMP\ct-ejemplo-c.exe"
+ *   & "$env:TEMP\ct-ejemplo-c.exe"
+ * Salida esperada:
+ *   8
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

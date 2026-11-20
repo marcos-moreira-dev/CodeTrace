@@ -19,8 +19,11 @@ function main() {
 if (require.main === module) main();
 
 /*
- * Salida esperada de consola:
- *   Celsius:
- *   (los valores variables completan los fragmentos anteriores)
- * Verificacion: termina sin excepciones inesperadas.
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   node .\04-patrones-diseno\adapter\unidades\main.js
+ * Salida esperada:
+ *   Celsius: 25
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
  */

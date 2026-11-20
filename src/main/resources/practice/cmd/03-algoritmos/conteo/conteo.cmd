@@ -14,3 +14,11 @@ for %%I in (3 5 8 13) do (
 )
 echo Suma: !total!
 endlocal
+
+REM CodeTrace | EJEMPLO DE CONSOLA (practica)
+REM 
+REM Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+REM   cmd /c .\03-algoritmos\conteo\conteo.cmd
+REM Salida esperada:
+REM   Suma: 29
+REM CodeTrace | FIN EJEMPLO DE CONSOLA

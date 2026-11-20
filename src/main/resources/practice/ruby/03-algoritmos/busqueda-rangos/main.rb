@@ -18,3 +18,12 @@ main if __FILE__ == $PROGRAM_NAME
 # Salida esperada:
 # Valor 3: [1, 4)
 # Insertar 4 en indice: 4
+
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   ruby .\03-algoritmos\busqueda-rangos\main.rb
+# Salida esperada:
+#   Valor 3: [1, 4)
+#   Insertar 4 en indice: 4
+# CodeTrace | FIN EJEMPLO DE CONSOLA

@@ -16,3 +16,14 @@ function trasladar(p: Punto, dx: number, dy: number): Punto {
 }
 const inicial: Punto = { x: 5, y: 10 };
 console.log(inicial, trasladar(inicial, 2, -3));
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   tsc --strict --target ES2022 --module commonjs --outDir "$env:TEMP\ct-ejemplo-ts" .\01-fundamentos\readonly-e-inmutabilidad\readonly_e_inmutabilidad.ts
+ *   node "$env:TEMP\ct-ejemplo-ts\readonly_e_inmutabilidad.js"
+ * Salida esperada:
+ *   { x: 5, y: 10 } { x: 7, y: 7 }
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

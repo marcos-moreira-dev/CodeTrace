@@ -23,3 +23,11 @@ if __name__=="__main__": main()
 
 # Salida esperada:
 # Insercion binaria: [1, 2, 3, 3, 5]
+
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   python -B .\03-algoritmos\ordenamientos\insercion-binaria\main.py
+# Salida esperada:
+#   Insercion binaria: [1, 2, 3, 3, 5]
+# CodeTrace | FIN EJEMPLO DE CONSOLA

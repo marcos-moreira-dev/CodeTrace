@@ -20,6 +20,10 @@ end
 
 main if __FILE__ == $PROGRAM_NAME
 
-# Salida esperada de consola:
-#   Se imprime el valor o coleccion calculado por el cliente.
-# Verificacion: termina sin excepciones inesperadas.
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   ruby .\02-estructuras-datos\arbol-bst\main.rb
+# Salida esperada:
+#   [1, 3, 4, 6, 8, 10]
+# CodeTrace | FIN EJEMPLO DE CONSOLA

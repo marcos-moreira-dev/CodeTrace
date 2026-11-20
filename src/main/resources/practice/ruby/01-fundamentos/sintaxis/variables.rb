@@ -9,3 +9,11 @@ cantidad = 3
 total = precio * cantidad
 
 puts "#{producto}: #{total}"
+
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   ruby .\01-fundamentos\sintaxis\variables.rb
+# Salida esperada:
+#   Libro: 37.5
+# CodeTrace | FIN EJEMPLO DE CONSOLA

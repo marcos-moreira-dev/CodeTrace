@@ -19,8 +19,12 @@ if(q.desencolar()!=="C"||q.cantidad!==0)throw Error("Tail");
 console.log("Cola enlazada verificada");
 
 /*
- * Salida esperada de consola:
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   tsc --strict --target ES2022 --module commonjs --outDir "$env:TEMP\ct-ejemplo-ts" .\02-estructuras-datos\cola-enlazada\MainColaEnlazada.ts
+ *   node "$env:TEMP\ct-ejemplo-ts\MainColaEnlazada.js"
+ * Salida esperada:
  *   Cola enlazada verificada
- *   (los valores variables completan los fragmentos anteriores)
- * Verificacion: termina sin excepciones inesperadas.
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
  */

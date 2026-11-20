@@ -45,3 +45,14 @@ class MinHeap {
 const heap = new MinHeap();
 [9, 2, 7, 1, 5].forEach(n => heap.insertar(n));
 while (!heap.vacio) console.log(heap.extraer());
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   node --check .\02-estructuras-datos\heap-minimo\heap_minimo.js
+ * Nota: archivo reutilizable sin entrada; el comando solo verifica la compilación o sintaxis.
+ * Salida esperada:
+ *   (sin salida de consola; la comprobación termina correctamente)
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

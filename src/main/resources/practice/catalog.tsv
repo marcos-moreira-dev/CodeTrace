@@ -16,7 +16,7 @@ c	02-estructuras-datos/cola-circular/cola_circular.c
 c	02-estructuras-datos/lista-enlazada/lista_enlazada.c
 c	02-estructuras-datos/pila/main.c
 c	02-estructuras-datos/pila/pila.c
-c	02-estructuras-datos/pila/Pila.c
+c	02-estructuras-datos/pila-capacidad-fija/Pila.c
 c	02-estructuras-datos/pila/pila.h
 c	02-estructuras-datos/tabla-hash/tabla_hash.c
 c	03-algoritmos/bfs-matriz/bfs_matriz.c

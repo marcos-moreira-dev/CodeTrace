@@ -20,3 +20,12 @@ class Pila:
         if not self.datos:
             raise IndexError("Pila vacía")
         return self.datos.pop()
+
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   python -B .\02-estructuras-datos\pila\main.py
+# Nota: pila.py es un componente; la salida corresponde al cliente main.py.
+# Salida esperada:
+#   LIFO y pila vacía verificados
+# CodeTrace | FIN EJEMPLO DE CONSOLA

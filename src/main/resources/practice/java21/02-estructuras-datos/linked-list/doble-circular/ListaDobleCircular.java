@@ -45,3 +45,17 @@ public final class ListaDobleCircular<T> {
         return r;
     }
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   $out=Join-Path $env:TEMP "ct-practica-java"
+ *   New-Item -ItemType Directory -Force -Path $out | Out-Null
+ *   javac --release 21 -encoding UTF-8 -d $out (Get-ChildItem -Recurse -Filter *.java).FullName
+ *   java -cp $out codetrace.practica.estructuras.listadoblecircular.MainListaDobleCircular
+ * Nota: ListaDobleCircular.java es un componente; la salida corresponde al cliente MainListaDobleCircular.java.
+ * Salida esperada:
+ *   [2, 3, 5] / [5, 3, 2]
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

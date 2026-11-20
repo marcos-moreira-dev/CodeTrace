@@ -30,3 +30,19 @@ public static class MainAbstractFactory
  *   < OK > / Ventana oscura
  * Botón y diálogo comparten la variante clara u oscura.
  */
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   $d=Join-Path $env:TEMP "ct-ejemplo-csharp"
+ *   if (Test-Path $d) { Remove-Item $d -Recurse -Force }
+ *   dotnet new console -f net8.0 -o $d --force
+ *   Remove-Item "$d\Program.cs" -ErrorAction SilentlyContinue
+ *   Copy-Item .\04-patrones-diseno\abstract-factory\tema-consola\*.cs $d -Force
+ *   dotnet run --project $d
+ * Salida esperada:
+ *   [ OK ] / Ventana clara
+ *   < OK > / Ventana oscura
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

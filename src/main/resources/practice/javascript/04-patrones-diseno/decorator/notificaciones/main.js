@@ -18,7 +18,11 @@ function main() {
 if (require.main === module) main();
 
 /*
- * Salida esperada de consola:
- *   Sin salida de texto; las pruebas del cliente se cumplen.
- * Verificacion: termina sin excepciones inesperadas.
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   node .\04-patrones-diseno\decorator\notificaciones\main.js
+ * Salida esperada:
+ *   [INFO] Servicio activo
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
  */

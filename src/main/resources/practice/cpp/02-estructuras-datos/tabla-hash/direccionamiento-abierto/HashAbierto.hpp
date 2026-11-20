@@ -47,3 +47,15 @@ public:
     }
     int cantidad()const{return cantidad_;}
 };
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   g++ -std=c++20 -Wall -Wextra .\02-estructuras-datos\tabla-hash\direccionamiento-abierto\*.cpp -o "$env:TEMP\ct-ejemplo-cpp.exe"
+ *   & "$env:TEMP\ct-ejemplo-cpp.exe"
+ * Nota: HashAbierto.hpp es un componente; la salida corresponde al cliente main.cpp.
+ * Salida esperada:
+ *   Tabla llena controlada
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

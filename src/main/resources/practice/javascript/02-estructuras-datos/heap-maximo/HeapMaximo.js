@@ -33,3 +33,14 @@ class HeapMaximo{
     }
 }
 module.exports={HeapMaximo};
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   node .\02-estructuras-datos\heap-maximo\main.js
+ * Nota: HeapMaximo.js es un componente; la salida corresponde al cliente main.js.
+ * Salida esperada:
+ *   Max heap correcto
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

@@ -14,3 +14,13 @@ for %%I in (1 2 3) do (
     echo Iteracion %%I: !contador!
 )
 endlocal
+
+REM CodeTrace | EJEMPLO DE CONSOLA (practica)
+REM 
+REM Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+REM   cmd /c .\01-fundamentos\expansion-retardada\expansion_retardada.cmd
+REM Salida esperada:
+REM   Iteracion 1: 1
+REM   Iteracion 2: 2
+REM   Iteracion 3: 3
+REM CodeTrace | FIN EJEMPLO DE CONSOLA

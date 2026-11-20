@@ -20,3 +20,13 @@ function optimizar(pesos, valores, capacidad) {
     return dp[capacidad];
 }
 console.log(optimizar([2, 3, 4, 5], [3, 4, 5, 8], 8));
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   node .\03-algoritmos\mochila-01\mochila_01.js
+ * Salida esperada:
+ *   12
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

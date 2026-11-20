@@ -14,3 +14,11 @@ class Contador
 end
 
 puts Contador.new.incrementar
+
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   ruby .\01-fundamentos\objetos\contador.rb
+# Salida esperada:
+#   1
+# CodeTrace | FIN EJEMPLO DE CONSOLA

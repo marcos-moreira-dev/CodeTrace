@@ -46,3 +46,22 @@ public final class GrafoPesado {
         if (id < 0 || id >= vertices()) throw new IndexOutOfBoundsException(id);
     }
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   $out=Join-Path $env:TEMP "ct-practica-java"
+ *   New-Item -ItemType Directory -Force -Path $out | Out-Null
+ *   javac --release 21 -encoding UTF-8 -d $out (Get-ChildItem -Recurse -Filter *.java).FullName
+ *   java -cp $out codetrace.practica.grafoscaminos.MainCaminosMinimos
+ * Nota: GrafoPesado.java es un componente; la salida corresponde al cliente MainCaminosMinimos.java.
+ * Salida esperada:
+ *   Ruta A-E: [0, 2, 1, 3, 4]
+ *   Dijkstra: 7.0
+ *   Bellman-Ford: 7.0
+ *   Floyd-Warshall: 7.0
+ *   Bellman-Ford con arista negativa: 2.0
+ *   Dijkstra rechaza pesos negativos correctamente
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

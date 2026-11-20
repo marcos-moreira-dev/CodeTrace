@@ -33,3 +33,16 @@ public final class MainBusquedaBinaria {
  *   Índice: 4; inexistente: -1
  * Los índices son de base cero y la entrada ya está ordenada.
  */
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   $out=Join-Path $env:TEMP "ct-practica-java"
+ *   New-Item -ItemType Directory -Force -Path $out | Out-Null
+ *   javac --release 21 -encoding UTF-8 -d $out (Get-ChildItem -Recurse -Filter *.java).FullName
+ *   java -cp $out MainBusquedaBinaria
+ * Salida esperada:
+ *   Índice: 4; inexistente: -1
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

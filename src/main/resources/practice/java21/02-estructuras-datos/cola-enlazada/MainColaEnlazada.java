@@ -31,3 +31,16 @@ public final class MainColaEnlazada {
  *   FIFO enlazada OK
  * La cola devuelve A, B y luego C, incluso después de vaciarse.
  */
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   $out=Join-Path $env:TEMP "ct-practica-java"
+ *   New-Item -ItemType Directory -Force -Path $out | Out-Null
+ *   javac --release 21 -encoding UTF-8 -d $out (Get-ChildItem -Recurse -Filter *.java).FullName
+ *   java -cp $out codetrace.practica.estructuras.colaenlazada.MainColaEnlazada
+ * Salida esperada:
+ *   FIFO enlazada OK
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

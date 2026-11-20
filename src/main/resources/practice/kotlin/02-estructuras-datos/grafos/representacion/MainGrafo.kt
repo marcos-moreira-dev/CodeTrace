@@ -22,8 +22,12 @@ fun main() {
 }
 
 /*
- * Salida esperada de consola:
- *   Desde Guayaquil: 
- *   (los valores variables completan los fragmentos anteriores)
- * Verificacion: termina sin excepciones inesperadas.
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   kotlinc .\02-estructuras-datos\grafos\representacion\*.kt -jvm-target 21 -include-runtime -d "$env:TEMP\ct-kotlin.jar"
+ *   java -jar "$env:TEMP\ct-kotlin.jar"
+ * Salida esperada:
+ *   Desde Guayaquil: {UIO=12.0, CUE=18.0}
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
  */

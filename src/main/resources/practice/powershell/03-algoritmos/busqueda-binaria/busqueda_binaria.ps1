@@ -23,3 +23,11 @@ function Find-Binary {
     return -1
 }
 Find-Binary -Datos @(2, 5, 8, 12, 21) -Objetivo 12
+
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   pwsh -NoProfile -File .\03-algoritmos\busqueda-binaria\busqueda_binaria.ps1
+# Salida esperada:
+#   3
+# CodeTrace | FIN EJEMPLO DE CONSOLA

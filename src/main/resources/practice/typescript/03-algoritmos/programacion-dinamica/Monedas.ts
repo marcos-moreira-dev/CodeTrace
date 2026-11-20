@@ -14,3 +14,15 @@ export function minimo(monedas: readonly number[], monto: number): number {
             if (moneda <= actual) dp[actual] = Math.min(dp[actual], dp[actual-moneda] + 1);
     return dp[monto] === imposible ? -1 : dp[monto];
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   tsc --strict --target ES2022 --module commonjs --outDir "$env:TEMP\ct-ejemplo-ts" .\03-algoritmos\programacion-dinamica\MainMonedas.ts
+ *   node "$env:TEMP\ct-ejemplo-ts\MainMonedas.js"
+ * Nota: Monedas.ts es un componente; la salida corresponde al cliente MainMonedas.ts.
+ * Salida esperada:
+ *   Mínimo: 2
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

@@ -27,3 +27,12 @@ class GrafoPonderado:
 
     def vecinos(self, origen: str) -> tuple[Arista,...]:
         return tuple(self.ady[origen])
+
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   python -B .\02-estructuras-datos\grafos\ponderados\main.py
+# Nota: grafo.py es un componente; la salida corresponde al cliente main.py.
+# Salida esperada:
+#   Adyacencias: (Arista(destino='UIO', peso=12), Arista(destino='CUE', peso=18))
+# CodeTrace | FIN EJEMPLO DE CONSOLA

@@ -23,3 +23,16 @@ export function upperBound(a:readonly number[],x:number):number{
     }
     return lo;
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   tsc --strict --target ES2022 --module commonjs --outDir "$env:TEMP\ct-ejemplo-ts" .\03-algoritmos\busqueda-rangos\MainLimitesOrdenados.ts
+ *   node "$env:TEMP\ct-ejemplo-ts\MainLimitesOrdenados.js"
+ * Nota: LimitesOrdenados.ts es un componente; la salida corresponde al cliente MainLimitesOrdenados.ts.
+ * Salida esperada:
+ *   Valor 3: [1, 4)
+ *   Insertar 4 en indice: 4
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

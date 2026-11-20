@@ -8,3 +8,11 @@ goto :eof
 :saludar
 echo Hola, %~1
 goto :eof
+
+REM CodeTrace | EJEMPLO DE CONSOLA (practica)
+REM 
+REM Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+REM   cmd /c .\01-fundamentos\funciones\subrutinas.cmd
+REM Salida esperada:
+REM   Hola, CodeTrace
+REM CodeTrace | FIN EJEMPLO DE CONSOLA

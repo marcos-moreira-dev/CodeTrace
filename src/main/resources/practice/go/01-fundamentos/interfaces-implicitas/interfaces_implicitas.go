@@ -15,3 +15,13 @@ type Sensor struct { Codigo string }
 func (s Sensor) Describir() string { return "Sensor " + s.Codigo }
 func mostrar(x Describible) { fmt.Println(x.Describir()) }
 func main() { mostrar(Sensor{Codigo: "LM35"}) }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   go run (Get-ChildItem .\01-fundamentos\interfaces-implicitas\*.go).FullName
+ * Salida esperada:
+ *   Sensor LM35
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

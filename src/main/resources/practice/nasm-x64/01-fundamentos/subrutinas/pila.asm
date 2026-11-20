@@ -14,3 +14,12 @@ multiplicar_y_sumar:
     add rax, rdx
     pop rbp
     ret
+
+; CodeTrace | EJEMPLO DE CONSOLA (practica)
+; 
+; Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+;   wsl nasm -f elf64 01-fundamentos/subrutinas/pila.asm -o /tmp/ct-ejemplo.o
+; Nota: archivo reutilizable sin entrada; el comando solo verifica la compilación o sintaxis.
+; Salida esperada:
+;   (sin salida de consola; la comprobación termina correctamente)
+; CodeTrace | FIN EJEMPLO DE CONSOLA

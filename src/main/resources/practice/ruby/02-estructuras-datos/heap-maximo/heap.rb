@@ -34,3 +34,12 @@ class HeapMaximo
     max
   end
 end
+
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   ruby .\02-estructuras-datos\heap-maximo\main.rb
+# Nota: heap.rb es un componente; la salida corresponde al cliente main.rb.
+# Salida esperada:
+#   Max heap correcto
+# CodeTrace | FIN EJEMPLO DE CONSOLA

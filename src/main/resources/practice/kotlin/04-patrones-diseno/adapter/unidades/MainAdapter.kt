@@ -17,8 +17,12 @@ fun main() {
 }
 
 /*
- * Salida esperada de consola:
- *   Grados Celsius: 
- *   (los valores variables completan los fragmentos anteriores)
- * Verificacion: termina sin excepciones inesperadas.
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   kotlinc .\04-patrones-diseno\adapter\unidades\*.kt -jvm-target 21 -include-runtime -d "$env:TEMP\ct-kotlin.jar"
+ *   java -jar "$env:TEMP\ct-kotlin.jar"
+ * Salida esperada:
+ *   Grados Celsius: 25.0
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
  */

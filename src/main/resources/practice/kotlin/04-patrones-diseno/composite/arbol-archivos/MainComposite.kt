@@ -24,3 +24,14 @@ fun main(){
  *   220
  * La suma incorpora los tamaños 120, 80 y 20, independientemente del tipo.
  */
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   kotlinc .\04-patrones-diseno\composite\arbol-archivos\*.kt -jvm-target 21 -include-runtime -d "$env:TEMP\ct-kotlin.jar"
+ *   java -jar "$env:TEMP\ct-kotlin.jar"
+ * Salida esperada:
+ *   220
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

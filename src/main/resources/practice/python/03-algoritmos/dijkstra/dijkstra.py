@@ -22,3 +22,11 @@ def dijkstra(grafo: list[list[tuple[int, int]]], inicio: int) -> list[float]:
 if __name__ == "__main__":
     grafo = [[(1, 2), (2, 8)], [(2, 3)], []]
     print(dijkstra(grafo, 0))
+
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   python -B .\03-algoritmos\dijkstra\dijkstra.py
+# Salida esperada:
+#   [0, 2, 5]
+# CodeTrace | FIN EJEMPLO DE CONSOLA

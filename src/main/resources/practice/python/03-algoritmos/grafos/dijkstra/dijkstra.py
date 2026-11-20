@@ -63,3 +63,11 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   python -B .\03-algoritmos\grafos\dijkstra\dijkstra.py
+# Salida esperada:
+#   Ruta mínima: ['A', 'C', 'B', 'D', 'E'] costo: 7.0
+# CodeTrace | FIN EJEMPLO DE CONSOLA

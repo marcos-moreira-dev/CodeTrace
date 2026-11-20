@@ -81,3 +81,16 @@ module Ordenamientos
     ordenar.call(0,a.length-1)
   end
 end
+
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   ruby .\03-algoritmos\ordenamientos\comparativa-cinco\main.rb
+# Nota: ordenamientos.rb es un componente; la salida corresponde al cliente main.rb.
+# Salida esperada:
+#   Insercion: [1, 2, 3, 5, 7, 8, 9]
+#   Burbuja: [1, 2, 3, 5, 7, 8, 9]
+#   Mezcla: [1, 2, 3, 5, 7, 8, 9]
+#   HeapSort: [1, 2, 3, 5, 7, 8, 9]
+#   QuickSort: [1, 2, 3, 5, 7, 8, 9]
+# CodeTrace | FIN EJEMPLO DE CONSOLA

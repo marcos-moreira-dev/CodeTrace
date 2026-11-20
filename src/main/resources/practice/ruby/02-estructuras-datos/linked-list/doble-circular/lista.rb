@@ -35,3 +35,12 @@ class ListaDobleCircular
     end
   end
 end
+
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   ruby .\02-estructuras-datos\linked-list\doble-circular\main.rb
+# Nota: lista.rb es un componente; la salida corresponde al cliente main.rb.
+# Salida esperada:
+#   [2, 3, 5]
+# CodeTrace | FIN EJEMPLO DE CONSOLA

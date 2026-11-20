@@ -16,7 +16,12 @@ fun main() {
 }
 
 /*
- * Salida esperada de consola:
- *   Sin salida de texto; las pruebas del cliente se cumplen.
- * Verificacion: termina sin excepciones inesperadas.
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   kotlinc .\04-patrones-diseno\decorator\notificaciones\*.kt -jvm-target 21 -include-runtime -d "$env:TEMP\ct-kotlin.jar"
+ *   java -jar "$env:TEMP\ct-kotlin.jar"
+ * Salida esperada:
+ *   Mensaje: [INFO] Pedido despachado
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
  */

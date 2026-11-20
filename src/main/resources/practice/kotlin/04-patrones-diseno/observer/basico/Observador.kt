@@ -28,3 +28,15 @@ class Observador {
         for (escucha in oyentes) escucha.alCambiar(valor)
     }
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   kotlinc .\04-patrones-diseno\observer\basico\*.kt -jvm-target 21 -include-runtime -d "$env:TEMP\ct-kotlin.jar"
+ *   java -jar "$env:TEMP\ct-kotlin.jar"
+ * Nota: Observador.kt es un componente; la salida corresponde al cliente MainObservador.kt.
+ * Salida esperada:
+ *   [vista:42, log:42]
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

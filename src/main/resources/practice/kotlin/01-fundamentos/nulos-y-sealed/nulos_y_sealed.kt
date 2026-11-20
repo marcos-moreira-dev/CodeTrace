@@ -21,3 +21,15 @@ fun main() {
     println(etiqueta?.uppercase() ?: "sin etiqueta")
     println(describir(Respuesta.Bien(21)))
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   kotlinc .\01-fundamentos\nulos-y-sealed\*.kt -jvm-target 21 -include-runtime -d "$env:TEMP\ct-kotlin.jar"
+ *   java -jar "$env:TEMP\ct-kotlin.jar"
+ * Salida esperada:
+ *   sin etiqueta
+ *   Valor: 21
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

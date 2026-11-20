@@ -31,3 +31,16 @@ export class ColaCircular {
     return valor;
   }
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   tsc --strict --target ES2022 --module commonjs --outDir "$env:TEMP\ct-ejemplo-ts" .\02-estructuras-datos\cola-circular\MainColaCircular.ts
+ *   node "$env:TEMP\ct-ejemplo-ts\MainColaCircular.js"
+ * Nota: cola_circular.ts es un componente; la salida corresponde al cliente MainColaCircular.ts.
+ * Salida esperada:
+ *   reporte
+ *   correo factura
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

@@ -31,3 +31,13 @@ class Claro:
 class Oscuro:
     def boton(self) -> Boton: return Texto("< OK >")
     def dialogo(self) -> Dialogo: return Texto("Ventana oscura")
+
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   python -B .\04-patrones-diseno\abstract-factory\tema-consola\main.py
+# Nota: familias.py es un componente; la salida corresponde al cliente main.py.
+# Salida esperada:
+#   [ OK ] / Ventana clara
+#   < OK > / Ventana oscura
+# CodeTrace | FIN EJEMPLO DE CONSOLA

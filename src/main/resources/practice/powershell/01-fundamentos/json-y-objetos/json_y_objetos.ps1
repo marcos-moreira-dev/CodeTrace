@@ -15,3 +15,11 @@ $pedido = $json | ConvertFrom-Json
 $total = ($pedido.precios | Measure-Object -Sum).Sum
 $resultado = [pscustomobject]@{ Codigo = $pedido.codigo; Total = $total }
 $resultado | ConvertTo-Json -Compress
+
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   pwsh -NoProfile -File .\01-fundamentos\json-y-objetos\json_y_objetos.ps1
+# Salida esperada:
+#   {"Codigo":"S-01","Total":14.7}
+# CodeTrace | FIN EJEMPLO DE CONSOLA

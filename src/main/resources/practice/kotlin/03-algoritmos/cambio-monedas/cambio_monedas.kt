@@ -19,3 +19,14 @@ fun monedasMinimas(monedas: List<Int>, monto: Int): Int {
     return if (dp[monto] == infinito) -1 else dp[monto]
 }
 fun main() { println(monedasMinimas(listOf(1, 3, 4), 6)) }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   kotlinc .\03-algoritmos\cambio-monedas\*.kt -jvm-target 21 -include-runtime -d "$env:TEMP\ct-kotlin.jar"
+ *   java -jar "$env:TEMP\ct-kotlin.jar"
+ * Salida esperada:
+ *   2
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

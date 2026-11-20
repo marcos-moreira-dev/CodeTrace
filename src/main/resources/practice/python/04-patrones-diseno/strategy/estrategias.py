@@ -18,3 +18,13 @@ def normal(subtotal: float) -> float:
 
 def promocion(subtotal: float) -> float:
     return subtotal * 0.9
+
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   python -B .\04-patrones-diseno\strategy\main.py
+# Nota: estrategias.py es un componente; la salida corresponde al cliente main.py.
+# Salida esperada:
+#   Normal: 100
+#   Promoción: 90.0
+# CodeTrace | FIN EJEMPLO DE CONSOLA

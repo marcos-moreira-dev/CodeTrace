@@ -13,3 +13,13 @@ function contador() {
 }
 const uno = contador(), otro = contador();
 console.log(uno(), uno(), otro(), uno());
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   node .\01-fundamentos\closures\closures.js
+ * Salida esperada:
+ *   1 2 1 3
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

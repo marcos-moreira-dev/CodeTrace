@@ -19,3 +19,16 @@ function* fibonacci(limite) {
 }
 const iterador = fibonacci(7);
 console.log([...iterador]);
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   node .\01-fundamentos\generadores-iteradores\generadores_iteradores.js
+ * Salida esperada:
+ *   [
+ *     0, 1, 1, 2,
+ *     3, 5, 8
+ *   ]
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

@@ -34,3 +34,12 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   python -B .\01-fundamentos\dataclasses-y-propiedades\dataclasses_y_propiedades.py
+# Salida esperada:
+#   Producto(codigo='S-01', precio=12.0)
+#   Con impuesto: 13.8
+# CodeTrace | FIN EJEMPLO DE CONSOLA

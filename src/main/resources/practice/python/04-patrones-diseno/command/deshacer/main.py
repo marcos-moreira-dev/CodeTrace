@@ -26,3 +26,11 @@ if __name__ == "__main__":
 # Salida esperada de consola:
 #   Hola
 # Deshacer el último comando recupera el estado previo del editor.
+
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   python -B .\04-patrones-diseno\command\deshacer\main.py
+# Salida esperada:
+#   Hola
+# CodeTrace | FIN EJEMPLO DE CONSOLA

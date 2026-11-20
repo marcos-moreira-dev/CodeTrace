@@ -32,3 +32,19 @@ public final class VectorEnteros {
     public int tamaño() { return cantidad; }
     public int capacidad() { return almacenamiento.length; }
 }
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   $out=Join-Path $env:TEMP "ct-practica-java"
+ *   New-Item -ItemType Directory -Force -Path $out | Out-Null
+ *   javac --release 21 -encoding UTF-8 -d $out (Get-ChildItem -Recurse -Filter *.java).FullName
+ *   java -cp $out codetrace.practica.vector.MainVector
+ * Nota: VectorEnteros.java es un componente; la salida corresponde al cliente MainVector.java.
+ * Salida esperada:
+ *   Elementos: 6
+ *   Capacidad: 8
+ *   Tercero: 30
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

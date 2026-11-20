@@ -21,3 +21,14 @@ class GrafoPonderado{
     }
 }
 module.exports={GrafoPonderado};
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   node .\02-estructuras-datos\grafos\ponderados\main.js
+ * Nota: GrafoPonderado.js es un componente; la salida corresponde al cliente main.js.
+ * Salida esperada:
+ *   [ { destino: 'UIO', peso: 12 }, { destino: 'CUE', peso: 18 } ]
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

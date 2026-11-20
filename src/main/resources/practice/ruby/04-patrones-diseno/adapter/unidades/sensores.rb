@@ -19,3 +19,12 @@ class AdaptadorCelsius
     (@proveedor.fahrenheit - 32) * 5 / 9
   end
 end
+
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   ruby .\04-patrones-diseno\adapter\unidades\main.rb
+# Nota: sensores.rb es un componente; la salida corresponde al cliente main.rb.
+# Salida esperada:
+#   Celsius: 25.0
+# CodeTrace | FIN EJEMPLO DE CONSOLA

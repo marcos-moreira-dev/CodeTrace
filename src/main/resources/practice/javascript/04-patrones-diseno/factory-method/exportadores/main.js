@@ -19,7 +19,11 @@ function main() {
 if (require.main === module) main();
 
 /*
- * Salida esperada de consola:
- *   Se imprime el valor o coleccion calculado por el cliente.
- * Verificacion: termina sin excepciones inesperadas.
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   node .\04-patrones-diseno\factory-method\exportadores\main.js
+ * Salida esperada:
+ *   TXT: Factura 001
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
  */

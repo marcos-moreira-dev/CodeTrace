@@ -25,8 +25,12 @@ int main(){
 }
 
 /*
- * Salida esperada de consola:
- *   Lista doble OK\n
- *   (los valores variables completan los fragmentos anteriores)
- * Verificacion: las aserciones se cumplen y el proceso termina sin error.
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   g++ -std=c++20 -Wall -Wextra .\02-estructuras-datos\linked-list\doble\*.cpp -o "$env:TEMP\ct-ejemplo-cpp.exe"
+ *   & "$env:TEMP\ct-ejemplo-cpp.exe"
+ * Salida esperada:
+ *   Lista doble OK
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
  */
