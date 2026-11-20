@@ -16,3 +16,9 @@ const l=new ListaDobleCircular<number>();
 if(l.valores().join(",")!=="2,3,5"||l.valores(true).join(",")!=="5,3,2")
     throw Error("Enlaces");
 console.log(l.valores());
+
+/*
+ * Salida esperada de consola:
+ *   Se imprime el valor o coleccion calculado por el cliente.
+ * Verificacion: termina sin excepciones inesperadas.
+ */

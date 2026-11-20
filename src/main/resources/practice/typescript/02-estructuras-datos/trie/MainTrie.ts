@@ -16,3 +16,10 @@ t.insertar("casa");t.insertar("casco");
 if(!t.prefijo("cas")||t.contiene("cas")||!t.contiene("casa")||
     t.contiene("cama"))throw Error("Trie");
 console.log("Prefijos comprobados");
+
+/*
+ * Salida esperada de consola:
+ *   Prefijos comprobados
+ *   (los valores variables completan los fragmentos anteriores)
+ * Verificacion: termina sin excepciones inesperadas.
+ */

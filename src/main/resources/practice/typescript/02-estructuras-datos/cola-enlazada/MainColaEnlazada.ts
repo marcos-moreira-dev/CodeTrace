@@ -17,3 +17,10 @@ if(q.desencolar()!=="A"||q.desencolar()!=="B")throw Error("FIFO");
 q.encolar("C");
 if(q.desencolar()!=="C"||q.cantidad!==0)throw Error("Tail");
 console.log("Cola enlazada verificada");
+
+/*
+ * Salida esperada de consola:
+ *   Cola enlazada verificada
+ *   (los valores variables completan los fragmentos anteriores)
+ * Verificacion: termina sin excepciones inesperadas.
+ */

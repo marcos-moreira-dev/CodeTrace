@@ -17,3 +17,9 @@ if(lista.adelante().join(",")!=="A,B,C"||lista.atras().join(",")!=="C,B,A")
     throw Error("Lista doble");
 if(lista.quitarFinal()!=="C"||lista.cantidad!==2)throw Error("Quitar");
 console.log(lista.adelante());
+
+/*
+ * Salida esperada de consola:
+ *   Se imprime el valor o coleccion calculado por el cliente.
+ * Verificacion: termina sin excepciones inesperadas.
+ */

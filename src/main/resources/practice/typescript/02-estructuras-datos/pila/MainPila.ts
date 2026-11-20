@@ -17,3 +17,10 @@ const pila = new Pila<string>();
 if (pila.desapilar() !== "C" || pila.desapilar() !== "B" ||
     pila.size() !== 1) throw Error("LIFO");
 console.log("Pila correcta");
+
+/*
+ * Salida esperada de consola:
+ *   Pila correcta
+ *   (los valores variables completan los fragmentos anteriores)
+ * Verificacion: termina sin excepciones inesperadas.
+ */

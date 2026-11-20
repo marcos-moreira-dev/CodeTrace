@@ -16,3 +16,10 @@ if(!d.unir(0,1)||!d.unir(1,2)||d.unir(0,2)||
     !d.conectados(0,2)||d.conectados(0,4)||d.componentes!==3)
     throw Error("DSU");
 console.log("Componentes:",d.componentes);
+
+/*
+ * Salida esperada de consola:
+ *   Componentes:
+ *   (los valores variables completan los fragmentos anteriores)
+ * Verificacion: termina sin excepciones inesperadas.
+ */

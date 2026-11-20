@@ -16,3 +16,10 @@ const heap=new HeapMaximo();
 if(Array.from({length:5},()=>heap.extraer()).join(",")!=="9,7,4,2,1")
     throw Error("Heap máximo");
 console.log("Heap máximo OK");
+
+/*
+ * Salida esperada de consola:
+ *   Heap máximo OK
+ *   (los valores variables completan los fragmentos anteriores)
+ * Verificacion: termina sin excepciones inesperadas.
+ */

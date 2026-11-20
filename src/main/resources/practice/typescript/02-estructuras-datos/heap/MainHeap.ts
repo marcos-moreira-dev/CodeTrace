@@ -14,3 +14,9 @@ import { MinHeap } from "./MinHeap";
 const prioridades = new MinHeap();
 for (const prioridad of [7, 2, 9, 1, 5]) prioridades.insertar(prioridad);
 while (!prioridades.vacio) console.log(prioridades.extraer());
+
+/*
+ * Salida esperada de consola:
+ *   Se imprime el valor o coleccion calculado por el cliente.
+ * Verificacion: termina sin excepciones inesperadas.
+ */

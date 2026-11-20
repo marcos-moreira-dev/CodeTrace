@@ -23,3 +23,11 @@ red.conectar("B", "C");
 red.vertice("AISLADO");
 console.log("Componentes:", red.componentes());
 if (red.componentes() !== 2) throw Error("Conteo incorrecto");
+
+/*
+ * Salida esperada de consola:
+ *   Arco A->B:
+ *   Arco B->A:
+ *   (los valores variables completan los fragmentos anteriores)
+ * Verificacion: termina sin excepciones inesperadas.
+ */

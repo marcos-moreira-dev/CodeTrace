@@ -17,3 +17,9 @@ if(turnos.valores().length)throw Error("Vacía");
 turnos.rotar();
 if(turnos.valores().join(",")!=="Luis,Mia,Ana")throw Error("Circular");
 console.log(turnos.valores());
+
+/*
+ * Salida esperada de consola:
+ *   Se imprime el valor o coleccion calculado por el cliente.
+ * Verificacion: termina sin excepciones inesperadas.
+ */

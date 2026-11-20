@@ -16,3 +16,10 @@ d.insertarPrimero("B");d.insertarPrimero("A");d.insertarUltimo("C");
 if(d.quitarPrimero()!=="A"||d.quitarUltimo()!=="C"||d.quitarUltimo()!=="B")
     throw Error("Deque");
 console.log("Deque correcta");
+
+/*
+ * Salida esperada de consola:
+ *   Deque correcta
+ *   (los valores variables completan los fragmentos anteriores)
+ * Verificacion: termina sin excepciones inesperadas.
+ */

@@ -16,3 +16,10 @@ const lista = new ListaSimple<string>();
 lista.insertarInicio("A");
 lista.insertarInicio("B");
 console.log("Lista con dos nodos insertados");
+
+/*
+ * Salida esperada de consola:
+ *   Lista con dos nodos insertados
+ *   (los valores variables completan los fragmentos anteriores)
+ * Verificacion: termina sin excepciones inesperadas.
+ */

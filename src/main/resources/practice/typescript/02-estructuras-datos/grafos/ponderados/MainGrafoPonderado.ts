@@ -16,3 +16,9 @@ g.conectar("GYE","UIO",12);g.conectar("GYE","CUE",18);g.conectar("UIO","CUE",8);
 if(g.vecinos("GYE").length!==2||g.vecinos("CUE").length!==0)
     throw Error("Dirigido");
 console.log(g.vecinos("GYE"));
+
+/*
+ * Salida esperada de consola:
+ *   Se imprime el valor o coleccion calculado por el cliente.
+ * Verificacion: termina sin excepciones inesperadas.
+ */

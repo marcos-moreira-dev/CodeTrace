@@ -19,3 +19,10 @@ let lleno=false;
 try{t.poner("C",4);}catch{lleno=true;}
 if(!lleno)throw Error("Debería estar llena");
 console.log("Sondeo comprobado");
+
+/*
+ * Salida esperada de consola:
+ *   Sondeo comprobado
+ *   (los valores variables completan los fragmentos anteriores)
+ * Verificacion: termina sin excepciones inesperadas.
+ */
