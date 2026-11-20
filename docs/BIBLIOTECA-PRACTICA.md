@@ -73,3 +73,7 @@ La caché cambia a `v4` para no mezclar referencias antiguas con las nuevas. Las
 ### Grafos: comparación entre lenguajes
 
 Java incluye grafos genéricos con `Vertice<T>`, igualdad por id y latencias; Kosaraju para componentes fuertemente conexas; y validación de ciclos negativos y destinos inaccesibles. Python contrasta tipos dirigidos/no dirigidos, Dijkstra con `heapq`, Floyd–Warshall y Prim/Kruskal. TypeScript aporta contratos de grafos con `Map`, ordenamiento de DAG, Dijkstra cuadrático sin heap y Kruskal con conjuntos disjuntos. C++ agrega Kruskal, Kahn y Floyd–Warshall usando STL. Estas variantes resaltan decisiones idiomáticas, no son copias indiscriminadas entre lenguajes.
+
+### Auditoría local Windows
+
+Desde la raíz del repositorio se puede ejecutar `scripts/auditar-biblioteca.ps1` para revisar los 387 recursos, 14 lenguajes, carpetas y cabeceras sin instalar compiladores. Con `-EjecutarClientes` se compila el paquete Java 21 en TEMP y se ejecutan ejemplos de grafos y patrones. El script elimina ese directorio temporal al terminar y no modifica las referencias.

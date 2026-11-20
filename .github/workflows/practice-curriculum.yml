@@ -36,6 +36,9 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Audit grouped offline catalog with PowerShell
+        shell: pwsh
+        run: .\scripts\auditar-biblioteca.ps1
       - name: Parse and execute PowerShell 7 lessons
         shell: pwsh
         run: |

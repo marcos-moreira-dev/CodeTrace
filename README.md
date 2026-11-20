@@ -417,3 +417,12 @@ Marcos Moreira, su afiliación académica y un retrato JPEG optimizado. La
 fotografía se entrega como recurso local en
 `src/main/resources/icons/codetrace-author-marcos.jpg` y forma parte
 del repositorio público; no requiere conexiones de red ni permisos de cámara.
+
+### Comprobar la biblioteca en PowerShell
+
+```powershell
+.\scripts\auditar-biblioteca.ps1
+.\scripts\auditar-biblioteca.ps1 -EjecutarClientes
+```
+
+El primer comando solo comprueba rutas, integridad, versiones y comentarios de los 387 archivos; el segundo usa JDK 21 para compilar Java en una carpeta temporal y ejecutar clientes representativos. Ninguno modifica las referencias originales.
