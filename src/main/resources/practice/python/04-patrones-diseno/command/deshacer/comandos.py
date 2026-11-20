@@ -1,0 +1,35 @@
+# CodeTrace | Referencia: Python 3.12
+# Comprobar desde COPIA de esta unidad: python -c "import ast,pathlib; ast.parse(pathlib.Path('comandos.py').read_text(encoding='utf-8'))"
+# Ejecutar: python -B main.py (cliente de esta carpeta, sin __pycache__)
+
+"""Command encapsula una petición y su acción inversa.
+
+Editor es el receptor de la modificación. El comando recuerda el
+estado anterior y el cliente conserva un historial de comandos
+en una pila. No son cadenas de órdenes del sistema operativo.
+"""
+from typing import Protocol
+
+class Comando(Protocol):
+    def ejecutar(self) -> None: ...
+    def deshacer(self) -> None: ...
+
+class Editor:
+    def __init__(self) -> None: self.texto=""
+    def agregar(self, parte: str) -> None: self.texto+=parte
+
+class AgregarTexto:
+    def __init__(self, editor: Editor, parte: str) -> None:
+        self.editor=editor
+        self.parte=parte
+        self.anterior: str | None = None
+
+    def ejecutar(self) -> None:
+        if self.anterior is not None: raise ValueError("Ya ejecutado")
+        self.anterior=self.editor.texto
+        self.editor.agregar(self.parte)
+
+    def deshacer(self) -> None:
+        if self.anterior is None: raise ValueError("No ejecutado")
+        self.editor.texto=self.anterior
+        self.anterior=None
