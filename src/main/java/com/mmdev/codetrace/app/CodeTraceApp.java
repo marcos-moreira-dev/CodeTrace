@@ -1732,10 +1732,16 @@ public final class CodeTraceApp extends Application {
         chooser.setTitle(title);
         chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter(
                 "Proyecto CodeTrace (*.ctrace)", "*.ctrace"));
-        if (sessionFile != null && sessionFile.getParent() != null
-                && Files.isDirectory(sessionFile.getParent())) {
-            chooser.setInitialDirectory(sessionFile.getParent().toFile());
-        }
+        // Prefer the previously used project folder. On a first launch,
+        // Windows otherwise opens "Este equipo" and enumerates mounted drives
+        // and cloud providers before its native chooser becomes responsive.
+        Path home = Path.of(System.getProperty("user.home", "."));
+        Path downloads = home.resolve("Downloads");
+        Path lastProjectFolder = sessionFile == null ? null : sessionFile.getParent();
+        Path preferred = lastProjectFolder != null && Files.isDirectory(lastProjectFolder)
+                ? lastProjectFolder : Files.isDirectory(downloads) ? downloads : home;
+        if (Files.isDirectory(preferred))
+            chooser.setInitialDirectory(preferred.toFile());
         return chooser;
     }
 
