@@ -1,25 +1,19 @@
 // CodeTrace | Referencia: Java 21 LTS / JDK 21
-// Compilar: javac --release 21 -encoding UTF-8 -d "$env:TEMP\ct-java21" (Get-ChildItem -Recurse -Filter *.java).FullName
-// Ejecutar: java -cp "$env:TEMP\ct-java21" Strategy
+// Compilar en copia: javac --release 21 -encoding UTF-8 Strategy.java MainStrategy.java
+// Ejecutar: java MainStrategy
+
 /**
- * Cliente Strategy de Java 21 que recibe un cálculo intercambiable.
+ * Contexto del patrón Strategy: delega una regla de negocio.
  *
- * <p>El contrato Descuento puede implementarse mediante lambda, pues
- * tiene un solo método abstracto. El patrón permite agregar políticas
- * de cobro sin añadir condicionales al cliente. Véase también la versión
- * multiarchivo strategy-tarifas para comparar organización.
+ * Un @FunctionalInterface con un único método abstracto admite
+ * expresiones lambda y referencias a métodos de Java 21.
  */
 public final class Strategy {
-    interface Descuento {
-        double aplicar(double total);
-    }
+    @FunctionalInterface
+    public interface Descuento { double aplicar(double total); }
 
-    static double cobrar(double total, Descuento estrategia) {
+    public static double cobrar(double total, Descuento estrategia) {
+        if (total < 0) throw new IllegalArgumentException("Subtotal");
         return estrategia.aplicar(total);
-    }
-
-    public static void main(String[] args) {
-        Descuento clienteFiel = total -> total * 0.90;
-        System.out.println(cobrar(50, clienteFiel));
     }
 }
