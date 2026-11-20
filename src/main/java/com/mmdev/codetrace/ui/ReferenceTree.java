@@ -432,6 +432,28 @@ public final class ReferenceTree extends TreeView<Path> {
             onStatus.accept("Indexando archivos; expansión programada al terminar.");
             return;
         }
+        if (index.directoryCount() > 40 || index.fileCount() > 1_000) {
+            // Large branch actions use the same logical projection as
+            // Expandir todo. Keep other manually opened branches visible
+            // without forcing JavaFX to materialize the requested subtree.
+            String requested = relative(directory);
+            Set<String> expand = new HashSet<>();
+            expand.add("");
+            Set<Path> alreadyOpen = new HashSet<>();
+            collectExpanded(getRoot(), alreadyOpen);
+            for (Path path : alreadyOpen) expand.add(relative(path));
+            for (String path : ExplorerRows.allDirectories(index, virtualChildren))
+                if (requested.isEmpty() || path.equals(requested)
+                        || path.startsWith(requested + "/")) expand.add(path);
+            String ancestor = requested;
+            while (!ancestor.isEmpty()) {
+                int slash = ancestor.lastIndexOf('/');
+                ancestor = slash < 0 ? "" : ancestor.substring(0, slash);
+                expand.add(ancestor);
+            }
+            projectRows(Set.copyOf(expand));
+            return;
+        }
         if (expander.isExpanding()) {
             onStatus.accept("La expansión de carpetas ya está en curso.");
             return;
