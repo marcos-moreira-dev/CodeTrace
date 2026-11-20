@@ -583,9 +583,16 @@ class CodeTraceAppSmokeTest {
                 Path deep = Files.createDirectories(nested.resolve("deep/layer"));
                 Files.writeString(deep.resolve("Example.java"), "class Example {}");
                 fileTree.open(root);
+                // The smoke test owns the FX thread and installs a prebuilt
+                // index synchronously. Cancel the genuine background scan first;
+                // otherwise loading stays true and expansion is correctly
+                // deferred, while this fixture incorrectly expects immediate
+                // recursive expansion without pumping another JavaFX pulse.
+                fileTree.cancelPendingWork();
                 Field treeIndexField = ReferenceTree.class.getDeclaredField("index");
                 treeIndexField.setAccessible(true);
                 treeIndexField.set(fileTree, ReferenceTreeIndex.scan(root));
+                fileTree.refreshTree();
                 Method menuFor = ReferenceTree.class.getDeclaredMethod(
                         "contextFor", Path.class);
                 menuFor.setAccessible(true);
