@@ -84,6 +84,12 @@ public final class ReferenceTree extends TreeView<Path> {
     private TreeItem<Path> snapshotPlaceholder;
     private ReferenceTreeIndex snapshotIndex;
     private final BatchedTreeExpander expander;
+    private final VirtualExplorerView projectedView = new VirtualExplorerView(this);
+    private Task<ExplorerRows.Result> projectionTask;
+    private long projectionGeneration;
+    private boolean projectionBusy, projectionVisible;
+    private Set<String> logicalExpansion = Set.of();
+    private Runnable projectedSelectionChanged = () -> {};
     private String nameFilter = "";
     private Set<String> filteredPaths = Set.of();
     private long filterGeneration;
@@ -96,6 +102,8 @@ public final class ReferenceTree extends TreeView<Path> {
         this.onChange = onChange;
         this.onStatus = onStatus;
         this.expander = new BatchedTreeExpander(onStatus, this::notifyBusy);
+        projectedView.setVisible(false);
+        projectedView.setManaged(false);
         setShowRoot(true);
         setCellFactory(view -> new TreeCell<>() {
             // TreeView virtualizes cells, so each cell is reused on scroll.
@@ -262,6 +270,7 @@ public final class ReferenceTree extends TreeView<Path> {
 
     public void refreshStatuses() {
         refresh();
+        if (projectionVisible) projectedView.refresh();
     }
 
     public void setOnProgressFolder(Consumer<String> listener) {
@@ -297,7 +306,7 @@ public final class ReferenceTree extends TreeView<Path> {
 
     public void setOnBusyChange(Consumer<Boolean> listener) {
         onBusyChange = listener == null ? busy -> {} : listener;
-        onBusyChange.accept(loading || expander.isBusy());
+        onBusyChange.accept(loading || expander.isBusy() || projectionBusy);
     }
 
     public void setOnIndexReady(Consumer<ReferenceTreeIndex> callback) {
@@ -305,11 +314,11 @@ public final class ReferenceTree extends TreeView<Path> {
     }
 
     private void notifyBusy() {
-        onBusyChange.accept(loading || expander.isBusy());
+        onBusyChange.accept(loading || expander.isBusy() || projectionBusy);
     }
 
     public boolean isBusy() {
-        return loading || expander.isBusy();
+        return loading || expander.isBusy() || projectionBusy;
     }
 
     /**
@@ -322,6 +331,8 @@ public final class ReferenceTree extends TreeView<Path> {
      * root. The immutable disk index is preserved, with zero disk I/O.</p>
      */
     public void collapseAll() {
+        cancelProjection();
+        hideProjection();
         pendingExpandAll = false;
         expander.cancel();
         TreeItem<Path> oldRoot = getRoot();
@@ -364,6 +375,10 @@ public final class ReferenceTree extends TreeView<Path> {
      * of being visited one by one on the UI thread.
      */
     public void collapseRecursively(Path directory) {
+        if (projectionVisible && directory != null && isFolder(directory)) {
+            changeProjectedFolder(relative(directory), false, true);
+            return;
+        }
         pendingExpandAll = false;
         expander.cancel();
         // A branch operation changes the visible expansion independently.
@@ -426,6 +441,10 @@ public final class ReferenceTree extends TreeView<Path> {
      * reference paths come from the indexed, read-only tree.
      */
     public void expandRecursively(Path directory) {
+        if (projectionVisible && directory != null && isFolder(directory)) {
+            changeProjectedFolder(relative(directory), true, true);
+            return;
+        }
         if (referenceRoot == null || directory == null || !isFolder(directory)) return;
         discardExpandedSnapshot();
         if (index == null || loading) {
@@ -449,59 +468,139 @@ public final class ReferenceTree extends TreeView<Path> {
         expander.expand(clicked, smallReference);
     }
 
-    /**
-     * Expand from the ACTUAL TreeView root, not from a path lookup.
-     *
-     * <p>After a refresh or a full collapse the visible TreeItem is replaced.
-     * Looking it up again via findVisibleNode(referenceRoot) could incorrectly
-     * report that the folder is not visible. Global expansion always starts
-     * from the root currently installed in the TreeView.</p>
-     */
+    /** Expand logically, never by mutating thousands of JavaFX TreeItems. */
     public void expandAll() {
         if (referenceRoot == null) {
             onStatus.accept("Abre una referencia antes de expandir sus carpetas.");
-            return;
-        }
-        if (index == null || loading) {
+        } else if (index == null || loading) {
             pendingExpandAll = true;
-            onStatus.accept("Indexando archivos; expansión programada al terminar.");
-            return;
+            onStatus.accept("Indexando; expansión programada.");
+        } else if (!projectionBusy) {
+            projectRows(ExplorerRows.allDirectories(index, virtualChildren));
         }
-        if (expander.isExpanding()) {
-            onStatus.accept("La expansión de carpetas ya está en curso.");
-            return;
-        }
-        TreeItem<Path> visualRoot = getRoot();
-        if (visualRoot == null || !referenceRoot.equals(visualRoot.getValue())) {
-            // Self-heal a stale visual root while keeping the immutable index.
-            refreshTree();
-            visualRoot = getRoot();
-        }
-        if (visualRoot == null) {
-            onStatus.accept("No se pudo reconstruir la raíz del explorador.");
-            return;
-        }
-        if (expandedSnapshot != null && snapshotPlaceholder == visualRoot
-                && snapshotIndex == index && nameFilter.isBlank()
-                && visualRoot.getChildren().stream().noneMatch(TreeItem::isExpanded)) {
-            // Reuse already materialized rows rather than reallocate thousands
-            // of lazy TreeItems on every collapse/expand cycle.
-            TreeItem<Path> restored = expandedSnapshot;
-            discardExpandedSnapshot();
-            setRoot(restored);
-            visualRoot = restored;
-        } else {
-            discardExpandedSnapshot();
-        }
-        if (!nameFilter.isBlank()) {
-            onStatus.accept("La expansión incluye solo carpetas visibles en el filtro.");
-        }
-        boolean smallReference = index.directoryCount() <= 40
-                && index.fileCount() <= 1_000;
-        expander.expand(visualRoot, smallReference);
+    }
+
+    public VirtualExplorerView projectedExplorer() { return projectedView; }
+
+    public TreeItem<Path> selectedExplorerItem() {
+        if (!projectionVisible) return getSelectionModel().getSelectedItem();
+        var row = projectedView.getSelectionModel().getSelectedItem();
+        return row == null ? null : new TreeItem<>(absoluteProjectedPath(row.relative()));
+    }
+
+    public void setOnProjectedSelectionChanged(Runnable callback) {
+        projectedSelectionChanged = callback == null ? () -> {} : callback;
+    }
+
+    void projectedSelectionChanged() { projectedSelectionChanged.run(); }
+    Path absoluteProjectedPath(String path) {
+        return path.isEmpty() ? referenceRoot : referenceRoot.resolve(path);
+    }
+    void openProjectedFile(String path) {
+        Path file = absoluteProjectedPath(path);
+        if (!isFolder(file)) onOpen.accept(file);
+    }
+    ContextMenu menuForProjectedPath(String path) {
+        return contextFor(absoluteProjectedPath(path));
+    }
+    String projectedFileCount(String path) {
+        long n = index == null ? 0 : index.recursiveFiles(path);
+        return "(" + n + (n == 1 ? " archivo)" : " archivos)");
+    }
+    boolean projectedExpanded(String path) { return logicalExpansion.contains(path); }
+    void toggleProjectedFolder(String path) {
+        changeProjectedFolder(path, !logicalExpansion.contains(path), false);
+    }
+    private void changeProjectedFolder(String relative, boolean expand, boolean recursive) {
+        if (!projectionVisible || index == null) return;
+        var next = new HashSet<>(logicalExpansion);
+        if (expand) {
+            next.add(relative);
+            if (recursive) for (String path :
+                    ExplorerRows.allDirectories(index, virtualChildren))
+                if (relative.isEmpty() || path.equals(relative) || path.startsWith(relative + "/"))
+                    next.add(path);
+        } else if (recursive) {
+            next.removeIf(path -> path.equals(relative) || path.startsWith(relative + "/"));
+        } else next.remove(relative);
+        projectRows(Set.copyOf(next));
+    }
+    private void cancelProjection() {
+        projectionGeneration++;
+        if (projectionTask != null) projectionTask.cancel(true);
+        projectionTask = null;
+        projectionBusy = false;
+        notifyBusy();
+    }
+    private void hideProjection() {
+        if (!projectionVisible) return;
+        projectionVisible = false;
+        projectedView.setVisible(false);
+        projectedView.setManaged(false);
+        setVisible(true);
+        setManaged(true);
+        projectedSelectionChanged.run();
+    }
+
+    /**
+     * Immutable projection prepared off the FX thread, installed atomically.
+     * ListView's VirtualFlow builds only the onscreen cells and does no disk I/O.
+     */
+    private void projectRows(Set<String> expanded) {
+        if (referenceRoot == null || index == null) return;
+        cancelProjection();
+        long generation = projectionGeneration;
+        Path root = referenceRoot;
+        ReferenceTreeIndex snapshot = index;
+        VirtualChildrenIndex virtual = virtualChildren;
+        Set<String> filter = nameFilter.isBlank() ? Set.of() : filteredPaths;
+        projectionBusy = true;
+        notifyBusy();
+        onStatus.accept("Preparando filas del explorador...");
+        Task<ExplorerRows.Result> task = new Task<>() {
+            @Override protected ExplorerRows.Result call() {
+                return ExplorerRows.project(snapshot, virtual, expanded, filter);
+            }
+        };
+        projectionTask = task;
+        task.setOnSucceeded(event -> {
+            if (projectionGeneration != generation || projectionTask != task
+                    || !root.equals(referenceRoot) || snapshot != index) return;
+            projectionTask = null;
+            logicalExpansion = expanded;
+            projectedView.publish(task.getValue());
+            setVisible(false);
+            setManaged(false);
+            projectedView.setVisible(true);
+            projectedView.setManaged(true);
+            projectionVisible = true;
+            projectionBusy = false;
+            notifyBusy();
+            projectedSelectionChanged.run();
+            onStatus.accept("Explorador listo: " + task.getValue().rows().size()
+                    + " filas" + (task.getValue().truncated() ? " (límite)" : "") + ".");
+        });
+        task.setOnFailed(event -> {
+            if (generation != projectionGeneration) return;
+            projectionTask = null;
+            projectionBusy = false;
+            notifyBusy();
+            onStatus.accept("No se pudo preparar la vista del explorador.");
+        });
+        task.setOnCancelled(event -> {
+            if (generation != projectionGeneration) return;
+            projectionTask = null;
+            projectionBusy = false;
+            notifyBusy();
+        });
+        Thread thread = new Thread(task, "codetrace-logical-explorer");
+        thread.setDaemon(true);
+        thread.start();
     }
 
     private void scanReference() {
+        cancelProjection();
+        hideProjection();
         discardExpandedSnapshot();
         if (referenceRoot == null) return;
         expander.cancel();
@@ -600,6 +699,8 @@ public final class ReferenceTree extends TreeView<Path> {
 
     /** Stop indexing, searching and expansion when CodeTrace is closing. */
     public void cancelPendingWork() {
+        cancelProjection();
+        hideProjection();
         discardExpandedSnapshot();
         pendingExpandAll = false;
         indexGeneration++;
@@ -614,6 +715,8 @@ public final class ReferenceTree extends TreeView<Path> {
 
     /** Search file/folder NAMES only; content searching is a separate service. */
     public void searchNames(String query) {
+        cancelProjection();
+        hideProjection();
         discardExpandedSnapshot();
         cancelNameSearch();
         nameFilter = query == null ? "" : query.strip();
@@ -665,6 +768,8 @@ public final class ReferenceTree extends TreeView<Path> {
     }
 
     public void refreshTree() {
+        cancelProjection();
+        hideProjection();
         discardExpandedSnapshot();
         if (referenceRoot == null) {
             return;
