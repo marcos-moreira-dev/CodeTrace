@@ -28,6 +28,5 @@ public final class MainHeapMaximo {
 /*
  * Salida esperada de consola:
  *   Max heap verificado
- *   (los valores variables completan los fragmentos anteriores)
- * Verificacion: termina sin excepciones inesperadas.
+ * La extracción validada es 9, 7, 4, 2, 1; no se imprimen esos valores.
  */

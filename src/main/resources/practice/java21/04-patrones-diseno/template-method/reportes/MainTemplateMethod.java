@@ -27,6 +27,10 @@ public final class MainTemplateMethod {
 
 /*
  * Salida esperada de consola:
- *   Se imprime el valor o coleccion calculado por el cliente.
- * Verificacion: termina sin excepciones inesperadas.
+ *   == ventas ==
+ *   Total: 15
+ *   titulo,total
+ *   ventas,15
+ *   (y una línea en blanco: println agrega un salto al texto que ya termina en \n)
+ * Se aplican los mismos pasos de validación, encabezado, detalle y pie.
  */

@@ -29,6 +29,5 @@ public final class MainColaEnlazada {
 /*
  * Salida esperada de consola:
  *   FIFO enlazada OK
- *   (los valores variables completan los fragmentos anteriores)
- * Verificacion: termina sin excepciones inesperadas.
+ * La cola devuelve A, B y luego C, incluso después de vaciarse.
  */

@@ -30,7 +30,7 @@ public final class MainArbolAVL {
 
 /*
  * Salida esperada de consola:
- *   Altura del AVL: 
- *   (los valores variables completan los fragmentos anteriores)
- * Verificacion: termina sin excepciones inesperadas.
+ *   Altura del AVL: 4
+ * Los valores 1..15 se equilibran en cuatro niveles; un BST simple
+ * sin balanceo alcanzaría altura 15 con esa inserción ascendente.
  */

@@ -24,7 +24,7 @@ public final class MainBuilder {
 }
 
 /*
- * Salida esperada de consola:
- *   Se imprime el valor o coleccion calculado por el cliente.
- * Verificacion: termina sin excepciones inesperadas.
+ * Salida esperada de consola (toString automático del record Solicitud):
+ *   Solicitud[ruta=/facturas, metodo=POST, cabeceras=[Content-Type: application/json]]
+ * El producto conserva una sola cabecera y valores válidos.
  */
