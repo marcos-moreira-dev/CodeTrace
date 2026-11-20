@@ -60,7 +60,7 @@ foreach ($linea in (Get-Content -LiteralPath $catalogo -Encoding UTF8)) {
 }
 
 $idiomas = @($referencias.Lenguaje | Sort-Object -Unique)
-if ($referencias.Count -ne 466 -or $idiomas.Count -ne 14) {
+if ($referencias.Count -ne 492 -or $idiomas.Count -ne 14) {
     throw "Catálogo inconsistente: $($referencias.Count) archivos, $($idiomas.Count) lenguajes"
 }
 Write-Host "CodeTrace v6 — catálogo íntegro: $($referencias.Count) archivos / $($idiomas.Count) lenguajes"
