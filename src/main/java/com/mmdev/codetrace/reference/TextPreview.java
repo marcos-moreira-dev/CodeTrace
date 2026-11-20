@@ -42,9 +42,12 @@ public final class TextPreview {
 
     private static byte[] readBounded(Path path) throws IOException {
         if (!Files.isRegularFile(path) || Files.size(path) > MAX_BYTES) return null;
-        byte[] bytes = Files.readAllBytes(path);
-        // A changing file can grow between the metadata check and the read.
-        return bytes.length <= MAX_BYTES ? bytes : null;
+        // A file can grow after Files.size(): keep the actual read bounded
+        // rather than allocating its entire newly enlarged contents.
+        try (var stream = Files.newInputStream(path)) {
+            byte[] bytes = stream.readNBytes((int) MAX_BYTES + 1);
+            return bytes.length <= MAX_BYTES ? bytes : null;
+        }
     }
 
     private static Result decode(byte[] bytes) {
