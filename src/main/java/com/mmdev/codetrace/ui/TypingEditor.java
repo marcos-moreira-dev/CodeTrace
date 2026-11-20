@@ -486,7 +486,7 @@ public final class TypingEditor extends BorderPane {
         if (first < 0 || last < first) return 0;
         int visible = last - first + 1;
         int above = Math.min(3, Math.max(0, (visible - 1) / 2));
-        int below = Math.min(2, Math.max(0, visible - above - 1));
+        int below = Math.min(2, Math.max(0, (visible - above - 1) / 2));
         int upperLimit = first + above;
         int lowerLimit = last - below;
         if (active < upperLimit) return active - upperLimit;
