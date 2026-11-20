@@ -260,7 +260,7 @@ public final class ReferenceTree extends TreeView<Path> {
 
     public void setStatusLookup(Function<String, State> lookup) {
         statusLookup = java.util.Objects.requireNonNull(lookup);
-        refresh();
+        refreshStatuses();
     }
 
     public void refreshStatuses() {
@@ -285,7 +285,7 @@ public final class ReferenceTree extends TreeView<Path> {
         String next = relative == null ? "" : relative;
         if (progressFocusFolder.equals(next)) return;
         progressFocusFolder = next;
-        refresh();
+        refreshStatuses();
     }
 
     public String progressFocusFolder() { return progressFocusFolder; }
@@ -748,6 +748,14 @@ public final class ReferenceTree extends TreeView<Path> {
             return;
         }
         ReferenceTreeIndex snapshot = index;
+        if (snapshot == null || loading) {
+            // The user may type before the cold disk scan finishes. The
+            // index-ready handler will restart this exact filter, so avoid
+            // scheduling a null-index background search or losing the text.
+            filteredPaths = Set.of();
+            onStatus.accept("Indexando referencia; la búsqueda comenzará al terminar.");
+            return;
+        }
         VirtualWorkspace currentWorkspace = workspace;
         Path root = referenceRoot;
         String requested = nameFilter;
