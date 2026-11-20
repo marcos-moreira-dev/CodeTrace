@@ -80,11 +80,11 @@ class ProjectDependencyGraphTest {
 
     @Test
     void inMemoryIndexFindsNestedGoPackagesByTheirDirectory() throws Exception {
-        Files.writeString(root.resolve("go.mod"), "module example.org/demo\\n");
+        Files.writeString(root.resolve("go.mod"), "module example.org/demo\n");
         Path nested = Files.createDirectories(root.resolve("lib/math"));
-        Files.writeString(nested.resolve("sum.go"), "package math\\n");
+        Files.writeString(nested.resolve("sum.go"), "package math\n");
         Files.writeString(root.resolve("main.go"),
-                "package main\\nimport \\"example.org/demo/lib/math\\"\\n");
+                "package main\nimport \"example.org/demo/lib/math\"\n");
         var graph = ProjectDependencyGraph.analyze(root, root, () -> false);
         assertTrue(graph.edges().stream().anyMatch(edge ->
                 edge.source().equals("main.go") && edge.target().equals("lib/math")));
