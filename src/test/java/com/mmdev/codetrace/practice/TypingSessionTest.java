@@ -166,7 +166,7 @@ class TypingSessionTest {
         int correct = 0, incorrect = 0;
         for (int i = 0; i < session.size(); i++) {
             var cell = session.cell(i);
-            boolean shown = !"\\n".equals(cell.expected())
+            boolean shown = !"\n".equals(cell.expected())
                     && !EmojiUnits.isEmoji(cell.expected());
             if (cell.state() == TypingSession.State.CORRECT) correct++;
             if (cell.state() == TypingSession.State.INCORRECT) incorrect++;
@@ -187,11 +187,11 @@ class TypingSessionTest {
 
     @Test
     void incrementalCountersRemainExactAcrossEditsSkipsCombiningAndRestore() {
-        TypingSession session = new TypingSession("a🙂í{}\\nB");
+        TypingSession session = new TypingSession("a🙂í{}\nB");
         assertCountersMatchSlots(session);
         session.type("a🙂i");
         assertCountersMatchSlots(session);
-        session.type("\\u0301");
+        session.type("\u0301");
         assertCountersMatchSlots(session);
         session.skip(3, 5);
         assertCountersMatchSlots(session);
