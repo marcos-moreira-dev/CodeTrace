@@ -9,7 +9,8 @@ import java.util.regex.Pattern;
 /**
  * Built-in syntactic adapters. Adding another language does not change the
  * typing engine, file explorer or session format.
- */
+  * <p><strong>Engineering rationale.</strong> Syntax metadata and extension recognition belong in a central registry, rather than scattered switch statements in UI cells. A registry enables language-specific formatting and eligibility without implying that CodeTrace compiles or semantically verifies every supported language.</p>
+*/
 public final class LanguageRegistry {
     private static final LanguageSupport PLAIN = new LanguageSupport() {
         @Override
@@ -30,6 +31,13 @@ public final class LanguageRegistry {
 
     private static final List<LanguageSupport> SUPPORTS = List.of(
             new RegexSupport("Java", List.of(".java"), javaPattern()),
+            new RegexSupport("Kotlin", List.of(".kt", ".kts"),
+                    cStylePattern("package|import|as|class|interface|object|data|sealed|"
+                            + "enum|fun|val|var|return|if|else|when|for|while|do|"
+                            + "in|is|!is|!in|try|catch|finally|throw|typealias|"
+                            + "suspend|inline|override|open|private|public|protected|"
+                            + "internal|companion|constructor|init|by|this|super|"
+                            + "null|true|false|break|continue|where|out|reified")),
             new RegexSupport("Python", List.of(".py", ".pyw"), pythonPattern()),
             new RegexSupport("TypeScript", List.of(".ts", ".tsx"),
                     cStylePattern("interface|type|let|const|var|function|class|export|import|"
@@ -73,7 +81,15 @@ public final class LanguageRegistry {
                             + "in|function|export|local|readonly|return|exit|"
                             + "source|echo|printf|cd|mkdir|grep|sed|awk")),
             new RegexSupport("Windows CMD", List.of(".bat", ".cmd"), cmdPattern()),
-            new RegexSupport("Markdown", List.of(".md", ".markdown"), markdownPattern())
+            new RegexSupport("NASM x86-64", List.of(".asm", ".nasm"), assemblyPattern()),
+            new RegexSupport("Markdown", List.of(".md", ".markdown"), markdownPattern()),
+            new RegexSupport("CSS", List.of(".css", ".scss", ".less"), cssPattern()),
+            new RegexSupport("JSON", List.of(".json", ".jsonc"), jsonPattern()),
+            new RegexSupport("XML", List.of(".xml", ".html", ".htm", ".svg"),
+                    xmlPattern()),
+            new RegexSupport("YAML", List.of(".yaml", ".yml"), yamlPattern()),
+            new RegexSupport("Properties", List.of(".properties", ".ini", ".conf"),
+                    propertiesPattern())
     );
 
     private LanguageRegistry() {
@@ -97,14 +113,21 @@ public final class LanguageRegistry {
                 + "var|void|volatile|while|yield|sealed|permits|non-sealed");
     }
 
+    /** Ordered matcher: comments/strings win over nested keyword-like text. */
     private static Pattern cStylePattern(String keywords) {
-        // Earlier alternatives take precedence so comments and strings are not
-        // recolored by nested words that look like keywords.
+        String primitives = "boolean|byte|short|int|long|float|double|char|void|"
+                + "String|Int|Long|Short|Float|Double|Char|Boolean|Byte|Unit|"
+                + "Any|Nothing|UInt|ULong|UShort|UByte|"
+                + "string|number|bool|decimal|bigint|symbol|uint|ulong|"
+                + "size_t|usize|isize|u8|u16|u32|u64|i8|i16|i32|i64";
         String expression =
                 "(?<comment>//[^\\r\\n]*|/\\*[\\s\\S]*?\\*/)"
                 + "|(?<string>\"(?:\\\\.|[^\"\\\\])*\"|'(?:\\\\.|[^'\\\\])*')"
                 + "|(?<annotation>@[A-Za-z_$][A-Za-z0-9_$]*)"
+                + "|(?<type>\\b(?:" + primitives + ")\\b)"
                 + "|(?<keyword>\\b(?:" + keywords + ")\\b)"
+                + "|(?<call>\\b[A-Za-z_$][A-Za-z0-9_$]*(?=\\s*\\())"
+                + "|(?<member>(?<=\\.)[A-Za-z_$][A-Za-z0-9_$]*)"
                 + "|(?<number>\\b\\d+(?:\\.\\d+)?\\b)";
         return Pattern.compile(expression, Pattern.MULTILINE);
     }
@@ -118,6 +141,59 @@ public final class LanguageRegistry {
                 + "|(?<keyword>\\b(?:def|class|return|if|elif|else|for|while|in|is|"
                 + "not|and|or|try|except|finally|raise|with|as|import|from|"
                 + "async|await|lambda|yield|None|True|False|pass|break|continue)\\b)"
+                + "|(?<type>\\b(?:str|int|float|bool|bytes|list|dict|set|tuple)\\b)"
+                + "|(?<call>\\b[A-Za-z_][A-Za-z0-9_]*(?=\\s*\\())"
+                + "|(?<member>(?<=\\.)[A-Za-z_][A-Za-z0-9_]*)"
+                + "|(?<number>\\b\\d+(?:\\.\\d+)?\\b)", Pattern.MULTILINE);
+    }
+
+    /** CSS declarations have different lexical rules from programming code. */
+    private static Pattern cssPattern() {
+        return Pattern.compile(
+                "(?<comment>/\\*[\\s\\S]*?\\*/)"
+                + "|(?<string>\"(?:\\\\.|[^\"\\\\])*\"|'(?:\\\\.|[^'\\\\])*')"
+                + "|(?<color>#[A-Fa-f0-9]{3,8}\\b)"
+                + "|(?<selector>[.#]?[A-Za-z_][\\w.#\\[\\]=:()\\s>-]*(?=\\s*\\{))"
+                + "|(?<property>--?[A-Za-z_][\\w-]*(?=\\s*:))"
+                + "|(?<number>-?\\b\\d+(?:\\.\\d+)?(?:px|pt|em|rem|vh|vw|%)?)",
+                Pattern.MULTILINE);
+    }
+
+    private static Pattern jsonPattern() {
+        return Pattern.compile(
+                "(?<comment>//[^\\r\\n]*|/\\*[\\s\\S]*?\\*/)"
+                + "|(?<property>\"(?:\\\\.|[^\"\\\\])*\"(?=\\s*:))"
+                + "|(?<string>\"(?:\\\\.|[^\"\\\\])*\")"
+                + "|(?<keyword>\\b(?:true|false|null)\\b)"
+                + "|(?<number>-?\\b\\d+(?:\\.\\d+)?(?:[eE][+-]?\\d+)?)",
+                Pattern.MULTILINE);
+    }
+
+    private static Pattern xmlPattern() {
+        return Pattern.compile(
+                "(?<comment><!--[\\s\\S]*?-->)"
+                + "|(?<string>\"(?:\\\\.|[^\"\\\\])*\"|'(?:\\\\.|[^'\\\\])*')"
+                + "|(?<tag>(?<=<)/?[A-Za-z_][\\w:.\\-]*)"
+                + "|(?<property>\\b[A-Za-z_][\\w:.\\-]*(?=\\s*=))"
+                + "|(?<number>\\b\\d+(?:\\.\\d+)?\\b)",
+                Pattern.MULTILINE);
+    }
+
+    private static Pattern yamlPattern() {
+        return Pattern.compile(
+                "(?<comment>#[^\\r\\n]*)"
+                + "|(?<string>\"(?:\\\\.|[^\"\\\\])*\"|'(?:\\\\.|[^'\\\\])*')"
+                + "|(?<property>^[ \\t]*-?[ \\t]*[A-Za-z_][\\w.\\-]*(?=\\s*:))"
+                + "|(?<keyword>\\b(?:true|false|null|yes|no)\\b)"
+                + "|(?<number>-?\\b\\d+(?:\\.\\d+)?\\b)",
+                Pattern.MULTILINE);
+    }
+
+    private static Pattern propertiesPattern() {
+        return Pattern.compile(
+                "(?<comment>^[ \\t]*[#!][^\\r\\n]*)"
+                + "|(?<property>^[ \\t]*[A-Za-z_][\\w.\\-]*(?=\\s*[=:]))"
+                + "|(?<string>\"[^\"\\r\\n]*\"|'[^'\\r\\n]*')"
                 + "|(?<number>\\b\\d+(?:\\.\\d+)?\\b)", Pattern.MULTILINE);
     }
 
@@ -149,6 +225,20 @@ public final class LanguageRegistry {
                 + "exit|start|cd|pushd|popd|copy|move|del|mkdir|rmdir|"
                 + "setlocal|endlocal|errorlevel)\\b)",
                 Pattern.MULTILINE | Pattern.CASE_INSENSITIVE);
+    }
+
+    private static Pattern assemblyPattern() {
+        return Pattern.compile(
+                "(?<comment>;[^\\r\\n]*)"
+                + "|(?<string>\"[^\"\\r\\n]*\"|'[^'\\r\\n]*')"
+                + "|(?<keyword>\\b(?:section|global|extern|bits|default|rel|"
+                + "mov|lea|add|sub|inc|dec|imul|mul|div|idiv|xor|and|or|not|"
+                + "cmp|test|jmp|je|jne|jg|jge|jl|jle|ja|jb|call|ret|"
+                + "push|pop|syscall|db|dw|dd|dq|resb|resq|equ)\\b)"
+                + "|(?<type>\\b(?:r(?:ax|bx|cx|dx|di|si|bp|sp|[89]|1[0-5])"
+                + "|e(?:ax|bx|cx|dx|di|si|bp|sp)|[abcd][lh])\\b)"
+                + "|(?<number>\\b(?:0x[0-9a-fA-F]+|[0-9]+)\\b)",
+                Pattern.CASE_INSENSITIVE | Pattern.MULTILINE);
     }
 
     private static Pattern markdownPattern() {
@@ -183,8 +273,9 @@ public final class LanguageRegistry {
             Matcher matcher = pattern.matcher(source);
             List<Token> matches = new ArrayList<>();
             while (matcher.find()) {
-                for (var group : List.of("comment", "string", "annotation",
-                        "keyword", "number", "heading")) {
+                for (var group : List.of("comment", "string", "annotation", "color",
+                        "selector", "property", "tag", "type", "keyword",
+                        "call", "member", "number", "heading")) {
                     try {
                         if (matcher.start(group) >= 0) {
                             Kind kind = switch (group) {
@@ -193,6 +284,13 @@ public final class LanguageRegistry {
                                 case "annotation" -> Kind.ANNOTATION;
                                 case "number" -> Kind.NUMBER;
                                 case "heading" -> Kind.HEADING;
+                                case "color" -> Kind.COLOR;
+                                case "selector" -> Kind.SELECTOR;
+                                case "property" -> Kind.PROPERTY;
+                                case "tag" -> Kind.TAG;
+                                case "type" -> Kind.TYPE;
+                                case "call" -> Kind.CALL;
+                                case "member" -> Kind.MEMBER;
                                 default -> Kind.KEYWORD;
                             };
                             matches.add(new Token(matcher.start(group),

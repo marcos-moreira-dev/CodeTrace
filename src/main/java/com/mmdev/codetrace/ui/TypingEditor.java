@@ -3,6 +3,10 @@ package com.mmdev.codetrace.ui;
 import com.mmdev.codetrace.languages.LanguageRegistry;
 import com.mmdev.codetrace.languages.LanguageSupport;
 import com.mmdev.codetrace.practice.TypingSession;
+import com.mmdev.codetrace.practice.EmojiUnits;
+import com.mmdev.codetrace.practice.DependencyDeclarationRules;
+import com.mmdev.codetrace.reference.SourceRange;
+import com.mmdev.codetrace.reference.SourceLineIndex;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -12,6 +16,7 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.skin.VirtualFlow;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.KeyEvent;
@@ -31,9 +36,12 @@ import javafx.scene.text.Text;
  *
  * ListView virtualizes lines, so refreshing a large document only recreates
  * visible cells instead of allocating a Text node for every character.
- */
+  * <p><strong>Engineering rationale.</strong> Input events update a TypingSession rather than modifying the immutable reference text. Rows are virtualized so rendering scales with visible lines instead of the full source length; caret navigation and auto-scroll belong to the presentation layer while Unicode correctness and skip rules stay in the practice model.</p>
+*/
 public final class TypingEditor extends BorderPane {
-    private static final Color PENDING = Color.web("#81909B");
+    // Unwritten reference characters must remain comfortably legible on white.
+    // Existing opacity preferences still apply; correctness colors stay intact.
+    private static final Color PENDING = Color.web("#263B4C");
     private static final Color CORRECT = Color.web("#26834B");
     private static final Color INCORRECT = Color.web("#B63E41");
     private static final Color SKIPPED = Color.web("#647689");
@@ -41,8 +49,10 @@ public final class TypingEditor extends BorderPane {
     private static final Color KEYWORD = Color.web("#164D9F");
 
     private final TypingSession session;
+    private final String filename;
     private final Color[] syntaxColors;
     private final List<SourceLine> sourceLines = new ArrayList<>();
+    private final SourceLineIndex lineIndex;
     private final ListView<SourceLine> lines = new ListView<>();
     private final Runnable onChange;
     private final Consumer<Boolean> onTypedCharacter;
@@ -50,8 +60,12 @@ public final class TypingEditor extends BorderPane {
     private double pendingOpacity = 0.70;
     private String fontFamily;
     private long firstKeyNanos;
+    private long correctTypedEvents;
+    private long incorrectTypedEvents;
     private boolean synchronizingLine;
     private boolean turboMode;
+    private int searchFirst = -1;
+    private int searchLast = -1;
     private Consumer<String> onNotice = ignored -> {};
     private BooleanSupplier mayPractice = () -> true;
     private Runnable onPracticeBlocked = () -> {};
@@ -62,12 +76,15 @@ public final class TypingEditor extends BorderPane {
                         String filename, String fontFamily, int fontSize,
                         Consumer<Boolean> onTypedCharacter) {
         this.session = session;
+        this.filename = filename;
         this.onChange = onChange;
         this.onTypedCharacter = onTypedCharacter;
         this.fontFamily = fontFamily;
         this.fontSize = fontSize;
         this.syntaxColors = syntaxColors(session, filename);
         buildLines();
+        lineIndex = new SourceLineIndex(
+                sourceLines.stream().mapToInt(SourceLine::last).toArray());
 
         getStyleClass().add("typing-editor");
         lines.getStyleClass().add("typing-lines");
@@ -142,6 +159,43 @@ public final class TypingEditor extends BorderPane {
         lines.requestFocus();
     }
 
+    /**
+     * Search navigation highlights immutable reference glyphs and scrolls to
+     * the matching row. It intentionally does NOT move the typing caret.
+     */
+    /** Navigation contract shared with read-only views (always 1-based). */
+    public void showSearchMatch(SourceRange location) {
+        showSearchMatch(location.lineIndex(), location.columnIndex(), location.length());
+    }
+
+    public void showSearchMatch(int zeroBasedLine, int zeroBasedColumn, int length) {
+        if (zeroBasedLine < 0 || zeroBasedLine >= sourceLines.size()) return;
+        SourceLine line = sourceLines.get(zeroBasedLine);
+        int position = line.first();
+        int offset = 0;
+        int requestedStart = Math.max(0, zeroBasedColumn);
+        while (position < line.last() && offset < requestedStart) {
+            offset += session.cell(position).expected().length();
+            position++;
+        }
+        searchFirst = position;
+        int endOffset = requestedStart + Math.max(1, length);
+        while (position < line.last() && offset < endOffset) {
+            offset += session.cell(position).expected().length();
+            position++;
+        }
+        searchLast = position;
+        synchronizingLine = true;
+        try {
+            lines.getSelectionModel().select(zeroBasedLine);
+        } finally {
+            synchronizingLine = false;
+        }
+        // Rebuild the visible cell before requesting the target scroll position.
+        lines.refresh();
+        lines.scrollTo(zeroBasedLine);
+    }
+
     /** Apply only to pending source characters, never to correctly typed tiles. */
     public void setTemplateOpacity(int percent) {
         if (percent < 20 || percent > 100) {
@@ -159,39 +213,61 @@ public final class TypingEditor extends BorderPane {
     }
 
     public double progress() {
-        return session.size() == 0 ? 1.0
-                : (double) session.resolvedCount() / session.size();
+        return session.visibleUnitCount() == 0 ? 1.0
+                : (double) session.resolvedVisibleCount() / session.visibleUnitCount();
     }
+
+    /** Elapsed wall-clock time since the first typing action (pauses included). */
+    public long practiceElapsedMillis() {
+        if (firstKeyNanos == 0) return 0;
+        return Math.max(0L, java.util.concurrent.TimeUnit.NANOSECONDS.toMillis(
+                System.nanoTime() - firstKeyNanos));
+    }
+
+    /** Correct visible keystrokes entered in this editor instance, not restored history. */
+    public long correctTypedEvents() { return correctTypedEvents; }
+
+    /** Incorrect visible keystrokes, including those subsequently corrected. */
+    public long incorrectTypedEvents() { return incorrectTypedEvents; }
 
     public long correctCpm() {
         if (firstKeyNanos == 0) return 0;
         double minutes = (System.nanoTime() - firstKeyNanos) / 60_000_000_000.0;
-        return minutes < (3.0 / 60) ? 0 : Math.round(session.correctCount() / minutes);
+        return minutes < (3.0 / 60) ? 0
+                : Math.round(correctTypedEvents / minutes);
     }
 
-    public int skipJavaImports() {
-        if (!permitPractice()) return 0;
+    public int skipDependencyDeclarations() {
+        if (!permitPractice() || !DependencyDeclarationRules.supports(filename)) return 0;
         int omittedBefore = session.skippedCount();
         int start = 0;
+        boolean goBlock = false;
         StringBuilder line = new StringBuilder();
         for (int i = 0; i <= session.size(); i++) {
             boolean atEnd = i == session.size();
             String unit = atEnd ? "" : session.cell(i).expected();
             if (atEnd || "\n".equals(unit)) {
-                String trimmed = line.toString().stripLeading();
-                if (trimmed.startsWith("import ") || trimmed.startsWith("import\t")) {
-                    session.skip(start, Math.min(i + 1, session.size()));
-                }
+                String text = line.toString().strip();
+                boolean beginsBlock = DependencyDeclarationRules.startsGoImportBlock(
+                        filename, text);
+                boolean declaration = goBlock || beginsBlock
+                        || DependencyDeclarationRules.isDeclaration(filename, text);
+                if (declaration) session.skip(start, Math.min(i + 1, session.size()));
+                if (goBlock && text.equals(")")) goBlock = false;
+                if (beginsBlock) goBlock = true;
                 start = i + 1;
                 line.setLength(0);
             } else {
                 line.append(unit);
             }
         }
-        boolean changed = session.skippedCount() != omittedBefore;
-        refresh(changed);
-        return session.skippedCount() - omittedBefore;
+        int omitted = session.skippedCount() - omittedBefore;
+        refresh(omitted > 0);
+        return omitted;
     }
+
+    /** Compatibility with older callers; now applies to supported languages. */
+    public int skipJavaImports() { return skipDependencyDeclarations(); }
 
     public void focusEditor() {
         lines.requestFocus();
@@ -335,13 +411,31 @@ public final class TypingEditor extends BorderPane {
         // Navigation and line selection never silently change progress.
         if (turboMode) session.skipTurboSymbols();
         int previous = session.caret();
+        boolean wasIncorrect = previous > 0
+                && session.state(previous - 1) == TypingSession.State.INCORRECT;
         session.type(committed);
         int afterTyping = session.caret();
         if (afterTyping > previous) {
+            // Count this opening's actual attempts, not all characters already
+            // present from a restored .ctrace session. Line separators are
+            // structural and cannot inflate the visible-typing statistics.
+            for (int i = previous; i < afterTyping; i++) {
+                if ("\n".equals(session.cell(i).expected())) continue;
+                if (session.state(i) == TypingSession.State.CORRECT)
+                    correctTypedEvents++;
+                else incorrectTypedEvents++;
+            }
             boolean correct = session.state(afterTyping - 1)
                     == TypingSession.State.CORRECT;
             onTypedCharacter.accept(correct);
             if (turboMode) session.skipTurboSymbols();
+        } else if (previous > 0 && wasIncorrect
+                && !"\n".equals(session.cell(previous - 1).expected())
+                && session.state(previous - 1) == TypingSession.State.CORRECT) {
+            // A separately committed combining accent can fix the last
+            // grapheme without advancing the caret (LATAM/IME keyboards).
+            correctTypedEvents++;
+            onTypedCharacter.accept(true);
         }
     }
 
@@ -379,17 +473,50 @@ public final class TypingEditor extends BorderPane {
         if (changed) onChange.run();
     }
 
-    private void synchronizeLine(boolean scrollToLine) {
-        int position = session.caret();
-        int selected = sourceLines.size() - 1;
-        for (int i = 0; i < sourceLines.size(); i++) {
-            SourceLine line = sourceLines.get(i);
-            int max = line.last();
-            if (position <= max) {
-                selected = i;
-                break;
-            }
+    /** When relocating to a distant line, start with context above it. */
+    static int firstLineWithContext(int activeLine) {
+        return Math.max(0, activeLine - 3);
+    }
+
+    /**
+     * Minimal row displacement needed to retain a small visual buffer around
+     * the caret. A line already comfortably visible must NOT move the viewport.
+     * Tiny windows reserve only as much context as they can display.
+     */
+    static int contextScrollRows(int first, int last, int active) {
+        if (first < 0 || last < first) return 0;
+        int visible = last - first + 1;
+        int above = Math.min(3, Math.max(0, (visible - 1) / 2));
+        int below = Math.min(2, Math.max(0, (visible - above - 1) / 2));
+        int upperLimit = first + above;
+        int lowerLimit = last - below;
+        if (active < upperLimit) return active - upperLimit;
+        if (active > lowerLimit) return active - lowerLimit;
+        return 0;
+    }
+
+    private void keepLineWithContext(int active) {
+        if (lines.getScene() == null) return;
+        // The public JavaFX VirtualFlow API lets us move only the required
+        // number of pixels, rather than anchoring every new row to the top.
+        if (!(lines.lookup(".virtual-flow") instanceof VirtualFlow<?> flow)) return;
+        var first = flow.getFirstVisibleCell();
+        var last = flow.getLastVisibleCell();
+        if (first == null || last == null) return;
+        int deltaRows = contextScrollRows(first.getIndex(), last.getIndex(), active);
+        if (deltaRows == 0) return;
+        if (Math.abs(deltaRows) > last.getIndex() - first.getIndex()) {
+            flow.scrollToTop(firstLineWithContext(active));
+        } else {
+            flow.scrollPixels(deltaRows * cellHeight());
         }
+    }
+
+    private void synchronizeLine(boolean scrollToLine) {
+        // Source line bounds are immutable. Binary search avoids scanning
+        // the entire document on every keystroke in very long files.
+        int selected = lineIndex.findLine(session.caret());
+        int previouslySelected = lines.getSelectionModel().getSelectedIndex();
         synchronizingLine = true;
         try {
             lines.getSelectionModel().select(selected);
@@ -397,11 +524,19 @@ public final class TypingEditor extends BorderPane {
             synchronizingLine = false;
         }
         lines.refresh();
-        if (scrollToLine) lines.scrollTo(selected);
+        // Only line transitions trigger scrolling, never every typed glyph.
+        // Defer until the selection model and JavaFX skin have settled.
+        if (scrollToLine && selected != previouslySelected) {
+            Platform.runLater(() -> {
+                if (lines.getSelectionModel().getSelectedIndex() == selected) {
+                    keepLineWithContext(selected);
+                }
+            });
+        }
     }
 
     private double cellHeight() {
-        return Math.ceil(fontSize * 1.5 + 7);
+        return CodeLineGutter.rowHeight(fontSize);
     }
 
     /**
@@ -428,7 +563,8 @@ public final class TypingEditor extends BorderPane {
             String original = cell.expected();
             String visible = original.equals("\t") ? "    " : original;
             Text glyph = new Text(visible);
-            glyph.setFont(font);
+            glyph.setFont(EmojiUnits.isEmoji(original)
+                    ? Font.font("Segoe UI Emoji", fontSize) : font);
             glyph.setMouseTransparent(true);
             glyph.setOpacity(cell.state() != TypingSession.State.PENDING ? 1.0
                     : syntaxColors[index].equals(KEYWORD)
@@ -458,6 +594,9 @@ public final class TypingEditor extends BorderPane {
             if (index == session.caret()) {
                 tile.getStyleClass().add("trace-caret");
             }
+            if (index >= searchFirst && index < searchLast) {
+                tile.getStyleClass().add("trace-search-hit");
+            }
             sizeTile(tile, width, tileHeight);
             row.getChildren().add(tile);
             rowWidth += width + 1.0;
@@ -477,7 +616,16 @@ public final class TypingEditor extends BorderPane {
 
         row.setMinWidth(rowWidth);
         row.setPrefWidth(rowWidth);
-        return row;
+        // The gutter is part of the same virtualized line cell, not an overlay.
+        // Its numbering is human-facing (1-based); caret indices stay 0-based.
+        HBox visualLine = new HBox(10,
+                CodeLineGutter.number(line.number() + 1, sourceLines.size(), fontSize), row);
+        visualLine.setAlignment(Pos.CENTER_LEFT);
+        visualLine.setMinHeight(cellHeight());
+        visualLine.setPrefHeight(cellHeight());
+        visualLine.setMaxHeight(cellHeight());
+        visualLine.getStyleClass().add("code-line-row");
+        return visualLine;
     }
 
     private static void sizeTile(StackPane tile, double width, double height) {
@@ -503,13 +651,7 @@ public final class TypingEditor extends BorderPane {
             if (token.start() == token.end()) continue;
             int first = units[token.start()];
             int last = units[token.end() - 1] + 1;
-            Color tint = switch (token.kind()) {
-                case KEYWORD, HEADING -> KEYWORD;
-                case COMMENT -> Color.web("#647F75");
-                case STRING -> Color.web("#267A65");
-                case NUMBER -> Color.web("#9D732F");
-                case ANNOTATION -> Color.web("#7B61A5");
-            };
+            Color tint = SyntaxPalette.color(token.kind());
             Arrays.fill(colors, first, last, tint);
         }
         return colors;

@@ -8,4 +8,4 @@ La aplicación utiliza **Ikonli** para presentar iconos de desarrollo en los ár
 
 Los logos de lenguajes y herramientas pertenecen a sus respectivos titulares. Su uso sirve exclusivamente para reconocer tipos de archivo y no implica patrocinio.
 
-Antes de empaquetar y redistribuir CodeTrace, conservar las atribuciones y avisos de licencia que correspondan a las dependencias incluidas.
+La licencia del código original es MIT; esto no convierte en propios los iconos de terceros. Se conserva la atribución en THIRD-PARTY-NOTICES.md y, para los recursos concretos integrados, en sus textos de licencia dentro del paquete. Antes de distribuir el binario, verificar la totalidad de avisos exigibles.

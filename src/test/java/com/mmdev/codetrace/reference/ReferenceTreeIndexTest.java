@@ -45,4 +45,36 @@ class ReferenceTreeIndexTest {
         assertTrue(index.isWorkable("src/Main.java"));
         assertFalse(index.isWorkable("pom.xml"));
     }
+
+    @Test
+    void autoRecreationPlanPreservesEmptyFoldersAndSkipsGeneratedOutput() throws Exception {
+        Files.createDirectories(root.resolve("src/empty"));
+        Files.createDirectories(root.resolve("src/code"));
+        Files.writeString(root.resolve("src/code/Main.java"), "class Main {}");
+        Files.createDirectories(root.resolve("target/classes"));
+        Files.writeString(root.resolve("target/classes/Main.class"), "bytecode");
+        var nodes = ReferenceTreeIndex.scan(root).recreationNodes();
+        assertTrue(nodes.contains(new ReferenceTreeIndex.Node("src/empty", true)));
+        assertTrue(nodes.contains(new ReferenceTreeIndex.Node("src/code/Main.java", false)));
+        assertFalse(nodes.stream().anyMatch(n -> n.path().startsWith("target/")));
+        assertFalse(ReferenceTreeIndex.scan(root)
+                .hasWorkableDescendant("target"),
+                "Compiled/generated sources are not pending typing work");
+        int parent = nodes.indexOf(new ReferenceTreeIndex.Node("src/code", true));
+        int child = nodes.indexOf(new ReferenceTreeIndex.Node("src/code/Main.java", false));
+        assertTrue(parent >= 0 && child > parent, "Virtual folders must precede files");
+    }
+
+    @org.junit.jupiter.api.Test
+    void interruptedTreeScanDoesNotPublishPartialIndex() throws Exception {
+        Thread.currentThread().interrupt();
+        try {
+            org.junit.jupiter.api.Assertions.assertThrows(
+                    java.util.concurrent.CancellationException.class,
+                    () -> ReferenceTreeIndex.scan(java.nio.file.Path.of(".")));
+        } finally {
+            Thread.interrupted();
+        }
+    }
+
 }

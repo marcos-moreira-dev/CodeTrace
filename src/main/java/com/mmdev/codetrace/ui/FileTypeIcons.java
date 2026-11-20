@@ -11,7 +11,8 @@ import org.kordamp.ikonli.javafx.FontIcon;
 /**
  * Icons are a shared UI service: language logos come from the Devicons pack,
  * desktop folders and documents from Feather. Unknown types retain a neutral glyph.
- */
+  * <p><strong>Engineering rationale.</strong> File icons are lightweight visual type hints, not proof of content validity or language support. Resolving them centrally prevents tabs, trees and read-only previews from disagreeing about common source, configuration and media extensions.</p>
+*/
 public final class FileTypeIcons {
     private FileTypeIcons() {}
 
@@ -21,7 +22,10 @@ public final class FileTypeIcons {
         }
         String name = path.getFileName() == null ? "" :
                 path.getFileName().toString().toLowerCase(Locale.ROOT);
+        if (name.endsWith(".ctrace")) return sessionIcon();
         if (name.endsWith(".java")) return font("di-java", "#C75B38");
+        if (name.endsWith(".kt") || name.endsWith(".kts"))
+            return badge("Kt", "#8055B5");
         if (name.endsWith(".py") || name.endsWith(".pyw"))
             return font("di-python", "#3678A4");
         if (name.endsWith(".js") || name.endsWith(".jsx"))
@@ -49,6 +53,8 @@ public final class FileTypeIcons {
                 || name.endsWith(".zsh")) return font("fth-terminal", "#536A77");
         if (name.endsWith(".bat") || name.endsWith(".cmd"))
             return font("fth-terminal", "#517A66");
+        if (name.endsWith(".asm") || name.endsWith(".nasm"))
+            return badge("ASM", "#6A5B90");
         if (name.endsWith(".rs")) return font("di-rust", "#5D6266");
         if (name.endsWith(".svg") || name.endsWith(".bmp")
                 || name.endsWith(".ico") || name.endsWith(".tiff")
@@ -72,6 +78,25 @@ public final class FileTypeIcons {
                 || name.endsWith(".yml") || name.endsWith(".properties"))
             return font("fth-settings", "#66798B");
         return font("fth-file-text", "#7A8B98");
+    }
+
+    private static Node sessionIcon() {
+        java.io.InputStream input = FileTypeIcons.class
+                .getResourceAsStream("/icons/codetrace-session.png");
+        if (input != null) {
+            try (input) {
+                javafx.scene.image.Image image = new javafx.scene.image.Image(input);
+                javafx.scene.image.ImageView view = new javafx.scene.image.ImageView(image);
+                view.setFitWidth(18);
+                view.setFitHeight(18);
+                view.setPreserveRatio(true);
+                view.setSmooth(true);
+                return view;
+            } catch (java.io.IOException error) {
+                // Fonts and generic symbols remain a graceful fallback.
+            }
+        }
+        return font("fth-save", "#42657d");
     }
 
     private static Node font(String literal, String color) {

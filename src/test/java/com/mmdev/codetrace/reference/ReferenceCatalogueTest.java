@@ -22,9 +22,9 @@ class ReferenceCatalogueTest {
 
         var catalogue = ReferenceCatalogue.scan(folder);
         assertEquals(2, catalogue.files().size());
-        assertEquals(2, catalogue.files().get("src/Main.java").typeableUnits());
+        assertEquals(1, catalogue.files().get("src/Main.java").typeableUnits());
         assertFalse(catalogue.files().get("logo.bin").typeable());
-        assertEquals(2, catalogue.expectedUnits());
+        assertEquals(1, catalogue.expectedUnits());
 
         VirtualWorkspace virtual = new VirtualWorkspace();
         virtual.createDirectory("src");
@@ -32,10 +32,31 @@ class ReferenceCatalogueTest {
         TypingSession session = new TypingSession("í\n");
         session.type("i\u0301\n");
         String sha = catalogue.files().get("src/Main.java").sha256();
-        assertEquals(2, catalogue.resolvedUnits(virtual, Map.of("src/Main.java", session),
+        assertEquals(1, catalogue.resolvedUnits(virtual, Map.of("src/Main.java", session),
                 Map.of("src/Main.java", sha)));
         assertEquals(0, catalogue.resolvedUnits(virtual, Map.of("src/Main.java", session),
                 Map.of("src/Main.java", "f".repeat(64))));
+    }
+
+    @Test
+    void mediaAndOversizedSourcesDoNotGetContentFingerprints() throws Exception {
+        byte[] media = new byte[4096];
+        java.util.Arrays.fill(media, (byte) 23);
+        Files.write(folder.resolve("song.mp3"), media);
+        Files.write(folder.resolve("movie.mkv"), new byte[8192]);
+        Files.write(folder.resolve("TooLarge.java"), new byte[2 * 1024 * 1024 + 1]);
+        Files.write(folder.resolve("Invalid.java"), new byte[] { (byte) 0xFF });
+        Files.writeString(folder.resolve("Valid.java"), "class Valid { }");
+
+        var catalogue = ReferenceCatalogue.scan(folder);
+        for (String excluded : java.util.List.of(
+                "song.mp3", "movie.mkv", "TooLarge.java", "Invalid.java")) {
+            assertFalse(catalogue.files().get(excluded).typeable(), excluded);
+            assertEquals("", catalogue.files().get(excluded).sha256(), excluded);
+        }
+        assertEquals(ReferenceFingerprint.sha256(folder.resolve("Valid.java")),
+                catalogue.files().get("Valid.java").sha256());
+        assertEquals(15, catalogue.files().get("Valid.java").typeableUnits());
     }
 
     @Test
@@ -110,4 +131,17 @@ class ReferenceCatalogueTest {
         virtual.createFile("empty.txt");
         assertEquals(0, index.resolvedUnits(virtual, Map.of(), Map.of()));
     }
+
+    @org.junit.jupiter.api.Test
+    void interruptedCatalogueScanDoesNotPublishPartialCounts() throws Exception {
+        Thread.currentThread().interrupt();
+        try {
+            org.junit.jupiter.api.Assertions.assertThrows(
+                    java.util.concurrent.CancellationException.class,
+                    () -> ReferenceCatalogue.scan(folder));
+        } finally {
+            Thread.interrupted();
+        }
+    }
+
 }

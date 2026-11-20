@@ -1,0 +1,246 @@
+# Rendimiento y escalabilidad de CodeTrace
+
+## Contrato que no se debe romper
+
+CodeTrace trabaja sobre una **referencia de solo lectura** y reconstruye una versión virtual.
+Las optimizaciones nunca deben escribir ni eliminar los originales, omitir comprobaciones
+de seguridad de rutas, alterar el formato de los archivos `.ctrace`, publicar resultados
+de tareas canceladas o presentar métricas parciales como definitivas.
+
+Las clases Java se documentan con **Javadoc** (`/** ... */`) para contratos públicos.
+Los comentarios `//` explican decisiones difíciles (por qué se hace algo), costes
+asintóticos, invariantes de seguridad y razones de una caché; se evita narrar instrucciones
+obvias. Ante una optimización, conservar comentarios sobre invalidación, cancelación y
+limitaciones. Los números de rendimiento se publican como **mediciones**, nunca como
+promesas sin datos.
+
+## Variables para medir
+
+* `n`: número de entradas de la referencia; `d`: profundidad de carpeta.
+* `B`: bytes realmente leídos del disco; `B_t`: bytes de textos examinados.
+* `k`: hijos directos de una carpeta; `p`: referencias/imports por resolver.
+* `U`: caracteres/graphemes de un archivo de práctica.
+* Costes de disco y antivirus de Windows pueden dominar el tiempo de CPU.
+
+No confundir **tiempo para mostrar el explorador** con **tiempo hasta terminar
+el catálogo de progreso**. El usuario debe poder inspeccionar el árbol y abrir
+archivos antes de que concluyan cálculos secundarios.
+
+## Auditoría por subsistema
+
+| Subsistema | Situación y coste teórico | Dirección |
+| --- | --- | --- |
+| Árbol de referencia | Recorrido de entradas y ordenación de hermanos: `O(n + Σ k log k)` con agregados por directorio | Índice inmutable fuera del hilo JavaFX, carga diferida |
+| Catálogo de práctica | Recorrido `O(n)`, lectura y verificación de archivos elegibles `O(B_practicable)` | No leer contenido de multimedia/archivos excluidos |
+| Estado de transcripción | Métricas por pulsación deben evitar recorrer `n` y `U` de nuevo | Mantener contadores e incrementos por archivo |
+| Consulta secundaria | Ordenar hijos de la carpeta abierta: `O(k log k)` | Mantener lectura en segundo plano, rechazar symlinks |
+| Buscar texto | Recorrido y lectura hasta límites de resultados | Búsquedas cancelables, sin bloquear JavaFX |
+| Grafo de dependencias | Importaciones y resolución entre rutas | Construir mapa de rutas antes de resolver imports |
+| Verificación de cambios | SHA de archivos registrados, por bytes | Conservar verificación de contenido donde afecte progreso |
+
+Las operaciones interactivas merecen especial atención: una operación `O(n)`
+periódica es muy distinta a repetir `O(n)` **por cada carácter**.
+
+## Instrumentación reproducible (Windows / JDK 21)
+
+1. Instalar JDK 21 (incluye `jcmd`, `jfr`) y abrir CodeTrace normalmente.
+2. En otra ventana PowerShell, ejecutar `jcmd -l` para localizar el PID Java de CodeTrace.
+3. Iniciar una grabación delimitada:
+   `jcmd <PID> JFR.start name=codetrace settings=profile duration=60s filename=codetrace-rendimiento.jfr`
+   (sustituir `<PID>` por el número real).
+4. Abrir una referencia grande, navegar, buscar y escribir durante la captura.
+5. Inspeccionar la grabación con Java Mission Control, `jfr summary` o `jfr print`.
+   Revisar CPU, asignaciones, GC y eventos de lectura de archivos. Algunas
+   métricas de E/S requieren habilitar eventos específicos.
+6. No subir grabaciones con rutas personales, muestras de código privado o datos
+   de uso a repositorios públicos.
+
+Registrar por escenario: tiempo hasta mostrar raíz, tiempo hasta catálogo completo,
+latencia p50/p95 del hilo JavaFX al escribir, bytes leídos, memoria máxima,
+coste de búsqueda, cancelación y comportamiento de archivos grandes.
+
+| Escenario | Tamaño sugerido | Comprobaciones |
+| --- | --- | --- |
+| Proyecto pequeño | 1.000 archivos | Inicio, navegación y progreso |
+| Proyecto mediano | 10.000 archivos | Búsqueda de nombres, escritura sostenida |
+| Proyecto grande | 50.000 archivos | Memoria, scroll y cancelación |
+| Mixto | 100 MB fuente + 10 GB media | No leer multimedia para SHA de progreso |
+| Rutas especiales | symlinks, inaccesibles, nombres Unicode | Seguridad y fallos parciales |
+| Sesión existente | `.ctrace` de una versión anterior | Integridad de recuperación |
+
+No se han publicado tiempos absolutos en esta guía: deben obtenerse en la máquina
+de destino, repetidos y acompañados por características de disco y CPU.
+
+## Invariantes de regresión
+
+- La suma de los caracteres correctos no puede superar el total esperado.
+- Saltar un carácter no equivale a escribirlo correctamente; puede resolver el ejercicio.
+- Cambiar el alcance o excluir carpetas invalida los agregados de progreso.
+- Cambiar o reemplazar un archivo practicable invalida su huella previa.
+- Los binarios no son objetivos de mecanografía y no deben leerse completos para
+  calcular progreso.
+- El explorador de referencia muestra archivos aunque no sean practicables.
+- Todo trabajo largo acepta cancelación; un resultado de solicitud obsoleta no
+  reemplaza el resultado vigente.
+- Una optimización de hashes nunca permite modificar originales ni alterar archivos
+  existentes `.ctrace`.
+
+## Decisión de ingeniería: RAM a cambio de menos disco
+
+Los índices de nombres, rutas, totales y dependencias viven en RAM; no se
+precarga por defecto el contenido de miles de archivos. El disco se consulta
+cuando una operación concreta necesita leer bytes, y se evita repetir esa
+consulta si ya existen metadatos reutilizables. La caché del sistema operativo
+también contribuye: no se debe duplicar indiscriminadamente en la JVM.
+
+| Cambio | Situación implementada | Coste/cautela |
+| --- | --- | --- |
+| Catálogo | SHA-256 solo para UTF-8 elegible y acotado; usa los bytes ya leídos | O(bytes de código), no O(bytes multimedia) |
+| Índice del árbol | Acumulación postorden de totales y elegibilidad | O(n + carpetas); no guardar cargas binarios |
+| Progreso global | Agregado por archivo, actualizable cuando cambia una sesión | O(1) contable por pulsación, reconstruir al invalidar |
+| Progreso local | Contadores de grafemas correctos y resueltos mantenidos por transición | O(1) para un grafema; restauración O(U) |
+| Dependencias | Índice temporal de sufijos y paquetes Go sobre un máximo de 1.200 fuentes | O(n × profundidad) RAM/creación, consulta hash promedio |
+| Tiempos | `PerformanceProbe` solo si `codetrace.profile=true` | Sin rutas/nombres en los logs |
+
+Los índices son proporcionales al número de entradas y no al tamaño en bytes
+de los archivos. Para previews de código abiertos, mantener las restricciones
+actuales de lectura y evitar nuevas cachés ilimitadas; un LRU de contenidos
+solamente tendría sentido si JFR demuestra repeticiones de I/O relevantes y
+si se define un presupuesto de memoria y una invalidación segura.
+
+Para activar el perfilado ligero desde PowerShell en una sesión de prueba:
+
+```powershell
+$env:JAVA_TOOL_OPTIONS = "-Dcodetrace.profile=true"
+mvn javafx:run
+Remove-Item Env:JAVA_TOOL_OPTIONS
+```
+
+Los registros del perfilado incluyen la operación, el tiempo, la cantidad de
+entradas y los MiB de heap JVM utilizados y comprometidos, sin archivos ni rutas.
+El heap no es toda la memoria del proceso Windows. Para comparar cambios de
+código, medir también p95, CPU e I/O con JFR en el mismo equipo.
+
+## Interfaz reactiva: colapsar y distribuir grafos
+
+Algunas operaciones que parecían de disco eran **mutaciones de miles de
+TreeItem de JavaFX** realizadas en su hilo gráfico. Colapsar todo ya no
+atraviesa cada descendiente para emitir miles de eventos de expansión:
+sustituye una sola raíz por un nodo nuevo de carga diferida y mantiene la
+referencia/indexación intacta. Colapsar una rama reemplaza solo el nodo de esa
+rama, conservando el estado de los demás hermanos. Volver a expandir no debe
+restaurar por accidente los descendientes de la rama colapsada.
+
+El diseño organizado del grafo conserva una cuadrícula de ocupación para
+reservar el rectángulo completo de cada nombre. Después de la simulación
+de fuerzas, los nodos con dos o más vecinos se acercan a su **baricentro**
+(minimizando la suma de distancias al cuadrado), sin colocar ninguna etiqueta
+sobre una celda ocupada. Las posiciones movidas manualmente y guardadas en
+sesión prevalecen hasta que el usuario elige **Restablecer distribución**.
+Eso respeta la personalización y evita que una actualización sobrescriba
+el trabajo del usuario.
+
+En modo de diagnóstico (`-Dcodetrace.profile=true`) se registran eventos
+`Performance collapse-all`, `collapse-branch`, `graph-organized`,
+`graph-grid`, `reference-tree` y `reference-catalogue` en
+`logs/javafx-run.log` dentro del ZIP. Incluyen también el heap JVM usado y
+comprometido en MiB. Son tiempos de pared, no CPU, FPS ni memoria total. El script
+`scripts/diagnostico.bat` habilita temporalmente el perfilado al abrir la
+aplicación y restaura las opciones Java preexistentes cuando sale.
+
+### Escenario manual para reproducir la incidencia
+
+1. Abre una referencia con miles de archivos y carpetas anidadas.
+2. Expande varias ramas; usa **Colapsar todas** y después reexpándelas.
+   La interfaz no debería mostrar «No responde» ni reabrir ramas sin pedirlo.
+3. Abre un mapa de dependencias conectado, elige **Restablecer distribución**,
+   y comprueba que los nodos con múltiples vecinos se acercan entre sí sin
+   superponer las etiquetas. Mueve un nodo manualmente, guarda la sesión y
+   comprueba que se restaura su posición personalizada.
+4. Cierra CodeTrace y comparte el ZIP generado. Revisar el archivo antes
+   de enviarlo: puede contener rutas o capturas sensibles.
+
+### Presupuesto de RAM: medir antes de fijar un límite
+
+El grupo «OpenJDK Platform binary» de Windows puede incluir dos JVM y no
+equivale por sí solo al heap de CodeTrace. Registrar por separado la memoria
+de CodeTrace, la de Maven/otros procesos Java, el heap de la JVM y el uso
+nativo. No deducir un promedio de uso de memoria a partir de una sola captura
+del Administrador de tareas. Para estudiar el heap, `jcmd <PID> GC.heap_info`
+puede complementar el Administrador de tareas. La métrica relevante es la
+variación al ampliar la referencia, no solo el tamaño absoluto del proceso.
+
+## Revisión de expansión y flechas (19 de noviembre de 2026)
+
+El registro `CodeTrace-feedback-20261119-220448.zip` midió una referencia
+de 11.514 entradas: índice 1841 ms, catálogo 2102 ms,
+`graph-organized` de 76 nodos 75,8 ms y `collapse-all` 6,8 ms.
+Estos tiempos pertenecen a una sola ejecución en un equipo Windows;
+no representan percentiles ni benchmarks generalizables.
+
+**Expandir todo:** tomar el `TreeItem` realmente instalado en el `TreeView`.
+Una búsqueda por la ruta raíz podía producir «La carpeta no está visible en
+el explorador» después de un refresco. La operación global no depende ya
+de esa búsqueda; en proyectos pequeños es inmediata, en los grandes
+mantiene lotes con un máximo de trabajo por pulso JavaFX. Una solicitud
+durante la indexación se ejecuta al terminarla. El diagnóstico registra
+`expand-recursive` con tiempo y memoria Java cuando completa.
+
+**Aristas superpuestas:** el diseño de nodos y sus posiciones guardadas
+permanecen intactos. El renderizado clasifica trazos por dirección y
+proximidad a una recta, encuentra segmentos solapados y asigna pequeños
+carriles Bézier perpendiculares, deterministas. Las flechas se orientan
+por la tangente de la curva al llegar al nodo. No se introduce ruido
+aleatorio en las coordenadas; eso rompería la repetibilidad y la claridad
+de las etiquetas. La asignación se recalcula solo al cambiar posiciones,
+no cuando el usuario hace zoom o desplaza la cámara.
+
+## Regresión de scroll y ciclos de expansión (22:19–22:22, 19/11/2026)
+
+El ZIP `CodeTrace-feedback-20261119-221936.zip` registró:
+índice 1.349,5 ms (11.598 entradas), catálogo 1.746,8 ms (10.421
+archivos), colapso completo 4,8 ms y grafo organizado 62,3 ms (111 nodos).
+El heap JVM pasó de 181 MiB en la primera expansión a 250 MiB
+en la segunda; se observaron 692 MiB comprometidos. Son instantáneas
+del heap, **no** memoria RAM total de Windows.
+
+**Error de instrumentación detectado:** las antiguas mediciones
+`expand-recursive` de 4,4 y 10,2 ms tenían una variable local de inicio
+que ocultaba el cronómetro global. Medían solo el último pulso de
+expansión y NO el tiempo de las 1.007 carpetas. El nombre de variable
+se corrigió, de modo que el nuevo ZIP medirá la expansión completa.
+
+**Ajustes implementados:**
+
+- Un colapso total conserva temporalmente una sola instantánea
+  `TreeItem` en RAM (máximo 40.000 archivos y 12.000 directorios).
+  Al volver a expandir, se reutilizan esos objetos ya materializados
+  en vez de crearlos desde cero. Se descarta la instantánea al
+  modificar el proyecto virtual, el índice, los filtros, o una rama.
+  No se guardan bytes de multimedia o textos en esa caché.
+- Las celdas virtualizadas del `TreeView` reutilizan sus nodos
+  `HBox`, etiquetas y aviso flotante. Los menús contextuales se
+  crean únicamente cuando el usuario hace clic derecho. Antes se
+  reconstruían también durante el desplazamiento.
+- El indicador de actividad continúa visible brevemente durante
+  el asentamiento visual posterior a la última expansión grande.
+  El texto de terminado se muestra cuando se apaga el indicador,
+  no al terminar de modificar las propiedades `expanded`.
+- En diagnósticos, el evento `Performance fx-frame-gap` registra
+  intervalos de renderizado de al menos 120 ms en una ventana
+  enfocada, hasta 30 observaciones. Esto detecta síntomas de un
+  atasco gráfico, pero no identifica por sí solo qué método lo causó.
+
+El ajuste requiere **prueba manual con el ZIP nuevo**: expandir,
+desplazarse arriba y abajo, colapsar, volver a expandir y comparar
+uso de memoria, latencia y `fx-frame-gap`. La virtualización de filas
+sigue siendo responsabilidad de JavaFX y no debe reemplazarse con
+miles de controles gráficos siempre montados.
+
+## Evolución posterior, sujeta a perfiles
+
+Consolidar los recorridos iniciales del árbol y del catálogo requiere un
+contrato de metadatos compartido y pruebas de cambios durante el escaneo.
+No introducir una base de datos persistente, hilos masivos ni un índice invertido
+de búsqueda sin perfilar la necesidad. Evaluar el coste y la invalidación del
+índice antes de añadirlo.

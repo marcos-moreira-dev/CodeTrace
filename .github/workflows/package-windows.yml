@@ -1,0 +1,93 @@
+name: Windows portable package
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "src/**"
+      - "pom.xml"
+      - "scripts/package-windows.ps1"
+      - "scripts/verificar-paquete.ps1"
+      - ".github/workflows/package-windows.yml"
+  pull_request:
+    paths:
+      - "src/**"
+      - "pom.xml"
+      - "scripts/package-windows.ps1"
+      - "scripts/verificar-paquete.ps1"
+      - ".github/workflows/package-windows.yml"
+
+concurrency:
+  group: package-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  package:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Eclipse Temurin 21 and Maven
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+          cache: maven
+      - name: Build portable app and native Windows installer
+        shell: pwsh
+        run: ./scripts/package-windows.ps1 -Installer
+      - name: Verify launcher and distribution ZIP
+        shell: pwsh
+        run: |
+          if (-not (Test-Path "dist/CodeTrace/CodeTrace.exe")) {
+            throw "Missing CodeTrace launcher"
+          }
+          if (-not (Test-Path "dist/CodeTrace-Windows-portable.zip")) {
+            throw "Missing portable ZIP"
+          }
+      - name: Verify packaged runtime and checksum
+        shell: pwsh
+        run: ./scripts/verificar-paquete.ps1
+      - name: Upload portable build for Windows validation
+        uses: actions/upload-artifact@v4
+        with:
+          name: CodeTrace-Windows-portable
+          path: |
+            dist/CodeTrace-Windows-portable.zip
+            dist/CodeTrace-Windows-portable.zip.sha256
+          if-no-files-found: error
+          retention-days: 7
+
+      - name: Verify native Windows EXE installer
+        shell: pwsh
+        run: |
+          $installers = @(Get-ChildItem -Path dist -Filter "CodeTrace-*.exe" -File)
+          if ($installers.Count -eq 0) { throw "Missing Windows installer EXE" }
+          Write-Host "Installer:" ($installers.Name -join ", ")
+      - name: Validate session ICO and native file association
+        shell: pwsh
+        run: |
+          $props = Get-Content target/session-association.properties -Raw
+          if ($props -notmatch 'extension=ctrace' -or
+              $props -notmatch 'mime-type=application/x-codetrace-session' -or
+              $props -notmatch 'icon=') {
+            throw "Windows .ctrace association missing."
+          }
+          foreach ($icon in @("target/codetrace-session.ico", "target/codetrace-app.ico")) {
+            if (-not (Test-Path $icon)) { throw "Windows icon missing: $icon" }
+            $bytes = [IO.File]::ReadAllBytes((Resolve-Path $icon))
+            if ($bytes.Length -lt 100 -or
+                $bytes[0] -ne 0 -or $bytes[1] -ne 0 -or
+                $bytes[2] -ne 1 -or $bytes[3] -ne 0 -or
+                $bytes[4] -ne 7 -or $bytes[5] -ne 0) {
+              throw "Malformed seven-size Windows icon: $icon"
+            }
+          }
+          Write-Host ".ctrace association, app and document icons ready."
+
+      - name: Upload native Windows installer
+        uses: actions/upload-artifact@v4
+        with:
+          name: CodeTrace-Windows-installer
+          path: dist/CodeTrace-*.exe
+          if-no-files-found: error
+          retention-days: 7

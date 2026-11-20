@@ -27,4 +27,38 @@ class AppSettingsTest {
         assertThrows(IllegalArgumentException.class,
                 () -> new AppSettings("Consolas", 16, true, "LATAM", false, 101));
     }
+
+    @Test
+    void readOnlyNoticeStartsEnabledAndCanBeReenabledAfterOptOut() {
+        AppSettings original = new AppSettings("Consolas", 16, true,
+                "LATAM", false, 70, false, true);
+        assertTrue(original.readOnlyNotice(),
+                "New installations should explain consultation before an opt-out");
+        AppSettings suppressed = original.withReadOnlyNotice(false);
+        assertFalse(suppressed.readOnlyNotice());
+        assertFalse(suppressed.withLayout("US").readOnlyNotice());
+        assertFalse(suppressed.withTurbo(true).readOnlyNotice());
+        assertFalse(suppressed.withCompletionDialog(false).readOnlyNotice());
+        assertFalse(suppressed.withGraphLayoutMode(
+                com.mmdev.codetrace.reference.GraphLayoutEngine.Mode.GRID)
+                .readOnlyNotice());
+        assertTrue(suppressed.withReadOnlyNotice(true).readOnlyNotice(),
+                "The notice must be restorable from Preferences");
+    }
+
+    @Test
+    void organizedIsDefaultAndGraphChoiceSurvivesOtherSettingChanges() {
+        AppSettings initial = new AppSettings(
+                "Consolas", 16, true, "LATAM", false, 70, false, true);
+        assertEquals(com.mmdev.codetrace.reference.GraphLayoutEngine.Mode.ORGANIZED,
+                initial.graphLayoutMode());
+        var grid = initial.withGraphLayoutMode(
+                com.mmdev.codetrace.reference.GraphLayoutEngine.Mode.GRID);
+        assertEquals(com.mmdev.codetrace.reference.GraphLayoutEngine.Mode.GRID,
+                grid.withLayout("US").graphLayoutMode());
+        assertEquals(com.mmdev.codetrace.reference.GraphLayoutEngine.Mode.GRID,
+                grid.withTurbo(true).graphLayoutMode());
+        assertThrows(IllegalArgumentException.class,
+                () -> initial.withGraphLayoutMode(null));
+    }
 }

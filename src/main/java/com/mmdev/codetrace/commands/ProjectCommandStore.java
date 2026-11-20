@@ -21,7 +21,8 @@ import java.util.Objects;
  * Project-specific commands, stored as a small versioned binary document
  * OUTSIDE the user's reference repository. These commands are not executable
  * through session loading and never run automatically.
- */
+  * <p><strong>Engineering rationale.</strong> Command presets are user configuration, not source-code reconstruction. A versioned, bounded record stored outside the selected repository prevents the practice workflow from contaminating reference files, and loading presets is never equivalent to executing them.</p>
+*/
 public final class ProjectCommandStore {
     private static final int MAGIC = 0x4354434D; // CTCM
     private static final int VERSION = 1;
@@ -95,6 +96,8 @@ public final class ProjectCommandStore {
                 presets.add(new Preset(in.readUTF(), Shell.valueOf(in.readUTF()),
                         in.readUTF(), in.readUTF()));
             }
+            if (in.read() != -1)
+                throw new IOException("Unexpected trailing command configuration data");
             return List.copyOf(presets);
         } catch (IllegalArgumentException malformed) {
             throw new IOException("Invalid command entry", malformed);

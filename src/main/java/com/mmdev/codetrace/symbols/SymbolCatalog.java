@@ -6,7 +6,8 @@ import java.util.Objects;
 /**
  * Small, curated keyboard reference. These are physical-key hints, not
  * commands for inserting text into the typing editor.
- */
+  * <p><strong>Engineering rationale.</strong> The symbol palette provides reference glyphs for a chosen keyboard layout without inventing new syntax rules. Keeping the catalogue separate allows copy/paste assistance while the typing model remains authoritative for every expected character.</p>
+*/
 public final class SymbolCatalog {
     public enum Layout {
         LATAM("Español latinoamericano"),

@@ -7,7 +7,8 @@ import java.util.prefs.Preferences;
 /**
  * Select which text categories contribute to project-wide progress.
  * Visibility and the ability to practice files are not affected.
- */
+  * <p><strong>Engineering rationale.</strong> The selected content categories are an immutable evaluation policy rather than a filter that mutates source files. Making them first-class values lets both folder summaries and individual completion tests apply consistent rules.</p>
+*/
 public record ProgressScope(boolean source, boolean configuration,
                             boolean documentation, boolean otherText) {
     public enum Category { SOURCE, CONFIGURATION, DOCUMENTATION, OTHER_TEXT }
@@ -19,6 +20,7 @@ public record ProgressScope(boolean source, boolean configuration,
             "java", "kt", "scala", "groovy", "py", "pyw", "js", "jsx",
             "ts", "tsx", "c", "h", "cc", "cpp", "cxx", "hpp", "hh",
             "cs", "csx", "go", "rs", "rb", "rake", "php", "swift", "dart", "sql",
+            "asm", "nasm",
             "html", "htm", "css", "scss", "sass", "sh", "bash", "zsh",
             "ps1", "psm1", "psd1", "bat", "cmd");
     private static final Set<String> CONFIG_EXTENSIONS = Set.of(

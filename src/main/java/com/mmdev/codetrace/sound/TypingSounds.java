@@ -20,7 +20,8 @@ import javafx.scene.media.AudioClip;
  * The compact embedded WAVs are 8-bit samples at very low amplitude. Restore
  * them as louder PCM16 WAVs before passing them to JavaFX AudioClip. Never let
  * a missing audio device interfere with typing.
- */
+  * <p><strong>Engineering rationale.</strong> Keystroke feedback belongs to a disposable UI/audio service rather than to the Unicode comparison algorithm. The application can disable sound or fall back gracefully without altering which graphemes count as correct.</p>
+*/
 public final class TypingSounds {
     private static final long MIN_GAP_NANOS = 55_000_000L;
     private AudioClip correct;

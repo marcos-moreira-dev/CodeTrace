@@ -40,6 +40,24 @@ class ProjectCommandStoreTest {
     }
 
     @Test
+    void refusesTrailingBytesInStoredCommandsWithoutTouchingOriginalProject()
+            throws Exception {
+        var storage = temp.resolve("command-settings");
+        var store = new ProjectCommandStore(storage);
+        Path project = Files.createDirectory(temp.resolve("project-check"));
+        var preset = new ProjectCommandStore.Preset(
+                "Echo", ProjectCommandStore.Shell.SH, "echo hi", ".");
+        store.save(project, List.of(preset));
+        Path config;
+        try (var files = Files.list(storage)) {
+            config = files.findFirst().orElseThrow();
+        }
+        Files.write(config, new byte[] {42, 43}, java.nio.file.StandardOpenOption.APPEND);
+        assertThrows(java.io.IOException.class, () -> store.load(project));
+        assertEquals(0, Files.list(project).count());
+    }
+
+    @Test
     void noAutoExecutionIsTriggeredBySavingAndLoading() throws Exception {
         var store = new ProjectCommandStore(temp.resolve("storage"));
         Path project = Files.createDirectory(temp.resolve("project"));

@@ -33,12 +33,15 @@ import org.w3c.dom.Node;
  * Offline, read-only Markdown preview of untrusted reference projects.
  * Relative image files are embedded as bounded data: URIs, without allowing
  * WebView to open file:// URLs or make network requests.
- */
+  * <p><strong>Engineering rationale.</strong> Markdown is interpreted as untrusted reference content, not as an unrestricted web page. Asset resolution, local-file boundaries and WebView policy must prevent arbitrary remote loads or script execution; rendering is independent of typing correctness.</p>
+*/
 public final class MarkdownRenderer {
     private static final List<Extension> EXTENSIONS = List.of(TablesExtension.create());
     private static final long MAX_IMAGE_BYTES = 8L * 1024 * 1024;
     private static final long MAX_PAGE_IMAGE_BYTES = 24L * 1024 * 1024;
-    private static final Pattern HTML_IMAGE = Pattern.compile("(?is)^\\s*<img\\b[^>]*?/?>\\s*$");
+    private static final Pattern HTML_IMAGE = Pattern.compile(
+            "(?is)^\\s*(?:(?:<p|<div)\\b[^>]*>\\s*)?<img\\b[^>]*?/?>"
+            + "\\s*(?:(?:</p>|</div>)\\s*)?$");
     private static final Pattern HTML_SRC = Pattern.compile(
             "(?i)\\bsrc\\s*=\\s*(?:\\\"([^\\\"]+)\\\"|'([^']+)'|([^\\s>]+))");
     private static final Pattern HTML_ALT = Pattern.compile(
@@ -119,7 +122,7 @@ public final class MarkdownRenderer {
                     }
                 })
                 .build();
-        String body = renderer.render(document);
+        String body = TwemojiSvgAssets.decorate(renderer.render(document));
         String allowedImages = externalAllowed ? "data: https:" : "data:";
         String html = "<!doctype html><html lang=\"es\"><head>"
                 + "<meta charset=\"utf-8\">"
@@ -129,12 +132,12 @@ public final class MarkdownRenderer {
                 + allowedImages + "; font-src 'none'; form-action 'none'; "
                 + "base-uri 'none'; script-src 'none'; object-src 'none'\">"
                 + "<style>"
-                + "body{font-family:Segoe UI,Arial,sans-serif;color:#263747;"
+                + "body{font-family:'Segoe UI','Segoe UI Emoji',Arial,sans-serif;color:#263747;"
                 + "background:#fff;margin:26px auto;padding:0 30px;max-width:980px;"
                 + "font-size:15px;line-height:1.55;overflow-wrap:break-word}"
                 + "h1,h2,h3{color:#304a62;border-bottom:1px solid #d6dee4;"
                 + "padding-bottom:5px}"
-                + "pre,code{font-family:Consolas,monospace;background:#eef1f3}"
+                + "pre,code{font-family:Consolas,'Segoe UI Emoji',monospace;background:#eef1f3}"
                 + "pre{padding:12px;overflow:auto;border:1px solid #cdd7df}"
                 + "code{padding:1px 3px}pre code{padding:0}"
                 + "table{border-collapse:collapse}td,th{border:1px solid #b9c7d1;"
@@ -147,6 +150,8 @@ public final class MarkdownRenderer {
                 + "padding:8px;border:1px dashed #b8c5cf;color:#6f8190}"
                 + ".emoji{font-family:'Segoe UI Emoji','Apple Color Emoji',"
                 + "'Noto Color Emoji',sans-serif}"
+                + "img.codetrace-emoji{display:inline-block;width:1.12em;"
+                + "height:1.12em;vertical-align:-0.19em;border:0}"
                 + "</style></head><body>" + body + "</body></html>";
         return new RenderedPage(html, local.get(), external.get(), unavailable.get());
     }

@@ -14,3 +14,13 @@ Thumbs.db
 
 # Local diagnostic bundles and session-specific toolchains
 reports/
+
+# Generated Windows application and optional third-party binaries
+dist/
+third_party/ffmpeg/bin/
+
+# Local unmodified IBM Plex font binaries (OFL license is tracked)
+src/main/resources/fonts/*.ttf
+
+# Official Twemoji SVGs fetched for Windows packaging; six baseline glyphs tracked
+src/main/resources/emojis/twemoji/*.svg

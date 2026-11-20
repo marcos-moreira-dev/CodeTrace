@@ -97,14 +97,23 @@ try {
 </toolchains>
 "@
             [System.IO.File]::WriteAllText($tc,$xml,[System.Text.UTF8Encoding]::new($false))
-            $oldPreference = $ErrorActionPreference
-            $ErrorActionPreference = "Continue"
+            # java -version prints its normal output to stderr. Capture it
+            # through ProcessStartInfo so PowerShell 5.1 cannot mislabel it
+            # as a NativeCommandError in the diagnostic report.
+            $javaInfo = New-Object System.Diagnostics.ProcessStartInfo
+            $javaInfo.FileName = Join-Path $jdk "bin\java.exe"
+            $javaInfo.Arguments = "-version"
+            $javaInfo.UseShellExecute = $false
+            $javaInfo.CreateNoWindow = $true
+            $javaInfo.RedirectStandardError = $true
+            $javaProcess = [System.Diagnostics.Process]::Start($javaInfo)
             try {
-                $javaVersion = & (Join-Path $jdk "bin\java.exe") -version 2>&1 | Out-String
-                $mavenVersion = & $mvn -version 2>&1 | Out-String
+                $javaVersion = $javaProcess.StandardError.ReadToEnd()
+                $javaProcess.WaitForExit()
             } finally {
-                $ErrorActionPreference = $oldPreference
+                $javaProcess.Dispose()
             }
+            $mavenVersion = & $mvn -version 2>&1 | Out-String
             [System.IO.File]::WriteAllText((Join-Path $logs "versiones.txt"),
                 "JAVA:" + [Environment]::NewLine + $javaVersion +
                 [Environment]::NewLine + "MAVEN:" + [Environment]::NewLine + $mavenVersion)
@@ -121,6 +130,16 @@ try {
                 Copy-Item -LiteralPath $junit -Destination (Join-Path $work "junit") -Recurse -Force
             }
             if ($result -eq 0 -and -not $NoApp) {
+                # Keep the diagnosis as a single-step workflow: prepare a
+                # reproducible reference project after Maven clean/verify.
+                try {
+                    & (Join-Path $PSScriptRoot "crear-fixtures-preview.ps1") | Out-Null
+                    $fixture = Join-Path $root "target\qa-preview"
+                    Note ("Proyecto de prueba visual: " + $fixture)
+                    Note "En CodeTrace: Archivo > Abrir proyecto y selecciona esa carpeta."
+                } catch {
+                    Note ("AVISO: no se pudo preparar el proyecto QA: " + $_.Exception.Message)
+                }
                 if (-not $NoScreenshot) {
                     Note "Intentando captura solo de la ventana CodeTrace..."
                     $capturer = Join-Path $PSScriptRoot "capturar-ventana.ps1"
@@ -130,7 +149,21 @@ try {
                     $capture = Start-Process -FilePath (Join-Path $PSHOME "powershell.exe") -ArgumentList $args -WindowStyle Hidden -RedirectStandardOutput (Join-Path $logs "captura.log") -RedirectStandardError (Join-Path $logs "captura-errores.log") -PassThru
                 }
                 Note "La aplicacion se abre ahora. Cierra CodeTrace para completar el informe."
-                $appCode = Maven-Log $mvn @("-B","-ntp","-t",$tc,"javafx:run") (Join-Path $logs "javafx-run.log")
+                Note "Perfilado ligero activo: abre un proyecto, colapsa carpetas y restablece el grafo."
+                # Inherit this property only during the app run; restore even
+                # if Maven/JavaFX fails. The ZIP contains timings without paths.
+                $previousJavaOptions = $env:JAVA_TOOL_OPTIONS
+                try {
+                    $env:JAVA_TOOL_OPTIONS = (
+                        ($previousJavaOptions + " -Dcodetrace.profile=true").Trim())
+                    $appCode = Maven-Log $mvn @("-B","-ntp","-t",$tc,"javafx:run") (Join-Path $logs "javafx-run.log")
+                } finally {
+                    if ($null -eq $previousJavaOptions) {
+                        Remove-Item Env:JAVA_TOOL_OPTIONS -ErrorAction SilentlyContinue
+                    } else {
+                        $env:JAVA_TOOL_OPTIONS = $previousJavaOptions
+                    }
+                }
                 if ($appCode -ne 0) {
                     Note ("ERROR: javafx:run termino con codigo " + $appCode)
                     $code = 1
@@ -166,7 +199,7 @@ try {
         Compress-Archive -Path (Join-Path $work "*") -DestinationPath $zip -Force
         Write-Host ("ZIP: " + $zip)
         if (-not $NoExplorer) {
-            Start-Process -FilePath explorer.exe -ArgumentList ('/select,"' + $zip + '"')
+            Invoke-Item -LiteralPath $reportRoot
         }
     } catch {
         Write-Warning ("No se pudo comprimir el informe: " + $_.Exception.Message)

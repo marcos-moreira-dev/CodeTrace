@@ -15,7 +15,11 @@ class MarkdownRendererTest {
         String page = MarkdownRenderer.toHtmlPage(
                 "# Título :rocket:\n\n`x` and :white_check_mark:\n\n"
                 + "| A | B |\n|---|---|\n| 1 | 2 |");
-        assertTrue(page.contains("<h1>Título 🚀</h1>"), page);
+        // Packaged builds may render 🚀 with an offline Twemoji SVG;
+        // developer builds without the optional pack retain the Unicode glyph.
+        assertTrue(page.contains("<h1>Título 🚀</h1>")
+                || (page.contains("<h1>Título <img")
+                    && page.contains("alt=\"🚀\"")), page);
         assertTrue(page.contains("<code>x</code>"));
         assertTrue(page.contains("✅"), page);
         assertTrue(page.contains("<table>"));
@@ -136,4 +140,47 @@ class MarkdownRendererTest {
         assertFalse(page.contains("<script>alert(1)</script>"));
         assertFalse(page.contains("href=\"javascript:"));
     }
+
+    @Test
+    void rendersCenteredReadmeImagesAndKeepsThemInsideReference() throws Exception {
+        Path root = Files.createDirectory(temp.resolve("readme-project"));
+        Path media = Files.createDirectory(root.resolve("docs"));
+        Path doc = Files.writeString(root.resolve("README.md"), "# Demo");
+        byte[] png = Base64.getDecoder().decode(
+                "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQIHWP4"
+                + "z8DwHwAFgAI/ScLttAAAAABJRU5ErkJggg==");
+        Files.write(media.resolve("logo.png"), png);
+        var page = MarkdownRenderer.render(
+                "<p align=\"center\">\n<img src=\"docs/logo.png\" alt=\"Marca\" />\n</p>",
+                doc, root, false);
+        assertEquals(1, page.localImages());
+        assertTrue(page.html().contains("data:image/png;base64,"));
+        assertTrue(page.html().contains("alt=\"Marca\""));
+        assertFalse(page.html().contains("<p align="));
+    }
+
+    @Test
+    void rendersWebpAsBoundedImageDataForJavaFxWebView() throws Exception {
+        Path root = Files.createDirectory(temp.resolve("webp-project"));
+        Path doc = Files.writeString(root.resolve("README.md"), "test");
+        Files.write(root.resolve("graphic.webp"), new byte[] { 'R', 'I', 'F', 'F' });
+        var page = MarkdownRenderer.render("![graph](graphic.webp)", doc, root, false);
+        assertEquals(1, page.localImages());
+        assertTrue(page.html().contains("data:image/webp;base64,"));
+    }
+    @Test
+    void emojiTextAndGlyphClustersSurviveSafeHtmlRendering() {
+        String page = MarkdownRenderer.toHtmlPage(
+                "# Prueba 😀 🇪🇨\n\nFamilia 👨‍👩‍👧‍👦, persona 👩🏽‍💻 "
+                + "y keycap 1️⃣.\n\n`1️⃣`\n\n:rocket:");
+        assertTrue(page.contains("😀"));
+        assertTrue(page.contains("🇪🇨"));
+        assertTrue(page.contains("👨‍👩‍👧‍👦"));
+        assertTrue(page.contains("👩🏽‍💻"));
+        assertTrue(page.contains("1️⃣"));
+        assertTrue(page.contains("Segoe UI Emoji"));
+        assertTrue(page.contains("🚀"));
+        assertFalse(page.contains("<script>"));
+    }
+
 }

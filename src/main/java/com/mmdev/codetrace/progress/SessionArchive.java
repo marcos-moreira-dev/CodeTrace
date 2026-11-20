@@ -2,6 +2,8 @@ package com.mmdev.codetrace.progress;
 
 import com.mmdev.codetrace.practice.TypingSession;
 import com.mmdev.codetrace.practice.PracticeMode;
+import com.mmdev.codetrace.reference.GraphLayout;
+import com.mmdev.codetrace.reference.GraphLayoutEngine;
 import com.mmdev.codetrace.workspace.VirtualWorkspace;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -9,6 +11,9 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.nio.ByteBuffer;
+import java.nio.charset.CharacterCodingException;
+import java.nio.charset.CodingErrorAction;
 import java.nio.file.AtomicMoveNotSupportedException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -19,15 +24,17 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.CancellationException;
 
 /**
  * Versioned binary .ctrace sessions, not JSON or serialized Java objects.
  * All writes use an adjacent temporary file followed by an atomic replacement
  * where the filesystem supports it.
- */
+  * <p><strong>Engineering rationale.</strong> A .ctrace file is a bounded, versioned data format with compatibility requirements, not an arbitrary Java object graph. Decode into validated domain values before switching the active project; write to a neighboring temporary file and replace only after successful completion, preserving the previous good session on interruption.</p>
+*/
 public final class SessionArchive {
     private static final int MAGIC = 0x43545243; // CTRC
-    private static final int VERSION = 2;
+    private static final int VERSION = 4;
     private static final int MAX_ITEMS = 200_000;
     private static final int MAX_STRING_BYTES = 8 * 1024 * 1024;
     private static final long MAX_ARCHIVE_BYTES = 256L * 1024 * 1024;
@@ -38,12 +45,19 @@ public final class SessionArchive {
     public record State(Path referenceRoot, VirtualWorkspace workspace,
                         Map<String, TypingSession> sessions,
                         Map<String, String> referenceHashes,
-                        PracticeMode practiceMode) {
+                        PracticeMode practiceMode, Map<String, GraphLayout> graphs) {
         public State(Path referenceRoot, VirtualWorkspace workspace,
                      Map<String, TypingSession> sessions,
                      Map<String, String> referenceHashes) {
             this(referenceRoot, workspace, sessions, referenceHashes,
-                    PracticeMode.RECONSTRUCTION);
+                    PracticeMode.RECONSTRUCTION, Map.of());
+        }
+
+        public State(Path referenceRoot, VirtualWorkspace workspace,
+                     Map<String, TypingSession> sessions,
+                     Map<String, String> referenceHashes, PracticeMode practiceMode) {
+            this(referenceRoot, workspace, sessions, referenceHashes,
+                    practiceMode, Map.of());
         }
 
         public State {
@@ -52,12 +66,25 @@ public final class SessionArchive {
             Objects.requireNonNull(practiceMode);
             sessions = Map.copyOf(sessions);
             referenceHashes = Map.copyOf(referenceHashes);
+            graphs = Map.copyOf(graphs);
+            if (graphs.size() > 100) throw new IllegalArgumentException("Demasiados mapas");
         }
     }
 
+    /**
+     * Persists the complete reconstructed session without writing to the
+     * reference root. The file is first written beside the destination and
+     * then moved into place; failures before replacement preserve the last
+     * good session. Interruption is checked while serializing large payloads.
+     *
+     * @param destination .ctrace file to atomically replace if possible
+     * @param state prepared project state, not mutable JavaFX controls
+     * @throws IOException on invalid destination or failed persistence
+     */
     public static void save(Path destination, State state) throws IOException {
         Objects.requireNonNull(destination);
         Objects.requireNonNull(state);
+        checkInterrupted();
         Path absolute = destination.toAbsolutePath().normalize();
         Path directory = absolute.getParent();
         if (directory == null || !Files.isDirectory(directory)) {
@@ -68,6 +95,9 @@ public final class SessionArchive {
             try (DataOutputStream out = new DataOutputStream(
                     new BufferedOutputStream(Files.newOutputStream(temp)))) {
                 write(out, state);
+            }
+            if (Files.size(temp) > MAX_ARCHIVE_BYTES) {
+                throw new IOException("La sesión supera el límite de 256 MB");
             }
             try {
                 Files.move(temp, absolute,
@@ -81,12 +111,15 @@ public final class SessionArchive {
     }
 
     public static State load(Path source) throws IOException {
+        checkInterrupted();
         if (Files.size(source) > MAX_ARCHIVE_BYTES) {
             throw new IOException("Session exceeds the supported size");
         }
         try (DataInputStream in = new DataInputStream(
                 new BufferedInputStream(Files.newInputStream(source)))) {
-            return read(in);
+            State state = read(in);
+            if (in.read() != -1) throw new IOException("Unexpected trailing session data");
+            return state;
         } catch (IllegalArgumentException | IndexOutOfBoundsException malformed) {
             throw new IOException("Invalid CodeTrace session", malformed);
         }
@@ -101,6 +134,7 @@ public final class SessionArchive {
         List<VirtualWorkspace.Entry> entries = state.workspace().entries();
         count(out, entries.size());
         for (var entry : entries) {
+            checkInterrupted();
             writeString(out, entry.path());
             out.writeByte(entry.kind() == VirtualWorkspace.Kind.DIRECTORY ? 1 : 2);
             if (entry.kind() == VirtualWorkspace.Kind.FILE) {
@@ -110,12 +144,14 @@ public final class SessionArchive {
 
         count(out, state.sessions().size());
         for (var pair : state.sessions().entrySet()) {
+            checkInterrupted();
             writeString(out, pair.getKey());
             TypingSession typing = pair.getValue();
             writeString(out, typing.expectedText());
             out.writeInt(typing.caret());
             count(out, typing.enteredSlots().size());
             for (String value : typing.enteredSlots()) {
+                checkInterrupted();
                 out.writeBoolean(value != null);
                 if (value != null) {
                     writeString(out, value);
@@ -123,21 +159,40 @@ public final class SessionArchive {
             }
             count(out, typing.skippedSlots().size());
             for (int index : typing.skippedSlots()) {
+                checkInterrupted();
                 out.writeInt(index);
             }
         }
 
         count(out, state.referenceHashes().size());
         for (var pair : state.referenceHashes().entrySet()) {
+            checkInterrupted();
             writeString(out, pair.getKey());
             writeString(out, pair.getValue());
+        }
+
+        // v3: layout metadata is session-only, never written into the reference.
+        count(out, state.graphs().size());
+        for (var graph : state.graphs().entrySet()) {
+            checkInterrupted();
+            writeString(out, graph.getKey());
+            writeString(out, graph.getValue().fingerprint());
+            count(out, graph.getValue().positions().size());
+            for (var point : graph.getValue().positions().entrySet()) {
+                checkInterrupted();
+                writeString(out, point.getKey());
+                out.writeDouble(point.getValue().x());
+                out.writeDouble(point.getValue().y());
+            }
+            // v4 appends presentation mode after v3 coordinates.
+            writeString(out, graph.getValue().mode().name());
         }
     }
 
     private static State read(DataInputStream in) throws IOException {
         int magic = in.readInt();
         int version = in.readInt();
-        if (magic != MAGIC || (version != 1 && version != VERSION)) {
+        if (magic != MAGIC || version < 1 || version > VERSION) {
             throw new IOException("Unsupported CodeTrace session header or version");
         }
         Path root = Path.of(readString(in));
@@ -148,6 +203,7 @@ public final class SessionArchive {
         int entryCount = boundedCount(in);
         List<VirtualWorkspace.Entry> entries = new ArrayList<>(entryCount);
         for (int i = 0; i < entryCount; i++) {
+            checkInterrupted();
             String path = readString(in);
             int kind = in.readUnsignedByte();
             if (kind == 1) {
@@ -164,6 +220,7 @@ public final class SessionArchive {
         int sessionCount = boundedCount(in);
         Map<String, TypingSession> sessions = new LinkedHashMap<>();
         for (int i = 0; i < sessionCount; i++) {
+            checkInterrupted();
             String path = readString(in);
             if (path.isEmpty() || sessions.containsKey(path)) {
                 throw new IOException("Invalid or duplicate session path");
@@ -174,11 +231,13 @@ public final class SessionArchive {
             int unitCount = boundedCount(in);
             List<String> slots = new ArrayList<>(unitCount);
             for (int j = 0; j < unitCount; j++) {
+                checkInterrupted();
                 slots.add(in.readBoolean() ? readString(in) : null);
             }
             int skippedCount = boundedCount(in);
             List<Integer> skipped = new ArrayList<>(skippedCount);
             for (int j = 0; j < skippedCount; j++) {
+                checkInterrupted();
                 skipped.add(in.readInt());
             }
             sessions.put(path, TypingSession.restore(original, slots, skipped, caret));
@@ -186,6 +245,7 @@ public final class SessionArchive {
         int hashCount = boundedCount(in);
         Map<String, String> hashes = new HashMap<>();
         for (int i = 0; i < hashCount; i++) {
+            checkInterrupted();
             String path = readString(in);
             VirtualWorkspace.checkPath(path);
             String hash = readString(in);
@@ -193,7 +253,41 @@ public final class SessionArchive {
                 throw new IOException("Invalid or duplicate SHA-256 record");
             }
         }
-        return new State(root, workspace, sessions, hashes, mode);
+        Map<String, GraphLayout> graphs = new LinkedHashMap<>();
+        if (version >= 3) {
+            int graphCount = boundedCount(in);
+            if (graphCount > 100) throw new IOException("Too many graph layouts");
+            for (int i = 0; i < graphCount; i++) {
+                checkInterrupted();
+                String folder = readString(in);
+                if (!folder.isEmpty()) VirtualWorkspace.checkPath(folder);
+                String fingerprint = readString(in);
+                int nodeCount = boundedCount(in);
+                if (nodeCount > 180) throw new IOException("Too many graph nodes");
+                Map<String, GraphLayout.Point> positions = new LinkedHashMap<>();
+                for (int n = 0; n < nodeCount; n++) {
+                    checkInterrupted();
+                    String node = readString(in);
+                    VirtualWorkspace.checkPath(node);
+                    GraphLayout.Point point = new GraphLayout.Point(
+                            in.readDouble(), in.readDouble());
+                    if (positions.putIfAbsent(node, point) != null)
+                        throw new IOException("Duplicate graph node");
+                }
+                GraphLayoutEngine.Mode layoutMode = GraphLayoutEngine.Mode.GRID;
+                if (version >= 4) {
+                    try {
+                        layoutMode = GraphLayoutEngine.Mode.valueOf(readString(in));
+                    } catch (IllegalArgumentException invalid) {
+                        throw new IOException("Unknown graph layout mode", invalid);
+                    }
+                }
+                if (graphs.putIfAbsent(folder,
+                        new GraphLayout(fingerprint, positions, layoutMode)) != null)
+                    throw new IOException("Duplicate graph scope");
+            }
+        }
+        return new State(root, workspace, sessions, hashes, mode, graphs);
     }
 
     private static void writeString(DataOutputStream out, String text) throws IOException {
@@ -206,13 +300,27 @@ public final class SessionArchive {
     }
 
     private static String readString(DataInputStream in) throws IOException {
+        checkInterrupted();
         int size = in.readInt();
         if (size < 0 || size > MAX_STRING_BYTES) {
             throw new IOException("Invalid text field size");
         }
         byte[] bytes = new byte[size];
         in.readFully(bytes);
-        return new String(bytes, StandardCharsets.UTF_8);
+        checkInterrupted();
+        try {
+            return StandardCharsets.UTF_8.newDecoder()
+                    .onMalformedInput(CodingErrorAction.REPORT)
+                    .onUnmappableCharacter(CodingErrorAction.REPORT)
+                    .decode(ByteBuffer.wrap(bytes)).toString();
+        } catch (CharacterCodingException malformed) {
+            throw new IOException("Invalid UTF-8 in CodeTrace session", malformed);
+        }
+    }
+
+    private static void checkInterrupted() {
+        if (Thread.currentThread().isInterrupted())
+            throw new CancellationException("Lectura de sesión cancelada");
     }
 
     private static void count(DataOutputStream out, int value) throws IOException {

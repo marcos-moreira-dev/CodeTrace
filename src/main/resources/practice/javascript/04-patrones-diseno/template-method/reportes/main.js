@@ -1,0 +1,42 @@
+// CodeTrace | Referencia: JavaScript ES2022 / Node.js 24
+// Comprobar en COPIA: node --check main.js
+// Ejecutar: node main.js desde esta carpeta, sin librerías externas
+
+const {ReporteTexto,ReporteCsv}=require("./Reportes");
+/**
+ * Cliente Template Method: secuencia estable por herencia.
+ *
+ * Contrastar con Strategy funcional/closures: Strategy recibe
+ * comportamiento como argumento; Template Method permite que
+ * subclases modifiquen pasos del mismo algoritmo base.
+ */
+function main(){
+    const a=new ReporteTexto(),b=new ReporteCsv();
+    if(!a.ejecutar("ventas",15).includes("Total: 15")||
+       !b.ejecutar("ventas",15).includes("ventas,15"))
+        throw Error("Template Method");
+    console.log((a.ejecutar("ventas",15)+b.ejecutar("ventas",15)).trimEnd());
+}
+if(require.main===module)main();
+
+/*
+ * Salida esperada de consola (cuatro líneas):
+ *   == ventas ==
+ *   Total: 15
+ *   titulo,total
+ *   ventas,15
+ * El método plantilla fija validación y pasos; las subclases aportan el formato.
+ */
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   node .\04-patrones-diseno\template-method\reportes\main.js
+ * Salida esperada:
+ *   == ventas ==
+ *   Total: 15
+ *   titulo,total
+ *   ventas,15
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

@@ -1,6 +1,7 @@
 package com.mmdev.codetrace.ui;
 
 import com.mmdev.codetrace.markdown.MarkdownRenderer;
+import com.mmdev.codetrace.markdown.MarkdownPreviewEncoding;
 import java.nio.file.Path;
 import javafx.concurrent.Task;
 import javafx.geometry.Insets;
@@ -19,7 +20,8 @@ import javafx.scene.web.WebView;
 /**
  * A Markdown tab with the original typing surface and a separate, read-only
  * reference preview. The preview resolves media only from the reference root.
- */
+  * <p><strong>Engineering rationale.</strong> Markdown has two legitimate views of the same reference: rendered documentation for comprehension and source text for transcription. Both must share one underlying typing session, while the WebView preview remains non-editable and is disposed when the tab closes.</p>
+*/
 public final class MarkdownPracticePane extends BorderPane {
     private final TypingEditor editor;
     private final Path markdownFile;
@@ -32,6 +34,7 @@ public final class MarkdownPracticePane extends BorderPane {
     private Task<MarkdownRenderer.RenderedPage> renderTask;
     private boolean showingPreview;
     private boolean allowExternalImages;
+    private boolean disposed;
 
     public MarkdownPracticePane(TypingEditor editor, Path markdownFile, Path referenceRoot) {
         this.editor = editor;
@@ -61,6 +64,11 @@ public final class MarkdownPracticePane extends BorderPane {
         toggle.setOnAction(event -> toggle());
     }
 
+    /** Search navigation must reveal the source row instead of the HTML preview. */
+    public void showSource() {
+        if (showingPreview) toggle();
+    }
+
     public TypingEditor editor() {
         return editor;
     }
@@ -69,6 +77,8 @@ public final class MarkdownPracticePane extends BorderPane {
         showingPreview = !showingPreview;
         if (!showingPreview) {
             if (renderTask != null) renderTask.cancel();
+            // Stop outstanding external requests when the preview is hidden.
+            preview.getEngine().loadContent("", "text/html");
             setCenter(editor);
             externalImages.setVisible(false);
             imagesInfo.setVisible(false);
@@ -82,6 +92,7 @@ public final class MarkdownPracticePane extends BorderPane {
     }
 
     private void renderPreview() {
+        if (disposed) return;
         if (renderTask != null) renderTask.cancel();
         ProgressIndicator spinner = new ProgressIndicator();
         spinner.setPrefSize(30, 30);
@@ -100,7 +111,7 @@ public final class MarkdownPracticePane extends BorderPane {
         };
         renderTask = task;
         task.setOnSucceeded(event -> {
-            if (showingPreview && renderTask == task) {
+            if (!disposed && showingPreview && renderTask == task) {
                 MarkdownRenderer.RenderedPage result = task.getValue();
                 imagesInfo.setText(result.localImages() + " locales · "
                         + result.externalImages() + " externas · "
@@ -111,7 +122,8 @@ public final class MarkdownPracticePane extends BorderPane {
                 externalImages.setVisible(result.externalImages() > 0);
                 externalImages.setText(allowExternalImages
                         ? "Bloquear imágenes externas" : "Cargar imágenes externas");
-                preview.getEngine().loadContent(result.html(), "text/html");
+                preview.getEngine().loadContent(
+                        MarkdownPreviewEncoding.asciiSafeHtml(result.html()), "text/html");
                 setCenter(preview);
             }
         });
@@ -135,5 +147,13 @@ public final class MarkdownPracticePane extends BorderPane {
                 : "Mostrar Markdown renderizado";
         toggle.setTooltip(new Tooltip(title));
         toggle.setAccessibleText(title);
+    }
+
+    /** Release pending rendering and the WebView when its tab closes. */
+    public void dispose() {
+        disposed = true;
+        showingPreview = false;
+        if (renderTask != null) renderTask.cancel(true);
+        preview.getEngine().loadContent("", "text/html");
     }
 }

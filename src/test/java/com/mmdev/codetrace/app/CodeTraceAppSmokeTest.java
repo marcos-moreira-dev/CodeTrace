@@ -3,6 +3,7 @@ package com.mmdev.codetrace.app;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -45,6 +46,8 @@ import javafx.scene.control.Spinner;
 import com.mmdev.codetrace.ui.ReferenceTree;
 import com.mmdev.codetrace.ui.ReconstructionStateIcons;
 import com.mmdev.codetrace.ui.FileTypeIcons;
+import com.mmdev.codetrace.ui.AudioSpectrumPane;
+import com.mmdev.codetrace.ui.ProjectSearchWindow;
 import com.mmdev.codetrace.ui.ReferenceMediaPane;
 import com.mmdev.codetrace.practice.ReconstructionStatus;
 import com.mmdev.codetrace.practice.PracticeMode;
@@ -78,6 +81,28 @@ class CodeTraceAppSmokeTest {
                 assertNotNull(stage.getScene());
                 stage.getScene().getRoot().applyCss();
                 stage.getScene().getRoot().layout();
+                javafx.scene.control.Label statusContext = (javafx.scene.control.Label)
+                        stage.getScene().getRoot().lookup(".status-context");
+                assertNotNull(statusContext);
+                assertTrue(statusContext.getFont().getSize() >= 13.0,
+                        "Status text should not remain at its old microcopy size");
+                VBox mainProject = (VBox) stage.getScene().getRoot()
+                        .lookup(".main-project-section");
+                assertNotNull(mainProject);
+                assertEquals(javafx.geometry.Insets.EMPTY, mainProject.getPadding(),
+                        "Explorer action strip should no longer have an outer inset");
+                javafx.scene.control.ToolBar toolbar = (javafx.scene.control.ToolBar)
+                        stage.getScene().getRoot().lookup(".tool-bar");
+                assertNotNull(toolbar);
+                assertFalse(toolbar.getItems().stream()
+                        .filter(javafx.scene.control.Button.class::isInstance)
+                        .map(javafx.scene.control.Button.class::cast)
+                        .anyMatch(button -> "Abrir archivo".equals(button.getText())),
+                        "The redundant single-file action must not return");
+                assertTrue(toolbar.getItems().stream()
+                        .filter(javafx.scene.control.Button.class::isInstance)
+                        .map(javafx.scene.control.Button.class::cast)
+                        .anyMatch(button -> "Abrir proyecto".equals(button.getText())));
                 // Verify the compact gallery is present and copies without typing.
                 SymbolPalette palette = (SymbolPalette) stage.getScene().getRoot()
                         .lookup(".symbol-menu-button");
@@ -108,6 +133,13 @@ class CodeTraceAppSmokeTest {
                 tabsField.setAccessible(true);
                 TabPane tabPane = (TabPane) tabsField.get(application);
                 assertEquals(1, tabPane.getTabs().size());
+                stage.getScene().getRoot().applyCss();
+                stage.getScene().getRoot().layout();
+                javafx.scene.control.Label tabCaption = (javafx.scene.control.Label)
+                        stage.getScene().getRoot().lookup(".tab-pane .tab .tab-label");
+                assertNotNull(tabCaption);
+                assertTrue(tabCaption.getFont().getSize() >= 14.0,
+                        "Tab titles should remain readable at desktop scale");
                 Path imageFile = src.resolve("image.png");
                 Files.write(imageFile, java.util.Base64.getDecoder().decode(
                         "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQIHWP4"
@@ -116,12 +148,197 @@ class CodeTraceAppSmokeTest {
                 assertEquals(2, tabPane.getTabs().size());
                 assertTrue(tabPane.getSelectionModel().getSelectedItem().getContent()
                         instanceof ReferenceMediaPane);
+                ReferenceMediaPane selectedMedia = (ReferenceMediaPane)
+                        tabPane.getSelectionModel().getSelectedItem().getContent();
+                selectedMedia.setZoomPercent(150);
+                assertEquals(150, selectedMedia.getZoomPercent());
+                assertNotNull(selectedMedia.lookup(".media-zoom-viewport"));
+                assertNotNull(stage.getScene().getRoot().lookup(".media-zoom-control"));
                 assertTrue(tabPane.getSelectionModel().getSelectedItem().isClosable());
+                // Spectrum rendering does not require an audio device.
+                AudioSpectrumPane spectrum = new AudioSpectrumPane();
+                spectrum.resize(520, 170);
+                spectrum.layout();
+                spectrum.accept(new float[] {-38f, -21f, -44f});
+                spectrum.clear();
+                spectrum.dispose();
+                ProjectSearchWindow find = new ProjectSearchWindow(stage,
+                        () -> root, () -> "src/Main.java", hit -> {});
+                find.show(ProjectSearchWindow.Scope.FILE);
+                Field searchStageField = ProjectSearchWindow.class
+                        .getDeclaredField("stage");
+                searchStageField.setAccessible(true);
+                Stage searchStage = (Stage) searchStageField.get(find);
+                assertTrue(searchStage.isShowing());
+                assertFalse(searchStage.getIcons().isEmpty(),
+                        "Find should show the CodeTrace titlebar icon");
+                var filterRow = (FlowPane) searchStage.getScene().getRoot()
+                        .lookup(".search-filter-options");
+                assertNotNull(filterRow);
+                assertEquals(4, filterRow.getChildren().size(),
+                        "The scope and checkboxes share a responsive row");
+                searchStage.close();
                 tabPane.getSelectionModel().selectFirst();
                 var zoom = stage.getScene().getRoot().lookup(".status-zoom-control");
                 assertNotNull(zoom, "The zoom belongs to the status bar");
                 assertSame(stage.getScene().getRoot().lookup(".statusbar"),
                         zoom.getParent());
+                // Every read-only text format must follow the global font slider.
+                com.mmdev.codetrace.ui.ReferenceTextPane xml =
+                        new com.mmdev.codetrace.ui.ReferenceTextPane(
+                                "<project><version>21</version></project>", "pom.xml");
+                xml.setFontSettings("Consolas", 23);
+                assertEquals(23, xml.fontSize());
+                xml.setFontSettings("Consolas", 13);
+                assertEquals(13, xml.fontSize());
+                var gutter = com.mmdev.codetrace.ui.CodeLineGutter.number(42, 300, 13);
+                assertEquals("42", gutter.getText());
+                assertTrue(gutter.getStyleClass().contains("code-line-number"));
+                assertEquals(com.mmdev.codetrace.ui.CodeLineGutter.rowHeight(13),
+                        gutter.getPrefHeight());
+                assertEquals(com.mmdev.codetrace.ui.CodeLineGutter.widthFor(300, 13),
+                        gutter.getPrefWidth());
+                var disposableTabs = new com.mmdev.codetrace.ui.DocumentTabs(
+                        new TabPane(), () -> {});
+                javafx.scene.control.Tab sampleTab = new javafx.scene.control.Tab("A");
+                disposableTabs.open("src/A.java", sampleTab);
+                assertSame(sampleTab, disposableTabs.find("src/A.java"));
+                disposableTabs.close(sampleTab);
+                assertNull(disposableTabs.find("src/A.java"));
+                com.mmdev.codetrace.ui.ReferenceTextPane plain =
+                        new com.mmdev.codetrace.ui.ReferenceTextPane("Hello", "notes.txt");
+                plain.setFontSettings("Consolas", 24);
+                assertEquals(24, plain.fontSize());
+
+                // Graph mode swaps the same zoom control, not an extra slider.
+                com.mmdev.codetrace.ui.MediaZoomControl graphZoom =
+                        new com.mmdev.codetrace.ui.MediaZoomControl(value -> {});
+                graphZoom.setGraphMode(true);
+                assertTrue(graphZoom.getStyleClass().contains("graph-zoom-control"));
+                graphZoom.setValue(175);
+                assertEquals(1, graphZoom.lookupAll(".slider").size());
+                var graphModel = new com.mmdev.codetrace.reference.ProjectDependencyGraph.Graph(
+                        "src", java.util.List.of("src/Main.java", "src/Util.java"),
+                        java.util.List.of(new com.mmdev.codetrace.reference
+                                .ProjectDependencyGraph.Edge("src/Main.java",
+                                        "src/Util.java", "import")),
+                        2, false, "a".repeat(64));
+                AtomicReference<com.mmdev.codetrace.reference.GraphLayout> graphChanges =
+                        new AtomicReference<>();
+                AtomicReference<String> selectedGraphPath = new AtomicReference<>();
+                var graphPane = new com.mmdev.codetrace.ui.DependencyGraphPane(
+                        graphModel, ignored -> {}, null, graphChanges::set,
+                        selectedGraphPath::set);
+                assertEquals(com.mmdev.codetrace.reference.GraphLayoutEngine.Mode.ORGANIZED,
+                        graphPane.getLayoutMode());
+                assertTrue(graphPane.hasUnboundedPan(),
+                        "Graph navigation should use a camera, not finite ScrollPane edges");
+                assertNull(graphPane.getTop());
+                assertNull(graphPane.getBottom());
+                graphPane.setLayoutMode(
+                        com.mmdev.codetrace.reference.GraphLayoutEngine.Mode.GRID);
+                assertEquals(com.mmdev.codetrace.reference.GraphLayoutEngine.Mode.GRID,
+                        graphChanges.get().mode());
+                graphPane.setLayoutMode(
+                        com.mmdev.codetrace.reference.GraphLayoutEngine.Mode.ORGANIZED);
+                assertEquals(com.mmdev.codetrace.reference.GraphLayoutEngine.Mode.ORGANIZED,
+                        graphChanges.get().mode());
+                var previousTab = tabPane.getSelectionModel().getSelectedItem();
+                var mapTab = new javafx.scene.control.Tab("Mapa prueba", graphPane);
+                tabPane.getTabs().add(mapTab);
+                tabPane.getSelectionModel().select(mapTab);
+                stage.getScene().getRoot().applyCss();
+                stage.getScene().getRoot().layout();
+                javafx.scene.layout.Pane graphViewport =
+                        (javafx.scene.layout.Pane) graphPane.getCenter();
+                javafx.scene.canvas.Canvas graphSurface =
+                        (javafx.scene.canvas.Canvas) graphViewport.getChildren().getFirst();
+                assertTrue(graphSurface.getWidth() > 300);
+                assertEquals(graphViewport.getWidth(), graphSurface.getWidth(), 0.01,
+                        "Graph Canvas should only allocate the viewport size");
+                graphPane.setZoomPercent(55);
+                double oldCameraX = graphPane.getCameraX();
+                double oldCameraY = graphPane.getCameraY();
+                graphPane.panByPixels(50_000, -30_000);
+                assertTrue(Math.abs(graphPane.getCameraX() - oldCameraX) > 80_000,
+                        "Pan is not constrained by finite canvas dimensions");
+                graphPane.panByPixels(-50_000, 30_000);
+                assertEquals(oldCameraX, graphPane.getCameraX(), 0.0001);
+                assertEquals(oldCameraY, graphPane.getCameraY(), 0.0001);
+
+                var oldNode = graphChanges.get().positions().get("src/Main.java");
+                double x = (oldNode.x() - graphPane.getCameraX()) * 0.55
+                        + graphSurface.getWidth() / 2;
+                double y = (oldNode.y() - graphPane.getCameraY()) * 0.55
+                        + graphSurface.getHeight() / 2;
+                graphSurface.getOnMousePressed().handle(
+                        new javafx.scene.input.MouseEvent(
+                                javafx.scene.input.MouseEvent.MOUSE_PRESSED,
+                                x, y, 0, 0,
+                                javafx.scene.input.MouseButton.PRIMARY, 1,
+                                false, false, false, false, true, false, false,
+                                false, false, false,
+                                new javafx.scene.input.PickResult(graphSurface, x, y)));
+                graphSurface.getOnMouseDragged().handle(
+                        new javafx.scene.input.MouseEvent(
+                                javafx.scene.input.MouseEvent.MOUSE_DRAGGED,
+                                x + 45, y + 30, 0, 0,
+                                javafx.scene.input.MouseButton.PRIMARY, 1,
+                                false, false, false, false, true, false, false,
+                                false, false, false,
+                                new javafx.scene.input.PickResult(graphSurface, x + 45, y + 30)));
+                assertEquals(oldCameraX, graphPane.getCameraX(), 0.0001,
+                        "Dragging a node must not move the graph camera");
+                graphSurface.getOnMouseReleased().handle(
+                        new javafx.scene.input.MouseEvent(
+                                javafx.scene.input.MouseEvent.MOUSE_RELEASED,
+                                x + 45, y + 30, 0, 0,
+                                javafx.scene.input.MouseButton.PRIMARY, 1,
+                                false, false, false, false, false, false, false,
+                                false, false, false,
+                                new javafx.scene.input.PickResult(graphSurface, x + 45, y + 30)));
+                assertTrue(graphChanges.get().positions().get("src/Main.java").x()
+                        > oldNode.x(), "The node moves independently from the viewport");
+                assertEquals("src/Main.java", graphPane.getSelectedNode());
+                assertTrue(graphPane.getSelectedNeighbors().contains("src/Util.java"));
+                assertEquals("src/Main.java", selectedGraphPath.get());
+
+                // Middle button pans without affecting the selected node.
+                double bgX = graphSurface.getWidth() - 20;
+                double bgY = graphSurface.getHeight() - 20;
+                graphSurface.getOnMousePressed().handle(
+                        new javafx.scene.input.MouseEvent(
+                                javafx.scene.input.MouseEvent.MOUSE_PRESSED,
+                                bgX, bgY, 100, 100,
+                                javafx.scene.input.MouseButton.MIDDLE, 1,
+                                false, false, false, false, false, true, false,
+                                false, false, false,
+                                new javafx.scene.input.PickResult(graphSurface, bgX, bgY)));
+                assertEquals(javafx.scene.Cursor.CLOSED_HAND, graphSurface.getCursor());
+                graphSurface.getOnMouseDragged().handle(
+                        new javafx.scene.input.MouseEvent(
+                                javafx.scene.input.MouseEvent.MOUSE_DRAGGED,
+                                bgX + 90, bgY + 30, 190, 130,
+                                javafx.scene.input.MouseButton.MIDDLE, 1,
+                                false, false, false, false, false, true, false,
+                                false, false, false,
+                                new javafx.scene.input.PickResult(graphSurface, bgX, bgY)));
+                assertTrue(graphPane.getCameraX() < oldCameraX);
+                graphSurface.getOnMouseReleased().handle(
+                        new javafx.scene.input.MouseEvent(
+                                javafx.scene.input.MouseEvent.MOUSE_RELEASED,
+                                bgX + 90, bgY + 30, 190, 130,
+                                javafx.scene.input.MouseButton.MIDDLE, 1,
+                                false, false, false, false, false, false, false,
+                                false, false, false,
+                                new javafx.scene.input.PickResult(graphSurface, bgX, bgY)));
+                assertEquals(javafx.scene.Cursor.OPEN_HAND, graphSurface.getCursor());
+                graphPane.clearSelection();
+                assertNull(graphPane.getSelectedNode());
+                assertTrue(graphPane.getSelectedNeighbors().isEmpty());
+                assertNull(selectedGraphPath.get());
+                tabPane.getTabs().remove(mapTab);
+                tabPane.getSelectionModel().select(previousTab);
                 Slider fontSlider = (Slider) zoom.lookup(".slider");
                 assertNotNull(fontSlider);
                 assertEquals(Orientation.HORIZONTAL, fontSlider.getOrientation());
@@ -146,7 +363,55 @@ class CodeTraceAppSmokeTest {
                 assertEquals(100.0, opacitySlider.getMax());
                 assertNull(preferences.getScene().getRoot().lookup(".prefs-opacity-spinner"));
                 assertNotNull(preferences.getScene().getRoot().lookup(".prefs-font-choice"));
+                @SuppressWarnings("unchecked")
+                ListView<String> preferencesNavigation = (ListView<String>)
+                        preferences.getScene().getRoot().lookup(".prefs-navigation");
+                assertTrue(preferencesNavigation.getItems().contains("Grafo"));
+                preferencesNavigation.getSelectionModel().select("Grafo");
+                preferences.getScene().getRoot().applyCss();
+                preferences.getScene().getRoot().layout();
+                javafx.scene.Node choices = preferences.getScene().getRoot()
+                        .lookup(".prefs-graph-layout");
+                assertNotNull(choices, "Graph distribution belongs in Preferences");
+                assertTrue(choices instanceof javafx.scene.layout.VBox,
+                        "Radio choices must be stacked vertically");
+                assertEquals(2, ((javafx.scene.layout.VBox) choices)
+                        .getChildren().size());
+                // The active navigation category must contrast with the
+                // pale sidebar in both text and its associated vector icon.
+                javafx.scene.control.ListCell<?> selectedCategory =
+                        preferencesNavigation.lookupAll(".list-cell").stream()
+                        .filter(node -> node instanceof javafx.scene.control.ListCell<?> cell
+                                && "Grafo".equals(cell.getItem()))
+                        .map(node -> (javafx.scene.control.ListCell<?>) node)
+                        .findFirst().orElseThrow();
+                assertEquals(javafx.scene.paint.Color.WHITE,
+                        selectedCategory.getTextFill());
+                assertTrue(selectedCategory.getGraphic() instanceof FontIcon);
+                assertEquals(javafx.scene.paint.Color.WHITE,
+                        ((FontIcon) selectedCategory.getGraphic()).getIconColor());
+                preferencesNavigation.getSelectionModel().select("Avisos");
+                preferences.getScene().getRoot().applyCss();
+                preferences.getScene().getRoot().layout();
+                assertNotNull(preferences.getScene().getRoot()
+                        .lookup(".read-only-consultation-notice"),
+                        "The notice can be reenabled in Preferences > Avisos");
+                CheckBox realFileWarning = (CheckBox) preferences.getScene().getRoot()
+                        .lookup(".prefs-real-file-warning");
+                assertNotNull(realFileWarning, "Security warning needs one central setting");
+                assertEquals(
+                        com.mmdev.codetrace.commands.CommandWarningPreferences.mustConfirm(),
+                        realFileWarning.isSelected(),
+                        "The dialog opt-out and Preferences must share the same persisted state");
                 preferences.close();
+                var consultationNotice = ProductDialogs.createConsultationNotice(stage);
+                consultationNotice.show();
+                CheckBox optOut = (CheckBox) consultationNotice
+                        .getDialogPane().lookup(".consultation-notice-optout");
+                assertNotNull(optOut, "Read-only warning includes a one-click opt-out");
+                assertFalse(optOut.isSelected(),
+                        "Do not preselect 'do not show again'");
+                consultationNotice.close();
                 var about = ProductDialogs.createAbout(stage);
                 about.show();
                 about.getDialogPane().getScene().getRoot().applyCss();
@@ -155,11 +420,27 @@ class CodeTraceAppSmokeTest {
                         about.getDialogPane().lookup(".about-description");
                 assertNotNull(aboutCopy);
                 assertTrue(aboutCopy.getText().contains("inteligencia artificial"));
+                assertTrue(about.getDialogPane().lookupAll(".about-license-note").stream()
+                        .filter(javafx.scene.control.Label.class::isInstance)
+                        .map(javafx.scene.control.Label.class::cast)
+                        .anyMatch(label -> label.getText().contains("WCAG 2.2")
+                                && label.getText().contains("sin certificación")),
+                        "About must mention the design reference without claiming conformity");
                 javafx.scene.image.ImageView aboutImage =
                         (javafx.scene.image.ImageView)
                                 about.getDialogPane().lookup(".about-logo-large");
                 assertNotNull(aboutImage);
                 assertTrue(aboutImage.getImage().getWidth() >= 256);
+                javafx.scene.image.ImageView authorPortrait =
+                        (javafx.scene.image.ImageView)
+                                about.getDialogPane().lookup(".about-author-portrait");
+                assertNotNull(authorPortrait, "The About author portrait must be packaged locally");
+                assertEquals(112.0, authorPortrait.getImage().getWidth());
+                javafx.scene.control.Label authorName =
+                        (javafx.scene.control.Label)
+                                about.getDialogPane().lookup(".about-author-name");
+                assertNotNull(authorName);
+                assertEquals("Marcos Moreira", authorName.getText());
                 about.close();
                 Stage projectPrefs = PreferencesWindow.create(
                         stage, AppSettings.load(), next -> {}, sample -> true,
@@ -196,6 +477,17 @@ class CodeTraceAppSmokeTest {
                         "Opening the reference must not create virtual paths");
                 Field modeField = CodeTraceApp.class.getDeclaredField("practiceMode");
                 modeField.setAccessible(true);
+                Field autoCreate = CodeTraceApp.class.getDeclaredField("autoCreateCheck");
+                autoCreate.setAccessible(true);
+                CheckBox auto = (CheckBox) autoCreate.get(application);
+                assertNotNull(auto, "Auto creation belongs to practice rules");
+                Method selectMode = CodeTraceApp.class.getDeclaredMethod(
+                        "selectPracticeMode", PracticeMode.class);
+                selectMode.setAccessible(true);
+                selectMode.invoke(application, PracticeMode.DIRECT);
+                assertTrue(auto.isSelected());
+                selectMode.invoke(application, PracticeMode.RECONSTRUCTION);
+                assertFalse(auto.isSelected());
                 assertEquals(PracticeMode.RECONSTRUCTION, modeField.get(application));
                 assertEquals(0, editor.session().correctCount());
                 assertEquals(0, editor.session().caret());
@@ -224,6 +516,10 @@ class CodeTraceAppSmokeTest {
                 editor.selectLine(0);
                 assertEquals(0, editor.session().caret());
                 assertEquals(0, editor.activeLineNumber());
+                assertTrue(editor.lookupAll(".code-line-number").stream()
+                        .anyMatch(node -> node instanceof javafx.scene.control.Label label
+                                && "1".equals(label.getText())),
+                        "Practice lines must have a native 1-based gutter");
                 assertTrue(editor.getChildren().stream()
                         .anyMatch(node -> node.getStyleClass().contains("typing-lines")));
 
@@ -233,6 +529,9 @@ class CodeTraceAppSmokeTest {
                 second.selectLine(1);
                 assertEquals(6, second.session().caret());
                 assertEquals("beta", second.visibleLineText(1));
+                second.showSearchMatch(0, 1, 2);
+                assertEquals(6, second.session().caret(),
+                        "Find must never change the typing cursor");
 
                 // Ctrl+V of ONE symbol writes into the existing reference slot
                 // without shifting the source glyph or changing lines.
@@ -252,6 +551,9 @@ class CodeTraceAppSmokeTest {
                 ReferenceTree fileTree = (ReferenceTree) stage.getScene()
                         .getRoot().lookup(".tree-view");
                 assertNotNull(fileTree);
+                assertNotNull(stage.getScene().getRoot().lookup(".tree-name-search"));
+                assertNotNull(stage.getScene().getRoot().lookup(".tree-exclude-checkbox"));
+                assertNotNull(stage.getScene().getRoot().lookup(".tabs-actions"));
                 // Regression: the virtual status must be a real vector icon,
                 // not a Label whose text can collapse into an ellipsis.
                 StackPane createdBadge = ReconstructionStateIcons.forCreated(true);
@@ -278,10 +580,28 @@ class CodeTraceAppSmokeTest {
                 Path nested = Files.createDirectory(src.resolve("ejemplos"));
                 Path nestedFile = nested.resolve("Demo.java");
                 Files.writeString(nestedFile, "class Demo {}");
+                Path deep = Files.createDirectories(nested.resolve("deep/layer"));
+                Files.writeString(deep.resolve("Example.java"), "class Example {}");
                 fileTree.open(root);
+                // During a real disk scan the tree has not yet published its
+                // children. The application must show a useful loading state,
+                // not an apparently empty and unresponsive explorer.
+                VBox explorerLoading = (VBox) stage.getScene().getRoot()
+                        .lookup(".explorer-loading");
+                assertNotNull(explorerLoading);
+                assertTrue(fileTree.isIndexing());
+                assertTrue(explorerLoading.isVisible(),
+                        "Cold indexing must expose the centered activity indicator");
+                // The smoke test owns the FX thread and installs a prebuilt
+                // index synchronously. Cancel the genuine background scan first;
+                // otherwise loading stays true and expansion is correctly
+                // deferred, while this fixture incorrectly expects immediate
+                // recursive expansion without pumping another JavaFX pulse.
+                fileTree.cancelPendingWork();
                 Field treeIndexField = ReferenceTree.class.getDeclaredField("index");
                 treeIndexField.setAccessible(true);
                 treeIndexField.set(fileTree, ReferenceTreeIndex.scan(root));
+                fileTree.refreshTree();
                 Method menuFor = ReferenceTree.class.getDeclaredMethod(
                         "contextFor", Path.class);
                 menuFor.setAccessible(true);
@@ -291,15 +611,104 @@ class CodeTraceAppSmokeTest {
                         "No new-folder action when all immediate folders already exist");
                 assertFalse(rootMenu.getItems().stream().anyMatch(
                         item -> "Crear archivo...".equals(item.getText())));
+                ContextMenu srcMenu = (ContextMenu) menuFor.invoke(fileTree, src);
+                assertTrue(srcMenu.getItems().stream().anyMatch(item ->
+                        "Colapsar todas las subcarpetas".equals(item.getText())));
+                assertTrue(srcMenu.getItems().stream().anyMatch(item ->
+                        "Mapa de dependencias...".equals(item.getText())));
                 ContextMenu folderMenu = (ContextMenu) menuFor.invoke(fileTree, nested);
+                assertTrue(folderMenu.getItems().stream().anyMatch(item ->
+                        "Colapsar todas las subcarpetas".equals(item.getText())),
+                        "The nested folder now contains a deeper subfolder");
+                assertFalse(((ContextMenu) menuFor.invoke(fileTree, deep))
+                        .getItems().stream().anyMatch(item ->
+                        "Colapsar todas las subcarpetas".equals(item.getText())));
+                assertTrue(folderMenu.getItems().stream().anyMatch(item ->
+                        "Mapa de dependencias...".equals(item.getText())));
                 assertTrue(folderMenu.getItems().stream().anyMatch(
                         item -> "Crear esta carpeta".equals(item.getText())));
-                assertFalse(folderMenu.getItems().stream().anyMatch(
-                        item -> "Crear subcarpeta...".equals(item.getText())));
+                assertTrue(folderMenu.getItems().stream().anyMatch(
+                        item -> "Crear subcarpeta...".equals(item.getText())),
+                        "The deep fixture includes an uncreated subfolder");
                 folderMenu.getItems().stream()
                         .filter(item -> "Crear esta carpeta".equals(item.getText()))
                         .findFirst().orElseThrow().fire();
                 assertTrue(virtual.exists("src/ejemplos"));
+                // Recursive collapse keeps the clicked parent expanded,
+                // while its already expanded child folders become collapsed.
+                fileTree.refreshTree();
+                var srcTree = fileTree.getRoot().getChildren().stream()
+                        .filter(item -> src.equals(item.getValue()))
+                        .findFirst().orElseThrow();
+                srcTree.setExpanded(true);
+                var nestedTree = srcTree.getChildren().stream()
+                        .filter(item -> nested.equals(item.getValue()))
+                        .findFirst().orElseThrow();
+                nestedTree.setExpanded(true);
+                var deepTree = nestedTree.getChildren().stream()
+                        .filter(item -> nested.resolve("deep").equals(item.getValue()))
+                        .findFirst().orElseThrow();
+                deepTree.setExpanded(true);
+                var layerTree = deepTree.getChildren().stream()
+                        .filter(item -> deep.equals(item.getValue()))
+                        .findFirst().orElseThrow();
+                layerTree.setExpanded(true);
+                assertTrue(layerTree.isExpanded());
+                var untouchedRoot = fileTree.getRoot();
+                srcMenu.getItems().stream()
+                        .filter(item -> "Colapsar todas las subcarpetas".equals(item.getText()))
+                        .findFirst().orElseThrow().fire();
+                assertSame(untouchedRoot, fileTree.getRoot(),
+                        "Collapsing one branch should not reconstruct unrelated branches");
+                var collapsedSrc = fileTree.getRoot().getChildren().stream()
+                        .filter(item -> src.equals(item.getValue()))
+                        .findFirst().orElseThrow();
+                var collapsedNested = collapsedSrc.getChildren().stream()
+                        .filter(item -> nested.equals(item.getValue()))
+                        .findFirst().orElseThrow();
+                assertFalse(collapsedSrc.isExpanded(),
+                        "Colapsar todas closes the selected branch itself");
+                // Opening the branch again must not restore deep expansion.
+                collapsedSrc.setExpanded(true);
+                assertFalse(collapsedNested.isExpanded(),
+                        "Nested directories should be recursively collapsed");
+                assertTrue(collapsedSrc.getChildren().contains(collapsedNested),
+                        "Immediate subfolders must remain visible");
+                collapsedNested.setExpanded(true);
+                var collapsedDeep = collapsedNested.getChildren().stream()
+                        .filter(item -> nested.resolve("deep").equals(item.getValue()))
+                        .findFirst().orElseThrow();
+                assertFalse(collapsedDeep.isExpanded(),
+                        "Reopening the first descendant must not restore deeper expansion");
+                collapsedDeep.setExpanded(true);
+                var collapsedLayer = collapsedDeep.getChildren().stream()
+                        .filter(item -> deep.equals(item.getValue()))
+                        .findFirst().orElseThrow();
+                assertFalse(collapsedLayer.isExpanded(),
+                        "All nested levels must stay collapsed, not just the first one");
+                // User request: show ALL nested directories in one action.
+                var expandedMenu = (ContextMenu) menuFor.invoke(fileTree, src);
+                assertTrue(expandedMenu.getItems().stream().anyMatch(item ->
+                        "Expandir todas las subcarpetas".equals(item.getText())));
+                expandedMenu.getItems().stream()
+                        .filter(item -> "Expandir todas las subcarpetas".equals(item.getText()))
+                        .findFirst().orElseThrow().fire();
+                assertTrue(collapsedSrc.isExpanded(), "Chosen folder stays visible");
+                assertTrue(collapsedNested.isExpanded(), "First nested directory expanded");
+                assertTrue(collapsedDeep.isExpanded(), "Grandchild directory expanded");
+                assertTrue(collapsedLayer.isExpanded(), "Deep descendant expanded recursively");
+                // Collapse a second time to check both commands are repeatable.
+                fileTree.collapseRecursively(src);
+                var againSrc = fileTree.getRoot().getChildren().stream()
+                        .filter(item -> src.equals(item.getValue()))
+                        .findFirst().orElseThrow();
+                assertFalse(againSrc.isExpanded(),
+                        "Second recursive collapse must close the branch itself");
+                againSrc.setExpanded(true);
+                assertFalse(againSrc.getChildren().stream()
+                        .filter(item -> nested.equals(item.getValue()))
+                        .findFirst().orElseThrow().isExpanded());
+                assertTrue(Files.exists(nestedFile));
                 ContextMenu fileMenu = (ContextMenu) menuFor.invoke(fileTree, nestedFile);
                 assertTrue(fileMenu.getItems().stream().anyMatch(
                         item -> "Crear este archivo".equals(item.getText())));
@@ -349,9 +758,24 @@ class CodeTraceAppSmokeTest {
                 changeMode.invoke(application, PracticeMode.RECONSTRUCTION);
                 assertTrue(virtual.exists("src/Direct.java"),
                         "Switching modes must not discard created files");
+                var beforeCollapseAll = fileTree.getRoot();
                 fileTree.collapseAll();
-                fileTree.expandAll();
+                assertNotSame(beforeCollapseAll, fileTree.getRoot(),
+                        "Collapse-all must reset the lazy expansion tree in one update");
                 assertTrue(fileTree.getRoot().isExpanded());
+                assertTrue(fileTree.getRoot().getChildren().stream()
+                        .noneMatch(javafx.scene.control.TreeItem::isExpanded),
+                        "Only the root stays open; old descendant flags are discarded");
+                fileTree.expandAll();
+                // Global expansion is now an asynchronous logical projection.
+                // The TreeView must remain shallow: thousands of expanded
+                // TreeItems are exactly what used to block the JavaFX pulse.
+                assertNotSame(beforeCollapseAll, fileTree.getRoot());
+                assertTrue(fileTree.getRoot().isExpanded());
+                assertTrue(fileTree.getRoot().getChildren().stream()
+                        .noneMatch(javafx.scene.control.TreeItem::isExpanded));
+                assertNotNull(fileTree.projectedExplorer(),
+                        "Large expansions use the ListView virtual-flow adapter");
                 Method toggleConsole = CodeTraceApp.class.getDeclaredMethod(
                         "setConsoleVisible", boolean.class);
                 toggleConsole.setAccessible(true);
@@ -398,9 +822,34 @@ class CodeTraceAppSmokeTest {
                 }
                 assertNotNull(stage.getScene().getRoot().lookup(".tree-activity"));
                 assertNotNull(stage.getScene().getRoot().lookup(".tree-scope-checkbox"));
+                Method focusFolder = CodeTraceApp.class.getDeclaredMethod(
+                        "setProgressFolder", String.class);
+                focusFolder.setAccessible(true);
+                focusFolder.invoke(application, "src");
+                assertTrue(auto != null);
+                CheckBox only = (CheckBox) stage.getScene().getRoot()
+                        .lookup(".tree-scope-checkbox");
+                assertTrue(only.isSelected());
+                assertEquals("src", fileTree.progressFocusFolder());
+                assertFalse(fileTree.isDisabled(), "Outside folders remain navigable");
+                var srcNode = fileTree.getRoot().getChildren().stream()
+                        .filter(n -> n.getValue().equals(src)).findFirst().orElseThrow();
+                var nestedNode = srcNode.getChildren().stream()
+                        .filter(n -> n.getValue().equals(nested)).findFirst().orElseThrow();
+                fileTree.getSelectionModel().select(nestedNode);
+                assertEquals("src/ejemplos", fileTree.progressFocusFolder(),
+                        "Selecting a different folder while Solo is on switches scope");
+                fileTree.getSelectionModel().select(fileTree.getRoot());
+                assertEquals("", fileTree.progressFocusFolder(),
+                        "Selecting project root returns to whole-project progress");
+                assertFalse(only.isSelected());
+
                 Files.delete(imageFile);
                 Files.delete(directFile);
                 Files.delete(nestedFile);
+                Files.delete(deep.resolve("Example.java"));
+                Files.delete(deep);
+                Files.delete(nested.resolve("deep"));
                 Files.delete(nested);
                 Files.delete(file);
                 Files.delete(src);
@@ -408,6 +857,9 @@ class CodeTraceAppSmokeTest {
             } catch (Throwable problem) {
                 failure.set(problem);
             } finally {
+                // This smoke test verifies synchronous JavaFX integration.
+                // A deferred projection is covered by ExplorerRowsTest and
+                // must be accepted visually on actual Windows hardware.
                 stage.close();
                 Platform.exit();
                 finished.countDown();

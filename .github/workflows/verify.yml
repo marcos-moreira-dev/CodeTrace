@@ -4,11 +4,32 @@ on:
   push:
   pull_request:
 
+concurrency:
+  group: verify-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Block accidental unlicensed or snapshot releases
+        if: startsWith(github.ref, 'refs/tags/v')
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import os
+          from pathlib import Path
+          import xml.etree.ElementTree as ET
+          project = ET.parse("pom.xml").getroot()
+          version = project.findtext("{http://maven.apache.org/POM/4.0.0}version")
+          tag = os.environ["GITHUB_REF_NAME"]
+          if not Path("LICENSE").is_file() or not Path("LICENSE").read_text().strip():
+              raise SystemExit("A release tag requires a reviewed LICENSE file.")
+          if version is None or "SNAPSHOT" in version or tag != f"v{version}":
+              raise SystemExit(f"Release tag {tag} differs from Maven version {version}.")
+          print(f"Release metadata matches {tag}.")
+          PY
       - name: Eclipse Temurin JDK 21 and Maven toolchain
         uses: actions/setup-java@v4
         with:
@@ -20,6 +41,17 @@ jobs:
         run: mvn --batch-mode --no-transfer-progress verify
       - name: JavaFX graphical startup smoke test
         run: xvfb-run -a mvn --batch-mode --no-transfer-progress -Dtest=CodeTraceAppSmokeTest -Dcodetrace.guiSmoke=true test
+      - name: Build Java 21 Javadoc
+        run: mvn --batch-mode --no-transfer-progress javadoc:javadoc
+      - name: Check generated API documentation
+        run: test -s target/reports/apidocs/index.html
+      - name: Upload browsable Javadoc
+        uses: actions/upload-artifact@v4
+        with:
+          name: codetrace-javadoc-html
+          path: target/reports/apidocs
+          retention-days: 7
+          if-no-files-found: error
 
   windows-diagnostics:
     runs-on: windows-latest
@@ -37,6 +69,47 @@ jobs:
         run: |
           & .\scripts\diagnostico.bat -NoApp -NoExplorer
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Validate reproducible preview QA fixtures
+        shell: pwsh
+        run: |
+          & .\scripts\crear-fixtures-preview.ps1
+          if (-not (Test-Path "target/qa-preview/README.md")) { throw "Missing QA README" }
+          if (-not (Test-Path "target/qa-preview/assets/seguro.svg")) { throw "Missing QA SVG" }
+          if (-not (Test-Path "target/qa-preview/assets/sample.webp")) { throw "Missing offline QA WebP" }
+          if (-not (Test-Path "target/qa-preview/src/Demo.java")) { throw "Missing search QA Java" }
+          if (-not (Test-Path "target/qa-preview/config.json")) { throw "Missing search QA configuration" }
+          if (-not (Test-Path "target/qa-preview/styles/theme.css")) { throw "Missing CSS QA fixture" }
+          if (-not (Test-Path "target/qa-preview/src/demo/A.java")) { throw "Missing dependency graph QA Java" }
+          if (-not (Test-Path "target/qa-preview/web/main.ts")) { throw "Missing dependency graph QA TypeScript" }
+      - name: Validate Windows screenshot scripts syntax and safety
+        shell: pwsh
+        run: |
+          $files = @(
+            "scripts/capturar-ventana.ps1",
+            "scripts/captura-automatica.ps1",
+            "scripts/auditoria-visual.ps1",
+            "scripts/generar-prueba-emojis.ps1",
+            "scripts/preparar-fuentes.ps1",
+            "scripts/preparar-emojis.ps1",
+            "scripts/crear-icono-sesion.ps1",
+            "scripts/package-windows.ps1",
+            "scripts/verificar-paquete.ps1"
+          )
+          foreach ($file in $files) {
+            $tokens = $null
+            $errors = $null
+            [void][System.Management.Automation.Language.Parser]::ParseFile(
+              (Resolve-Path $file), [ref]$tokens, [ref]$errors)
+            if ($errors.Count -ne 0) {
+              throw "PowerShell syntax error in $file : $($errors -join '; ')"
+            }
+          }
+          $capture = Get-Content "scripts/capturar-ventana.ps1" -Raw
+          if ($capture -notmatch "GetWindowThreadProcessId" -or
+              $capture -notmatch "Get-CimInstance") {
+            throw "Screenshot capture must verify window process identity."
+          }
+          Write-Host "CodeTrace-only capture script checks OK."
       - name: Preserve Windows diagnostic ZIP
         if: always()
         uses: actions/upload-artifact@v4

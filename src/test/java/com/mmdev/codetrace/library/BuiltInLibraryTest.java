@@ -17,11 +17,12 @@ class BuiltInLibraryTest {
     @Test
     void allPacksAreBundledOfflineAndHaveRealCodeExtensions() throws Exception {
         var library = new BuiltInLibrary(temp.resolve("offline"));
-        assertEquals(12, library.packs().size());
-        assertEquals(12, library.packs().stream().map(BuiltInLibrary.Pack::id)
+        assertEquals(14, library.packs().size());
+        assertEquals(14, library.packs().stream().map(BuiltInLibrary.Pack::id)
                 .collect(Collectors.toSet()).size());
         for (var pack : library.packs()) {
-            assertTrue(library.size(pack) >= 2, pack.name());
+            assertTrue(library.size(pack) >= (java.util.Set.of("java21", "kotlin", "typescript")
+                    .contains(pack.id()) ? 16 : 6), pack.name());
             Path root = library.open(pack);
             for (String relative : library.entries(pack)) {
                 Path file = root.resolve(relative);
@@ -68,11 +69,154 @@ class BuiltInLibraryTest {
     @Test
     void deeperCategoriesExistForJavaAndTypeScript() throws Exception {
         var library = new BuiltInLibrary(temp.resolve("cache"));
-        for (var pack : library.packs().subList(0, 2)) {
+        var extended = library.packs().stream()
+                .filter(pack -> java.util.Set.of("java21", "typescript", "kotlin")
+                        .contains(pack.id())).toList();
+        assertEquals(3, extended.size());
+        for (var pack : extended) {
+            assertTrue(library.size(pack) >= 16);
             var names = library.entries(pack);
+            assertTrue(names.stream().anyMatch(p -> p.toLowerCase().contains("euclides")));
+            assertTrue(names.stream().anyMatch(p -> p.toLowerCase().contains("callback")));
+            assertTrue(names.stream().anyMatch(p -> p.toLowerCase().contains("observador")));
+            assertTrue(names.stream().anyMatch(p -> p.toLowerCase().contains("cola_circular") || p.contains("ColaCircular")));
             assertTrue(names.stream().anyMatch(p -> p.contains("estructuras")));
             assertTrue(names.stream().anyMatch(p -> p.contains("algoritmos")));
             assertTrue(names.stream().anyMatch(p -> p.contains("patrones")));
         }
     }
+
+    @Test
+    void everyExerciseDocumentsItsVersionAndCompilingOrCheckingCommand()
+            throws Exception {
+        var library = new BuiltInLibrary(temp.resolve("versions"));
+        for (var pack : library.packs()) {
+            Path root = library.open(pack);
+            for (String relative : library.entries(pack)) {
+                String text = Files.readString(root.resolve(relative));
+                String firstLines = text.lines().limit(10)
+                        .collect(Collectors.joining("\n")).toLowerCase(java.util.Locale.ROOT);
+                assertTrue(firstLines.contains("codetrace"), pack.id() + "/" + relative);
+                assertTrue(firstLines.contains("referencia:") || firstLines.contains("kotlin 2.2"),
+                        "Missing version in " + pack.id() + "/" + relative);
+                assertTrue(firstLines.contains("compilar:")
+                        || firstLines.contains("comprobar")
+                        || firstLines.contains("ejecutar:")
+                        || firstLines.contains("tipos/sintaxis: tsc "),
+                        "Missing CLI command in " + pack.id() + "/" + relative);
+            }
+        }
+    }
+    @Test
+    void allFourCurriculumPurposesAndDocumentedJavaClientsArePresent() throws Exception {
+        var library = new BuiltInLibrary(temp.resolve("curriculum"));
+        assertEquals("v8", BuiltInLibrary.CATALOG_VERSION);
+        assertEquals(813, library.packs().stream().mapToInt(library::size).sum());
+        for (var pack : library.packs()) {
+            var entries = library.entries(pack);
+            assertTrue(entries.stream().allMatch(x -> x.split("/").length >= 3),
+                    "Every reference must be inside a named exercise directory: " + pack.id());
+            assertTrue(entries.stream().anyMatch(x -> x.startsWith("01-fundamentos/")), pack.id());
+            assertTrue(entries.stream().anyMatch(x -> x.startsWith("03-algoritmos/")), pack.id());
+            assertTrue(entries.stream().noneMatch(x -> x.contains("07-proyectos/")
+                    || x.contains("laboratorios/") || x.contains("/complejidad/")), pack.id());
+        }
+        var javaPack = library.packs().stream().filter(x -> x.id().equals("java21")).findFirst().orElseThrow();
+        assertTrue(library.entries(javaPack).contains("01-fundamentos/comparadores/ComparadoresEncadenados.java"));
+        assertTrue(library.entries(javaPack).contains("03-algoritmos/programacion-dinamica/cambio-monedas/MainMonedas.java"));
+        assertTrue(library.entries(javaPack).contains("04-patrones-diseno/strategy-tarifas/MainTarifas.java"));
+        assertTrue(library.entries(javaPack).contains("02-estructuras-datos/arbol-bst/MainArbol.java"));
+        assertTrue(library.entries(javaPack).contains("02-estructuras-datos/tabla-hash/MainHash.java"));
+        assertTrue(library.entries(javaPack).contains("03-algoritmos/backtracking/CuatroReinas.java"));
+        assertTrue(library.entries(javaPack).contains("03-algoritmos/programacion-dinamica/mochila-01/Mochila01.java"));
+        assertTrue(library.entries(javaPack).contains("04-patrones-diseno/adapter/MainAdapter.java"));
+        assertTrue(library.entries(javaPack).contains("04-patrones-diseno/decorator/MainDecorator.java"));
+        assertTrue(library.entries(javaPack).contains("02-estructuras-datos/grafos/tipos/MainTiposGrafo.java"));
+        assertTrue(library.entries(javaPack).contains("02-estructuras-datos/grafos/representaciones/MainRepresentaciones.java"));
+        assertTrue(library.entries(javaPack).contains("03-algoritmos/grafos/caminos-minimos/MainCaminosMinimos.java"));
+        assertTrue(library.entries(javaPack).contains("03-algoritmos/grafos/expansion-minima/MainExpansionMinima.java"));
+        assertTrue(library.entries(javaPack).contains("03-algoritmos/grafos/topologico/MainTopologico.java"));
+        assertTrue(library.entries(javaPack).contains("03-algoritmos/grafos/recorridos/caminos-sin-peso/MainCaminosSinPeso.java"));
+        assertTrue(library.entries(javaPack).contains("04-patrones-diseno/factory/basico/MainFactoryBasica.java"));
+        assertTrue(library.entries(javaPack).contains("04-patrones-diseno/observer/basico/MainObservadorBasico.java"));
+        assertTrue(library.entries(javaPack).contains("01-fundamentos/excepciones/checked-personalizada/MainExcepcionChecked.java"));
+        assertTrue(library.entries(javaPack).contains("01-fundamentos/excepciones/unchecked-dominio/MainExcepcionUnchecked.java"));
+        assertTrue(library.entries(javaPack).contains("02-estructuras-datos/cola-circular/MainColaCircular.java"));
+        assertTrue(library.entries(javaPack).contains("04-patrones-diseno/strategy/basico/MainStrategy.java"));
+
+        for (String idioma : java.util.List.of("java21", "kotlin", "csharp", "typescript",
+                "python", "cpp", "ruby", "javascript")) {
+            var paquete = library.packs().stream()
+                    .filter(x -> x.id().equals(idioma)).findFirst().orElseThrow();
+            var rutas = library.entries(paquete);
+            for (String familia : java.util.List.of("linked-list/simple/", "linked-list/doble/",
+                    "linked-list/circular/", "linked-list/doble-circular/", "arbol-avl/",
+                    "union-find/", "trie/", "heap-maximo/", "deque/")) {
+                assertTrue(rutas.stream().anyMatch(x -> x.startsWith("02-estructuras-datos/" + familia)),
+                        idioma + " no contiene " + familia);
+            }
+            for (String patron : java.util.List.of("builder/", "abstract-factory/", "composite/",
+                    "command/", "template-method/")) {
+                assertTrue(rutas.stream().anyMatch(x -> x.startsWith("04-patrones-diseno/" + patron)),
+                        idioma + " no contiene patrón " + patron);
+            }
+        }
+        assertTrue(library.entries(javaPack).contains(
+                "02-estructuras-datos/linked-list/doble/MainListaDoble.java"));
+        assertTrue(library.entries(javaPack).contains(
+                "04-patrones-diseno/command/deshacer/MainCommand.java"));
+        for (String subtema : java.util.List.of(
+                "ordenamientos/burbuja-optimizada/MainBurbuja.java",
+                "ordenamientos/insercion-binaria/MainInsercionBinaria.java",
+                "busqueda-rangos/MainLimitesOrdenados.java",
+                "ordenamientos/MainOrdenamientos.java")) {
+            assertTrue(library.entries(javaPack).contains("03-algoritmos/" + subtema));
+        }
+        for (String lenguaje : java.util.List.of("kotlin", "csharp", "typescript",
+                "python", "cpp", "ruby", "javascript")) {
+            var paquete = library.packs().stream().filter(x -> x.id().equals(lenguaje))
+                    .findFirst().orElseThrow();
+            var rutas = library.entries(paquete);
+            for (String unidad : java.util.List.of(
+                    "ordenamientos/comparativa-cinco/", "ordenamientos/insercion-binaria/",
+                    "busqueda-rangos/")) {
+                assertTrue(rutas.stream().anyMatch(x -> x.startsWith("03-algoritmos/" + unidad)),
+                        lenguaje + " no contiene " + unidad);
+            }
+        }
+        var cppPack = library.packs().stream().filter(x -> x.id().equals("cpp")).findFirst().orElseThrow();
+        assertTrue(library.entries(cppPack).contains("01-fundamentos/compilacion-y-enlazado/biblioteca-estatica-dinamica/main.cpp"));
+        assertTrue(library.entries(javaPack).contains("02-estructuras-datos/grafos/genericos/MainGrafoGenerico.java"));
+        assertTrue(library.entries(javaPack).contains("03-algoritmos/grafos/componentes-fuertes/MainComponentesFuertes.java"));
+        assertTrue(library.entries(javaPack).contains("03-algoritmos/grafos/caminos-minimos/MainCasosLimite.java"));
+        var kotlinPack = library.packs().stream().filter(x -> x.id().equals("kotlin")).findFirst().orElseThrow();
+        assertTrue(library.entries(kotlinPack).contains("04-patrones-diseno/factory/basico/MainFactory.kt"));
+        assertTrue(library.entries(kotlinPack).contains("04-patrones-diseno/observer/basico/MainObservador.kt"));
+        var tsPack = library.packs().stream().filter(x -> x.id().equals("typescript")).findFirst().orElseThrow();
+        assertTrue(library.entries(tsPack).contains("04-patrones-diseno/observer/basico/MainObserverBasico.ts"));
+    }
+
+    @Test
+    void multiFileProjectsAndAssemblyAreActuallyBundled() throws Exception {
+        var library = new BuiltInLibrary(temp.resolve("architectures"));
+        assertEquals(14, library.packs().size());
+        var all = library.packs().stream().collect(
+                Collectors.toMap(BuiltInLibrary.Pack::id, p -> p));
+        assertTrue(library.entries(all.get("java21")).contains(
+                "04-patrones-diseno/factory-method/MainFactoryMethod.java"));
+        assertTrue(library.entries(all.get("java21")).contains(
+                "04-patrones-diseno/observer/CentroEventos.java"));
+        assertTrue(library.entries(all.get("typescript")).contains(
+                "04-patrones-diseno/observer/BusEventos.ts"));
+        assertTrue(library.entries(all.get("python")).contains(
+                "04-patrones-diseno/factory-method/creadores.py"));
+        assertTrue(library.entries(all.get("c")).contains(
+                "04-patrones-diseno/observer/Observer.h"));
+        assertTrue(library.entries(all.get("nasm-x64")).contains(
+                "03-algoritmos/euclides/euclides.asm"));
+        assertTrue(library.entries(all.get("java21")).contains(
+                "03-algoritmos/dijkstra/Dijkstra.java"));
+        assertEquals(813, library.packs().stream().mapToInt(library::size).sum());
+    }
+
 }

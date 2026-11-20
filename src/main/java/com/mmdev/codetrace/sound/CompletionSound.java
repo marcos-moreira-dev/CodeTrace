@@ -10,7 +10,8 @@ import javafx.scene.media.AudioClip;
 /**
  * Per-file success cue. Loaded lazily, kept separate from the typing samples,
  * and extracted to a temporary file so it also works from a packaged JAR.
- */
+  * <p><strong>Engineering rationale.</strong> Completion feedback is an optional effect triggered by a transition in typing state, never a condition for marking an exercise finished. Audio playback failures must not affect the progress model or stop the user from continuing.</p>
+*/
 public final class CompletionSound {
     private AudioClip clip;
     private boolean initialized;

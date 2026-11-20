@@ -1,0 +1,26 @@
+// CodeTrace | Referencia: Kotlin 2.2 / JVM 21
+// Compilar/Comprobar: kotlinc -jvm-target 21 01-fundamentos/extensiones-y-lambdas/extensiones_y_lambdas.kt -include-runtime -d app.jar
+// Ejecutar: java -jar app.jar
+
+/**
+ * Cliente de funciones de extensión y colecciones funcionales.
+ * Una extensión no cambia el tipo original: ofrece una sintaxis
+ * cómoda para un método resuelto estáticamente. filter selecciona
+ * valores y map los transforma; la lista de origen se conserva.
+ */
+fun Int.esPar(): Boolean = this % 2 == 0
+fun main() {
+    val numeros = listOf(1, 2, 3, 4, 5, 6)
+    println(numeros.filter(Int::esPar).map { it * it })
+}
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   kotlinc .\01-fundamentos\extensiones-y-lambdas\*.kt -jvm-target 21 -include-runtime -d "$env:TEMP\ct-kotlin.jar"
+ *   java -jar "$env:TEMP\ct-kotlin.jar"
+ * Salida esperada:
+ *   [4, 16, 36]
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

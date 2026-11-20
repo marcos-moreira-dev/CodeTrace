@@ -22,9 +22,11 @@ import java.util.Set;
  * No network operations or generated teaching text. References are materialized
  * into a versioned, private application folder solely because the existing
  * reference engine expects real file paths.
- */
+  * <p><strong>Engineering rationale.</strong> Practice packs are bundled, offline teaching content distinct from the user's selected reference folder. Extraction must use controlled destinations and paths, and loading a lesson should still enter the usual read-only reference and transcription workflow instead of creating a second editor.</p>
+*/
 public final class BuiltInLibrary {
-    public static final String CATALOG_VERSION = "v1";
+    /** v4 relocates study files; v2/v3/v4/v5/v6/v7 cached copies are left untouched for prior sessions. */
+    public static final String CATALOG_VERSION = "v8";
 
     public record Pack(String id, String name, String extension) {
         public Pack {
@@ -35,6 +37,7 @@ public final class BuiltInLibrary {
 
     private static final List<Pack> PACKS = List.of(
             new Pack("java21", "Java 21", ".java"),
+            new Pack("kotlin", "Kotlin 2.2", ".kt"),
             new Pack("typescript", "TypeScript", ".ts"),
             new Pack("javascript", "JavaScript", ".js"),
             new Pack("python", "Python", ".py"),
@@ -45,7 +48,8 @@ public final class BuiltInLibrary {
             new Pack("ruby", "Ruby", ".rb"),
             new Pack("powershell", "PowerShell", ".ps1"),
             new Pack("shell", "Shell (Linux)", ".sh"),
-            new Pack("cmd", "Windows CMD", ".cmd")
+            new Pack("cmd", "Windows CMD", ".cmd"),
+            new Pack("nasm-x64", "Ensamblador NASM x86-64 (Intel)", ".asm")
     );
 
     private final Path cacheRoot;

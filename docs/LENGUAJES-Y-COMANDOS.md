@@ -1,0 +1,44 @@
+# Referencias y comandos para los 14 lenguajes
+
+Las versiones son objetivos didácticos reproducibles, no afirmaciones sobre lo último publicado. **Todos los archivos de la biblioteca** muestran en sus primeros comentarios versión y comando sugerido; compilar o ejecutar es una operación voluntaria, fuera del modo de práctica.
+
+| Paquete | Versión didáctica | Comando de comprobación |
+| --- | --- | --- |
+| `java21` | Java 21 LTS | `javac --release 21` |
+| `kotlin` | Kotlin 2.2 / JVM 21 | `kotlinc -jvm-target 21` |
+| `typescript` | TypeScript 5.9 / ES2022 | `tsc --noEmit --target ES2022` |
+| `javascript` | ES2022 / Node.js 24 | `node --check` |
+| `python` | Python 3.12 | `python -B` |
+| `c` | C17 / GCC 13+ | `gcc -std=c17` |
+| `cpp` | C++20 / g++ 13+ | `g++ -std=c++20` |
+| `csharp` | C# 12 / .NET 8 | `dotnet build` |
+| `go` | Go 1.24 | `go run` |
+| `ruby` | Ruby 3.3 | `ruby -c` |
+| `powershell` | PowerShell 7.4 | `pwsh -NoProfile -File` |
+| `shell` | POSIX sh (Linux/WSL) | `sh -n` |
+| `cmd` | Windows CMD | `cmd /c` |
+| `nasm-x64` | NASM x86-64 ELF64 / Linux-WSL | `nasm -f elf64` + `ld` |
+
+Diferenciar **compilar**, **comprobar** y **ejecutar**. Clases sin `main`, headers C/C++ y módulos auxiliares no están obligados a ejecutar individualmente; se compilan junto al cliente. Un ejercicio multiarchivo requiere incluir todas sus dependencias en el comando. `node --check` solo analiza sintaxis, `tsc --noEmit` valida tipos sin emitir JS, `ruby -c` revisa sintaxis.
+
+Para .NET 8 se puede usar un proyecto temporal creado con `dotnet new console`, copiando el único cliente para compilar o ejecutar. Los fuentes ELF64 no son ejecutables PE de Windows. Las rutas bajo `$env:TEMP` son temporales y no comprometen la referencia.
+
+Se conservan ejemplos existentes siempre que puedan verificarse; al mejorar una cabecera actualizar la ruta y el contrato. Los comandos no se ejecutan automáticamente desde CodeTrace.
+
+
+## Convención de rutas v4
+
+Los comandos referenciales se leen desde la raíz del paquete de lenguaje y deben apuntar al archivo dentro de su **carpeta de unidad**. Para proyectos multiarchivo, compilar todas las fuentes de la unidad. La estructura de carpetas no modifica los estándares de compilación: Java 21, C17, C++20, TypeScript 5.9, etc. Las referencias son material de estudio; CodeTrace no ejecuta los comandos automáticamente.
+
+### Biblioteca v6
+
+Las unidades multiarchivo emplean convenciones `Main*.java/kt/ts/cs`, `main.py/rb/js/go` o `main.c/cpp` conforme a su ecosistema. C17/C++20 presentan `compilar.sh` para comparar bibliotecas `.a` y `.so` sobre Linux o WSL, con objetos temporales y sin modificar las referencias. El catálogo interno usa caché `v6` para no mezclar rutas de sesiones anteriores.
+
+## Nuevos comandos v8
+
+- Java 21: compilar todas las fuentes dentro de una COPIA con `javac --release 21 -encoding UTF-8 -d "$env:TEMP\\ct-java" (Get-ChildItem -Recurse -Filter *.java).FullName`; ejecutar `codetrace.practica.ordenamientos.MainOrdenamientos`, `codetrace.practica.algoritmos.burbuja.MainBurbuja`, `codetrace.practica.algoritmos.insercionbinaria.MainInsercionBinaria` y `codetrace.practica.algoritmos.limites.MainLimitesOrdenados`.
+- C++20: cada unidad con `g++ -std=c++20 -Wall -Wextra -Werror *.cpp -o ejemplo` y `./ejemplo`.
+- Kotlin 2.2: `kotlinc -jvm-target 21 *.kt -include-runtime -d ejemplo.jar && java -jar ejemplo.jar`.
+- C# 12: `dotnet new console -f net8.0`, copiar las fuentes de la unidad sin el `Program.cs` generado, `dotnet run`.
+- TypeScript 5.9: `tsc --strict --target ES2022 --module commonjs MainOrdenamientos.ts`, luego `node MainOrdenamientos.js` en copia.
+- Python 3.12: `python -B main.py`; Ruby 3.3: `ruby main.rb`; Node 24: `node main.js`.

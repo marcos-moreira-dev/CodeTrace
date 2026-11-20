@@ -1,0 +1,31 @@
+# CodeTrace | Referencia: PowerShell 7.4
+# Comprobar: pwsh -NoProfile -File 01-fundamentos/funciones-avanzadas/funciones_avanzadas.ps1
+# Ejecutar: pwsh -NoProfile -File 01-fundamentos/funciones-avanzadas/funciones_avanzadas.ps1
+
+<#
+Cliente de parámetros tipados, validación y funciones avanzadas.
+
+CmdletBinding incorpora semántica de cmdlets. ValidateRange protege
+precondiciones. El resultado se entrega al pipeline como objeto y no
+se imprime dentro de la función, permitiendo composición.
+#>
+function Get-PrecioFinal {
+    [CmdletBinding()]
+    param(
+        [Parameter(Mandatory)]
+        [ValidateRange(0, 100000)]
+        [double] $Subtotal,
+        [ValidateRange(0, 1)]
+        [double] $Descuento = 0
+    )
+    return [math]::Round($Subtotal * (1 - $Descuento), 2)
+}
+Get-PrecioFinal -Subtotal 120 -Descuento 0.15
+
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# 
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   pwsh -NoProfile -File .\01-fundamentos\funciones-avanzadas\funciones_avanzadas.ps1
+# Salida esperada:
+#   102
+# CodeTrace | FIN EJEMPLO DE CONSOLA

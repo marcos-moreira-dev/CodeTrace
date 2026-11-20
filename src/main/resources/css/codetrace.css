@@ -1,5 +1,5 @@
 .root {
-    -fx-font-family: "Segoe UI";
+    -fx-font-family: "IBM Plex Sans";
     -fx-font-size: 12px;
     -fx-base: #f5f6f7;
     -fx-background-color: #f5f6f7;
@@ -18,7 +18,7 @@
 }
 .button:hover { -fx-background-color: #e5eff6; -fx-border-color: #4a6076; }
 .button:disabled { -fx-opacity: 0.48; }
-.sidebar { -fx-background-color: #eef1f3; }
+.sidebar { -fx-background-color: #dfe7ec; }
 .sidebar-title {
     -fx-font-weight: bold;
     -fx-text-fill: #34495a;
@@ -38,8 +38,12 @@
 .typing-editor, .typing-scroll { -fx-background-color: white; }
 .typing-scroll > .viewport { -fx-background-color: white; }
 .typing-surface { -fx-background-color: white; }
-.statusbar { -fx-border-color: #b8c5cd transparent transparent transparent; }
-.statusbar .label { -fx-text-fill: #455c6f; -fx-font-size: 11px; }
+.statusbar {
+    -fx-background-color: linear-gradient(to bottom, #e1e9ee 0%, #d1dce4 100%);
+    -fx-border-color: #a8bac7 transparent transparent transparent;
+}
+.statusbar .label { -fx-text-fill: #243f54; -fx-font-size: 13px; }
+.statusbar .status-context { -fx-font-weight: bold; }
 .progress-info { -fx-text-fill: #304b60; }
 .typing-progress { -fx-pref-height: 9px; -fx-max-width: 160px; }
 .typing-progress .track { -fx-background-color: #d3dce3; -fx-background-radius: 0; }
@@ -78,7 +82,7 @@
     -fx-border-color: transparent;
 }
 .product-dialog .button-bar {
-    -fx-background-color: #e7edf1;
+    -fx-background-color: linear-gradient(to bottom, #e2eaf0 0%, #cfdae3 100%);
     -fx-padding: 10px 12px;
 }
 .product-dialog .button-bar .button { -fx-min-width: 88px; }
@@ -169,7 +173,7 @@
 }
 .context-menu .menu-item:focused .label { -fx-text-fill: #263747; }
 .source-file-badge {
-    -fx-font-family: "Segoe UI";
+    -fx-font-family: "IBM Plex Sans";
     -fx-font-size: 10px;
     -fx-font-weight: bold;
     -fx-padding: 0 2px;
@@ -185,30 +189,30 @@
     -fx-padding: 0 0 0 0;
 }
 .tab-pane .tab-header-background {
-    -fx-background-color: #e8edf1;
-    -fx-border-color: transparent transparent #b6c5cf transparent;
+    -fx-background-color: linear-gradient(to bottom, #dfe8ee 0%, #cfdae3 100%);
+    -fx-border-color: transparent transparent #9db2c2 transparent;
 }
 .tab-pane .tab {
     -fx-background-radius: 0;
     -fx-border-radius: 0;
-    -fx-background-color: #e3eaf0;
-    -fx-border-color: transparent #c4ced7 transparent transparent;
-    -fx-padding: 6px 12px;
+    -fx-background-color: linear-gradient(to bottom, #d5e1e9 0%, #c0d1dc 100%);
+    -fx-border-color: transparent #b2c1cc transparent transparent;
+    -fx-padding: 7px 12px;
     -fx-focus-color: transparent;
     -fx-faint-focus-color: transparent;
 }
-.tab-pane .tab:hover { -fx-background-color: #d4e2eb; }
+.tab-pane .tab:hover { -fx-background-color: #c4d5e1; }
 .tab-pane .tab:selected {
     -fx-background-color: #ffffff;
-    -fx-border-color: #4a6076 #c4ced7 transparent transparent;
+    -fx-border-color: #496d85 #b2c1cc transparent transparent;
     -fx-border-width: 2px 1px 0 0;
 }
 .tab-pane .tab .tab-label {
-    -fx-text-fill: #4b6274;
-    -fx-font-size: 12px;
+    -fx-text-fill: #27465e;
+    -fx-font-size: 14px;
 }
 .tab-pane .tab:selected .tab-label {
-    -fx-text-fill: #243e54;
+    -fx-text-fill: #203c52;
     -fx-font-weight: bold;
 }
 .tab-pane .tab .tab-close-button {
@@ -225,16 +229,16 @@
 }
 .typing-lines .list-cell {
     -fx-background-color: #ffffff;
-    -fx-text-fill: #81909b;
+    -fx-text-fill: #263b4c;
     -fx-border-color: transparent;
-    -fx-padding: 1px 12px 1px 17px;
+    -fx-padding: 0 10px 0 0;
 }
 .typing-lines .list-cell:filled:selected,
 .typing-lines:focused .list-cell:filled:selected {
-    -fx-background-color: #e7f0f6;
-    -fx-border-color: transparent transparent transparent #4a6076;
-    -fx-border-width: 0 0 0 3px;
-    -fx-padding: 1px 12px 1px 14px;
+    -fx-background-color: #f6f8fa;
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+    -fx-padding: 0 10px 0 0;
 }
 .typing-lines .list-cell:filled:hover:!selected {
     -fx-background-color: #f4f8fa;
@@ -308,7 +312,7 @@
     -fx-border-color: #a3b6c4;
 }
 .status-zoom-control .zoom-value {
-    -fx-font-size: 11px;
+    -fx-font-size: 12px;
     -fx-text-fill: #344f63;
 }
 .status-zoom-control .slider .track,
@@ -380,45 +384,46 @@
     -fx-background-color: #f5f6f7;
 }
 .prefs-header {
-    -fx-background-color: #e7edf1;
-    -fx-border-color: transparent transparent #b8c6d0 transparent;
+    -fx-background-color: linear-gradient(to bottom, #586f82 0%, #41586c 100%);
+    -fx-border-color: transparent transparent #334c60 transparent;
     -fx-padding: 17px 23px;
 }
 .prefs-window-heading {
     -fx-font-size: 19px;
     -fx-font-weight: bold;
-    -fx-text-fill: #30485e;
+    -fx-text-fill: #ffffff;
 }
 .prefs-navigation {
-    -fx-background-color: #edf1f4;
-    -fx-control-inner-background: #edf1f4;
-    -fx-border-color: transparent #bac7d0 transparent transparent;
+    -fx-background-color: #d8e3eb;
+    -fx-control-inner-background: #d8e3eb;
+    -fx-border-color: transparent #a4b7c6 transparent transparent;
     -fx-border-width: 0 1px 0 0;
     -fx-background-insets: 0;
     -fx-padding: 8px 0;
 }
 .prefs-navigation .list-cell {
-    -fx-background-color: #edf1f4;
-    -fx-text-fill: #425a6d;
+    -fx-background-color: #d8e3eb;
+    -fx-text-fill: #304c61;
     -fx-padding: 12px 15px;
     -fx-font-size: 13px;
     -fx-graphic-text-gap: 11px;
     -fx-border-color: transparent;
 }
 .prefs-navigation .list-cell:filled:hover {
-    -fx-background-color: #e0eaf0;
+    -fx-background-color: #c5d7e3;
 }
 .prefs-navigation .list-cell:filled:selected,
 .prefs-navigation:focused .list-cell:filled:selected {
-    -fx-background-color: #d2e1eb;
-    -fx-text-fill: #263e51;
+    /* Active selection is legible and distinct from a lighter hover. */
+    -fx-background-color: linear-gradient(to bottom, #49697f 0%, #345268 100%);
+    -fx-text-fill: #ffffff;
     -fx-font-weight: bold;
-    -fx-border-color: transparent transparent transparent #4a6076;
+    -fx-border-color: transparent transparent transparent #213c52;
     -fx-border-width: 0 0 0 3px;
     -fx-padding: 12px 15px 12px 12px;
 }
 .prefs-navigation .list-cell:empty {
-    -fx-background-color: #edf1f4;
+    -fx-background-color: #d8e3eb;
 }
 .prefs-content {
     -fx-background-color: #ffffff;
@@ -457,8 +462,8 @@
 }
 .prefs-actions {
     -fx-padding: 12px 18px;
-    -fx-background-color: #e7edf1;
-    -fx-border-color: #b8c6d0 transparent transparent transparent;
+    -fx-background-color: linear-gradient(to bottom, #e2eaf0 0%, #d0dde6 100%);
+    -fx-border-color: #a9bdcb transparent transparent transparent;
 }
 .prefs-actions .button {
     -fx-min-width: 88px;
@@ -491,8 +496,8 @@
 
 /* Explorer header: clear structure actions and compact virtual status. */
 .project-tree-header {
-    -fx-background-color: #edf1f4;
-    -fx-border-color: transparent transparent #c3cdd5 transparent;
+    -fx-background-color: linear-gradient(to bottom, #d2e0e9 0%, #b9cddc 100%);
+    -fx-border-color: transparent transparent #aabcc9 transparent;
     -fx-padding: 4px 7px 4px 6px;
     -fx-spacing: 4px;
 }
@@ -548,7 +553,7 @@
 }
 .prefs-font-choice .list-cell .font-family-name {
     -fx-text-fill: #30485e;
-    -fx-font-family: "Segoe UI";
+    -fx-font-family: "IBM Plex Sans";
     -fx-font-size: 12px;
 }
 
@@ -646,13 +651,13 @@
     -fx-border-width: 1px 0 0 0;
 }
 .command-console-pane .console-header {
-    -fx-background-color: #e6edf2;
+    -fx-background-color: linear-gradient(to bottom, #d2e0e9 0%, #bacddb 100%);
     -fx-padding: 6px 10px;
     -fx-alignment: center-left;
 }
 .command-console-pane .console-header .label {
     -fx-font-weight: bold;
-    -fx-text-fill: #385369;
+    -fx-text-fill: #29485f;
 }
 .command-console-pane .console-header .button {
     -fx-min-height: 27px;
@@ -756,7 +761,7 @@
 /* Pending reference names communicate work not yet undertaken. */
 .reference-tree-row .reference-pending-name {
     -fx-font-style: italic;
-    -fx-text-fill: #72818d;
+    -fx-text-fill: #596f80;
 }
 .reconstruction-state-icon.state-created,
 .reconstruction-state-icon.state-completed,
@@ -778,7 +783,7 @@
     -fx-font-weight: bold;
 }
 .about-version {
-    -fx-text-fill: #647c8f;
+    -fx-text-fill: #526a7d;
     -fx-font-size: 12px;
 }
 .about-description {
@@ -815,7 +820,626 @@
     -fx-max-width: 18px;
     -fx-min-height: 18px;
     -fx-pref-height: 18px;
-    -fx-font-family: "Segoe UI";
+    -fx-font-family: "IBM Plex Sans";
     -fx-font-size: 9px;
     -fx-text-fill: #334f63;
+}
+
+
+/* Explorer navigation: three compact rows that remain usable when docked narrow. */
+.tree-search-row { -fx-padding: 0 8 4 8; -fx-alignment: center-left; }
+.tree-name-search {
+    -fx-background-radius: 0; -fx-border-radius: 0;
+    -fx-background-color: white; -fx-border-color: #a9b8c4;
+    -fx-font-size: 11px; -fx-pref-height: 26px; -fx-min-height: 26px;
+}
+.tree-name-search:focused { -fx-border-color: #426b8c; }
+.tree-search-clear { -fx-min-width: 25px; -fx-pref-width: 25px; -fx-padding: 3 4; }
+.tree-options-row { -fx-padding: 2 8 6 8; -fx-alignment: center-left; }
+.tree-options-row .check-box { -fx-font-size: 10px; -fx-text-fill: #455b6b; }
+.tree-options-row .check-box .box { -fx-background-radius: 0; -fx-border-radius: 0; }
+.reference-match-name { -fx-font-weight: bold; -fx-text-fill: #185c83; }
+
+
+/* One statusbar location, two contextual zoom semantics. */
+.media-zoom-control .ikonli-font-icon { -fx-icon-color: #73559a; }
+.media-zoom-control .label { -fx-text-fill: #65438d; }
+.media-zoom-control .slider .track { -fx-background-color: #e7deef; }
+.media-zoom-control .slider .thumb { -fx-background-color: #76549e; }
+.media-zoom-control .zoom-step { -fx-text-fill: #65438d; }
+.media-zoom-viewport { -fx-background-color: #eef1f3; -fx-cursor: open-hand; }
+.media-zoom-viewport:pressed { -fx-cursor: closed-hand; }
+.tabs-actions { -fx-background-radius: 0; -fx-border-radius: 0;
+    -fx-background-color: #ffffff; -fx-border-color: #a9b8c4; }
+
+
+/* Shared rectangular preferences/command-form language. */
+.command-preset-column { -fx-padding: 0 3 0 0; }
+.command-preset-list {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #b6c4ce;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+}
+.command-preset-list .list-cell { -fx-background-color: #fff; -fx-padding: 7 8; }
+.command-preset-list .list-cell:filled:selected {
+    -fx-background-color: #d5e4ee;
+    -fx-border-color: transparent transparent transparent #426b8c;
+    -fx-border-width: 0 0 0 3;
+}
+.command-preset-name { -fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: #28455e; }
+.command-preset-detail { -fx-font-size: 10px; -fx-text-fill: #63788a; }
+.command-preset-row .ikonli-font-icon { -fx-icon-color: #53718a; }
+.command-edit-panel {
+    -fx-padding: 10 12;
+    -fx-background-color: #f8fafb;
+    -fx-border-color: #c5d1d9;
+}
+.command-preset-save { -fx-alignment: center-left; }
+.command-settings-pane .text-field, .command-settings-pane .text-area {
+    -fx-background-radius: 0; -fx-border-radius: 0;
+    -fx-border-color: #acbbc6; -fx-background-color: #fff;
+}
+.command-settings-pane .text-input:focused { -fx-border-color: #426b8c; }
+
+/* Non-modal Find dialog; uses the same style rules as Preferences. */
+.project-search-window { -fx-background-color: #f7f9fa; }
+.search-window-header { -fx-background-color: #e8eef2;
+    -fx-border-color: transparent transparent #bdcbd5 transparent; }
+.search-window-footer { -fx-background-color: #e8eef2;
+    -fx-border-color: #bdcbd5 transparent transparent transparent; }
+.project-search-window .text-field {
+    -fx-background-radius: 0; -fx-border-radius: 0;
+    -fx-background-color: white; -fx-border-color: #a9b8c4;
+}
+.project-search-window .list-view { -fx-background-color: white; }
+.project-search-window .list-cell:filled { -fx-font-family: "Consolas"; -fx-font-size: 11px; }
+.project-search-window .list-cell:filled:selected { -fx-background-color: #d1e2ed;
+    -fx-text-fill: #263747; }
+
+/* Search highlights are borders so typing correctness backgrounds stay visible. */
+.trace-search-hit {
+    -fx-border-color: #e8a628;
+    -fx-border-width: 0 0 2px 0;
+}
+.reference-text-content { -fx-font-family: "Consolas";
+    -fx-font-size: 12px; -fx-background-color: #fff; }
+
+
+/* Consistent shared result rows: commands, file/project Find and future records. */
+.record-list-cell { -fx-padding: 0; -fx-background-color: white; }
+.record-list-cell:filled .record-list-row {
+    -fx-padding: 8 10;
+    -fx-alignment: center-left;
+}
+.record-list-cell:filled:hover:!selected { -fx-background-color: #eff5f9; }
+.record-list-cell:filled:selected {
+    -fx-background-color: #d5e4ee;
+    -fx-border-color: transparent transparent transparent #426b8c;
+    -fx-border-width: 0 0 0 3;
+}
+.record-list-row .ikonli-font-icon { -fx-icon-color: #56748d; }
+.record-list-title {
+    -fx-font-family: "IBM Plex Sans"; -fx-font-size: 12px;
+    -fx-font-weight: bold; -fx-text-fill: #29465c;
+}
+.record-list-subtitle {
+    -fx-font-family: "IBM Plex Sans"; -fx-font-size: 10px;
+    -fx-text-fill: #627a8e;
+}
+.record-list-description {
+    -fx-font-family: "Consolas"; -fx-font-size: 11px;
+    -fx-text-fill: #455d6d;
+}
+.search-results-list .record-list-row { -fx-min-height: 58px; }
+.command-preset-list .record-list-row { -fx-min-height: 43px; }
+.search-results-list .list-cell:filled { -fx-font-family: "IBM Plex Sans"; }
+
+/* Airier explorer toolbar, with a borderless close/clear affordance. */
+/* Slightly more breathing room below the explorer actions; top and icons stay unchanged. */
+.project-tree-header { -fx-padding: 7 9 6 11; }
+.tree-search-row { -fx-padding: 6 10 7 10; }
+.tree-search-clear {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-font-size: 17px;
+    -fx-text-fill: #657c8e;
+    -fx-min-width: 26px;
+    -fx-pref-width: 26px;
+}
+.tree-search-clear:hover {
+    -fx-background-color: #d9e6ee;
+    -fx-border-color: transparent;
+    -fx-text-fill: #2b526c;
+}
+.tree-options-row { -fx-padding: 2 10 8 11; }
+
+
+/* Audio controls: standard recognizable icons, timeline and live spectrum. */
+.media-playback-controls {
+    -fx-background-color: #e8eef2;
+    -fx-border-color: #bdcbd5 transparent transparent transparent;
+    -fx-padding: 10 13;
+    -fx-spacing: 10;
+}
+.media-playback-controls .media-icon-button {
+    -fx-min-width: 33px; -fx-pref-width: 33px;
+    -fx-min-height: 30px; -fx-pref-height: 30px;
+    -fx-alignment: center;
+    -fx-padding: 0;
+    -fx-border-color: #9eafbe;
+    -fx-background-color: #ffffff;
+}
+.media-playback-controls .media-icon-button .ikonli-font-icon {
+    -fx-icon-color: #36536a;
+    -fx-icon-size: 16px;
+}
+.media-playback-controls .media-icon-button:hover {
+    -fx-background-color: #dceaf3;
+    -fx-border-color: #587994;
+}
+.media-playback-controls .media-play-toggle {
+    -fx-background-color: #436a88;
+    -fx-border-color: #365b76;
+}
+.media-playback-controls .media-play-toggle .ikonli-font-icon {
+    -fx-icon-color: #ffffff;
+}
+.media-playback-controls .media-play-toggle:hover {
+    -fx-background-color: #305c7d;
+}
+.media-playback-controls .media-time-label {
+    -fx-text-fill: #425c70;
+    -fx-font-family: "Consolas";
+    -fx-font-size: 11px;
+    -fx-min-width: 78px;
+}
+.media-playback-controls .slider .track {
+    -fx-background-color: #b4c5d0;
+    -fx-background-radius: 0;
+    -fx-pref-height: 4px;
+}
+.media-playback-controls .slider .thumb {
+    -fx-background-color: #4a708d;
+    -fx-background-radius: 1px;
+}
+.media-playback-controls .label .ikonli-font-icon {
+    -fx-icon-color: #547286;
+}
+.media-audio-panel { -fx-padding: 20 28; -fx-spacing: 10; }
+.media-audio-title { -fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #2c4c63; }
+.media-audio-subtitle { -fx-font-size: 11px; -fx-text-fill: #788f9e; }
+.audio-spectrum-pane {
+    -fx-background-color: #f5f8fa;
+    -fx-border-color: #d2dde5;
+    -fx-border-width: 1;
+    -fx-min-height: 120px;
+    -fx-pref-height: 174px;
+}
+
+
+/* Read-only syntax view: virtualized colored lines with stable gutters. */
+.reference-colored-lines {
+    -fx-background-color: #ffffff;
+    -fx-control-inner-background: #ffffff;
+    -fx-padding: 0;
+}
+.reference-colored-lines .list-cell {
+    -fx-background-color: #ffffff;
+    -fx-padding: 0 10px 0 0;
+    -fx-border-color: transparent;
+}
+.reference-colored-lines .list-cell:filled:selected,
+.reference-colored-lines:focused .list-cell:filled:selected {
+    -fx-background-color: #f6f8fa;
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+    -fx-padding: 0 10px 0 0;
+}
+.reference-text-row, .code-line-row {
+    -fx-alignment: center-left;
+    -fx-spacing: 10;
+}
+.code-line-number {
+    -fx-font-family: "Consolas";
+    -fx-text-fill: #78838d;
+    -fx-padding: 0 9px 8px 0;
+    -fx-background-color: #f1f3f5;
+    -fx-background-radius: 0;
+    -fx-border-color: transparent #d5dbe0 transparent transparent;
+    -fx-border-width: 0 1px 0 0;
+}
+.typing-lines .list-cell:filled:selected .code-line-number,
+.reference-colored-lines .list-cell:filled:selected .code-line-number {
+    -fx-background-color: #e6ecef;
+    -fx-text-fill: #465e70;
+}
+.reference-text-flow { -fx-line-spacing: 0; }
+
+/* Deliberately distinct but quiet top bars: graphite/slate vs warm-neutral. */
+.menu-bar {
+    -fx-background-color: #526471;
+    -fx-border-color: transparent transparent #445562 transparent;
+}
+.menu-bar > .container > .menu-button > .label { -fx-text-fill: #f8fafb; }
+.menu-bar > .container > .menu-button:hover,
+.menu-bar > .container > .menu-button:showing,
+.menu-bar > .container > .menu-button:focused {
+    -fx-background-color: #354c5d;
+}
+.menu-bar > .container > .menu-button:hover > .label,
+.menu-bar > .container > .menu-button:showing > .label {
+    -fx-text-fill: #ffffff;
+}
+.tool-bar {
+    -fx-background-color: linear-gradient(to bottom, #d5e1ea 0%, #bdcedb 100%);
+    -fx-border-color: transparent transparent #a8bac7 transparent;
+}
+
+
+/* JavaFX tab overflow: native round notched dropdown replaced by square UI. */
+.tab-pane > .tab-header-area > .control-buttons-tab {
+    -fx-background-color: #cfdae3;
+    -fx-padding: 0 6 0 4;
+}
+.tab-pane > .tab-header-area > .control-buttons-tab > .container {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+.tab-pane > .tab-header-area > .control-buttons-tab > .container > .tab-down-button {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #a9b8c4;
+    -fx-border-width: 1px;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+    -fx-padding: 6 8;
+    -fx-min-width: 28px;
+    -fx-min-height: 26px;
+    -fx-cursor: hand;
+}
+.tab-pane > .tab-header-area > .control-buttons-tab > .container > .tab-down-button:hover {
+    -fx-background-color: #d5e4ee;
+    -fx-border-color: #64839a;
+}
+.tab-pane > .tab-header-area > .control-buttons-tab > .container > .tab-down-button > .arrow {
+    -fx-background-color: #3a5870;
+    -fx-shape: "M0 0 L8 0 L4 4 Z";
+    -fx-padding: 2px 4px;
+}
+
+/* The graph shares the ONE statusbar zoom, but uses a link/network tone. */
+.graph-zoom-control .ikonli-font-icon { -fx-icon-color: #3e7183; }
+.graph-zoom-control .slider .track { -fx-background-color: #d8e8ec; }
+.graph-zoom-control .slider .thumb {
+    -fx-background-color: #4f8494;
+    -fx-border-color: #376b7d;
+}
+.graph-zoom-control .zoom-step,
+.graph-zoom-control .zoom-value { -fx-text-fill: #376879; }
+.dependency-map-toolbar {
+    -fx-background-color: #edf2f5;
+    -fx-border-color: transparent transparent #c0ced8 transparent;
+    -fx-alignment: center-left;
+}
+.dependency-map-heading { -fx-font-size: 12px; -fx-text-fill: #36556b; }
+.dependency-map-reset { -fx-background-radius: 0; -fx-border-radius: 0; }
+.dependency-map-scroll { -fx-background-color: #f8fafb; }
+.dependency-map-status, .dependency-map-note {
+    -fx-text-fill: #566c7b; -fx-font-size: 11px;
+}
+.dependency-map-footer {
+    -fx-background-color: #eaf0f4;
+    -fx-border-color: #bdcbd5 transparent transparent transparent;
+}
+
+
+/* "Solo carpeta": visual focus, not a disabled TreeCell. Ancestor
+   directories remain full-strength for fast navigation/scope switching. */
+.tree-view .tree-cell.reference-outside-scope .reference-tree-row {
+    -fx-opacity: 0.36;
+}
+.tree-view .tree-cell.reference-outside-scope:selected .reference-tree-row,
+.tree-view:focused .tree-cell.reference-outside-scope:selected .reference-tree-row {
+    -fx-opacity: 0.68;
+}
+
+
+/* Reusable vertical radio selector. No container, segmented tiles or extra frame. */
+.exclusive-choice-bar {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+    -fx-padding: 0;
+}
+.exclusive-choice-bar .exclusive-choice {
+    -fx-padding: 6 12 6 2;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+    -fx-text-fill: #35546b;
+    -fx-font-size: 12px;
+    -fx-cursor: hand;
+}
+.exclusive-choice-bar .exclusive-choice:hover {
+    -fx-background-color: #edf3f7;
+}
+.exclusive-choice-bar .exclusive-choice:selected {
+    -fx-background-color: transparent;
+    -fx-font-weight: bold;
+    -fx-text-fill: #244b67;
+}
+.exclusive-choice-bar .exclusive-choice .radio {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #94aabb;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-padding: 4px;
+}
+.exclusive-choice-bar .exclusive-choice:selected .radio {
+    -fx-border-color: #426e8e;
+}
+.exclusive-choice-bar .exclusive-choice:selected .radio .dot {
+    -fx-background-color: #426e8e;
+    -fx-background-radius: 4;
+}
+.dependency-map-mode-label {
+    -fx-font-size: 11px;
+    -fx-text-fill: #536d7e;
+    -fx-padding: 0 2px 0 2px;
+}
+
+
+/* About: one dialog for product information and modest author credit.
+   No oversized profile card and no external image requests. */
+.about-author {
+    -fx-padding: 12 0 4 0;
+    -fx-alignment: center-left;
+}
+.about-author-heading {
+    -fx-text-fill: #687f8f;
+    -fx-font-size: 10px;
+    -fx-font-weight: bold;
+}
+.about-author-name {
+    -fx-text-fill: #234962;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+.about-author-role {
+    -fx-text-fill: #415e71;
+    -fx-font-size: 12px;
+}
+.about-author-link {
+    -fx-text-fill: #416f8f;
+    -fx-font-size: 11px;
+}
+.about-author-portrait {
+    -fx-effect: dropshadow(gaussian, rgba(34,58,78,0.18), 5, 0, 0, 1);
+}
+
+
+/* Transversal desktop checkboxes. Applied by AppControls across dialogs,
+   practice rules, sidebar and preferences: one common hit area and appearance. */
+.app-checkbox { -fx-text-fill: #355167; -fx-font-size: 12px; -fx-graphic-text-gap: 7px; }
+.app-checkbox .box {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #92a8b9;
+    -fx-border-width: 1px;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+    -fx-min-width: 15px;
+    -fx-min-height: 15px;
+    -fx-pref-width: 15px;
+    -fx-pref-height: 15px;
+}
+.app-checkbox:hover .box { -fx-border-color: #3f6d8d; -fx-background-color: #f0f6fa; }
+.app-checkbox:focused .box { -fx-border-color: #315f83; -fx-border-width: 2px; }
+.app-checkbox:selected .box { -fx-background-color: #e5f0f6; -fx-border-color: #4d7897; }
+.app-checkbox:selected .mark { -fx-background-color: #1f697d; }
+.app-checkbox:disabled { -fx-opacity: 0.48; }
+.search-filter-options { -fx-padding: 1 0 1 0; }
+.search-filter-options .app-checkbox { -fx-font-size: 11.5px; }
+
+/* Graph camera renders only the visible viewport; never allocates a bitmap
+   the size of the virtual (unbounded) map. */
+.dependency-map-viewport { -fx-background-color: #f8fafb; }
+
+/* Visible safety boundary: commands run in the original project, never virtual. */
+.console-real-files-warning {
+    -fx-background-color: #fff8e6;
+    -fx-border-color: #dcc79b transparent transparent transparent;
+    -fx-padding: 5px 12px;
+    -fx-font-size: 11px;
+    -fx-text-fill: #76572b;
+}
+
+
+/* Empty editor surface: no tabs, original brand icon in muted grayscale. */
+.document-workspace { -fx-background-color: #ffffff; }
+.empty-workspace {
+    -fx-background-color: #ffffff;
+    -fx-padding: 26px 30px;
+}
+.empty-workspace-heading {
+    -fx-text-fill: #526477;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+.empty-workspace-hint {
+    -fx-text-fill: #536b7d;
+    -fx-font-size: 12px;
+    -fx-text-alignment: center;
+    -fx-alignment: center;
+    -fx-max-width: 340px;
+}
+
+/* Always-present stopwatch follows the application's square control language. */
+.status-stopwatch { -fx-alignment: center-left; -fx-spacing: 5px; }
+.status-stopwatch .stopwatch-value {
+    -fx-font-family: "Consolas";
+    -fx-font-size: 12px;
+    -fx-text-fill: #2c4a60;
+    -fx-font-weight: bold;
+}
+.status-stopwatch .stopwatch-action {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+    -fx-padding: 3px 5px;
+    -fx-min-width: 22px;
+    -fx-min-height: 22px;
+}
+.status-stopwatch .stopwatch-action:hover,
+.status-stopwatch .stopwatch-action:focused {
+    -fx-background-color: #dbe6ed;
+}
+.status-stopwatch .stopwatch-action .ikonli-font-icon {
+    -fx-icon-size: 12px;
+    -fx-icon-color: #38566d;
+}
+
+
+/* Maintain subdued icon colors when hovering pale desktop controls.
+   Exclude video primary play button: it intentionally uses white on dark. */
+.tool-bar .toolbar-action:hover .ikonli-font-icon,
+.practice-rules-button:hover .ikonli-font-icon,
+.project-tree-header .tree-header-action:hover .ikonli-font-icon,
+.tab-pane .tab:hover .ikonli-font-icon,
+.context-menu .menu-item:focused .ikonli-font-icon,
+.prefs-navigation .list-cell:filled:hover .ikonli-font-icon {
+    -fx-icon-color: #344f66;
+}
+
+/* Preferences: all active navigation states retain white icons on slate. */
+.prefs-navigation .list-cell .ikonli-font-icon {
+    -fx-icon-color: #38566b;
+}
+.prefs-navigation .list-cell:filled:selected .ikonli-font-icon,
+.prefs-navigation:focused .list-cell:filled:selected .ikonli-font-icon,
+.prefs-navigation .list-cell:filled:selected:hover .ikonli-font-icon {
+    -fx-icon-color: #ffffff;
+}
+
+/* Two independent project/consultation explorers, one expanded at a time. */
+.project-tree-header { -fx-min-height: 29px; }
+.consultation-folder-tree { -fx-background-color: #f9fafb; }
+.consultation-tree-hint { -fx-text-fill: #516a7d; -fx-font-size: 10px; }
+.about-license-note { -fx-font-size: 11px; -fx-text-fill: #52697d; }
+.accordion > .titled-pane > .title {
+    -fx-background-color: linear-gradient(to bottom, #e0e9ef 0%, #ccdae5 100%);
+    -fx-border-color: transparent transparent #aabdc9 transparent;
+    -fx-background-radius: 0;
+    -fx-padding: 6px 9px;
+    -fx-font-size: 14px;
+    -fx-text-fill: #29485c;
+}
+.accordion > .titled-pane:expanded > .title {
+    -fx-font-weight: bold;
+}
+/* Let the action strip touch the full available explorer width; each inner
+   search/filter row retains its own spacing independently. */
+.accordion > .titled-pane > .content {
+    -fx-background-color: #f6f8fa;
+    -fx-background-insets: 0;
+    -fx-border-color: transparent;
+    -fx-border-insets: 0;
+    -fx-padding: 0;
+}
+.main-project-section {
+    -fx-padding: 0;
+    -fx-spacing: 0;
+}
+.command-console-pane .console-header {
+    -fx-border-color: transparent transparent #aabdc9 transparent;
+}
+.product-dialog .button-bar {
+    -fx-border-color: #a9bac8 transparent transparent transparent;
+}
+/* Reserved accent for About confirmation; content panels remain light. */
+.about-dialog .button-bar .button {
+    -fx-background-color: #4b6478;
+    -fx-border-color: #38546b;
+    -fx-text-fill: #ffffff;
+}
+.about-dialog .button-bar .button:hover {
+    -fx-background-color: #35536c;
+    -fx-border-color: #29465d;
+}
+
+/* One continuous background for all text/code rows, including the gutter.
+   JavaFX's default ListCell background insets used to create white hairlines. */
+.typing-lines .list-cell,
+.reference-colored-lines .list-cell,
+.typing-lines .list-cell:filled:selected,
+.reference-colored-lines .list-cell:filled:selected,
+.typing-lines .list-cell:empty,
+.reference-colored-lines .list-cell:empty {
+    -fx-background-insets: 0;
+    -fx-border-insets: 0;
+    -fx-border-width: 0;
+    -fx-padding: 0;
+}
+.typing-line-glyphs, .reference-text-row, .code-line-row {
+    -fx-background-insets: 0;
+    -fx-border-width: 0;
+    -fx-padding: 0;
+}
+/* Label text sits below the TextFlow glyphs under JavaFX's default
+   label baseline. Bottom content inset lifts only the digits, not the
+   continuous full-height gutter background or its borders. */
+.code-line-number {
+    -fx-background-insets: 0;
+    -fx-border-insets: 0;
+    -fx-padding: 0 9px 8px 0;
+}
+
+/* Large references: logical rows rendered through ListView VirtualFlow.
+   Styling mirrors TreeView without materializing thousands of TreeItems. */
+.reference-explorer-host { -fx-background-color: #f6f8fa; }
+/* Indexing an unopened reference must not resemble an empty, finished tree.
+   Keep a readable loading indicator in the explorer itself, rather than
+   relying solely on the tiny activity icon in the project toolbar. */
+.explorer-loading {
+    -fx-background-color: rgba(246, 248, 250, 0.94);
+    -fx-alignment: center;
+    -fx-spacing: 10px;
+    -fx-padding: 18px;
+}
+.explorer-loading .progress-indicator { -fx-progress-color: #4d7895; }
+.explorer-loading-label {
+    -fx-text-fill: #3b5870;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+}
+.reference-flat-explorer {
+    -fx-background-color: #f6f8fa;
+    -fx-border-color: transparent;
+    -fx-padding: 0;
+}
+.reference-flat-explorer .list-cell {
+    -fx-background-color: #ffffff;
+    -fx-padding: 0 4 0 1;
+}
+.reference-flat-explorer .list-cell:filled:selected,
+.reference-flat-explorer:focused .list-cell:filled:selected {
+    -fx-background-color: #c9dbe8;
+}
+.reference-flat-explorer .virtual-tree-disclosure {
+    -fx-font-size: 12px;
+    -fx-padding: 0;
+    -fx-background-color: transparent;
+    -fx-text-fill: #475c6d;
+    -fx-border-color: transparent;
+}
+.reference-flat-explorer .virtual-tree-disclosure:hover {
+    -fx-background-color: #dce8f0;
+}
+.reference-flat-explorer .reference-tree-row { -fx-alignment: center-left; }
+.reference-flat-explorer .list-cell.reference-outside-scope .reference-tree-row {
+    -fx-opacity: 0.36;
+}
+.reference-flat-explorer .list-cell.reference-outside-scope:selected .reference-tree-row {
+    -fx-opacity: 0.68;
 }

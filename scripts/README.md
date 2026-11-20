@@ -16,7 +16,7 @@ Desde la carpeta descomprimida:
 
 1. Ejecuta scripts\diagnostico.bat.
 2. El programa busca Temurin 21 y Maven, guarda sus versiones y ejecuta **mvn clean verify**.
-3. Si pasan las pruebas, inicia CodeTrace con **mvn javafx:run**.
+3. Si pasan las pruebas, crea automáticamente `target\qa-preview` con ejemplos de Markdown, imágenes, SVG y multimedia (si FFmpeg está disponible), e inicia CodeTrace con **mvn javafx:run**. Abre esa carpeta de QA desde Archivo → Abrir proyecto para comprobar las vistas.
 4. Puedes probar la aplicación; ciérrala cuando quieras finalizar.
 5. El script crea un ZIP en reports\ y abre el Explorador de Windows seleccionándolo.
 
@@ -35,3 +35,13 @@ El ZIP incluye resultado.txt, registros de Maven, informes JUnit y una captura d
 El diagnóstico **no adjunta los proyectos fuente**, las sesiones *.ctrace ni otros archivos personales. Sin embargo, los logs y versiones pueden revelar rutas de usuario y la captura puede mostrar lo que aparece dentro o encima de la ventana. **Revisa el ZIP antes de subirlo al chat**.
 
 Si faltan herramientas o falla la compilación, el informe se genera de todos modos, con los datos disponibles y un mensaje de error. El código de salida será distinto de cero en ese caso.
+
+## Auditoría de biblioteca de práctica v4
+
+Para revisar las 387 referencias, sus carpetas y cabeceras sin ejecutar código ni modificar originales, usa:
+
+```powershell
+.\scripts\auditar-biblioteca.ps1
+```
+
+Para compilar con JDK 21 y ejecutar clientes seleccionados de grafos y patrones, agrega `-EjecutarClientes`. Los archivos compilados van a una carpeta temporal única que se elimina al terminar. Esta prueba no sustituye la verificación Maven ni la aceptación visual del programa.

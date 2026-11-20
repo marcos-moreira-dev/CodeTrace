@@ -1,0 +1,40 @@
+// CodeTrace | Referencia: C# 12 / .NET 8
+// Compilar/Comprobar: dotnet new console -o $env:TEMP\ct-csharp; Copy-Item 01-fundamentos/eventos-y-delegados/eventos_y_delegados.cs $env:TEMP\ct-csharp\Program.cs -Force; dotnet build $env:TEMP\ct-csharp
+// Ejecutar: dotnet run --project $env:TEMP\ct-csharp
+
+using System;
+/**
+ * Cliente de delegados y eventos en C#.
+ * Un delegate tipa una función. Un event permite a otros componentes
+ * suscribirse sin poder emitir desde fuera; es un mecanismo idiomático
+ * para el patrón Observer. No se necesitan frameworks de interfaz.
+ */
+public sealed class Sensor
+{
+    public event Action<int>? NuevaLectura;
+    public void Emitir(int lectura) => NuevaLectura?.Invoke(lectura);
+}
+public static class Program
+{
+    public static void Main()
+    {
+        var sensor = new Sensor();
+        sensor.NuevaLectura += valor => Console.WriteLine("Lectura: " + valor);
+        sensor.Emitir(28);
+    }
+}
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   $d=Join-Path $env:TEMP "ct-ejemplo-csharp"
+ *   if (Test-Path $d) { Remove-Item $d -Recurse -Force }
+ *   dotnet new console -f net8.0 -o $d --force
+ *   Remove-Item "$d\Program.cs" -ErrorAction SilentlyContinue
+ *   Copy-Item .\01-fundamentos\eventos-y-delegados\*.cs $d -Force
+ *   dotnet run --project $d
+ * Salida esperada:
+ *   Lectura: 28
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

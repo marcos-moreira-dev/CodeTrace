@@ -11,13 +11,15 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import org.kordamp.ikonli.javafx.FontIcon;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
-/** Editable command presets on the Preferences > Comandos page. */
+/** Editable command presets on the Preferences > Comandos page.  * <p><strong>Engineering rationale.</strong> Saved commands are user-managed configuration with a real-filesystem security consequence. This pane edits presets and explanations but does not execute them, so applying preferences cannot accidentally launch a process.</p>
+*/
 public final class CommandSettingsPane extends VBox {
     private final ObservableList<Preset> profiles;
     private final ListView<Preset> list = new ListView<>();
@@ -36,13 +38,18 @@ public final class CommandSettingsPane extends VBox {
         heading.getStyleClass().add("prefs-section-heading");
 
         list.setItems(profiles);
-        list.setPrefWidth(175);
-        list.setMinWidth(175);
-        list.setMaxWidth(175);
+        list.getStyleClass().add("command-preset-list");
+        list.setCellFactory(view -> new RecordListCell<>(preset ->
+                new RecordListCell.Content(preset.name(), preset.shell().label(),
+                        null, "fth-terminal")));
+        list.setPrefWidth(205);
+        list.setMinWidth(190);
+        list.setMaxWidth(225);
         list.setMaxHeight(Double.MAX_VALUE);
         VBox.setVgrow(list, Priority.ALWAYS);
 
-        Button create = new Button("Nuevo");
+        Button create = new Button("Nuevo", new FontIcon("fth-plus"));
+        create.getStyleClass().add("command-add");
         create.setOnAction(event -> {
             list.getSelectionModel().clearSelection();
             title.clear();
@@ -52,7 +59,8 @@ public final class CommandSettingsPane extends VBox {
             validation.setText("");
             title.requestFocus();
         });
-        Button delete = new Button("Eliminar");
+        Button delete = new Button("Eliminar", new FontIcon("fth-trash-2"));
+        delete.getStyleClass().add("command-remove");
         delete.setOnAction(event -> {
             Preset selected = list.getSelectionModel().getSelectedItem();
             if (selected != null) profiles.remove(selected);
@@ -62,6 +70,7 @@ public final class CommandSettingsPane extends VBox {
             validation.setText("");
         });
         VBox controls = new VBox(8, list, new HBox(7, create, delete));
+        controls.getStyleClass().add("command-preset-column");
 
         shell.getItems().setAll(Shell.values());
         shell.setValue(Shell.preferred());
@@ -74,8 +83,12 @@ public final class CommandSettingsPane extends VBox {
         validation.getStyleClass().add("prefs-feedback");
         validation.setWrapText(true);
 
-        Button savePreset = new Button("Guardar comando");
+        Button savePreset = new Button("Agregar comando", new FontIcon("fth-check"));
+        savePreset.getStyleClass().add("command-preset-save");
         savePreset.setOnAction(event -> commitDraft());
+        list.getSelectionModel().selectedItemProperty().addListener(
+                (obs, previous, selected) -> savePreset.setText(
+                        selected == null ? "Agregar comando" : "Actualizar comando"));
 
         VBox form = new VBox(8,
                 field("Nombre", title),
@@ -85,6 +98,7 @@ public final class CommandSettingsPane extends VBox {
                 savePreset, validation);
         form.setFillWidth(true);
         HBox.setHgrow(form, Priority.ALWAYS);
+        form.getStyleClass().add("command-edit-panel");
 
         list.getSelectionModel().selectedItemProperty().addListener(
                 (observable, previous, chosen) -> {
@@ -136,7 +150,7 @@ public final class CommandSettingsPane extends VBox {
                 profiles.add(preset);
             }
             list.getSelectionModel().select(preset);
-            validation.setText("Comando preparado para guardar.");
+            validation.setText("Preparado. Pulsa Aplicar o Aceptar para guardar.");
             return true;
         } catch (IllegalArgumentException error) {
             validation.setText("Indica nombre e instrucción válidos (máximo 3.000 caracteres).");

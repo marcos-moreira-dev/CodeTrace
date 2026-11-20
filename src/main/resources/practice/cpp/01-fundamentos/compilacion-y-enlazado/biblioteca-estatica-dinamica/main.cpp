@@ -1,0 +1,48 @@
+// CodeTrace | Referencia: C++20 / GCC g++ 13+ / Linux o WSL
+// Compilar: sh compilar.sh
+#include "operaciones.hpp"
+#include <iostream>
+
+/**
+ * Cliente de biblioteca estática (.a) y compartida (.so) C++20.
+ *
+ * Un .hpp declara la API pública, el .cpp define las funciones y
+ * main.cpp únicamente las consume. La declaración puede incluirse
+ * múltiples veces, pero cada función no-inline tiene UNA definición
+ * (One Definition Rule). El enlazador une unidades de traducción.
+ *
+ * Biblioteca estática: ar empaqueta .o y el enlazado incorpora los
+ * símbolos necesarios. Biblioteca compartida: g++ -shared -fPIC
+ * produce una .so que un cargador localizará al ejecutar.
+ *
+ * A diferencia de C, el enlazado C++ puede codificar nombres,
+ * sobrecargas y namespaces mediante name mangling. La ABI binaria
+ * estable entre compiladores/versiones NO se garantiza por este ejemplo;
+ * exportar una API C con extern "C" sería una decisión adicional.
+ *
+ * Las dos variantes devuelven el mismo resultado y se compilan en
+ * un directorio temporal de una copia, sin modificar CodeTrace.
+ */
+int main() {
+    const int s = didactico::sumar(3, 4);
+    const int p = didactico::multiplicar(3, 4);
+    std::cout << "Suma=" << s << ", producto=" << p << '\n';
+    return (s == 7 && p == 12) ? 0 : 1;
+}
+
+/*
+ * Salida esperada de consola (exacta para los datos del cliente):
+ * Suma=7, producto=12
+ * Verificacion: exit code 0 y ninguna excepcion inesperada.
+ */
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   g++ -std=c++20 -Wall -Wextra .\01-fundamentos\compilacion-y-enlazado\biblioteca-estatica-dinamica\*.cpp -o "$env:TEMP\ct-ejemplo-cpp.exe"
+ *   & "$env:TEMP\ct-ejemplo-cpp.exe"
+ * Salida esperada:
+ *   Suma=7, producto=12
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

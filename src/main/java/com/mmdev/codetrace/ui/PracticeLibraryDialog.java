@@ -19,7 +19,8 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Window;
 
-/** A small, conventional picker for bundled language practice projects. */
+/** A small, conventional picker for bundled language practice projects.  * <p><strong>Engineering rationale.</strong> Built-in exercises are chosen as reference packs, not generated as mutable source-code projects. The selection dialog controls navigation and accessibility while the library service owns packaged content and safe extraction.</p>
+*/
 public final class PracticeLibraryDialog {
     private PracticeLibraryDialog() {}
 
@@ -47,7 +48,7 @@ public final class PracticeLibraryDialog {
                 }
                 Label title = new Label(pack.name());
                 title.getStyleClass().add("library-pack-title");
-                Label count = new Label(library.size(pack) + " ejercicios");
+                Label count = new Label(library.size(pack) + " archivos");
                 count.getStyleClass().add("library-pack-count");
                 javafx.scene.layout.Region fill = new javafx.scene.layout.Region();
                 HBox.setHgrow(fill, Priority.ALWAYS);
@@ -62,7 +63,7 @@ public final class PracticeLibraryDialog {
         Label title = new Label("Biblioteca de práctica");
         title.getStyleClass().add("prefs-section-heading");
         Label detail = new Label(
-                "Ejercicios de código incluidos en CodeTrace. Funciona sin conexión.");
+                "Código incluido y disponible sin conexión. Un ejercicio puede contener varios archivos.");
         detail.getStyleClass().add("prefs-feedback");
         detail.setWrapText(true);
 

@@ -1,7 +1,10 @@
 package com.mmdev.codetrace.ui;
 
 import com.mmdev.codetrace.app.AppSettings;
+import com.mmdev.codetrace.app.FontResources;
+import com.mmdev.codetrace.reference.GraphLayoutEngine;
 import com.mmdev.codetrace.commands.ProjectCommandStore;
+import com.mmdev.codetrace.commands.CommandWarningPreferences;
 import com.mmdev.codetrace.commands.ProjectCommandStore.Preset;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -35,7 +38,8 @@ import org.kordamp.ikonli.javafx.FontIcon;
 /**
  * Desktop Preferences: persistent navigation on the left, functional settings
  * on the right, and conventional Apply/Cancel/OK actions.
- */
+  * <p><strong>Engineering rationale.</strong> Settings are edited transactionally: Apply persists without closing, Accept applies and closes, and Cancel abandons uncommitted changes. Shared navigation styles and warning policies belong here so users can restore deliberately suppressed notices.</p>
+*/
 public final class PreferencesWindow {
     private PreferencesWindow() {
     }
@@ -103,7 +107,7 @@ public final class PreferencesWindow {
         root.setTop(header);
 
         ListView<String> navigation = new ListView<>(
-                FXCollections.observableArrayList("Editor", "Ventana", "Sonido", "Comandos"));
+                FXCollections.observableArrayList("Editor", "Ventana", "Grafo", "Sonido", "Avisos", "Comandos"));
         navigation.getStyleClass().add("prefs-navigation");
         navigation.setPrefWidth(168);
         navigation.setMinWidth(168);
@@ -119,11 +123,13 @@ public final class PreferencesWindow {
                     FontIcon icon = new FontIcon(switch (item) {
                         case "Editor" -> "fth-type";
                         case "Ventana" -> "fth-layout";
+                        case "Grafo" -> "fth-share-2";
                         case "Sonido" -> "fth-volume-2";
+                        case "Avisos" -> "fth-alert-triangle";
                         default -> "fth-terminal";
                     });
                     icon.setIconSize(16);
-                    icon.setIconColor(javafx.scene.paint.Color.web("#4A6076"));
+                    // Icon color is owned by stylesheet selection/hover states.
                     setGraphic(icon);
                 }
             }
@@ -189,27 +195,62 @@ public final class PreferencesWindow {
         opacity.valueProperty().addListener((obs, previous, value) -> updatePreview.run());
         updatePreview.run();
 
-        CheckBox turbo = new CheckBox("Omitir automáticamente símbolos y puntuación");
+        CheckBox turbo = AppControls.checkBox("Omitir automáticamente símbolos y puntuación");
         turbo.setSelected(current.turboMode());
 
+        Button recommendedFont = new Button("Usar IBM Plex Mono");
+        recommendedFont.setTooltip(new Tooltip(
+                "Fuente recomendada de CodeTrace. No instala nada en Windows."));
+        recommendedFont.setDisable(!FontResources.bundledCodeAvailable());
+        recommendedFont.setOnAction(event ->
+                families.setValue(FontResources.codeFamily()));
         VBox editorPanel = section("Editor");
         editorPanel.getChildren().addAll(
                 field("Fuente de código", families),
+                recommendedFont,
                 field("Tamaño de letra", new HBox(10, size, sizeValue)),
                 field("Opacidad de la plantilla", opacityRow),
                 groupHeading("Práctica"), turbo,
                 groupHeading("Vista previa"), preview);
 
-        CheckBox explorer = new CheckBox("Mostrar explorador de proyectos");
+        CheckBox explorer = AppControls.checkBox("Mostrar explorador de proyectos");
         explorer.setSelected(current.showExplorer());
         VBox windowPanel = section("Ventana");
         windowPanel.getChildren().addAll(groupHeading("Paneles"), explorer);
 
-        CheckBox sounds = new CheckBox("Reproducir sonidos al escribir");
+        // Layout is an application preference, not permanent map toolbar clutter.
+        ExclusiveChoiceBar<GraphLayoutEngine.Mode> graphLayout =
+                new ExclusiveChoiceBar<>(
+                        List.of(
+                                new ExclusiveChoiceBar.Choice<>(GraphLayoutEngine.Mode.ORGANIZED,
+                                        "Organizado", "Agrupa archivos conectados y evita etiquetas superpuestas"),
+                                new ExclusiveChoiceBar.Choice<>(GraphLayoutEngine.Mode.GRID,
+                                        "Cuadrícula", "Distribución simple en filas y columnas")),
+                        current.graphLayoutMode(), mode -> {});
+        graphLayout.getStyleClass().add("prefs-graph-layout");
+        graphLayout.setMaxWidth(javafx.scene.layout.Region.USE_PREF_SIZE);
+        Label graphExplanation = new Label(
+                "Organizado distribuye los archivos según sus dependencias. "
+                + "La opción no modifica los imports ni los archivos originales. "
+                + "Puedes arrastrar nodos y guardar su posición en la sesión.");
+        graphExplanation.setWrapText(true);
+        graphExplanation.getStyleClass().add("prefs-feedback");
+        VBox graphPanel = section("Mapa de dependencias");
+        graphPanel.getChildren().addAll(
+                groupHeading("Distribución inicial"), graphLayout,
+                graphExplanation);
+
+        CheckBox sounds = AppControls.checkBox("Reproducir sonidos al escribir");
         sounds.setSelected(current.typingSounds());
-        CheckBox completionSound = new CheckBox(
-                "Reproducir sonido de éxito al completar cada archivo");
+        CheckBox completionSound = AppControls.checkBox(
+                "Reproducir sonido al terminar un archivo");
         completionSound.setSelected(current.completionSound());
+        CheckBox completionDialog = AppControls.checkBox(
+                "Mostrar felicitación y estadísticas al terminar un archivo");
+        completionDialog.setSelected(current.completionDialog());
+        completionDialog.setTooltip(new javafx.scene.control.Tooltip(
+                "Muestra aciertos, tiempo y velocidad media al finalizar "
+                + "un ejercicio de mecanografía; no afecta a los multimedia."));
         Button sampleCorrect = new Button("Probar acierto");
         Button sampleError = new Button("Probar error");
         Label sampleStatus = new Label();
@@ -228,6 +269,7 @@ public final class PreferencesWindow {
         soundPanel.getChildren().addAll(
                 groupHeading("Mecanografía"), sounds,
                 groupHeading("Finalización de archivos"), completionSound,
+                completionDialog,
                 groupHeading("Escuchar muestras"), previews, sampleStatus);
 
         CommandSettingsPane commandEditor = null;
@@ -251,6 +293,34 @@ public final class PreferencesWindow {
             commandsPage.getStyleClass().add("prefs-section");
         }
 
+        // One persistent choice controls both the warning dialog opt-out
+        // and restoration here; no redundant second "restore" action.
+        CheckBox realFilesWarning = AppControls.checkBox(
+                "Confirmar antes de ejecutar comandos sobre archivos reales");
+        realFilesWarning.getStyleClass().add("prefs-real-file-warning");
+        realFilesWarning.setSelected(CommandWarningPreferences.mustConfirm());
+        realFilesWarning.setTooltip(new Tooltip(
+                "Se desactiva al marcar No volver a mostrar en el aviso. "
+                + "Vuelve a activarla aquí con Aplicar o Aceptar."));
+        Label safetyNote = new Label(
+                "Los comandos se ejecutan sobre archivos del proyecto original, "
+                + "no sobre la reconstrucción virtual. Si marcas «No volver a mostrar "
+                + "esta advertencia» en el diálogo, esta casilla se desactiva. "
+                + "Puedes reactivarla aquí cuando quieras; guarda con Aplicar o Aceptar.");
+        safetyNote.setWrapText(true);
+        safetyNote.getStyleClass().add("prefs-feedback");
+        CheckBox readOnlyNotice = AppControls.checkBox(
+                "Mostrar aviso al abrir archivos solo de consulta");
+        readOnlyNotice.getStyleClass().add("read-only-consultation-notice");
+        readOnlyNotice.setSelected(current.readOnlyNotice());
+        readOnlyNotice.setTooltip(new Tooltip(
+                "Cuando está desactivado, los archivos de solo lectura se abren "
+                + "directamente sin interrumpir con una ventana informativa."));
+        VBox noticesPanel = section("Avisos");
+        noticesPanel.getChildren().addAll(
+                groupHeading("Confirmaciones de seguridad"),
+                realFilesWarning, safetyNote,
+                groupHeading("Avisos informativos"), readOnlyNotice);
         final javafx.scene.Node stableCommandsPage = commandsPage;
 
         BorderPane sectionContent = new BorderPane();
@@ -259,7 +329,9 @@ public final class PreferencesWindow {
         navigation.getSelectionModel().selectedItemProperty().addListener(
                 (obs, previous, selected) -> sectionContent.setCenter(
                         "Ventana".equals(selected) ? windowPanel
+                                : "Grafo".equals(selected) ? graphPanel
                                 : "Sonido".equals(selected) ? soundPanel
+                                : "Avisos".equals(selected) ? noticesPanel
                                 : "Comandos".equals(selected) ? stableCommandsPage : editorPanel));
         navigation.getSelectionModel().selectFirst();
         root.setLeft(navigation);
@@ -278,12 +350,14 @@ public final class PreferencesWindow {
                     return false;
                 }
             }
+            CommandWarningPreferences.setMustConfirm(realFilesWarning.isSelected());
             onApply.accept(new AppSettings(
                     families.getValue() == null ? current.fontFamily() : families.getValue(),
                     (int) Math.round(size.getValue()),
                     explorer.isSelected(), current.keyboardLayout(), sounds.isSelected(),
                     (int) Math.round(opacity.getValue()), turbo.isSelected(),
-                    completionSound.isSelected()));
+                    completionSound.isSelected(), completionDialog.isSelected(),
+                    readOnlyNotice.isSelected(), graphLayout.selected()));
             return true;
         };
         Button accept = new Button("Aceptar");

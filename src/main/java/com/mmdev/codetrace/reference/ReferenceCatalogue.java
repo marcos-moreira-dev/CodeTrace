@@ -15,13 +15,12 @@ import java.util.Set;
 
 /**
  * An index of a reference folder, scanned on a background worker.
- * Hashes cover all regular files; typeable counts cover compatible UTF-8 text.
- */
+ * Only supported, bounded UTF-8 practice files are hashed. Other regular
+ * files retain their size and path for navigation, with an empty SHA-256 and
+ * no typeable units. Never load complete multimedia blobs just for progress.
+  * <p><strong>Engineering rationale.</strong> This structure supplies semantic progress facts such as eligible character counts and source fingerprints; it does not own the virtual text entered by the student. The scan is bounded, read-only and asynchronous because hashing every file or preloading multimedia would make large-project startup prohibitively expensive.</p>
+*/
 public final class ReferenceCatalogue {
-    private static final Set<String> IGNORED_FOLDERS = Set.of(
-            ".git", ".idea", ".local", "target", "node_modules",
-            "build", "dist", "__pycache__", ".venv");
-
     public record FileInfo(String sha256, long bytes, int typeableUnits) {
         public boolean typeable() {
             return typeableUnits >= 0;
@@ -122,7 +121,7 @@ public final class ReferenceCatalogue {
                 if (info.typeableUnits() == 0) continue;
                 TypingSession session = typing.get(path);
                 if (session != null && info.sha256().equals(originalHashes.get(path))) {
-                    result += Math.min(info.typeableUnits(), session.correctCount());
+                    result += Math.min(info.typeableUnits(), session.correctVisibleCount());
                 }
             }
             return result;
@@ -133,6 +132,8 @@ public final class ReferenceCatalogue {
     }
 
     public static Snapshot scan(Path referenceRoot) throws IOException {
+        abortIfInterrupted();
+        long scanStart = PerformanceProbe.begin();
         if (!Files.isDirectory(referenceRoot)) {
             throw new IOException("Reference directory is missing");
         }
@@ -141,8 +142,9 @@ public final class ReferenceCatalogue {
             @Override
             public FileVisitResult preVisitDirectory(Path dir,
                                                      BasicFileAttributes attributes) {
+                abortIfInterrupted();
                 if (!dir.equals(referenceRoot)
-                        && IGNORED_FOLDERS.contains(dir.getFileName().toString())) {
+                        && ReferenceScanRules.generatedName(dir.getFileName().toString())) {
                     return FileVisitResult.SKIP_SUBTREE;
                 }
                 return FileVisitResult.CONTINUE;
@@ -150,21 +152,28 @@ public final class ReferenceCatalogue {
 
             @Override
             public FileVisitResult visitFile(Path file, BasicFileAttributes attributes) {
+                abortIfInterrupted();
                 if (!attributes.isRegularFile()) {
                     return FileVisitResult.CONTINUE;
                 }
                 try {
-                    String sha = ReferenceFingerprint.sha256(file);
-                    int units = -1; // Binary, unsupported, or too large for this editor.
-                    TextPreview.Result preview = PracticeEligibility.supports(file)
-                            ? TextPreview.load(file) : new TextPreview.Result(null,
-                                    "Tipo de archivo no incluido en la práctica.");
-                    if (preview.readable()) {
-                        units = new TypingSession(preview.content()).size();
-                    }
                     String relative = referenceRoot.relativize(file)
                             .toString().replace('\\', '/');
-                    files.put(relative, new FileInfo(sha, attributes.size(), units));
+                    // Binary/multimedia files remain visible in the catalogue,
+                    // but never require a full SHA-256 pass just for progress.
+                    if (!PracticeEligibility.supports(file)) {
+                        files.put(relative, new FileInfo("", attributes.size(), -1));
+                        return FileVisitResult.CONTINUE;
+                    }
+                    // One bounded read validates UTF-8 and hashes the same bytes.
+                    // Empty SHA means unavailable/non-practicable source.
+                    TextPreview.Analysed analysed = TextPreview.loadWithHash(file);
+                    TextPreview.Result preview = analysed.preview();
+                    int units = preview.readable()
+                            ? new TypingSession(preview.content()).visibleUnitCount()
+                            : -1;
+                    files.put(relative, new FileInfo(analysed.sha256(),
+                            attributes.size(), units));
                 } catch (IOException | SecurityException ignored) {
                     // An unreadable file does not block indexing other files.
                 }
@@ -176,6 +185,13 @@ public final class ReferenceCatalogue {
                 return FileVisitResult.CONTINUE;
             }
         });
+        abortIfInterrupted();
+        PerformanceProbe.finish("reference-catalogue", scanStart, files.size());
         return new Snapshot(files);
+    }
+
+    private static void abortIfInterrupted() {
+        if (Thread.currentThread().isInterrupted())
+            throw new java.util.concurrent.CancellationException("Reference scan cancelled");
     }
 }

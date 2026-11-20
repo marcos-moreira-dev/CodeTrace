@@ -11,15 +11,16 @@ import java.util.Objects;
 /**
  * Recreation and transcription are separate achievements. The selected progress
  * scope affects folder completion, not whether an individual file is finished.
- */
+  * <p><strong>Engineering rationale.</strong> The existence of a virtual directory or file is different from having correctly transcribed its contents. The state calculation combines physical reference eligibility, virtual creation, typing completion, file fingerprints and the selected scope, so the UI can display truthful progress without modifying source files.</p>
+*/
 public final class ReconstructionStatus {
     public enum State { NOT_APPLICABLE, PENDING, CREATED, COMPLETED }
 
     private ReconstructionStatus() {}
 
     public static boolean entirelyCorrect(TypingSession session) {
-        return session != null && session.size() > 0
-                && session.correctCount() == session.size();
+        return session != null && session.visibleUnitCount() > 0
+                && session.correctVisibleCount() == session.visibleUnitCount();
     }
 
     public static Map<String, State> calculate(VirtualWorkspace workspace,

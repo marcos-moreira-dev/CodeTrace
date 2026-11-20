@@ -1,0 +1,50 @@
+package com.mmdev.codetrace.reference;
+
+import java.lang.management.ManagementFactory;
+import java.util.Locale;
+import java.util.logging.Logger;
+
+/**
+ * Opt-in, privacy-preserving wall-clock measurement of read-only operations.
+ *
+ * <p>Enable with JVM property {@code -Dcodetrace.profile=true}. When disabled,
+ * no timestamps or formatted log messages are produced. Log only counts,
+ * never absolute paths, source code or filenames. For CPU and file-I/O detail
+ * use Java Flight Recorder instead of interpreting timings as benchmarks.</p>
+  * <p><strong>Engineering rationale.</strong> Profiling is optional observability for expensive scans, expansions and JavaFX frame gaps. Keeping instrumentation behind a disabled-by-default boundary avoids mixing log generation with business decisions or making benchmark counters necessary for normal operation.</p>
+*/
+public final class PerformanceProbe {
+    private static final boolean ENABLED = Boolean.getBoolean("codetrace.profile");
+    private static final Logger LOG = Logger.getLogger(PerformanceProbe.class.getName());
+
+    private PerformanceProbe() { }
+
+    public static long begin() {
+        return ENABLED ? System.nanoTime() : 0L;
+    }
+
+    /**
+     * Detect unusually long gaps between JavaFX rendering pulses during
+     * interactive exploration. This is a symptom measurement, not the CPU
+     * time of an individual control. The caller ignores unfocused windows
+     * and limits reporting to avoid creating more work during a stall.
+     */
+    public static void fxFrameGap(double milliseconds, long entries) {
+        if (!ENABLED || milliseconds < 120) return;
+        LOG.info(() -> String.format(Locale.ROOT,
+                "Performance fx-frame-gap: %.1f ms, entries=%d",
+                milliseconds, entries));
+    }
+
+    public static void finish(String operation, long startNanos, long entries) {
+        if (!ENABLED || startNanos == 0L) return;
+        double milliseconds = (System.nanoTime() - startNanos) / 1_000_000.0;
+        var heap = ManagementFactory.getMemoryMXBean().getHeapMemoryUsage();
+        long usedMiB = heap.getUsed() / (1024 * 1024);
+        long committedMiB = heap.getCommitted() / (1024 * 1024);
+        // These are JVM heap metrics, NOT total OS process memory/RSS.
+        LOG.info(() -> String.format(Locale.ROOT,
+                "Performance %s: %.1f ms, entries=%d, heapUsedMiB=%d, heapCommittedMiB=%d",
+                operation, milliseconds, entries, usedMiB, committedMiB));
+    }
+}

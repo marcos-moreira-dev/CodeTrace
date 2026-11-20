@@ -11,7 +11,8 @@ import java.util.TreeSet;
 import java.util.prefs.Preferences;
 import java.util.stream.Collectors;
 
-/** Folder exclusions affect the progress score only, never reference visibility. */
+/** Folder exclusions affect the progress score only, never reference visibility.  * <p><strong>Engineering rationale.</strong> An exclusion removes files from aggregate progress but does not remove them from the reference or revoke read-only navigation. The representation must account for explicit exclusions and inherited folder rules without confusing them with file-system deletion.</p>
+*/
 public record ProgressExclusions(Set<String> folders) {
     private static final Preferences STORE =
             Preferences.userNodeForPackage(ProgressExclusions.class);

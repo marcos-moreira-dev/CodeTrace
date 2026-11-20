@@ -13,7 +13,8 @@ import java.util.Objects;
  *
  * Paths are relative, separated by '/', and case-insensitively unique among
  * siblings to behave predictably on Windows.
- */
+  * <p><strong>Engineering rationale.</strong> The reference tree is the immutable specification; this workspace is the student's reconstructed state. Storing normalized relative paths and typed text exclusively in memory makes it possible to save progress to a separate session without writing into the original project.</p>
+*/
 public final class VirtualWorkspace {
     public enum Kind { DIRECTORY, FILE }
 

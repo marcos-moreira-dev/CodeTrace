@@ -11,7 +11,8 @@ import java.util.prefs.Preferences;
 /**
  * Per-project interaction mode. It never changes what qualifies as a correctly
  * typed character or the progress filter; only the creation gate differs.
- */
+  * <p><strong>Engineering rationale.</strong> Manual reconstruction and direct transcription are project-level workflows, independent of which file types count toward progress. Keep this decision explicit so a change of mode does not secretly erase the virtual tree or reinterpret a saved typing session.</p>
+*/
 public enum PracticeMode {
     RECONSTRUCTION(0, "Reconstrucción manual"),
     DIRECT(1, "Transcripción directa");

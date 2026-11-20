@@ -1,6 +1,7 @@
 package com.mmdev.codetrace.ui;
 
 import com.mmdev.codetrace.commands.CommandRunner;
+import com.mmdev.codetrace.commands.CommandWarningPreferences;
 import com.mmdev.codetrace.commands.ProjectCommandStore.Preset;
 import java.nio.file.Path;
 import java.util.List;
@@ -9,6 +10,8 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.ButtonBar;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.Tooltip;
@@ -23,7 +26,8 @@ import javafx.scene.text.Font;
 /**
  * Collapsible, read-only terminal output. External processes run only after
  * clicking Execute; they never receive virtual reconstruction files.
- */
+  * <p><strong>Engineering rationale.</strong> Console execution is deliberately separated from transcription and preview. Presets are selected explicitly, warnings refer to the real filesystem rather than the virtual workspace, and the UI can request cancellation without waiting on the JavaFX thread for a child process.</p>
+*/
 public final class CommandConsolePane extends BorderPane {
     private final CommandRunner executor = new CommandRunner();
     private final ComboBox<Preset> presets = new ComboBox<>();
@@ -35,6 +39,10 @@ public final class CommandConsolePane extends BorderPane {
     private final VBox emptyState = new VBox(12, emptyMessage, configure);
     private final Runnable onConfigure;
     private Path project;
+    private boolean commandExecutionAcknowledged;
+    private final Label realProjectWarning = new Label(
+            "Los comandos se ejecutan sobre los archivos reales, no sobre la reconstrucción virtual.");
+    private long outputGeneration;
 
     public CommandConsolePane(Runnable onClose) {
         this(onClose, () -> {});
@@ -70,6 +78,13 @@ public final class CommandConsolePane extends BorderPane {
         header.setAlignment(Pos.CENTER_LEFT);
         header.getStyleClass().add("console-header");
         setTop(header);
+        realProjectWarning.getStyleClass().add("console-real-files-warning");
+        realProjectWarning.setWrapText(true);
+        realProjectWarning.setTooltip(new Tooltip(
+                "El programa externo puede modificar los archivos originales. Usa una copia para probar."));
+        realProjectWarning.setVisible(false);
+        realProjectWarning.managedProperty().bind(realProjectWarning.visibleProperty());
+        setBottom(realProjectWarning);
 
         output.setEditable(false);
         output.setWrapText(false);
@@ -91,6 +106,12 @@ public final class CommandConsolePane extends BorderPane {
     }
 
     public void setProject(Path selected) {
+        // A new reference must explicitly acknowledge the real-file boundary.
+        if (!java.util.Objects.equals(project, selected))
+            commandExecutionAcknowledged = false;
+        realProjectWarning.setVisible(selected != null);
+        // Ignore log callbacks already queued for the previous project.
+        outputGeneration++;
         if (executor.isRunning()) executor.stop();
         project = selected;
         output.clear();
@@ -108,6 +129,11 @@ public final class CommandConsolePane extends BorderPane {
 
     public void stop() {
         executor.stop();
+    }
+
+    /** Re-arm the warning when Preferences restores its default protection. */
+    public void resetExecutionAcknowledgement() {
+        commandExecutionAcknowledged = false;
     }
 
     public boolean isRunning() {
@@ -139,10 +165,28 @@ public final class CommandConsolePane extends BorderPane {
         if (project == null || presets.getValue() == null) return;
         Preset selected = presets.getValue();
         Path currentRoot = project;
+        if (!commandExecutionAcknowledged && CommandWarningPreferences.mustConfirm()) {
+            ButtonType runConfirmed = new ButtonType("Ejecutar comando",
+                    ButtonBar.ButtonData.OK_DONE);
+            ProductDialogs.Confirmation decision = ProductDialogs.confirmRealFiles(
+                    getScene() == null ? null : getScene().getWindow(),
+                    "Confirmar ejecución sobre archivos reales",
+                    "Este comando se ejecutará en el proyecto ORIGINAL: "
+                    + currentRoot + "\n\n"
+                    + "Puede crear, modificar o eliminar archivos reales. "
+                    + "No ejecuta la reconstrucción virtual de CodeTrace. "
+                    + "Utiliza una copia del proyecto si vas a probar operaciones de escritura.",
+                    runConfirmed);
+            if (decision.choice() != runConfirmed) return;
+            if (decision.doNotShowAgain()) CommandWarningPreferences.setMustConfirm(false);
+            commandExecutionAcknowledged = true;
+        }
+        long generation = ++outputGeneration;
         output.appendText(System.lineSeparator() + "▶ " + selected.name()
                 + System.lineSeparator());
         boolean started = executor.start(currentRoot, selected,
                 text -> Platform.runLater(() -> {
+                    if (generation != outputGeneration) return;
                     output.appendText(text);
                     // Bounded history, separate from the reference project.
                     if (output.getLength() > 200_000) {
@@ -151,6 +195,7 @@ public final class CommandConsolePane extends BorderPane {
                     output.positionCaret(output.getLength());
                 }),
                 code -> Platform.runLater(() -> {
+                    if (generation != outputGeneration) return;
                     output.appendText(System.lineSeparator()
                             + "[Proceso finalizado · código " + code + "]"
                             + System.lineSeparator());

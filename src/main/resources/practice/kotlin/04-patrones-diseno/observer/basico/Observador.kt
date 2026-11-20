@@ -1,0 +1,42 @@
+// CodeTrace | Kotlin 2.2 | JVM 21 | Java JDK 21.
+// Desde PowerShell, en una copia de esta biblioteca:
+// Compilar: kotlinc -jvm-target 21 '.\04-patrones-diseno\observer\basico\Observador.kt' -include-runtime -d "$env:TEMP\codetrace-kotlin.jar"
+// Este archivo declara tipos; se compila, pero no tiene punto de entrada main.
+
+/**
+ * Observable pequeño con listeners representados por fun interface.
+ *
+ * <p>El emisor mantiene el valor y notifica cambios sin conocer a sus
+ * consumidores. La colección mutable se utiliza para enseñanza; en
+ * aplicaciones reales habría que definir desuscripción y concurrencia.
+ */
+fun interface Escucha {
+    fun alCambiar(nuevoValor: Int)
+}
+
+class Observador {
+    private val oyentes = mutableListOf<Escucha>()
+    var valor: Int = 0
+        private set
+
+    fun suscribir(escucha: Escucha) {
+        oyentes.add(escucha)
+    }
+
+    fun actualizar(nuevoValor: Int) {
+        valor = nuevoValor
+        for (escucha in oyentes) escucha.alCambiar(valor)
+    }
+}
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * 
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   kotlinc .\04-patrones-diseno\observer\basico\*.kt -jvm-target 21 -include-runtime -d "$env:TEMP\ct-kotlin.jar"
+ *   java -jar "$env:TEMP\ct-kotlin.jar"
+ * Nota: Observador.kt es un componente; la salida corresponde al cliente MainObservador.kt.
+ * Salida esperada:
+ *   [vista:42, log:42]
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */
