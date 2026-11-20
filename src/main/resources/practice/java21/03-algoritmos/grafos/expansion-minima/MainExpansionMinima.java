@@ -48,8 +48,8 @@ public final class MainExpansionMinima {
 
 /*
  * Salida esperada de consola:
- *   Prim:    
- *   Kruskal: 
- *   (los valores variables completan los fragmentos anteriores)
- * Verificacion: termina sin excepciones inesperadas.
+ *   Prim:    [Arista[a=0, b=2, peso=1], Arista[a=2, b=1, peso=2], Arista[a=1, b=3, peso=4], Arista[a=3, b=4, peso=1]] = 8
+ *   Kruskal: [Arista[a=0, b=2, peso=1], Arista[a=3, b=4, peso=1], Arista[a=1, b=2, peso=2], Arista[a=1, b=3, peso=4]] = 8
+ *   Seis vértices, dos componentes: 2
+ * Los algoritmos tienen igual costo pero pueden registrar aristas en otro orden.
  */

@@ -38,7 +38,17 @@ assert len(clientes)>=260, len(clientes)
 sin_salida=[str(x) for x in clientes
             if "Salida esperada" not in x.read_text(encoding="utf-8")[-1200:]]
 assert not sin_salida, ("Clientes sin salida esperada:",sin_salida)
-print("OK catálogo:",len(items), "| clientes documentados:", len(clientes))
+# Java es la referencia curricular: no admitir salidas vacías ni plantillas genéricas.
+java_clientes=[x for x in clientes if x.suffix==".java" and "java21" in x.parts]
+plantillas=("Se imprime el valor o coleccion calculado",
+           "(los valores variables completan los fragmentos anteriores)",
+           "Sin salida de texto; las pruebas del cliente se cumplen.")
+no_concretos=[str(x) for x in java_clientes
+              if any(marca in x.read_text(encoding="utf-8")[-1500:] for marca in plantillas)]
+assert not no_concretos, ("Salidas Java genéricas o incorrectas:",no_concretos)
+assert len(java_clientes)>=50, len(java_clientes)
+print("OK catálogo:",len(items), "| clientes documentados:", len(clientes),
+      "| clientes Java sin plantillas genéricas:",len(java_clientes))
 PY
 
 echo "Java 21: clases, contratos y clientes"
@@ -56,6 +66,27 @@ for cls in \
  codetrace.practica.grafosscc.MainComponentesFuertes; do
   java -cp "$tmp/java" "$cls" >/dev/null
 done
+
+# Ejecutar todos los clientes Java, no solo la muestra histórica anterior.
+# Cada aplicación es autocontenida y no debe pedir datos ni mutar referencias.
+python3 - "$base/java21" "$tmp/java" <<'PY'
+from pathlib import Path
+import re, subprocess, sys
+root=Path(sys.argv[1])
+classpath=sys.argv[2]
+clientes=sorted(root.rglob("Main*.java"))
+for archivo in clientes:
+    texto=archivo.read_text(encoding="utf-8")
+    paquete=re.search(r"(?m)^\\s*package\\s+([\\w.]+)\\s*;", texto)
+    clase=(paquete.group(1)+"." if paquete else "")+archivo.stem
+    resultado=subprocess.run(["java","-cp",classpath,clase],
+                             capture_output=True,text=True,encoding="utf-8",
+                             timeout=20,check=False)
+    if resultado.returncode!=0:
+        raise AssertionError(f"{clase}: exit={resultado.returncode}\\n{resultado.stderr}")
+assert len(clientes)>=50, len(clientes)
+print("OK: ejecutados",len(clientes),"clientes Java 21")
+PY
 
 echo "C17: pila .h/.c y bibliotecas .a/.so"
 gcc -std=c17 -Wall -Wextra -Werror \

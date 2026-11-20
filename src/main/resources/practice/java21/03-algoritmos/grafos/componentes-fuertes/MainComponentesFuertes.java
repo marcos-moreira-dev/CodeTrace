@@ -33,7 +33,11 @@ public final class MainComponentesFuertes {
             "F", List.of()
         );
         List<Set<String>> componentes = ComponentesFuertes.kosaraju(grafo);
-        System.out.println("Componentes fuertes: " + componentes);
+        // Canonizar para que el orden de Map.of/Set no cambie la salida didáctica.
+        List<String> gruposOrdenados = componentes.stream()
+                .map(grupo -> grupo.stream().sorted().toList().toString())
+                .sorted().toList();
+        System.out.println("Componentes fuertes: " + gruposOrdenados);
         if (componentes.size() != 3
                 || !componentes.contains(Set.of("A", "B", "C"))
                 || !componentes.contains(Set.of("D", "E"))
@@ -44,7 +48,6 @@ public final class MainComponentesFuertes {
 
 /*
  * Salida esperada de consola:
- *   Componentes fuertes: 
- *   (los valores variables completan los fragmentos anteriores)
- * Verificacion: termina sin excepciones inesperadas.
+ *   Componentes fuertes: [[A, B, C], [D, E], [F]]
+ * La canonización ordena la impresión; no altera las tres SCC calculadas.
  */
