@@ -77,13 +77,13 @@ classpath=sys.argv[2]
 clientes=sorted(root.rglob("Main*.java"))
 for archivo in clientes:
     texto=archivo.read_text(encoding="utf-8")
-    paquete=re.search(r"(?m)^\\s*package\\s+([\\w.]+)\\s*;", texto)
+    paquete=re.search(r"(?m)^\s*package\s+([\w.]+)\s*;", texto)
     clase=(paquete.group(1)+"." if paquete else "")+archivo.stem
     resultado=subprocess.run(["java","-cp",classpath,clase],
                              capture_output=True,text=True,encoding="utf-8",
                              timeout=20,check=False)
     if resultado.returncode!=0:
-        raise AssertionError(f"{clase}: exit={resultado.returncode}\\n{resultado.stderr}")
+        raise AssertionError(f"{clase}: exit={resultado.returncode}\n{resultado.stderr}")
 assert len(clientes)>=50, len(clientes)
 print("OK: ejecutados",len(clientes),"clientes Java 21")
 PY
