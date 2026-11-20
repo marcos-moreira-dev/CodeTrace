@@ -42,13 +42,16 @@ final class VirtualExplorerView extends ListView<ExplorerRows.Row> {
                 fileCount.getStyleClass().add("reference-file-count");
                 disclosure.getStyleClass().add("virtual-tree-disclosure");
                 disclosure.setFocusTraversable(false);
+                disclosure.setAccessibleText("Expandir o contraer carpeta");
                 disclosure.setMinSize(18, 20);
                 disclosure.setPrefSize(18, 20);
                 disclosure.setMaxSize(18, 20);
                 disclosure.setOnAction(event -> {
                     var active = getItem();
-                    if (active != null && active.directory())
+                    if (active != null && active.directory()) {
+                        VirtualExplorerView.this.getSelectionModel().select(active);
                         owner.toggleProjectedFolder(active.relative());
+                    }
                     event.consume();
                 });
                 row.getChildren().addAll(indentation, disclosure, filename, fileCount);
@@ -118,6 +121,8 @@ final class VirtualExplorerView extends ListView<ExplorerRows.Row> {
             for (int i = 0; i < getItems().size(); i++) {
                 if (selection.equals(getItems().get(i).relative())) {
                     getSelectionModel().select(i);
+                    // Preserve the navigational context across projection updates.
+                    scrollTo(Math.max(0, i - 4));
                     return;
                 }
             }
