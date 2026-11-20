@@ -20,7 +20,7 @@ function main(){
 if(require.main===module)main();
 
 /*
- * Salida esperada de consola:
- *   Se imprime el valor o coleccion calculado por el cliente.
- * Verificacion: termina sin excepciones inesperadas.
+ * Salida esperada de consola (una línea; console.log(a, b)):
+ *   [ OK ] / Ventana clara < OK > / Ventana oscura
+ * Ambos valores se escriben separados por un espacio.
  */

@@ -27,7 +27,8 @@ int main(){
 }
 
 /*
- * Salida esperada de consola:
- *   Se muestran los datos o el resultado calculado del ejemplo.
- * Verificacion: terminar sin excepciones inesperadas.
+ * Salida esperada de consola (dos líneas):
+ *   [ OK ] / Ventana clara
+ *   < OK > / Ventana oscura
+ * La fábrica y los dos productos se liberan mediante RAII.
  */

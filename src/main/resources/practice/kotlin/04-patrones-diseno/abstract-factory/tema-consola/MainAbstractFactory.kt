@@ -17,7 +17,8 @@ fun main(){
 }
 
 /*
- * Salida esperada de consola:
- *   Se imprime el valor o coleccion calculado por el cliente.
- * Verificacion: termina sin excepciones inesperadas.
+ * Salida esperada de consola (dos líneas):
+ *   [ OK ] / Ventana clara
+ *   < OK > / Ventana oscura
+ * Una fábrica cambia ambos productos de la familia.
  */

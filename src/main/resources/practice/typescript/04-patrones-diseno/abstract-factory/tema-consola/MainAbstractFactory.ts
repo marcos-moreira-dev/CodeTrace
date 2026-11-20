@@ -17,7 +17,7 @@ if(a===b||!a.includes("clara")||!b.includes("oscura"))throw Error("Familias");
 console.log(a,b);
 
 /*
- * Salida esperada de consola:
- *   Se imprime el valor o coleccion calculado por el cliente.
- * Verificacion: termina sin excepciones inesperadas.
+ * Salida esperada de consola (una línea; console.log(a, b)):
+ *   [ OK ] / Ventana clara < OK > / Ventana oscura
+ * Los argumentos se separan mediante un espacio en Node.js.
  */
