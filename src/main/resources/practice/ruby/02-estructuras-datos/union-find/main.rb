@@ -17,3 +17,8 @@ def main
   puts "Componentes: #{uf.componentes}"
 end
 main if __FILE__ == $PROGRAM_NAME
+
+# Salida esperada de consola:
+#   Componentes: #{uf.componentes}
+#   (los valores variables completan los fragmentos anteriores)
+# Verificacion: termina sin excepciones inesperadas.

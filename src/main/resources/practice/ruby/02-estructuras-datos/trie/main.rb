@@ -17,3 +17,8 @@ def main
   puts 'Trie correcto'
 end
 main if __FILE__ == $PROGRAM_NAME
+
+# Salida esperada de consola:
+#   Trie correcto
+#   (los valores variables completan los fragmentos anteriores)
+# Verificacion: termina sin excepciones inesperadas.
