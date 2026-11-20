@@ -14,6 +14,20 @@ public final class ReferenceFingerprint {
     private ReferenceFingerprint() {
     }
 
+    /**
+     * Fingerprint bytes already loaded for UTF-8 validation. Reusing the
+     * in-memory buffer avoids opening every source file a second time.
+     * The hash is of original bytes, not normalized transcription text.
+     */
+    public static String sha256(byte[] originalBytes) {
+        try {
+            return HexFormat.of().formatHex(
+                    MessageDigest.getInstance("SHA-256").digest(originalBytes));
+        } catch (NoSuchAlgorithmException error) {
+            throw new IllegalStateException("SHA-256 no disponible", error);
+        }
+    }
+
     public static String sha256(Path file) throws IOException {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
