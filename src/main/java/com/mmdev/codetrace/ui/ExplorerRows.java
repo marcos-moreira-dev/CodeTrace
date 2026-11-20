@@ -35,6 +35,21 @@ public final class ExplorerRows {
         return Set.copyOf(paths);
     }
 
+    /**
+     * Builds a complete, immutable display projection without JavaFX or I/O.
+     *
+     * <p>The empty path names the root and must be included in {@code expanded}
+     * to reveal its children. Empty or null {@code filter} means no filtering;
+     * otherwise the caller supplies matches AND their ancestors. The current
+     * thread can cancel traversal by interruption. Sibling sorting makes the
+     * cost dependent on local child counts as well as the number of visible rows.
+     *
+     * @param index immutable snapshot of real reference paths
+     * @param virtual immutable snapshot of reconstructed paths
+     * @param expanded relative paths of logically expanded directories
+     * @param filter allowed relative paths, or null/empty for no filter
+     * @return ordered rows and a flag indicating the maximum-row limit
+     */
     public static Result project(ReferenceTreeIndex index, VirtualChildrenIndex virtual,
                                  Set<String> expanded, Set<String> filter) {
         long started = PerformanceProbe.begin();

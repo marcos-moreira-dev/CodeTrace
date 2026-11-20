@@ -71,6 +71,16 @@ public final class SessionArchive {
         }
     }
 
+    /**
+     * Persists the complete reconstructed session without writing to the
+     * reference root. The file is first written beside the destination and
+     * then moved into place; failures before replacement preserve the last
+     * good session. Interruption is checked while serializing large payloads.
+     *
+     * @param destination .ctrace file to atomically replace if possible
+     * @param state prepared project state, not mutable JavaFX controls
+     * @throws IOException on invalid destination or failed persistence
+     */
     public static void save(Path destination, State state) throws IOException {
         Objects.requireNonNull(destination);
         Objects.requireNonNull(state);

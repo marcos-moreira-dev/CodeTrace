@@ -34,6 +34,17 @@ public final class GraphLayoutEngine {
 
     private GraphLayoutEngine() {}
 
+    /**
+     * Places dependency nodes in persistent world-space coordinates.
+     *
+     * <p>Organized placement balances graph relationship distances against
+     * label collisions; grid mode deliberately retains a simpler legacy
+     * layout. Neither mode uses screen pixels or modifies source code.
+     *
+     * @param graph bounded graph extracted from reference files
+     * @param mode explicit organized or grid strategy
+     * @return immutable mapping from source-node identifiers to positions
+     */
     public static Map<String, GraphLayout.Point> arrange(
             ProjectDependencyGraph.Graph graph, Mode mode) {
         long started = PerformanceProbe.begin();

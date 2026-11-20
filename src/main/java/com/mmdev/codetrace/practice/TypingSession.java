@@ -105,6 +105,17 @@ public final class TypingSession {
         return new Cell(reference.get(position), entered.get(position), state(position));
     }
 
+    /**
+     * Commits text into existing reference-aligned grapheme slots.
+     *
+     * <p>This is not an insert operation: it cannot lengthen the reference.
+     * Multiple graphemes from a paste are processed consecutively, emoji
+     * annotations are ignored, and a trailing combining mark can attach to
+     * the previously committed base without consuming another slot.
+     *
+     * @param committedText one or more committed Unicode characters
+     * @throws NullPointerException when input is null
+     */
     public void type(String committedText) {
         Objects.requireNonNull(committedText);
         for (String character : graphemes(normalizeLineEndings(committedText))) {

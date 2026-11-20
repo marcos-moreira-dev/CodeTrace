@@ -91,6 +91,16 @@ public final class ReferenceTreeIndex {
         return List.copyOf(nodes);
     }
 
+    /**
+     * Reads directory topology once, preserving immediate children and
+     * recursive totals in an immutable snapshot for later RAM-only queries.
+     * Call from a worker; this potentially O(N) filesystem walk is unsuitable
+     * for the JavaFX application thread. Symbolic links are not traversed.
+     *
+     * @param reference selected original reference directory
+     * @return immutable tree topology, file counts and practice eligibility
+     * @throws IOException if the reference root cannot be accessed
+     */
     public static ReferenceTreeIndex scan(Path reference) throws IOException {
         abortIfInterrupted();
         long scanStart = PerformanceProbe.begin();

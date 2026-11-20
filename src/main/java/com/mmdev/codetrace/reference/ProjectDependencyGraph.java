@@ -30,6 +30,19 @@ public final class ProjectDependencyGraph {
             ".bat", "/__init__.py", "/index.ts", "/index.js");
     private ProjectDependencyGraph() {}
 
+    /**
+     * Extracts a bounded, best-effort graph of resolvable local imports.
+     *
+     * <p>This is static source exploration, not language compilation or
+     * dependency installation. The chosen folder must resolve inside the
+     * real project root; generated folders and symbolic links are excluded.
+     *
+     * @param project real reference root
+     * @param selected subfolder to inspect
+     * @param cancelled cooperative cancellation requested by the caller
+     * @return graph with completeness metadata and a source fingerprint
+     * @throws IOException if the folder is invalid or inaccessible
+     */
     public static Graph analyze(Path project, Path selected, BooleanSupplier cancelled)
             throws IOException {
         Path root = project.toRealPath(), folder = selected.toRealPath();
