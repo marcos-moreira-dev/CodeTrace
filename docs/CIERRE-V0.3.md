@@ -1,14 +1,15 @@
 # CodeTrace v0.3 — condiciones de cierre y publicación
 
-**Estado:** candidato de publicación, **no publicado**. La biblioteca de práctica **v8 (813 archivos de referencia en 14 lenguajes)**
+**Estado:** primera publicación de prueba preparada, sin declaración de certificación exhaustiva. La biblioteca de práctica **v8 (813 archivos de referencia en 14 lenguajes)**
 forma parte del candidato en esta rama, sin equivaler a 813 ejercicios
 independientes. Se valida junto a la aplicación antes de publicar.
 
 La rama de trabajo `refactor/virtual-explorer-20261119` se basa en
 `fix/media-preview-and-release-20261118`; ninguna reemplaza todavía `main`.
-No fusionar, quitar `-SNAPSHOT` ni crear una etiqueta/release antes de
-verificar el empaquetado y los avisos de terceros. La licencia del código
-original ya está decidida: MIT, copyright de Marcos Moreira.
+El autor ha decidido publicar como versión pública de prueba, aceptando el
+riesgo residual de pruebas manuales no exhaustivas; esto **no equivale** a
+marcar los casos no ejecutados como aprobados. Licencia del código: MIT,
+© 2026 Marcos Moreira. Comprobar CI y empaquetado antes de distribuir.
 
 ## Evidencia que sí existe
 
@@ -47,7 +48,7 @@ sin herramientas de desarrollo, ni el uso con pantalla de 125/150 % DPI.
 | UX, accesibilidad y escalas Windows | Falta cierre manual | 100 %, 125 % y 150 %; teclado, foco, pestañas, diálogo y mensajes |
 | Instalación en Windows sin JDK/Maven | Falta cierre manual | ZIP portable limpio; instalador, asociación y icono `.ctrace` |
 | Licencia de CodeTrace y avisos de terceros | **MIT adoptada; avisos de terceros pendientes de auditoría final** | LICENSE, LICENSING.md y THIRD-PARTY-NOTICES.md presentes; verificar el binario y obligaciones por componente |
-| Versión y GitHub Release | Pendiente | Quitar `-SNAPSHOT`, etiqueta `v0.3.0`, notas y artefactos validados |
+| Versión y GitHub Release | Automatizada al publicar desde main | Versionado 0.3.0, etiqueta v0.3.0, notas, ZIP, EXE y checksums desde una misma compilación Windows |
 
 ## Reproducir y registrar el cierre en Windows
 

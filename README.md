@@ -55,19 +55,19 @@ La biblioteca integrada comprende **14 lenguajes y 813 archivos de referencia** 
 
 **Plataforma principal:** Windows 11.
 
-Cuando exista una publicación validada, sus entregables serán:
+**Descargas oficiales:** [CodeTrace v0.3.0 — Windows](https://github.com/marcos-moreira-dev/CodeTrace/releases/tag/v0.3.0).
 
-- **Instalador `.exe`:** instalación normal y asociación prevista para sesiones `.ctrace`.
-- **Archivo `.zip` portable:** descomprime y ejecuta `CodeTrace.exe` sin instalar un JDK por separado.
+- **Instalador `.exe`:** instalación normal y asociación de sesiones `.ctrace`.
+- **Archivo `.zip` portable:** descomprime y ejecuta `CodeTrace.exe` sin instalar Java por separado.
+- **SHA-256:** se publica junto a ambos archivos para verificar sus descargas.
 
-Por ahora, los binarios creados son **candidatos de prueba**, no una versión estable publicada. Consulta [las condiciones de cierre](docs/CIERRE-V0.3.md) antes de distribuirlos. No hay una release oficial disponible todavía.
+Esta primera publicación es una **versión de prueba**. El instalador no tiene firma digital; Windows puede mostrar advertencias de SmartScreen. Se han realizado pruebas automatizadas y uso real del autor, pero no una certificación exhaustiva en todos los equipos. Consulta [los límites y las pruebas](docs/CIERRE-V0.3.md).
 
 Para probar el código fuente necesitas **Eclipse Temurin JDK 21**, **Maven** y un entorno gráfico de Windows:
 
 ```powershell
 git clone https://github.com/marcos-moreira-dev/CodeTrace.git
 cd CodeTrace
-git switch feature/practice-curriculum-20261120
 .\scripts\diagnostico.bat
 ```
 
@@ -99,7 +99,7 @@ Para generar un ZIP portable, y opcionalmente el instalador con las herramientas
 
 ## Estado del proyecto
 
-**CodeTrace v0.3 — candidato de publicación, no versión estable.** La rama `feature/practice-curriculum-20261120` no equivale a una publicación. Están pendientes la aceptación manual del instalador y de las sesiones en Windows limpio, el repaso de atribuciones de terceros, la auditoría final de avisos de terceros y la etiqueta/release definitiva. La biblioteca con comentarios de consola v9 está integrada en esta rama, pero todavía requiere CI del commit final y validación cruzada de algunas salidas inferidas.
+**CodeTrace v0.3.0 — primera versión pública de prueba.** El autor verificó informalmente las funciones habituales y el repositorio realiza pruebas automatizadas; no se afirma aceptación exhaustiva en todos los equipos Windows. La biblioteca contiene 813 archivos de referencia en 14 lenguajes, con anotaciones de consola. Algunas salidas de otros lenguajes se infirieron a partir del código y requieren comprobación en su entorno específico.
 
 **Código fuente original:** licencia [MIT](LICENSE), © 2026 Marcos Moreira. Puedes usarlo, modificarlo y distribuirlo, incluso comercialmente, conservando el aviso y la licencia; no debes mostrar ningún contacto personal. Los elementos gráficos originales y los componentes de terceros tienen alcances distintos: [identidad y recursos](LICENSING.md) y [avisos de terceros](THIRD-PARTY-NOTICES.md). El nombre CodeTrace no se declara marca registrada.
 
