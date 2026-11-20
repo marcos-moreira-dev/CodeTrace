@@ -24,6 +24,5 @@ public final class MainPila {
 /*
  * Salida esperada de consola:
  *   LIFO comprobado
- *   (los valores variables completan los fragmentos anteriores)
- * Verificacion: termina sin excepciones inesperadas.
+ * Desapilar devuelve C, luego B; solo A permanece en la pila.
  */

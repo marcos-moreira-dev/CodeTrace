@@ -44,8 +44,8 @@ public final class MainCaminosSinPeso {
 
 /*
  * Salida esperada de consola:
- *   Saltos a E: 
- *   Ruta a E: 
- *   (los valores variables completan los fragmentos anteriores)
- * Verificacion: termina sin excepciones inesperadas.
+ *   Saltos a E: 2
+ *   Ruta a E: [A, C, E]
+ *   Componentes: 2
+ * BFS encuentra una ruta mínima por número de aristas en este grafo sin pesos.
  */

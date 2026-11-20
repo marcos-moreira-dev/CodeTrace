@@ -30,8 +30,9 @@ public final class MainHash {
 
 /*
  * Salida esperada de consola:
- *   FB=
- *   Ea=
- *   (los valores variables completan los fragmentos anteriores)
- * Verificacion: termina sin excepciones inesperadas.
+ *   FB=15
+ *   Ea=20
+ *   Ausente=null
+ *   Claves distintas=2
+ * Las claves FB y Ea colisionan, pero conservan valores independientes.
  */

@@ -30,7 +30,6 @@ public final class MainBusquedaBinaria {
 
 /*
  * Salida esperada de consola:
- *   Índice: 
- *   (los valores variables completan los fragmentos anteriores)
- * Verificacion: termina sin excepciones inesperadas.
+ *   Índice: 4; inexistente: -1
+ * Los índices son de base cero y la entrada ya está ordenada.
  */

@@ -34,8 +34,7 @@ public final class MainRecorridos {
 
 /*
  * Salida esperada de consola:
- *   BFS: 
- *   DFS: 
- *   (los valores variables completan los fragmentos anteriores)
- * Verificacion: termina sin excepciones inesperadas.
+ *   BFS: [A, B, C, D, E]
+ *   DFS: [A, B, D, C, E]
+ * La diferencia procede de la cola FIFO y la pila LIFO, con vecinos ordenados.
  */
