@@ -56,7 +56,34 @@ referencia que antes del refactor.
 - Mantener el árbol convencional para la navegación manual sencilla,
   evitando una migración disruptiva de los menús existentes.
 
+### Estado de carga y publicación
+
+La primera apertura puede mostrar un árbol vacío **mientras se crea el índice**,
+porque no se construyen miles de `TreeItem` con datos incompletos. Para hacer
+visible ese estado, `CodeTraceApp` muestra un `ProgressIndicator` centrado
+sobre el explorador con el mensaje «Preparando el explorador...». El indicador
+del encabezado continúa informando expansiones y trabajos posteriores; no
+se impide hacer scroll sobre filas que ya estén presentadas.
+
+`ReferenceTree.isIndexing()` distingue el escaneo inicial de otras tareas:
+las actualizaciones de la proyección masiva conservan su representación
+previa hasta instalar las filas nuevas. Una transición breve permite a JavaFX
+realizar el siguiente renderizado antes de ocultar el indicador central.
+Mientras haya trabajo pendiente, el estado contextual no debe afirmar
+«Proyecto listo» por el mero hecho de haberse activado una referencia.
+
 ### Medición y regresiones
+
+Un ZIP de diagnóstico del 19 de noviembre de 2026 mostró en una ejecución
+de Windows: indexación topológica de **11.867 archivos en 1.640 ms**,
+catálogo de progreso de **10.427 entradas en 2.407 ms** y proyección lógica
+de **12.896 filas en 63,6 ms**. Son tiempos observados de un único entorno,
+no promedios ni garantías de latencia. Confirman que la generación de filas
+no es por sí sola el cuello de botella percibido al cargar la interfaz.
+El log también contiene avisos internos de `VirtualFlow` sobre tamaño
+de celdas; conviene seguirlos mediante profiling sin concluir que sean
+una excepción fatal.
+
 
 Con `-Dcodetrace.profile=true`, `Performance explorer-projection`
 mide el cálculo de filas, independientemente de `reference-tree`,
