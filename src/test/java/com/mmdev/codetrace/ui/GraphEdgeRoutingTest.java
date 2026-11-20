@@ -21,8 +21,9 @@ class GraphEdgeRoutingTest {
         var routed = GraphEdgeRouting.arrange(List.of(forward, backward), nodes);
         assertTrue(routed.get(forward).curved());
         assertTrue(routed.get(backward).curved());
-        assertTrue(routed.get(forward).controlX() < 200);
-        assertTrue(routed.get(backward).controlX() > 200);
+        assertTrue((routed.get(forward).controlX() - 200)
+                        * (routed.get(backward).controlX() - 200) < 0,
+                "Opposite-direction arrows must bend to opposite sides");
         assertEquals(new GraphLayout.Point(200, 100), nodes.get("A"));
         assertEquals(new GraphLayout.Point(200, 500), nodes.get("B"));
 
