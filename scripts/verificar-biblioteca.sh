@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# CodeTrace | Referencia: biblioteca de práctica v8 / verificador GNU/Linux-WSL
+# CodeTrace | Referencia: biblioteca de práctica v9 / verificador GNU/Linux-WSL
 # Ejecutar en COPIA: bash scripts/verificar-biblioteca.sh
 # Artefactos de compilación aislados en mktemp, sin tocar referencias.
 set -euo pipefail
@@ -334,4 +334,20 @@ nasm -f elf64 "$base/nasm-x64/03-algoritmos/busqueda-lineal/busqueda_lineal.asm"
 ld "$tmp/a.o" -o "$tmp/a"
 "$tmp/a" >/dev/null
 
-echo "OK: catálogo v8, 14 paquetes, 813 fuentes y clientes seleccionados"
+echo "v9: comprobar documentación de consola en todas las fuentes"
+python3 -B scripts/documentar_consola_practica.py --check \
+  --root "$base" --outcomes scripts/salidas_practica.json
+python3 - "$base" <<'PY'
+from pathlib import Path
+import sys
+root=Path(sys.argv[1])
+seen={}
+for path in root.rglob("*"):
+    if not path.is_file(): continue
+    key=str(path.relative_to(root)).casefold()
+    assert key not in seen, ("Colision de nombres Windows",seen.get(key),str(path))
+    seen[key]=str(path)
+print("OK: rutas de la biblioteca sin colisiones por mayusculas/minusculas")
+PY
+
+echo "OK: catálogo v9, 14 paquetes, 813 fuentes documentadas y clientes seleccionados"
