@@ -475,7 +475,9 @@ public final class CodeTraceApp extends Application {
                 this::changeFolderExclusion);
         tree.setOnBusyChange(busy -> {
             treeActivity.setVisible(busy);
-            expand.setDisable(busy);
+            // A click during indexing is queued by ReferenceTree. Disabling
+            // this button made "Expandir todo" appear broken on large roots.
+            // Repeated clicks during an active expansion display its status.
         });
         sidebar.getStyleClass().add("sidebar");
         sidebar.setMinWidth(165);
