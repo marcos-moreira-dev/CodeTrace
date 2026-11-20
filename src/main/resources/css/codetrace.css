@@ -760,7 +760,7 @@
 /* Pending reference names communicate work not yet undertaken. */
 .reference-tree-row .reference-pending-name {
     -fx-font-style: italic;
-    -fx-text-fill: #72818d;
+    -fx-text-fill: #596f80;
 }
 .reconstruction-state-icon.state-created,
 .reconstruction-state-icon.state-completed,
@@ -782,7 +782,7 @@
     -fx-font-weight: bold;
 }
 .about-version {
-    -fx-text-fill: #647c8f;
+    -fx-text-fill: #526a7d;
     -fx-font-size: 12px;
 }
 .about-description {
@@ -1266,7 +1266,7 @@
     -fx-font-weight: bold;
 }
 .empty-workspace-hint {
-    -fx-text-fill: #778897;
+    -fx-text-fill: #536b7d;
     -fx-font-size: 12px;
     -fx-text-alignment: center;
     -fx-alignment: center;
@@ -1324,8 +1324,8 @@
 /* Two independent project/consultation explorers, one expanded at a time. */
 .project-tree-header { -fx-min-height: 29px; }
 .consultation-folder-tree { -fx-background-color: #f9fafb; }
-.consultation-tree-hint { -fx-text-fill: #637889; -fx-font-size: 10px; }
-.about-license-note { -fx-font-size: 11px; -fx-text-fill: #657989; }
+.consultation-tree-hint { -fx-text-fill: #516a7d; -fx-font-size: 10px; }
+.about-license-note { -fx-font-size: 11px; -fx-text-fill: #52697d; }
 .accordion > .titled-pane > .title {
     -fx-background-color: linear-gradient(to bottom, #e0e9ef 0%, #ccdae5 100%);
     -fx-border-color: transparent transparent #c5d0d8 transparent;
