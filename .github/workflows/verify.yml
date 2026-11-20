@@ -63,7 +63,9 @@ jobs:
             "scripts/generar-prueba-emojis.ps1",
             "scripts/preparar-fuentes.ps1",
             "scripts/preparar-emojis.ps1",
-            "scripts/crear-icono-sesion.ps1"
+            "scripts/crear-icono-sesion.ps1",
+            "scripts/package-windows.ps1",
+            "scripts/verificar-paquete.ps1"
           )
           foreach ($file in $files) {
             $tokens = $null
