@@ -42,7 +42,8 @@
     -fx-background-color: linear-gradient(to bottom, #e1e9ee 0%, #d1dce4 100%);
     -fx-border-color: #a8bac7 transparent transparent transparent;
 }
-.statusbar .label { -fx-text-fill: #455c6f; -fx-font-size: 11px; }
+.statusbar .label { -fx-text-fill: #304b60; -fx-font-size: 12px; }
+.statusbar .status-context { -fx-font-weight: bold; }
 .progress-info { -fx-text-fill: #304b60; }
 .typing-progress { -fx-pref-height: 9px; -fx-max-width: 160px; }
 .typing-progress .track { -fx-background-color: #d3dce3; -fx-background-radius: 0; }
@@ -196,7 +197,7 @@
     -fx-border-radius: 0;
     -fx-background-color: linear-gradient(to bottom, #d5e1e9 0%, #c0d1dc 100%);
     -fx-border-color: transparent #b2c1cc transparent transparent;
-    -fx-padding: 6px 12px;
+    -fx-padding: 7px 12px;
     -fx-focus-color: transparent;
     -fx-faint-focus-color: transparent;
 }
@@ -207,8 +208,8 @@
     -fx-border-width: 2px 1px 0 0;
 }
 .tab-pane .tab .tab-label {
-    -fx-text-fill: #344e62;
-    -fx-font-size: 12px;
+    -fx-text-fill: #2d495d;
+    -fx-font-size: 13px;
 }
 .tab-pane .tab:selected .tab-label {
     -fx-text-fill: #203c52;
@@ -311,7 +312,7 @@
     -fx-border-color: #a3b6c4;
 }
 .status-zoom-control .zoom-value {
-    -fx-font-size: 11px;
+    -fx-font-size: 12px;
     -fx-text-fill: #344f63;
 }
 .status-zoom-control .slider .track,
@@ -1328,12 +1329,36 @@
 .about-license-note { -fx-font-size: 11px; -fx-text-fill: #52697d; }
 .accordion > .titled-pane > .title {
     -fx-background-color: linear-gradient(to bottom, #e0e9ef 0%, #ccdae5 100%);
-    -fx-border-color: transparent transparent #c5d0d8 transparent;
+    -fx-border-color: transparent transparent #aabdc9 transparent;
     -fx-background-radius: 0;
+    -fx-padding: 6px 9px;
+    -fx-font-size: 13px;
+    -fx-text-fill: #29485c;
 }
+.accordion > .titled-pane:expanded > .title {
+    -fx-font-weight: bold;
+}
+/* Let the action strip touch the full available explorer width; each inner
+   search/filter row retains its own spacing independently. */
 .accordion > .titled-pane > .content {
     -fx-background-color: #f6f8fa;
+    -fx-background-insets: 0;
     -fx-border-color: transparent;
+    -fx-border-insets: 0;
+    -fx-padding: 0;
+}
+.main-project-section {
+    -fx-padding: 0;
+    -fx-spacing: 0;
+}
+/* Thin white contours keep small labels readable against blue-grey chrome.
+   Stroke is outside glyphs and under one pixel, never a heavy outlined font. */
+.statusbar .label .text,
+.accordion > .titled-pane > .title > .text,
+.tab-pane .tab .tab-label .text {
+    -fx-stroke: rgba(255, 255, 255, 0.88);
+    -fx-stroke-type: outside;
+    -fx-stroke-width: 0.65px;
 }
 
 .command-console-pane .console-header {
