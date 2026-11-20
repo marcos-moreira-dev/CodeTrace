@@ -759,7 +759,9 @@ public final class CodeTraceApp extends Application {
         updateTitle();
         refreshMetrics();
         if (resumed) reportReferenceChanges();
-        else setStatus("Referencia: " + reference);
+        else setStatus(tree.isIndexing()
+                ? "Preparando el explorador..."
+                : "Referencia: " + reference);
     }
 
     private void refreshReference() {
