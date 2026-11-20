@@ -7,6 +7,7 @@ import com.mmdev.codetrace.practice.PracticeMode;
 import com.mmdev.codetrace.progress.SessionArchive;
 import com.mmdev.codetrace.progress.PracticeSessionPaths;
 import com.mmdev.codetrace.reference.ProgressSummary;
+import com.mmdev.codetrace.reference.ProgressAccumulator;
 import com.mmdev.codetrace.reference.ReferenceCatalogue;
 import com.mmdev.codetrace.reference.ReferenceFingerprint;
 import com.mmdev.codetrace.reference.ReferenceTreeIndex;
@@ -167,6 +168,8 @@ public final class CodeTraceApp extends Application {
     private Map<String, String> hashes = new LinkedHashMap<>();
     private Map<String, State> reconstructionStates = Map.of();
     private ReferenceCatalogue.Snapshot catalogue;
+    /** Rebuilt only after structural/filter/catalogue changes. */
+    private ProgressAccumulator progressAccumulator;
     private ProgressScope progressScope = ProgressScope.load();
     private ProgressExclusions exclusions = ProgressExclusions.empty();
     private PracticeMode practiceMode = PracticeMode.RECONSTRUCTION;
@@ -825,6 +828,12 @@ public final class CodeTraceApp extends Application {
                     dirty = true;
                     updateTitle();
                 }
+                // The user changed ONE practice file. Update its aggregate
+                // contribution instead of rescanning the whole catalogue.
+                if (progressAccumulator != null) {
+                    progressAccumulator.updateFile(relative, workspace, current,
+                            hashes.get(relative));
+                }
                 refreshMetrics();
                 refreshStatusIfCompletionChanged(relative, current);
                 if (completion.update(current.finishedExercise())) {
@@ -1376,6 +1385,9 @@ public final class CodeTraceApp extends Application {
     }
 
     private void refreshReconstructionStatuses() {
+        // Any structural/eligibility change invalidates incremental totals.
+        // Normal keystrokes do not take this path unless completion changes.
+        progressAccumulator = null;
         reconstructionStates = ReconstructionStatus.calculate(
                 workspace, sessions, hashes, catalogue, progressScope, exclusions);
         tree.refreshStatuses();
@@ -1426,9 +1438,12 @@ public final class CodeTraceApp extends Application {
             fileProgress.setVisible(false);
             return;
         }
-        ProgressSummary summary = ProgressSummary.calculate(
-                catalogue, workspace, sessions, hashes,
-                progressScope, progressFolder, exclusions);
+        if (progressAccumulator == null || !progressAccumulator.matches(
+                catalogue, progressScope, progressFolder, exclusions)) {
+            progressAccumulator = new ProgressAccumulator(catalogue, workspace,
+                    sessions, hashes, progressScope, progressFolder, exclusions);
+        }
+        ProgressSummary summary = progressAccumulator.summary();
         long total = summary.totalUnits();
         long resolved = summary.correctUnits();
         double ratio = summary.ratio();
