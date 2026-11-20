@@ -125,7 +125,6 @@ public final class ReferenceTree extends TreeView<Path> {
                     if (isEmpty() || current == null || referenceRoot == null) return;
                     ContextMenu menu = contextFor(current);
                     if (menu.getItems().isEmpty()) return;
-                    menu.setOnHidden(hidden -> menu.getItems().clear());
                     menu.show(this, event.getScreenX(), event.getScreenY());
                     event.consume();
                 });
