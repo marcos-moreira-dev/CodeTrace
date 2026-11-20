@@ -16,6 +16,7 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.skin.VirtualFlow;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.KeyEvent;
@@ -471,9 +472,43 @@ public final class TypingEditor extends BorderPane {
         if (changed) onChange.run();
     }
 
-    /** Keep three preceding source rows visible when advancing to a new line. */
+    /** When relocating to a distant line, start with context above it. */
     static int firstLineWithContext(int activeLine) {
         return Math.max(0, activeLine - 3);
+    }
+
+    /**
+     * Minimal row displacement needed to retain a small visual buffer around
+     * the caret. A line already comfortably visible must NOT move the viewport.
+     * Tiny windows reserve only as much context as they can display.
+     */
+    static int contextScrollRows(int first, int last, int active) {
+        if (first < 0 || last < first) return 0;
+        int visible = last - first + 1;
+        int above = Math.min(3, Math.max(0, (visible - 1) / 2));
+        int below = Math.min(2, Math.max(0, visible - above - 1));
+        int upperLimit = first + above;
+        int lowerLimit = last - below;
+        if (active < upperLimit) return active - upperLimit;
+        if (active > lowerLimit) return active - lowerLimit;
+        return 0;
+    }
+
+    private void keepLineWithContext(int active) {
+        if (lines.getScene() == null) return;
+        // The public JavaFX VirtualFlow API lets us move only the required
+        // number of pixels, rather than anchoring every new row to the top.
+        if (!(lines.lookup(".virtual-flow") instanceof VirtualFlow<?> flow)) return;
+        var first = flow.getFirstVisibleCell();
+        var last = flow.getLastVisibleCell();
+        if (first == null || last == null) return;
+        int deltaRows = contextScrollRows(first.getIndex(), last.getIndex(), active);
+        if (deltaRows == 0) return;
+        if (Math.abs(deltaRows) > last.getIndex() - first.getIndex()) {
+            flow.scrollToTop(firstLineWithContext(active));
+        } else {
+            flow.scrollPixels(deltaRows * cellHeight());
+        }
     }
 
     private void synchronizeLine(boolean scrollToLine) {
@@ -488,10 +523,14 @@ public final class TypingEditor extends BorderPane {
             synchronizingLine = false;
         }
         lines.refresh();
-        // Do not reset manual scrolling on every character of the same line.
-        // On Enter/line navigation, preserve a little context above the caret.
+        // Only line transitions trigger scrolling, never every typed glyph.
+        // Defer until the selection model and JavaFX skin have settled.
         if (scrollToLine && selected != previouslySelected) {
-            lines.scrollTo(firstLineWithContext(selected));
+            Platform.runLater(() -> {
+                if (lines.getSelectionModel().getSelectedIndex() == selected) {
+                    keepLineWithContext(selected);
+                }
+            });
         }
     }
 
