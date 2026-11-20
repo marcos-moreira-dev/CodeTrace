@@ -471,10 +471,16 @@ public final class TypingEditor extends BorderPane {
         if (changed) onChange.run();
     }
 
+    /** Keep three preceding source rows visible when advancing to a new line. */
+    static int firstLineWithContext(int activeLine) {
+        return Math.max(0, activeLine - 3);
+    }
+
     private void synchronizeLine(boolean scrollToLine) {
         // Source line bounds are immutable. Binary search avoids scanning
         // the entire document on every keystroke in very long files.
         int selected = lineIndex.findLine(session.caret());
+        int previouslySelected = lines.getSelectionModel().getSelectedIndex();
         synchronizingLine = true;
         try {
             lines.getSelectionModel().select(selected);
@@ -482,7 +488,11 @@ public final class TypingEditor extends BorderPane {
             synchronizingLine = false;
         }
         lines.refresh();
-        if (scrollToLine) lines.scrollTo(selected);
+        // Do not reset manual scrolling on every character of the same line.
+        // On Enter/line navigation, preserve a little context above the caret.
+        if (scrollToLine && selected != previouslySelected) {
+            lines.scrollTo(firstLineWithContext(selected));
+        }
     }
 
     private double cellHeight() {
