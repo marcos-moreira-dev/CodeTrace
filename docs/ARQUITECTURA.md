@@ -1,5 +1,11 @@
 # Arquitectura de CodeTrace
 
+> Lectura recomendada para estudiar las decisiones de ingeniería:
+> [CodeTrace por dentro: guía de arquitectura e ingeniería](GUIA-DE-ARQUITECTURA-CODETRACE.md).
+> El código fuente contiene Javadoc de nivel de clase para los 100 archivos
+> Java de producción. El HTML se genera con `mvn javadoc:javadoc` y se
+> valida como artefacto independiente en GitHub Actions.
+
 ## Stack
 
 Eclipse Temurin 21, JavaFX 21.0.13, Maven y JUnit 5. Paquete raíz `com.mmdev.codetrace`.
