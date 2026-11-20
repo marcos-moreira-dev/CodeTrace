@@ -78,6 +78,11 @@ public final class ReferenceTree extends TreeView<Path> {
     private boolean loading;
     /** Expansion requested while the immutable disk index is still building. */
     private boolean pendingExpandAll;
+    // One bounded in-memory expansion snapshot for a collapse -> expand cycle.
+    // It holds TreeItems, never file contents; structural changes invalidate it.
+    private TreeItem<Path> expandedSnapshot;
+    private TreeItem<Path> snapshotPlaceholder;
+    private ReferenceTreeIndex snapshotIndex;
     private final BatchedTreeExpander expander;
     private String nameFilter = "";
     private Set<String> filteredPaths = Set.of();
@@ -265,11 +270,19 @@ public final class ReferenceTree extends TreeView<Path> {
         TreeItem<Path> oldRoot = getRoot();
         if (oldRoot == null || referenceRoot == null) return;
         long started = PerformanceProbe.begin();
+        // Keep only one expansion generation, and never cache huge trees.
+        // A second click on Collapse all must not overwrite that snapshot.
+        if (expandedSnapshot == null && nameFilter.isBlank() && index != null
+                && index.fileCount() <= 40_000 && index.directoryCount() <= 12_000) {
+            expandedSnapshot = oldRoot;
+            snapshotIndex = index;
+        }
         TreeItem<Path> selected = getSelectionModel().getSelectedItem();
         Path selectedPath = selected == null ? null : selected.getValue();
         TreeItem<Path> freshRoot = item(referenceRoot);
         setRoot(freshRoot);
         freshRoot.setExpanded(true);
+        snapshotPlaceholder = expandedSnapshot == null ? null : freshRoot;
         // Preserve a visible first-level selection without rebuilding the
         // complete previously expanded tree.
         TreeItem<Path> visible = freshRoot;
@@ -296,6 +309,8 @@ public final class ReferenceTree extends TreeView<Path> {
     public void collapseRecursively(Path directory) {
         pendingExpandAll = false;
         expander.cancel();
+        // A branch operation changes the visible expansion independently.
+        discardExpandedSnapshot();
         TreeItem<Path> clicked = findVisibleNode(getRoot(), directory);
         if (clicked == null || !isFolder(directory)) return;
         if (clicked == getRoot()) {
@@ -314,6 +329,13 @@ public final class ReferenceTree extends TreeView<Path> {
         parent.getChildren().set(slot, replacement);
         if (selectedInside) getSelectionModel().select(replacement);
         PerformanceProbe.finish("collapse-branch", started, 1);
+    }
+
+    /** Release retained UI nodes after a structural change or after reuse. */
+    private void discardExpandedSnapshot() {
+        expandedSnapshot = null;
+        snapshotPlaceholder = null;
+        snapshotIndex = null;
     }
 
     /**
@@ -348,6 +370,7 @@ public final class ReferenceTree extends TreeView<Path> {
      */
     public void expandRecursively(Path directory) {
         if (referenceRoot == null || directory == null || !isFolder(directory)) return;
+        discardExpandedSnapshot();
         if (index == null || loading) {
             // A click during a cold scan is not a no-op. Once the index is
             // ready, reopen the intended tree instead of expanding empty nodes.
@@ -401,6 +424,18 @@ public final class ReferenceTree extends TreeView<Path> {
             onStatus.accept("No se pudo reconstruir la raíz del explorador.");
             return;
         }
+        if (expandedSnapshot != null && snapshotPlaceholder == visualRoot
+                && snapshotIndex == index && nameFilter.isBlank()
+                && visualRoot.getChildren().stream().noneMatch(TreeItem::isExpanded)) {
+            // Reuse already materialized rows rather than reallocate thousands
+            // of lazy TreeItems on every collapse/expand cycle.
+            TreeItem<Path> restored = expandedSnapshot;
+            discardExpandedSnapshot();
+            setRoot(restored);
+            visualRoot = restored;
+        } else {
+            discardExpandedSnapshot();
+        }
         if (!nameFilter.isBlank()) {
             onStatus.accept("La expansión incluye solo carpetas visibles en el filtro.");
         }
@@ -410,6 +445,7 @@ public final class ReferenceTree extends TreeView<Path> {
     }
 
     private void scanReference() {
+        discardExpandedSnapshot();
         if (referenceRoot == null) return;
         expander.cancel();
         if (indexTask != null) indexTask.cancel(true);
@@ -507,6 +543,7 @@ public final class ReferenceTree extends TreeView<Path> {
 
     /** Stop indexing, searching and expansion when CodeTrace is closing. */
     public void cancelPendingWork() {
+        discardExpandedSnapshot();
         pendingExpandAll = false;
         indexGeneration++;
         Task<ReferenceTreeIndex> previous = indexTask;
@@ -520,6 +557,7 @@ public final class ReferenceTree extends TreeView<Path> {
 
     /** Search file/folder NAMES only; content searching is a separate service. */
     public void searchNames(String query) {
+        discardExpandedSnapshot();
         cancelNameSearch();
         nameFilter = query == null ? "" : query.strip();
         long generation = filterGeneration;
@@ -570,6 +608,7 @@ public final class ReferenceTree extends TreeView<Path> {
     }
 
     public void refreshTree() {
+        discardExpandedSnapshot();
         if (referenceRoot == null) {
             return;
         }
