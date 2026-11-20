@@ -268,6 +268,14 @@ public final class GraphLayoutEngine {
             occupied.add(occupiedKey);
             cells.put(leaf, new int[]{bestCol, bestRow});
         }
+        // Two-pass layout: attraction toward the barycenter first, followed by
+        // collision-safe legalization of leaf rectangles. Repeat once because
+        // newly placed leaves also affect the centers of shared dependencies.
+        // This is strictly local and bounded; never move an occupied label.
+        for (int sweep = 0; sweep < 2; sweep++) {
+            compactSharedNodes(cells, occupied, adjacent);
+            settleSatellites(cells, occupied, adjacent);
+        }
         // Local physics is centered on (0,0), but GraphLayout.Point represents
         // persisted non-negative canvas coordinates. Normalize BEFORE records.
         int minColumn = cells.values().stream().mapToInt(p -> p[0]).min().orElse(0);
@@ -338,6 +346,44 @@ public final class GraphLayoutEngine {
                 }
             }
             if (!changed) break;
+        }
+    }
+
+    /**
+     * Second-phase collision repair. A leaf follows its single linked parent
+     * only when a closer label-sized grid cell is actually available. This
+     * preserves the occupied-cell invariant after shared vertices move.
+     */
+    private static void settleSatellites(Map<String, int[]> cells, Set<Long> occupied,
+                                         Map<String, Set<String>> adjacent) {
+        List<String> leaves = cells.keySet().stream()
+                .filter(node -> adjacent.get(node).size() == 1)
+                .sorted().toList();
+        for (String leaf : leaves) {
+            String parent = adjacent.get(leaf).iterator().next();
+            int[] center = cells.get(parent);
+            int[] current = cells.get(leaf);
+            if (center == null || current == null) continue;
+            int bestCol = current[0], bestRow = current[1];
+            double bestCost = connectionCost(bestCol, bestRow, List.of(center));
+            for (int dx = -2; dx <= 2; dx++) {
+                for (int dy = -2; dy <= 2; dy++) {
+                    int col = center[0] + dx, row = center[1] + dy;
+                    if (occupied.contains(cellKey(col, row))
+                            && (col != current[0] || row != current[1])) continue;
+                    double candidate = connectionCost(col, row, List.of(center));
+                    if (candidate + 0.001 < bestCost) {
+                        bestCost = candidate;
+                        bestCol = col;
+                        bestRow = row;
+                    }
+                }
+            }
+            if (bestCol != current[0] || bestRow != current[1]) {
+                occupied.remove(cellKey(current[0], current[1]));
+                occupied.add(cellKey(bestCol, bestRow));
+                cells.put(leaf, new int[]{bestCol, bestRow});
+            }
         }
     }
 
