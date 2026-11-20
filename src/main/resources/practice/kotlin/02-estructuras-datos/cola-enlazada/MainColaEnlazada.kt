@@ -17,3 +17,10 @@ fun main(){
     check(q.desencolar()=="C"&&q.cantidad==0)
     println("FIFO por nodos correcta")
 }
+
+/*
+ * Salida esperada de consola:
+ *   FIFO por nodos correcta
+ *   (los valores variables completan los fragmentos anteriores)
+ * Verificacion: termina sin excepciones inesperadas.
+ */

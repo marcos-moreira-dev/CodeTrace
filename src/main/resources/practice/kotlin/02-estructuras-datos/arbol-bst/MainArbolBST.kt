@@ -16,3 +16,10 @@ fun main() {
     check(bst.inorden() == listOf(1, 3, 4, 6, 7, 8, 10))
     println("Inorden: " + bst.inorden())
 }
+
+/*
+ * Salida esperada de consola:
+ *   Inorden: 
+ *   (los valores variables completan los fragmentos anteriores)
+ * Verificacion: termina sin excepciones inesperadas.
+ */

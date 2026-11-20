@@ -14,3 +14,10 @@ fun main(){
     check(d.quitarPrimero()=="A"&&d.quitarUltimo()=="C"&&d.quitarUltimo()=="B")
     println("Deque verificado")
 }
+
+/*
+ * Salida esperada de consola:
+ *   Deque verificado
+ *   (los valores variables completan los fragmentos anteriores)
+ * Verificacion: termina sin excepciones inesperadas.
+ */

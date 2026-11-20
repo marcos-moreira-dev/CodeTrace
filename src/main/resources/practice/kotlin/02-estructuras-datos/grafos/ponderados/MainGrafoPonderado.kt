@@ -17,3 +17,9 @@ fun main(){
     check(g.vecinos("GYE").size==2&&g.vecinos("CUE").isEmpty())
     println(g.vecinos("GYE"))
 }
+
+/*
+ * Salida esperada de consola:
+ *   Se imprime el valor o coleccion calculado por el cliente.
+ * Verificacion: termina sin excepciones inesperadas.
+ */

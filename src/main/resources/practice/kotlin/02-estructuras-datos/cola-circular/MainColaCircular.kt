@@ -19,3 +19,10 @@ fun main() {
         listOf(20, 30, 40))
     println("Cola circular FIFO verificada")
 }
+
+/*
+ * Salida esperada de consola:
+ *   Cola circular FIFO verificada
+ *   (los valores variables completan los fragmentos anteriores)
+ * Verificacion: termina sin excepciones inesperadas.
+ */

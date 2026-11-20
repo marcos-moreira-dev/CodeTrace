@@ -20,3 +20,10 @@ fun main() {
     check(red.vecinos("CUE").isEmpty())
     println("Desde Guayaquil: " + red.vecinos("GYE"))
 }
+
+/*
+ * Salida esperada de consola:
+ *   Desde Guayaquil: 
+ *   (los valores variables completan los fragmentos anteriores)
+ * Verificacion: termina sin excepciones inesperadas.
+ */

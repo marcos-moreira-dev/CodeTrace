@@ -18,3 +18,9 @@ function main() {
     console.log(cobrar(100, normal), cobrar(100, fidelidad));
 }
 if (require.main === module) main();
+
+/*
+ * Salida esperada de consola:
+ *   Se imprime el valor o coleccion calculado por el cliente.
+ * Verificacion: termina sin excepciones inesperadas.
+ */

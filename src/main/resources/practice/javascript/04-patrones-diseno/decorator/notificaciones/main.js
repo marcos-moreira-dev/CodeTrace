@@ -16,3 +16,9 @@ function main() {
     emisor.enviar("Servicio activo");
 }
 if (require.main === module) main();
+
+/*
+ * Salida esperada de consola:
+ *   Sin salida de texto; las pruebas del cliente se cumplen.
+ * Verificacion: termina sin excepciones inesperadas.
+ */
