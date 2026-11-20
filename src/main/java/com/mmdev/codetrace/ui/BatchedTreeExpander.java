@@ -16,7 +16,7 @@ import javafx.util.Duration;
  * This coordinator only schedules bounded work on the JavaFX thread.
  */
 final class BatchedTreeExpander {
-    private static final int EXPANSION_BATCH = 12;
+    private static final int EXPANSION_BATCH = 48;
     // Time-box each FX pulse as well as limiting the number of directories.
     private static final long FX_BATCH_BUDGET_NS = 8_000_000L;
     private static final int MAX_EXPANDED_FOLDERS = 12_000;
