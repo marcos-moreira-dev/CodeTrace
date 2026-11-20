@@ -26,6 +26,6 @@ public final class MainListaDobleCircular {
 
 /*
  * Salida esperada de consola:
- *   Se imprime el valor o coleccion calculado por el cliente.
- * Verificacion: termina sin excepciones inesperadas.
+ *   [2, 3, 5] / [5, 3, 2]
+ * Los dos recorridos recorren la misma lista en sentidos opuestos.
  */

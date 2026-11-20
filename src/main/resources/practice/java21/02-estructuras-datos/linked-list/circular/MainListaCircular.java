@@ -29,7 +29,6 @@ public final class MainListaCircular {
 
 /*
  * Salida esperada de consola:
- *   Turnos: 
- *   (los valores variables completan los fragmentos anteriores)
- * Verificacion: termina sin excepciones inesperadas.
+ *   Turnos: [Luis, Mia, Ana]
+ * La rotación hace que el último turno pase al final del recorrido.
  */

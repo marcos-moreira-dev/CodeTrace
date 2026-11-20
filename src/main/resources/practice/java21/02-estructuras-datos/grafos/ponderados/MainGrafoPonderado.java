@@ -24,7 +24,6 @@ public final class MainGrafoPonderado {
 
 /*
  * Salida esperada de consola:
- *   Aristas de origen: 
- *   (los valores variables completan los fragmentos anteriores)
- * Verificacion: termina sin excepciones inesperadas.
+ *   Aristas de origen: [Arista[destino=1, peso=4.5], Arista[destino=2, peso=7.0]]
+ * El record Arista imprime sus componentes; no aparece el arco inverso 1→0.
  */

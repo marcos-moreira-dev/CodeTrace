@@ -21,7 +21,11 @@ public final class MainColaPrioridad {
 }
 
 /*
- * Salida esperada de consola:
- *   Se imprime el valor o coleccion calculado por el cliente.
- * Verificacion: termina sin excepciones inesperadas.
+ * Salida esperada de consola (una prioridad por línea):
+ *   1
+ *   2
+ *   5
+ *   7
+ *   9
+ * El min-heap extrae de menor a mayor, no en orden FIFO.
  */

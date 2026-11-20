@@ -33,8 +33,7 @@ public final class MainListaDoble {
 
 /*
  * Salida esperada de consola:
- *   Adelante: 
- *   Atrás: 
- *   (los valores variables completan los fragmentos anteriores)
- * Verificacion: termina sin excepciones inesperadas.
+ *   Adelante: [Z, A]
+ *   Atrás: [A, Z]
+ * La impresión ocurre después de quitar el último elemento B.
  */
