@@ -12,7 +12,8 @@ import javafx.scene.layout.HBox;
 /**
  * Compact, reusable font-size control for the status bar.
  * Only interaction with this control changes the global editor font size.
- */
+  * <p><strong>Engineering rationale.</strong> The status bar exposes one compact font-size control for text-oriented views. Keep zoom state a presentation preference rather than modifying the reference or transcription; when a media or graph tab is selected, the application switches to the appropriate visual zoom semantics.</p>
+*/
 public final class EditorZoomControl extends HBox {
     private static final int MIN_SIZE = 10;
     private static final int MAX_SIZE = 36;

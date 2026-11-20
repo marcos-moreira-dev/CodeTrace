@@ -19,7 +19,8 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Window;
 
-/** A small, conventional picker for bundled language practice projects. */
+/** A small, conventional picker for bundled language practice projects.  * <p><strong>Engineering rationale.</strong> Built-in exercises are chosen as reference packs, not generated as mutable source-code projects. The selection dialog controls navigation and accessibility while the library service owns packaged content and safe extraction.</p>
+*/
 public final class PracticeLibraryDialog {
     private PracticeLibraryDialog() {}
 

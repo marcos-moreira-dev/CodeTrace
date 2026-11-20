@@ -26,7 +26,8 @@ import javafx.scene.text.TextFlow;
 /**
  * Read-only colored reference. Virtualized rows avoid creating one node for
  * every character in large CSS/JSON/XML/config files.
- */
+  * <p><strong>Engineering rationale.</strong> Non-practiceable text is still useful for understanding a project. This read-only viewer shares line gutters and navigation conventions with the typing editor but must not construct a TypingSession or make its text editable.</p>
+*/
 public final class ReferenceTextPane extends BorderPane {
     public record Span(String text, LanguageSupport.Kind kind) {}
     public record SourceLine(int number, String source, List<Span> spans) {}

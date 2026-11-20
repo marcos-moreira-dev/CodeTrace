@@ -38,7 +38,8 @@ import org.kordamp.ikonli.javafx.FontIcon;
 /**
  * Desktop Preferences: persistent navigation on the left, functional settings
  * on the right, and conventional Apply/Cancel/OK actions.
- */
+  * <p><strong>Engineering rationale.</strong> Settings are edited transactionally: Apply persists without closing, Accept applies and closes, and Cancel abandons uncommitted changes. Shared navigation styles and warning policies belong here so users can restore deliberately suppressed notices.</p>
+*/
 public final class PreferencesWindow {
     private PreferencesWindow() {
     }

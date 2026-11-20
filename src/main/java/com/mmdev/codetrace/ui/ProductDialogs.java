@@ -20,7 +20,8 @@ import javafx.stage.Window;
 import javafx.scene.paint.Color;
 import org.kordamp.ikonli.javafx.FontIcon;
 
-/** Shared readable dialogs. Long messages scroll instead of being ellipsized. */
+/** Shared readable dialogs. Long messages scroll instead of being ellipsized.  * <p><strong>Engineering rationale.</strong> A central set of product dialogs avoids inconsistent confirmation semantics and button layouts. A warning that protects real files must remain distinguishable from a merely informative notice; neither dialog should conceal which action is being authorized.</p>
+*/
 public final class ProductDialogs {
     private ProductDialogs() {}
 

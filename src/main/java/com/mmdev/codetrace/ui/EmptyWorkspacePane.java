@@ -15,7 +15,8 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
-/** VS Code-like welcome using the exact official PNG, desaturated without redrawing. */
+/** VS Code-like welcome using the exact official PNG, desaturated without redrawing.  * <p><strong>Engineering rationale.</strong> An empty workspace is a deliberate navigation state, not an application error. Its subdued monochrome brand mark and concise prompt provide orientation while tab lifetime is still managed exclusively by the document controller.</p>
+*/
 public final class EmptyWorkspacePane extends StackPane {
     public EmptyWorkspacePane(TabPane tabs) {
         getStyleClass().add("empty-workspace");

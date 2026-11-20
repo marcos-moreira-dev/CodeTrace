@@ -11,7 +11,8 @@ import org.kordamp.ikonli.javafx.FontIcon;
  * One semantic status icon per virtual reference item.
  * These are vector glyphs from the existing Ikonli Feather pack,
  * never Unicode characters rendered by a Label.
- */
+  * <p><strong>Engineering rationale.</strong> Pending, created and completed have domain meanings that must be communicated consistently across the explorer. Using stable vector shapes and accessible descriptions avoids relying on color alone or squeezing textual badges into narrow rows.</p>
+*/
 public final class ReconstructionStateIcons {
     private static final String AMBER = "#AA7918";
     private static final String GREEN = "#29834B";

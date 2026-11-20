@@ -11,7 +11,8 @@ import org.kordamp.ikonli.javafx.FontIcon;
 /**
  * Icons are a shared UI service: language logos come from the Devicons pack,
  * desktop folders and documents from Feather. Unknown types retain a neutral glyph.
- */
+  * <p><strong>Engineering rationale.</strong> File icons are lightweight visual type hints, not proof of content validity or language support. Resolving them centrally prevents tabs, trees and read-only previews from disagreeing about common source, configuration and media extensions.</p>
+*/
 public final class FileTypeIcons {
     private FileTypeIcons() {}
 

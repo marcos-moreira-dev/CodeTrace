@@ -9,7 +9,8 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.layout.HBox;
 import org.kordamp.ikonli.javafx.FontIcon;
 
-/** Contextual statusbar control; replaces font zoom when a media tab is active. */
+/** Contextual statusbar control; replaces font zoom when a media tab is active.  * <p><strong>Engineering rationale.</strong> A single contextual zoom affordance serves images and dependency maps without borrowing the editor's font scaling rules. Its percentage is a view transform; it must not resize or rewrite the media file, nor mutate persisted graph node positions.</p>
+*/
 public final class MediaZoomControl extends HBox {
     private final Slider slider = new Slider(25, 400, 100);
     private final Label value = new Label("100 %");

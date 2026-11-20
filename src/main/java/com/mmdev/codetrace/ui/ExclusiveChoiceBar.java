@@ -13,7 +13,8 @@ import javafx.scene.layout.VBox;
 /**
  * Shared, accessible vertical single-choice control, reusable across preferences.
  * It uses real RadioButtons/ToggleGroup without an artificial enclosing frame.
- */
+  * <p><strong>Engineering rationale.</strong> Mutually exclusive controls are a recurring interaction convention, so their selection semantics should be represented in one reusable widget. The component decides presentation and focus behavior, not which domain operation a chosen option triggers.</p>
+*/
 public final class ExclusiveChoiceBar<T> extends VBox {
     public record Choice<T>(T value, String text, String tooltip) {}
 

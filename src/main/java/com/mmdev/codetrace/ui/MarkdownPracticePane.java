@@ -20,7 +20,8 @@ import javafx.scene.web.WebView;
 /**
  * A Markdown tab with the original typing surface and a separate, read-only
  * reference preview. The preview resolves media only from the reference root.
- */
+  * <p><strong>Engineering rationale.</strong> Markdown has two legitimate views of the same reference: rendered documentation for comprehension and source text for transcription. Both must share one underlying typing session, while the WebView preview remains non-editable and is disposed when the tab closes.</p>
+*/
 public final class MarkdownPracticePane extends BorderPane {
     private final TypingEditor editor;
     private final Path markdownFile;

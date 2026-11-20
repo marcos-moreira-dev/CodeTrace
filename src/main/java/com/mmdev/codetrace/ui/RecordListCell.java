@@ -12,7 +12,8 @@ import org.kordamp.ikonli.javafx.FontIcon;
 /**
  * Shared compact desktop list item for commands, search results and other
  * structured records. Presentation only; the owning ListView retains actions.
- */
+  * <p><strong>Engineering rationale.</strong> A reusable list cell should present one record at a time while respecting JavaFX virtualization and selection state. Never retain stale graphics or metadata when a cell is recycled, because scrolling can otherwise display another record's content.</p>
+*/
 public final class RecordListCell<T> extends ListCell<T> {
     public record Content(String title, String subtitle, String description,
                           String iconLiteral) {}

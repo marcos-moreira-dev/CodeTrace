@@ -11,7 +11,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.web.WebView;
 import java.nio.file.Path;
 
-/** Markdown reader for the secondary tree; never creates a typing session. */
+/** Markdown reader for the secondary tree; never creates a typing session.  * <p><strong>Engineering rationale.</strong> A Markdown consultation view renders untrusted local content without creating transcription slots or virtual files. The preview engine handles safe resource resolution; this pane owns only the presentation lifecycle and must release its WebView on disposal.</p>
+*/
 public final class ReadOnlyMarkdownPane extends BorderPane {
     private final ReferenceTextPane source;
     private final WebView preview = new WebView();

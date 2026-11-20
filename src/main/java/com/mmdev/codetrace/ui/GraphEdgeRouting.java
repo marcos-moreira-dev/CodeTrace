@@ -18,7 +18,8 @@ import java.util.Map;
  * segments receive small quadratic bends. Sorting the groups makes routing
  * independent of input edge order. The work is O(E log E) and is recalculated
  * when node positions change, never on a plain zoom/pan redraw.</p>
- */
+  * <p><strong>Engineering rationale.</strong> Graph edge routing is a geometric readability problem distinct from dependency detection: parallel and crossing relationships should remain visually distinguishable while preserving endpoints. Deterministic offsets avoid a graph jumping randomly each time it is redrawn.</p>
+*/
 final class GraphEdgeRouting {
     private static final double LANE_GAP = 14.0;
     private static final double MAX_BEND = 20.0;
