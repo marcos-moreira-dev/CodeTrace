@@ -77,6 +77,16 @@ $jarName = "$artifact-$version.jar"
 $jar = Join-Path $target $jarName
 if (-not (Test-Path -LiteralPath $jar)) { throw "No existe el JAR compilado: $jarName" }
 Copy-Item -LiteralPath $jar -Destination $input -Force
+# Windows shell and taskbar must display the official CodeTrace mark,
+# not jpackage's fallback Java icon. Reuse the same ICO converter that
+# generates the distinct .ctrace document icon for the installer.
+$appIcon = Join-Path $target "codetrace-app.ico"
+& (Join-Path $PSScriptRoot "crear-icono-sesion.ps1") `
+    -Source (Join-Path $root "src\main\resources\icons\codetrace-window.png") `
+    -Destination $appIcon
+if (-not (Test-Path -LiteralPath $appIcon -PathType Leaf)) {
+    throw "No se generó el icono principal de CodeTrace."
+}
 $jpackage = Join-Path $jdk "bin\jpackage.exe"
 $portable = Join-Path $dist "CodeTrace"
 if (Test-Path $portable) { Remove-Item -LiteralPath $portable -Recurse -Force }
@@ -86,7 +96,8 @@ $packageArgs = @("--type", "app-image", "--name", "CodeTrace",
     "--input", $input, "--main-jar", $jarName,
     "--main-class", "com.mmdev.codetrace.app.Launcher",
     "--dest", $dist, "--java-options", "-Dfile.encoding=UTF-8",
-    "--app-version", $appVersion, "--vendor", "Marcos Moreira DEV")
+    "--app-version", $appVersion, "--vendor", "Marcos Moreira DEV",
+    "--icon", $appIcon)
 & $jpackage @packageArgs
 if ($LASTEXITCODE -ne 0) { throw "jpackage no pudo generar la aplicación." }
 
