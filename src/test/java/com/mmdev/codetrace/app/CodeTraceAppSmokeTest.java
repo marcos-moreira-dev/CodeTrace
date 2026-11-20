@@ -752,6 +752,18 @@ class CodeTraceAppSmokeTest {
                         "Only the root stays open; old descendant flags are discarded");
                 fileTree.expandAll();
                 assertTrue(fileTree.getRoot().isExpanded());
+                // A root-only assertion missed the real regression: users
+                // pressed Expandir todo but nested branches did not reopen.
+                var reopenedSrc = fileTree.getRoot().getChildren().stream()
+                        .filter(item -> src.equals(item.getValue()))
+                        .findFirst().orElseThrow();
+                assertTrue(reopenedSrc.isExpanded(),
+                        "Expandir todo must reopen actual first-level folders");
+                var reopenedNested = reopenedSrc.getChildren().stream()
+                        .filter(item -> nested.equals(item.getValue()))
+                        .findFirst().orElseThrow();
+                assertTrue(reopenedNested.isExpanded(),
+                        "Expandir todo must reopen nested folders, not just the root");
                 Method toggleConsole = CodeTraceApp.class.getDeclaredMethod(
                         "setConsoleVisible", boolean.class);
                 toggleConsole.setAccessible(true);
