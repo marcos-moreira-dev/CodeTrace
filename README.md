@@ -13,8 +13,7 @@ expansión lógica fuera del hilo JavaFX y filas visibles mediante `ListView`,
 con mejoras confirmadas en pruebas reales de proyectos grandes.
 No se ha integrado todavía en `main`.
 
-La ampliación de la biblioteca de prácticas por lenguaje es una fase
-educativa posterior. Los requisitos pendientes de aceptación funcional,
+En esta rama de desarrollo, la biblioteca de práctica está ampliada a **347 archivos de referencia en 14 lenguajes**. Cada ejercicio puede tener varios archivos: la cifra no equivale a 347 ejercicios independientes. Es contenido educativo en validación y no implica una publicación estable. Los requisitos pendientes de aceptación funcional,
 legal, accesibilidad y Windows están en
 [Condiciones de cierre v0.3](docs/CIERRE-V0.3.md).
 El hecho de que el código sea público en GitHub **no equivale** a tener
@@ -94,7 +93,7 @@ un análisis semántico completo.
 
 La barra de menú usa gris pizarra moderado y la barra de herramientas un
 neutral cálido para diferenciarlas sin imitar interfaces antiguas exageradas.
-Las versiones y comandos de los 108 ejemplos se describen en
+Las versiones y comandos de los 347 archivos de referencia se describen en
 [Versiones y CLI](docs/LENGUAJES-Y-COMANDOS.md).
 
 ## Navegación y búsqueda (versión en evaluación)
