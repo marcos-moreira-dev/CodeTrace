@@ -59,4 +59,145 @@ sh "$base/shell/03-algoritmos/frecuencia_de_palabras.sh"
 nasm -f elf64 "$base/nasm-x64/03-algoritmos/busqueda_lineal.asm" -o "$tmp/busqueda.o"
 ld "$tmp/busqueda.o" -o "$tmp/busqueda"
 "$tmp/busqueda"
-echo "OK: clientes, catálogo y lenguajes comprobados"
+echo "Verificando ejercicios nuevos de Java y algoritmos"
+for clase in \
+  RecordsYEnums OptionalYResultados GenericosYContratos \
+  ColeccionesEIteradores ArchivosYNio ExcepcionesYRecursos ConcurrenciaVirtual; do
+    java -cp "$tmp/java" "$clase" >/dev/null
+done
+for clase in \
+  codetrace.practica.vector.MainVector \
+  codetrace.practica.hash.MainHash \
+  codetrace.practica.bst.MainArbol \
+  codetrace.practica.grafo.MainGrafo \
+  codetrace.practica.ordenamientos.MainOrdenamientos \
+  codetrace.practica.recorridos.MainRecorridos \
+  codetrace.practica.reinas.CuatroReinas \
+  codetrace.practica.actividades.SeleccionActividades \
+  codetrace.practica.mochila.Mochila01 \
+  codetrace.practica.fibonacci.FibonacciMemoizado \
+  codetrace.practica.adapter.MainAdapter \
+  codetrace.practica.decorator.MainDecorator; do
+    java -cp "$tmp/java" "$clase" >/dev/null
+done
+
+echo "Compilando y ejecutando C17, incluidos punteros y estructuras"
+for archivo in \
+  01-fundamentos/punteros_dobles.c \
+  01-fundamentos/realloc_vector.c \
+  01-fundamentos/structs_y_enums.c \
+  01-fundamentos/bits_y_mascaras.c \
+  01-fundamentos/qsort_callbacks.c \
+  02-estructuras-datos/cola_circular.c \
+  02-estructuras-datos/lista_enlazada.c \
+  02-estructuras-datos/tabla_hash.c \
+  03-algoritmos/merge_sort.c \
+  03-algoritmos/bfs_matriz.c \
+  03-algoritmos/mochila_01.c \
+  03-algoritmos/cuatro_reinas.c; do
+    gcc -std=c17 -Wall -Wextra -Werror "$base/c/$archivo" -o "$tmp/c-extra"
+    "$tmp/c-extra" >/dev/null
+done
+
+echo "Compilando y ejecutando C++20 idiomático"
+for archivo in \
+  01-fundamentos/templates_y_concepts.cpp \
+  01-fundamentos/semantica_movimiento.cpp \
+  01-fundamentos/optional_variant.cpp \
+  01-fundamentos/span_y_iteradores.cpp \
+  02-estructuras-datos/arbol_bst.cpp \
+  02-estructuras-datos/grafo_adyacencia.cpp \
+  03-algoritmos/merge_sort.cpp \
+  03-algoritmos/bfs_dfs.cpp \
+  03-algoritmos/mochila_01.cpp \
+  03-algoritmos/cuatro_reinas.cpp \
+  04-patrones-diseno/adapter_unidades.cpp \
+  04-patrones-diseno/decorator_notificaciones.cpp; do
+    g++ -std=c++20 -Wall -Wextra -Werror "$base/cpp/$archivo" -o "$tmp/cpp-extra"
+    "$tmp/cpp-extra" >/dev/null
+done
+
+echo "Validando TypeScript 5.9 y ejecutando clientes nuevos"
+for archivo in \
+  01-fundamentos/tipos_condicionales.ts \
+  01-fundamentos/discriminated_unions.ts \
+  01-fundamentos/promesas_async.ts \
+  01-fundamentos/readonly_e_inmutabilidad.ts \
+  02-estructuras-datos/heap/Principal.ts \
+  02-estructuras-datos/arbol-bst/Principal.ts \
+  03-algoritmos/merge_sort.ts \
+  03-algoritmos/bfs_dfs.ts \
+  03-algoritmos/mochila_01.ts \
+  03-algoritmos/cuatro_reinas.ts \
+  04-patrones-diseno/adapter_unidades.ts \
+  04-patrones-diseno/decorator_notificaciones.ts; do
+    tsc --strict --target ES2022 --module commonjs --noEmit "$base/typescript/$archivo"
+done
+for archivo in \
+  02-estructuras-datos/heap/Principal.ts \
+  02-estructuras-datos/arbol-bst/Principal.ts; do
+    tsc --strict --target ES2022 --module commonjs --outDir "$tmp/ts-extra" \
+      "$base/typescript/$archivo"
+    node "$tmp/ts-extra/Principal.js" >/dev/null
+done
+
+echo "Ejecutando Python, JavaScript, Go y Ruby idiomáticos"
+for archivo in \
+  01-fundamentos/dataclasses_y_propiedades.py \
+  01-fundamentos/context_managers.py \
+  01-fundamentos/protocolos_y_genericos.py \
+  01-fundamentos/funciones_orden_superior.py \
+  02-estructuras-datos/arbol-bst/main.py \
+  02-estructuras-datos/heaps_y_prioridades.py \
+  03-algoritmos/merge_sort.py \
+  03-algoritmos/bfs_dfs.py \
+  03-algoritmos/cuatro_reinas.py \
+  03-algoritmos/mochila_01.py \
+  03-algoritmos/seleccion_intervalos.py \
+  04-patrones-diseno/adapter/main.py \
+  04-patrones-diseno/decorator_objetos.py; do
+    python3 -B "$base/python/$archivo" >/dev/null
+done
+for archivo in \
+  01-fundamentos/generadores_iteradores.js \
+  01-fundamentos/map_set_referencias.js \
+  01-fundamentos/promesas_asincronas.js \
+  02-estructuras-datos/heap_minimo.js \
+  03-algoritmos/bfs_dfs.js \
+  03-algoritmos/mochila_01.js; do
+    node --check "$base/javascript/$archivo"
+    node "$base/javascript/$archivo" >/dev/null
+done
+for archivo in \
+  01-fundamentos/errores_y_defer.go \
+  01-fundamentos/slices_y_capacidad.go \
+  02-estructuras-datos/heap_minimo.go \
+  03-algoritmos/bfs_grafo.go \
+  03-algoritmos/mochila_01.go; do
+    go run "$base/go/$archivo" >/dev/null
+done
+for archivo in \
+  01-fundamentos/enumeradores_perezosos.rb \
+  02-estructuras-datos/arbol_bst.rb \
+  03-algoritmos/bfs_grafo.rb \
+  03-algoritmos/mochila_01.rb; do
+    ruby -c "$base/ruby/$archivo" >/dev/null
+    ruby "$base/ruby/$archivo" >/dev/null
+done
+
+echo "Comprobando NASM y POSIX sh"
+for archivo in \
+  03-algoritmos/busqueda_binaria.asm \
+  01-fundamentos/memoria_y_salida.asm; do
+    nasm -f elf64 "$base/nasm-x64/$archivo" -o "$tmp/extra.o"
+    ld "$tmp/extra.o" -o "$tmp/extra"
+    "$tmp/extra" >/dev/null
+done
+for archivo in \
+  01-fundamentos/argumentos_getopts.sh \
+  03-algoritmos/seleccion_registros.sh; do
+    sh -n "$base/shell/$archivo"
+    sh "$base/shell/$archivo" >/dev/null
+done
+
+echo "OK: catálogo, integración y clientes nuevos comprobados"
