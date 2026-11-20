@@ -128,7 +128,7 @@ public final class PreferencesWindow {
                         default -> "fth-terminal";
                     });
                     icon.setIconSize(16);
-                    icon.setIconColor(javafx.scene.paint.Color.web("#4A6076"));
+                    // Icon color is owned by stylesheet selection/hover states.
                     setGraphic(icon);
                 }
             }
