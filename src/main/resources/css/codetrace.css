@@ -413,10 +413,11 @@
 }
 .prefs-navigation .list-cell:filled:selected,
 .prefs-navigation:focused .list-cell:filled:selected {
-    -fx-background-color: #b7cddd;
-    -fx-text-fill: #203d53;
+    /* Active selection is legible and distinct from a lighter hover. */
+    -fx-background-color: linear-gradient(to bottom, #49697f 0%, #345268 100%);
+    -fx-text-fill: #ffffff;
     -fx-font-weight: bold;
-    -fx-border-color: transparent transparent transparent #4a6076;
+    -fx-border-color: transparent transparent transparent #213c52;
     -fx-border-width: 0 0 0 3px;
     -fx-padding: 12px 15px 12px 12px;
 }
@@ -1308,6 +1309,16 @@
 .context-menu .menu-item:focused .ikonli-font-icon,
 .prefs-navigation .list-cell:filled:hover .ikonli-font-icon {
     -fx-icon-color: #344f66;
+}
+
+/* Preferences: all active navigation states retain white icons on slate. */
+.prefs-navigation .list-cell .ikonli-font-icon {
+    -fx-icon-color: #38566b;
+}
+.prefs-navigation .list-cell:filled:selected .ikonli-font-icon,
+.prefs-navigation:focused .list-cell:filled:selected .ikonli-font-icon,
+.prefs-navigation .list-cell:filled:selected:hover .ikonli-font-icon {
+    -fx-icon-color: #ffffff;
 }
 
 /* Two independent project/consultation explorers, one expanded at a time. */
