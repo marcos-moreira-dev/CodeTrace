@@ -111,7 +111,7 @@ class BuiltInLibraryTest {
     void allFourCurriculumPurposesAndDocumentedJavaClientsArePresent() throws Exception {
         var library = new BuiltInLibrary(temp.resolve("curriculum"));
         assertEquals("v3", BuiltInLibrary.CATALOG_VERSION);
-        assertEquals(364, library.packs().stream().mapToInt(library::size).sum());
+        assertEquals(387, library.packs().stream().mapToInt(library::size).sum());
         for (var pack : library.packs()) {
             var entries = library.entries(pack);
             assertTrue(entries.stream().allMatch(x -> x.split("/").length >= 3),
@@ -139,6 +139,14 @@ class BuiltInLibraryTest {
         assertTrue(library.entries(javaPack).contains("03-algoritmos/grafos/recorridos/MainCaminosSinPeso.java"));
         assertTrue(library.entries(javaPack).contains("04-patrones-diseno/factory/basico/MainFactoryBasica.java"));
         assertTrue(library.entries(javaPack).contains("04-patrones-diseno/observer/basico/MainObservadorBasico.java"));
+        assertTrue(library.entries(javaPack).contains("02-estructuras-datos/grafos/genericos/MainGrafoGenerico.java"));
+        assertTrue(library.entries(javaPack).contains("03-algoritmos/grafos/componentes-fuertes/MainComponentesFuertes.java"));
+        assertTrue(library.entries(javaPack).contains("03-algoritmos/grafos/caminos-minimos/MainCasosLimite.java"));
+        var kotlinPack = library.packs().stream().filter(x -> x.id().equals("kotlin")).findFirst().orElseThrow();
+        assertTrue(library.entries(kotlinPack).contains("04-patrones-diseno/factory/basico/MainFactory.kt"));
+        assertTrue(library.entries(kotlinPack).contains("04-patrones-diseno/observer/basico/MainObservador.kt"));
+        var tsPack = library.packs().stream().filter(x -> x.id().equals("typescript")).findFirst().orElseThrow();
+        assertTrue(library.entries(tsPack).contains("04-patrones-diseno/observer/basico/Principal.ts"));
     }
 
     @Test
@@ -161,7 +169,7 @@ class BuiltInLibraryTest {
                 "03-algoritmos/euclides/euclides.asm"));
         assertTrue(library.entries(all.get("java21")).contains(
                 "03-algoritmos/dijkstra/Dijkstra.java"));
-        assertEquals(364, library.packs().stream().mapToInt(library::size).sum());
+        assertEquals(387, library.packs().stream().mapToInt(library::size).sum());
     }
 
 }

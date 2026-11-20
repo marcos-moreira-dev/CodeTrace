@@ -17,7 +17,8 @@
  * primero vértices sin dependencias. Un ciclo deja vértices sin procesar:
  * se rechaza la ordenación, no se inventa un resultado parcial.
  *
- * O(V+E) tiempo y O(V+E) memoria con lista de adyacencia.
+ * O((V+E) log V) tiempo usando std::map (búsquedas logarítmicas),
+ * y O(V+E) memoria. Con tablas hash el costo esperado se acerca a O(V+E).
  */
 using Grafo = std::map<std::string, std::vector<std::string>>;
 

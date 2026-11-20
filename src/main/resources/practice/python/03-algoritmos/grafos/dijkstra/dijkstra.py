@@ -11,7 +11,7 @@ eliminación lineal del heap como en cierta versión original del
 repositorio. Tiempo O((V+E) log(V+E)) con cola perezosa, espacio O(V+E).
 """
 from heapq import heappop, heappush
-from math import inf
+from math import inf, isfinite
 
 
 def dijkstra(grafo: dict[str, list[tuple[str, float]]], origen: str):
@@ -20,7 +20,7 @@ def dijkstra(grafo: dict[str, list[tuple[str, float]]], origen: str):
     vertices = set(grafo)
     for aristas in grafo.values():
         for destino, peso in aristas:
-            if peso < 0 or peso == inf:
+            if peso < 0 or not isfinite(peso):
                 raise ValueError("Dijkstra requiere pesos finitos no negativos")
             vertices.add(destino)
     distancia = {vertice: inf for vertice in vertices}

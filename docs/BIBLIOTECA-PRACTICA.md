@@ -1,6 +1,6 @@
 # Biblioteca de práctica CodeTrace — catálogo v3
 
-**364 archivos de referencia en 14 paquetes**, incorporados en la aplicación. Un ejercicio con varios archivos cuenta varias entradas; no confundir cantidad de archivos con cantidad de ejercicios.
+**387 archivos de referencia en 14 paquetes**, incorporados en la aplicación. Un ejercicio con varios archivos cuenta varias entradas; no confundir cantidad de archivos con cantidad de ejercicios.
 
 ## Organización curricular
 
@@ -69,3 +69,7 @@ Todos los fuentes de práctica están ubicados al menos tres niveles por debajo 
 Los comentarios conceptuales más completos están en los clientes; no se traslada código original de GitHub de forma indiscriminada. La migración exacta de los archivos originales se registra en `docs/MAPA-REORGANIZACION-BIBLIOTECA-V3.tsv`.
 
 La caché cambia de `v2` a `v3` para no mezclar referencias antiguas con las nuevas. Las copias `v2` del usuario y sus sesiones existentes **no se eliminan**. Esta rama continúa siendo un borrador sujeto a QA.
+
+### Grafos: comparación entre lenguajes
+
+Java incluye grafos genéricos con `Vertice<T>`, igualdad por id y latencias; Kosaraju para componentes fuertemente conexas; y validación de ciclos negativos y destinos inaccesibles. Python contrasta tipos dirigidos/no dirigidos, Dijkstra con `heapq`, Floyd–Warshall y Prim/Kruskal. TypeScript aporta contratos de grafos con `Map`, ordenamiento de DAG, Dijkstra cuadrático sin heap y Kruskal con conjuntos disjuntos. C++ agrega Kruskal, Kahn y Floyd–Warshall usando STL. Estas variantes resaltan decisiones idiomáticas, no son copias indiscriminadas entre lenguajes.

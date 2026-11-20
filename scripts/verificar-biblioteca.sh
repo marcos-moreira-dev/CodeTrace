@@ -15,7 +15,7 @@ import sys
 base = Path(sys.argv[1])
 catalog = (base / "catalog.tsv").read_text(encoding="utf-8")
 items = [line.split("\t", 1) for line in catalog.splitlines() if line and not line.startswith("#")]
-assert len(items) == 364, len(items)
+assert len(items) == 387, len(items)
 assert len({x[0] for x in items}) == 14
 assert all(len(path.split("/")) >= 3 for _, path in items), "Loose file in category root"
 for pack, path in items:
@@ -86,7 +86,10 @@ for clase in \
   codetrace.practica.grafosmst.MainExpansionMinima \
   codetrace.practica.grafostopologico.MainTopologico \
   MainFactoryBasica \
-  MainObservadorBasico; do
+  MainObservadorBasico \
+  codetrace.practica.grafosgenericos.MainGrafoGenerico \
+  codetrace.practica.grafosscc.MainComponentesFuertes \
+  codetrace.practica.grafoscaminos.MainCasosLimite; do
     java -cp "$tmp/java" "$clase" >/dev/null
 done
 
@@ -209,4 +212,32 @@ for archivo in \
     sh "$base/shell/$archivo" >/dev/null
 done
 
-echo "OK: catálogo, integración y clientes nuevos comprobados"
+echo "Validando grafos multilenguaje con casos de prueba"
+python3 -B "$base/python/02-estructuras-datos/grafos/tipos/main.py" >/dev/null
+python3 -B "$base/python/03-algoritmos/grafos/dijkstra/dijkstra.py" >/dev/null
+python3 -B "$base/python/03-algoritmos/grafos/floyd-warshall/floyd_warshall.py" >/dev/null
+python3 -B "$base/python/03-algoritmos/grafos/expansion-minima/main.py" >/dev/null
+
+for archivo in \
+  03-algoritmos/grafos/expansion-minima/kruskal.cpp \
+  03-algoritmos/grafos/topologico/kahn.cpp \
+  03-algoritmos/grafos/floyd-warshall/floyd_warshall.cpp; do
+  g++ -std=c++20 -Wall -Wextra -Werror "$base/cpp/$archivo" -o "$tmp/cpp-graph"
+  "$tmp/cpp-graph" >/dev/null
+done
+
+for archivo in \
+  02-estructuras-datos/grafos/tipos/Principal.ts \
+  03-algoritmos/grafos/topologico/kahn.ts \
+  03-algoritmos/grafos/dijkstra/cuadratico.ts \
+  03-algoritmos/grafos/expansion-minima/kruskal.ts \
+  04-patrones-diseno/observer/basico/Principal.ts; do
+  destino="$tmp/ts-graph"
+  mkdir -p "$destino"
+  tsc --strict --target ES2022 --module commonjs --outDir "$destino" \
+    "$base/typescript/$archivo"
+  js="$(basename "$archivo" .ts).js"
+  node "$destino/$js" >/dev/null
+done
+
+echo "OK: catálogo v3, 14 lenguajes y casos de grafos comprobados"
