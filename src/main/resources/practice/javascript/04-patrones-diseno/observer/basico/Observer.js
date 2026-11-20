@@ -1,15 +1,18 @@
-// CodeTrace | Referencia: JavaScript ES2022, Node.js 24.
-// Desde PowerShell en una COPIA del paquete:
-// Comprobar sintaxis: node --check '.\04-patrones-diseno\observer\basico\Observer.js'
-// Ejecutar: node '.\04-patrones-diseno\observer\basico\Observer.js'
+// CodeTrace | Referencia: JavaScript ES2022 / Node.js 24
+// Comprobar: node --check main.js
+// Ejecutar: node main.js (desde copia de esta carpeta)
+// Módulos locales CommonJS sin dependencias de npm.
 
+/** Emisor de cambios con listeners y función de desuscripción. */
 class Emisor {
-  constructor() { this.oyentes = []; }
-  suscribir(callback) { this.oyentes.push(callback); }
-  actualizar(valor) {
-    for (const callback of this.oyentes) callback(valor);
-  }
+    constructor() { this.oyentes = new Set(); }
+    suscribir(fn) {
+        if (typeof fn !== "function") throw TypeError("Callback");
+        this.oyentes.add(fn);
+        return () => this.oyentes.delete(fn);
+    }
+    publicar(valor) {
+        for (const oyente of [...this.oyentes]) oyente(valor);
+    }
 }
-const emisor = new Emisor();
-emisor.suscribir(valor => console.log("Cambio:", valor));
-emisor.actualizar(42);
+module.exports = { Emisor };
