@@ -66,6 +66,31 @@ class ProjectDependencyGraphTest {
     }
 
     @Test
+    void inMemoryIndexDoesNotInventEdgesForAmbiguousImports() throws Exception {
+        Path one = Files.createDirectories(root.resolve("one/demo"));
+        Path two = Files.createDirectories(root.resolve("two/demo"));
+        Files.writeString(one.resolve("Helper.java"), "package demo; class Helper {}");
+        Files.writeString(two.resolve("Helper.java"), "package demo; class Helper {}");
+        Files.writeString(root.resolve("Main.java"),
+                "import demo.Helper; class Main {}");
+        var graph = ProjectDependencyGraph.analyze(root, root, () -> false);
+        assertTrue(graph.edges().isEmpty(),
+                "Duplicate candidate suffixes are ambiguous, not dependencies");
+    }
+
+    @Test
+    void inMemoryIndexFindsNestedGoPackagesByTheirDirectory() throws Exception {
+        Files.writeString(root.resolve("go.mod"), "module example.org/demo\\n");
+        Path nested = Files.createDirectories(root.resolve("lib/math"));
+        Files.writeString(nested.resolve("sum.go"), "package math\\n");
+        Files.writeString(root.resolve("main.go"),
+                "package main\\nimport \\"example.org/demo/lib/math\\"\\n");
+        var graph = ProjectDependencyGraph.analyze(root, root, () -> false);
+        assertTrue(graph.edges().stream().anyMatch(edge ->
+                edge.source().equals("main.go") && edge.target().equals("lib/math")));
+    }
+
+    @Test
     void boundsVeryLargeGraphsToAvoidOversizedCanvas() throws Exception {
         for (int i = 0; i < 205; i++) {
             String dependency = i < 204 ? "import './node" + (i + 1) + "';" : "";
