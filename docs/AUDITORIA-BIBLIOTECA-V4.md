@@ -1,4 +1,4 @@
-# Auditoría de estructura curricular — CodeTrace biblioteca v4
+# Auditoría de estructura curricular — CodeTrace biblioteca v6
 
 **Rama:** `feature/practice-curriculum-20261120` (PR #2, borrador).  
 **Referencia de auditoría:** recursos en `src/main/resources/practice/`.  
@@ -6,12 +6,12 @@
 
 ## Resumen verificable
 
-- **387 archivos fuente** en **14 lenguajes**.
-- **295 carpetas de último nivel con código**, que NO deben confundirse con 295 ejercicios independientes (algunos clientes comparten unidad, y ciertas carpetas contienen varias variantes).
+- **492 archivos fuente** en **14 lenguajes**.
+- **295 carpetas (referencia v6) de último nivel con código**, que NO deben confundirse con 295 ejercicios independientes (algunos clientes comparten unidad, y ciertas carpetas contienen varias variantes).
 - **197 archivos originales sueltos** fueron trasladados a carpetas, y se ajustaron rutas adicionales de ejercicios relacionados; hay **202 correspondencias** de rutas antiguas a nuevas en `MAPA-REORGANIZACION-BIBLIOTECA-V4.tsv`.
 - **0 archivos de código directamente bajo las cuatro raíces curriculares**. Cada fuente pertenece a una carpeta de unidad; los archivos de implementación conservan al cliente relacionado en la misma unidad cuando corresponde.
-- La biblioteca creció de **347 a 387 fuentes**: 40 fuentes nuevas en esta iteración, especialmente grafos y clientes de patrones.
-- El catálogo es `v4`, separado de cachés `v2/v3` para no mezclar rutas. No se eliminan sesiones previas.
+- La biblioteca creció de **347 a 492 fuentes**: 40 fuentes nuevas en esta iteración, especialmente grafos y clientes de patrones.
+- El catálogo es `v6`, separado de cachés `v2/v3` para no mezclar rutas. No se eliminan sesiones previas.
 
 ## Distribución por lenguaje y categoría
 
@@ -75,3 +75,7 @@ El repositorio propio `Estructuras-de-Datos-y-Algoritmos` sirvió de orientació
 - Auditoría de cierre de aplicación: `docs/CIERRE-V0.3.md`
 
 La ampliación **no modifica `main` ni publica una versión estable**.
+
+## Estado de la segunda revisión (v6)
+
+La primera auditoría correspondía a 387 fuentes. La segunda llega a **492 fuentes**, incorpora clases cliente para excepciones, colecciones y patrones en Java, Kotlin, C#, TypeScript, Python, Ruby, JavaScript y C++, y compara enlazado de bibliotecas C/C++. El inventario de carpetas previo a v6 es histórico; comprobar las rutas actuales en `catalog.tsv`. Los 14 lenguajes no tienen necesariamente iguales cantidades, porque las lecciones autóctonas difieren. La validación automatizada sólo cubre los clientes enumerados explícitamente en los scripts; la aceptación manual sigue pendiente.

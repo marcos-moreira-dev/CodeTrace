@@ -29,3 +29,7 @@ Se conservan ejemplos existentes siempre que puedan verificarse; al mejorar una 
 ## Convención de rutas v4
 
 Los comandos referenciales se leen desde la raíz del paquete de lenguaje y deben apuntar al archivo dentro de su **carpeta de unidad**. Para proyectos multiarchivo, compilar todas las fuentes de la unidad. La estructura de carpetas no modifica los estándares de compilación: Java 21, C17, C++20, TypeScript 5.9, etc. Las referencias son material de estudio; CodeTrace no ejecuta los comandos automáticamente.
+
+### Biblioteca v6
+
+Las unidades multiarchivo emplean convenciones `Main*.java/kt/ts/cs`, `main.py/rb/js/go` o `main.c/cpp` conforme a su ecosistema. C17/C++20 presentan `compilar.sh` para comparar bibliotecas `.a` y `.so` sobre Linux o WSL, con objetos temporales y sin modificar las referencias. El catálogo interno usa caché `v6` para no mezclar rutas de sesiones anteriores.

@@ -15,7 +15,7 @@ import sys
 root=Path(sys.argv[1])
 items=[x.split("\t",1) for x in (root/"catalog.tsv").read_text(encoding="utf-8").splitlines()
        if x and not x.startswith("#")]
-assert len(items)==466, len(items)
+assert len(items)==492, len(items)
 assert len({p for p,_ in items})==14
 assert len(set(map(tuple,items)))==len(items)
 assert all(len(path.split("/"))>=3 for _,path in items)
@@ -100,6 +100,34 @@ for unit in \
     python3 -B "$base/python/$unit" >/dev/null
 done
 
+
+echo "JavaScript: patrones y cola circular"
+for dir in \
+  04-patrones-diseno/factory-method/exportadores \
+  04-patrones-diseno/strategy/tarifas \
+  04-patrones-diseno/adapter/unidades \
+  04-patrones-diseno/decorator/notificaciones \
+  04-patrones-diseno/observer/basico \
+  02-estructuras-datos/cola-circular; do
+  node --check "$base/javascript/$dir/main.js"
+  node "$base/javascript/$dir/main.js" >/dev/null
+done
+
+echo "Ruby: patrones y estructuras como miniproyectos"
+for dir in \
+  04-patrones-diseno/factory-method/exportadores \
+  04-patrones-diseno/strategy/tarifas \
+  04-patrones-diseno/adapter/unidades \
+  04-patrones-diseno/decorator/notificaciones \
+  04-patrones-diseno/observer/basico \
+  02-estructuras-datos/cola-circular \
+  02-estructuras-datos/pila \
+  02-estructuras-datos/arbol-bst \
+  01-fundamentos/excepciones-personalizadas; do
+  ruby -c "$base/ruby/$dir/main.rb" >/dev/null
+  ruby "$base/ruby/$dir/main.rb" >/dev/null
+done
+
 echo "Resto de lenguajes: smoke tests reales"
 node "$base/javascript/03-algoritmos/cuatro-reinas/cuatro_reinas.js" >/dev/null
 go run "$base/go/01-fundamentos/goroutines-canales/goroutines_canales.go" >/dev/null
@@ -109,4 +137,4 @@ nasm -f elf64 "$base/nasm-x64/03-algoritmos/busqueda-lineal/busqueda_lineal.asm"
 ld "$tmp/a.o" -o "$tmp/a"
 "$tmp/a" >/dev/null
 
-echo "OK: catálogo v5, 14 paquetes, 466 fuentes y clientes seleccionados"
+echo "OK: catálogo v6, 14 paquetes, 492 fuentes y clientes seleccionados"

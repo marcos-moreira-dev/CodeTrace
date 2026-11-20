@@ -1,6 +1,6 @@
-# Biblioteca de práctica CodeTrace — catálogo v5
+# Biblioteca de práctica CodeTrace — catálogo v6
 
-**466 archivos de referencia en 14 paquetes**, incorporados en la aplicación. Un ejercicio con varios archivos cuenta varias entradas; no confundir cantidad de archivos con cantidad de ejercicios.
+**492 archivos de referencia en 14 paquetes**, incorporados en la aplicación. Un ejercicio con varios archivos cuenta varias entradas; no confundir cantidad de archivos con cantidad de ejercicios.
 
 ## Organización curricular
 
@@ -81,3 +81,7 @@ Desde la raíz del repositorio se puede ejecutar `scripts/auditar-biblioteca.ps1
 ## Ampliación de miniproyectos comparables v5
 
 Java incorpora excepciones de negocio checked/unchecked y fallos suprimidos en AutoCloseable. Kotlin enseña fun interface, null safety y excepciones propias; C# agrega eventos reales, Strategy, Factory Method, Adapter, Decorator y colecciones genéricas; TypeScript separa contratos en módulos y clientes Main; Python utiliza Protocol, funciones y main.py; C++ utiliza .hpp/.cpp, unique_ptr y RAII. C y C++ contienen `01-fundamentos/compilacion-y-enlazado/biblioteca-estatica-dinamica/` con compilación/enlace de bibliotecas .a y .so en Linux/WSL. Ninguna variante requiere MVC para estos ejemplos de consola.
+
+## Ampliación orientada a objetos y paradigmas nativos (v6)
+
+Ruby 3.3 incluye clientes independientes para Factory Method, Strategy con bloques, Adapter con duck typing, Decorator por composición, Observer con suscripción/desuscripción, pila, cola circular, BST y excepción propia. JavaScript ES2022/Node 24 incorpora clientes CommonJS de esos cinco patrones con closures, callbacks y objetos compatibles por contrato dinámico, más cola circular. Se mantienen ejemplos separados de JS event loop, map/set, promesas y generadores. La biblioteca tiene **492 fuentes** en **14 lenguajes** y se estudia en consola; estas cifras no equivalen al número de ejercicios autónomos.
