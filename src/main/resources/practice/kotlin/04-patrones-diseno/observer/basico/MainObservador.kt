@@ -18,3 +18,9 @@ fun main() {
     println(eventos)
     check(eventos.size == 2 && sensor.valor == 42)
 }
+
+/*
+ * Salida esperada de consola:
+ *   Se imprime el valor o coleccion calculado por el cliente.
+ * Verificacion: termina sin excepciones inesperadas.
+ */

@@ -14,3 +14,9 @@ fun main() {
     val notificador: Notificador = Prefijo(Consola(), "[INFO] ")
     notificador.enviar("Pedido despachado")
 }
+
+/*
+ * Salida esperada de consola:
+ *   Sin salida de texto; las pruebas del cliente se cumplen.
+ * Verificacion: termina sin excepciones inesperadas.
+ */

@@ -15,3 +15,9 @@ fun main(){
     check(s.ruta=="/facturas"&&s.cabeceras.size==1)
     println(s)
 }
+
+/*
+ * Salida esperada de consola:
+ *   Se imprime el valor o coleccion calculado por el cliente.
+ * Verificacion: termina sin excepciones inesperadas.
+ */

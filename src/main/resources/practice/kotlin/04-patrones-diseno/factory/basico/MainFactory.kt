@@ -13,3 +13,9 @@ fun main() {
     val mensaje: Mensaje = Factory.crear("correo", "Ejemplo de Kotlin")
     println(mensaje.enviar())
 }
+
+/*
+ * Salida esperada de consola:
+ *   Se imprime el valor o coleccion calculado por el cliente.
+ * Verificacion: termina sin excepciones inesperadas.
+ */

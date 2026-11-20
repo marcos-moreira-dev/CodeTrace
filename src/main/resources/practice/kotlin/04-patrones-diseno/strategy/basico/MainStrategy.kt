@@ -18,3 +18,11 @@ fun main() {
     println("Total normal: " + Strategy.calcular(100.0, normal))
     println("Total fidelidad: " + Strategy.calcular(100.0, fidelidad))
 }
+
+/*
+ * Salida esperada de consola:
+ *   Total normal: 
+ *   Total fidelidad: 
+ *   (los valores variables completan los fragmentos anteriores)
+ * Verificacion: termina sin excepciones inesperadas.
+ */
