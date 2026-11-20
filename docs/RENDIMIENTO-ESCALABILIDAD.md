@@ -85,6 +85,41 @@ de destino, repetidos y acompañados por características de disco y CPU.
 - Una optimización de hashes nunca permite modificar originales ni alterar archivos
   existentes `.ctrace`.
 
+## Decisión de ingeniería: RAM a cambio de menos disco
+
+Los índices de nombres, rutas, totales y dependencias viven en RAM; no se
+precarga por defecto el contenido de miles de archivos. El disco se consulta
+cuando una operación concreta necesita leer bytes, y se evita repetir esa
+consulta si ya existen metadatos reutilizables. La caché del sistema operativo
+también contribuye: no se debe duplicar indiscriminadamente en la JVM.
+
+| Cambio | Situación implementada | Coste/cautela |
+| --- | --- | --- |
+| Catálogo | SHA-256 solo para UTF-8 elegible y acotado; usa los bytes ya leídos | O(bytes de código), no O(bytes multimedia) |
+| Índice del árbol | Acumulación postorden de totales y elegibilidad | O(n + carpetas); no guardar cargas binarios |
+| Progreso global | Agregado por archivo, actualizable cuando cambia una sesión | O(1) contable por pulsación, reconstruir al invalidar |
+| Progreso local | Contadores de grafemas correctos y resueltos mantenidos por transición | O(1) para un grafema; restauración O(U) |
+| Dependencias | Índice temporal de sufijos y paquetes Go sobre un máximo de 1.200 fuentes | O(n × profundidad) RAM/creación, consulta hash promedio |
+| Tiempos | `PerformanceProbe` solo si `codetrace.profile=true` | Sin rutas/nombres en los logs |
+
+Los índices son proporcionales al número de entradas y no al tamaño en bytes
+de los archivos. Para previews de código abiertos, mantener las restricciones
+actuales de lectura y evitar nuevas cachés ilimitadas; un LRU de contenidos
+solamente tendría sentido si JFR demuestra repeticiones de I/O relevantes y
+si se define un presupuesto de memoria y una invalidación segura.
+
+Para activar el perfilado ligero desde PowerShell en una sesión de prueba:
+
+```powershell
+$env:JAVA_TOOL_OPTIONS = "-Dcodetrace.profile=true"
+mvn javafx:run
+Remove-Item Env:JAVA_TOOL_OPTIONS
+```
+
+Los registros del perfilado solo incluyen la operación, el tiempo transcurrido
+y el número de entradas. Para comparar cambios de código, medir también p95,
+uso de heap, CPU e I/O con JFR y repetir los escenarios sobre el mismo equipo.
+
 ## Evolución posterior, sujeta a perfiles
 
 Consolidar los recorridos iniciales del árbol y del catálogo requiere un
