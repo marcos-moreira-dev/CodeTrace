@@ -120,6 +120,55 @@ Los registros del perfilado solo incluyen la operación, el tiempo transcurrido
 y el número de entradas. Para comparar cambios de código, medir también p95,
 uso de heap, CPU e I/O con JFR y repetir los escenarios sobre el mismo equipo.
 
+## Interfaz reactiva: colapsar y distribuir grafos
+
+Algunas operaciones que parecían de disco eran **mutaciones de miles de
+TreeItem de JavaFX** realizadas en su hilo gráfico. Colapsar todo ya no
+atraviesa cada descendiente para emitir miles de eventos de expansión:
+sustituye una sola raíz por un nodo nuevo de carga diferida y mantiene la
+referencia/indexación intacta. Colapsar una rama reemplaza solo el nodo de esa
+rama, conservando el estado de los demás hermanos. Volver a expandir no debe
+restaurar por accidente los descendientes de la rama colapsada.
+
+El diseño organizado del grafo conserva una cuadrícula de ocupación para
+reservar el rectángulo completo de cada nombre. Después de la simulación
+de fuerzas, los nodos con dos o más vecinos se acercan a su **baricentro**
+(minimizando la suma de distancias al cuadrado), sin colocar ninguna etiqueta
+sobre una celda ocupada. Las posiciones movidas manualmente y guardadas en
+sesión prevalecen hasta que el usuario elige **Restablecer distribución**.
+Eso respeta la personalización y evita que una actualización sobrescriba
+el trabajo del usuario.
+
+En modo de diagnóstico (`-Dcodetrace.profile=true`) se registran eventos
+`Performance collapse-all`, `collapse-branch`, `graph-organized`,
+`graph-grid`, `reference-tree` y `reference-catalogue` en
+`logs/javafx-run.log` dentro del ZIP. Son tiempos de pared de cada operación,
+no tiempos de CPU ni mediciones de FPS. El script
+`scripts/diagnostico.bat` habilita temporalmente el perfilado al abrir la
+aplicación y restaura las opciones Java preexistentes cuando sale.
+
+### Escenario manual para reproducir la incidencia
+
+1. Abre una referencia con miles de archivos y carpetas anidadas.
+2. Expande varias ramas; usa **Colapsar todas** y después reexpándelas.
+   La interfaz no debería mostrar «No responde» ni reabrir ramas sin pedirlo.
+3. Abre un mapa de dependencias conectado, elige **Restablecer distribución**,
+   y comprueba que los nodos con múltiples vecinos se acercan entre sí sin
+   superponer las etiquetas. Mueve un nodo manualmente, guarda la sesión y
+   comprueba que se restaura su posición personalizada.
+4. Cierra CodeTrace y comparte el ZIP generado. Revisar el archivo antes
+   de enviarlo: puede contener rutas o capturas sensibles.
+
+### Presupuesto de RAM: medir antes de fijar un límite
+
+El grupo «OpenJDK Platform binary» de Windows puede incluir dos JVM y no
+equivale por sí solo al heap de CodeTrace. Registrar por separado la memoria
+de CodeTrace, la de Maven/otros procesos Java, el heap de la JVM y el uso
+nativo. No deducir un promedio de uso de memoria a partir de una sola captura
+del Administrador de tareas. Para estudiar el heap, `jcmd <PID> GC.heap_info`
+puede complementar el Administrador de tareas. La métrica relevante es la
+variación al ampliar la referencia, no solo el tamaño absoluto del proceso.
+
 ## Evolución posterior, sujeta a perfiles
 
 Consolidar los recorridos iniciales del árbol y del catálogo requiere un
