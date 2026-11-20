@@ -26,8 +26,8 @@ public final class MainVector {
 
 /*
  * Salida esperada de consola:
- *   Elementos: 
- *   Capacidad: 
- *   (los valores variables completan los fragmentos anteriores)
- * Verificacion: termina sin excepciones inesperadas.
+ *   Elementos: 6
+ *   Capacidad: 8
+ *   Tercero: 30
+ * La capacidad crece geométricamente 2 -> 4 -> 8, sin cambiar el tamaño lógico.
  */

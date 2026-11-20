@@ -32,7 +32,6 @@ public final class MainExcepcionUnchecked {
 
 /*
  * Salida esperada de consola:
- *   Rechazo controlado: 
- *   (los valores variables completan los fragmentos anteriores)
- * Verificacion: termina sin excepciones inesperadas.
+ *   Rechazo controlado: Producto A-001: solicitado 10, disponible 3
+ * El despacho fallido deja el inventario con tres unidades.
  */

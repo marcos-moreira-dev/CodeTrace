@@ -30,9 +30,10 @@ public final class MainRecursosYSuppressed {
 }
 
 /*
- * Salida esperada de consola:
- *   Principal: 
- *   Suprimidas: 
- *   (los valores variables completan los fragmentos anteriores)
- * Verificacion: termina sin excepciones inesperadas.
+ * Salida esperada de consola (la apertura y el cierre también imprimen):
+ *   Abrir: demostración
+ *   Cerrar: demostración
+ *   Principal: Error del proceso demostración
+ *   Suprimidas: 1
+ * close() falla, pero su excepción queda asociada a la principal.
  */

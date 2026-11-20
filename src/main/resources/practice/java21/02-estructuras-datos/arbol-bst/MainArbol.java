@@ -26,8 +26,8 @@ public final class MainArbol {
 
 /*
  * Salida esperada de consola:
- *   Existe 6: 
- *   Existe 2: 
- *   (los valores variables completan los fragmentos anteriores)
- * Verificacion: termina sin excepciones inesperadas.
+ *   [1, 3, 4, 6, 7, 8, 10, 14]
+ *   Existe 6: true
+ *   Existe 2: false
+ * El recorrido inorden refleja el invariante del BST.
  */

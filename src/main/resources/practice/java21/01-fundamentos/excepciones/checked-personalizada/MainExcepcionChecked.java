@@ -35,9 +35,8 @@ public final class MainExcepcionChecked {
 }
 
 /*
- * Salida esperada de consola:
- *   Saldo preservado: 
- *   No se retiraron [valor]; hay [valor]%n
- *   (los valores variables completan los fragmentos anteriores)
- * Verificacion: termina sin excepciones inesperadas.
+ * Salida esperada de consola (en este orden):
+ *   No se retiraron 200; hay 70
+ *   Saldo preservado: 70
+ * La operación rechazada no altera el saldo; el catch recupera el flujo.
  */
