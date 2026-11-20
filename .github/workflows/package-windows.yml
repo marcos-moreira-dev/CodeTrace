@@ -7,12 +7,14 @@ on:
       - "src/**"
       - "pom.xml"
       - "scripts/package-windows.ps1"
+      - "scripts/verificar-paquete.ps1"
       - ".github/workflows/package-windows.yml"
   pull_request:
     paths:
       - "src/**"
       - "pom.xml"
       - "scripts/package-windows.ps1"
+      - "scripts/verificar-paquete.ps1"
       - ".github/workflows/package-windows.yml"
 
 concurrency:
@@ -42,11 +44,16 @@ jobs:
           if (-not (Test-Path "dist/CodeTrace-Windows-portable.zip")) {
             throw "Missing portable ZIP"
           }
+      - name: Verify packaged runtime and checksum
+        shell: pwsh
+        run: ./scripts/verificar-paquete.ps1
       - name: Upload portable build for Windows validation
         uses: actions/upload-artifact@v4
         with:
           name: CodeTrace-Windows-portable
-          path: dist/CodeTrace-Windows-portable.zip
+          path: |
+            dist/CodeTrace-Windows-portable.zip
+            dist/CodeTrace-Windows-portable.zip.sha256
           if-no-files-found: error
           retention-days: 7
 
