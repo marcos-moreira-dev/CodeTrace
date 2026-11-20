@@ -95,7 +95,7 @@ jobs:
           }
 
 
-      - name: Compile C# multi-file mini-projects
+      - name: Compile all C# mini-projects v7
         shell: pwsh
         run: |
           $root = "src/main/resources/practice/csharp"
@@ -110,7 +110,24 @@ jobs:
             "04-patrones-diseno/factory-method/exportadores",
             "04-patrones-diseno/adapter/sensores",
             "04-patrones-diseno/decorator/notificaciones",
-            "04-patrones-diseno/observer/eventos"
+            "04-patrones-diseno/observer/eventos",
+            "02-estructuras-datos/linked-list/simple",
+            "02-estructuras-datos/linked-list/doble",
+            "02-estructuras-datos/linked-list/circular",
+            "02-estructuras-datos/linked-list/doble-circular",
+            "02-estructuras-datos/cola-enlazada",
+            "02-estructuras-datos/deque",
+            "02-estructuras-datos/arbol-avl",
+            "02-estructuras-datos/trie",
+            "02-estructuras-datos/union-find",
+            "02-estructuras-datos/heap-maximo",
+            "02-estructuras-datos/tabla-hash/direccionamiento-abierto",
+            "02-estructuras-datos/grafos/ponderados",
+            "04-patrones-diseno/builder/solicitud",
+            "04-patrones-diseno/abstract-factory/tema-consola",
+            "04-patrones-diseno/composite/arbol-archivos",
+            "04-patrones-diseno/command/deshacer",
+            "04-patrones-diseno/template-method/reportes"
           )
           foreach ($unidad in $unidades) {
             $destino = Join-Path $env:RUNNER_TEMP "curso-csharp-unit"
@@ -138,7 +155,7 @@ jobs:
           echo "1adb6f1a5845ba0aa5a59e412e44c8e405236b957de1a9683619f1dca3b16932  $RUNNER_TEMP/kotlin-compiler.zip" | sha256sum -c -
           unzip -q "$RUNNER_TEMP/kotlin-compiler.zip" -d "$RUNNER_TEMP"
           echo "$RUNNER_TEMP/kotlinc/bin" >> "$GITHUB_PATH"
-      - name: Compile and execute idiomatic Kotlin 2.2 clients
+      - name: Compile and execute Kotlin 2.2 client parity v7
         shell: bash
         run: |
           set -euo pipefail
@@ -174,7 +191,24 @@ jobs:
             04-patrones-diseno/adapter/unidades \
             04-patrones-diseno/decorator/notificaciones \
             04-patrones-diseno/strategy/basico \
-            04-patrones-diseno/factory-method; do
+            04-patrones-diseno/factory-method \
+            02-estructuras-datos/linked-list/simple \
+            02-estructuras-datos/linked-list/doble \
+            02-estructuras-datos/linked-list/circular \
+            02-estructuras-datos/linked-list/doble-circular \
+            02-estructuras-datos/cola-enlazada \
+            02-estructuras-datos/deque \
+            02-estructuras-datos/arbol-avl \
+            02-estructuras-datos/trie \
+            02-estructuras-datos/union-find \
+            02-estructuras-datos/heap-maximo \
+            02-estructuras-datos/tabla-hash/direccionamiento-abierto \
+            02-estructuras-datos/grafos/ponderados \
+            04-patrones-diseno/builder/solicitud \
+            04-patrones-diseno/abstract-factory/tema-consola \
+            04-patrones-diseno/composite/arbol-archivos \
+            04-patrones-diseno/command/deshacer \
+            04-patrones-diseno/template-method/reportes; do
             kotlinc -jvm-target 21 "$base/$unidad/"*.kt \
               -include-runtime -d "$RUNNER_TEMP/kotlin-unit.jar"
             java -jar "$RUNNER_TEMP/kotlin-unit.jar" >/dev/null
