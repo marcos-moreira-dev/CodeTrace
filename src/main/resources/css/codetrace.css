@@ -1394,3 +1394,31 @@
     -fx-border-insets: 0;
     -fx-padding: 0 9px 8px 0;
 }
+
+/* Large references: logical rows rendered through ListView VirtualFlow.
+   Styling mirrors TreeView without materializing thousands of TreeItems. */
+.reference-explorer-host { -fx-background-color: #f6f8fa; }
+.reference-flat-explorer {
+    -fx-background-color: #f6f8fa;
+    -fx-border-color: transparent;
+    -fx-padding: 0;
+}
+.reference-flat-explorer .list-cell {
+    -fx-background-color: #ffffff;
+    -fx-padding: 0 4 0 1;
+}
+.reference-flat-explorer .list-cell:filled:selected,
+.reference-flat-explorer:focused .list-cell:filled:selected {
+    -fx-background-color: #c9dbe8;
+}
+.reference-flat-explorer .virtual-tree-disclosure {
+    -fx-font-size: 12px;
+    -fx-padding: 0;
+    -fx-background-color: transparent;
+    -fx-text-fill: #475c6d;
+    -fx-border-color: transparent;
+}
+.reference-flat-explorer .virtual-tree-disclosure:hover {
+    -fx-background-color: #dce8f0;
+}
+.reference-flat-explorer .reference-tree-row { -fx-alignment: center-left; }
