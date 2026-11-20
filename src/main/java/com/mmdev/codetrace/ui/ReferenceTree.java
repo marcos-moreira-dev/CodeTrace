@@ -76,6 +76,8 @@ public final class ReferenceTree extends TreeView<Path> {
     private long indexGeneration;
     private Task<ReferenceTreeIndex> indexTask;
     private boolean loading;
+    /** Expansion requested while the immutable disk index is still building. */
+    private boolean pendingExpandAll;
     private final BatchedTreeExpander expander;
     private String nameFilter = "";
     private Set<String> filteredPaths = Set.of();
@@ -258,6 +260,7 @@ public final class ReferenceTree extends TreeView<Path> {
      * root. The immutable disk index is preserved, with zero disk I/O.</p>
      */
     public void collapseAll() {
+        pendingExpandAll = false;
         expander.cancel();
         TreeItem<Path> oldRoot = getRoot();
         if (oldRoot == null || referenceRoot == null) return;
@@ -291,6 +294,7 @@ public final class ReferenceTree extends TreeView<Path> {
      * of being visited one by one on the UI thread.
      */
     public void collapseRecursively(Path directory) {
+        pendingExpandAll = false;
         expander.cancel();
         TreeItem<Path> clicked = findVisibleNode(getRoot(), directory);
         if (clicked == null || !isFolder(directory)) return;
@@ -343,15 +347,33 @@ public final class ReferenceTree extends TreeView<Path> {
      * reference paths come from the indexed, read-only tree.
      */
     public void expandRecursively(Path directory) {
-        expander.cancel();
+        if (referenceRoot == null || directory == null || !isFolder(directory)) return;
+        if (index == null || loading) {
+            // A click during a cold scan is not a no-op. Once the index is
+            // ready, reopen the intended tree instead of expanding empty nodes.
+            pendingExpandAll = true;
+            onStatus.accept("Indexando archivos; expansión programada al terminar.");
+            return;
+        }
+        if (expander.isExpanding()) {
+            onStatus.accept("La expansión de carpetas ya está en curso.");
+            return;
+        }
         TreeItem<Path> clicked = findVisibleNode(getRoot(), directory);
-        if (clicked == null || !isFolder(directory)) return;
+        if (clicked == null) {
+            onStatus.accept("La carpeta no está visible en el explorador.");
+            return;
+        }
         expander.expand(clicked);
     }
 
-    /** Expand the entire reference using the same bounded FX batches. */
+    /** Expand the entire reference; queue the request if indexing is pending. */
     public void expandAll() {
-        if (referenceRoot != null) expandRecursively(referenceRoot);
+        if (referenceRoot == null) {
+            onStatus.accept("Abre una referencia antes de expandir sus carpetas.");
+            return;
+        }
+        expandRecursively(referenceRoot);
     }
 
     private void scanReference() {
@@ -375,15 +397,25 @@ public final class ReferenceTree extends TreeView<Path> {
             indexTask = null;
             index = job.getValue();
             loading = false;
-            if (nameFilter.isBlank()) refreshTree();
-            else searchNames(nameFilter);
+            if (nameFilter.isBlank()) {
+                refreshTree();
+            } else {
+                searchNames(nameFilter);
+            }
             notifyBusy();
             onIndexReady.accept(index);
+            if (pendingExpandAll && nameFilter.isBlank()) {
+                pendingExpandAll = false;
+                Platform.runLater(() -> {
+                    if (source.equals(referenceRoot) && !loading) expandAll();
+                });
+            }
         });
         job.setOnFailed(event -> {
             if (generation != indexGeneration || indexTask != job) return;
             indexTask = null;
             loading = false;
+            pendingExpandAll = false;
             notifyBusy();
             onStatus.accept("No se pudo analizar el árbol de archivos.");
         });
@@ -391,6 +423,7 @@ public final class ReferenceTree extends TreeView<Path> {
             if (generation != indexGeneration || indexTask != job) return;
             indexTask = null;
             loading = false;
+            pendingExpandAll = false;
             notifyBusy();
         });
         Thread worker = new Thread(job, "codetrace-tree-index");
@@ -400,6 +433,7 @@ public final class ReferenceTree extends TreeView<Path> {
 
     /** Called by the explicit Refresh action, not on every keystroke. */
     public void reloadReference() {
+        pendingExpandAll = false;
         cancelNameSearch();
         index = null;
         filteredPaths = Set.of();
@@ -421,6 +455,7 @@ public final class ReferenceTree extends TreeView<Path> {
     }
 
     public void open(Path folder) {
+        pendingExpandAll = false;
         cancelNameSearch();
         referenceRoot = folder;
         index = null;
@@ -439,6 +474,7 @@ public final class ReferenceTree extends TreeView<Path> {
 
     /** Stop indexing, searching and expansion when CodeTrace is closing. */
     public void cancelPendingWork() {
+        pendingExpandAll = false;
         indexGeneration++;
         Task<ReferenceTreeIndex> previous = indexTask;
         indexTask = null;
@@ -477,6 +513,12 @@ public final class ReferenceTree extends TreeView<Path> {
                 nameSearchTask = null;
                 filteredPaths = search.getValue();
                 refreshTree();
+                if (pendingExpandAll && !loading) {
+                    pendingExpandAll = false;
+                    Platform.runLater(() -> {
+                        if (root.equals(referenceRoot) && !loading) expandAll();
+                    });
+                }
             });
             search.setOnFailed(done -> {
                 if (generation != filterGeneration || nameSearchTask != search) return;
