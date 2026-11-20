@@ -25,3 +25,10 @@ public final class MainListaSimple {
         System.out.println("Elementos insertados: " + materias.size());
     }
 }
+
+/*
+ * Salida esperada de consola:
+ *   Elementos insertados: 
+ *   (los valores variables completan los fragmentos anteriores)
+ * Verificacion: termina sin excepciones inesperadas.
+ */

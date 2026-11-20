@@ -21,3 +21,10 @@ public final class MainGrafoPonderado {
         System.out.println("Aristas de origen: "+g.vecinos(0));
     }
 }
+
+/*
+ * Salida esperada de consola:
+ *   Aristas de origen: 
+ *   (los valores variables completan los fragmentos anteriores)
+ * Verificacion: termina sin excepciones inesperadas.
+ */

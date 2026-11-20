@@ -24,3 +24,10 @@ public final class MainTrie {
         System.out.println("Prefijo 'cas': "+diccionario.comienzaCon("cas"));
     }
 }
+
+/*
+ * Salida esperada de consola:
+ *   Prefijo 'cas': 
+ *   (los valores variables completan los fragmentos anteriores)
+ * Verificacion: termina sin excepciones inesperadas.
+ */

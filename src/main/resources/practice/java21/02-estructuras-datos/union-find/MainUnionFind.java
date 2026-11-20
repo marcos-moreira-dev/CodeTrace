@@ -21,3 +21,10 @@ public final class MainUnionFind {
         System.out.println("Componentes: "+uf.componentes());
     }
 }
+
+/*
+ * Salida esperada de consola:
+ *   Componentes: 
+ *   (los valores variables completan los fragmentos anteriores)
+ * Verificacion: termina sin excepciones inesperadas.
+ */

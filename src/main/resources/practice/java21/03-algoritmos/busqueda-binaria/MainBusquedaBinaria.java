@@ -27,3 +27,10 @@ public final class MainBusquedaBinaria {
         System.out.println("Índice: " + real + "; inexistente: -1");
     }
 }
+
+/*
+ * Salida esperada de consola:
+ *   Índice: 
+ *   (los valores variables completan los fragmentos anteriores)
+ * Verificacion: termina sin excepciones inesperadas.
+ */

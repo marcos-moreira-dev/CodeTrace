@@ -27,3 +27,11 @@ public final class MainHash {
         System.out.println("Claves distintas=" + tabla.tamaño());
     }
 }
+
+/*
+ * Salida esperada de consola:
+ *   FB=
+ *   Ea=
+ *   (los valores variables completan los fragmentos anteriores)
+ * Verificacion: termina sin excepciones inesperadas.
+ */

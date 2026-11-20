@@ -24,3 +24,10 @@ public final class MainHeapMaximo {
         System.out.println("Max heap verificado");
     }
 }
+
+/*
+ * Salida esperada de consola:
+ *   Max heap verificado
+ *   (los valores variables completan los fragmentos anteriores)
+ * Verificacion: termina sin excepciones inesperadas.
+ */

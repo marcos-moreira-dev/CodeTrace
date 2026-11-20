@@ -30,3 +30,11 @@ public final class MainListaDoble {
         System.out.println("Atrás: " + lista.atras());
     }
 }
+
+/*
+ * Salida esperada de consola:
+ *   Adelante: 
+ *   Atrás: 
+ *   (los valores variables completan los fragmentos anteriores)
+ * Verificacion: termina sin excepciones inesperadas.
+ */

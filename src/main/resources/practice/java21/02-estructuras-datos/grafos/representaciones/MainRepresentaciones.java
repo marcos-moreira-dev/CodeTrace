@@ -31,3 +31,11 @@ public final class MainRepresentaciones {
             throw new AssertionError("Representaciones inconsistentes");
     }
 }
+
+/*
+ * Salida esperada de consola:
+ *   Matriz 0-2: 
+ *   Lista 0-2: 
+ *   (los valores variables completan los fragmentos anteriores)
+ * Verificacion: termina sin excepciones inesperadas.
+ */

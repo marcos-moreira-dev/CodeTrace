@@ -50,3 +50,11 @@ public final class MainTiposGrafo {
                 + ", bipartito=" + ponderado.bipartito());
     }
 }
+
+/*
+ * Salida esperada de consola:
+ *   Dirigido acíclico (DAG): 
+ *   Después de introducir un ciclo: 
+ *   (los valores variables completan los fragmentos anteriores)
+ * Verificacion: termina sin excepciones inesperadas.
+ */

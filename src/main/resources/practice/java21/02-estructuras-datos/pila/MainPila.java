@@ -20,3 +20,10 @@ public final class MainPila {
         System.out.println("LIFO comprobado");
     }
 }
+
+/*
+ * Salida esperada de consola:
+ *   LIFO comprobado
+ *   (los valores variables completan los fragmentos anteriores)
+ * Verificacion: termina sin excepciones inesperadas.
+ */
