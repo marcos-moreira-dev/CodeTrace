@@ -38,6 +38,11 @@ public final class VirtualChildrenIndex {
         return new VirtualChildrenIndex(grouped, folders);
     }
 
+    /** All virtual directories, without filesystem calls. */
+    public Set<String> directoryPaths() { return directories; }
+
+    public boolean isDirectory(String path) { return directories.contains(path); }
+
     public List<String> childrenOf(String parent) {
         return byParent.getOrDefault(parent, List.of());
     }
