@@ -365,6 +365,13 @@ class CodeTraceAppSmokeTest {
                 assertNotNull(preferences.getScene().getRoot()
                         .lookup(".read-only-consultation-notice"),
                         "The notice can be reenabled in Preferences > Avisos");
+                CheckBox realFileWarning = (CheckBox) preferences.getScene().getRoot()
+                        .lookup(".prefs-real-file-warning");
+                assertNotNull(realFileWarning, "Security warning needs one central setting");
+                assertEquals(
+                        com.mmdev.codetrace.commands.CommandWarningPreferences.mustConfirm(),
+                        realFileWarning.isSelected(),
+                        "The dialog opt-out and Preferences must share the same persisted state");
                 preferences.close();
                 var consultationNotice = ProductDialogs.createConsultationNotice(stage);
                 consultationNotice.show();
