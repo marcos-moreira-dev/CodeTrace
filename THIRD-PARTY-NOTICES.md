@@ -32,6 +32,13 @@ Referencias oficiales:
 - Twemoji: https://github.com/jdecked/twemoji
 - CC BY 4.0: https://creativecommons.org/licenses/by/4.0/
 
+Los textos de licencia íntegros de OpenJFX, emoji-java, Ikonli, CommonMark,
+Feather, Devicons y JSON-java se conservan bajo `third_party/licenses/` y se
+copian a `app/licenses/` en las distribuciones Windows. Son reproducciones
+de los avisos de los proyectos correspondientes, no documentos de autoría
+de CodeTrace. El runtime JDK mantiene sus propias licencias en
+`runtime/legal/` dentro de la distribución.
+
 **Atribución Twemoji:** gráficos emoji de Twemoji, mantenidos por el
 proyecto jdecked/twemoji, bajo CC BY 4.0. Se incluyen sin alteraciones
 del arte original. El texto completo `LICENSE-GRAPHICS` se conserva en

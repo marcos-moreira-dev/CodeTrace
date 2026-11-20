@@ -94,6 +94,16 @@ foreach ($item in $legalFiles) {
     }
     Copy-Item -LiteralPath $item[0] -Destination (Join-Path $legalDir $item[1]) -Force
 }
+# Ship full upstream license texts for the non-JDK runtime components.
+# JDK runtime itself keeps its own legal/ directory.
+$upstreamLicenses = Join-Path $root "third_party\licenses"
+foreach ($name in @("OpenJFX-GPLv2-Classpath.txt", "EmojiJava-MIT.txt", "Devicons-MIT.txt", "Feather-MIT.txt", "CommonMark-BSD-2-Clause.txt", "Ikonli-Apache-2.0.txt", "JSONJava-Public-Domain.txt")) {
+    $source = Join-Path $upstreamLicenses $name
+    if (-not (Test-Path -LiteralPath $source -PathType Leaf)) {
+        throw "Falta el texto de licencia de tercero: $source"
+    }
+    Copy-Item -LiteralPath $source -Destination (Join-Path $legalDir $name) -Force
+}
 # Windows shell and taskbar must display the official CodeTrace mark,
 # not jpackage's fallback Java icon. Reuse the same ICO converter that
 # generates the distinct .ctrace document icon for the installer.

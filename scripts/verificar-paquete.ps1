@@ -35,7 +35,7 @@ if (-not (Test-Path -LiteralPath (Join-Path $app "json-20260814.jar"))) {
 if (Test-Path -LiteralPath (Join-Path $app "json-20170516.jar")) {
     throw "Dependencia JSON-java de 2017 obsoleta incluida por error."
 }
-foreach ($legal in @("CodeTrace-MIT.txt", "LICENSING.md", "THIRD-PARTY-NOTICES.md", "IBM-Plex-OFL.txt", "Twemoji-CC-BY-4.0.txt")) {
+foreach ($legal in @("CodeTrace-MIT.txt", "LICENSING.md", "THIRD-PARTY-NOTICES.md", "IBM-Plex-OFL.txt", "Twemoji-CC-BY-4.0.txt", "OpenJFX-GPLv2-Classpath.txt", "EmojiJava-MIT.txt", "Devicons-MIT.txt", "Feather-MIT.txt", "CommonMark-BSD-2-Clause.txt", "Ikonli-Apache-2.0.txt", "JSONJava-Public-Domain.txt")) {
     if (-not (Test-Path -LiteralPath (Join-Path (Join-Path $app "licenses") $legal) -PathType Leaf)) {
         throw "No se incluyó el aviso legal requerido: $legal"
     }
@@ -62,7 +62,7 @@ try {
     if (-not @($entries | Where-Object { $_ -like "*/app/codetrace-*.jar" }).Count) {
         throw "El ZIP no contiene el artefacto compilado."
     }
-    foreach ($legal in @("CodeTrace-MIT.txt", "LICENSING.md", "THIRD-PARTY-NOTICES.md", "IBM-Plex-OFL.txt", "Twemoji-CC-BY-4.0.txt")) {
+    foreach ($legal in @("CodeTrace-MIT.txt", "LICENSING.md", "THIRD-PARTY-NOTICES.md", "IBM-Plex-OFL.txt", "Twemoji-CC-BY-4.0.txt", "OpenJFX-GPLv2-Classpath.txt", "EmojiJava-MIT.txt", "Devicons-MIT.txt", "Feather-MIT.txt", "CommonMark-BSD-2-Clause.txt", "Ikonli-Apache-2.0.txt", "JSONJava-Public-Domain.txt")) {
         if (-not @($entries | Where-Object { $_.EndsWith("/app/licenses/$legal") }).Count) {
             throw "El ZIP no contiene el aviso legal requerido: $legal"
         }
