@@ -19,12 +19,12 @@ public static class MainBuilder
             .Cabecera("Content-Type: application/json").Construir();
         if(s.Ruta!="/facturas"||s.Cabeceras.Count!=1)
             throw new Exception("Builder");
-        Console.WriteLine(s);
+        Console.WriteLine($"{s.Metodo} {s.Ruta} ({s.Cabeceras.Count} cabecera)");
     }
 }
 
 /*
  * Salida esperada de consola:
- *   Se imprime el valor o coleccion calculado por el cliente.
- * Verificacion: termina sin excepciones inesperadas.
+ *   POST /facturas (1 cabecera)
+ * La validación del Builder entrega un producto con una cabecera.
  */

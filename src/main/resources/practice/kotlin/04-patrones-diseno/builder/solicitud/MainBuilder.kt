@@ -13,11 +13,11 @@ fun main(){
     val s=SolicitudBuilder().ruta("/facturas").metodo("POST")
         .cabecera("Content-Type: application/json").construir()
     check(s.ruta=="/facturas"&&s.cabeceras.size==1)
-    println(s)
+    println("${s.metodo} ${s.ruta} (${s.cabeceras.size} cabecera)")
 }
 
 /*
  * Salida esperada de consola:
- *   Se imprime el valor o coleccion calculado por el cliente.
- * Verificacion: termina sin excepciones inesperadas.
+ *   POST /facturas (1 cabecera)
+ * La validación del Builder entrega un producto con una cabecera.
  */

@@ -19,11 +19,11 @@ int main(){
     auto s=b.ruta("/facturas").metodo("POST")
         .cabecera("Content-Type: application/json").construir();
     if(s.ruta!="/facturas"||s.cabeceras.size()!=1)throw std::logic_error("Builder");
-    std::cout<<s.metodo<<" "<<s.ruta<<'\n';
+    std::cout<<s.metodo<<" "<<s.ruta<<" ("<<s.cabeceras.size()<<" cabecera)"<<'\n';
 }
 
 /*
  * Salida esperada de consola:
- *   Se muestran los datos o el resultado calculado del ejemplo.
- * Verificacion: terminar sin excepciones inesperadas.
+ *   POST /facturas (1 cabecera)
+ * La validación del Builder entrega un producto con una cabecera.
  */

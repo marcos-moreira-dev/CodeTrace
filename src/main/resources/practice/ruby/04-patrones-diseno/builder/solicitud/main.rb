@@ -13,10 +13,10 @@ def main
   s = SolicitudBuilder.new.ruta('/facturas').metodo('POST')
       .cabecera('Content-Type: application/json').construir
   raise 'Builder' unless s.ruta == '/facturas' && s.cabeceras.length == 1
-  p s
+  puts "#{s.metodo} #{s.ruta} (#{s.cabeceras.length} cabecera)"
 end
 main if __FILE__ == $PROGRAM_NAME
 
 # Salida esperada de consola:
-#   Se imprime el valor o coleccion calculado por el cliente.
-# Verificacion: termina sin excepciones inesperadas.
+#   POST /facturas (1 cabecera)
+# La validación del Builder entrega un producto inmutable con una cabecera.

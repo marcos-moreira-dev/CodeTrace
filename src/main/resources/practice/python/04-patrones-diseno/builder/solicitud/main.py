@@ -14,11 +14,11 @@ def main() -> None:
     s=(SolicitudBuilder().ruta("/facturas").metodo("POST")
        .cabecera("Content-Type: application/json").construir())
     assert s.ruta=="/facturas" and len(s.cabeceras)==1
-    print(s)
+    print(f"{s.metodo} {s.ruta} ({len(s.cabeceras)} cabecera)")
 
 if __name__ == "__main__":
     main()
 
 # Salida esperada de consola:
-#   Se imprime el valor o coleccion calculado por el cliente.
-# Verificacion: termina sin excepciones inesperadas.
+#   POST /facturas (1 cabecera)
+# La validación del Builder entrega un producto inmutable con una cabecera.

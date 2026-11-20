@@ -14,12 +14,12 @@ function main(){
     const s=new SolicitudBuilder().ruta("/facturas").metodo("POST")
         .cabecera("Content-Type: application/json").construir();
     if(s.ruta!=="/facturas"||s.cabeceras.length!==1)throw Error("Builder");
-    console.log(s);
+    console.log(s.metodo+" "+s.ruta+" ("+s.cabeceras.length+" cabecera)");
 }
 if(require.main===module)main();
 
 /*
  * Salida esperada de consola:
- *   Se imprime el valor o coleccion calculado por el cliente.
- * Verificacion: termina sin excepciones inesperadas.
+ *   POST /facturas (1 cabecera)
+ * La validación del Builder entrega un producto con una cabecera.
  */

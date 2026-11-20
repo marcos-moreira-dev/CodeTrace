@@ -15,10 +15,10 @@ const solicitud:Solicitud=new SolicitudBuilder().ruta("/facturas")
     .metodo("POST").cabecera("Content-Type: application/json").construir();
 if(solicitud.ruta!=="/facturas"||solicitud.cabeceras.length!==1)
     throw Error("Builder");
-console.log(solicitud);
+console.log(solicitud.metodo+" "+solicitud.ruta+" ("+solicitud.cabeceras.length+" cabecera)");
 
 /*
  * Salida esperada de consola:
- *   Se imprime el valor o coleccion calculado por el cliente.
- * Verificacion: termina sin excepciones inesperadas.
+ *   POST /facturas (1 cabecera)
+ * La validación del Builder entrega un producto con una cabecera.
  */
