@@ -23,6 +23,11 @@ ni la escritura de archivos originales.**
 | `VirtualExplorerView` | `ListView` con celdas recicladas; pinta las filas visibles mediante VirtualFlow |
 | `ReferenceTree` | Adaptador de compatibilidad: acciones, selección, filtros y sincronización con la aplicación |
 
+**Expandir todo** y la expansión recursiva de una rama grande
+(más de 40 carpetas o 1.000 archivos indexados) utilizan la proyección
+lógica. Los menús de expansión de proyectos pequeños conservan el
+comportamiento tradicional e inmediato de JavaFX.
+
 **Expandir todo** computa el conjunto de directorios expandidos
 y una lista ordenada de filas fuera del hilo JavaFX. Solo al terminar se
 publica la lista de una vez. El `TreeView` convencional queda oculto y
