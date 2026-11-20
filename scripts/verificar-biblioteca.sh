@@ -32,8 +32,8 @@ for pack,path in items:
 # Documentar la salida de TODOS los clientes identificables (sin suponer que cada fuente es cliente).
 import re
 clientes=[x for x in root.rglob("*") if x.is_file() and
-    re.search(r"/(?:Main[A-Z][^/]*\\.(?:java|kt|ts|cs)|main\\.(?:py|rb|js|go|cpp|c))$",
-              str(x).replace("\\\\","/"))]
+    re.search(r"/(?:Main[A-Z][^/]*\.(?:java|kt|ts|cs)|main\.(?:py|rb|js|go|cpp|c))$",
+              x.as_posix())]
 assert len(clientes)>=260, len(clientes)
 sin_salida=[str(x) for x in clientes
             if "Salida esperada" not in x.read_text(encoding="utf-8")[-1200:]]
