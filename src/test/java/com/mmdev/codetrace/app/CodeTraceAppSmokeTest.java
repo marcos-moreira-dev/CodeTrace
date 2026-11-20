@@ -72,6 +72,7 @@ class CodeTraceAppSmokeTest {
     void launchesAndShowsTheMainWindow() throws Exception {
         CountDownLatch finished = new CountDownLatch(1);
         AtomicReference<Throwable> failure = new AtomicReference<>();
+        AtomicReference<ReferenceTree> projectedTree = new AtomicReference<>();
         Platform.startup(() -> {
             Stage stage = new Stage();
             try {
@@ -551,6 +552,7 @@ class CodeTraceAppSmokeTest {
                 ReferenceTree fileTree = (ReferenceTree) stage.getScene()
                         .getRoot().lookup(".tree-view");
                 assertNotNull(fileTree);
+                projectedTree.set(fileTree);
                 assertNotNull(stage.getScene().getRoot().lookup(".tree-name-search"));
                 assertNotNull(stage.getScene().getRoot().lookup(".tree-exclude-checkbox"));
                 assertNotNull(stage.getScene().getRoot().lookup(".tabs-actions"));
@@ -835,6 +837,10 @@ class CodeTraceAppSmokeTest {
                         "Selecting project root returns to whole-project progress");
                 assertFalse(only.isSelected());
 
+                // Verify the actual asynchronous row publication after the
+                // synchronous UI assertions have finished.
+                fileTree.expandAll();
+
                 Files.delete(imageFile);
                 Files.delete(directFile);
                 Files.delete(nestedFile);
@@ -848,12 +854,43 @@ class CodeTraceAppSmokeTest {
             } catch (Throwable problem) {
                 failure.set(problem);
             } finally {
-                stage.close();
-                Platform.exit();
-                finished.countDown();
+                Runnable finishUi = () -> {
+                    stage.close();
+                    Platform.exit();
+                    finished.countDown();
+                };
+                if (failure.get() != null || projectedTree.get() == null) {
+                    finishUi.run();
+                } else {
+                    var virtualRows = (ListView<?>) projectedTree.get().projectedExplorer();
+                    var ended = new java.util.concurrent.atomic.AtomicBoolean();
+                    // A JavaFX test must not block its own event thread while
+                    // waiting for Task.setOnSucceeded to publish the rows.
+                    var timer = new javafx.animation.Timeline();
+                    timer.getKeyFrames().add(new javafx.animation.KeyFrame(
+                            javafx.util.Duration.millis(60), event -> {
+                        if (!virtualRows.isVisible() || virtualRows.getItems().size() < 2)
+                            return;
+                        if (!ended.compareAndSet(false, true)) return;
+                        timer.stop();
+                        if (projectedTree.get().getRoot() != null)
+                            failure.set(new AssertionError(
+                                    "Mass expansion retained a hidden TreeItem hierarchy"));
+                        finishUi.run();
+                    }));
+                    timer.setCycleCount(100);
+                    timer.setOnFinished(event -> {
+                        if (ended.compareAndSet(false, true)) {
+                            failure.set(new AssertionError(
+                                    "Virtual explorer did not publish rows after Expandir todo"));
+                            finishUi.run();
+                        }
+                    });
+                    timer.play();
+                }
             }
         });
-        assertTrue(finished.await(25, TimeUnit.SECONDS),
+        assertTrue(finished.await(28, TimeUnit.SECONDS),
                 "JavaFX startup did not finish");
         if (failure.get() != null) {
             fail("JavaFX startup failed", failure.get());
