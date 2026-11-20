@@ -41,6 +41,17 @@ jobs:
         run: mvn --batch-mode --no-transfer-progress verify
       - name: JavaFX graphical startup smoke test
         run: xvfb-run -a mvn --batch-mode --no-transfer-progress -Dtest=CodeTraceAppSmokeTest -Dcodetrace.guiSmoke=true test
+      - name: Build Java 21 Javadoc
+        run: mvn --batch-mode --no-transfer-progress javadoc:javadoc
+      - name: Check generated API documentation
+        run: test -s target/site/apidocs/index.html
+      - name: Upload browsable Javadoc
+        uses: actions/upload-artifact@v4
+        with:
+          name: codetrace-javadoc-html
+          path: target/site/apidocs
+          retention-days: 7
+          if-no-files-found: error
 
   windows-diagnostics:
     runs-on: windows-latest
