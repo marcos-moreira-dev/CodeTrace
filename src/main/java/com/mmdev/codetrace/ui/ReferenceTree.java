@@ -485,6 +485,18 @@ public final class ReferenceTree extends TreeView<Path> {
         long n = index == null ? 0 : index.recursiveFiles(path);
         return "(" + n + (n == 1 ? " archivo)" : " archivos)");
     }
+    State projectedState(String path) {
+        boolean folder = path.isEmpty() || isFolder(absoluteProjectedPath(path));
+        boolean practiceable = folder
+                ? (index == null || index.hasWorkableDescendant(path))
+                : (index != null ? index.isWorkable(path)
+                        : PracticeEligibility.supports(absoluteProjectedPath(path)));
+        return practiceable ? statusLookup.apply(path) : State.NOT_APPLICABLE;
+    }
+    boolean projectedExcluded(String path) { return excluded.test(path); }
+    boolean projectedOutsideScope(String path) {
+        return FolderProgressFocus.outside(progressFocusFolder, path);
+    }
     boolean projectedExpanded(String path) { return logicalExpansion.contains(path); }
     void toggleProjectedFolder(String path) {
         changeProjectedFolder(path, !logicalExpansion.contains(path), false);
