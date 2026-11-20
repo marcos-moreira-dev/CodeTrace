@@ -17,3 +17,9 @@ fun main(){
     check(l.valores()==listOf("Luis","Mia","Ana"))
     println(l.valores())
 }
+
+/*
+ * Salida esperada de consola:
+ *   Se imprime el valor o coleccion calculado por el cliente.
+ * Verificacion: termina sin excepciones inesperadas.
+ */

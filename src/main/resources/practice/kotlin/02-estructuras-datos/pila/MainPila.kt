@@ -17,3 +17,10 @@ fun main() {
     check(pila.cantidad() == 1)
     println("Pila LIFO verificada")
 }
+
+/*
+ * Salida esperada de consola:
+ *   Pila LIFO verificada
+ *   (los valores variables completan los fragmentos anteriores)
+ * Verificacion: termina sin excepciones inesperadas.
+ */

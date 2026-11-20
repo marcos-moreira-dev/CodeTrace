@@ -17,3 +17,10 @@ fun main(){
     try{t.poner("C",4);error("Debió fallar")}
     catch(e:IllegalStateException){println("Hash lleno controlado")}
 }
+
+/*
+ * Salida esperada de consola:
+ *   Hash lleno controlado
+ *   (los valores variables completan los fragmentos anteriores)
+ * Verificacion: termina sin excepciones inesperadas.
+ */

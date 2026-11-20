@@ -17,3 +17,10 @@ fun main() {
     check(lista.cantidad == 2 && lista.obtenerPrimero() == "Estructuras")
     println("Primero: " + lista.obtenerPrimero())
 }
+
+/*
+ * Salida esperada de consola:
+ *   Primero: 
+ *   (los valores variables completan los fragmentos anteriores)
+ * Verificacion: termina sin excepciones inesperadas.
+ */

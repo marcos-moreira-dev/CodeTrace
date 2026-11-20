@@ -17,3 +17,9 @@ fun main(){
     check(l.quitarFinal()=="C"&&l.cantidad==2)
     println(l.adelante())
 }
+
+/*
+ * Salida esperada de consola:
+ *   Se imprime el valor o coleccion calculado por el cliente.
+ * Verificacion: termina sin excepciones inesperadas.
+ */

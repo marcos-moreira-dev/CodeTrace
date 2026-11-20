@@ -15,3 +15,9 @@ fun main(){
     check(a!=b&&"clara" in a&&"oscura" in b)
     println(a);println(b)
 }
+
+/*
+ * Salida esperada de consola:
+ *   Se imprime el valor o coleccion calculado por el cliente.
+ * Verificacion: termina sin excepciones inesperadas.
+ */

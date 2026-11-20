@@ -15,3 +15,10 @@ fun main() {
     check(sensor.leer() == 25.0)
     println("Grados Celsius: " + sensor.leer())
 }
+
+/*
+ * Salida esperada de consola:
+ *   Grados Celsius: 
+ *   (los valores variables completan los fragmentos anteriores)
+ * Verificacion: termina sin excepciones inesperadas.
+ */

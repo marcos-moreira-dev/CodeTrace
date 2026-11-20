@@ -15,3 +15,10 @@ fun main(){
     check(List(5){h.extraer()}==listOf(9,7,4,2,1))
     println("Max heap correcto")
 }
+
+/*
+ * Salida esperada de consola:
+ *   Max heap correcto
+ *   (los valores variables completan los fragmentos anteriores)
+ * Verificacion: termina sin excepciones inesperadas.
+ */
