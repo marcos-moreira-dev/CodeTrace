@@ -18,5 +18,5 @@ for(const parte of ["Hola"," mundo"]){
 }
 if(editor.texto!=="Hola mundo")throw Error("Ejecutar");
 historial.pop()!.deshacer();
-if(editor.texto!=="Hola")throw Error("Deshacer");
+if(String(editor.texto)!=="Hola")throw Error("Deshacer");
 console.log(editor.texto);
