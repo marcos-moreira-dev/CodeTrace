@@ -493,6 +493,7 @@ public final class CodeTraceApp extends Application {
         workspaceSplit.getItems().add(split);
         root.setCenter(workspaceSplit);
 
+        status.getStyleClass().add("status-context");
         fileInfo.getStyleClass().add("progress-info");
         fileProgress.getStyleClass().add("typing-progress");
         fileProgress.setPrefWidth(160);
