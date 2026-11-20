@@ -1,5 +1,5 @@
 /* CodeTrace | Referencia: C17 / GCC 13+ / Linux o WSL
- * Compilar y ejecutar en una COPIA: sh compilar.sh
+ * Compilar: sh compilar.sh
  * Esta cabecera se incluye desde main.c y operaciones.c; no se enlaza sola.
  */
 #ifndef CT_C_OPERACIONES_H

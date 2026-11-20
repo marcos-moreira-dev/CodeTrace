@@ -1,5 +1,5 @@
 // CodeTrace | Referencia: C++20 / GCC g++ 13+ / Linux o WSL
-// Compilar y ejecutar en copia: sh compilar.sh
+// Compilar: sh compilar.sh
 #include "operaciones.hpp"
 #include <iostream>
 
