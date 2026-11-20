@@ -1,5 +1,5 @@
 /* CodeTrace | Referencia: C17 / GCC 13+ / Linux o WSL
- * Construir y ejecutar (en COPIA): sh compilar.sh
+ * Compilar y ejecutar (en COPIA): sh compilar.sh
  */
 #include "operaciones.h"
 #include <stdio.h>

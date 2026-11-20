@@ -4,6 +4,7 @@
 // Interfaz en .hpp, implementación en .cpp, cliente en main.cpp.
 
 #pragma once
+#include <cstddef>
 #include <stdexcept>
 #include <utility>
 #include <vector>
@@ -24,5 +25,5 @@ public:
         datos.pop_back();
         return valor;
     }
-    size_t cantidad() const { return datos.size(); }
+    std::size_t cantidad() const { return datos.size(); }
 };

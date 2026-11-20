@@ -152,7 +152,7 @@ class BuiltInLibraryTest {
         assertTrue(library.entries(kotlinPack).contains("04-patrones-diseno/factory/basico/MainFactory.kt"));
         assertTrue(library.entries(kotlinPack).contains("04-patrones-diseno/observer/basico/MainObservador.kt"));
         var tsPack = library.packs().stream().filter(x -> x.id().equals("typescript")).findFirst().orElseThrow();
-        assertTrue(library.entries(tsPack).contains("04-patrones-diseno/observer/basico/Principal.ts"));
+        assertTrue(library.entries(tsPack).contains("04-patrones-diseno/observer/basico/MainObserverBasico.ts"));
     }
 
     @Test
