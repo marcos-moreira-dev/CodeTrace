@@ -108,6 +108,24 @@ class BuiltInLibraryTest {
         }
     }
     @Test
+    void allFourCurriculumPurposesAndDocumentedJavaClientsArePresent() throws Exception {
+        var library = new BuiltInLibrary(temp.resolve("curriculum"));
+        assertEquals("v2", BuiltInLibrary.CATALOG_VERSION);
+        assertEquals(226, library.packs().stream().mapToInt(library::size).sum());
+        for (var pack : library.packs()) {
+            var entries = library.entries(pack);
+            assertTrue(entries.stream().anyMatch(x -> x.startsWith("01-fundamentos/")), pack.id());
+            assertTrue(entries.stream().anyMatch(x -> x.startsWith("03-algoritmos/")), pack.id());
+            assertTrue(entries.stream().noneMatch(x -> x.contains("07-proyectos/")
+                    || x.contains("laboratorios/") || x.contains("/complejidad/")), pack.id());
+        }
+        var javaPack = library.packs().stream().filter(x -> x.id().equals("java21")).findFirst().orElseThrow();
+        assertTrue(library.entries(javaPack).contains("01-fundamentos/comparadores/ComparadoresEncadenados.java"));
+        assertTrue(library.entries(javaPack).contains("03-algoritmos/programacion-dinamica/MainMonedas.java"));
+        assertTrue(library.entries(javaPack).contains("04-patrones-diseno/strategy-tarifas/MainTarifas.java"));
+    }
+
+    @Test
     void multiFileProjectsAndAssemblyAreActuallyBundled() throws Exception {
         var library = new BuiltInLibrary(temp.resolve("architectures"));
         assertEquals(14, library.packs().size());
@@ -127,7 +145,7 @@ class BuiltInLibraryTest {
                 "03-algoritmos/euclides.asm"));
         assertTrue(library.entries(all.get("java21")).contains(
                 "03-algoritmos/Dijkstra.java"));
-        assertTrue(library.packs().stream().mapToInt(library::size).sum() >= 160);
+        assertEquals(226, library.packs().stream().mapToInt(library::size).sum());
     }
 
 }

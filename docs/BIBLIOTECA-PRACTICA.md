@@ -1,46 +1,38 @@
-# Biblioteca de práctica CodeTrace — criterios y estructura
+# Biblioteca de práctica CodeTrace — catálogo v2
 
-La biblioteca es una referencia **de solo lectura**, no un compilador: las
-fuentes se entregan dentro del programa, se materializan en una carpeta local
-propia y la sesión de mecanografía se guarda por separado en .ctrace.
+**226 archivos de referencia en 14 paquetes**, incorporados en la aplicación. Un ejercicio con varios archivos cuenta varias entradas; no confundir cantidad de archivos con cantidad de ejercicios.
 
-## Organización de aprendizajes
+## Organización curricular
 
-1. **Sintaxis:** variables, tipos, flujo, funciones y peculiaridades del idioma.
-2. **Estructuras:** pilas, listas, colas, arreglos y uso de memoria.
-3. **Algoritmos:** búsqueda binaria, Euclides, ordenación, **Dijkstra** y
-   ejercicios de costo computacional, con complejidad explicada cuando procede.
-4. **Patrones y proyectos:** Observer y Factory Method como conjuntos de
-   archivos con interfaces, implementaciones, fábricas, observadores y demos.
-5. **Integración:** comandos, módulos, scripts y herramientas externas.
-6. **Ensambador NASM x86-64:** sintaxis Intel, registros, pila, memoria,
-   bucles, Euclides, Fibonacci y llamadas Linux. No prometer que los ejemplos
-   con llamadas al sistema Linux son ejecutables Windows sin modificaciones.
+- `01-fundamentos/`: sintaxis, tipos, control de flujo, funciones y especialidades del lenguaje.
+- `02-estructuras-datos/`: pilas, colas, listas, heaps, tablas, grafos y su implementación.
+- `03-algoritmos/`: búsqueda, ordenamiento, recursión, grafos, backtracking, voraces y programación dinámica. **Complejidad temporal y espacial integrada**, sin carpeta separada.
+- `04-patrones-diseno/`: contratos, Strategy, Observer, Factory y otros patrones donde tengan sentido; organización idiomática en C/C++ y lenguajes funcionales.
 
-### Convenciones de inclusión
+No se crean carpetas `proyectos/`, `laboratorios/` o `complejidad/`, ni se imponen patrones GoF en CMD o ensamblador. Las subcarpetas expresan problemas reales y mantienen archivos relacionados juntos.
 
-- Cada archivo fuente indica en sus primeras líneas **versión de referencia**
-  y **comando de compilación/comprobación**.
-- Los proyectos multiarhivo permanecen en la MISMA carpeta de caso de uso.
-  CodeTrace no copia dependencias de forma mágica ni los ejecuta
-  automáticamente: sirven para estudiar relaciones reales entre archivos.
-- Los patrones se enseñan donde tienen sentido para el paradigma y el
-  alcance. No forzar Factory Method en CMD ni POO ficticia en ensamblador.
-- Cada ejemplo distingue el lenguaje, su versión, dependencias y sistema
-  operativo (especialmente NASM y scripts Shell).
-- Se permite omitir las declaraciones de dependencias del archivo actual,
-  pero nunca se omiten en masa llamadas o código arbitrario por heurísticas.
-- Los emojis pueden visualizarse como anotaciones; no son caracteres que
-  deban teclearse y no suman puntos de velocidad ni bloquean finalizar.
-- Los originales de referencia no se sobrescriben durante la práctica.
+## Cómo estudiar una unidad
 
-## Pruebas de aceptación
+El archivo cliente contiene la introducción conceptual más generosa: **propósito, problema, archivos relacionados, precondiciones, decisiones y costos**. Sus dependencias documentan contratos e invariantes, evitando comentarios línea por línea. No se fuerza MVC en ejercicios de consola.
 
-- Enumerar 14 paquetes, incluidos los 13 previos y NASM, desde interfaz.
-- Comprobar integridad del catálogo y existencia de los archivos
-  multiarhivo; validar que los Java de la biblioteca compilan juntos.
-- Ejecutar manualmente un Factory Method, un Observer y Dijkstra en
-  distintos lenguajes, según compiladores disponibles.
-- Verificar compilación NASM \`nasm -f elf64\` dentro de WSL/Linux si está
-  disponible; no exigir NASM para ejecutar CodeTrace.
-- No fusionar en \`main\` ni publicar instalador hasta aceptar esos casos.
+Los comentarios iniciales de cada archivo registran versión/estándar y comandos orientativos de compilación, verificación o ejecución. Los comandos de los clientes multiarchivo deben compilar conjuntamente todas sus fuentes. Ejecútalos desde una **copia de trabajo**, no sobre referencias insustituibles.
+
+### Casos relevantes
+
+- Java: `01-fundamentos/comparadores/`, `01-fundamentos/streams/`, `03-algoritmos/programacion-dinamica/`, `02-estructuras-datos/heaps/`, `04-patrones-diseno/strategy-tarifas/`.
+- Python: generadores, decoradores, cola circular, monedas y Strategy.
+- C: punteros, callbacks, pila opaca con `.h/.c`, enlace estático/compartido, búsqueda binaria.
+- C++: RAII, STL, iteradores, cola de prioridad y Strategy multiarchivo.
+- TypeScript: tipos discriminados, comparadores genéricos, cola circular y monedas.
+- JavaScript: closures, microtareas, backtracking y Strategy funcional.
+- Kotlin, C#, Go, Ruby, PowerShell, Shell, CMD, NASM: características idiomáticas y ejemplos acotados.
+
+**Ejemplo de decisión algorítmica:** para denominaciones 1, 3 y 4 y monto 6, el voraz mayor-primero elige 4+1+1 (tres monedas), mientras DP encuentra 3+3 (dos). La tabla de DP requiere O(m*k) tiempo y O(m) memoria para monto m y k denominaciones.
+
+## Conservación y seguridad
+
+Los ejemplos se cargan como **recursos internos**, sin conexión ni compiladores. CodeTrace practica sin sobrescribir el contenido original; el progreso se guarda por separado en `.ctrace`. La compilación externa requiere la toolchain correspondiente y puede escribir archivos, por lo que se recomienda una copia. Los programas NASM de ELF64 requieren Linux/WSL.
+
+Fuentes de orientación: los repositorios personales Estructuras-de-Datos-y-Algoritmos, Patrones-de-dise-o-Java y PrincipiosSOLID, además del libro facilitado *De las matemáticas a la computadora*. Las implementaciones integradas deben validarse contra sus comandos y contratos; una fuente original con complejidad anotada no se considera automáticamente correcta.
+
+**Estado:** desarrollo en rama `feature/practice-curriculum-20261120`. Publicación/merge sujetos a aceptación manual y condiciones de `CIERRE-V0.3.md`.
