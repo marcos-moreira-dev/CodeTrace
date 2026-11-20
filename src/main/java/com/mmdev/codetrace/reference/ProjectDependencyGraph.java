@@ -62,6 +62,8 @@ public final class ProjectDependencyGraph {
         source.sort(Comparator.comparing(p -> relative(root, p)));
         Set<String> known = new HashSet<>();
         for (Path file : source) known.add(relative(root, file));
+        // Bounded, per-analysis index: spending a little RAM saves repeated scans.
+        ResolutionIndex resolution = new ResolutionIndex(known);
         String goModule = "";
         try {
             Matcher m = Pattern.compile("(?m)^\\s*module\\s+(\\S+)")
@@ -90,7 +92,7 @@ public final class ProjectDependencyGraph {
             signature.update(data.content().getBytes(StandardCharsets.UTF_8));
             signature.update((byte) 0);
             for (ImportRef imp : parse(file, data.content())) {
-                String target = resolve(root, file, known, imp, goModule);
+                String target = resolve(root, file, resolution, imp, goModule);
                 if (target != null && !target.equals(from))
                     edges.add(new Edge(from, target, imp.kind()));
                 if (cancelled.getAsBoolean() || edges.size() >= 1200) break;
@@ -189,7 +191,7 @@ public final class ProjectDependencyGraph {
         }
         return refs;
     }
-    private static String resolve(Path root, Path from, Set<String> known,
+    private static String resolve(Path root, Path from, ResolutionIndex index,
                                   ImportRef ref, String goModule) {
         String requested = ref.target().replace('\\', '/').strip();
         if (requested.isEmpty() || requested.contains("$" + "{")
@@ -197,10 +199,9 @@ public final class ProjectDependencyGraph {
         if (ref.kind().equals("go-import")) {
             if (goModule.isEmpty() || !requested.startsWith(goModule + "/")) return null;
             String dir = requested.substring(goModule.length() + 1);
-            return known.stream().anyMatch(p -> p.startsWith(dir + "/") && p.endsWith(".go"))
-                    ? dir : null; // Go imports packages, not individual files.
+            return index.goPackages.contains(dir) ? dir : null; // Go imports packages.
         }
-        if (ref.dotted()) return findUnique(known, requested.replace('.', '/'));
+        if (ref.dotted()) return findUnique(index, requested.replace('.', '/'));
         if (!ref.kind().equals("include") && !ref.kind().equals("call")
                 && !requested.startsWith(".")) return null;
         Path target;
@@ -209,22 +210,52 @@ public final class ProjectDependencyGraph {
         if (!target.startsWith(root)) return null;
         String relative = relative(root, target);
         for (String extension : ENDINGS) {
-            if (known.contains(relative + extension)) return relative + extension;
+            if (index.known.contains(relative + extension)) return relative + extension;
         }
         // For #include "common.h" inside a project-wide include/ folder.
-        if (!requested.contains("/")) return findUnique(known, requested);
+        if (!requested.contains("/")) return findUnique(index, requested);
         return null;
     }
-    private static String findUnique(Set<String> files, String candidate) {
+    private static String findUnique(ResolutionIndex index, String candidate) {
         String result = null;
         for (String ending : ENDINGS) {
-            for (String path : files) {
-                if (path.equals(candidate + ending) || path.endsWith("/" + candidate + ending)) {
-                    if (result != null && !result.equals(path)) return null;
-                    result = path;
-                }
+            for (String path : index.suffixes.getOrDefault(candidate + ending, Set.of())) {
+                // Ambiguous source files must not generate invented dependencies.
+                if (result != null && !result.equals(path)) return null;
+                result = path;
             }
         }
         return result;
+    }
+
+    /**
+     * The graph caps sources at 1,200. Precompute relative path suffixes in
+     * O(n * depth) space/time so resolving imports avoids O(n) linear scans.
+     * This index is discarded after each analysis, preventing stale lookups.
+     */
+    private static final class ResolutionIndex {
+        private final Set<String> known;
+        private final Map<String, Set<String>> suffixes = new HashMap<>();
+        private final Set<String> goPackages = new HashSet<>();
+
+        private ResolutionIndex(Set<String> known) {
+            this.known = known;
+            for (String path : known) {
+                String suffix = path;
+                while (true) {
+                    suffixes.computeIfAbsent(suffix, ignored -> new HashSet<>()).add(path);
+                    int slash = suffix.indexOf('/');
+                    if (slash < 0) break;
+                    suffix = suffix.substring(slash + 1);
+                }
+                if (path.endsWith(".go")) {
+                    int slash = path.lastIndexOf('/');
+                    while (slash > 0) {
+                        goPackages.add(path.substring(0, slash));
+                        slash = path.lastIndexOf('/', slash - 1);
+                    }
+                }
+            }
+        }
     }
 }
