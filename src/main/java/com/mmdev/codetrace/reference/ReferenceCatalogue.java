@@ -130,6 +130,7 @@ public final class ReferenceCatalogue {
 
     public static Snapshot scan(Path referenceRoot) throws IOException {
         abortIfInterrupted();
+        long scanStart = PerformanceProbe.begin();
         if (!Files.isDirectory(referenceRoot)) {
             throw new IOException("Reference directory is missing");
         }
@@ -182,6 +183,7 @@ public final class ReferenceCatalogue {
             }
         });
         abortIfInterrupted();
+        PerformanceProbe.finish("reference-catalogue", scanStart, files.size());
         return new Snapshot(files);
     }
 
