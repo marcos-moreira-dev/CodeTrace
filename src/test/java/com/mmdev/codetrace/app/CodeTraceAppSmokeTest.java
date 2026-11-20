@@ -637,9 +637,12 @@ class CodeTraceAppSmokeTest {
                         .findFirst().orElseThrow();
                 layerTree.setExpanded(true);
                 assertTrue(layerTree.isExpanded());
+                var untouchedRoot = fileTree.getRoot();
                 srcMenu.getItems().stream()
                         .filter(item -> "Colapsar todas las subcarpetas".equals(item.getText()))
                         .findFirst().orElseThrow().fire();
+                assertSame(untouchedRoot, fileTree.getRoot(),
+                        "Collapsing one branch should not reconstruct unrelated branches");
                 var collapsedSrc = fileTree.getRoot().getChildren().stream()
                         .filter(item -> src.equals(item.getValue()))
                         .findFirst().orElseThrow();
@@ -738,7 +741,14 @@ class CodeTraceAppSmokeTest {
                 changeMode.invoke(application, PracticeMode.RECONSTRUCTION);
                 assertTrue(virtual.exists("src/Direct.java"),
                         "Switching modes must not discard created files");
+                var beforeCollapseAll = fileTree.getRoot();
                 fileTree.collapseAll();
+                assertNotSame(beforeCollapseAll, fileTree.getRoot(),
+                        "Collapse-all must reset the lazy expansion tree in one update");
+                assertTrue(fileTree.getRoot().isExpanded());
+                assertTrue(fileTree.getRoot().getChildren().stream()
+                        .noneMatch(javafx.scene.control.TreeItem::isExpanded),
+                        "Only the root stays open; old descendant flags are discarded");
                 fileTree.expandAll();
                 assertTrue(fileTree.getRoot().isExpanded());
                 Method toggleConsole = CodeTraceApp.class.getDeclaredMethod(
