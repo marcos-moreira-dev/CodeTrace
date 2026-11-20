@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# CodeTrace | Referencia: biblioteca de práctica v7 / verificador GNU/Linux-WSL
+# CodeTrace | Referencia: biblioteca de práctica v8 / verificador GNU/Linux-WSL
 # Ejecutar en COPIA: bash scripts/verificar-biblioteca.sh
 # Artefactos de compilación aislados en mktemp, sin tocar referencias.
 set -euo pipefail
@@ -15,7 +15,7 @@ import sys
 root=Path(sys.argv[1])
 items=[x.split("\t",1) for x in (root/"catalog.tsv").read_text(encoding="utf-8").splitlines()
        if x and not x.startswith("#")]
-assert len(items)==762, len(items)
+assert len(items)==813, len(items)
 assert len({p for p,_ in items})==14
 assert len(set(map(tuple,items)))==len(items)
 assert all(len(path.split("/"))>=3 for _,path in items)
@@ -29,7 +29,16 @@ for pack,path in items:
     assert "codetrace" in head, (pack,path)
     assert "referencia" in head or "kotlin 2.2" in head, (pack,path)
     assert any(word in head for word in ("compilar","comprobar","ejecutar","verificar","tipos/sintaxis")), (pack,path)
-print("OK catálogo:",len(items))
+# Documentar la salida de TODOS los clientes identificables (sin suponer que cada fuente es cliente).
+import re
+clientes=[x for x in root.rglob("*") if x.is_file() and
+    re.search(r"/(?:Main[A-Z][^/]*\\.(?:java|kt|ts|cs)|main\\.(?:py|rb|js|go|cpp|c))$",
+              str(x).replace("\\\\","/"))]
+assert len(clientes)>=260, len(clientes)
+sin_salida=[str(x) for x in clientes
+            if "Salida esperada" not in x.read_text(encoding="utf-8")[-1200:]]
+assert not sin_salida, ("Clientes sin salida esperada:",sin_salida)
+print("OK catálogo:",len(items), "| clientes documentados:", len(clientes))
 PY
 
 echo "Java 21: clases, contratos y clientes"
@@ -129,7 +138,7 @@ for dir in \
 done
 
 
-echo "v7: Java 21 — pruebas de las nuevas familias y patrones"
+echo "v8: Java 21 — pruebas de las nuevas familias y patrones"
 for clase in \
   codetrace.practica.estructuras.listadoble.MainListaDoble \
   codetrace.practica.estructuras.listacircular.MainListaCircular \
@@ -150,7 +159,7 @@ for clase in \
   java -cp "$tmp/java" "$clase" >/dev/null
 done
 
-echo "v7: C++20 — miniproyectos completos por carpeta"
+echo "v8: C++20 — miniproyectos completos por carpeta"
 for unidad in \
   02-estructuras-datos/linked-list/simple \
   02-estructuras-datos/linked-list/doble \
@@ -170,11 +179,11 @@ for unidad in \
   04-patrones-diseno/command/deshacer \
   04-patrones-diseno/template-method/reportes; do
   ruta="$base/cpp/$unidad"
-  g++ -std=c++20 -Wall -Wextra -Werror "$ruta/"*.cpp -o "$tmp/cpp-v7"
-  "$tmp/cpp-v7" >/dev/null
+  g++ -std=c++20 -Wall -Wextra -Werror "$ruta/"*.cpp -o "$tmp/cpp-v8"
+  "$tmp/cpp-v8" >/dev/null
 done
 
-echo "v7: TypeScript 5.9 — transpilar y ejecutar el cliente de cada unidad"
+echo "v8: TypeScript 5.9 — transpilar y ejecutar el cliente de cada unidad"
 tsc --strict --target ES2022 --module commonjs --outDir "$tmp/ts" "$base/typescript/02-estructuras-datos/linked-list/simple/MainListaSimple.ts"
 node "$tmp/ts/MainListaSimple.js" >/dev/null
 tsc --strict --target ES2022 --module commonjs --outDir "$tmp/ts" "$base/typescript/02-estructuras-datos/linked-list/doble/MainListaDoble.ts"
@@ -210,7 +219,7 @@ node "$tmp/ts/MainCommand.js" >/dev/null
 tsc --strict --target ES2022 --module commonjs --outDir "$tmp/ts" "$base/typescript/04-patrones-diseno/template-method/reportes/MainTemplateMethod.ts"
 node "$tmp/ts/MainTemplateMethod.js" >/dev/null
 
-echo "v7: Python, Ruby y JavaScript — todos los nuevos clientes"
+echo "v8: Python, Ruby y JavaScript — todos los nuevos clientes"
 for unidad in \
   02-estructuras-datos/linked-list/simple \
   02-estructuras-datos/linked-list/doble \
@@ -236,6 +245,36 @@ for unidad in \
   node "$base/javascript/$unidad/main.js" >/dev/null
 done
 
+
+echo "v8: comparativa de cinco sorts, insercion binaria y limites ordenados"
+for clase in \
+  codetrace.practica.ordenamientos.MainOrdenamientos \
+  codetrace.practica.algoritmos.burbuja.MainBurbuja \
+  codetrace.practica.algoritmos.insercionbinaria.MainInsercionBinaria \
+  codetrace.practica.algoritmos.limites.MainLimitesOrdenados; do
+  java -cp "$tmp/java" "$clase" >/dev/null
+done
+for unidad in \
+  ordenamientos/comparativa-cinco \
+  ordenamientos/insercion-binaria \
+  busqueda-rangos; do
+  cpp="$base/cpp/03-algoritmos/$unidad"
+  g++ -std=c++20 -Wall -Wextra -Werror "$cpp/"*.cpp -o "$tmp/sort-cpp"
+  "$tmp/sort-cpp" >/dev/null
+  py="$base/python/03-algoritmos/$unidad/main.py"
+  python3 -B "$py" >/dev/null
+  ruby "$base/ruby/03-algoritmos/$unidad/main.rb" >/dev/null
+  node "$base/javascript/03-algoritmos/$unidad/main.js" >/dev/null
+done
+for main in \
+  ordenamientos/comparativa-cinco/MainOrdenamientos.ts \
+  ordenamientos/insercion-binaria/MainInsercionBinaria.ts \
+  busqueda-rangos/MainLimitesOrdenados.ts; do
+  tsc --strict --target ES2022 --module commonjs --outDir "$tmp/ts" \
+      "$base/typescript/03-algoritmos/$main"
+  node "$tmp/ts/$(basename "$main" .ts).js" >/dev/null
+done
+
 echo "Resto de lenguajes: smoke tests reales"
 node "$base/javascript/03-algoritmos/cuatro-reinas/cuatro_reinas.js" >/dev/null
 go run "$base/go/01-fundamentos/goroutines-canales/goroutines_canales.go" >/dev/null
@@ -245,4 +284,4 @@ nasm -f elf64 "$base/nasm-x64/03-algoritmos/busqueda-lineal/busqueda_lineal.asm"
 ld "$tmp/a.o" -o "$tmp/a"
 "$tmp/a" >/dev/null
 
-echo "OK: catálogo v7, 14 paquetes, 762 fuentes y clientes seleccionados"
+echo "OK: catálogo v8, 14 paquetes, 813 fuentes y clientes seleccionados"

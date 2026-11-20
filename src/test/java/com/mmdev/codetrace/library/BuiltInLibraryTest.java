@@ -110,8 +110,8 @@ class BuiltInLibraryTest {
     @Test
     void allFourCurriculumPurposesAndDocumentedJavaClientsArePresent() throws Exception {
         var library = new BuiltInLibrary(temp.resolve("curriculum"));
-        assertEquals("v7", BuiltInLibrary.CATALOG_VERSION);
-        assertEquals(762, library.packs().stream().mapToInt(library::size).sum());
+        assertEquals("v8", BuiltInLibrary.CATALOG_VERSION);
+        assertEquals(813, library.packs().stream().mapToInt(library::size).sum());
         for (var pack : library.packs()) {
             var entries = library.entries(pack);
             assertTrue(entries.stream().allMatch(x -> x.split("/").length >= 3),
@@ -165,6 +165,25 @@ class BuiltInLibraryTest {
                 "02-estructuras-datos/linked-list/doble/MainListaDoble.java"));
         assertTrue(library.entries(javaPack).contains(
                 "04-patrones-diseno/command/deshacer/MainCommand.java"));
+        for (String subtema : java.util.List.of(
+                "ordenamientos/burbuja-optimizada/MainBurbuja.java",
+                "ordenamientos/insercion-binaria/MainInsercionBinaria.java",
+                "busqueda-rangos/MainLimitesOrdenados.java",
+                "ordenamientos/MainOrdenamientos.java")) {
+            assertTrue(library.entries(javaPack).contains("03-algoritmos/" + subtema));
+        }
+        for (String lenguaje : java.util.List.of("kotlin", "csharp", "typescript",
+                "python", "cpp", "ruby", "javascript")) {
+            var paquete = library.packs().stream().filter(x -> x.id().equals(lenguaje))
+                    .findFirst().orElseThrow();
+            var rutas = library.entries(paquete);
+            for (String unidad : java.util.List.of(
+                    "ordenamientos/comparativa-cinco/", "ordenamientos/insercion-binaria/",
+                    "busqueda-rangos/")) {
+                assertTrue(rutas.stream().anyMatch(x -> x.startsWith("03-algoritmos/" + unidad)),
+                        lenguaje + " no contiene " + unidad);
+            }
+        }
         var cppPack = library.packs().stream().filter(x -> x.id().equals("cpp")).findFirst().orElseThrow();
         assertTrue(library.entries(cppPack).contains("01-fundamentos/compilacion-y-enlazado/biblioteca-estatica-dinamica/main.cpp"));
         assertTrue(library.entries(javaPack).contains("02-estructuras-datos/grafos/genericos/MainGrafoGenerico.java"));
@@ -197,7 +216,7 @@ class BuiltInLibraryTest {
                 "03-algoritmos/euclides/euclides.asm"));
         assertTrue(library.entries(all.get("java21")).contains(
                 "03-algoritmos/dijkstra/Dijkstra.java"));
-        assertEquals(762, library.packs().stream().mapToInt(library::size).sum());
+        assertEquals(813, library.packs().stream().mapToInt(library::size).sum());
     }
 
 }

@@ -1,4 +1,4 @@
-# CodeTrace | Biblioteca offline v7: una fila por archivo real; archivos no equivalen a unidades.
+# CodeTrace | Biblioteca offline v8 | una entrada por archivo, no por ejercicio
 c	01-fundamentos/bits-y-mascaras/bits_y_mascaras.c
 c	01-fundamentos/callbacks-y-funciones/callbacks_y_funciones.c
 c	01-fundamentos/compilacion-y-enlazado/biblioteca-estatica-dinamica/compilar.sh
@@ -89,6 +89,9 @@ cpp	02-estructuras-datos/union-find/UnionFind.hpp
 cpp	03-algoritmos/bfs-dfs/bfs_dfs.cpp
 cpp	03-algoritmos/busqueda-binaria-stl/busqueda_binaria_stl.cpp
 cpp	03-algoritmos/busqueda-binaria/BusquedaBinaria.cpp
+cpp	03-algoritmos/busqueda-rangos/LimitesOrdenados.cpp
+cpp	03-algoritmos/busqueda-rangos/LimitesOrdenados.hpp
+cpp	03-algoritmos/busqueda-rangos/main.cpp
 cpp	03-algoritmos/cuatro-reinas/cuatro_reinas.cpp
 cpp	03-algoritmos/dijkstra/Dijkstra.cpp
 cpp	03-algoritmos/euclides/Euclides.cpp
@@ -97,6 +100,12 @@ cpp	03-algoritmos/grafos/floyd-warshall/floyd_warshall.cpp
 cpp	03-algoritmos/grafos/topologico/kahn.cpp
 cpp	03-algoritmos/merge-sort/merge_sort.cpp
 cpp	03-algoritmos/mochila-01/mochila_01.cpp
+cpp	03-algoritmos/ordenamientos/comparativa-cinco/main.cpp
+cpp	03-algoritmos/ordenamientos/comparativa-cinco/Ordenamientos.cpp
+cpp	03-algoritmos/ordenamientos/comparativa-cinco/Ordenamientos.hpp
+cpp	03-algoritmos/ordenamientos/insercion-binaria/InsercionBinaria.cpp
+cpp	03-algoritmos/ordenamientos/insercion-binaria/InsercionBinaria.hpp
+cpp	03-algoritmos/ordenamientos/insercion-binaria/main.cpp
 cpp	04-patrones-diseno/abstract-factory/tema-consola/Familias.cpp
 cpp	04-patrones-diseno/abstract-factory/tema-consola/Familias.hpp
 cpp	04-patrones-diseno/abstract-factory/tema-consola/main.cpp
@@ -175,8 +184,14 @@ csharp	02-estructuras-datos/union-find/UnionFind.cs
 csharp	03-algoritmos/bfs-grafo/bfs_grafo.cs
 csharp	03-algoritmos/busqueda-binaria-basica/BusquedaBinaria.cs
 csharp	03-algoritmos/busqueda-binaria/busqueda_binaria.cs
+csharp	03-algoritmos/busqueda-rangos/LimitesOrdenados.cs
+csharp	03-algoritmos/busqueda-rangos/MainLimitesOrdenados.cs
 csharp	03-algoritmos/euclides/Euclides.cs
 csharp	03-algoritmos/mochila-01/mochila_01.cs
+csharp	03-algoritmos/ordenamientos/comparativa-cinco/MainOrdenamientos.cs
+csharp	03-algoritmos/ordenamientos/comparativa-cinco/Ordenadores.cs
+csharp	03-algoritmos/ordenamientos/insercion-binaria/InsercionBinaria.cs
+csharp	03-algoritmos/ordenamientos/insercion-binaria/MainInsercionBinaria.cs
 csharp	04-patrones-diseno/abstract-factory/tema-consola/Familias.cs
 csharp	04-patrones-diseno/abstract-factory/tema-consola/MainAbstractFactory.cs
 csharp	04-patrones-diseno/adapter/sensores/MainAdapter.cs
@@ -293,6 +308,8 @@ java21	02-estructuras-datos/union-find/UnionFind.java
 java21	03-algoritmos/backtracking/CuatroReinas.java
 java21	03-algoritmos/busqueda-binaria/BusquedaBinaria.java
 java21	03-algoritmos/busqueda-binaria/MainBusquedaBinaria.java
+java21	03-algoritmos/busqueda-rangos/LimitesOrdenados.java
+java21	03-algoritmos/busqueda-rangos/MainLimitesOrdenados.java
 java21	03-algoritmos/dijkstra/Dijkstra.java
 java21	03-algoritmos/euclides/Euclides.java
 java21	03-algoritmos/grafos/caminos-minimos/CaminosMinimos.java
@@ -311,6 +328,10 @@ java21	03-algoritmos/grafos/recorridos/orden-visita/Recorridos.java
 java21	03-algoritmos/grafos/topologico/MainTopologico.java
 java21	03-algoritmos/grafos/topologico/OrdenTopologico.java
 java21	03-algoritmos/insercion/Insercion.java
+java21	03-algoritmos/ordenamientos/burbuja-optimizada/BurbujaOptimizada.java
+java21	03-algoritmos/ordenamientos/burbuja-optimizada/MainBurbuja.java
+java21	03-algoritmos/ordenamientos/insercion-binaria/InsercionBinaria.java
+java21	03-algoritmos/ordenamientos/insercion-binaria/MainInsercionBinaria.java
 java21	03-algoritmos/ordenamientos/MainOrdenamientos.java
 java21	03-algoritmos/ordenamientos/Ordenadores.java
 java21	03-algoritmos/programacion-dinamica/cambio-monedas/MainMonedas.java
@@ -391,9 +412,15 @@ javascript	02-estructuras-datos/union-find/main.js
 javascript	02-estructuras-datos/union-find/UnionFind.js
 javascript	03-algoritmos/bfs-dfs/bfs_dfs.js
 javascript	03-algoritmos/busqueda-binaria/BusquedaBinaria.js
+javascript	03-algoritmos/busqueda-rangos/LimitesOrdenados.js
+javascript	03-algoritmos/busqueda-rangos/main.js
 javascript	03-algoritmos/cuatro-reinas/cuatro_reinas.js
 javascript	03-algoritmos/euclides/Euclides.js
 javascript	03-algoritmos/mochila-01/mochila_01.js
+javascript	03-algoritmos/ordenamientos/comparativa-cinco/main.js
+javascript	03-algoritmos/ordenamientos/comparativa-cinco/Ordenadores.js
+javascript	03-algoritmos/ordenamientos/insercion-binaria/InsercionBinaria.js
+javascript	03-algoritmos/ordenamientos/insercion-binaria/main.js
 javascript	04-patrones-diseno/abstract-factory/tema-consola/Familias.js
 javascript	04-patrones-diseno/abstract-factory/tema-consola/main.js
 javascript	04-patrones-diseno/adapter/unidades/main.js
@@ -467,10 +494,16 @@ kotlin	02-estructuras-datos/union-find/MainUnionFind.kt
 kotlin	02-estructuras-datos/union-find/UnionFind.kt
 kotlin	03-algoritmos/bfs-grafo/bfs_grafo.kt
 kotlin	03-algoritmos/busqueda-binaria/BusquedaBinaria.kt
+kotlin	03-algoritmos/busqueda-rangos/LimitesOrdenados.kt
+kotlin	03-algoritmos/busqueda-rangos/MainLimitesOrdenados.kt
 kotlin	03-algoritmos/cambio-monedas/cambio_monedas.kt
 kotlin	03-algoritmos/euclides/Euclides.kt
 kotlin	03-algoritmos/insercion/Insercion.kt
 kotlin	03-algoritmos/mochila-01/mochila_01.kt
+kotlin	03-algoritmos/ordenamientos/comparativa-cinco/MainOrdenamientos.kt
+kotlin	03-algoritmos/ordenamientos/comparativa-cinco/Ordenadores.kt
+kotlin	03-algoritmos/ordenamientos/insercion-binaria/InsercionBinaria.kt
+kotlin	03-algoritmos/ordenamientos/insercion-binaria/MainInsercionBinaria.kt
 kotlin	04-patrones-diseno/abstract-factory/tema-consola/Familias.kt
 kotlin	04-patrones-diseno/abstract-factory/tema-consola/MainAbstractFactory.kt
 kotlin	04-patrones-diseno/adapter/unidades/adapter_unidades.kt
@@ -566,6 +599,8 @@ python	02-estructuras-datos/union-find/main.py
 python	02-estructuras-datos/union-find/union_find.py
 python	03-algoritmos/bfs-dfs/bfs_dfs.py
 python	03-algoritmos/busqueda-binaria/busqueda_binaria.py
+python	03-algoritmos/busqueda-rangos/limites.py
+python	03-algoritmos/busqueda-rangos/main.py
 python	03-algoritmos/cuatro-reinas/cuatro_reinas.py
 python	03-algoritmos/dijkstra/dijkstra.py
 python	03-algoritmos/euclides/euclides.py
@@ -575,6 +610,10 @@ python	03-algoritmos/grafos/expansion-minima/mst.py
 python	03-algoritmos/grafos/floyd-warshall/floyd_warshall.py
 python	03-algoritmos/merge-sort/merge_sort.py
 python	03-algoritmos/mochila-01/mochila_01.py
+python	03-algoritmos/ordenamientos/comparativa-cinco/main.py
+python	03-algoritmos/ordenamientos/comparativa-cinco/ordenamientos.py
+python	03-algoritmos/ordenamientos/insercion-binaria/insercion_binaria.py
+python	03-algoritmos/ordenamientos/insercion-binaria/main.py
 python	03-algoritmos/programacion-dinamica/main.py
 python	03-algoritmos/programacion-dinamica/monedas.py
 python	03-algoritmos/seleccion-intervalos/seleccion_intervalos.py
@@ -638,8 +677,14 @@ ruby	02-estructuras-datos/union-find/main.rb
 ruby	02-estructuras-datos/union-find/union_find.rb
 ruby	03-algoritmos/bfs-grafo/bfs_grafo.rb
 ruby	03-algoritmos/busqueda-binaria/busqueda_binaria.rb
+ruby	03-algoritmos/busqueda-rangos/limites.rb
+ruby	03-algoritmos/busqueda-rangos/main.rb
 ruby	03-algoritmos/euclides/euclides.rb
 ruby	03-algoritmos/mochila-01/mochila_01.rb
+ruby	03-algoritmos/ordenamientos/comparativa-cinco/main.rb
+ruby	03-algoritmos/ordenamientos/comparativa-cinco/ordenamientos.rb
+ruby	03-algoritmos/ordenamientos/insercion-binaria/insercion_binaria.rb
+ruby	03-algoritmos/ordenamientos/insercion-binaria/main.rb
 ruby	04-patrones-diseno/abstract-factory/tema-consola/familias.rb
 ruby	04-patrones-diseno/abstract-factory/tema-consola/main.rb
 ruby	04-patrones-diseno/adapter/unidades/main.rb
@@ -725,6 +770,8 @@ typescript	02-estructuras-datos/union-find/MainUnionFind.ts
 typescript	02-estructuras-datos/union-find/UnionFind.ts
 typescript	03-algoritmos/bfs-dfs/bfs_dfs.ts
 typescript	03-algoritmos/busqueda-binaria/busqueda_binaria.ts
+typescript	03-algoritmos/busqueda-rangos/LimitesOrdenados.ts
+typescript	03-algoritmos/busqueda-rangos/MainLimitesOrdenados.ts
 typescript	03-algoritmos/cuatro-reinas/cuatro_reinas.ts
 typescript	03-algoritmos/dijkstra/dijkstra.ts
 typescript	03-algoritmos/euclides/euclides.ts
@@ -734,6 +781,10 @@ typescript	03-algoritmos/grafos/topologico/kahn.ts
 typescript	03-algoritmos/insercion/insercion.ts
 typescript	03-algoritmos/merge-sort/merge_sort.ts
 typescript	03-algoritmos/mochila-01/mochila_01.ts
+typescript	03-algoritmos/ordenamientos/comparativa-cinco/MainOrdenamientos.ts
+typescript	03-algoritmos/ordenamientos/comparativa-cinco/Ordenadores.ts
+typescript	03-algoritmos/ordenamientos/insercion-binaria/InsercionBinaria.ts
+typescript	03-algoritmos/ordenamientos/insercion-binaria/MainInsercionBinaria.ts
 typescript	03-algoritmos/programacion-dinamica/MainMonedas.ts
 typescript	03-algoritmos/programacion-dinamica/Monedas.ts
 typescript	04-patrones-diseno/abstract-factory/tema-consola/Familias.ts

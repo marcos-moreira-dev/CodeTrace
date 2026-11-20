@@ -33,3 +33,12 @@ Los comandos referenciales se leen desde la raíz del paquete de lenguaje y debe
 ### Biblioteca v6
 
 Las unidades multiarchivo emplean convenciones `Main*.java/kt/ts/cs`, `main.py/rb/js/go` o `main.c/cpp` conforme a su ecosistema. C17/C++20 presentan `compilar.sh` para comparar bibliotecas `.a` y `.so` sobre Linux o WSL, con objetos temporales y sin modificar las referencias. El catálogo interno usa caché `v6` para no mezclar rutas de sesiones anteriores.
+
+## Nuevos comandos v8
+
+- Java 21: compilar todas las fuentes dentro de una COPIA con `javac --release 21 -encoding UTF-8 -d "$env:TEMP\\ct-java" (Get-ChildItem -Recurse -Filter *.java).FullName`; ejecutar `codetrace.practica.ordenamientos.MainOrdenamientos`, `codetrace.practica.algoritmos.burbuja.MainBurbuja`, `codetrace.practica.algoritmos.insercionbinaria.MainInsercionBinaria` y `codetrace.practica.algoritmos.limites.MainLimitesOrdenados`.
+- C++20: cada unidad con `g++ -std=c++20 -Wall -Wextra -Werror *.cpp -o ejemplo` y `./ejemplo`.
+- Kotlin 2.2: `kotlinc -jvm-target 21 *.kt -include-runtime -d ejemplo.jar && java -jar ejemplo.jar`.
+- C# 12: `dotnet new console -f net8.0`, copiar las fuentes de la unidad sin el `Program.cs` generado, `dotnet run`.
+- TypeScript 5.9: `tsc --strict --target ES2022 --module commonjs MainOrdenamientos.ts`, luego `node MainOrdenamientos.js` en copia.
+- Python 3.12: `python -B main.py`; Ruby 3.3: `ruby main.rb`; Node 24: `node main.js`.

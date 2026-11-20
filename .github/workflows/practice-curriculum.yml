@@ -133,7 +133,10 @@ jobs:
             "04-patrones-diseno/abstract-factory/tema-consola",
             "04-patrones-diseno/composite/arbol-archivos",
             "04-patrones-diseno/command/deshacer",
-            "04-patrones-diseno/template-method/reportes"
+            "04-patrones-diseno/template-method/reportes",
+            "03-algoritmos/ordenamientos/comparativa-cinco",
+            "03-algoritmos/ordenamientos/insercion-binaria",
+            "03-algoritmos/busqueda-rangos"
           )
           foreach ($unidad in $unidades) {
             $destino = Join-Path $env:RUNNER_TEMP "curso-csharp-unit"
@@ -214,7 +217,10 @@ jobs:
             04-patrones-diseno/abstract-factory/tema-consola \
             04-patrones-diseno/composite/arbol-archivos \
             04-patrones-diseno/command/deshacer \
-            04-patrones-diseno/template-method/reportes; do
+            04-patrones-diseno/template-method/reportes \
+            03-algoritmos/ordenamientos/comparativa-cinco \
+            03-algoritmos/ordenamientos/insercion-binaria \
+            03-algoritmos/busqueda-rangos; do
             kotlinc -jvm-target 21 "$base/$unidad/"*.kt \
               -include-runtime -d "$RUNNER_TEMP/kotlin-unit.jar"
             java -jar "$RUNNER_TEMP/kotlin-unit.jar" >/dev/null
