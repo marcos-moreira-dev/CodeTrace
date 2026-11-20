@@ -23,7 +23,8 @@ import javafx.scene.layout.VBox;
  * A compact Word-like gallery of programming symbols.
  * Selecting an entry copies it; it NEVER enters a character into the
  * training editor or increments typing statistics.
- */
+  * <p><strong>Engineering rationale.</strong> The keyboard assistance palette is a reference and copy surface, not an alternative text editor. Layout-specific glyphs belong to a catalogue while selection or clipboard actions return focus to the active practice view.</p>
+*/
 public final class SymbolPalette extends MenuButton {
     private final ComboBox<Layout> layoutSelector = new ComboBox<>();
     private final Label hint = new Label();

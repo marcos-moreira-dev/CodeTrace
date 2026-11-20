@@ -5,7 +5,8 @@ import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 import java.util.function.LongSupplier;
 
-/** Monotonic stopwatch independent of document tabs and wall-clock adjustments. */
+/** Monotonic stopwatch independent of document tabs and wall-clock adjustments.  * <p><strong>Engineering rationale.</strong> Elapsed time is monotonic state, not a counter that should drift with JavaFX rendering pulses. Keeping the clock independent of scene controls makes pause/resume and reset arithmetic testable without relying on wall-clock changes.</p>
+*/
 public final class StopwatchClock {
     private final LongSupplier nanos;
     private long accumulated;

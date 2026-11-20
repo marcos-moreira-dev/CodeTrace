@@ -12,7 +12,8 @@ import javafx.scene.shape.Rectangle;
 /**
  * Reusable, read-only media canvas: Ctrl+wheel zoom, left-drag pan and
  * double-click reset. It never moves or modifies the underlying file.
- */
+  * <p><strong>Engineering rationale.</strong> Images are displayed in a viewport with pan and zoom transforms, not rewritten or resampled on disk whenever the user navigates. Keeping that camera-like interaction in one component avoids duplicating mouse-gesture logic across media formats.</p>
+*/
 public final class ZoomableMediaViewport extends StackPane {
     public static final int MIN_ZOOM = 25;
     public static final int MAX_ZOOM = 400;

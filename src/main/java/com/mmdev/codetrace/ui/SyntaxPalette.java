@@ -3,7 +3,8 @@ package com.mmdev.codetrace.ui;
 import com.mmdev.codetrace.languages.LanguageSupport;
 import javafx.scene.paint.Color;
 
-/** Shared syntax palette for read-only previews and immutable typing glyphs. */
+/** Shared syntax palette for read-only previews and immutable typing glyphs.  * <p><strong>Engineering rationale.</strong> Syntax colors are presentation metadata applied to immutable reference text. Centralizing them prevents per-file viewers from inventing inconsistent rules or confusing highlighting with semantic validation by a compiler.</p>
+*/
 public final class SyntaxPalette {
     private SyntaxPalette() {}
 

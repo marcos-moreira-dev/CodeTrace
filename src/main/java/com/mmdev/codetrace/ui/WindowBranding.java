@@ -4,7 +4,8 @@ import javafx.scene.control.Dialog;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
-/** Shared product branding across desktop utility windows and dialogs. */
+/** Shared product branding across desktop utility windows and dialogs.  * <p><strong>Engineering rationale.</strong> Window and dialog branding is shared presentation infrastructure, separate from per-document file associations and their icon. Centralization keeps the native title/icon behavior consistent while packaging scripts own the operating-system integration.</p>
+*/
 public final class WindowBranding {
     private WindowBranding() {}
 

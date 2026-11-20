@@ -11,7 +11,8 @@ import javafx.scene.layout.HBox;
 import javafx.util.Duration;
 import org.kordamp.ikonli.javafx.FontIcon;
 
-/** Always-on status-bar stopwatch; its time is independent of open files. */
+/** Always-on status-bar stopwatch; its time is independent of open files.  * <p><strong>Engineering rationale.</strong> A training timer is a user-controlled view widget with separate start, pause, resume and stop-to-zero operations. It must not infer exercise completion or make the duration a prerequisite for saving a session.</p>
+*/
 public final class StatusStopwatch extends HBox {
     private final StopwatchClock clock = new StopwatchClock();
     private final Label time = new Label("00:00:00");

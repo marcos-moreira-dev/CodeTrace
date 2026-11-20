@@ -10,7 +10,8 @@ import javafx.scene.shape.SVGPath;
 import javafx.scene.shape.StrokeLineCap;
 import javafx.scene.shape.StrokeLineJoin;
 
-/** Consistent vector glyphs used by the desktop toolbar. */
+/** Consistent vector glyphs used by the desktop toolbar.  * <p><strong>Engineering rationale.</strong> Reusable toolbar icon factories keep spacing, accessible labels and vector appearance consistent. They should communicate commands clearly without containing the commands' business logic or choosing when execution is permitted.</p>
+*/
 public final class ToolbarIcons {
     public enum Icon {
         OPEN("M 3 6 H 10 L 12 9 H 21 V 19 H 3 Z M 3 9 V 5 H 10"),

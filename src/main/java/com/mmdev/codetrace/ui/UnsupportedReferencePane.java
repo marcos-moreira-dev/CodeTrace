@@ -13,7 +13,8 @@ import org.kordamp.ikonli.javafx.FontIcon;
 /**
  * Generic, non-editable fallback. CodeTrace never attempts to parse unknown
  * binaries as text or automatically launches potentially writable programs.
- */
+  * <p><strong>Engineering rationale.</strong> When a file cannot be previewed safely, the UI should explain the limitation instead of displaying corrupt text or failing silently. Such a result is consultation-only and must never count as a failed typing attempt.</p>
+*/
 public final class UnsupportedReferencePane extends VBox {
     public UnsupportedReferencePane(Path file) {
         super(12);
