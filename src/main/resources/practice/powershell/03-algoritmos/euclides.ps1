@@ -1,6 +1,6 @@
 # CodeTrace | Referencia: PowerShell 7.4.
 # En una COPIA del paquete, desde PowerShell o shell indicado:
-# Ejecutar: pwsh -NoProfile -File '.\05-algoritmos\euclides.ps1'
+# Ejecutar: pwsh -NoProfile -File '.\03-algoritmos\euclides.ps1'
 
 function Get-Mcd {
     param([int]$A, [int]$B)

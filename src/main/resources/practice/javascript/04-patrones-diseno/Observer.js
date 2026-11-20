@@ -1,7 +1,7 @@
 // CodeTrace | Referencia: JavaScript ES2022, Node.js 24.
 // Desde PowerShell en una COPIA del paquete:
-// Comprobar sintaxis: node --check '.\06-patrones\Observer.js'
-// Ejecutar: node '.\06-patrones\Observer.js'
+// Comprobar sintaxis: node --check '.\04-patrones-diseno\Observer.js'
+// Ejecutar: node '.\04-patrones-diseno\Observer.js'
 
 class Emisor {
   constructor() { this.oyentes = []; }

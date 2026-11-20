@@ -1,6 +1,6 @@
 // CodeTrace | Referencia: C++20, g++ 13+.
 // Desde PowerShell en una COPIA del paquete:
-// Compilar: g++ -std=c++20 -Wall -Wextra '.\05-algoritmos\BusquedaBinaria.cpp' -o "$env:TEMP\codetrace-cpp.exe"
+// Compilar: g++ -std=c++20 -Wall -Wextra '.\03-algoritmos\BusquedaBinaria.cpp' -o "$env:TEMP\codetrace-cpp.exe"
 // Ejecutar: & "$env:TEMP\codetrace-cpp.exe"
 
 #include <algorithm>

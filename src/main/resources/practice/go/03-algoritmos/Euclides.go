@@ -1,6 +1,6 @@
 // CodeTrace | Referencia: Go 1.24.
 // Desde PowerShell en una COPIA del paquete:
-// Compilar y ejecutar: go run '.\05-algoritmos\Euclides.go'
+// Compilar y ejecutar: go run '.\03-algoritmos\Euclides.go'
 
 package main
 import "fmt"

@@ -1,7 +1,7 @@
 // CodeTrace | Referencia: JavaScript ES2022, Node.js 24.
 // Desde PowerShell en una COPIA del paquete:
-// Comprobar sintaxis: node --check '.\04-estructuras\Pila.js'
-// Ejecutar: node '.\04-estructuras\Pila.js'
+// Comprobar sintaxis: node --check '.\02-estructuras-datos\Pila.js'
+// Ejecutar: node '.\02-estructuras-datos\Pila.js'
 
 class Pila {
   constructor() { this.datos = []; }

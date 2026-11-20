@@ -1,6 +1,6 @@
 // CodeTrace | Referencia: C++20; g++ 13+.
 // Comandos desde PowerShell, en una COPIA de la carpeta del paquete:
-// Compilar/verificar: g++ -std=c++20 -Wall -Wextra '.\02-objetos\clase.cpp' -o "$env:TEMP\codetrace-cpp.exe"
+// Compilar/verificar: g++ -std=c++20 -Wall -Wextra '.\01-fundamentos/objetos\clase.cpp' -o "$env:TEMP\codetrace-cpp.exe"
 // Ejecutar: & "$env:TEMP\codetrace-cpp.exe"
 
 #include <iostream>

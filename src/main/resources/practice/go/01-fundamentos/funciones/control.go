@@ -1,6 +1,6 @@
 // CodeTrace | Referencia: Go 1.24.
 // Desde PowerShell, en una COPIA del paquete: 
-// Compilar y ejecutar: go run '.\02-funciones\control.go'
+// Compilar y ejecutar: go run '.\01-fundamentos/funciones\control.go'
 
 package main
 

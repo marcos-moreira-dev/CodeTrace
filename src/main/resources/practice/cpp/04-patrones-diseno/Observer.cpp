@@ -1,6 +1,6 @@
 // CodeTrace | Referencia: C++20, g++ 13+.
 // Desde PowerShell en una COPIA del paquete:
-// Compilar: g++ -std=c++20 -Wall -Wextra '.\06-patrones\Observer.cpp' -o "$env:TEMP\codetrace-cpp.exe"
+// Compilar: g++ -std=c++20 -Wall -Wextra '.\04-patrones-diseno\Observer.cpp' -o "$env:TEMP\codetrace-cpp.exe"
 // Ejecutar: & "$env:TEMP\codetrace-cpp.exe"
 
 #include <functional>

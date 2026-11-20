@@ -1,7 +1,7 @@
 # CodeTrace | Referencia: Python 3.12.
 # Desde PowerShell en una COPIA del paquete:
-# Comprobar sin escribir archivos: python -c "import ast,pathlib; ast.parse(pathlib.Path('04-estructuras/pila.py').read_text(encoding='utf-8'))"
-# Ejecutar sin bytecode: python -B '.\04-estructuras\pila.py'
+# Comprobar sin escribir archivos: python -c "import ast,pathlib; ast.parse(pathlib.Path('02-estructuras-datos/pila.py').read_text(encoding='utf-8'))"
+# Ejecutar sin bytecode: python -B '.\02-estructuras-datos\pila.py'
 
 class Pila:
     def __init__(self) -> None:

@@ -1,6 +1,6 @@
 // CodeTrace | Referencia: Go 1.24.
 // Desde PowerShell en una COPIA del paquete:
-// Compilar y ejecutar: go run '.\04-estructuras\Pila.go'
+// Compilar y ejecutar: go run '.\02-estructuras-datos\Pila.go'
 
 package main
 import "fmt"

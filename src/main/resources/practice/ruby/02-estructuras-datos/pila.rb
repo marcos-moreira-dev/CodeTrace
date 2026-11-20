@@ -1,7 +1,7 @@
 # CodeTrace | Referencia: Ruby 3.3.
 # Desde PowerShell en una COPIA del paquete:
-# Comprobar sintaxis: ruby -c '.\04-estructuras\pila.rb'
-# Ejecutar: ruby '.\04-estructuras\pila.rb'
+# Comprobar sintaxis: ruby -c '.\02-estructuras-datos\pila.rb'
+# Ejecutar: ruby '.\02-estructuras-datos\pila.rb'
 
 class Pila
   def initialize

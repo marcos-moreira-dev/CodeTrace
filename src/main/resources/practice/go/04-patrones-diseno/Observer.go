@@ -1,6 +1,6 @@
 // CodeTrace | Referencia: Go 1.24.
 // Desde PowerShell en una COPIA del paquete:
-// Compilar y ejecutar: go run '.\06-patrones\Observer.go'
+// Compilar y ejecutar: go run '.\04-patrones-diseno\Observer.go'
 
 package main
 import "fmt"

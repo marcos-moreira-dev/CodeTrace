@@ -1,6 +1,6 @@
 # CodeTrace | Referencia: PowerShell 7.4.
 # Desde PowerShell en una COPIA de este paquete:
-# Ejecutar: pwsh -NoProfile -File '.\02-funciones\funciones.ps1'
+# Ejecutar: pwsh -NoProfile -File '.\01-fundamentos/funciones\funciones.ps1'
 
 function Sumar-Pares {
     param([int]$Limite)

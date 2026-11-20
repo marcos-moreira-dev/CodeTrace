@@ -1,6 +1,6 @@
 // CodeTrace | Kotlin 2.2 | JVM 21 | Java JDK 21.
 // Desde PowerShell, en una copia de esta biblioteca:
-// Compilar: kotlinc -jvm-target 21 '.\03-funciones\Excepciones.kt' -include-runtime -d "$env:TEMP\codetrace-kotlin.jar"
+// Compilar: kotlinc -jvm-target 21 '.\01-fundamentos/funciones\Excepciones.kt' -include-runtime -d "$env:TEMP\codetrace-kotlin.jar"
 // Ejecutar: java -jar "$env:TEMP\codetrace-kotlin.jar"
 
 object Excepciones {

@@ -1,8 +1,8 @@
 #!/bin/sh
 # CodeTrace | Referencia: POSIX sh (WSL/Linux/Git Bash).
 # En una COPIA del paquete, desde PowerShell o shell indicado:
-# Comprobar sintaxis: sh -n '.\05-algoritmos\primos.sh'
-# Ejecutar en WSL/Git Bash: sh '.\05-algoritmos\primos.sh'
+# Comprobar sintaxis: sh -n '.\03-algoritmos\primos.sh'
+# Ejecutar en WSL/Git Bash: sh '.\03-algoritmos\primos.sh'
 
 numero=17
 divisor=2

@@ -1,6 +1,6 @@
 // CodeTrace | Kotlin 2.2 | JVM 21 | Java JDK 21.
 // Desde PowerShell, en una copia de esta biblioteca:
-// Compilar: kotlinc -jvm-target 21 '.\06-patrones\Observador.kt' -include-runtime -d "$env:TEMP\codetrace-kotlin.jar"
+// Compilar: kotlinc -jvm-target 21 '.\04-patrones-diseno\Observador.kt' -include-runtime -d "$env:TEMP\codetrace-kotlin.jar"
 // Este archivo declara tipos; se compila, pero no tiene punto de entrada main.
 
 fun interface Escucha {

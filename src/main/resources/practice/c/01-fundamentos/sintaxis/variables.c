@@ -1,6 +1,6 @@
 // CodeTrace | Referencia: C17 (ISO C17); GCC 13+.
 // Comandos desde PowerShell, en una COPIA de la carpeta del paquete:
-// Compilar/verificar: gcc -std=c17 -Wall -Wextra '.\01-sintaxis\variables.c' -o "$env:TEMP\codetrace-c.exe"
+// Compilar/verificar: gcc -std=c17 -Wall -Wextra '.\01-fundamentos/sintaxis\variables.c' -o "$env:TEMP\codetrace-c.exe"
 // Ejecutar: & "$env:TEMP\codetrace-c.exe"
 
 #include <stdio.h>
