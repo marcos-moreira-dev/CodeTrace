@@ -420,6 +420,26 @@ class CodeTraceAppSmokeTest {
                         about.getDialogPane().lookup(".about-description");
                 assertNotNull(aboutCopy);
                 assertTrue(aboutCopy.getText().contains("inteligencia artificial"));
+                assertTrue(aboutCopy.getText().contains("consola integrada"),
+                        "About must distinguish practice from real-file commands");
+                assertEquals("Estudiante de Ingeniería en Computación · ESPOL",
+                        ((javafx.scene.control.Label) about.getDialogPane()
+                            .lookup(".about-author-role")).getText());
+                assertNotNull(about.getDialogPane().lookup(".about-author-link"),
+                        "The author's profile must be a working hyperlink");
+                assertNotNull(about.getDialogPane().lookup(".about-legal-link"),
+                        "Legal attributions must have a working destination");
+                assertTrue(about.getDialogPane().lookupAll(".about-license-note").stream()
+                        .filter(javafx.scene.control.Label.class::isInstance)
+                        .map(javafx.scene.control.Label.class::cast)
+                        .anyMatch(label -> label.getText().contains("MIT")
+                                && label.getText().contains("© 2026 Marcos Moreira")
+                                && label.getText().contains("Ikonli")));
+                assertFalse(about.getDialogPane().lookupAll(".about-license-note").stream()
+                        .filter(javafx.scene.control.Label.class::isInstance)
+                        .map(javafx.scene.control.Label.class::cast)
+                        .anyMatch(label -> label.getText().contains("aún por definir")),
+                        "A released app must not claim its license is undecided");
                 assertTrue(about.getDialogPane().lookupAll(".about-license-note").stream()
                         .filter(javafx.scene.control.Label.class::isInstance)
                         .map(javafx.scene.control.Label.class::cast)

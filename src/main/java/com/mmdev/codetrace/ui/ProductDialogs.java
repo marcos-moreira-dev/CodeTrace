@@ -7,6 +7,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Separator;
 import javafx.scene.image.ImageView;
@@ -19,6 +20,9 @@ import javafx.scene.image.Image;
 import javafx.stage.Window;
 import javafx.scene.paint.Color;
 import org.kordamp.ikonli.javafx.FontIcon;
+import java.awt.Desktop;
+import java.io.IOException;
+import java.net.URI;
 
 /** Shared readable dialogs. Long messages scroll instead of being ellipsized.  * <p><strong>Engineering rationale.</strong> A central set of product dialogs avoids inconsistent confirmation semantics and button layouts. A warning that protects real files must remain distinguishable from a merely informative notice; neither dialog should conceal which action is being authorized.</p>
 */
@@ -44,8 +48,8 @@ public final class ProductDialogs {
         pane.setPrefSize(680, 555);
         pane.setMinSize(560, 410);
 
-        // The original small PNG remains for OS window chrome only. The
-        // approved desktop icon has a dedicated 320px detail asset in About.
+        // Use the same official high-resolution brand symbol as the Windows
+        // launcher; the About dialog must not show obsolete artwork.
         ImageView brand = new ImageView(new Image(ProductDialogs.class
                 .getResourceAsStream("/icons/codetrace-about-hires.png")));
         brand.setFitWidth(180);
@@ -77,7 +81,9 @@ public final class ProductDialogs {
                 + "artificial como herramienta profesional.\n\n"
                 + "CodeTrace compara cada carácter con una referencia, pero no "
                 + "determina si su código original compila o funciona. "
-                + "El proyecto de referencia permanece intacto.";
+                + "La práctica y la exploración no modifican la referencia. "
+                + "Los comandos ejecutados en la consola integrada, en cambio, "
+                + "actúan sobre archivos reales y podrían modificarlos.";
         Label body = new Label(description);
         body.setWrapText(true);
         body.setMaxWidth(Double.MAX_VALUE);
@@ -90,10 +96,12 @@ public final class ProductDialogs {
         authorHeading.getStyleClass().add("about-author-heading");
         Label authorName = new Label("Marcos Moreira");
         authorName.getStyleClass().add("about-author-name");
-        Label authorRole = new Label("Ingeniería en Computación · ESPOL");
+        Label authorRole = new Label("Estudiante de Ingeniería en Computación · ESPOL");
         authorRole.getStyleClass().add("about-author-role");
-        Label authorAccount = new Label("github.com/marcos-moreira-dev");
+        Hyperlink authorAccount = new Hyperlink("github.com/marcos-moreira-dev");
         authorAccount.getStyleClass().add("about-author-link");
+        authorAccount.setOnAction(event -> openProjectLink(
+                "https://github.com/marcos-moreira-dev/CodeTrace"));
         VBox authorDetails = new VBox(5, authorHeading, authorName, authorRole,
                 authorAccount);
         authorDetails.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
@@ -115,20 +123,30 @@ public final class ProductDialogs {
         }
         author.getChildren().add(authorDetails);
 
-        Label standardsHeading = new Label("ACCESIBILIDAD Y LICENCIAS");
+        Label standardsHeading = new Label("ACCESIBILIDAD");
         standardsHeading.getStyleClass().add("about-author-heading");
         Label standards = new Label(
                 "Contraste y legibilidad guiados por WCAG 2.2 y WCAG2ICT (W3C), "
                 + "como referencias de diseño para escritorio; sin certificación.");
         standards.setWrapText(true);
         standards.getStyleClass().add("about-license-note");
+        Label licenseHeading = new Label("LICENCIA Y CRÉDITOS");
+        licenseHeading.getStyleClass().add("about-author-heading");
         Label licenses = new Label(
-                "Fuentes IBM Plex · SIL OFL 1.1  |  Emojis Twemoji · CC BY 4.0\n"
-                + "Créditos y licencias: IBM/plex y jdecked/twemoji. "
-                + "Licencia del código: aún por definir.");
+                "Código y documentación originales: MIT · © 2026 Marcos Moreira.\n"
+                + "IBM Plex · SIL OFL 1.1 | Twemoji · CC BY 4.0.\n"
+                + "Ikonli · Apache 2.0 | Feather y Devicons · MIT. "
+                + "Otras dependencias mantienen sus propias licencias.");
         licenses.setWrapText(true);
         licenses.getStyleClass().add("about-license-note");
-        VBox credits = new VBox(6, standardsHeading, standards, licenses);
+        Hyperlink legalNotices = new Hyperlink(
+                "Consultar las licencias y atribuciones completas");
+        legalNotices.getStyleClass().add("about-legal-link");
+        legalNotices.setOnAction(event -> openProjectLink(
+                "https://github.com/marcos-moreira-dev/CodeTrace/blob/main/"
+                + "THIRD-PARTY-NOTICES.md"));
+        VBox credits = new VBox(6, standardsHeading, standards,
+                new Separator(), licenseHeading, licenses, legalNotices);
         VBox contents = new VBox(15, identity, body, new Separator(), author,
                 new Separator(), credits);
         contents.getStyleClass().add("about-content");
@@ -140,6 +158,21 @@ public final class ProductDialogs {
         scroll.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
         pane.setContent(scroll);
         return about;
+    }
+
+    /** Open official documentation in the system browser, not in the practice area. */
+    private static void openProjectLink(String address) {
+        try {
+            if (Desktop.isDesktopSupported()
+                    && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
+                Desktop.getDesktop().browse(URI.create(address));
+                return;
+            }
+        } catch (IOException | SecurityException | UnsupportedOperationException ex) {
+            // Display a useful fallback rather than pretending navigation worked.
+        }
+        information(null, "Enlace de CodeTrace",
+                "No se pudo abrir el navegador. Copia esta dirección:\n" + address);
     }
 
     /** Traditional, understated iconography shared by all product dialogs. */

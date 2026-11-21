@@ -1210,10 +1210,16 @@
     -fx-text-fill: #415e71;
     -fx-font-size: 12px;
 }
-.about-author-link {
+.about-author-link, .about-legal-link {
     -fx-text-fill: #416f8f;
     -fx-font-size: 11px;
+    -fx-padding: 0;
+    -fx-border-color: transparent;
 }
+.about-author-link:hover, .about-legal-link:hover {
+    -fx-underline: true;
+}
+.about-legal-link { -fx-font-size: 11px; }
 .about-author-portrait {
     -fx-effect: dropshadow(gaussian, rgba(34,58,78,0.18), 5, 0, 0, 1);
 }
