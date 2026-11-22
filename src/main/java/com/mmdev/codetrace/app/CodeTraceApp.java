@@ -1,6 +1,7 @@
 package com.mmdev.codetrace.app;
 
 import com.mmdev.codetrace.practice.TypingSession;
+import com.mmdev.codetrace.workspace.AutoCreatedWorkspaceCleanup;
 import com.mmdev.codetrace.practice.ReconstructionStatus;
 import com.mmdev.codetrace.practice.ReconstructionStatus.State;
 import com.mmdev.codetrace.practice.PracticeMode;
@@ -150,17 +151,18 @@ public final class CodeTraceApp extends Application {
     private boolean syncingExclusion;
     private ReferenceTreeIndex referenceIndex;
     private long autoCreateGeneration;
+    /** Only paths created by this running session's automatic reconstruction. */
+    private final java.util.Set<String> autoCreatedPaths = new java.util.LinkedHashSet<>();
     private Map<String, GraphLayout> graphLayouts = new LinkedHashMap<>();
     private TextField explorerSearch;
     private boolean syncingFolderScope;
-    private final Map<ProgressScope.Category, CheckBox> scopeChecks =
-            new EnumMap<>(ProgressScope.Category.class);
-    private CheckBox allScopes;
-    private CheckBox autoCreateCheck;
+     private CheckBox autoCreateCheck;
     private final Button refreshButton = new Button("", new FontIcon("fth-refresh-cw"));
-    private final Button skipImportsButton = ToolbarIcons.button(
-            "Dependencias", ToolbarIcons.Icon.SKIP, "Omitir declaraciones de dependencias");
-    private final MenuItem skipImportsMenu = new MenuItem("Omitir dependencias de código");
+    private final ToggleButton skipImportsButton =
+            new ToggleButton("Omitir dependencias de código",
+                    ToolbarIcons.graphic(ToolbarIcons.Icon.SKIP));
+    private final CheckMenuItem skipImportsMenu =
+            new CheckMenuItem("Omitir dependencias de código");
     private final VBox top = new VBox();
     private final MenuButton tabsActions = new MenuButton("Pestañas");
 
@@ -177,6 +179,9 @@ public final class CodeTraceApp extends Application {
             .userNodeForPackage(CodeTraceApp.class)
             .getBoolean("practice.includeComments", true);
     private CheckBox includeCommentsCheck;
+    private boolean omitDependencies = java.util.prefs.Preferences
+            .userNodeForPackage(CodeTraceApp.class)
+            .getBoolean("practice.omitDependencies", false);
     private ProgressExclusions exclusions = ProgressExclusions.empty();
     private PracticeMode practiceMode = PracticeMode.RECONSTRUCTION;
     private RadioMenuItem manualModeMenu;
@@ -273,7 +278,9 @@ public final class CodeTraceApp extends Application {
         Menu viewMenu = new Menu("Ver", null,
                 explorerToggle, showConsole, focus, fullscreen);
 
-        skipImportsMenu.setOnAction(event -> skipImports());
+        skipImportsMenu.setSelected(omitDependencies);
+        skipImportsMenu.setOnAction(event ->
+                setOmitDependencies(skipImportsMenu.isSelected()));
         turboMenu = new CheckMenuItem("Modo Turbo · omitir símbolos");
         turboMenu.setSelected(settings.turboMode());
         turboMenu.setOnAction(event -> setTurboMode(turboMenu.isSelected()));
@@ -341,7 +348,12 @@ public final class CodeTraceApp extends Application {
                 + "los archivos originales sin modificar el proyecto guardado"));
         refreshButton.setAccessibleText("Actualizar referencia");
         refreshButton.setOnAction(event -> refreshReference());
-        skipImportsButton.setOnAction(event -> skipImports());
+        skipImportsButton.getStyleClass().addAll("toolbar-action", "turbo-toggle");
+        skipImportsButton.setSelected(omitDependencies);
+        skipImportsButton.setTooltip(new Tooltip(
+                "Activar o desactivar la omisión de declaraciones de dependencias"));
+        skipImportsButton.setOnAction(event ->
+                setOmitDependencies(skipImportsButton.isSelected()));
         symbols = new SymbolPalette(Layout.valueOf(settings.keyboardLayout()), next -> {
             settings = settings.withLayout(next.name());
             settings.save();
@@ -733,13 +745,16 @@ public final class CodeTraceApp extends Application {
         sessionLoader.cancel();
         referenceRequest++;
         autoCreateGeneration++;
+        autoCreatedPaths.clear();
         clearOpenTabs();
 
         reference = next.root();
         workspace = next.workspace();
         sessions = new LinkedHashMap<>(next.sessions());
-        sessions.forEach((path, session) ->
-                session.setIncludeComments(includeComments, path));
+        sessions.forEach((path, session) -> {
+            session.setIncludeComments(includeComments, path);
+            session.setOmitDependencies(omitDependencies, path);
+        });
         hashes = new LinkedHashMap<>(next.hashes());
         graphLayouts = new LinkedHashMap<>(next.graphLayouts());
         sessionFile = next.sessionFile();
@@ -858,6 +873,7 @@ public final class CodeTraceApp extends Application {
             // Preserve reference text and saved slots; policy only changes
             // which source positions are required to complete the exercise.
             session.setIncludeComments(includeComments, file.getFileName().toString());
+            session.setOmitDependencies(omitDependencies, file.getFileName().toString());
             hashes.putIfAbsent(relative, ReferenceFingerprint.sha256(file));
             TypingSession current = session;
             // Completion feedback tracks typing transitions, not the
@@ -1331,6 +1347,14 @@ public final class CodeTraceApp extends Application {
     }
 
     private void onWorkspaceChanged(ReferenceTree.Change change) {
+        // A user-initiated operation revokes automatic provenance for that path.
+        // Prevents accidentally removing manually recreated or relocated nodes.
+        if (change.source() != null && !change.source().isEmpty())
+            autoCreatedPaths.removeIf(p -> p.equals(change.source())
+                    || p.startsWith(change.source() + "/"));
+        if (change.target() != null && !change.target().isEmpty())
+            autoCreatedPaths.removeIf(p -> p.equals(change.target())
+                    || p.startsWith(change.target() + "/"));
         if (change.operation() == ReferenceTree.Operation.DELETE) {
             removeSessionsUnder(change.source());
         } else if (change.operation() == ReferenceTree.Operation.MOVE) {
@@ -1369,16 +1393,30 @@ public final class CodeTraceApp extends Application {
         hashes = relocated.hashes();
     }
 
-    private void skipImports() {
-        TypingEditor editor = selectedEditor();
-        Tab selected = tabs.getSelectionModel().getSelectedItem();
-        if (editor != null && selected != null
-                && DependencyDeclarationRules.supports(selected.getText())) {
-            int omitted = editor.skipDependencyDeclarations();
-            setStatus(omitted == 0 ? "No hay dependencias declaradas pendientes"
-                    : omitted + " caracteres omitidos");
-            editor.focusEditor();
+    /**
+     * Reversible project-wide training rule, shared by menu and toolbar.
+     * Old skip slots remain untouched; only the derived dependency mask changes.
+     */
+    private void setOmitDependencies(boolean enabled) {
+        if (omitDependencies == enabled) {
+            skipImportsButton.setSelected(enabled);
+            skipImportsMenu.setSelected(enabled);
+            return;
         }
+        omitDependencies = enabled;
+        java.util.prefs.Preferences.userNodeForPackage(CodeTraceApp.class)
+                .putBoolean("practice.omitDependencies", enabled);
+        skipImportsButton.setSelected(enabled);
+        skipImportsMenu.setSelected(enabled);
+        sessions.forEach((path, session) -> session.setOmitDependencies(enabled, path));
+        for (Tab tab : tabs.getTabs()) {
+            TypingEditor editor = editorIn(tab);
+            if (editor != null) editor.refreshCommentPolicy();
+        }
+        refreshReconstructionStatuses();
+        refreshMetrics();
+        setStatus(enabled ? "Dependencias omitidas de la práctica."
+                : "Dependencias incluidas nuevamente en la práctica.");
     }
 
     /** Mode is per project; progress and file contents are preserved on switch. */
@@ -1397,14 +1435,25 @@ public final class CodeTraceApp extends Application {
 
     private void setPracticeMode(PracticeMode next) {
         if (reference == null || practiceMode == next) return;
+        // Cancel queued creation batches before reverting anything.
+        if (next == PracticeMode.RECONSTRUCTION) autoCreateGeneration++;
         selectPracticeMode(next);
         PracticeMode.remember(reference, next);
+        int removed = 0;
+        if (next == PracticeMode.RECONSTRUCTION) {
+            removed = AutoCreatedWorkspaceCleanup.removeUnused(
+                    workspace, autoCreatedPaths, sessions);
+            autoCreatedPaths.clear();
+            if (removed > 0) tree.setWorkspace(workspace);
+            refreshReconstructionStatuses();
+            refreshMetrics();
+        } else autoCreateReferenceTree();
         dirty = true;
-        if (next == PracticeMode.DIRECT) autoCreateReferenceTree();
         updateTitle();
         setStatus(next == PracticeMode.DIRECT
                 ? "Autocreación activada · se recreará el árbol virtual completo"
-                : "Reconstrucción manual · conserva los elementos creados");
+                : "Reconstrucción manual · " + removed
+                    + " elementos automáticos vacíos retirados; tu trabajo se conserva");
     }
 
     /**
@@ -1416,7 +1465,7 @@ public final class CodeTraceApp extends Application {
         if (reference == null || referenceIndex == null
                 || practiceMode != PracticeMode.DIRECT) return;
         VirtualTreeRecreator recreator = new VirtualTreeRecreator(
-                workspace, referenceIndex.recreationNodes());
+                workspace, referenceIndex.recreationNodes(), autoCreatedPaths::add);
         long generation = ++autoCreateGeneration;
         long request = referenceRequest;
         Path root = reference;
@@ -1452,7 +1501,7 @@ public final class CodeTraceApp extends Application {
         progressAccumulator = null;
         reconstructionStates = ReconstructionStatus.calculate(
                 workspace, sessions, hashes, catalogue, progressScope, exclusions,
-                includeComments);
+                includeComments, omitDependencies);
         tree.refreshStatuses();
     }
 
@@ -1474,6 +1523,8 @@ public final class CodeTraceApp extends Application {
         boolean hasEditor = editor != null;
         skipImportsButton.setDisable(!hasEditor || !selectedDependencyFile());
         skipImportsMenu.setDisable(!hasEditor || !selectedDependencyFile());
+        skipImportsButton.setSelected(omitDependencies);
+        skipImportsMenu.setSelected(omitDependencies);
         Tab active = tabs.getSelectionModel().getSelectedItem();
         if (!hasEditor && active != null
                 && active.getContent() instanceof DependencyGraphPane map) {
@@ -1502,10 +1553,11 @@ public final class CodeTraceApp extends Application {
             return;
         }
         if (progressAccumulator == null || !progressAccumulator.matches(
-                catalogue, progressScope, progressFolder, exclusions, includeComments)) {
+                catalogue, progressScope, progressFolder, exclusions,
+                includeComments, omitDependencies)) {
             progressAccumulator = new ProgressAccumulator(catalogue, workspace,
                     sessions, hashes, progressScope, progressFolder, exclusions,
-                    includeComments);
+                    includeComments, omitDependencies);
         }
         ProgressSummary summary = progressAccumulator.summary();
         long total = summary.totalUnits();
@@ -1612,11 +1664,9 @@ public final class CodeTraceApp extends Application {
 
     /** Persistent filter gallery: checkboxes do NOT close after each click. */
     private void installProgressFilters() {
-        allScopes = com.mmdev.codetrace.ui.AppControls.checkBox("Todos");
-        allScopes.getStyleClass().add("scope-all");
         Label contentCaption = new Label("CONTENIDO EVALUADO");
         contentCaption.getStyleClass().add("palette-caption");
-        VBox options = new VBox(9, contentCaption, allScopes);
+        VBox options = new VBox(9, contentCaption);
         options.getStyleClass().add("scope-options");
         addFilterOption(options, "Código fuente", ProgressScope.Category.SOURCE);
         addFilterOption(options, "Markdown", ProgressScope.Category.DOCUMENTATION);
@@ -1626,7 +1676,8 @@ public final class CodeTraceApp extends Application {
         autoCreateCheck = com.mmdev.codetrace.ui.AppControls.checkBox("Autocrear archivos y carpetas");
         autoCreateCheck.setTooltip(new Tooltip(
                 "Al activar, recrea virtualmente las carpetas y los archivos de referencia "
-                + "(excepto cachés y compilados). Creado no significa completado."));
+                + "(excepto cachés y compilados). Al desactivar, se retiran "
+                + "solo los elementos automáticos vacíos; no se borra tu trabajo."));
         autoCreateCheck.setSelected(practiceMode == PracticeMode.DIRECT);
         autoCreateCheck.setDisable(reference == null);
         autoCreateCheck.setOnAction(event -> setPracticeMode(
@@ -1651,16 +1702,6 @@ public final class CodeTraceApp extends Application {
         exclusionHint.getStyleClass().add("scope-exclusion-hint");
         exclusionHint.setWrapText(true);
         options.getChildren().add(exclusionHint);
-        updateAllCheck();
-
-        allScopes.setOnAction(event -> {
-            boolean active = allScopes.isSelected();
-            progressScope = new ProgressScope(active, false, active, false);
-            for (CheckBox choice : scopeChecks.values()) choice.setSelected(active);
-            progressScope.save();
-            refreshReconstructionStatuses();
-            refreshMetrics();
-        });
 
         CustomMenuItem panel = new CustomMenuItem(options, false);
         panel.setHideOnClick(false);
@@ -1673,19 +1714,13 @@ public final class CodeTraceApp extends Application {
         control.setOnAction(event -> {
             progressScope = progressScope.with(category, control.isSelected());
             progressScope.save();
-            updateAllCheck();
             refreshReconstructionStatuses();
             refreshMetrics();
         });
-        scopeChecks.put(category, control);
         parent.getChildren().add(control);
     }
 
-    private void updateAllCheck() {
-        allScopes.setSelected(scopeChecks.values().stream().allMatch(CheckBox::isSelected));
-    }
-
-    private boolean selectedDependencyFile() {
+     private boolean selectedDependencyFile() {
         Tab selected = tabs.getSelectionModel().getSelectedItem();
         return selected != null && DependencyDeclarationRules.supports(selected.getText());
     }

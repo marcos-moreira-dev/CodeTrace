@@ -3,6 +3,7 @@ package com.mmdev.codetrace.workspace;
 import com.mmdev.codetrace.reference.ReferenceTreeIndex;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Consumer;
 
 /**
  * Stateful, UI-independent batch processing for direct virtual recreation.
@@ -14,14 +15,23 @@ public final class VirtualTreeRecreator {
     private final VirtualWorkspace workspace;
     private final List<ReferenceTreeIndex.Node> nodes;
     private final int limit;
+    private final Consumer<String> onCreated;
     private int cursor;
     private int added;
     private int rejected;
 
     public VirtualTreeRecreator(VirtualWorkspace workspace,
                                 List<ReferenceTreeIndex.Node> nodes) {
+        this(workspace, nodes, ignored -> {});
+    }
+
+    /** Tracks only nodes newly created by this pass. */
+    public VirtualTreeRecreator(VirtualWorkspace workspace,
+                                List<ReferenceTreeIndex.Node> nodes,
+                                Consumer<String> onCreated) {
         this.workspace = Objects.requireNonNull(workspace);
         this.nodes = List.copyOf(Objects.requireNonNull(nodes));
+        this.onCreated = Objects.requireNonNull(onCreated);
         limit = Math.min(MAX_NODES, this.nodes.size());
     }
 
@@ -37,6 +47,7 @@ public final class VirtualTreeRecreator {
                 if (node.directory()) workspace.createDirectory(node.path());
                 else workspace.createFile(node.path());
                 added++;
+                onCreated.accept(node.path());
             } catch (IllegalArgumentException rejectedNode) {
                 rejected++;
             }

@@ -828,18 +828,33 @@ class CodeTraceAppSmokeTest {
                 assertTrue(filterChoices.getChildren().size() >= 8);
                 assertTrue(filterChoices.getChildren().stream().anyMatch(n ->
                         n.getStyleClass().contains("turbo-toggle")));
-                CheckBox all = (CheckBox) filterChoices.getChildren().get(1);
-                all.fire();
-                for (var child : filterChoices.getChildren().subList(2, 4)) {
-                    assertTrue(((CheckBox) child).isSelected());
-                }
-                CheckBox markdown = (CheckBox) filterChoices.getChildren().get(3);
+                assertFalse(filterChoices.getChildren().stream()
+                        .filter(CheckBox.class::isInstance)
+                        .map(CheckBox.class::cast)
+                        .anyMatch(c -> "Todos".equals(c.getText())));
+                CheckBox sourceRule = (CheckBox) filterChoices.getChildren().get(1);
+                CheckBox markdown = (CheckBox) filterChoices.getChildren().get(2);
+                assertEquals("Código fuente", sourceRule.getText());
+                assertEquals("Markdown", markdown.getText());
+                boolean previousSource = sourceRule.isSelected();
+                boolean previousMarkdown = markdown.isSelected();
+                sourceRule.fire();
+                assertEquals(!previousSource, sourceRule.isSelected());
+                assertEquals(previousMarkdown, markdown.isSelected(),
+                        "Source and Markdown rules must be independent");
                 markdown.fire();
-                assertFalse(all.isSelected());
-                all.fire();
-                for (var child : filterChoices.getChildren().subList(2, 4)) {
-                    assertTrue(((CheckBox) child).isSelected());
-                }
+                assertEquals(!previousMarkdown, markdown.isSelected());
+                sourceRule.fire();
+                markdown.fire();
+                assertEquals(previousSource, sourceRule.isSelected());
+                assertEquals(previousMarkdown, markdown.isSelected());
+                Field skipRuleField = CodeTraceApp.class.getDeclaredField(
+                        "skipImportsButton");
+                skipRuleField.setAccessible(true);
+                javafx.scene.control.ToggleButton skipRule =
+                        (javafx.scene.control.ToggleButton)
+                            skipRuleField.get(application);
+                assertEquals("Omitir dependencias de código", skipRule.getText());
                 assertNotNull(stage.getScene().getRoot().lookup(".tree-activity"));
                 assertNotNull(stage.getScene().getRoot().lookup(".tree-scope-checkbox"));
                 Method focusFolder = CodeTraceApp.class.getDeclaredMethod(

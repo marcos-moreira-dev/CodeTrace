@@ -41,6 +41,15 @@ public final class ReconstructionStatus {
             Map<String, TypingSession> sessions, Map<String, String> hashes,
             ReferenceCatalogue.Snapshot catalog, ProgressScope scope,
             ProgressExclusions exclusions, boolean includeComments) {
+        return calculate(workspace, sessions, hashes, catalog, scope, exclusions,
+                includeComments, false);
+    }
+
+    public static Map<String, State> calculate(VirtualWorkspace workspace,
+            Map<String, TypingSession> sessions, Map<String, String> hashes,
+            ReferenceCatalogue.Snapshot catalog, ProgressScope scope,
+            ProgressExclusions exclusions, boolean includeComments,
+            boolean omitDependencies) {
         Objects.requireNonNull(workspace);
         Objects.requireNonNull(sessions);
         Objects.requireNonNull(hashes);
@@ -65,7 +74,7 @@ public final class ReconstructionStatus {
                 continue;
             }
             // An empty supported source needs no typing or virtual recreation.
-            if (info.requiredUnits(includeComments) == 0) {
+            if (info.requiredUnits(includeComments, omitDependencies) == 0) {
                 state.put(path, State.COMPLETED);
                 continue;
             }
@@ -75,7 +84,7 @@ public final class ReconstructionStatus {
                     && sessions.get(path).finishedExercise();
             if (complete) state.put(path, State.COMPLETED);
 
-            if (!info.typeable() || info.requiredUnits(includeComments) == 0
+            if (!info.typeable() || info.requiredUnits(includeComments, omitDependencies) == 0
                     || exclusions.excludes(path)
                     || !scope.includes(ProgressScope.classify(path))) continue;
             String parent = parent(path);

@@ -36,7 +36,7 @@ class CompletionSummaryTest {
         typing.skip(1, 3);
         assertTrue(typing.finishedExercise());
         String message = CompletionSummary.message("fuente.java", typing, 20_000);
-        assertTrue(message.contains("Aciertos finales: 1 de 3"));
+        assertTrue(message.contains("Aciertos finales: 1 de 1"));
         assertTrue(message.contains("Caracteres omitidos deliberadamente: 2"));
     }
     @Test void restoredFileUsesOnlyNewTypingAttemptsForAverageSpeed() {

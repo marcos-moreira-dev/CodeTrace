@@ -22,8 +22,10 @@ public final class ProgressAccumulator {
     private final String folder;
     private final ProgressExclusions exclusions;
     private final boolean includeComments;
+    private final boolean omitDependencies;
+    private final Map<String, Integer> requiredByFile = new HashMap<>();
     private final Map<String, Integer> creditedByFile = new HashMap<>();
-    private final long total;
+    private long total;
     private final long included;
     private long correct;
 
@@ -33,7 +35,7 @@ public final class ProgressAccumulator {
                                Map<String, String> hashes,
                                ProgressScope scope, String folder,
                                ProgressExclusions exclusions) {
-        this(catalogue, workspace, sessions, hashes, scope, folder, exclusions, true);
+        this(catalogue, workspace, sessions, hashes, scope, folder, exclusions, true, false);
     }
 
     public ProgressAccumulator(ReferenceCatalogue.Snapshot catalogue,
@@ -42,11 +44,23 @@ public final class ProgressAccumulator {
                                Map<String, String> hashes,
                                ProgressScope scope, String folder,
                                ProgressExclusions exclusions, boolean includeComments) {
+        this(catalogue, workspace, sessions, hashes, scope, folder, exclusions,
+                includeComments, false);
+    }
+
+    public ProgressAccumulator(ReferenceCatalogue.Snapshot catalogue,
+                               VirtualWorkspace workspace,
+                               Map<String, TypingSession> sessions,
+                               Map<String, String> hashes,
+                               ProgressScope scope, String folder,
+                               ProgressExclusions exclusions, boolean includeComments,
+                               boolean omitDependencies) {
         this.catalogue = Objects.requireNonNull(catalogue);
         this.scope = Objects.requireNonNull(scope);
         this.folder = Objects.requireNonNull(folder);
         this.exclusions = Objects.requireNonNull(exclusions);
         this.includeComments = includeComments;
+        this.omitDependencies = omitDependencies;
         Objects.requireNonNull(workspace);
         Objects.requireNonNull(sessions);
         Objects.requireNonNull(hashes);
@@ -57,9 +71,12 @@ public final class ProgressAccumulator {
             var info = entry.getValue();
             if (!included(path, info)) continue;
             fileCount++;
-            totalUnits += info.requiredUnits(includeComments);
+            int required = required(info, path, workspace,
+                    sessions.get(path), hashes.get(path));
+            totalUnits += required;
+            requiredByFile.put(path, required);
             int contribution = contribution(info, path, workspace,
-                    sessions.get(path), hashes.get(path), includeComments);
+                    sessions.get(path), hashes.get(path), required);
             if (contribution != 0) creditedByFile.put(path, contribution);
             correct += contribution;
         }
@@ -70,16 +87,24 @@ public final class ProgressAccumulator {
     public boolean matches(ReferenceCatalogue.Snapshot nextCatalogue,
                            ProgressScope nextScope, String nextFolder,
                            ProgressExclusions nextExclusions) {
-        return catalogue == nextCatalogue && scope.equals(nextScope)
-                && folder.equals(nextFolder) && exclusions.equals(nextExclusions);
+        return matches(nextCatalogue, nextScope, nextFolder, nextExclusions, true, false);
     }
 
     public boolean matches(ReferenceCatalogue.Snapshot nextCatalogue,
                            ProgressScope nextScope, String nextFolder,
                            ProgressExclusions nextExclusions, boolean nextIncludeComments) {
+        return matches(nextCatalogue, nextScope, nextFolder, nextExclusions,
+                nextIncludeComments, false);
+    }
+
+    public boolean matches(ReferenceCatalogue.Snapshot nextCatalogue,
+                           ProgressScope nextScope, String nextFolder,
+                           ProgressExclusions nextExclusions, boolean nextIncludeComments,
+                           boolean nextOmitDependencies) {
         return catalogue == nextCatalogue && scope.equals(nextScope)
                 && folder.equals(nextFolder) && exclusions.equals(nextExclusions)
-                && includeComments == nextIncludeComments;
+                && includeComments == nextIncludeComments
+                && omitDependencies == nextOmitDependencies;
     }
 
     /**
@@ -91,8 +116,11 @@ public final class ProgressAccumulator {
         var info = catalogue.files().get(path);
         if (info == null || !included(path, info)) return;
         int previous = creditedByFile.getOrDefault(path, 0);
-        int next = contribution(info, path, workspace, session, originalHash,
-                includeComments);
+        int required = required(info, path, workspace, session, originalHash);
+        total += required - requiredByFile.getOrDefault(path,
+                info.requiredUnits(includeComments, omitDependencies));
+        requiredByFile.put(path, required);
+        int next = contribution(info, path, workspace, session, originalHash, required);
         if (previous == next) return;
         correct += next - previous;
         if (next == 0) creditedByFile.remove(path);
@@ -109,13 +137,23 @@ public final class ProgressAccumulator {
                 && scope.includes(ProgressScope.classify(path));
     }
 
+    /** Exclude explicit skipped glyphs only for current, valid virtual files. */
+    private int required(ReferenceCatalogue.FileInfo info, String path,
+                         VirtualWorkspace workspace, TypingSession session, String originalHash) {
+        int expected = info.requiredUnits(includeComments, omitDependencies);
+        if (session == null || !info.sha256().equals(originalHash)) return expected;
+        var virtual = workspace.entry(path);
+        if (virtual == null || virtual.kind() != VirtualWorkspace.Kind.FILE) return expected;
+        return Math.max(0, expected - session.deliberatelySkippedVisibleCount());
+    }
+
     private static int contribution(ReferenceCatalogue.FileInfo info, String path,
                                     VirtualWorkspace workspace, TypingSession session,
-                                    String originalHash, boolean includeComments) {
-        if (info.requiredUnits(includeComments) == 0 || session == null
+                                    String originalHash, int required) {
+        if (required == 0 || session == null
                 || !info.sha256().equals(originalHash)) return 0;
         var entry = workspace.entry(path);
         if (entry == null || entry.kind() != VirtualWorkspace.Kind.FILE) return 0;
-        return Math.min(info.requiredUnits(includeComments), session.correctVisibleCount());
+        return Math.min(required, session.correctVisibleCount());
     }
 }
