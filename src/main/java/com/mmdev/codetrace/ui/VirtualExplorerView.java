@@ -40,6 +40,13 @@ final class VirtualExplorerView extends ListView<ExplorerRows.Row> {
             {
                 row.setAlignment(Pos.CENTER_LEFT);
                 row.getStyleClass().add("reference-tree-row");
+                row.setMinHeight(23);
+                row.setPrefHeight(23);
+                row.setMaxHeight(23);
+                javafx.scene.shape.Rectangle clip = new javafx.scene.shape.Rectangle();
+                clip.widthProperty().bind(row.widthProperty());
+                clip.heightProperty().bind(row.heightProperty());
+                row.setClip(clip);
                 filename.getStyleClass().add("reference-name");
                 fileCount.getStyleClass().add("reference-file-count");
                 disclosure.getStyleClass().add("virtual-tree-disclosure");
@@ -74,6 +81,8 @@ final class VirtualExplorerView extends ListView<ExplorerRows.Row> {
             @Override protected void updateItem(ExplorerRows.Row entry, boolean empty) {
                 super.updateItem(entry, empty);
                 if (empty || entry == null) {
+                    row.getChildren().clear();
+                    getStyleClass().remove("reference-outside-scope");
                     setText(null);
                     setGraphic(null);
                     setTooltip(null);

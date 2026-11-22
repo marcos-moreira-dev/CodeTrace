@@ -101,6 +101,10 @@ public final class ReferenceTree extends TreeView<Path> {
         projectedView.setVisible(false);
         projectedView.setManaged(false);
         setShowRoot(true);
+        getStyleClass().add("reference-tree");
+        // Fixed row geometry prevents a previous cell's glyph from briefly
+        // painting into the newly recycled row during rapid collapse/refresh.
+        setFixedCellSize(29);
         setCellFactory(view -> new TreeCell<>() {
             // TreeView virtualizes cells, so each cell is reused on scroll.
             // Construct its graphics and tooltip ONCE rather than allocating
@@ -116,6 +120,13 @@ public final class ReferenceTree extends TreeView<Path> {
                 row.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
                 row.getStyleClass().add("reference-tree-row");
                 row.setMinWidth(javafx.scene.layout.Region.USE_PREF_SIZE);
+                row.setMinHeight(23);
+                row.setPrefHeight(23);
+                row.setMaxHeight(23);
+                javafx.scene.shape.Rectangle clip = new javafx.scene.shape.Rectangle();
+                clip.widthProperty().bind(row.widthProperty());
+                clip.heightProperty().bind(row.heightProperty());
+                row.setClip(clip);
                 nameLabel.getStyleClass().add("reference-name");
                 nameLabel.setMinWidth(javafx.scene.layout.Region.USE_PREF_SIZE);
                 countLabel.getStyleClass().add("reference-file-count");
@@ -147,6 +158,7 @@ public final class ReferenceTree extends TreeView<Path> {
             protected void updateItem(Path path, boolean empty) {
                 super.updateItem(path, empty);
                 if (empty || path == null || referenceRoot == null) {
+                    row.getChildren().clear();
                     setText(null);
                     setGraphic(null);
                     setTooltip(null);
@@ -943,6 +955,12 @@ public final class ReferenceTree extends TreeView<Path> {
                         : "Progreso: solo esta carpeta");
                 scope.setOnAction(event -> onProgressFolder.accept(relative));
                 actions.add(scope);
+                if (!relative.isEmpty() && !progressFocusFolder.isEmpty()) {
+                    MenuItem all = new MenuItem("Progreso: todo el proyecto");
+                    all.setGraphic(new FontIcon("fth-layers"));
+                    all.setOnAction(event -> onProgressFolder.accept(""));
+                    actions.add(all);
+                }
                 if (!relative.isEmpty()) {
                     CheckMenuItem excludedFolder = new CheckMenuItem(
                             "Excluir carpeta del progreso");
