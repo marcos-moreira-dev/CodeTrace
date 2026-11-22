@@ -850,7 +850,20 @@ class CodeTraceAppSmokeTest {
                 CheckBox only = (CheckBox) stage.getScene().getRoot()
                         .lookup(".tree-scope-checkbox");
                 assertTrue(only.isSelected());
+                assertEquals("Solo esta carpeta", only.getText());
                 assertEquals("src", fileTree.progressFocusFolder());
+                Method scopedMenuAccessor = ReferenceTree.class.getDeclaredMethod(
+                        "contextFor", Path.class);
+                scopedMenuAccessor.setAccessible(true);
+                ContextMenu restoreMenu = (ContextMenu) scopedMenuAccessor.invoke(fileTree, src);
+                assertTrue(restoreMenu.getItems().stream()
+                        .anyMatch(item -> "Progreso: todo el proyecto"
+                                .equals(item.getText())));
+                Field commentsControl = CodeTraceApp.class.getDeclaredField(
+                        "includeCommentsCheck");
+                commentsControl.setAccessible(true);
+                CheckBox commentRule = (CheckBox) commentsControl.get(application);
+                assertEquals("Practicar comentarios", commentRule.getText());
                 assertFalse(fileTree.isDisabled(), "Outside folders remain navigable");
                 var srcNode = fileTree.getRoot().getChildren().stream()
                         .filter(n -> n.getValue().equals(src)).findFirst().orElseThrow();

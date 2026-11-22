@@ -20,6 +20,7 @@ Java 21 · JavaFX · Windows 11 · 14 lenguajes en la biblioteca de práctica ·
 
 ## Qué puedes hacer
 
+- **Personalizar lo que practicas.** Activa o desactiva «Practicar comentarios» para concentrarte en el código de los lenguajes admitidos; los comentarios permanecen visibles. El progreso se recalcula sin eliminar lo ya mecanografiado.
 - **Practicar sobre una plantilla real.** Los caracteres de referencia permanecen visibles mientras escribes: los aciertos, errores y caracteres pendientes tienen estados diferenciados. Puedes seleccionar líneas, ajustar el tamaño de letra y usar un modo de concentración.
 - **Reconstruir un proyecto de manera virtual.** Reproduce su estructura de carpetas y archivos, manualmente o mediante reglas automáticas, sin escribir encima de la referencia original.
 - **Seguir el progreso.** Consulta el avance por archivo y proyecto; filtra carpetas y categorías, registra aciertos y velocidad, y guarda sesiones `.ctrace` para retomarlas más adelante.
@@ -43,7 +44,7 @@ programa es **Marcos Moreira**, también identificado en sus metadatos.
 
 ![Biblioteca Java con fundamentos, estructuras de datos, algoritmos y patrones](docs/media/01-biblioteca-java.jpg)
 
-La biblioteca integrada comprende **14 lenguajes y 813 archivos de referencia** en v0.3.2. Son *archivos*, no 813 ejercicios independientes. Sus contenidos cubren fundamentos, estructuras de datos, algoritmos y patrones de diseño; los ejemplos incluyen guías de consola y salidas esperadas, algunas todavía pendientes de validación cruzada en todos los entornos.
+La biblioteca integrada comprende **14 lenguajes y 813 archivos de referencia** en v0.3.3. Son *archivos*, no 813 ejercicios independientes. Sus contenidos cubren fundamentos, estructuras de datos, algoritmos y patrones de diseño; los ejemplos incluyen guías de consola y salidas esperadas, algunas todavía pendientes de validación cruzada en todos los entornos.
 
 ### Consulta documentación directamente dentro del proyecto
 
@@ -67,13 +68,13 @@ La biblioteca integrada comprende **14 lenguajes y 813 archivos de referencia** 
 
 **Plataforma principal:** Windows 11.
 
-**Descargas oficiales:** [CodeTrace v0.3.2 — Windows](https://github.com/marcos-moreira-dev/CodeTrace/releases/tag/v0.3.2).
+**Descargas oficiales:** [CodeTrace v0.3.3 — Windows](https://github.com/marcos-moreira-dev/CodeTrace/releases/tag/v0.3.3).
 
 - **Instalador `.exe`:** instalación normal y asociación de sesiones `.ctrace`.
 - **Archivo `.zip` portable:** descomprime y ejecuta `CodeTrace.exe` sin instalar Java por separado.
 - **SHA-256:** se publica junto a ambos archivos para verificar sus descargas.
 
-Esta versión 0.3.2 es una **corrección editorial del diálogo «Acerca de»**: licencia MIT y atribuciones correctas, enlace a los avisos de terceros, autoría académica precisa y advertencia sobre el acceso de la consola a archivos reales. Conserva los iconos definitivos de v0.3.1. Las funcionalidades de práctica y el formato `.ctrace` no cambian.
+Esta versión 0.3.3 incorpora **«Practicar comentarios»**, una regla opcional para mecanografiar únicamente el código sin dejar de ver sus comentarios. El progreso y los estados del árbol se ajustan al contenido exigido, sin borrar lo ya escrito ni alterar el formato `.ctrace`. El explorador mejora el renderizado de iconos, ofrece «Progreso: todo el proyecto» en el menú contextual y aclara «Solo esta carpeta».
 
 CodeTrace es una **versión de prueba**. El instalador no tiene firma digital; Windows puede mostrar advertencias de SmartScreen. Se han realizado pruebas automatizadas y uso real del autor, pero no una certificación exhaustiva en todos los equipos. Consulta [los límites y las pruebas](docs/CIERRE-V0.3.md).
 
@@ -113,7 +114,7 @@ Para generar un ZIP portable, y opcionalmente el instalador con las herramientas
 
 ## Estado del proyecto
 
-**CodeTrace v0.3.2 — primera versión pública de prueba.** El autor verificó informalmente las funciones habituales y el repositorio realiza pruebas automatizadas; no se afirma aceptación exhaustiva en todos los equipos Windows. La biblioteca contiene 813 archivos de referencia en 14 lenguajes, con anotaciones de consola. Algunas salidas de otros lenguajes se infirieron a partir del código y requieren comprobación en su entorno específico.
+**CodeTrace v0.3.3 — primera versión pública de prueba.** El autor verificó informalmente las funciones habituales y el repositorio realiza pruebas automatizadas; no se afirma aceptación exhaustiva en todos los equipos Windows. La biblioteca contiene 813 archivos de referencia en 14 lenguajes, con anotaciones de consola. Algunas salidas de otros lenguajes se infirieron a partir del código y requieren comprobación en su entorno específico.
 
 **Código fuente original:** licencia [MIT](LICENSE), © 2026 Marcos Moreira. Puedes usarlo, modificarlo y distribuirlo, incluso comercialmente, conservando el aviso y la licencia; no debes mostrar ningún contacto personal. Los elementos gráficos originales y los componentes de terceros tienen alcances distintos: [identidad y recursos](LICENSING.md) y [avisos de terceros](THIRD-PARTY-NOTICES.md). El nombre CodeTrace no se declara marca registrada.
 
