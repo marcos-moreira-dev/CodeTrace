@@ -23,11 +23,15 @@ public final class TypingSession {
     private final BitSet skipped = new BitSet();
     /** Derived, reversible training mask; never serialized into .ctrace. */
     private final BitSet ignoredComments = new BitSet();
+    /** Rule-derived, reversible mask for import/dependency declaration rows. */
+    private final BitSet ignoredDependencies = new BitSet();
+    private boolean dependenciesOmitted;
     private int caret;
     // O(1) counters: all user mutations pass through changeSlot().
     private int visibleUnits;
     private int correctVisible;
     private int resolvedVisible;
+    private int skippedVisible;
     private int correctAll;
     private int incorrectAll;
 
@@ -58,6 +62,37 @@ public final class TypingSession {
         recount();
     }
 
+    /** Toggle dependency omission, keeping manual skips and typed slots intact. */
+    public void setOmitDependencies(boolean enabled, String filename) {
+        ignoredDependencies.clear();
+        dependenciesOmitted = enabled && DependencyDeclarationRules.supports(filename);
+        if (dependenciesOmitted) {
+            int start = 0;
+            boolean goBlock = false;
+            StringBuilder line = new StringBuilder();
+            for (int i = 0; i <= size(); i++) {
+                boolean end = i == size();
+                String unit = end ? "" : reference.get(i);
+                if (end || "\n".equals(unit)) {
+                    String value = line.toString().strip();
+                    boolean beginsBlock = DependencyDeclarationRules.startsGoImportBlock(
+                            filename, value);
+                    boolean declaration = goBlock || beginsBlock
+                            || DependencyDeclarationRules.isDeclaration(filename, value);
+                    if (declaration) ignoredDependencies.set(start, Math.min(i + 1, size()));
+                    if (goBlock && value.equals(")")) goBlock = false;
+                    if (beginsBlock) goBlock = true;
+                    start = i + 1;
+                    line.setLength(0);
+                } else line.append(unit);
+            }
+        }
+        moveCaret(caret);
+        recount();
+    }
+
+    public boolean dependenciesOmitted() { return dependenciesOmitted; }
+
     public int size() {
         return reference.size();
     }
@@ -81,6 +116,16 @@ public final class TypingSession {
         return resolvedVisible;
     }
 
+    /** Dynamic denominator used by both completion feedback and progress bars. */
+    public int assessableVisibleCount() {
+        return visibleUnits - skippedVisible;
+    }
+
+    /** Explicit skips (e.g. Turbo), excluding comments and dependencies omitted by rules. */
+    public int deliberatelySkippedVisibleCount() {
+        return skippedVisible;
+    }
+
     public int correctCount() {
         return correctAll;
     }
@@ -99,7 +144,8 @@ public final class TypingSession {
         // Only visible source units determine completion; skipped units may
         // resolve an exercise but never count as correctly transcribed.
         return (visibleUnits > 0 && resolvedVisible == visibleUnits)
-                || (visibleUnits == 0 && !ignoredComments.isEmpty());
+                || (visibleUnits == 0 && (!ignoredComments.isEmpty()
+                        || !ignoredDependencies.isEmpty()));
     }
 
     public int resolvedCount() {
@@ -112,7 +158,8 @@ public final class TypingSession {
 
     public State state(int position) {
         Objects.checkIndex(position, size());
-        if (skipped.get(position) || ignoredComments.get(position)) {
+        if (skipped.get(position) || ignoredComments.get(position)
+                || ignoredDependencies.get(position)) {
             return State.SKIPPED;
         }
         String actual = entered.get(position);
@@ -165,7 +212,8 @@ public final class TypingSession {
 
     public void backspace() {
         while (caret > 0 && (EmojiUnits.isEmoji(reference.get(caret - 1))
-                || ignoredComments.get(caret - 1))) caret--;
+                || ignoredComments.get(caret - 1)
+                || ignoredDependencies.get(caret - 1))) caret--;
         if (caret > 0) {
             caret--;
             changeSlot(caret, null, false);
@@ -186,7 +234,8 @@ public final class TypingSession {
         int before = caret;
         caret = position;
         if (position < before) {
-            while (caret > 0 && ignoredComments.get(caret)) caret--;
+            while (caret > 0 && (ignoredComments.get(caret)
+                    || ignoredDependencies.get(caret))) caret--;
         }
         advanceEmoji();
     }
@@ -279,7 +328,7 @@ public final class TypingSession {
     private boolean isVisible(int index) {
         String unit = reference.get(index);
         return !"\n".equals(unit) && !EmojiUnits.isEmoji(unit)
-                && !ignoredComments.get(index);
+                && !ignoredComments.get(index) && !ignoredDependencies.get(index);
     }
 
     /**
@@ -302,6 +351,8 @@ public final class TypingSession {
             if (after == State.CORRECT) correctVisible++;
             if (before == State.CORRECT || before == State.SKIPPED) resolvedVisible--;
             if (after == State.CORRECT || after == State.SKIPPED) resolvedVisible++;
+            if (before == State.SKIPPED) skippedVisible--;
+            if (after == State.SKIPPED) skippedVisible++;
         }
     }
 
@@ -310,6 +361,7 @@ public final class TypingSession {
         visibleUnits = 0;
         correctVisible = 0;
         resolvedVisible = 0;
+        skippedVisible = 0;
         correctAll = 0;
         incorrectAll = 0;
         for (int i = 0; i < size(); i++) {
@@ -320,6 +372,7 @@ public final class TypingSession {
             visibleUnits++;
             if (value == State.CORRECT) correctVisible++;
             if (value == State.CORRECT || value == State.SKIPPED) resolvedVisible++;
+            if (value == State.SKIPPED) skippedVisible++;
         }
     }
 
@@ -343,7 +396,8 @@ public final class TypingSession {
 
     private void advanceEmoji() {
         while (caret < size() && (EmojiUnits.isEmoji(reference.get(caret))
-                || ignoredComments.get(caret))) {
+                || ignoredComments.get(caret)
+                || ignoredDependencies.get(caret))) {
             if (EmojiUnits.isEmoji(reference.get(caret))) skipped.set(caret);
             caret++;
         }

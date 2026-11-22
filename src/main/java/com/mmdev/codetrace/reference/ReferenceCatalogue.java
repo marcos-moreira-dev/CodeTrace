@@ -22,13 +22,25 @@ import java.util.Set;
 */
 public final class ReferenceCatalogue {
     public record FileInfo(String sha256, long bytes, int typeableUnits,
-                           int codeOnlyUnits) {
+                           int codeOnlyUnits, int withoutDependenciesUnits,
+                           int codeOnlyWithoutDependenciesUnits) {
         public FileInfo(String sha256, long bytes, int typeableUnits) {
-            this(sha256, bytes, typeableUnits, typeableUnits);
+            this(sha256, bytes, typeableUnits, typeableUnits,
+                    typeableUnits, typeableUnits);
+        }
+        public FileInfo(String sha256, long bytes, int typeableUnits,
+                        int codeOnlyUnits) {
+            this(sha256, bytes, typeableUnits, codeOnlyUnits,
+                    typeableUnits, codeOnlyUnits);
         }
         public boolean typeable() { return typeableUnits >= 0; }
         public int requiredUnits(boolean includeComments) {
-            return includeComments ? typeableUnits : codeOnlyUnits;
+            return requiredUnits(includeComments, false);
+        }
+        public int requiredUnits(boolean includeComments, boolean omitDependencies) {
+            if (!omitDependencies) return includeComments ? typeableUnits : codeOnlyUnits;
+            return includeComments ? withoutDependenciesUnits
+                    : codeOnlyWithoutDependenciesUnits;
         }
     }
 
@@ -176,14 +188,22 @@ public final class ReferenceCatalogue {
                     TextPreview.Result preview = analysed.preview();
                     int units = -1;
                     int codeUnits = -1;
+                    int dependencyFree = -1;
+                    int codeOnlyDependencyFree = -1;
                     if (preview.readable()) {
                         TypingSession measure = new TypingSession(preview.content());
+                        String filename = file.getFileName().toString();
                         units = measure.visibleUnitCount();
-                        measure.setIncludeComments(false, file.getFileName().toString());
+                        measure.setIncludeComments(false, filename);
                         codeUnits = measure.visibleUnitCount();
+                        measure.setOmitDependencies(true, filename);
+                        codeOnlyDependencyFree = measure.visibleUnitCount();
+                        measure.setIncludeComments(true, filename);
+                        dependencyFree = measure.visibleUnitCount();
                     }
                     files.put(relative, new FileInfo(analysed.sha256(),
-                            attributes.size(), units, codeUnits));
+                            attributes.size(), units, codeUnits,
+                            dependencyFree, codeOnlyDependencyFree));
                 } catch (IOException | SecurityException ignored) {
                     // An unreadable file does not block indexing other files.
                 }
