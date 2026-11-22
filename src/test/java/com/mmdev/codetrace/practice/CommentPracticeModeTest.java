@@ -16,7 +16,7 @@ class CommentPracticeModeTest {
         assertTrue(s.finishedExercise());
         assertEquals(8, s.correctVisibleCount());
         assertEquals(0, s.skippedCount(), "The preference is not a stored skip");
-        List<String> slots = List.copyOf(s.enteredSlots());
+        List<String> slots = new java.util.ArrayList<>(s.enteredSlots());
         s.setIncludeComments(true, "Main.java");
         assertEquals(15, s.visibleUnitCount());
         assertEquals(8, s.correctVisibleCount());

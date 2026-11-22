@@ -83,6 +83,13 @@ public final class CommentSpans {
                 cursor = marker < 0 ? length : marker + 3;
                 continue;
             }
+            if (kind == Kind.POWERSHELL && source.startsWith("<#", cursor)) {
+                int closing = source.indexOf("#>", cursor + 2);
+                int to = closing < 0 ? length : closing + 2;
+                add(spans, source, cursor, to);
+                cursor = to;
+                continue;
+            }
             if (kind == Kind.C && extension.equals("cs") && source.startsWith("@\"", cursor)) {
                 cursor = skipQuote(source, cursor + 1, '"', false, true);
                 continue;
