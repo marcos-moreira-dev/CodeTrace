@@ -142,6 +142,9 @@ public final class TypingEditor extends BorderPane {
         return session;
     }
 
+    /** Redraw after the comments training rule changes, without mutating text. */
+    public void refreshCommentPolicy() { synchronizeLine(true); }
+
     /** Used for GUI regression tests, and guaranteed independent of typed input. */
     public String visibleLineText(int lineNumber) {
         return sourceLines.get(lineNumber).original();

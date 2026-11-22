@@ -21,9 +21,14 @@ import java.util.Set;
   * <p><strong>Engineering rationale.</strong> This structure supplies semantic progress facts such as eligible character counts and source fingerprints; it does not own the virtual text entered by the student. The scan is bounded, read-only and asynchronous because hashing every file or preloading multimedia would make large-project startup prohibitively expensive.</p>
 */
 public final class ReferenceCatalogue {
-    public record FileInfo(String sha256, long bytes, int typeableUnits) {
-        public boolean typeable() {
-            return typeableUnits >= 0;
+    public record FileInfo(String sha256, long bytes, int typeableUnits,
+                           int codeOnlyUnits) {
+        public FileInfo(String sha256, long bytes, int typeableUnits) {
+            this(sha256, bytes, typeableUnits, typeableUnits);
+        }
+        public boolean typeable() { return typeableUnits >= 0; }
+        public int requiredUnits(boolean includeComments) {
+            return includeComments ? typeableUnits : codeOnlyUnits;
         }
     }
 
@@ -169,11 +174,16 @@ public final class ReferenceCatalogue {
                     // Empty SHA means unavailable/non-practicable source.
                     TextPreview.Analysed analysed = TextPreview.loadWithHash(file);
                     TextPreview.Result preview = analysed.preview();
-                    int units = preview.readable()
-                            ? new TypingSession(preview.content()).visibleUnitCount()
-                            : -1;
+                    int units = -1;
+                    int codeUnits = -1;
+                    if (preview.readable()) {
+                        TypingSession measure = new TypingSession(preview.content());
+                        units = measure.visibleUnitCount();
+                        measure.setIncludeComments(false, file.getFileName().toString());
+                        codeUnits = measure.visibleUnitCount();
+                    }
                     files.put(relative, new FileInfo(analysed.sha256(),
-                            attributes.size(), units));
+                            attributes.size(), units, codeUnits));
                 } catch (IOException | SecurityException ignored) {
                     // An unreadable file does not block indexing other files.
                 }

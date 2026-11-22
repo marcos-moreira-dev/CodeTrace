@@ -21,6 +21,8 @@ public final class TypingSession {
     private final List<String> reference;
     private final List<String> entered;
     private final BitSet skipped = new BitSet();
+    /** Derived, reversible training mask; never serialized into .ctrace. */
+    private final BitSet ignoredComments = new BitSet();
     private int caret;
     // O(1) counters: all user mutations pass through changeSlot().
     private int visibleUnits;
@@ -34,6 +36,25 @@ public final class TypingSession {
         entered = new ArrayList<>(Collections.nCopies(reference.size(), null));
         preserveEmojiAnnotations();
         advanceEmoji();
+        recount();
+    }
+
+    /** Reconfigure without deleting previously entered or deliberately skipped slots. */
+    public void setIncludeComments(boolean include, String filename) {
+        ignoredComments.clear();
+        if (!include) {
+            List<CommentSpans.Span> spans = CommentSpans.find(filename, expectedText());
+            int offset = 0;
+            int range = 0;
+            for (int i = 0; i < reference.size() && range < spans.size(); i++) {
+                int next = offset + reference.get(i).length();
+                while (range < spans.size() && spans.get(range).end() <= offset) range++;
+                if (range < spans.size() && spans.get(range).start() < next
+                        && spans.get(range).end() > offset) ignoredComments.set(i);
+                offset = next;
+            }
+        }
+        moveCaret(caret);
         recount();
     }
 
@@ -77,7 +98,8 @@ public final class TypingSession {
     public boolean finishedExercise() {
         // Only visible source units determine completion; skipped units may
         // resolve an exercise but never count as correctly transcribed.
-        return visibleUnits > 0 && resolvedVisible == visibleUnits;
+        return (visibleUnits > 0 && resolvedVisible == visibleUnits)
+                || (visibleUnits == 0 && !ignoredComments.isEmpty());
     }
 
     public int resolvedCount() {
@@ -90,7 +112,7 @@ public final class TypingSession {
 
     public State state(int position) {
         Objects.checkIndex(position, size());
-        if (skipped.get(position)) {
+        if (skipped.get(position) || ignoredComments.get(position)) {
             return State.SKIPPED;
         }
         String actual = entered.get(position);
@@ -142,7 +164,8 @@ public final class TypingSession {
     }
 
     public void backspace() {
-        while (caret > 0 && EmojiUnits.isEmoji(reference.get(caret - 1))) caret--;
+        while (caret > 0 && (EmojiUnits.isEmoji(reference.get(caret - 1))
+                || ignoredComments.get(caret - 1))) caret--;
         if (caret > 0) {
             caret--;
             changeSlot(caret, null, false);
@@ -160,7 +183,11 @@ public final class TypingSession {
         if (position < 0 || position > size()) {
             throw new IndexOutOfBoundsException("Caret: " + position);
         }
+        int before = caret;
         caret = position;
+        if (position < before) {
+            while (caret > 0 && ignoredComments.get(caret)) caret--;
+        }
         advanceEmoji();
     }
 
@@ -251,7 +278,8 @@ public final class TypingSession {
 
     private boolean isVisible(int index) {
         String unit = reference.get(index);
-        return !"\n".equals(unit) && !EmojiUnits.isEmoji(unit);
+        return !"\n".equals(unit) && !EmojiUnits.isEmoji(unit)
+                && !ignoredComments.get(index);
     }
 
     /**
@@ -314,8 +342,10 @@ public final class TypingSession {
     }
 
     private void advanceEmoji() {
-        while (caret < size() && EmojiUnits.isEmoji(reference.get(caret))) {
-            skipped.set(caret++);
+        while (caret < size() && (EmojiUnits.isEmoji(reference.get(caret))
+                || ignoredComments.get(caret))) {
+            if (EmojiUnits.isEmoji(reference.get(caret))) skipped.set(caret);
+            caret++;
         }
     }
 
