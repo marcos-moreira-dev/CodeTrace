@@ -24,8 +24,8 @@ public final class CompletionSummary {
         Objects.requireNonNull(filename);
         Objects.requireNonNull(session);
         int correct = session.correctVisibleCount();
-        int visible = session.visibleUnitCount();
-        int skipped = session.resolvedVisibleCount() - correct;
+        int visible = session.assessableVisibleCount();
+        int skipped = session.deliberatelySkippedVisibleCount();
         long seconds = Math.max(0L, elapsedMillis / 1000L);
         String time = String.format(Locale.ROOT, "%02d:%02d:%02d",
                 seconds / 3600, (seconds / 60) % 60, seconds % 60);

@@ -27,11 +27,8 @@ public record ProgressSummary(long totalUnits, long correctUnits, long includedF
         Objects.requireNonNull(hashes);
         Objects.requireNonNull(scope);
         Objects.requireNonNull(exclusions);
-        return new ProgressSummary(
-                catalogue.expectedUnits(scope, folder, exclusions),
-                catalogue.resolvedUnits(workspace, sessions, hashes,
-                        scope, folder, exclusions),
-                catalogue.includedFileCount(scope, folder, exclusions));
+        return new ProgressAccumulator(catalogue, workspace, sessions, hashes,
+                scope, folder, exclusions).summary();
     }
 
     public double ratio() {
