@@ -422,15 +422,21 @@ public final class TypingEditor extends BorderPane {
             // Count this opening's actual attempts, not all characters already
             // present from a restored .ctrace session. Line separators are
             // structural and cannot inflate the visible-typing statistics.
+            int typedSlot = -1;
             for (int i = previous; i < afterTyping; i++) {
-                if ("\n".equals(session.cell(i).expected())) continue;
+                // Invisible line breaks and implicitly omitted comments are
+                // NOT physical keystrokes. Never count them as mistakes or
+                // trigger an incorrect-typing sound when the caret advances.
+                if ("\n".equals(session.cell(i).expected())
+                        || session.state(i) == TypingSession.State.SKIPPED) continue;
+                typedSlot = i;
                 if (session.state(i) == TypingSession.State.CORRECT)
                     correctTypedEvents++;
                 else incorrectTypedEvents++;
             }
-            boolean correct = session.state(afterTyping - 1)
-                    == TypingSession.State.CORRECT;
-            onTypedCharacter.accept(correct);
+            if (typedSlot >= previous)
+                onTypedCharacter.accept(session.state(typedSlot)
+                        == TypingSession.State.CORRECT);
             if (turboMode) session.skipTurboSymbols();
         } else if (previous > 0 && wasIncorrect
                 && !"\n".equals(session.cell(previous - 1).expected())
