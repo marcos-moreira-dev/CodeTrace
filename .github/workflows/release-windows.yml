@@ -1,4 +1,4 @@
-name: Publish CodeTrace v0.3.2 for Windows
+name: Publish CodeTrace v0.3.3 for Windows
 
 on:
   push:
@@ -14,7 +14,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: codetrace-release-v0.3.2
+  group: codetrace-release-v0.3.3
   cancel-in-progress: false
 
 jobs:
@@ -33,7 +33,7 @@ jobs:
         run: |
           [xml]$pom = Get-Content pom.xml -Raw
           $v = $pom.SelectSingleNode("/*[local-name()='project']/*[local-name()='version']").InnerText.Trim()
-          if ($v -ne "0.3.2") { throw "Not the intended release version: $v" }
+          if ($v -ne "0.3.3") { throw "Not the intended release version: $v" }
       - name: Compile, test and build portable and installer
         shell: pwsh
         run: |
@@ -47,27 +47,27 @@ jobs:
           $ErrorActionPreference = "Stop"
           $exe = @(Get-ChildItem -Path dist -Filter "CodeTrace-*.exe" -File)
           if ($exe.Count -ne 1) { throw "Expected exactly one Windows installer." }
-          $zipPath = "dist/CodeTrace-v0.3.2-Windows-portable.zip"
-          $exePath = "dist/CodeTrace-v0.3.2-Windows-installer.exe"
+          $zipPath = "dist/CodeTrace-v0.3.3-Windows-portable.zip"
+          $exePath = "dist/CodeTrace-v0.3.3-Windows-installer.exe"
           Copy-Item -LiteralPath "dist/CodeTrace-Windows-portable.zip" -Destination $zipPath -Force
           Copy-Item -LiteralPath $exe[0].FullName -Destination $exePath -Force
           $z = (Get-FileHash -LiteralPath $zipPath -Algorithm SHA256).Hash.ToLowerInvariant()
           $e = (Get-FileHash -LiteralPath $exePath -Algorithm SHA256).Hash.ToLowerInvariant()
-          [IO.File]::WriteAllText("dist/CodeTrace-v0.3.2-checksums.sha256",
-            "$z  CodeTrace-v0.3.2-Windows-portable.zip" + [Environment]::NewLine +
-            "$e  CodeTrace-v0.3.2-Windows-installer.exe" + [Environment]::NewLine,
+          [IO.File]::WriteAllText("dist/CodeTrace-v0.3.3-checksums.sha256",
+            "$z  CodeTrace-v0.3.3-Windows-portable.zip" + [Environment]::NewLine +
+            "$e  CodeTrace-v0.3.3-Windows-installer.exe" + [Environment]::NewLine,
             [Text.Encoding]::ASCII)
       - name: Publish public GitHub prerelease
         shell: pwsh
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release create "v0.3.2" `
-            "dist/CodeTrace-v0.3.2-Windows-portable.zip" `
-            "dist/CodeTrace-v0.3.2-Windows-installer.exe" `
-            "dist/CodeTrace-v0.3.2-checksums.sha256" `
+          gh release create "v0.3.3" `
+            "dist/CodeTrace-v0.3.3-Windows-portable.zip" `
+            "dist/CodeTrace-v0.3.3-Windows-installer.exe" `
+            "dist/CodeTrace-v0.3.3-checksums.sha256" `
             --target "$env:GITHUB_SHA" `
-            --title "CodeTrace v0.3.2 — correcciones en Acerca de" `
-            --notes-file "docs/NOTAS-DE-VERSION-v0.3.2.md" `
+            --title "CodeTrace v0.3.3 — reglas de comentarios y mejoras del explorador" `
+            --notes-file "docs/NOTAS-DE-VERSION-v0.3.3.md" `
             --prerelease
           if ($LASTEXITCODE -ne 0) { throw "GitHub release creation failed" }

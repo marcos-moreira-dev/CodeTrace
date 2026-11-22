@@ -278,11 +278,11 @@ public final class CommentSpans {
         boolean alone = source.substring(row, first).isBlank();
         int start = alone ? row : first;
         int end = last;
-        if (alone) {
-            int lineEnd = lineEnd(source, end);
-            if (source.substring(end, lineEnd).isBlank())
-                end = lineEnd < source.length() ? lineEnd + 1 : lineEnd;
-        }
+        // Trailing comments also consume the structural newline, allowing
+        // continuous code-only typing into the next line without an Enter.
+        int lineEnd = lineEnd(source, end);
+        if (source.substring(end, lineEnd).isBlank())
+            end = lineEnd < source.length() ? lineEnd + 1 : lineEnd;
         if (!spans.isEmpty() && spans.get(spans.size() - 1).end() >= start) {
             Span previous = spans.remove(spans.size() - 1);
             spans.add(new Span(previous.start(), Math.max(previous.end(), end)));
