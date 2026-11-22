@@ -172,6 +172,11 @@ public final class CodeTraceApp extends Application {
     /** Rebuilt only after structural/filter/catalogue changes. */
     private ProgressAccumulator progressAccumulator;
     private ProgressScope progressScope = ProgressScope.load();
+    /** User-wide, reversible training preference. Existing .ctrace slots are intact. */
+    private boolean includeComments = java.util.prefs.Preferences
+            .userNodeForPackage(CodeTraceApp.class)
+            .getBoolean("practice.includeComments", true);
+    private CheckBox includeCommentsCheck;
     private ProgressExclusions exclusions = ProgressExclusions.empty();
     private PracticeMode practiceMode = PracticeMode.RECONSTRUCTION;
     private RadioMenuItem manualModeMenu;
@@ -367,11 +372,11 @@ public final class CodeTraceApp extends Application {
         top.getChildren().addAll(menu, toolbar);
         root.setTop(top);
 
-        onlySelectedFolder = com.mmdev.codetrace.ui.AppControls.checkBox("Solo");
+        onlySelectedFolder = com.mmdev.codetrace.ui.AppControls.checkBox("Solo esta carpeta");
         onlySelectedFolder.getStyleClass().add("tree-scope-checkbox");
         onlySelectedFolder.setTooltip(new Tooltip(
                 "Contabiliza solo la carpeta activa. Selecciona otra carpeta para cambiar "
-                + "el ámbito o desmarca Solo para incluir todo el proyecto."));
+                + "el ámbito o desmarca esta opción para incluir todo el proyecto."));
         onlySelectedFolder.setDisable(true);
         onlySelectedFolder.setOnAction(event -> {
             if (syncingFolderScope) return;
@@ -733,6 +738,8 @@ public final class CodeTraceApp extends Application {
         reference = next.root();
         workspace = next.workspace();
         sessions = new LinkedHashMap<>(next.sessions());
+        sessions.forEach((path, session) ->
+                session.setIncludeComments(includeComments, path));
         hashes = new LinkedHashMap<>(next.hashes());
         graphLayouts = new LinkedHashMap<>(next.graphLayouts());
         sessionFile = next.sessionFile();
@@ -848,6 +855,9 @@ public final class CodeTraceApp extends Application {
                 session = new TypingSession(preview.content());
                 sessions.put(relative, session);
             }
+            // Preserve reference text and saved slots; policy only changes
+            // which source positions are required to complete the exercise.
+            session.setIncludeComments(includeComments, file.getFileName().toString());
             hashes.putIfAbsent(relative, ReferenceFingerprint.sha256(file));
             TypingSession current = session;
             // Completion feedback tracks typing transitions, not the
@@ -1441,7 +1451,8 @@ public final class CodeTraceApp extends Application {
         // Normal keystrokes do not take this path unless completion changes.
         progressAccumulator = null;
         reconstructionStates = ReconstructionStatus.calculate(
-                workspace, sessions, hashes, catalogue, progressScope, exclusions);
+                workspace, sessions, hashes, catalogue, progressScope, exclusions,
+                includeComments);
         tree.refreshStatuses();
     }
 
@@ -1491,9 +1502,10 @@ public final class CodeTraceApp extends Application {
             return;
         }
         if (progressAccumulator == null || !progressAccumulator.matches(
-                catalogue, progressScope, progressFolder, exclusions)) {
+                catalogue, progressScope, progressFolder, exclusions, includeComments)) {
             progressAccumulator = new ProgressAccumulator(catalogue, workspace,
-                    sessions, hashes, progressScope, progressFolder, exclusions);
+                    sessions, hashes, progressScope, progressFolder, exclusions,
+                    includeComments);
         }
         ProgressSummary summary = progressAccumulator.summary();
         long total = summary.totalUnits();
@@ -1566,7 +1578,7 @@ public final class CodeTraceApp extends Application {
                         ? "Progreso: todo el proyecto. Selecciona una carpeta para activar Solo."
                         : "Solo: " + progressFolder
                                 + "\nLas demás carpetas se atenúan, pero siguen accesibles."
-                                + "\nSelecciona otra carpeta para cambiar el ámbito."));
+                                + "\nSelecciona otra carpeta para cambiar el ámbito. Desmarca para volver al proyecto completo."));
                 onlySelectedFolder.setDisable(progressFolder.isEmpty()
                         && !tree.isFolderPath(tree.selectedExplorerItem() == null
                             ? null : tree.selectedExplorerItem().getValue()));
@@ -1578,6 +1590,24 @@ public final class CodeTraceApp extends Application {
         setStatus(progressFolder.isEmpty()
                 ? "Progreso: todo el proyecto"
                 : "Progreso: " + progressFolder);
+    }
+
+    /** One reversible policy for every open and saved typing session. */
+    private void setIncludeComments(boolean enabled) {
+        if (includeComments == enabled) return;
+        includeComments = enabled;
+        java.util.prefs.Preferences.userNodeForPackage(CodeTraceApp.class)
+                .putBoolean("practice.includeComments", enabled);
+        sessions.forEach((path, session) -> session.setIncludeComments(enabled, path));
+        for (Tab tab : tabs.getTabs()) {
+            TypingEditor editor = editorIn(tab);
+            if (editor != null) editor.refreshCommentPolicy();
+        }
+        refreshReconstructionStatuses();
+        refreshMetrics();
+        setStatus(enabled
+                ? "Los comentarios vuelven a formar parte de la práctica."
+                : "Comentarios visibles, pero excluidos de la mecanografía.");
     }
 
     /** Persistent filter gallery: checkboxes do NOT close after each click. */
@@ -1602,8 +1632,18 @@ public final class CodeTraceApp extends Application {
         autoCreateCheck.setOnAction(event -> setPracticeMode(
                 autoCreateCheck.isSelected() ? PracticeMode.DIRECT
                         : PracticeMode.RECONSTRUCTION));
+        includeCommentsCheck = com.mmdev.codetrace.ui.AppControls
+                .checkBox("Practicar comentarios");
+        includeCommentsCheck.setSelected(includeComments);
+        includeCommentsCheck.setTooltip(new Tooltip(
+                "Si se desactiva, los comentarios permanecen visibles, pero "
+                + "no se deben mecanografiar ni cuentan para el progreso. "
+                + "Se aplica a todos los lenguajes reconocidos."));
+        includeCommentsCheck.setOnAction(event ->
+                setIncludeComments(includeCommentsCheck.isSelected()));
         options.getChildren().addAll(new Separator(Orientation.HORIZONTAL),
-                writingCaption, autoCreateCheck, turboToggle, skipImportsButton);
+                writingCaption, autoCreateCheck, includeCommentsCheck,
+                turboToggle, skipImportsButton);
         Label exclusionHint = new Label(
                 "Autocrear marca los archivos de práctica como creados (amarillo); "
                 + "solo terminan (verde) al transcribirlos. Los filtros de "
