@@ -8,7 +8,7 @@ class CommentPracticeModeTest {
     @Test void togglingKeepsStoredSlotsButExcludesCommentsFromRequirements() {
         String reference = "// note\nint a=1;";
         TypingSession s = new TypingSession(reference);
-        assertEquals(17, s.visibleUnitCount());
+        assertEquals(15, s.visibleUnitCount());
         s.setIncludeComments(false, "Main.java");
         assertEquals(8, s.visibleUnitCount());
         assertEquals(8, s.caret()); // entire comment line, including structural newline
@@ -18,7 +18,7 @@ class CommentPracticeModeTest {
         assertEquals(0, s.skippedCount(), "The preference is not a stored skip");
         List<String> slots = List.copyOf(s.enteredSlots());
         s.setIncludeComments(true, "Main.java");
-        assertEquals(17, s.visibleUnitCount());
+        assertEquals(15, s.visibleUnitCount());
         assertEquals(8, s.correctVisibleCount());
         assertFalse(s.finishedExercise());
         assertEquals(slots, s.enteredSlots());

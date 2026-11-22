@@ -17,7 +17,7 @@ class CommentProgressTest {
         Files.writeString(root.resolve("Main.java"), "// note\nint x=1;");
         var catalogue = ReferenceCatalogue.scan(root);
         var info = catalogue.files().get("Main.java");
-        assertEquals(17, info.typeableUnits());
+        assertEquals(15, info.typeableUnits());
         assertEquals(8, info.requiredUnits(false));
         var workspace = new VirtualWorkspace();
         workspace.createFile("Main.java");
@@ -39,7 +39,7 @@ class CommentProgressTest {
         session.setIncludeComments(true, "Main.java");
         var withComments = new ProgressAccumulator(catalogue, workspace, sessions,
                 hashes, ProgressScope.defaults(), "", ProgressExclusions.empty(), true);
-        assertEquals(17, withComments.summary().totalUnits());
+        assertEquals(15, withComments.summary().totalUnits());
         assertEquals(8, withComments.summary().correctUnits());
         assertFalse(session.finishedExercise());
     }

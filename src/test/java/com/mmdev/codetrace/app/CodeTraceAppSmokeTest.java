@@ -852,10 +852,10 @@ class CodeTraceAppSmokeTest {
                 assertTrue(only.isSelected());
                 assertEquals("Solo esta carpeta", only.getText());
                 assertEquals("src", fileTree.progressFocusFolder());
-                Method folderMenu = ReferenceTree.class.getDeclaredMethod(
+                Method scopedMenuAccessor = ReferenceTree.class.getDeclaredMethod(
                         "contextFor", Path.class);
-                folderMenu.setAccessible(true);
-                ContextMenu restoreMenu = (ContextMenu) folderMenu.invoke(fileTree, src);
+                scopedMenuAccessor.setAccessible(true);
+                ContextMenu restoreMenu = (ContextMenu) scopedMenuAccessor.invoke(fileTree, src);
                 assertTrue(restoreMenu.getItems().stream()
                         .anyMatch(item -> "Progreso: todo el proyecto"
                                 .equals(item.getText())));

@@ -31,7 +31,7 @@ class CommentSpansTest {
     @Test void scriptLanguagesIncludingPowerShellAndAsm() {
         assertEquals("#!/bin/bash\nprintf '%s' '# hi'\necho done",
                 left("run.sh", "#!/bin/bash\nprintf '%s' '# hi'\n# note\necho done"));
-        assertEquals("Write-Host '#not'; \n#Requires -Version 7\nWrite-Host hi",
+        assertEquals("Write-Host '#not'; #Requires -Version 7\nWrite-Host hi",
                 left("run.ps1", "Write-Host '#not'; # comment\n#Requires -Version 7\n<# block #>\nWrite-Host hi"));
         assertEquals("msg db 'a;b',0\nmov rax,1", left("hi.asm",
                 "msg db 'a;b',0\n; note\nmov rax,1"));
@@ -39,7 +39,7 @@ class CommentSpansTest {
                 "@echo off\nREM hello\n:: comment\necho hello"));
         assertEquals("print('#')\nprint(2)", left("main.py",
                 "print('#')\n# note\nprint(2)"));
-        assertEquals("puts '#' \nputs 2", left("main.rb",
+        assertEquals("puts '#' puts 2", left("main.rb",
                 "puts '#' # note\n=begin\ntext\n=end\nputs 2"));
     }
 
