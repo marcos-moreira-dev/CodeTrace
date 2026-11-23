@@ -25,7 +25,7 @@ Java 21 · JavaFX · Windows 11 · 14 lenguajes en la biblioteca de práctica ·
 - **Reconstruir un proyecto de manera virtual.** Reproduce su estructura de carpetas y archivos, manualmente o mediante reglas automáticas, sin escribir encima de la referencia original.
 - **Seguir el progreso.** Consulta el avance por archivo y proyecto; filtra carpetas y categorías, registra aciertos y velocidad, y guarda sesiones `.ctrace` para retomarlas más adelante.
 - **Explorar proyectos existentes.** Navega el árbol de archivos, busca contenido y consulta código o archivos de configuración de solo lectura. La navegación está optimizada para proyectos grandes.
-- **Comprender dependencias.** Visualiza relaciones estáticas entre archivos de una carpeta, acerca, desplaza y abre nodos desde el mapa. El análisis es aproximado: no sustituye a un compilador o analizador semántico.
+- **Explorar la dimensión del código (rama experimental v0.3.5).** El mapa representa carpetas y dependencias explícitas detectadas. Desde su menú contextual puedes **mostrar u ocultar archivos de código** como nodos secundarios, conectados a la carpeta que los contiene. Doble clic abre el archivo; no se realizan análisis semánticos nuevos. El dibujo está limitado para proteger el rendimiento y señala las vistas parciales. [Comportamiento del mapa](docs/MAPA-ESTRUCTURA-DEPENDENCIAS.md).
 - **Estudiar recursos complementarios.** Abre README con Markdown renderizado e imágenes locales; consulta imágenes, audio y vídeo compatibles, y utiliza una consola para ejecutar **comandos explícitos** sobre el proyecto real.
 
 ## Identidad de CodeTrace
