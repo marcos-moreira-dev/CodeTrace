@@ -408,12 +408,65 @@ class CodeTraceAppSmokeTest {
                 assertEquals("src/Main.java", openedSource.get(),
                         "Double-clicking a file opens the existing reference tab");
                 assertEquals("src", filePane.getSelectedNode());
+
+                // A normal primary-button drag relocates ONLY the source file.
+                // Its parent remains a folder node and no source text changes.
+                stage.getScene().getRoot().layout();
+                var oldFilePosition = filePane.fileNodePositions().get("src/Main.java");
+                var oldOtherFile = filePane.fileNodePositions().get("src/demo/Helper.py");
+                double dragScale = filePane.getZoomPercent() / 100.0;
+                double pressFileX = leafSurface.getWidth() / 2
+                        + (oldFilePosition.x() - filePane.getCameraX()) * dragScale;
+                double pressFileY = leafSurface.getHeight() / 2
+                        + (oldFilePosition.y() - filePane.getCameraY()) * dragScale;
+                double dropFileY = pressFileY - 900 * dragScale;
+                leafSurface.getOnMousePressed().handle(
+                        new javafx.scene.input.MouseEvent(
+                                javafx.scene.input.MouseEvent.MOUSE_PRESSED,
+                                pressFileX, pressFileY, 0, 0,
+                                javafx.scene.input.MouseButton.PRIMARY, 1,
+                                false, false, false, false, true, false, false,
+                                false, false, false,
+                                new javafx.scene.input.PickResult(
+                                        leafSurface, pressFileX, pressFileY)));
+                leafSurface.getOnMouseDragged().handle(
+                        new javafx.scene.input.MouseEvent(
+                                javafx.scene.input.MouseEvent.MOUSE_DRAGGED,
+                                pressFileX, dropFileY, 0, 0,
+                                javafx.scene.input.MouseButton.PRIMARY, 1,
+                                false, false, false, false, true, false, false,
+                                false, false, false,
+                                new javafx.scene.input.PickResult(
+                                        leafSurface, pressFileX, dropFileY)));
+                leafSurface.getOnMouseReleased().handle(
+                        new javafx.scene.input.MouseEvent(
+                                javafx.scene.input.MouseEvent.MOUSE_RELEASED,
+                                pressFileX, dropFileY, 0, 0,
+                                javafx.scene.input.MouseButton.PRIMARY, 1,
+                                false, false, false, false, false, false, false,
+                                false, false, false,
+                                new javafx.scene.input.PickResult(
+                                        leafSurface, pressFileX, dropFileY)));
+                var draggedFile = filePane.fileNodePositions().get("src/Main.java");
+                assertEquals(oldFilePosition.x(), draggedFile.x(), 1.0);
+                assertEquals(oldFilePosition.y() - 900, draggedFile.y(), 1.0,
+                        "An individual file should be draggable on the graph");
+                assertEquals(oldOtherFile,
+                        filePane.fileNodePositions().get("src/demo/Helper.py"),
+                        "Dragging one file must not move its siblings or other islands");
+                assertEquals("src", filePane.getSelectedNode());
+                assertNull(fileLayoutSaved.get(),
+                        "Manual source-file drags do not corrupt folder layout state");
+
                 filePane.setShowCodeFiles(false);
                 assertFalse(filePane.isShowingCodeFiles());
                 assertTrue(filePane.fileNodePositions().isEmpty());
                 assertTrue(filePane.fileIslandBounds().isEmpty());
+                filePane.setShowCodeFiles(true);
+                assertEquals(draggedFile, filePane.fileNodePositions().get("src/Main.java"),
+                        "Manual file relocation survives toggling within the open map");
                 assertNull(fileLayoutSaved.get(),
-                        "Hiding files must not overwrite the saved layout");
+                        "Showing or moving files must not overwrite the folder layout");
                 tabPane.getTabs().remove(fileTab);
                 tabPane.getSelectionModel().select(previousTab);
                 Slider fontSlider = (Slider) zoom.lookup(".slider");
