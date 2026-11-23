@@ -1,4 +1,4 @@
-name: Publish CodeTrace v0.3.4 for Windows
+name: Publish CodeTrace v0.3.5 for Windows
 
 on:
   push:
@@ -12,9 +12,11 @@ on:
 
 permissions:
   contents: write
+  actions: read
+  pull-requests: read
 
 concurrency:
-  group: codetrace-release-v0.3.4
+  group: codetrace-release-v0.3.5
   cancel-in-progress: false
 
 jobs:
@@ -33,7 +35,7 @@ jobs:
         run: |
           [xml]$pom = Get-Content pom.xml -Raw
           $v = $pom.SelectSingleNode("/*[local-name()='project']/*[local-name()='version']").InnerText.Trim()
-          if ($v -ne "0.3.4") { throw "Not the intended release version: $v" }
+          if ($v -ne "0.3.5") { throw "Not the intended release version: $v" }
       - name: Compile, test and build portable and installer
         shell: pwsh
         run: |
@@ -47,27 +49,71 @@ jobs:
           $ErrorActionPreference = "Stop"
           $exe = @(Get-ChildItem -Path dist -Filter "CodeTrace-*.exe" -File)
           if ($exe.Count -ne 1) { throw "Expected exactly one Windows installer." }
-          $zipPath = "dist/CodeTrace-v0.3.4-Windows-portable.zip"
-          $exePath = "dist/CodeTrace-v0.3.4-Windows-installer.exe"
+          $zipPath = "dist/CodeTrace-v0.3.5-Windows-portable.zip"
+          $exePath = "dist/CodeTrace-v0.3.5-Windows-installer.exe"
           Copy-Item -LiteralPath "dist/CodeTrace-Windows-portable.zip" -Destination $zipPath -Force
           Copy-Item -LiteralPath $exe[0].FullName -Destination $exePath -Force
           $z = (Get-FileHash -LiteralPath $zipPath -Algorithm SHA256).Hash.ToLowerInvariant()
           $e = (Get-FileHash -LiteralPath $exePath -Algorithm SHA256).Hash.ToLowerInvariant()
-          [IO.File]::WriteAllText("dist/CodeTrace-v0.3.4-checksums.sha256",
-            "$z  CodeTrace-v0.3.4-Windows-portable.zip" + [Environment]::NewLine +
-            "$e  CodeTrace-v0.3.4-Windows-installer.exe" + [Environment]::NewLine,
+          [IO.File]::WriteAllText("dist/CodeTrace-v0.3.5-checksums.sha256",
+            "$z  CodeTrace-v0.3.5-Windows-portable.zip" + [Environment]::NewLine +
+            "$e  CodeTrace-v0.3.5-Windows-installer.exe" + [Environment]::NewLine,
             [Text.Encoding]::ASCII)
-      - name: Publish public GitHub prerelease
+      - name: Require successful verification for this exact main commit
         shell: pwsh
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release create "v0.3.4" `
-            "dist/CodeTrace-v0.3.4-Windows-portable.zip" `
-            "dist/CodeTrace-v0.3.4-Windows-installer.exe" `
-            "dist/CodeTrace-v0.3.4-checksums.sha256" `
+          $ErrorActionPreference = "Stop"
+          $required = @("verify.yml", "practice-curriculum.yml", "package-windows.yml")
+          $deadline = (Get-Date).AddMinutes(30)
+          foreach ($workflow in $required) {
+            do {
+              $json = gh run list --workflow $workflow --branch main --commit $env:GITHUB_SHA --event push --limit 10 --json status,conclusion,databaseId
+              if ($LASTEXITCODE -ne 0) { throw "Cannot inspect $workflow" }
+              $runs = @($json | ConvertFrom-Json)
+              $run = $runs | Select-Object -First 1
+              if ($run -and $run.status -eq "completed") {
+                if ($run.conclusion -ne "success") { throw "$workflow failed: $($run.conclusion)" }
+                Write-Host "$workflow passed on $env:GITHUB_SHA"
+                break
+              }
+              if ((Get-Date) -ge $deadline) { throw "Verification timed out: $workflow" }
+              Start-Sleep -Seconds 15
+            } while ($true)
+          }
+      - name: Publish public GitHub release
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "v0.3.5" `
+            "dist/CodeTrace-v0.3.5-Windows-portable.zip" `
+            "dist/CodeTrace-v0.3.5-Windows-installer.exe" `
+            "dist/CodeTrace-v0.3.5-checksums.sha256" `
             --target "$env:GITHUB_SHA" `
-            --title "CodeTrace v0.3.4 — coherencia de reglas y progreso" `
-            --notes-file "docs/NOTAS-DE-VERSION-v0.3.4.md" `
-            --prerelease
+            --title "CodeTrace v0.3.5 — mapa de dependencias y biblioteca de práctica" `
+            --notes-file "docs/NOTAS-DE-VERSION-v0.3.5.md" `
+            --latest
           if ($LASTEXITCODE -ne 0) { throw "GitHub release creation failed" }
+
+      - name: Remove only the merged v0.3.5 feature branch
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $ErrorActionPreference = "Stop"
+          $pr = gh pr view 6 --json state,headRefName,headRefOid,baseRefName | ConvertFrom-Json
+          if ($LASTEXITCODE -ne 0) { throw "Could not inspect PR #6" }
+          if ($pr.state -ne "MERGED" -or $pr.baseRefName -ne "main" -or $pr.headRefName -ne "feature/folder-structure-dependency-map-20261123") {
+            throw "Refusing to delete a branch not confirmed merged."
+          }
+          $ref = gh api "repos/$env:GITHUB_REPOSITORY/git/ref/heads/$($pr.headRefName)" 2>$null
+          if ($LASTEXITCODE -ne 0) {
+            Write-Host "Branch missing or inaccessible; no deletion attempted."
+            exit 0
+          }
+          $head = ($ref | ConvertFrom-Json).object.sha
+          if ($head -ne $pr.headRefOid) { throw "Branch advanced after merge; preserving it." }
+          gh api --method DELETE "repos/$env:GITHUB_REPOSITORY/git/refs/heads/$($pr.headRefName)"
+          if ($LASTEXITCODE -ne 0) { throw "Merged branch cleanup failed." }

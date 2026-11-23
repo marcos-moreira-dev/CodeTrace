@@ -1,4 +1,8 @@
 // CodeTrace | Referencia: Java 21 LTS / JDK 21
+// Universo compartido: Arena Táctica, juego competitivo ficticio por equipos.
+// Dominio: Marcador de ronda que notifica resultados a los espectadores.
+// Patrón observer: Varios observadores reciben cambios sin ser consultados continuamente.
+// Glosario: Ronda: segmento breve de una partida; marcador: registro de resultados.
 // Compilar: javac --release 21 -encoding UTF-8 -d "$env:TEMP\ct-java21" (Get-ChildItem -Recurse -Filter *.java).FullName
 // Ejecutar: java -cp "$env:TEMP\ct-java21" codetrace.observer.MainObserver
 package codetrace.observer;

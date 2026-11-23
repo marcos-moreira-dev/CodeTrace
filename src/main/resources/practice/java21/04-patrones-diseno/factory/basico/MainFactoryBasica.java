@@ -1,4 +1,8 @@
 // CodeTrace | Referencia: Java 21 LTS / JDK 21
+// Universo compartido: Arena Táctica, juego competitivo ficticio por equipos.
+// Dominio: Comunicaciones del torneo: crear avisos para participantes.
+// Patrón factory: Una fábrica devuelve un mensaje sin exponer el tipo concreto.
+// Glosario: Torneo: competición entre varios equipos y partidas.
 // Compilar: New-Item -ItemType Directory -Force "$env:TEMP\ct-java21" | Out-Null; javac --release 21 -encoding UTF-8 -d "$env:TEMP\ct-java21" (Get-ChildItem -Recurse -Filter *.java | ForEach-Object FullName)
 // Ejecutar: java -cp "$env:TEMP\ct-java21" MainFactoryBasica
 
@@ -11,14 +15,14 @@
  * Factory Method: en ese patrón la creación se delega habitualmente
  * a subclases de una abstracción creadora.
  *
- * <p>Factory.java enseña el contrato y la decisión de creación.
+ * <p>Mensaje.java enseña el contrato; Correo.java, el record; Factory.java, la creación.
  * Aquí solo invocamos y presentamos el resultado, manteniendo el
  * foco en la responsabilidad de cada archivo. La relación queda
  * visible también en el mapa de dependencias de CodeTrace.
  */
 public final class MainFactoryBasica {
     public static void main(String[] args) {
-        Factory.Mensaje mensaje = Factory.crear("cliente@example.invalid");
+        Mensaje mensaje = Factory.crear("cliente@example.invalid");
         System.out.println(mensaje.enviar());
     }
 }

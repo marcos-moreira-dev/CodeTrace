@@ -1449,3 +1449,122 @@
 .reference-flat-explorer .list-cell.reference-outside-scope:selected .reference-tree-row {
     -fx-opacity: 0.68;
 }
+
+/* Shared compact navigation surfaces: usable in sidebars and inspectors. */
+.app-navigation-list {
+    -fx-background-color: #ffffff;
+    -fx-background-insets: 0;
+    -fx-border-color: #cbd9e2;
+    -fx-border-width: 1px;
+    -fx-control-inner-background: #ffffff;
+    -fx-padding: 0;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
+.app-navigation-list .list-cell {
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #304d60;
+    -fx-font-size: 12px;
+    -fx-graphic-text-gap: 9px;
+    -fx-alignment: center-left;
+    -fx-padding: 6px 10px;
+}
+.app-navigation-list .list-cell:empty { -fx-background-color: #ffffff; }
+/* Hover and selection must NOT look the same; otherwise two rows seem active. */
+.app-navigation-list .list-cell:filled:hover:!selected {
+    -fx-background-color: #f1f6f9;
+}
+.app-navigation-list .list-cell:filled:selected,
+.app-navigation-list:focused .list-cell:filled:selected,
+.app-navigation-list .list-cell:filled:selected:hover {
+    -fx-background-color: #c9dfeb;
+    -fx-text-fill: #243f54;
+    -fx-border-color: transparent transparent transparent #4a7894;
+    -fx-border-width: 0 0 0 3px;
+}
+.app-list-placeholder { -fx-font-size: 11.5px; -fx-text-fill: #718494; }
+.app-section-heading {
+    -fx-text-fill: #4e6679;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-padding: 6px 0 2px 0;
+}
+.app-panel-close {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-padding: 3px;
+    -fx-min-width: 25px;
+    -fx-min-height: 25px;
+    -fx-pref-width: 25px;
+    -fx-pref-height: 25px;
+}
+.app-panel-close .ikonli-font-icon { -fx-icon-color: #536e82; }
+.app-panel-close:hover, .app-panel-close:focused { -fx-background-color: #e1ebf1; }
+
+/* Directory graph: overlay legend stays fixed during pan/zoom. */
+.dependency-map-legend {
+    -fx-background-color: rgba(255,255,255,0.94);
+    -fx-background-radius: 5;
+    -fx-border-color: #cbd9e2;
+    -fx-border-radius: 5;
+    -fx-padding: 9 11 9 11;
+}
+.dependency-map-legend .label { -fx-font-size: 11px; -fx-text-fill: #536979; }
+.dependency-map-legend .dependency-map-legend-title {
+    -fx-font-weight: bold;
+    -fx-font-size: 12px;
+    -fx-text-fill: #344f63;
+}
+.dependency-map-legend .dependency-map-legend-dependency { -fx-text-fill: #168a97; }
+.dependency-map-legend-row { -fx-alignment: center-left; }
+.dependency-map-legend .dependency-map-navigation-only {
+    -fx-padding: 0 0 0 0;
+    -fx-font-size: 11px;
+    -fx-text-fill: #345268;
+}
+.dependency-map-legend .dependency-map-search {
+    -fx-font-size: 11px;
+    -fx-background-radius: 3;
+    -fx-border-radius: 3;
+    -fx-pref-width: 205px;
+    -fx-prompt-text-fill: #8193a0;
+}
+.dependency-map-legend .dependency-map-search-status {
+    -fx-text-fill: #a34e10;
+}
+.dependency-map-legend .separator:horizontal .line {
+    -fx-border-color: #e0e8ef;
+    -fx-border-width: 1px 0 0 0;
+}
+.dependency-map-file-summary {
+    -fx-background-color: rgba(255,255,255,0.94);
+    -fx-background-radius: 4;
+    -fx-border-color: #cbd9e2;
+    -fx-border-radius: 4;
+    -fx-padding: 6 9;
+    -fx-font-size: 11px;
+    -fx-text-fill: #35566a;
+}
+.dependency-map-inspector {
+    -fx-background-color: #f6f9fb;
+    -fx-border-color: #d0dce5;
+    -fx-border-width: 0 0 0 1px;
+    -fx-padding: 12px;
+}
+.dependency-map-inspector-header { -fx-alignment: center-left; }
+.dependency-map-inspector .dependency-map-inspector-title {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #28485c;
+}
+.dependency-map-partial-branch {
+    -fx-background-color: #edf2f7;
+    -fx-text-fill: #526a7e;
+    -fx-font-size: 11px;
+    -fx-padding: 7px 8px;
+    -fx-background-radius: 4px;
+}
+.dependency-map-inspector .dependency-map-inspector-path {
+    -fx-font-size: 11px;
+    -fx-text-fill: #647989;
+}

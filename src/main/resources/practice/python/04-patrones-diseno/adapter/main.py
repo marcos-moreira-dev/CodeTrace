@@ -1,4 +1,8 @@
 # CodeTrace | Referencia: Python 3.12
+# Universo compartido: Arena Táctica, juego competitivo ficticio por equipos.
+# Dominio: Sensor legado del servidor que aloja partidas ficticias.
+# Patrón adapter: Convertir lecturas para una interfaz que espera otra unidad.
+# Glosario: Servidor de partida: equipo informático que coordina el juego.
 # Comprobar en PowerShell: python -m py_compile ".\04-patrones-diseno\adapter\main.py"
 # Ejecutar: python -B ".\04-patrones-diseno\adapter\main.py"
 

@@ -6,6 +6,7 @@ import java.util.List;
 
 /**
  * Cliente de dos construcciones muy habituales en Java moderno.
+ * Estado.java y Pedido.java son tipos independientes con sus propios archivos.
  *
  * <p>Un enum representa un conjunto cerrado de valores con identidad estable.
  * Un record agrupa datos y genera constructor, accesores, equals, hashCode
@@ -16,15 +17,6 @@ import java.util.List;
  * de ciclo de vida puede justificar una clase tradicional.
  */
 public class RecordsYEnums {
-    enum Estado { RECIBIDO, PREPARANDO, ENTREGADO }
-
-    record Pedido(String codigo, double total, Estado estado) {
-        Pedido {
-            if (codigo == null || codigo.isBlank() || total < 0)
-                throw new IllegalArgumentException("Pedido inválido");
-        }
-    }
-
     public static void main(String[] args) {
         List<Pedido> pedidos = List.of(
             new Pedido("P-001", 12.5, Estado.RECIBIDO),

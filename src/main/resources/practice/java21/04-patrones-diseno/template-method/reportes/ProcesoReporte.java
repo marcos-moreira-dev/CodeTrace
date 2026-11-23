@@ -1,4 +1,8 @@
 // CodeTrace | Referencia: Java 21 LTS / JDK 21
+// Universo compartido: Arena Táctica, juego competitivo ficticio por equipos.
+// Dominio: Informe del torneo que se publica con formatos diferentes.
+// Patrón template-method: Fijar el proceso común y personalizar sus pasos concretos.
+// Glosario: Reporte: resumen de datos de las rondas, no instrucciones tácticas.
 // Compilar en COPIA desde java21: javac --release 21 -encoding UTF-8 -d "$env:TEMP\ct-practice" (Get-ChildItem -Recurse -Filter *.java).FullName
 // Ejecutar: desde el cliente Main... de la misma carpeta
 
@@ -17,14 +21,6 @@ public abstract class ProcesoReporte {
     protected abstract String encabezado(String titulo);
     protected abstract String detalle(int total);
     protected String pie(){return "\n";} // Hook opcional.
-}
-final class ReporteTexto extends ProcesoReporte {
-    protected String encabezado(String titulo){return "== "+titulo+" ==\n";}
-    protected String detalle(int total){return "Total: "+total;}
-}
-final class ReporteCsv extends ProcesoReporte {
-    protected String encabezado(String titulo){return "titulo,total\n";}
-    protected String detalle(int total){return "ventas,"+total;}
 }
 
 /*

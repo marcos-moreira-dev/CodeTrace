@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# CodeTrace | Referencia: biblioteca de práctica v9 / verificador GNU/Linux-WSL
+# CodeTrace | Referencia: biblioteca de práctica v15 / verificador GNU/Linux-WSL
 # Ejecutar en COPIA: bash scripts/verificar-biblioteca.sh
 # Artefactos de compilación aislados en mktemp, sin tocar referencias.
 set -euo pipefail
@@ -15,10 +15,19 @@ import sys
 root=Path(sys.argv[1])
 items=[x.split("\t",1) for x in (root/"catalog.tsv").read_text(encoding="utf-8").splitlines()
        if x and not x.startswith("#")]
-assert len(items)==813, len(items)
+assert len(items)==1037, len(items)
 assert len({p for p,_ in items})==14
 assert len(set(map(tuple,items)))==len(items)
-assert all(len(path.split("/"))>=3 for _,path in items)
+# The integrator intentionally lives in the 05 root; all pattern
+# components still require their own named exercise directory.
+assert all(len(path.split("/"))>=3 or
+           (pack, path) in {
+               ("java21","05-patrones-diseno-counter-strike/MainCounterStrike.java"),
+               ("python","05-patrones-diseno-counter-strike/main.py"),
+               ("csharp","05-patrones-diseno-counter-strike/MainCounterStrike.cs"),
+               ("cpp","05-patrones-diseno-counter-strike/main.cpp"),
+               ("typescript","05-patrones-diseno-counter-strike/MainCounterStrike.ts")}
+           for pack,path in items)
 actual={str(x.relative_to(root)).replace("\\","/") for x in root.rglob("*")
         if x.is_file() and x.name!="catalog.tsv"}
 declared={p+"/"+path for p,path in items}
@@ -107,6 +116,44 @@ assert len(clientes)>=50, len(clientes)
 print("OK: ejecutados",len(clientes),"clientes Java 21")
 PY
 
+echo "Counter-Strike: ejecutar y comparar salidas de los 13 patrones Java"
+python3 - "$tmp/java" <<'PY'
+import json
+from pathlib import Path
+import re, subprocess, sys
+classpath=sys.argv[1]
+folder=Path("src/main/resources/practice/java21/05-patrones-diseno-counter-strike")
+manifest=json.loads(Path("scripts/salidas_practica.json").read_text(encoding="utf-8"))
+clients=sorted(p for p in folder.rglob("Main*.java")
+               if p.parent != folder)
+assert len(clients)==13, ("Se esperan 13 clientes de patrones",len(clients))
+for source in clients:
+    body=source.read_text(encoding="utf-8")
+    match=re.search(r"(?m)^package\s+([\w.]+);",body)
+    assert match, source
+    cls=match.group(1)+"."+source.stem
+    expected=manifest["java21/"+source.relative_to(folder.parent).as_posix()]
+    run=subprocess.run(["java","-cp",classpath,cls],capture_output=True,
+                       text=True,encoding="utf-8",timeout=15,check=True)
+    assert run.stdout.strip()==expected.strip(),(cls,expected,run.stdout)
+    assert not run.stderr.strip(),(cls,run.stderr)
+print("OK: 13 clientes Java de Counter-Strike con salidas verificadas")
+
+# El Main de la raíz no es un patrón independiente. Ejecuta los componentes
+# de los patrones durante tres rondas y verificamos toda su narración.
+integrador=folder / "MainCounterStrike.java"
+source=integrador.read_text(encoding="utf-8")
+match=re.search(r"(?m)^package\s+([\w.]+);", source)
+assert match, integrador
+cls=match.group(1)+"."+integrador.stem
+run=subprocess.run(["java","-cp",classpath,cls],capture_output=True,
+                   text=True,encoding="utf-8",timeout=15,check=True)
+expected=manifest["java21/"+integrador.relative_to(folder.parent).as_posix()]
+assert run.stdout.strip()==expected.strip(),(cls,expected,run.stdout)
+assert not run.stderr.strip(),(cls,run.stderr)
+print("OK: MainCounterStrike, tres rondas narradas, semilla fija y salida exacta")
+PY
+
 echo "C17: pila .h/.c y bibliotecas .a/.so"
 gcc -std=c17 -Wall -Wextra -Werror \
  "$base/c/02-estructuras-datos/pila/main.c" \
@@ -188,7 +235,7 @@ for dir in \
 done
 
 
-echo "v8: Java 21 — pruebas de las nuevas familias y patrones"
+echo "v15: Java 21 — pruebas de las nuevas familias y patrones"
 for clase in \
   codetrace.practica.estructuras.listadoble.MainListaDoble \
   codetrace.practica.estructuras.listacircular.MainListaCircular \
@@ -209,7 +256,7 @@ for clase in \
   java -cp "$tmp/java" "$clase" >/dev/null
 done
 
-echo "v8: C++20 — miniproyectos completos por carpeta"
+echo "v15: C++20 — miniproyectos completos por carpeta"
 for unidad in \
   02-estructuras-datos/linked-list/simple \
   02-estructuras-datos/linked-list/doble \
@@ -229,11 +276,11 @@ for unidad in \
   04-patrones-diseno/command/deshacer \
   04-patrones-diseno/template-method/reportes; do
   ruta="$base/cpp/$unidad"
-  g++ -std=c++20 -Wall -Wextra -Werror "$ruta/"*.cpp -o "$tmp/cpp-v8"
-  "$tmp/cpp-v8" >/dev/null
+  g++ -std=c++20 -Wall -Wextra -Werror "$ruta/"*.cpp -o "$tmp/cpp-v15"
+  "$tmp/cpp-v15" >/dev/null
 done
 
-echo "v8: TypeScript 5.9 — transpilar y ejecutar el cliente de cada unidad"
+echo "v15: TypeScript 5.9 — transpilar y ejecutar el cliente de cada unidad"
 tsc --strict --target ES2022 --module commonjs --outDir "$tmp/ts" "$base/typescript/02-estructuras-datos/linked-list/simple/MainListaSimple.ts"
 node "$tmp/ts/MainListaSimple.js" >/dev/null
 tsc --strict --target ES2022 --module commonjs --outDir "$tmp/ts" "$base/typescript/02-estructuras-datos/linked-list/doble/MainListaDoble.ts"
@@ -269,7 +316,7 @@ node "$tmp/ts/MainCommand.js" >/dev/null
 tsc --strict --target ES2022 --module commonjs --outDir "$tmp/ts" "$base/typescript/04-patrones-diseno/template-method/reportes/MainTemplateMethod.ts"
 node "$tmp/ts/MainTemplateMethod.js" >/dev/null
 
-echo "v8: Python, Ruby y JavaScript — todos los nuevos clientes"
+echo "v15: Python, Ruby y JavaScript — todos los nuevos clientes"
 for unidad in \
   02-estructuras-datos/linked-list/simple \
   02-estructuras-datos/linked-list/doble \
@@ -296,7 +343,7 @@ for unidad in \
 done
 
 
-echo "v8: comparativa de cinco sorts, insercion binaria y limites ordenados"
+echo "v15: comparativa de cinco sorts, insercion binaria y limites ordenados"
 for clase in \
   codetrace.practica.ordenamientos.MainOrdenamientos \
   codetrace.practica.algoritmos.burbuja.MainBurbuja \
@@ -334,7 +381,13 @@ nasm -f elf64 "$base/nasm-x64/03-algoritmos/busqueda-lineal/busqueda_lineal.asm"
 ld "$tmp/a.o" -o "$tmp/a"
 "$tmp/a" >/dev/null
 
-echo "v9: comprobar documentación de consola en todas las fuentes"
+echo "Arena Táctica: mismo caso Chain of Responsibility en Java y Python"
+java -cp "$tmp/java" codetrace.practica.patrones.cadena.MainCadenaResponsabilidad > "$tmp/cadena-java.txt"
+python3 -B "$base/python/04-patrones-diseno/chain-of-responsibility/reportes-partida/main.py" > "$tmp/cadena-python.txt"
+diff -u "$tmp/cadena-java.txt" "$tmp/cadena-python.txt"
+echo "OK: salidas Java/Python idénticas para la cadena de responsabilidad"
+
+echo "v15: comprobar documentación de consola en todas las fuentes"
 python3 -B scripts/documentar_consola_practica.py --check \
   --root "$base" --outcomes scripts/salidas_practica.json
 python3 - "$base" <<'PY'
@@ -350,4 +403,4 @@ for path in root.rglob("*"):
 print("OK: rutas de la biblioteca sin colisiones por mayusculas/minusculas")
 PY
 
-echo "OK: catálogo v9, 14 paquetes, 813 fuentes documentadas y clientes seleccionados"
+echo "OK: catálogo v15, 14 paquetes, 1037 fuentes documentadas y clientes seleccionados"

@@ -1,4 +1,8 @@
 # CodeTrace | Referencia: Python 3.12
+# Universo compartido: Arena Táctica, juego competitivo ficticio por equipos.
+# Dominio: Reporte de resultados del torneo en varios formatos.
+# Patrón template-method: Conservar el proceso común y cambiar pasos concretos.
+# Glosario: Reporte: resumen de resultados de rondas.
 # Comprobar desde COPIA: python -c "import ast,pathlib; ast.parse(pathlib.Path('main.py').read_text(encoding='utf-8'))"
 # Ejecutar: python -B main.py
 

@@ -1,4 +1,8 @@
 // CodeTrace | Referencia: Java 21 LTS / JDK 21
+// Universo compartido: Arena Táctica, juego competitivo ficticio por equipos.
+// Dominio: Marcador de ronda que notifica resultados a los espectadores.
+// Patrón observer: Varios observadores reciben cambios sin ser consultados continuamente.
+// Glosario: Ronda: segmento breve de una partida; marcador: registro de resultados.
 // Compilar: javac --release 21 -encoding UTF-8 -d "$env:TEMP\ct-java21" (Get-ChildItem -Recurse -Filter *.java).FullName
 // Ejecutar: ejecutar desde el cliente que utiliza este componente
 // Sin main: compilación de clase reutilizable.
@@ -15,11 +19,6 @@ import java.util.List;
  * esas políticas de ciclo de vida y manejo de excepciones.
  */
 public final class Observador {
-    @FunctionalInterface
-    public interface Escucha {
-        void alCambiar(int nuevoValor);
-    }
-
     private final List<Escucha> oyentes = new ArrayList<>();
     private int valor;
 

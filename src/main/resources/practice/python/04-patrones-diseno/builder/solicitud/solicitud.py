@@ -1,4 +1,8 @@
 # CodeTrace | Referencia: Python 3.12
+# Universo compartido: Arena Táctica, juego competitivo ficticio por equipos.
+# Dominio: Petición de consulta de estadísticas del torneo.
+# Patrón builder: Construir una solicitud gradualmente sin un constructor enorme.
+# Glosario: Estadísticas: datos agregados de los resultados de las rondas.
 # Comprobar desde COPIA de esta unidad: python -c "import ast,pathlib; ast.parse(pathlib.Path('solicitud.py').read_text(encoding='utf-8'))"
 # Ejecutar: python -B main.py (cliente de esta carpeta, sin __pycache__)
 

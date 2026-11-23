@@ -1,4 +1,8 @@
 # CodeTrace | Referencia: Python 3.12+, proyecto Factory Method
+# Universo compartido: Arena Táctica, juego competitivo ficticio por equipos.
+# Dominio: Exportación de estadísticas de un torneo de partidas tácticas.
+# Patrón factory-method: Delegar al creador concreto el formato del reporte.
+# Glosario: Reporte: resumen de resultados de una partida, no instrucciones tácticas.
 # Compilar: python 04-patrones-diseno/factory-method/main.py
 from typing import Protocol
 

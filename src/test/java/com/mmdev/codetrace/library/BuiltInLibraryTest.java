@@ -110,12 +110,20 @@ class BuiltInLibraryTest {
     @Test
     void allFourCurriculumPurposesAndDocumentedJavaClientsArePresent() throws Exception {
         var library = new BuiltInLibrary(temp.resolve("curriculum"));
-        assertEquals("v8", BuiltInLibrary.CATALOG_VERSION);
-        assertEquals(813, library.packs().stream().mapToInt(library::size).sum());
+        assertEquals("v15", BuiltInLibrary.CATALOG_VERSION);
+        assertEquals(1037, library.packs().stream().mapToInt(library::size).sum());
         for (var pack : library.packs()) {
             var entries = library.entries(pack);
-            assertTrue(entries.stream().allMatch(x -> x.split("/").length >= 3),
-                    "Every reference must be inside a named exercise directory: " + pack.id());
+            assertTrue(entries.stream().allMatch(x -> x.split("/").length >= 3
+                    || x.equals(java.util.Map.of(
+                        "java21", "05-patrones-diseno-counter-strike/MainCounterStrike.java",
+                        "python", "05-patrones-diseno-counter-strike/main.py",
+                        "csharp", "05-patrones-diseno-counter-strike/MainCounterStrike.cs",
+                        "cpp", "05-patrones-diseno-counter-strike/main.cpp",
+                        "typescript", "05-patrones-diseno-counter-strike/MainCounterStrike.ts"
+                    ).get(pack.id()))),
+                    "Every reference is in an exercise directory except the documented integrator: "
+                            + pack.id());
             assertTrue(entries.stream().anyMatch(x -> x.startsWith("01-fundamentos/")), pack.id());
             assertTrue(entries.stream().anyMatch(x -> x.startsWith("03-algoritmos/")), pack.id());
             assertTrue(entries.stream().noneMatch(x -> x.contains("07-proyectos/")
@@ -125,6 +133,23 @@ class BuiltInLibraryTest {
         assertTrue(library.entries(javaPack).contains("01-fundamentos/comparadores/ComparadoresEncadenados.java"));
         assertTrue(library.entries(javaPack).contains("03-algoritmos/programacion-dinamica/cambio-monedas/MainMonedas.java"));
         assertTrue(library.entries(javaPack).contains("04-patrones-diseno/strategy-tarifas/MainTarifas.java"));
+        for (var expected : java.util.Map.of("python", 33L, "csharp", 18L, "cpp", 35L, "typescript", 33L).entrySet()) {
+            var pack = library.packs().stream().filter(p -> p.id().equals(expected.getKey()))
+                    .findFirst().orElseThrow();
+            assertEquals(expected.getValue().longValue(), library.entries(pack).stream()
+                    .filter(p -> p.startsWith("05-patrones-diseno-counter-strike/")).count(),
+                    "Counter-Strike track: " + pack.id());
+        }
+        assertEquals(79, library.entries(javaPack).stream()
+                .filter(path -> path.startsWith("05-patrones-diseno-counter-strike/"))
+                .count(), "Separate Counter-Strike track preserves the original 04 lessons");
+        assertEquals(14, library.entries(javaPack).stream()
+                .filter(path -> path.startsWith("05-patrones-diseno-counter-strike/")
+                        && path.substring(path.lastIndexOf('/') + 1).startsWith("Main"))
+                .count(), "One runnable client for each Counter-Strike pattern");
+        assertTrue(library.entries(javaPack).contains(
+                "05-patrones-diseno-counter-strike/MainCounterStrike.java"),
+                "The MVC integration client lives at the Counter-Strike track root");
         assertTrue(library.entries(javaPack).contains("02-estructuras-datos/arbol-bst/MainArbol.java"));
         assertTrue(library.entries(javaPack).contains("02-estructuras-datos/tabla-hash/MainHash.java"));
         assertTrue(library.entries(javaPack).contains("03-algoritmos/backtracking/CuatroReinas.java"));
@@ -205,6 +230,10 @@ class BuiltInLibraryTest {
         assertTrue(library.entries(all.get("java21")).contains(
                 "04-patrones-diseno/factory-method/MainFactoryMethod.java"));
         assertTrue(library.entries(all.get("java21")).contains(
+                "04-patrones-diseno/chain-of-responsibility/reportes-partida/MainCadenaResponsabilidad.java"));
+        assertTrue(library.entries(all.get("python")).contains(
+                "04-patrones-diseno/chain-of-responsibility/reportes-partida/main.py"));
+        assertTrue(library.entries(all.get("java21")).contains(
                 "04-patrones-diseno/observer/CentroEventos.java"));
         assertTrue(library.entries(all.get("typescript")).contains(
                 "04-patrones-diseno/observer/BusEventos.ts"));
@@ -216,7 +245,7 @@ class BuiltInLibraryTest {
                 "03-algoritmos/euclides/euclides.asm"));
         assertTrue(library.entries(all.get("java21")).contains(
                 "03-algoritmos/dijkstra/Dijkstra.java"));
-        assertEquals(813, library.packs().stream().mapToInt(library::size).sum());
+        assertEquals(1037, library.packs().stream().mapToInt(library::size).sum());
     }
 
 }

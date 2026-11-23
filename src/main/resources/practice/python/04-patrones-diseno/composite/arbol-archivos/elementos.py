@@ -1,4 +1,8 @@
 # CodeTrace | Referencia: Python 3.12
+# Universo compartido: Arena Táctica, juego competitivo ficticio por equipos.
+# Dominio: Árbol de mapas y recursos descargables del videojuego.
+# Patrón composite: Tratar archivos individuales y carpetas completas de forma uniforme.
+# Glosario: Mapa: escenario virtual donde sucede una partida.
 # Comprobar desde COPIA de esta unidad: python -c "import ast,pathlib; ast.parse(pathlib.Path('elementos.py').read_text(encoding='utf-8'))"
 # Ejecutar: python -B main.py (cliente de esta carpeta, sin __pycache__)
 

@@ -75,6 +75,14 @@ public final class GraphLayoutEngine {
             }
         }
 
+        // Containment is an undirected layout constraint, not a code dependency.
+        for (var link : graph.hierarchy()) {
+            if (adjacent.containsKey(link.parent()) && adjacent.containsKey(link.child())) {
+                adjacent.get(link.parent()).add(link.child());
+                adjacent.get(link.child()).add(link.parent());
+            }
+        }
+
         List<List<String>> components = new ArrayList<>();
         Set<String> visited = new HashSet<>();
         for (String start : graph.nodes().stream().sorted().toList()) {

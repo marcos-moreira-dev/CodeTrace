@@ -1,0 +1,16 @@
+# CodeTrace | Referencia: Python 3.12
+# Ejecutar: python -B .\05-patrones-diseno-counter-strike\main.py strategy-puntuacion
+# Dominio: Counter-Strike; paquete de práctica strategy-puntuacion.
+# El archivo delimita un paquete local: evita confundirlo con módulos externos
+# homónimos instalados en el entorno. Exponemos solo su demostración.
+from .reglas import demo
+
+__all__ = ["demo"]
+
+# CodeTrace | EJEMPLO DE CONSOLA (practica)
+# Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+#   python -B .\05-patrones-diseno-counter-strike\main.py strategy-puntuacion
+# Salida esperada:
+#   Casual: 4 puntos
+#   Competitivo: 6 puntos
+# CodeTrace | FIN EJEMPLO DE CONSOLA

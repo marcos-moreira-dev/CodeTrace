@@ -2,7 +2,7 @@
 # UTF-8 BOM required for the legacy Windows PowerShell 5.1 parser.
 <#
 .SYNOPSIS
-  Audita la biblioteca offline de CodeTrace v8 (813 referencias / 14 lenguajes).
+  Audita la biblioteca offline de CodeTrace v15 (1037 referencias / 14 lenguajes).
 .DESCRIPTION
   Revisa el catálogo, archivos existentes, carpetas de ejercicio, versiones
   y comandos de compilación. Por defecto NO compila ni modifica referencias.
@@ -25,7 +25,7 @@ if (-not (Test-Path -LiteralPath $catalogo -PathType Leaf)) {
 
 $referencias = New-Object 'System.Collections.Generic.List[object]'
 $rutasVistas = [System.Collections.Generic.HashSet[string]]::new([StringComparer]::Ordinal)
-$tipos = @('01-fundamentos', '02-estructuras-datos', '03-algoritmos', '04-patrones-diseno')
+$tipos = @('01-fundamentos', '02-estructuras-datos', '03-algoritmos', '04-patrones-diseno', '05-patrones-diseno-counter-strike')
 foreach ($linea in (Get-Content -LiteralPath $catalogo -Encoding UTF8)) {
     if ([string]::IsNullOrWhiteSpace($linea) -or $linea.StartsWith('#')) { continue }
     $campos = $linea -split ([string][char]9), 2
@@ -35,7 +35,18 @@ foreach ($linea in (Get-Content -LiteralPath $catalogo -Encoding UTF8)) {
         throw "Ruta de referencia insegura: $linea"
     }
     $partes = $ruta -split '/'
-    if ($partes.Count -lt 3 -or $tipos -notcontains $partes[0]) {
+    # MVC entrypoint is intentionally at the root of the 05 practice
+    # category; only this exact file is exempted from the usual depth rule.
+    $integradores = @{
+        java21 = '05-patrones-diseno-counter-strike/MainCounterStrike.java'
+        python = '05-patrones-diseno-counter-strike/main.py'
+        csharp = '05-patrones-diseno-counter-strike/MainCounterStrike.cs'
+        cpp = '05-patrones-diseno-counter-strike/main.cpp'
+        typescript = '05-patrones-diseno-counter-strike/MainCounterStrike.ts'
+    }
+    $integradorCS = ($integradores.ContainsKey($paquete) -and $ruta -eq $integradores[$paquete])
+    if (($partes.Count -lt 3 -and -not $integradorCS) -or
+        $tipos -notcontains $partes[0]) {
         throw "Archivo fuera de su carpeta de unidad: $linea"
     }
     $identificador = $paquete + '/' + $ruta
@@ -61,10 +72,10 @@ foreach ($linea in (Get-Content -LiteralPath $catalogo -Encoding UTF8)) {
 }
 
 $idiomas = @($referencias.Lenguaje | Sort-Object -Unique)
-if ($referencias.Count -ne 813 -or $idiomas.Count -ne 14) {
+if ($referencias.Count -ne 1037 -or $idiomas.Count -ne 14) {
     throw "Catálogo inconsistente: $($referencias.Count) archivos, $($idiomas.Count) lenguajes"
 }
-Write-Host "CodeTrace v8 — catálogo íntegro: $($referencias.Count) archivos / $($idiomas.Count) lenguajes"
+Write-Host "CodeTrace v15 — catálogo íntegro: $($referencias.Count) archivos / $($idiomas.Count) lenguajes"
 foreach ($grupo in ($referencias | Group-Object Lenguaje | Sort-Object Name)) {
     $unidades = @($grupo.Group.Unidad | Sort-Object -Unique).Count
     Write-Host ("  {0,-16} {1,3} archivos  {2,3} carpetas con código" -f
@@ -113,7 +124,22 @@ try {
         'codetrace.practica.patrones.abstractfactory.MainAbstractFactory',
         'codetrace.practica.patrones.composite.MainComposite',
         'codetrace.practica.patrones.command.MainCommand',
-        'codetrace.practica.patrones.templatemethod.MainTemplateMethod'
+        'codetrace.practica.patrones.templatemethod.MainTemplateMethod',
+        'codetrace.practica.patrones.cadena.MainCadenaResponsabilidad',
+        'codetrace.practica.counterstrike.MainCounterStrike',
+        'codetrace.practica.counterstrike.cadena.MainCadenaCS',
+        'codetrace.practica.counterstrike.observer.MainObserverCS',
+        'codetrace.practica.counterstrike.strategy.MainStrategyCS',
+        'codetrace.practica.counterstrike.command.MainCommandCS',
+        'codetrace.practica.counterstrike.abstractfactory.MainAbstractFactoryCS',
+        'codetrace.practica.counterstrike.adapter.MainAdapterCS',
+        'codetrace.practica.counterstrike.builder.MainBuilderCS',
+        'codetrace.practica.counterstrike.composite.MainCompositeCS',
+        'codetrace.practica.counterstrike.decorator.MainDecoratorCS',
+        'codetrace.practica.counterstrike.factory.MainFactoryCS',
+        'codetrace.practica.counterstrike.factorymethod.MainFactoryMethodCS',
+        'codetrace.practica.counterstrike.puntuacion.MainPuntuacionCS',
+        'codetrace.practica.counterstrike.template.MainTemplateCS'
     )) {
         Write-Host ("Comprobando: " + $clase)
         & java -cp $temporal $clase

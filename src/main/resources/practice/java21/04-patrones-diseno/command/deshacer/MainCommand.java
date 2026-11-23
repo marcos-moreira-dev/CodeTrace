@@ -1,4 +1,8 @@
 // CodeTrace | Referencia: Java 21 LTS / JDK 21
+// Universo compartido: Arena Táctica, juego competitivo ficticio por equipos.
+// Dominio: Editor de las notas de una ronda en un juego ficticio.
+// Patrón command: Deshacer o rehacer acciones encapsuladas.
+// Glosario: Ronda: segmento breve de una partida; deshacer: restaurar la nota anterior.
 // Compilar en COPIA desde java21: javac --release 21 -encoding UTF-8 -d "$env:TEMP\ct-practice" (Get-ChildItem -Recurse -Filter *.java).FullName
 // Ejecutar: java -cp "$env:TEMP\ct-practice" codetrace.practica.patrones.command.MainCommand
 

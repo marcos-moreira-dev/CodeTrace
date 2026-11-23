@@ -4,7 +4,7 @@
 
 package codetrace.practica.grafostipos;
 
-import static codetrace.practica.grafostipos.Grafo.Orientacion.*;
+import static codetrace.practica.grafostipos.Orientacion.*;
 
 /**
  * Cliente de taxonomía de grafos, no solo de sus recorridos.

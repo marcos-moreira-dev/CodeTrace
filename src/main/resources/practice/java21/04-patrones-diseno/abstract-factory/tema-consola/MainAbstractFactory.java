@@ -1,4 +1,8 @@
 // CodeTrace | Referencia: Java 21 LTS / JDK 21
+// Universo compartido: Arena Táctica, juego competitivo ficticio por equipos.
+// Dominio: Interfaz del torneo, con paneles claros y oscuros.
+// Patrón abstract-factory: Crear familias de componentes compatibles sin conocer sus clases concretas.
+// Glosario: HUD: indicadores gráficos de la partida mostrados en pantalla.
 // Compilar en COPIA desde java21: javac --release 21 -encoding UTF-8 -d "$env:TEMP\ct-practice" (Get-ChildItem -Recurse -Filter *.java).FullName
 // Ejecutar: java -cp "$env:TEMP\ct-practice" codetrace.practica.patrones.abstractfactory.MainAbstractFactory
 
@@ -15,13 +19,13 @@ import java.util.List;
  * JavaFX. El ejemplo enseña familias compatibles sin forzar MVC.
  */
 public final class MainAbstractFactory {
-    private static String pantalla(FamiliaInterfaz.Fabrica fabrica) {
+    private static String pantalla(Fabrica fabrica) {
         return fabrica.boton().pintar()+" / "+fabrica.dialogo().pintar();
     }
     public static void main(String[] args) {
         var resultados=List.of(
-            pantalla(new FamiliaInterfaz.Claro()),
-            pantalla(new FamiliaInterfaz.Oscuro()));
+            pantalla(new FabricaClara()),
+            pantalla(new FabricaOscura()));
         if(resultados.get(0).equals(resultados.get(1)))
             throw new AssertionError("Fábricas indistinguibles");
         resultados.forEach(System.out::println);

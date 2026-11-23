@@ -1,4 +1,8 @@
 // CodeTrace | Referencia: Java 21 LTS / JDK 21
+// Universo compartido: Arena Táctica, juego competitivo ficticio por equipos.
+// Dominio: Tarifas de inscripción al torneo según la categoría.
+// Patrón strategy-tarifas: Cambiar la política de cálculo sin modificar el cliente.
+// Glosario: Inscripción: registro de un participante o equipo al torneo.
 // Compilar: javac --release 21 -encoding UTF-8 -d "$env:TEMP\ct-java21" (Get-ChildItem -Recurse -Filter *.java).FullName
 // Ejecutar: ejecutar desde el cliente que utiliza este componente
 package codetrace.practica.tarifas;

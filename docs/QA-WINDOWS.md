@@ -1,3 +1,93 @@
+## Mapa de estructura con archivos opcionales — v0.3.5 experimental
+
+- **GRAPH-FILES-01:** Abrir un proyecto con carpetas y varios archivos Java,
+  Python o TypeScript. Por defecto solo deben verse las carpetas. Clic
+  derecho en el fondo del grafo → **Mostrar archivos de código**: aparecen
+  los archivos como nodos secundarios con línea fina hasta su carpeta directa.
+  No debe aparecer ninguna flecha semántica nueva al activar esta opción.
+- **GRAPH-FILES-02:** Clic sobre un archivo: resalta el archivo y su
+  carpeta en el inspector. Doble clic: abre la referencia. Arrastrar desde
+  un archivo, o desde el espacio libre dentro de su isla, mueve **toda la
+  isla rígida**, con todos sus archivos a la misma distancia relativa.
+  Ningún archivo se puede arrastrar fuera de su contenedor.
+- **GRAPH-FILES-03:** Mover una carpeta y alternar mostrar/ocultar tres veces:
+  sus posiciones y el diseño organizado/cuadrícula no deben cambiar.
+  Guardar y restaurar .ctrace debe conservar posiciones de carpetas; no
+  requiere persistir posiciones de archivos.
+- **GRAPH-FILES-04:** Si únicamente existe una clase de conexión, se oculta la
+  leyenda. Con contención y archivos visibles, se muestra una leyenda para
+  esas dos clases. Si además hay dependencias detectadas, aparecen los tres
+  símbolos diferenciados.
+- **GRAPH-FILES-05:** Abrir una referencia extensa. Comprobar que el canvas
+  permite pan y zoom, informa cuántos archivos se visualizan y advierte
+  «vista parcial» cuando se alcanzan los límites del analizador o dibujo.
+  No debe bloquearse al activar/desactivar los nodos de archivo.
+- **GRAPH-FILES-06:** En la vista, nunca representar configuraciones,
+  Markdown, imágenes u otros archivos que el catálogo de código no reconoce.
+  El inspector sigue ofreciendo navegación mediante doble clic e Intro.
+- **GRAPH-FILES-07:** Con 11 archivos dentro de app, confirmar una isla
+  compacta cerca de su carpeta (rejilla local, no un barrido global de filas).
+  Seleccionar app resalta la isla y sus archivos en violeta tenue; seleccionar
+  AppSettings.java destaca solo ese documento con violeta más intenso.
+  La selección desde el inspector debe sincronizar el mismo resaltado.
+- **GRAPH-FILES-08:** Con carpetas próximas y numerosos archivos,
+  ninguna isla debe cubrir rótulos de carpetas ni solaparse con otra isla.
+  Cada carpeta se une a su grupo con **una sola línea continua, sin flecha**.
+  Al seleccionar una carpeta se engrosan las aristas incidentes; al seleccionar
+  un archivo se engrosa su conexión a la carpeta. Las dependencias dirigidas
+  conservan sus flechas y la jerarquía su línea discontinua.
+  No se crean nuevas dependencias ni se alteran las posiciones persistidas.
+  Los enlaces entre carpetas pueden cruzarse: no representan objetos sólidos.
+- **GRAPH-FILES-09:** Arrastrar carpetas, cambiar entre organizado y
+  cuadrícula, ocultar y mostrar los archivos: recalcular islas sin
+  intercalar los archivos de dos carpetas. Revisar también un proyecto de
+  más de 1.200 fuentes y una carpeta cerca del borde del espacio lógico.
+- **GRAPH-FILES-10:** En una carpeta con 198 fuentes al lado de una carpeta
+  con solo un archivo, este último debe quedar en una isla próxima a su
+  carpeta y no ser expulsado por la isla grande.
+- **GRAPH-FILES-11:** Arrastrar una isla, ocultar/mostrar archivos y mover
+  su carpeta: se conserva el desplazamiento relativo del **grupo completo**
+  si hay espacio. Restablecer distribución descarta los movimientos de islas.
+  La sesión .ctrace sigue guardando posiciones de carpetas, no de islas.
+
+- **GRAPH-FILES-12:** La línea de pertenencia debe terminar **antes**
+  del borde de la isla, sin atravesar el icono del primer archivo. Las conexiones
+  del grafo se dibujan debajo de fondos y textos de las islas; verificarlo
+  en un mapa grande con numerosas relaciones.
+- **GRAPH-FILES-13:** Seleccionar dos archivos distintos del mismo inspector
+  de manera sucesiva. Solo el último queda seleccionado en el ListView
+  y resaltado en el Canvas. El hover debe distinguirse visualmente de
+  la selección, también cuando el puntero permanece encima de una fila.
+- **GRAPH-FILES-14:** Activar «Solo panear y hacer zoom» debajo de la leyenda.
+  Arrastrar desde un nodo o archivo debe mover únicamente la cámara, no
+  alterar posiciones ni marcar la sesión como modificada. La rueda sin Ctrl
+  ajusta el zoom; un clic selecciona; doble clic en archivo NO abre pestaña.
+  Desactivar la casilla restablece el movimiento de carpetas e islas y el
+  doble clic de archivo; **la rueda sin Ctrl hace zoom en ambos modos**.
+  Repetir con la leyenda oculta por tener una sola relación: la casilla
+  debe seguir visible.
+
+- **GRAPH-FILES-15:** Generar mapa de `src` con una carpeta grande de 42
+  archivos y otras con un solo archivo. Con los archivos ocultos, los nodos
+  conservan su mapa habitual; al mostrarlos, los nodos se espacian en
+  conjunto y las islas quedan próximas a su carpeta sin atravesar etiquetas.
+  Al ocultarlos se recuperan las posiciones originales sin modificar .ctrace.
+- **GRAPH-FILES-16:** En una vista parcial por el límite de 180 carpetas,
+  seleccionar una rama intermedia cuyos hijos reales no caben. Debe aparecer
+  **una conexión discontinua de continuación** con nombre de hijo omitido,
+  no un nodo «desnudo». El inspector enumera tanto los hijos visibles como
+  los omitidos («fuera del mapa»). Doble clic en uno de los omitidos abre
+  un mapa del mismo tipo centrado en esa subcarpeta. Una carpeta sin hijos
+  reales no muestra advertencias de truncamiento aunque otra rama se corte.
+  Las líneas discontinuas siempre significan contención, nunca herencia.
+- **GRAPH-FILES-17:** Mover manualmente una carpeta en modo archivos visibles
+  y alternar varias veces el modo. La posición persistida de la carpeta
+  debe seguir siendo un dato válido y recuperable, sin incorporar el
+  espaciado adicional de presentación.
+
+Las pruebas automáticas comprueban distribución, límites y eventos JavaFX;
+la fluidez y legibilidad requieren revisión manual en Windows.
+
 # CodeTrace — aceptación manual en Windows
 
 **Estado: pendiente de ejecutar en hardware real.** El CI prueba compilación y arranque básico, pero no sustituye la inspección visual de JavaFX WebView ni la reproducción real de códecs. Utiliza una copia desechable del proyecto de referencia si pruebas comandos externos.

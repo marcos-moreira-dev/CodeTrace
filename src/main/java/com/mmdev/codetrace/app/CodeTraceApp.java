@@ -320,7 +320,7 @@ public final class CodeTraceApp extends Application {
                 KeyCombination.SHORTCUT_DOWN, KeyCombination.SHIFT_DOWN));
         findProject.setOnAction(event ->
                 openSearch(ProjectSearchWindow.Scope.PROJECT));
-        MenuItem dependencyMap = new MenuItem("Mapa de dependencias de carpeta...");
+        MenuItem dependencyMap = new MenuItem("Mapa de estructura y dependencias...");
         dependencyMap.setGraphic(new FontIcon("fth-map"));
         dependencyMap.setOnAction(event -> openDependencyGraphForSelectedFolder());
         Menu toolsMenu = new Menu("Herramientas", null, findCurrent, findProject,
@@ -1124,7 +1124,7 @@ public final class CodeTraceApp extends Application {
 
     /** Used by Tools and by the exact folder that received a right click. */
     private void openDependencyGraphForFolder(Path folder) {
-        if (reference == null || folder == null || !tree.isFolderPath(folder)
+        if (reference == null || folder == null || !Files.isDirectory(folder)
                 || !folder.toAbsolutePath().normalize()
                           .startsWith(reference.toAbsolutePath().normalize())) {
             showGraphNotice("Selecciona una carpeta de la referencia actual.");
@@ -1132,7 +1132,7 @@ public final class CodeTraceApp extends Application {
         }
         Path root = reference;
         long request = referenceRequest;
-        setStatus("Analizando imports internos de " + folder.getFileName() + "...");
+        setStatus("Preparando estructura y dependencias de " + folder.getFileName() + "...");
         Task<ProjectDependencyGraph.Graph> task = new Task<>() {
             @Override protected ProjectDependencyGraph.Graph call() throws IOException {
                 return ProjectDependencyGraph.analyze(root, folder, this::isCancelled);
@@ -1141,10 +1141,9 @@ public final class CodeTraceApp extends Application {
         task.setOnSucceeded(event -> {
             if (request != referenceRequest || !root.equals(reference)) return;
             ProjectDependencyGraph.Graph graph = task.getValue();
-            if (graph.edges().isEmpty()) {
-                showGraphNotice("No se encontraron dependencias internas resolubles "
-                        + "en la carpeta seleccionada. Los imports externos no "
-                        + "se muestran como archivos ficticios.");
+            if (graph.nodes().isEmpty() || graph.inspected() == 0) {
+                showGraphNotice("No se encontraron archivos de código compatibles "
+                        + "en la carpeta seleccionada.");
                 return;
             }
             GraphLayout saved = graphLayouts.get(graph.folder());
@@ -1172,18 +1171,22 @@ public final class CodeTraceApp extends Application {
                             : selectedPath);
                     refreshMetrics();
                 }
-            }, settings.graphLayoutMode());
+            }, settings.graphLayoutMode(), hiddenFolder -> {
+                Path child = reference.resolve(hiddenFolder).normalize();
+                if (child.startsWith(reference) && Files.isDirectory(child))
+                    openDependencyGraphForFolder(child);
+            });
             view.zoomPercentProperty().addListener((obs, old, value) -> {
                 if (tabs.getSelectionModel().getSelectedItem() != null
                         && tabs.getSelectionModel().getSelectedItem().getContent() == view)
                     mediaZoom.setValue(value.intValue());
             });
-            Tab tab = new Tab("Mapa · " + folder.getFileName(), view);
+            Tab tab = new Tab("Estructura · " + folder.getFileName(), view);
             tab.setGraphic(new FontIcon("fth-share-2"));
             tab.setTooltip(new Tooltip(graph.truncated()
-                    ? "Vista parcial: algunas dependencias se omitieron por los límites "
-                      + "de tamaño o densidad. No representa todas las relaciones del proyecto."
-                    : "Relaciones internas detectadas en " + graph.folder()));
+                    ? "Vista parcial: algunas carpetas o dependencias se omitieron por "
+                      + "los límites de tamaño. No representa todo el proyecto."
+                    : "Estructura y dependencias explícitas detectadas en " + graph.folder()));
             installTabContextMenu(tab);
             documents.open(null, tab);
             setStatus("Mapa · " + graph.folder()
@@ -1201,7 +1204,7 @@ public final class CodeTraceApp extends Application {
     private void showGraphNotice(String message) {
         Alert info = new Alert(Alert.AlertType.INFORMATION, message, ButtonType.OK);
         info.initOwner(stage);
-        info.setTitle("Mapa de dependencias — CodeTrace");
+        info.setTitle("Mapa de estructura y dependencias — CodeTrace");
         info.setHeaderText("Exploración de relaciones");
         info.showAndWait();
     }
@@ -1533,9 +1536,10 @@ public final class CodeTraceApp extends Application {
             fileInfo.setTooltip(new Tooltip(
                     (map.isPartial() ? "IMPORTANTE: análisis parcial; no todas las "
                             + "relaciones caben en el mapa.\n" : "")
-                    + map.nodeCount() + " nodos · " + map.connectionCount()
-                            + " conexiones internas\n"
-                            + "Arrastra un círculo o su nombre para moverlo. "
+                    + map.nodeCount() + " carpetas · " + map.connectionCount()
+                            + " dependencias explícitas\n"
+                            + "Arrastra un círculo o su nombre para mover la carpeta. "
+                            + "Los archivos de código también se pueden arrastrar. "
                             + "Arrastra el fondo para desplazarte."));
         } else if (!hasEditor) {
             fileInfo.setText("");

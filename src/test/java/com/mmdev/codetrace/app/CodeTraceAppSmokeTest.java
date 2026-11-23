@@ -302,6 +302,14 @@ class CodeTraceAppSmokeTest {
                 assertEquals("src/Main.java", graphPane.getSelectedNode());
                 assertTrue(graphPane.getSelectedNeighbors().contains("src/Util.java"));
                 assertEquals("src/Main.java", selectedGraphPath.get());
+                assertNotNull(graphPane.getRight(),
+                        "Selecting a folder must expose the right-hand inspector");
+                assertEquals(2, graphPane.getRight().lookupAll(".app-navigation-list").size(),
+                        "Both inspector lists must reuse shared navigation styling");
+                assertNotNull(graphPane.getRight().lookup(".app-panel-close"),
+                        "The inspector should offer a visible close action");
+                assertEquals(0, graphViewport.lookupAll(".dependency-map-legend-marker").size(),
+                        "With only one connection kind, hide the redundant legend");
 
                 // Middle button pans without affecting the selected node.
                 double bgX = graphSurface.getWidth() - 20;
@@ -335,9 +343,322 @@ class CodeTraceAppSmokeTest {
                 assertEquals(javafx.scene.Cursor.OPEN_HAND, graphSurface.getCursor());
                 graphPane.clearSelection();
                 assertNull(graphPane.getSelectedNode());
+                assertNull(graphPane.getRight(),
+                        "Closing the inspector must leave the canvas unobstructed");
                 assertTrue(graphPane.getSelectedNeighbors().isEmpty());
                 assertNull(selectedGraphPath.get());
                 tabPane.getTabs().remove(mapTab);
+                tabPane.getSelectionModel().select(previousTab);
+
+                // The 180-folder limit can show an ancestor without its
+                // descendants. That ancestor is an incomplete branch, not
+                // evidence of an empty real directory.
+                var cappedModel = new com.mmdev.codetrace.reference.ProjectDependencyGraph.Graph(
+                        "src", java.util.List.of("src", "src/test"),
+                        java.util.List.of(), 200, true, "f".repeat(64),
+                        java.util.Map.of("src", java.util.List.of("src/Main.java")),
+                        java.util.List.of(new com.mmdev.codetrace.reference
+                                .ProjectDependencyGraph.FolderLink("src", "src/test")),
+                        java.util.Map.of(),
+                        java.util.Map.of("src/test",
+                                java.util.List.of("src/test/java", "src/test/resources")));
+                var cappedPane = new com.mmdev.codetrace.ui.DependencyGraphPane(
+                        cappedModel, ignored -> {});
+                assertTrue(cappedPane.hasHiddenDescendants("src/test"),
+                        "A truncated fileless visible leaf must be marked incomplete");
+                assertFalse(cappedPane.hasHiddenDescendants("src"),
+                        "Visible descendants mean this parent isn't a truncated leaf");
+                assertEquals(2, cappedModel.hiddenSubfolders("src/test").size(),
+                        "The omitted children are real paths, not guessed numbers");
+                // A partial scan elsewhere must never mark an unrelated true
+                // leaf as having missing children.
+                assertFalse(cappedPane.hasHiddenDescendants("src/Main.java"));
+
+                // The same graph can reveal every recognized source file as
+                // a read-only leaf without changing saved directory positions.
+                var fileModel = new com.mmdev.codetrace.reference.ProjectDependencyGraph.Graph(
+                        "src", java.util.List.of("src", "src/demo"),
+                        java.util.List.of(), 3, false, "c".repeat(64),
+                        java.util.Map.of("src", java.util.List.of(
+                                        "src/Main.java", "src/Second.java"),
+                                "src/demo", java.util.List.of("src/demo/Helper.py")),
+                        java.util.List.of(new com.mmdev.codetrace.reference
+                                .ProjectDependencyGraph.FolderLink("src", "src/demo")),
+                        java.util.Map.of());
+                AtomicReference<String> openedSource = new AtomicReference<>();
+                AtomicReference<com.mmdev.codetrace.reference.GraphLayout> fileLayoutSaved =
+                        new AtomicReference<>();
+                var filePane = new com.mmdev.codetrace.ui.DependencyGraphPane(
+                        fileModel, openedSource::set, null, fileLayoutSaved::set,
+                        ignored -> {});
+                var fileTab = new javafx.scene.control.Tab("Mapa con archivos", filePane);
+                tabPane.getTabs().add(fileTab);
+                tabPane.getSelectionModel().select(fileTab);
+                stage.getScene().getRoot().applyCss();
+                stage.getScene().getRoot().layout();
+                assertFalse(filePane.isShowingCodeFiles());
+                assertEquals(0, filePane.visibleCodeFileCount());
+                assertEquals(3, filePane.availableCodeFileCount());
+                assertEquals(0, filePane.getCenter()
+                        .lookupAll(".dependency-map-legend-marker").size());
+                // No matching text must not enable hidden code leaves.
+                var initialSearch = (javafx.scene.control.TextField)
+                        filePane.getCenter().lookup(".dependency-map-search");
+                assertNotNull(initialSearch);
+                initialSearch.setText("not-a-source");
+                assertFalse(filePane.isShowingCodeFiles());
+                assertTrue(filePane.getSearchMatches().isEmpty());
+                // A real match reveals file leaves without opening any source.
+                initialSearch.setText("main");
+                assertTrue(filePane.isShowingCodeFiles());
+                assertEquals(java.util.Set.of("src/Main.java"), filePane.getSearchMatches());
+                assertNull(openedSource.get());
+                initialSearch.clear();
+                assertTrue(filePane.getSearchMatches().isEmpty());
+                assertTrue(filePane.isShowingCodeFiles());
+                assertEquals(3, filePane.visibleCodeFileCount());
+                assertEquals(3, filePane.fileNodePositions().size());
+                assertEquals(2, filePane.fileIslandBounds().size(),
+                        "Each folder with code owns its own non-overlapping island");
+                assertFalse(filePane.fileIslandBounds().get("src").overlaps(
+                        filePane.fileIslandBounds().get("src/demo"), 10));
+                assertEquals(2, filePane.getCenter()
+                        .lookupAll(".dependency-map-legend-marker").size(),
+                        "Hierarchy and file membership require two legend symbols");
+                assertNull(fileLayoutSaved.get(),
+                        "Showing files must not rewrite the saved folder layout");
+                var leaf = filePane.fileNodePositions().get("src/Main.java");
+                var leafSurface = (javafx.scene.canvas.Canvas)
+                        ((javafx.scene.layout.Pane) filePane.getCenter())
+                                .getChildren().getFirst();
+                double leafScale = filePane.getZoomPercent() / 100.0;
+                double leafX = leafSurface.getWidth() / 2
+                        + (leaf.x() - filePane.getCameraX()) * leafScale;
+                double leafY = leafSurface.getHeight() / 2
+                        + (leaf.y() - filePane.getCameraY()) * leafScale;
+                leafSurface.getOnMouseClicked().handle(
+                        new javafx.scene.input.MouseEvent(
+                                javafx.scene.input.MouseEvent.MOUSE_CLICKED,
+                                leafX, leafY, 0, 0, javafx.scene.input.MouseButton.PRIMARY, 2,
+                                false, false, false, false, true, false, false,
+                                false, false, false,
+                                new javafx.scene.input.PickResult(leafSurface, leafX, leafY)));
+                assertEquals("src/Main.java", openedSource.get(),
+                        "Double-clicking a file opens the existing reference tab");
+                assertEquals("src", filePane.getSelectedNode());
+
+                // Inspector selection must be exclusive and reflected on the
+                // canvas: stale highlights of an earlier file are forbidden.
+                @SuppressWarnings("unchecked")
+                var sourceInspector = (javafx.scene.control.ListView<String>)
+                        filePane.getRight().lookupAll(".app-navigation-list").stream()
+                            .filter(node -> node instanceof javafx.scene.control.ListView<?> list
+                                    && list.getItems().contains("src/Second.java"))
+                            .findFirst().orElseThrow();
+                assertEquals(javafx.scene.control.SelectionMode.SINGLE,
+                        sourceInspector.getSelectionModel().getSelectionMode());
+                sourceInspector.getSelectionModel().select("src/Second.java");
+                assertEquals("src/Second.java", filePane.getSelectedFile());
+                assertEquals(1, sourceInspector.getSelectionModel().getSelectedItems().size());
+                sourceInspector.getSelectionModel().select("src/Main.java");
+                assertEquals("src/Main.java", filePane.getSelectedFile());
+                assertEquals(1, sourceInspector.getSelectionModel().getSelectedItems().size());
+                assertEquals("src/Main.java",
+                        sourceInspector.getSelectionModel().getSelectedItem());
+
+                // Search is separate from selectedFile: multiple orange matches
+                // may coexist with the one purple manually selected file.
+                var graphSearch = (javafx.scene.control.TextField)
+                        filePane.getCenter().lookup(".dependency-map-search");
+                assertNotNull(graphSearch);
+                var beforeSearchPositions = filePane.fileNodePositions();
+                int beforeSearchZoom = filePane.getZoomPercent();
+                double beforeSearchX = filePane.getCameraX();
+                graphSearch.setText(".JAVA");
+                assertEquals(java.util.Set.of("src/Main.java", "src/Second.java"),
+                        filePane.getSearchMatches());
+                assertEquals("src/Main.java", filePane.getSelectedFile());
+                graphSearch.setText("helper");
+                assertEquals(java.util.Set.of("src/demo/Helper.py"),
+                        filePane.getSearchMatches());
+                graphSearch.setText("no-such-file");
+                assertTrue(filePane.getSearchMatches().isEmpty());
+                graphSearch.clear();
+                assertTrue(filePane.getSearchMatches().isEmpty());
+                assertEquals(beforeSearchPositions, filePane.fileNodePositions());
+                assertEquals(beforeSearchZoom, filePane.getZoomPercent());
+                assertEquals(beforeSearchX, filePane.getCameraX(), 0.001);
+                assertEquals("src/Main.java", openedSource.get(),
+                        "Typing a search must not open another file");
+
+                // The WHOLE container moves: file positions remain rigid
+                // relative to one another, even when drag begins on a file.
+                stage.getScene().getRoot().layout();
+                var oldFilePosition = filePane.fileNodePositions().get("src/Main.java");
+                var oldSiblingPosition = filePane.fileNodePositions().get("src/Second.java");
+                var oldOtherFile = filePane.fileNodePositions().get("src/demo/Helper.py");
+                var oldIsland = filePane.fileIslandBounds().get("src");
+                double dragScale = filePane.getZoomPercent() / 100.0;
+                double pressFileX = leafSurface.getWidth() / 2
+                        + (oldFilePosition.x() - filePane.getCameraX()) * dragScale;
+                double pressFileY = leafSurface.getHeight() / 2
+                        + (oldFilePosition.y() - filePane.getCameraY()) * dragScale;
+                double dropFileY = pressFileY - 900 * dragScale;
+                leafSurface.getOnMousePressed().handle(
+                        new javafx.scene.input.MouseEvent(
+                                javafx.scene.input.MouseEvent.MOUSE_PRESSED,
+                                pressFileX, pressFileY, 0, 0,
+                                javafx.scene.input.MouseButton.PRIMARY, 1,
+                                false, false, false, false, true, false, false,
+                                false, false, false,
+                                new javafx.scene.input.PickResult(
+                                        leafSurface, pressFileX, pressFileY)));
+                leafSurface.getOnMouseDragged().handle(
+                        new javafx.scene.input.MouseEvent(
+                                javafx.scene.input.MouseEvent.MOUSE_DRAGGED,
+                                pressFileX, dropFileY, 0, 0,
+                                javafx.scene.input.MouseButton.PRIMARY, 1,
+                                false, false, false, false, true, false, false,
+                                false, false, false,
+                                new javafx.scene.input.PickResult(
+                                        leafSurface, pressFileX, dropFileY)));
+                leafSurface.getOnMouseReleased().handle(
+                        new javafx.scene.input.MouseEvent(
+                                javafx.scene.input.MouseEvent.MOUSE_RELEASED,
+                                pressFileX, dropFileY, 0, 0,
+                                javafx.scene.input.MouseButton.PRIMARY, 1,
+                                false, false, false, false, false, false, false,
+                                false, false, false,
+                                new javafx.scene.input.PickResult(
+                                        leafSurface, pressFileX, dropFileY)));
+                var draggedFile = filePane.fileNodePositions().get("src/Main.java");
+                var draggedSibling = filePane.fileNodePositions().get("src/Second.java");
+                var draggedIsland = filePane.fileIslandBounds().get("src");
+                assertEquals(oldFilePosition.x(), draggedFile.x(), 1.0);
+                assertEquals(oldFilePosition.y() - 900, draggedFile.y(), 1.0,
+                        "A drag starting on a file moves its whole island");
+                assertEquals(oldSiblingPosition.x(), draggedSibling.x(), 1.0);
+                assertEquals(oldSiblingPosition.y() - 900, draggedSibling.y(), 1.0,
+                        "Every sibling must move the same distance");
+                assertEquals(oldIsland.minY() - 900, draggedIsland.minY(), 1.0);
+                assertEquals(oldOtherFile,
+                        filePane.fileNodePositions().get("src/demo/Helper.py"),
+                        "An island drag cannot move another folder's files");
+                assertEquals("src", filePane.getSelectedNode());
+                assertNull(fileLayoutSaved.get(),
+                        "Island movement cannot modify persisted folder coordinates");
+
+                filePane.setShowCodeFiles(false);
+                assertFalse(filePane.isShowingCodeFiles());
+                assertTrue(filePane.fileNodePositions().isEmpty());
+                assertTrue(filePane.fileIslandBounds().isEmpty());
+                filePane.setShowCodeFiles(true);
+                assertEquals(draggedFile, filePane.fileNodePositions().get("src/Main.java"),
+                        "The whole island offset survives toggling in the open map");
+                assertEquals(draggedSibling,
+                        filePane.fileNodePositions().get("src/Second.java"));
+                assertNull(fileLayoutSaved.get(),
+                        "Showing or moving file islands must not persist folder changes");
+
+                // Exploration-only checkbox lives beneath the contextual
+                // legend and protects files and folders against accidental drag.
+                assertNotNull(filePane.getCenter().lookup(".dependency-map-navigation-only"));
+                filePane.setNavigationOnly(true);
+                assertTrue(filePane.isNavigationOnly());
+                var safeFile = filePane.fileNodePositions().get("src/Second.java");
+                var savedFilePositions = filePane.fileNodePositions();
+                double beforePan = filePane.getCameraX();
+                double safeScale = filePane.getZoomPercent() / 100.0;
+                double safeX = leafSurface.getWidth() / 2
+                        + (safeFile.x() - filePane.getCameraX()) * safeScale;
+                double safeY = leafSurface.getHeight() / 2
+                        + (safeFile.y() - filePane.getCameraY()) * safeScale;
+                leafSurface.getOnMousePressed().handle(
+                        new javafx.scene.input.MouseEvent(
+                                javafx.scene.input.MouseEvent.MOUSE_PRESSED,
+                                safeX, safeY, 150, 130,
+                                javafx.scene.input.MouseButton.PRIMARY, 1,
+                                false, false, false, false, true, false, false,
+                                false, false, false,
+                                new javafx.scene.input.PickResult(leafSurface, safeX, safeY)));
+                leafSurface.getOnMouseDragged().handle(
+                        new javafx.scene.input.MouseEvent(
+                                javafx.scene.input.MouseEvent.MOUSE_DRAGGED,
+                                safeX + 75, safeY, 225, 130,
+                                javafx.scene.input.MouseButton.PRIMARY, 1,
+                                false, false, false, false, true, false, false,
+                                false, false, false,
+                                new javafx.scene.input.PickResult(leafSurface, safeX + 75, safeY)));
+                leafSurface.getOnMouseReleased().handle(
+                        new javafx.scene.input.MouseEvent(
+                                javafx.scene.input.MouseEvent.MOUSE_RELEASED,
+                                safeX + 75, safeY, 225, 130,
+                                javafx.scene.input.MouseButton.PRIMARY, 1,
+                                false, false, false, false, false, false, false,
+                                false, false, false,
+                                new javafx.scene.input.PickResult(leafSurface, safeX + 75, safeY)));
+                assertTrue(Math.abs(beforePan - filePane.getCameraX()) > 0.01,
+                        "Navigation mode drags should pan even when starting on a file");
+                assertEquals(savedFilePositions, filePane.fileNodePositions(),
+                        "Navigation mode must never drag source files");
+                assertNull(fileLayoutSaved.get(),
+                        "Navigation mode must not persist any layout changes");
+                // JavaFX sends a click after a drag, which resets the
+                // gesture-suppression flag before the next actual click.
+                leafSurface.getOnMouseClicked().handle(
+                        new javafx.scene.input.MouseEvent(
+                                javafx.scene.input.MouseEvent.MOUSE_CLICKED,
+                                safeX + 75, safeY, 225, 130,
+                                javafx.scene.input.MouseButton.PRIMARY, 1,
+                                false, false, false, false, true, false, false,
+                                false, false, false,
+                                new javafx.scene.input.PickResult(
+                                        leafSurface, safeX + 75, safeY)));
+
+                // A click still selects a file, but even a double click must
+                // not open another tab while navigation-only is enabled.
+                safeScale = filePane.getZoomPercent() / 100.0;
+                safeX = leafSurface.getWidth() / 2
+                        + (safeFile.x() - filePane.getCameraX()) * safeScale;
+                safeY = leafSurface.getHeight() / 2
+                        + (safeFile.y() - filePane.getCameraY()) * safeScale;
+                leafSurface.getOnMouseClicked().handle(
+                        new javafx.scene.input.MouseEvent(
+                                javafx.scene.input.MouseEvent.MOUSE_CLICKED,
+                                safeX, safeY, 0, 0,
+                                javafx.scene.input.MouseButton.PRIMARY, 2,
+                                false, false, false, false, true, false, false,
+                                false, false, false,
+                                new javafx.scene.input.PickResult(leafSurface, safeX, safeY)));
+                assertEquals("src/Second.java", filePane.getSelectedFile());
+                assertEquals("src/Main.java", openedSource.get(),
+                        "Navigation-only mode forbids accidental file opening");
+                filePane.setNavigationOnly(false);
+                assertFalse(filePane.isNavigationOnly());
+
+                // The wheel zooms without Ctrl in both exploration modes.
+                for (boolean safeMode : new boolean[] {false, true}) {
+                    filePane.setNavigationOnly(safeMode);
+                    int previousZoom = filePane.getZoomPercent();
+                    javafx.event.Event.fireEvent(filePane.getCenter(),
+                            new javafx.scene.input.ScrollEvent(
+                                    javafx.scene.input.ScrollEvent.SCROLL,
+                                    30, 30, 30, 30,
+                                    false, false, false, false,
+                                    false, false,
+                                    0, 40, 0, 40,
+                                    javafx.scene.input.ScrollEvent.HorizontalTextScrollUnits.NONE,
+                                    0,
+                                    javafx.scene.input.ScrollEvent.VerticalTextScrollUnits.NONE,
+                                    0, 0,
+                                    new javafx.scene.input.PickResult(
+                                            filePane.getCenter(), 30, 30)));
+                    assertEquals(previousZoom + 10, filePane.getZoomPercent(),
+                            "Wheel zoom must work without Ctrl regardless of checkbox");
+                }
+                filePane.setNavigationOnly(false);
+
+                tabPane.getTabs().remove(fileTab);
                 tabPane.getSelectionModel().select(previousTab);
                 Slider fontSlider = (Slider) zoom.lookup(".slider");
                 assertNotNull(fontSlider);
@@ -635,7 +956,7 @@ class CodeTraceAppSmokeTest {
                 assertTrue(srcMenu.getItems().stream().anyMatch(item ->
                         "Colapsar todas las subcarpetas".equals(item.getText())));
                 assertTrue(srcMenu.getItems().stream().anyMatch(item ->
-                        "Mapa de dependencias...".equals(item.getText())));
+                        "Mapa de estructura y dependencias...".equals(item.getText())));
                 ContextMenu folderMenu = (ContextMenu) menuFor.invoke(fileTree, nested);
                 assertTrue(folderMenu.getItems().stream().anyMatch(item ->
                         "Colapsar todas las subcarpetas".equals(item.getText())),
@@ -644,7 +965,7 @@ class CodeTraceAppSmokeTest {
                         .getItems().stream().anyMatch(item ->
                         "Colapsar todas las subcarpetas".equals(item.getText())));
                 assertTrue(folderMenu.getItems().stream().anyMatch(item ->
-                        "Mapa de dependencias...".equals(item.getText())));
+                        "Mapa de estructura y dependencias...".equals(item.getText())));
                 assertTrue(folderMenu.getItems().stream().anyMatch(
                         item -> "Crear esta carpeta".equals(item.getText())));
                 assertTrue(folderMenu.getItems().stream().anyMatch(

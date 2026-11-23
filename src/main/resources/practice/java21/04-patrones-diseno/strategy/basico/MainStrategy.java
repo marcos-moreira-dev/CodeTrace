@@ -1,4 +1,8 @@
 // CodeTrace | Referencia: Java 21 LTS / JDK 21
+// Universo compartido: Arena Táctica, juego competitivo ficticio por equipos.
+// Dominio: Reglas de descuento en la inscripción del torneo.
+// Patrón strategy: Intercambiar la política de cálculo sin alterar el cliente.
+// Glosario: Torneo: competición de varias partidas entre equipos.
 // Compilar en COPIA: javac --release 21 -encoding UTF-8 Strategy.java MainStrategy.java
 // Ejecutar: java MainStrategy
 
@@ -13,8 +17,8 @@
  */
 public final class MainStrategy {
     public static void main(String[] args) {
-        Strategy.Descuento normal = importe -> importe;
-        Strategy.Descuento fidelidad = importe -> importe * .90;
+        Descuento normal = importe -> importe;
+        Descuento fidelidad = importe -> importe * .90;
         double subtotal = 100;
         double esperado = Strategy.cobrar(subtotal, fidelidad);
         if (esperado != 90) throw new AssertionError("Descuento incorrecto");

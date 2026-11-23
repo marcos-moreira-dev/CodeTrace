@@ -1,4 +1,8 @@
 // CodeTrace | Referencia: Java 21 LTS / JDK 21
+// Universo compartido: Arena Táctica, juego competitivo ficticio por equipos.
+// Dominio: Reportes de un torneo competitivo ficticio.
+// Patrón factory-method: Delegar la creación del tipo de exportador a un subtipo.
+// Glosario: Reporte: resumen de resultados de rondas.
 // Compilar: javac --release 21 -encoding UTF-8 -d "$env:TEMP\ct-java21" (Get-ChildItem -Recurse -Filter *.java).FullName
 // Ejecutar: ejecutar desde el cliente que utiliza este componente
 package codetrace.factorymethod;

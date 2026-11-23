@@ -1,4 +1,8 @@
 // CodeTrace | Referencia: Java 21 LTS / JDK 21
+// Universo compartido: Arena Táctica, juego competitivo ficticio por equipos.
+// Dominio: Termómetro antiguo del servidor que aloja partidas.
+// Patrón adapter: Convertir una lectura antigua a la interfaz esperada.
+// Glosario: Servidor de partida: computadora que coordina el juego.
 // Compilar desde copia del paquete (PowerShell): New-Item -ItemType Directory -Force "$env:TEMP\ct-java21" | Out-Null; javac --release 21 -encoding UTF-8 -d "$env:TEMP\ct-java21" (Get-ChildItem -Recurse -Filter *.java | ForEach-Object FullName)
 // Ejecutar: ejecutar desde el archivo cliente del mismo ejercicio
 

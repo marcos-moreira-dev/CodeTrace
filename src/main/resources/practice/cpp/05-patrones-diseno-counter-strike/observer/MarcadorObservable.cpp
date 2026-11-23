@@ -1,0 +1,39 @@
+// CodeTrace | Referencia: C++20
+// Compilar: g++ -std=c++20 -Wall -Wextra (véase guía al final).
+// Dominio: Counter-Strike — notificar a los HUD de espectadores.
+// Patrón: Observer.
+// Glosario: CT/T = bandos; NPC = personaje no jugable; HUD = indicadores de pantalla.
+// Implementación: enlazar este .cpp junto con main.cpp y los demás módulos.
+#include "MarcadorObservable.hpp"
+
+namespace cs {
+
+void MarcadorObservable::suscribir(Receptor receptor) { observadores_.push_back(std::move(receptor)); }
+
+void MarcadorObservable::anotar(const std::string& equipo, int puntos) const {
+        // El marcador entrega el dato a todos, no elige un responsable único.
+        for (const auto& receptor : observadores_) receptor(equipo, puntos);
+    }
+
+void demo_observer() {
+    MarcadorObservable marcador;
+    marcador.suscribir([](const std::string& equipo, int puntos) {
+        std::cout << "HUD: " << equipo << "=" << puntos << '\n';
+    });
+    marcador.anotar("CT", 2);
+    marcador.anotar("T", 1);
+}
+
+} // namespace cs
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   $fuentes=(Get-ChildItem .\05-patrones-diseno-counter-strike -Recurse -Filter *.cpp).FullName
+ *   g++ -std=c++20 -Wall -Wextra $fuentes -o "$env:TEMP\ct-counter-strike.exe"
+ *   & "$env:TEMP\ct-counter-strike.exe" observer
+ * Salida esperada:
+ *   HUD: CT=2
+ *   HUD: T=1
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

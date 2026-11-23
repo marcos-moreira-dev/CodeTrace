@@ -928,7 +928,7 @@ public final class ReferenceTree extends TreeView<Path> {
                 collapseBranch.setOnAction(event -> collapseRecursively(path));
                 actions.add(collapseBranch);
             }
-            MenuItem dependencies = new MenuItem("Mapa de dependencias...");
+            MenuItem dependencies = new MenuItem("Mapa de estructura y dependencias...");
             dependencies.setGraphic(new FontIcon("fth-map"));
             dependencies.setOnAction(event -> onDependencyGraph.accept(path));
             actions.add(dependencies);
