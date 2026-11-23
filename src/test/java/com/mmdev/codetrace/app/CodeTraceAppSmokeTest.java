@@ -359,13 +359,20 @@ class CodeTraceAppSmokeTest {
                         java.util.Map.of("src", java.util.List.of("src/Main.java")),
                         java.util.List.of(new com.mmdev.codetrace.reference
                                 .ProjectDependencyGraph.FolderLink("src", "src/test")),
-                        java.util.Map.of());
+                        java.util.Map.of(),
+                        java.util.Map.of("src/test",
+                                java.util.List.of("src/test/java", "src/test/resources")));
                 var cappedPane = new com.mmdev.codetrace.ui.DependencyGraphPane(
                         cappedModel, ignored -> {});
                 assertTrue(cappedPane.hasHiddenDescendants("src/test"),
                         "A truncated fileless visible leaf must be marked incomplete");
                 assertFalse(cappedPane.hasHiddenDescendants("src"),
                         "Visible descendants mean this parent isn't a truncated leaf");
+                assertEquals(2, cappedModel.hiddenSubfolders("src/test").size(),
+                        "The omitted children are real paths, not guessed numbers");
+                // A partial scan elsewhere must never mark an unrelated true
+                // leaf as having missing children.
+                assertFalse(cappedPane.hasHiddenDescendants("src/Main.java"));
 
                 // The same graph can reveal every recognized source file as
                 // a read-only leaf without changing saved directory positions.
