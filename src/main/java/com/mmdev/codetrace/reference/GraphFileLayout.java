@@ -71,9 +71,13 @@ public final class GraphFileLayout {
                                 continue;
                             int col = centerCol + dx;
                             int row = centerRow + dy;
+                            double x = col * COLUMN, y = row * ROW;
+                            // GraphLayout.Point intentionally limits world
+                            // coordinates; do not throw at the viewport edge.
+                            if (Math.abs(x) > 100_000 || Math.abs(y) > 100_000)
+                                continue;
                             if (!occupied.add(key(col, row))) continue;
-                            placed.put(file, new GraphLayout.Point(
-                                    col * COLUMN, row * ROW));
+                            placed.put(file, new GraphLayout.Point(x, y));
                             allocated = true;
                             break;
                         }
