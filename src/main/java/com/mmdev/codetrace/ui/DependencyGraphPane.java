@@ -21,12 +21,14 @@ import javafx.scene.Cursor;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Separator;
 import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.control.Tooltip;
 import javafx.scene.input.KeyCode;
@@ -55,6 +57,12 @@ public final class DependencyGraphPane extends BorderPane {
     private final Pane viewport = new Pane();
     private final Canvas canvas = new Canvas();
     private final VBox legend = new VBox(5);
+    /** Navigation-only mode protects the architecture layout from mouse drags. */
+    private final CheckBox navigationOnly = AppControls.checkBox(
+            "Solo panear y desplazar",
+            "Arrastra en cualquier lugar para mover el mapa. "
+                    + "Clic para seleccionar; doble clic no abre archivos. "
+                    + "Rueda para acercar o alejar.");
     private final Label fileSummary = new Label();
     private final CheckMenuItem showFilesItem = new CheckMenuItem("Mostrar archivos de código");
     /** Secondary file positions are derived, never saved with folder layouts. */
@@ -151,7 +159,11 @@ public final class DependencyGraphPane extends BorderPane {
         canvas.heightProperty().addListener((obs, old, value) -> onViewportResized());
         legend.getStyleClass().add("dependency-map-legend");
         legend.setMaxSize(VBox.USE_PREF_SIZE, VBox.USE_PREF_SIZE);
-        legend.setMouseTransparent(true);
+        legend.setMouseTransparent(false);
+        legend.setPickOnBounds(true);
+        navigationOnly.getStyleClass().add("dependency-map-navigation-only");
+        navigationOnly.setAccessibleText("Solo panear y desplazar el mapa");
+        navigationOnly.setOnAction(event -> canvas.requestFocus());
         updateLegend();
         // Keep the original Pane -> Canvas structure for existing JavaFX clients.
         // Overlay is anchored in viewport coordinates, never graph/world space.
@@ -205,6 +217,18 @@ public final class DependencyGraphPane extends BorderPane {
             if (event.getButton() != MouseButton.PRIMARY
                     && event.getButton() != MouseButton.MIDDLE) return;
             canvas.requestFocus();
+            if (navigationOnly.isSelected()) {
+                // Even if the press starts over a node or file, the gesture
+                // moves only the camera. A release without drag still clicks.
+                panning = true;
+                panSceneX = event.getSceneX();
+                panSceneY = event.getSceneY();
+                panStartX = camera.centerX();
+                panStartY = camera.centerY();
+                canvas.setCursor(Cursor.CLOSED_HAND);
+                event.consume();
+                return;
+            }
             String hit = event.getButton() == MouseButton.PRIMARY
                     ? pickNode(event.getX(), event.getY()) : null;
             if (hit != null) {
@@ -313,14 +337,16 @@ public final class DependencyGraphPane extends BorderPane {
                     selectNode(parentOfFile(file));
                     selectedFile = file;
                     inspectorFiles.getSelectionModel().select(file);
-                    if (event.getClickCount() == 2) openSource.accept(file);
+                    if (event.getClickCount() == 2 && !navigationOnly.isSelected())
+                        openSource.accept(file);
                     redraw();
                 }
             }
             event.consume();
         });
         viewport.addEventFilter(javafx.scene.input.ScrollEvent.SCROLL, event -> {
-            if (!event.isControlDown() && !event.isShortcutDown()) return;
+            if (!navigationOnly.isSelected()
+                    && !event.isControlDown() && !event.isShortcutDown()) return;
             Point2D local = viewport.sceneToLocal(event.getSceneX(), event.getSceneY());
             zoomAt(getZoomPercent() + (event.getDeltaY() > 0 ? 10 : -10),
                     local.getX(), local.getY());
@@ -344,6 +370,14 @@ public final class DependencyGraphPane extends BorderPane {
             event.consume();
         });
         redraw();
+    }
+
+    /** Exploration mode: click selects, drag pans, wheel zooms, double-click is safe. */
+    public boolean isNavigationOnly() { return navigationOnly.isSelected(); }
+
+    public void setNavigationOnly(boolean value) {
+        navigationOnly.setSelected(value);
+        canvas.setCursor(Cursor.OPEN_HAND);
     }
 
     /** A single graph: the checkbox only adds or removes filesystem leaves. */
@@ -464,39 +498,46 @@ public final class DependencyGraphPane extends BorderPane {
         onNodeSelected.accept(selected);
     }
 
-    /** Show a legend only when at least two connection conventions coexist. */
+    /**
+     * Show edge symbols only if needed, but keep the navigation-only checkbox
+     * accessible in the same bottom-left overlay on every graph.
+     */
     private void updateLegend() {
         boolean hasDependencies = !model.edges().isEmpty();
         boolean hasHierarchy = !model.hierarchy().isEmpty();
         boolean hasFiles = showFilesItem.isSelected() && !filePositions.isEmpty();
         int types = (hasDependencies ? 1 : 0)
                 + (hasHierarchy ? 1 : 0) + (hasFiles ? 1 : 0);
-        legend.setVisible(types > 1);
-        legend.setManaged(types > 1);
         legend.getChildren().clear();
-        if (types <= 1) return;
-        Label heading = new Label("Leyenda");
-        heading.getStyleClass().add("dependency-map-legend-title");
-        legend.getChildren().add(heading);
-        if (hasDependencies)
-            legend.getChildren().add(legendRow(true, "Origen depende del destino"));
-        if (hasHierarchy)
-            legend.getChildren().add(legendRow(false, "Contiene subcarpeta"));
-        if (hasFiles) {
-            Pane symbol = new Pane();
-            symbol.getStyleClass().add("dependency-map-legend-marker");
-            symbol.setMinSize(34, 16);
-            symbol.setPrefSize(34, 16);
-            symbol.setMaxSize(34, 16);
-            Line membership = new Line(1, 8, 30, 8);
-            membership.setStroke(Color.web("#91a5b3"));
-            membership.setStrokeWidth(1.7);
-            symbol.getChildren().add(membership);
-            HBox row = new HBox(7, symbol, new Label("Pertenece a la carpeta"));
-            row.getStyleClass().add("dependency-map-legend-row");
-            row.setAlignment(Pos.CENTER_LEFT);
-            legend.getChildren().add(row);
+        if (types > 1) {
+            Label heading = new Label("Leyenda");
+            heading.getStyleClass().add("dependency-map-legend-title");
+            legend.getChildren().add(heading);
+            if (hasDependencies)
+                legend.getChildren().add(legendRow(true, "Origen depende del destino"));
+            if (hasHierarchy)
+                legend.getChildren().add(legendRow(false, "Contiene subcarpeta"));
+            if (hasFiles) {
+                Pane symbol = new Pane();
+                symbol.getStyleClass().add("dependency-map-legend-marker");
+                symbol.setMinSize(34, 16);
+                symbol.setPrefSize(34, 16);
+                symbol.setMaxSize(34, 16);
+                Line membership = new Line(1, 8, 30, 8);
+                membership.setStroke(Color.web("#91a5b3"));
+                membership.setStrokeWidth(1.7);
+                symbol.getChildren().add(membership);
+                HBox row = new HBox(7, symbol,
+                        new Label("Pertenece a la carpeta"));
+                row.getStyleClass().add("dependency-map-legend-row");
+                row.setAlignment(Pos.CENTER_LEFT);
+                legend.getChildren().add(row);
+            }
+            legend.getChildren().add(new Separator());
         }
+        legend.getChildren().add(navigationOnly);
+        legend.setVisible(true);
+        legend.setManaged(true);
     }
 
     private Collection<GraphLayout.Point> visiblePoints() {
@@ -870,8 +911,8 @@ public final class DependencyGraphPane extends BorderPane {
             GraphFileLayout.Bounds box = entry.getValue();
             if (!visibleBounds(box, w, h, zoom)) continue;
             boolean related = entry.getKey().equals(selected);
-            g.setFill(Color.web(related ? "#ebe3fa" : "#eaf0f5",
-                    related ? 0.58 : 0.30));
+            // Opaque island backdrop masks architecture edges drawn behind.
+            g.setFill(Color.web(related ? "#f3ecfc" : "#f6f9fb"));
             g.fillRoundRect(box.minX() - 5, box.minY() - 5,
                     box.maxX() - box.minX() + 10,
                     box.maxY() - box.minY() + 10, 10, 10);
@@ -935,15 +976,21 @@ public final class DependencyGraphPane extends BorderPane {
             g.strokeLine(parent.x(), parent.y(), file.x(), file.y());
         }
 
-        // A selected docked file gets one stronger direct relationship.
+        // For a docked file, emphasize the folder-to-ISLAND connector.
+        // A direct line through the island crossed unrelated file labels.
         if (selectedFile != null && !manualFileOffsets.containsKey(selectedFile)) {
-            GraphLayout.Point parent = layout.get(parentOfFile(selectedFile));
-            GraphLayout.Point file = filePositions.get(selectedFile);
-            if (parent != null && file != null
-                    && visibleOnCanvas(parent, file, w, h, zoom)) {
-                g.setStroke(Color.web("#7251ae"));
-                g.setLineWidth(3.3);
-                g.strokeLine(parent.x(), parent.y(), file.x(), file.y());
+            String owner = parentOfFile(selectedFile);
+            GraphLayout.Point parent = layout.get(owner);
+            GraphFileLayout.Bounds box = fileIslands.get(owner);
+            if (parent != null && box != null) {
+                double x = clamp(parent.x(), box.minX(), box.maxX());
+                double y = clamp(parent.y(), box.minY(), box.maxY());
+                GraphLayout.Point endpoint = new GraphLayout.Point(x, y);
+                if (visibleOnCanvas(parent, endpoint, w, h, zoom)) {
+                    g.setStroke(Color.web("#7251ae"));
+                    g.setLineWidth(3.3);
+                    g.strokeLine(parent.x(), parent.y(), x, y);
+                }
             }
         }
     }
@@ -1023,7 +1070,8 @@ public final class DependencyGraphPane extends BorderPane {
         g.setTransform(zoom, 0, 0, zoom,
                 w / 2 - camera.centerX() * zoom,
                 h / 2 - camera.centerY() * zoom);
-        drawFileIslands(g, w, h, zoom);
+        // Paint all edges first. Opaque island and label surfaces come after,
+        // so graph lines never appear to sit on top of file text.
         g.setLineWidth(1.15);
         // Dashed containment links are independent from directed code dependencies.
         g.setLineDashes(7, 6);
@@ -1073,6 +1121,7 @@ public final class DependencyGraphPane extends BorderPane {
                     tipY - 7 * Math.sin(angle + 0.5));
         }
         drawFileMembership(g, w, h, zoom);
+        drawFileIslands(g, w, h, zoom);
         drawCodeFiles(g, w, h, zoom);
         for (String path : model.nodes()) {
             GraphLayout.Point p = layout.get(path);
