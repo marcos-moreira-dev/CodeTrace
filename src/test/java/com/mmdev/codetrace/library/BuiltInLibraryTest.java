@@ -216,7 +216,7 @@ class BuiltInLibraryTest {
                 "03-algoritmos/euclides/euclides.asm"));
         assertTrue(library.entries(all.get("java21")).contains(
                 "03-algoritmos/dijkstra/Dijkstra.java"));
-        assertEquals(813, library.packs().stream().mapToInt(library::size).sum());
+        assertEquals(826, library.packs().stream().mapToInt(library::size).sum());
     }
 
 }
