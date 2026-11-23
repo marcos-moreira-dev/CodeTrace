@@ -67,6 +67,22 @@
   Repetir con la leyenda oculta por tener una sola relación: la casilla
   debe seguir visible.
 
+- **GRAPH-FILES-15:** Generar mapa de `src` con una carpeta grande de 42
+  archivos y otras con un solo archivo. Con los archivos ocultos, los nodos
+  conservan su mapa habitual; al mostrarlos, los nodos se espacian en
+  conjunto y las islas quedan próximas a su carpeta sin atravesar etiquetas.
+  Al ocultarlos se recuperan las posiciones originales sin modificar .ctrace.
+- **GRAPH-FILES-16:** En una vista parcial por el límite de 180 carpetas,
+  seleccionar una rama intermedia cuyo código aparece en descendientes
+  omitidos. El inspector no debe presentar su ausencia de hijos VISIBLES
+  como si la carpeta del disco estuviera vacía: indicará rama parcial y
+  «Subcarpetas visibles». Comprobar que las líneas discontinuas mantienen
+  significado de contención, no herencia.
+- **GRAPH-FILES-17:** Mover manualmente una carpeta en modo archivos visibles
+  y alternar varias veces el modo. La posición persistida de la carpeta
+  debe seguir siendo un dato válido y recuperable, sin incorporar el
+  espaciado adicional de presentación.
+
 Las pruebas automáticas comprueban distribución, límites y eventos JavaFX;
 la fluidez y legibilidad requieren revisión manual en Windows.
 
