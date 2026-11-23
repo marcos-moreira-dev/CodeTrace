@@ -27,8 +27,6 @@ import java.util.Set;
  * El tipo no intenta decidir de antemano qué algoritmo utilizar.
  */
 public final class Grafo {
-    public enum Orientacion { DIRIGIDO, NO_DIRIGIDO }
-
     private final Orientacion orientacion;
     private final boolean ponderado;
     private final Map<String, LinkedHashMap<String, Double>> adyacencia =
