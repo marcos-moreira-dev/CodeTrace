@@ -42,6 +42,22 @@ actual se muestran como nodos secundarios: **no se añade análisis semántico**
   No representa dependencia ni importación; una flecha continua sí indica
   dependencia detectada y una línea discontinua, contención de subcarpetas.
 
+### Espaciado adaptativo del mismo grafo
+
+Al activar **Mostrar archivos de código**, el mapa **separa temporalmente
+las posiciones de las carpetas**, en filas y columnas según el tamaño de
+las islas próximas. Así cada carpeta con archivos dispone de un espacio
+más adecuado para mantener su isla cerca sin superponer rótulos. Se conserva
+la relación espacial entre carpetas, no se crean otros mapas ni se alteran
+las dependencias detectadas. El cálculo es una transformación visual:
+la posición original de las carpetas sigue siendo la que se guarda en la
+sesión `.ctrace`. Al ocultar los archivos se recuperan esas coordenadas.
+Las ramas sin fuentes directas no fuerzan espacio adicional por sí solas.
+
+La distancia final no puede garantizarse para todas las islas cuando la
+densidad es extraordinaria o la distribución se personaliza arrastrando.
+En esos casos sigue prevaleciendo la prohibición de solapamiento.
+
 ### Selección y movimiento
 
 - Un clic sobre una carpeta resalta su isla y las aristas incidentes.
@@ -74,6 +90,17 @@ Si un límite impide representar todo, se muestra «vista parcial». La
 ausencia de flechas no demuestra ausencia de dependencias. Los símbolos
 de la leyenda se ocultan cuando solo existe un tipo de relación; la casilla
 de navegación permanece disponible.
+
+## Carpetas sin archivos en una vista parcial
+
+Las **líneas discontinuas** son contención de directorios, no herencia
+entre clases. Un directorio puede tener **cero archivos de código directos**
+y ser padre de otros directorios con código. Además, si se alcanza el límite
+de 180 nodos, un directorio antecesor puede mostrarse mientras sus hijos
+quedan fuera del mapa. Esos nodos se señalan con puntos suspensivos y el
+inspector advierte **«Esta rama continúa fuera de la vista parcial»**,
+en lugar de afirmar que no existen subcarpetas. El contador del inspector
+habla de **subcarpetas visibles**, no del total real de disco.
 
 ## Navegación
 
