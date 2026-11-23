@@ -110,13 +110,17 @@ class BuiltInLibraryTest {
     @Test
     void allFourCurriculumPurposesAndDocumentedJavaClientsArePresent() throws Exception {
         var library = new BuiltInLibrary(temp.resolve("curriculum"));
-        assertEquals("v13", BuiltInLibrary.CATALOG_VERSION);
-        assertEquals(918, library.packs().stream().mapToInt(library::size).sum());
+        assertEquals("v14", BuiltInLibrary.CATALOG_VERSION);
+        assertEquals(990, library.packs().stream().mapToInt(library::size).sum());
         for (var pack : library.packs()) {
             var entries = library.entries(pack);
             assertTrue(entries.stream().allMatch(x -> x.split("/").length >= 3
-                    || (pack.id().equals("java21")
-                        && x.equals("05-patrones-diseno-counter-strike/MainCounterStrike.java"))),
+                    || x.equals(java.util.Map.of(
+                        "java21", "05-patrones-diseno-counter-strike/MainCounterStrike.java",
+                        "python", "05-patrones-diseno-counter-strike/main.py",
+                        "csharp", "05-patrones-diseno-counter-strike/MainCounterStrike.cs",
+                        "cpp", "05-patrones-diseno-counter-strike/main.cpp"
+                    ).get(pack.id()))),
                     "Every reference is in an exercise directory except the documented integrator: "
                             + pack.id());
             assertTrue(entries.stream().anyMatch(x -> x.startsWith("01-fundamentos/")), pack.id());
@@ -128,6 +132,13 @@ class BuiltInLibraryTest {
         assertTrue(library.entries(javaPack).contains("01-fundamentos/comparadores/ComparadoresEncadenados.java"));
         assertTrue(library.entries(javaPack).contains("03-algoritmos/programacion-dinamica/cambio-monedas/MainMonedas.java"));
         assertTrue(library.entries(javaPack).contains("04-patrones-diseno/strategy-tarifas/MainTarifas.java"));
+        for (var expected : java.util.Map.of("python", 33L, "csharp", 18L, "cpp", 21L).entrySet()) {
+            var pack = library.packs().stream().filter(p -> p.id().equals(expected.getKey()))
+                    .findFirst().orElseThrow();
+            assertEquals(expected.getValue().longValue(), library.entries(pack).stream()
+                    .filter(p -> p.startsWith("05-patrones-diseno-counter-strike/")).count(),
+                    "Counter-Strike track: " + pack.id());
+        }
         assertEquals(79, library.entries(javaPack).stream()
                 .filter(path -> path.startsWith("05-patrones-diseno-counter-strike/"))
                 .count(), "Separate Counter-Strike track preserves the original 04 lessons");
@@ -233,7 +244,7 @@ class BuiltInLibraryTest {
                 "03-algoritmos/euclides/euclides.asm"));
         assertTrue(library.entries(all.get("java21")).contains(
                 "03-algoritmos/dijkstra/Dijkstra.java"));
-        assertEquals(918, library.packs().stream().mapToInt(library::size).sum());
+        assertEquals(990, library.packs().stream().mapToInt(library::size).sum());
     }
 
 }

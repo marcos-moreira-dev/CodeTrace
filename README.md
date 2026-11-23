@@ -46,7 +46,7 @@ programa es **Marcos Moreira**, también identificado en sus metadatos.
 
 La biblioteca integrada comprende **14 lenguajes y 813 archivos de referencia** en v0.3.4. Son *archivos*, no 813 ejercicios independientes. Sus contenidos cubren fundamentos, estructuras de datos, algoritmos y patrones de diseño; los ejemplos incluyen guías de consola y salidas esperadas, algunas todavía pendientes de validación cruzada en todos los entornos.
 
-**En la rama experimental v0.3.5**, el catálogo interno `v13` incluye **918 archivos**, con contratos, `record`, `enum` y clases colaboradoras Java 21 separados donde aportan claridad. Los otros lenguajes conservan las estructuras idiomáticas de sus módulos. [Auditoría de los ejemplos y criterio didáctico](docs/AUDITORIA-EJEMPLOS-V035.md). Los ejemplos Java 21 y Python de patrones comparten el universo ficticio **Arena Táctica**, con [glosario y correspondencias](docs/ARENA-TACTICA-PATRONES.md).
+**En la rama experimental v0.3.5**, el catálogo interno `v14` incluye **990 archivos**, con contratos, `record`, `enum` y clases colaboradoras Java 21 separados donde aportan claridad. Los otros lenguajes conservan las estructuras idiomáticas de sus módulos. [Auditoría de los ejemplos y criterio didáctico](docs/AUDITORIA-EJEMPLOS-V035.md). Los ejemplos Java 21 y Python de patrones comparten el universo ficticio **Arena Táctica**, con [glosario y correspondencias](docs/ARENA-TACTICA-PATRONES.md).
 
 En **Java 21** existe además la nueva colección independiente **`05-patrones-diseno-counter-strike/`**: 13 patrones o variantes, 67 archivos y ejemplos de consola comentados paso a paso, todos ambientados explícitamente en Counter-Strike. [Guía y glosario de Counter-Strike](docs/COUNTER-STRIKE-PATRONES-JAVA.md). La colección general `04` no se reemplaza. La misma carpeta `05` incorpora además **`MainCounterStrike.java`**, una simulación automática de tres rondas en `cs_office`, apoyada por clases `infraestructura/` (modelo, vista de consola y controlador), con rehenes, jugadores y estado de partida explicados en comentarios. El cliente raíz usa ahora el patrón **Facade** (`facade/FachadaCounterStrike.java`) como entrada al subsistema MVC; los trece clientes individuales se conservan.
 
@@ -131,3 +131,7 @@ Para generar un ZIP portable, y opcionalmente el instalador con las herramientas
 Desarrollado por Marcos Moreira.
 
 </div>
+
+### Counter-Strike en cuatro lenguajes
+
+La pista `05-patrones-diseno-counter-strike/` ahora también existe en C# 12/.NET 8, Python 3.12 y C++20. Cada una ofrece trece demostraciones de patrones o variantes y una partida automática con Facade y MVC. Conserva los ejercicios generales `04` y toda la pista Java. [Guía comparativa y comandos](docs/COUNTER-STRIKE-MULTILENGUAJE.md).

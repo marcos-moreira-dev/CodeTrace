@@ -30,6 +30,11 @@ jobs:
           npm install --global typescript@5.9.3
           sudo apt-get update -qq
           sudo apt-get install -y nasm
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+      - name: Compile and compare Counter-Strike clients
+        run: python3 scripts/verificar-counter-strike.py
       - name: Compile and run representative clients
         run: bash scripts/verificar-biblioteca.sh
   windows-scripts:
