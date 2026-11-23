@@ -22,7 +22,7 @@ public final class GraphFileLayout {
     private static final double FILE_STEP_Y = 44;
     private static final int MAX_COLUMNS = 12;
     private static final int SEARCH_RINGS = 260;
-    private static final double SEARCH_STEP = 90;
+    private static final double SEARCH_STEP = 54;
     private static final double GAP = 12;
     private static final double WORLD_LIMIT = 100_000;
 
@@ -63,12 +63,13 @@ public final class GraphFileLayout {
         Map<String, GraphLayout.Point> placed = new LinkedHashMap<>();
         Map<String, Bounds> islands = new LinkedHashMap<>();
 
-        // Give large islands the nearest free space before small islands
-        // consume it. Ties use directory paths, never map iteration order.
+        // Small islands take the nearest available orbit first. Previously
+        // placing huge folders first could exile single-file islands across
+        // the entire graph. Larger clusters expand outward only if necessary.
         List<String> owners = graph.nodes().stream()
                 .filter(dir -> folders.containsKey(dir) && !graph.files(dir).isEmpty())
                 .sorted(Comparator.<String>comparingInt(
-                        dir -> graph.files(dir).size()).reversed()
+                        dir -> graph.files(dir).size())
                         .thenComparing(Comparator.naturalOrder()))
                 .toList();
 
@@ -99,38 +100,57 @@ public final class GraphFileLayout {
         return new Result(placed, islands, eligible, limited || eligible > placed.size());
     }
 
+    /** The shortest free position near the folder is preferred, not a global grid. */
     private static IslandPlacement nearestFreeIsland(
             GraphLayout.Point parent, double width, double height,
             List<Bounds> reserved) {
-        // Try right, diagonals, below, above and left in concentric shells.
-        // This keeps each island as close as space allows to its own folder.
-        double[] angles = {0, Math.PI / 4, -Math.PI / 4,
-                Math.PI / 2, -Math.PI / 2,
-                3 * Math.PI / 4, -3 * Math.PI / 4, Math.PI};
+        double left = parent.x() - 13;
+        double right = parent.x() + 261;
+        double top = parent.y() - 18;
+        double bottom = parent.y() + 18;
+        double alignX = parent.x() + 124 - width / 2;
+
         for (int ring = 0; ring < SEARCH_RINGS; ring++) {
-            double extra = ring * SEARCH_STEP;
-            for (double angle : angles) {
-                double cx = parent.x() + 123
-                        + (width / 2 + 190 + extra) * Math.cos(angle);
-                double cy = parent.y()
-                        + (height / 2 + 75 + extra) * Math.sin(angle);
-                double originX = Math.rint(cx - width / 2 + 8);
-                double originY = Math.rint(cy - height / 2 + 14);
+            double distance = GAP + 8 + ring * SEARCH_STEP;
+            // Right, left, bottom, top, and four diagonal corners.
+            // The candidate's entire rectangle (not just its center)
+            // must fit, preserving the no-overlap guarantee.
+            double[][] origins = {
+                    {right + distance, parent.y() - height / 2},
+                    {left - distance - width, parent.y() - height / 2},
+                    {alignX, bottom + distance},
+                    {alignX, top - distance - height},
+                    {right + distance, bottom + distance},
+                    {right + distance, top - distance - height},
+                    {left - distance - width, bottom + distance},
+                    {left - distance - width, top - distance - height}
+            };
+            IslandPlacement best = null;
+            double bestDistance = Double.POSITIVE_INFINITY;
+            for (double[] origin : origins) {
+                double originX = Math.rint(origin[0] + 8);
+                double originY = Math.rint(origin[1] + 14);
                 Bounds candidate = new Bounds(originX - 8, originY - 14,
                         originX - 8 + width, originY - 14 + height);
                 if (candidate.minX() < -WORLD_LIMIT || candidate.minY() < -WORLD_LIMIT
                         || candidate.maxX() > WORLD_LIMIT
                         || candidate.maxY() > WORLD_LIMIT) continue;
-                boolean collision = false;
-                for (Bounds blocked : reserved) {
-                    if (candidate.overlaps(blocked, GAP)) {
-                        collision = true;
+                boolean blocked = false;
+                for (Bounds existing : reserved) {
+                    if (candidate.overlaps(existing, GAP)) {
+                        blocked = true;
                         break;
                     }
                 }
-                if (!collision)
-                    return new IslandPlacement(originX, originY, candidate);
+                if (blocked) continue;
+                double score = Math.hypot(candidate.centerX() - parent.x(),
+                        candidate.centerY() - parent.y());
+                if (score < bestDistance) {
+                    bestDistance = score;
+                    best = new IslandPlacement(originX, originY, candidate);
+                }
             }
+            if (best != null) return best;
         }
         return null;
     }
