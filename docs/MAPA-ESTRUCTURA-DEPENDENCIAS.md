@@ -97,10 +97,18 @@ Las **líneas discontinuas** son contención de directorios, no herencia
 entre clases. Un directorio puede tener **cero archivos de código directos**
 y ser padre de otros directorios con código. Además, si se alcanza el límite
 de 180 nodos, un directorio antecesor puede mostrarse mientras sus hijos
-quedan fuera del mapa. Esos nodos se señalan con puntos suspensivos y el
-inspector advierte **«Esta rama continúa fuera de la vista parcial»**,
-en lugar de afirmar que no existen subcarpetas. El contador del inspector
-habla de **subcarpetas visibles**, no del total real de disco.
+quedan fuera del mapa. Para evitar un padre aparentemente «desnudo», el
+Canvas dibuja una **continuación de jerarquía discontinua** debajo del padre,
+con el nombre de una subcarpeta real y el número de las demás omitidas.
+Es una rama colapsada, **no una dependencia ni una subcarpeta inventada**.
+
+El inspector enumera las subcarpetas directas **visibles y omitidas**,
+diferenciando estas últimas con «fuera del mapa». Con doble clic sobre
+una omitida se genera otro mapa del **mismo tipo**, limitado a esa subcarpeta,
+para explorar sus descendientes. El mapa global mantiene su límite de
+rendimiento; no se añaden nodos falsos para llenar el espacio. Las carpetas
+realmente sin hijos no reciben avisos de continuación aunque otra rama del
+proyecto haya sido truncada.
 
 ## Navegación
 
