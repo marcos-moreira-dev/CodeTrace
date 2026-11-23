@@ -308,8 +308,8 @@ class CodeTraceAppSmokeTest {
                         "Both inspector lists must reuse shared navigation styling");
                 assertNotNull(graphPane.getRight().lookup(".app-panel-close"),
                         "The inspector should offer a visible close action");
-                assertEquals(2, graphViewport.lookupAll(".dependency-map-legend-marker").size(),
-                        "The legend must draw vector samples, not font glyph arrows");
+                assertEquals(0, graphViewport.lookupAll(".dependency-map-legend-marker").size(),
+                        "With only one connection kind, hide the redundant legend");
 
                 // Middle button pans without affecting the selected node.
                 double bgX = graphSurface.getWidth() - 20;
@@ -348,6 +348,68 @@ class CodeTraceAppSmokeTest {
                 assertTrue(graphPane.getSelectedNeighbors().isEmpty());
                 assertNull(selectedGraphPath.get());
                 tabPane.getTabs().remove(mapTab);
+                tabPane.getSelectionModel().select(previousTab);
+
+                // The same graph can reveal every recognized source file as
+                // a read-only leaf without changing saved directory positions.
+                var fileModel = new com.mmdev.codetrace.reference.ProjectDependencyGraph.Graph(
+                        "src", java.util.List.of("src", "src/demo"),
+                        java.util.List.of(), 2, false, "c".repeat(64),
+                        java.util.Map.of("src", java.util.List.of("src/Main.java"),
+                                "src/demo", java.util.List.of("src/demo/Helper.py")),
+                        java.util.List.of(new com.mmdev.codetrace.reference
+                                .ProjectDependencyGraph.FolderLink("src", "src/demo")),
+                        java.util.Map.of());
+                AtomicReference<String> openedSource = new AtomicReference<>();
+                AtomicReference<com.mmdev.codetrace.reference.GraphLayout> fileLayoutSaved =
+                        new AtomicReference<>();
+                var filePane = new com.mmdev.codetrace.ui.DependencyGraphPane(
+                        fileModel, openedSource::set, null, fileLayoutSaved::set,
+                        ignored -> {});
+                var fileTab = new javafx.scene.control.Tab("Mapa con archivos", filePane);
+                tabPane.getTabs().add(fileTab);
+                tabPane.getSelectionModel().select(fileTab);
+                stage.getScene().getRoot().applyCss();
+                stage.getScene().getRoot().layout();
+                assertFalse(filePane.isShowingCodeFiles());
+                assertEquals(0, filePane.visibleCodeFileCount());
+                assertEquals(2, filePane.availableCodeFileCount());
+                assertEquals(0, filePane.getCenter()
+                        .lookupAll(".dependency-map-legend-marker").size());
+                filePane.setShowCodeFiles(true);
+                assertTrue(filePane.isShowingCodeFiles());
+                assertEquals(2, filePane.visibleCodeFileCount());
+                assertEquals(2, filePane.fileNodePositions().size());
+                assertEquals(2, filePane.getCenter()
+                        .lookupAll(".dependency-map-legend-marker").size(),
+                        "Hierarchy and file membership require two legend symbols");
+                assertNull(fileLayoutSaved.get(),
+                        "Showing files must not rewrite the saved folder layout");
+                var leaf = filePane.fileNodePositions().get("src/Main.java");
+                var leafSurface = (javafx.scene.canvas.Canvas)
+                        ((javafx.scene.layout.Pane) filePane.getCenter())
+                                .getChildren().getFirst();
+                double leafScale = filePane.getZoomPercent() / 100.0;
+                double leafX = leafSurface.getWidth() / 2
+                        + (leaf.x() - filePane.getCameraX()) * leafScale;
+                double leafY = leafSurface.getHeight() / 2
+                        + (leaf.y() - filePane.getCameraY()) * leafScale;
+                leafSurface.getOnMouseClicked().handle(
+                        new javafx.scene.input.MouseEvent(
+                                javafx.scene.input.MouseEvent.MOUSE_CLICKED,
+                                leafX, leafY, 0, 0, javafx.scene.input.MouseButton.PRIMARY, 2,
+                                false, false, false, false, true, false, false,
+                                false, false, false,
+                                new javafx.scene.input.PickResult(leafSurface, leafX, leafY)));
+                assertEquals("src/Main.java", openedSource.get(),
+                        "Double-clicking a file opens the existing reference tab");
+                assertEquals("src", filePane.getSelectedNode());
+                filePane.setShowCodeFiles(false);
+                assertFalse(filePane.isShowingCodeFiles());
+                assertTrue(filePane.fileNodePositions().isEmpty());
+                assertNull(fileLayoutSaved.get(),
+                        "Hiding files must not overwrite the saved layout");
+                tabPane.getTabs().remove(fileTab);
                 tabPane.getSelectionModel().select(previousTab);
                 Slider fontSlider = (Slider) zoom.lookup(".slider");
                 assertNotNull(fontSlider);
