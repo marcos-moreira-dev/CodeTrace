@@ -12,15 +12,24 @@ import javafx.application.Platform;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.geometry.Point2D;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
+import javafx.scene.control.Tooltip;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
@@ -35,6 +44,12 @@ public final class DependencyGraphPane extends BorderPane {
     private static final double MAX_NODE_COORDINATE = 100_000;
     private final Pane viewport = new Pane();
     private final Canvas canvas = new Canvas();
+    private final StackPane graphSurface = new StackPane();
+    private final VBox inspector = new VBox(8);
+    private final Label inspectorTitle = new Label();
+    private final Label inspectorPath = new Label();
+    private final ListView<String> inspectorFiles = new ListView<>();
+    private final ListView<String> inspectorFolders = new ListView<>();
     private final GraphCamera camera = new GraphCamera();
     private final Map<String, GraphLayout.Point> layout = new LinkedHashMap<>();
     /** Recompute edge curves on layout changes, not zoom, pan or selection. */
@@ -112,7 +127,22 @@ public final class DependencyGraphPane extends BorderPane {
         canvas.heightProperty().bind(viewport.heightProperty());
         canvas.widthProperty().addListener((obs, old, value) -> onViewportResized());
         canvas.heightProperty().addListener((obs, old, value) -> onViewportResized());
-        setCenter(viewport);
+        graphSurface.getChildren().add(viewport);
+        VBox legend = new VBox(5);
+        legend.getStyleClass().add("dependency-map-legend");
+        legend.setMaxSize(VBox.USE_PREF_SIZE, VBox.USE_PREF_SIZE);
+        Label legendTitle = new Label("Leyenda");
+        legendTitle.getStyleClass().add("dependency-map-legend-title");
+        Label dependency = new Label("━━▶  Origen depende del destino");
+        dependency.getStyleClass().add("dependency-map-legend-dependency");
+        Label containment = new Label("┄┄┄   Contiene subcarpeta");
+        legend.getChildren().addAll(legendTitle, dependency, containment);
+        legend.setMouseTransparent(true);
+        graphSurface.getChildren().add(legend);
+        StackPane.setAlignment(legend, Pos.BOTTOM_LEFT);
+        StackPane.setMargin(legend, new Insets(12));
+        setCenter(graphSurface);
+        initializeInspector();
         canvas.setCursor(Cursor.OPEN_HAND);
         canvas.setFocusTraversable(true);
 
@@ -198,7 +228,7 @@ public final class DependencyGraphPane extends BorderPane {
             }
             String hit = pickNode(event.getX(), event.getY());
             selectNode(hit);
-            if (hit != null && event.getClickCount() == 2) openSource.accept(hit);
+            // Directory nodes are explored through the inspector, not opened as files.
             event.consume();
         });
         viewport.addEventFilter(javafx.scene.input.ScrollEvent.SCROLL, event -> {
@@ -225,6 +255,71 @@ public final class DependencyGraphPane extends BorderPane {
             event.consume();
         });
         redraw();
+    }
+
+    private void initializeInspector() {
+        inspector.getStyleClass().add("dependency-map-inspector");
+        inspector.setPrefWidth(265);
+        inspector.setMinWidth(220);
+        inspectorTitle.getStyleClass().add("dependency-map-inspector-title");
+        inspectorTitle.setWrapText(true);
+        inspectorPath.getStyleClass().add("dependency-map-inspector-path");
+        inspectorPath.setWrapText(true);
+        inspectorFiles.setPlaceholder(new Label("Sin archivos directos"));
+        inspectorFolders.setPlaceholder(new Label("Sin subcarpetas visibles"));
+        inspectorFiles.setCellFactory(list -> pathCell());
+        inspectorFolders.setCellFactory(list -> pathCell());
+        inspectorFiles.setOnMouseClicked(event -> {
+            if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
+                String file = inspectorFiles.getSelectionModel().getSelectedItem();
+                if (file != null) openSource.accept(file);
+            }
+        });
+        inspectorFolders.setOnMouseClicked(event -> {
+            if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
+                String folder = inspectorFolders.getSelectionModel().getSelectedItem();
+                if (folder != null) {
+                    selectNode(folder);
+                    GraphLayout.Point at = layout.get(folder);
+                    if (at != null) camera.center(at.x() + 120, at.y());
+                    redraw();
+                }
+            }
+        });
+        inspectorFolders.setPrefHeight(115);
+        inspectorFolders.setMaxHeight(165);
+        VBox.setVgrow(inspectorFiles, Priority.ALWAYS);
+        inspector.getChildren().addAll(inspectorTitle, inspectorPath,
+                new Label("Archivos"), inspectorFiles,
+                new Label("Subcarpetas"), inspectorFolders);
+    }
+
+    private static ListCell<String> pathCell() {
+        return new ListCell<>() {
+            @Override protected void updateItem(String path, boolean empty) {
+                super.updateItem(path, empty);
+                setText(empty || path == null ? null : shortName(path));
+                setTooltip(empty || path == null ? null : new Tooltip(path));
+            }
+        };
+    }
+
+    private static String shortName(String path) {
+        if (path.equals(".")) return "Raíz";
+        return path.substring(path.lastIndexOf('/') + 1);
+    }
+
+    private void showInspector(String directory) {
+        if (directory == null) {
+            setRight(null);
+            return;
+        }
+        inspectorTitle.setText(shortName(directory.equals(".") && !model.folder().isEmpty()
+                ? model.folder() : directory));
+        inspectorPath.setText(directory.equals(".") ? "Carpeta del proyecto" : directory);
+        inspectorFiles.getItems().setAll(model.files(directory));
+        inspectorFolders.getItems().setAll(model.subfolders(directory));
+        setRight(inspector);
     }
 
     private void onViewportResized() {
@@ -322,13 +417,15 @@ public final class DependencyGraphPane extends BorderPane {
     }
 
     public String selectedNodeSummary() {
-        if (selected == null) return nodeCount() + " nodos · "
-                + connectionCount() + " conexiones";
+        if (selected == null) return nodeCount() + " carpetas · "
+                + connectionCount() + " dependencias · "
+                + model.hierarchy().size() + " subcarpetas";
         long outgoing = model.edges().stream()
                 .filter(e -> e.source().equals(selected)).count();
         long incoming = model.edges().stream()
                 .filter(e -> e.target().equals(selected)).count();
-        return outgoing + " salientes · " + incoming + " entrantes";
+        return outgoing + " dependencias salientes · " + incoming
+                + " entrantes · " + model.subfolders(selected).size() + " subcarpetas";
     }
 
     public void clearSelection() { selectNode(null); }
@@ -340,6 +437,10 @@ public final class DependencyGraphPane extends BorderPane {
             selectedNeighbors = Set.of();
         } else {
             Set<String> neighbors = new LinkedHashSet<>();
+            for (var link : model.hierarchy()) {
+                if (link.parent().equals(path)) neighbors.add(link.child());
+                if (link.child().equals(path)) neighbors.add(link.parent());
+            }
             for (var edge : model.edges()) {
                 if (edge.source().equals(path) && !edge.target().equals(path))
                     neighbors.add(edge.target());
@@ -348,6 +449,7 @@ public final class DependencyGraphPane extends BorderPane {
             }
             selectedNeighbors = Set.copyOf(neighbors);
         }
+        showInspector(path);
         onNodeSelected.accept(path);
         redraw();
     }
@@ -398,6 +500,19 @@ public final class DependencyGraphPane extends BorderPane {
                 w / 2 - camera.centerX() * zoom,
                 h / 2 - camera.centerY() * zoom);
         g.setLineWidth(1.15);
+        // Dashed containment links are independent from directed code dependencies.
+        g.setLineDashes(7, 6);
+        for (var link : model.hierarchy()) {
+            GraphLayout.Point a = layout.get(link.parent());
+            GraphLayout.Point b = layout.get(link.child());
+            if (a == null || b == null) continue;
+            boolean related = selected != null && (selected.equals(link.parent())
+                    || selected.equals(link.child()));
+            g.setStroke(Color.web(related ? "#738796" : "#b0bdc7"));
+            g.setLineWidth(related ? 1.8 : 1.25);
+            g.strokeLine(a.x(), a.y(), b.x(), b.y());
+        }
+        g.setLineDashes();
         if (edgeRoutes == null) edgeRoutes = GraphEdgeRouting.arrange(model.edges(), layout);
         for (var edge : model.edges()) {
             GraphLayout.Point a = layout.get(edge.source());
@@ -437,7 +552,8 @@ public final class DependencyGraphPane extends BorderPane {
             if (p == null) continue;
             boolean active = path.equals(selected);
             boolean neighbor = selectedNeighbors.contains(path);
-            String label = path.substring(path.lastIndexOf('/') + 1);
+            String label = path.equals(".") && !model.folder().isEmpty()
+                    ? shortName(model.folder()) : shortName(path);
             if (label.length() > 35) label = label.substring(0, 32) + "...";
             double labelWidth = Math.min(241, Math.max(70, label.length() * 6.5 + 12));
             g.setFill(Color.web(active ? "#ede9fb" : neighbor ? "#dff6f5" : "#f8fafb"));
