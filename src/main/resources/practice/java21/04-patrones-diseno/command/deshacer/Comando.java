@@ -12,24 +12,6 @@ public interface Comando {
     void ejecutar();
     void deshacer();
 }
-final class AgregarTexto implements Comando {
-    private final Editor receptor;
-    private final String texto;
-    private int longitudAnterior=-1;
-    AgregarTexto(Editor receptor,String texto){
-        this.receptor=receptor;this.texto=texto;
-    }
-    public void ejecutar(){
-        if(longitudAnterior>=0)throw new IllegalStateException("Ya ejecutado");
-        longitudAnterior=receptor.longitud();
-        receptor.agregar(texto);
-    }
-    public void deshacer(){
-        if(longitudAnterior<0)throw new IllegalStateException("Sin ejecución");
-        receptor.borrarDesde(longitudAnterior);
-        longitudAnterior=-1;
-    }
-}
 
 /*
  * CodeTrace | EJEMPLO DE CONSOLA (practica)
