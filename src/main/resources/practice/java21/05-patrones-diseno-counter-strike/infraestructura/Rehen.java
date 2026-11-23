@@ -93,7 +93,7 @@ public final class Rehen {
         // El avance es un indicador abstracto del objetivo de evacuación.
         // Un porcentaje de 100 equivale a entregar el NPC en la zona segura
         // del escenario narrativo; no almacenamos coordenadas ni trayectos.
-        // El controlador leerá RESCATADO para relatar el objetivo completado.
+        // La vista leerá RESCATADO al imprimir la ficha tras la evacuación.
         progreso = Math.min(100, progreso + porcentaje);
         if (progreso == 100) estado = EstadoRehen.RESCATADO;
     }
