@@ -222,9 +222,15 @@ def valid_complete_guide(src: str, path: Path) -> bool:
     if stripped == src:
         return False
     footer = src[src.rfind(BEGIN):src.rfind(END)]
-    required = ('Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):',
-                'Salida esperada:')
-    if not all(token in footer for token in required):
+    # A complete Java exercise may name its java21 working folder
+    # explicitly instead of the generic "carpeta del lenguaje".
+    locations = (
+        'Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):',
+        'Ejemplo en consola (PowerShell; desde la carpeta java21):',
+    )
+    if not any(location in footer for location in locations):
+        return False
+    if 'Salida esperada:' not in footer:
         return False
     if GENERIC.search(footer):
         return False
