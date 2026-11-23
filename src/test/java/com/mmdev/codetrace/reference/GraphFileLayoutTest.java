@@ -104,6 +104,27 @@ class GraphFileLayoutTest {
     }
 
     @Test
+    void singleFileIsNotExiledByAnAdjacentHundredFileIsland() {
+        List<String> large = IntStream.range(0, 198)
+                .mapToObj(i -> "big/Source" + i + ".java").toList();
+        var graph = new ProjectDependencyGraph.Graph(".",
+                List.of("big", "small"), List.of(), 199, false,
+                "f".repeat(64),
+                Map.of("big", large, "small", List.of("small/Entry.java")),
+                List.of(), Map.of());
+        var folders = Map.of("big", new GraphLayout.Point(0, 0),
+                "small", new GraphLayout.Point(290, 0));
+        var result = GraphFileLayout.arrange(graph, folders);
+        assertEquals(199, result.positions().size());
+        GraphFileLayout.Bounds small = result.islands().get("small");
+        assertNotNull(small);
+        assertTrue(Math.hypot(small.centerX() - 290,
+                        small.centerY()) < 240,
+                "Small islands should orbit their folder instead of being exiled.");
+        assertFalse(small.overlaps(result.islands().get("big"), 10));
+    }
+
+    @Test
     void crowdedNeighborsKeepDistinctIslandsAndFolderLabelsFree() {
         var owners = List.of("a", "b", "c", "d", "e", "f");
         Map<String, List<String>> files = new HashMap<>();
