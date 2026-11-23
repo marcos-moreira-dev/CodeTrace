@@ -302,6 +302,14 @@ class CodeTraceAppSmokeTest {
                 assertEquals("src/Main.java", graphPane.getSelectedNode());
                 assertTrue(graphPane.getSelectedNeighbors().contains("src/Util.java"));
                 assertEquals("src/Main.java", selectedGraphPath.get());
+                assertNotNull(graphPane.getRight(),
+                        "Selecting a folder must expose the right-hand inspector");
+                assertEquals(2, graphPane.getRight().lookupAll(".app-navigation-list").size(),
+                        "Both inspector lists must reuse shared navigation styling");
+                assertNotNull(graphPane.getRight().lookup(".app-panel-close"),
+                        "The inspector should offer a visible close action");
+                assertEquals(2, graphViewport.lookupAll(".dependency-map-legend-marker").size(),
+                        "The legend must draw vector samples, not font glyph arrows");
 
                 // Middle button pans without affecting the selected node.
                 double bgX = graphSurface.getWidth() - 20;
@@ -335,6 +343,8 @@ class CodeTraceAppSmokeTest {
                 assertEquals(javafx.scene.Cursor.OPEN_HAND, graphSurface.getCursor());
                 graphPane.clearSelection();
                 assertNull(graphPane.getSelectedNode());
+                assertNull(graphPane.getRight(),
+                        "Closing the inspector must leave the canvas unobstructed");
                 assertTrue(graphPane.getSelectedNeighbors().isEmpty());
                 assertNull(selectedGraphPath.get());
                 tabPane.getTabs().remove(mapTab);
