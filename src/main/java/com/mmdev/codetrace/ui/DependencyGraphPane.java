@@ -12,8 +12,6 @@ import javafx.application.Platform;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.geometry.Point2D;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -28,7 +26,6 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -44,7 +41,6 @@ public final class DependencyGraphPane extends BorderPane {
     private static final double MAX_NODE_COORDINATE = 100_000;
     private final Pane viewport = new Pane();
     private final Canvas canvas = new Canvas();
-    private final StackPane graphSurface = new StackPane();
     private final VBox inspector = new VBox(8);
     private final Label inspectorTitle = new Label();
     private final Label inspectorPath = new Label();
@@ -127,7 +123,6 @@ public final class DependencyGraphPane extends BorderPane {
         canvas.heightProperty().bind(viewport.heightProperty());
         canvas.widthProperty().addListener((obs, old, value) -> onViewportResized());
         canvas.heightProperty().addListener((obs, old, value) -> onViewportResized());
-        graphSurface.getChildren().add(viewport);
         VBox legend = new VBox(5);
         legend.getStyleClass().add("dependency-map-legend");
         legend.setMaxSize(VBox.USE_PREF_SIZE, VBox.USE_PREF_SIZE);
@@ -138,10 +133,13 @@ public final class DependencyGraphPane extends BorderPane {
         Label containment = new Label("┄┄┄   Contiene subcarpeta");
         legend.getChildren().addAll(legendTitle, dependency, containment);
         legend.setMouseTransparent(true);
-        graphSurface.getChildren().add(legend);
-        StackPane.setAlignment(legend, Pos.BOTTOM_LEFT);
-        StackPane.setMargin(legend, new Insets(12));
-        setCenter(graphSurface);
+        // Keep the original Pane -> Canvas structure for existing JavaFX clients.
+        // Overlay is anchored in viewport coordinates, never graph/world space.
+        viewport.getChildren().add(legend);
+        legend.setLayoutX(12);
+        legend.layoutYProperty().bind(viewport.heightProperty()
+                .subtract(legend.heightProperty()).subtract(12));
+        setCenter(viewport);
         initializeInspector();
         canvas.setCursor(Cursor.OPEN_HAND);
         canvas.setFocusTraversable(true);
