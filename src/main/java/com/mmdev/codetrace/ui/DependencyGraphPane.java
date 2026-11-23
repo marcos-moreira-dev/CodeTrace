@@ -490,10 +490,9 @@ public final class DependencyGraphPane extends BorderPane {
             symbol.setMaxSize(34, 16);
             Line membership = new Line(1, 8, 30, 8);
             membership.setStroke(Color.web("#91a5b3"));
-            membership.setStrokeWidth(1.2);
-            membership.getStrokeDashArray().addAll(2.0, 5.0);
+            membership.setStrokeWidth(1.7);
             symbol.getChildren().add(membership);
-            HBox row = new HBox(7, symbol, new Label("Archivo en carpeta"));
+            HBox row = new HBox(7, symbol, new Label("Pertenece a la carpeta"));
             row.getStyleClass().add("dependency-map-legend-row");
             row.setAlignment(Pos.CENTER_LEFT);
             legend.getChildren().add(row);
@@ -860,14 +859,14 @@ public final class DependencyGraphPane extends BorderPane {
     }
 
     /**
-     * Each folder owns one visually grouped island. A single membership
-     * connector avoids hundreds of crossing edges from one directory.
-     * The island backgrounds sit below all graph edges and labels.
+     * Each folder owns one visually grouped island. The backgrounds sit
+     * beneath architecture edges; ownership connectors are drawn above them.
      */
     private void drawFileIslands(GraphicsContext g, double w, double h,
                                  double zoom) {
         if (!showFilesItem.isSelected()) return;
         for (var entry : fileIslands.entrySet()) {
+            if (!islandHasDockedFiles(entry.getKey())) continue;
             GraphFileLayout.Bounds box = entry.getValue();
             if (!visibleBounds(box, w, h, zoom)) continue;
             boolean related = entry.getKey().equals(selected);
@@ -885,21 +884,68 @@ public final class DependencyGraphPane extends BorderPane {
             g.setLineDashes();
         }
 
-        g.setLineWidth(1.35);
-        g.setLineDashes(2, 5);
+    }
+
+    /** Files moved by hand no longer occupy their automatically packed slot. */
+    private boolean islandHasDockedFiles(String owner) {
+        for (String source : model.files(owner)) {
+            if (filePositions.containsKey(source)
+                    && !manualFileOffsets.containsKey(source)) return true;
+        }
+        return false;
+    }
+
+    /**
+     * Solid membership lines have no arrowhead, so they cannot be confused
+     * with directed source dependencies. Selected relationships are drawn last.
+     */
+    private void drawFileMembership(GraphicsContext g,
+                                    double w, double h, double zoom) {
+        if (!showFilesItem.isSelected()) return;
+        g.setLineDashes();
+
+        // One connector per ordinary island, not one per file.
         for (var entry : fileIslands.entrySet()) {
+            if (!islandHasDockedFiles(entry.getKey())) continue;
             GraphLayout.Point parent = layout.get(entry.getKey());
             if (parent == null) continue;
             GraphFileLayout.Bounds box = entry.getValue();
             double nearestX = clamp(parent.x(), box.minX(), box.maxX());
             double nearestY = clamp(parent.y(), box.minY(), box.maxY());
-            if (!visibleOnCanvas(parent, new GraphLayout.Point(
-                    nearestX, nearestY), w, h, zoom)) continue;
-            g.setStroke(Color.web(entry.getKey().equals(selected)
-                    ? "#9c7acb" : "#9aafbf"));
-            g.strokeLine(parent.x(), parent.y(), nearestX, nearestY);
+            GraphLayout.Point target = new GraphLayout.Point(nearestX, nearestY);
+            if (!visibleOnCanvas(parent, target, w, h, zoom)) continue;
+            boolean related = entry.getKey().equals(selected);
+            g.setStroke(Color.web(related ? "#8863bc" : "#8fa5b5"));
+            g.setLineWidth(related ? 2.8 : 1.35);
+            g.strokeLine(parent.x(), parent.y(), target.x(), target.y());
         }
-        g.setLineDashes();
+
+        // Explicitly dragged files have their own line to the parent.
+        for (String source : manualFileOffsets.keySet()) {
+            GraphLayout.Point parent = layout.get(parentOfFile(source));
+            GraphLayout.Point file = filePositions.get(source);
+            if (parent == null || file == null
+                    || !visibleOnCanvas(parent, file, w, h, zoom)) continue;
+            boolean related = selected != null
+                    && selected.equals(parentOfFile(source));
+            g.setStroke(Color.web(source.equals(selectedFile)
+                    ? "#7251ae" : related ? "#a183cc" : "#8fa5b5"));
+            g.setLineWidth(source.equals(selectedFile) ? 3.3
+                    : related ? 2.6 : 1.25);
+            g.strokeLine(parent.x(), parent.y(), file.x(), file.y());
+        }
+
+        // A selected docked file gets one stronger direct relationship.
+        if (selectedFile != null && !manualFileOffsets.containsKey(selectedFile)) {
+            GraphLayout.Point parent = layout.get(parentOfFile(selectedFile));
+            GraphLayout.Point file = filePositions.get(selectedFile);
+            if (parent != null && file != null
+                    && visibleOnCanvas(parent, file, w, h, zoom)) {
+                g.setStroke(Color.web("#7251ae"));
+                g.setLineWidth(3.3);
+                g.strokeLine(parent.x(), parent.y(), file.x(), file.y());
+            }
+        }
     }
 
     /** Only visualized source files are drawn; labels never become graph edges. */
@@ -987,8 +1033,8 @@ public final class DependencyGraphPane extends BorderPane {
             if (a == null || b == null) continue;
             boolean related = selected != null && (selected.equals(link.parent())
                     || selected.equals(link.child()));
-            g.setStroke(Color.web(related ? "#738796" : "#b0bdc7"));
-            g.setLineWidth(related ? 1.8 : 1.25);
+            g.setStroke(Color.web(related ? "#536f82" : "#b0bdc7"));
+            g.setLineWidth(related ? 2.8 : 1.25);
             g.strokeLine(a.x(), a.y(), b.x(), b.y());
         }
         g.setLineDashes();
@@ -999,8 +1045,8 @@ public final class DependencyGraphPane extends BorderPane {
             if (a == null || b == null) continue;
             boolean related = selected != null && (edge.source().equals(selected)
                     || edge.target().equals(selected));
-            g.setStroke(Color.web(related ? "#168a97" : "#c1d2dd"));
-            g.setLineWidth(related ? 2.05 : 1.1);
+            g.setStroke(Color.web(related ? "#087c8b" : "#c1d2dd"));
+            g.setLineWidth(related ? 3.1 : 1.1);
             GraphEdgeRouting.Route route = edgeRoutes.get(edge);
             double tangentX = b.x() - a.x();
             double tangentY = b.y() - a.y();
@@ -1026,6 +1072,7 @@ public final class DependencyGraphPane extends BorderPane {
                     tipX - 7 * Math.cos(angle + 0.5),
                     tipY - 7 * Math.sin(angle + 0.5));
         }
+        drawFileMembership(g, w, h, zoom);
         drawCodeFiles(g, w, h, zoom);
         for (String path : model.nodes()) {
             GraphLayout.Point p = layout.get(path);
