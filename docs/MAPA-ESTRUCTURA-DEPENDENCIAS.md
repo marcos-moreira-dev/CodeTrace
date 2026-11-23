@@ -23,10 +23,21 @@ implícitos de símbolos. El mapa es una exploración estática limitada.
 
 ## Navegación
 
-Seleccionar un nodo abre el inspector lateral con archivos de código y
-subcarpetas directas. Doble clic en un archivo abre su pestaña normal de
-CodeTrace; doble clic en una subcarpeta selecciona su nodo. La leyenda
-permanece fija abajo a la izquierda durante el paneo y zoom.
+Seleccionar un nodo abre el **inspector a la derecha**, con archivos de código
+y subcarpetas directas, iconos del mismo servicio que usa el explorador y
+listas con el estilo transversal de navegación. Doble clic o Intro sobre
+un archivo abre su pestaña normal; sobre una subcarpeta, selecciona su nodo.
+El botón de cerrar o Esc quitan la selección y ocultan el inspector.
+
+La leyenda permanece fija abajo a la izquierda durante el paneo y zoom.
+Sus trazos y puntas de flecha son vectoriales, independientes de la fuente
+del sistema; la flecha indica dependencia y la línea discontinua indica
+contención sin dirección.
+
+Un clic primario o central en el área de trabajo cierra el menú contextual
+«Centrar y ajustar a ventana / Restablecer distribución», sin interferir
+con el arrastre, zoom o selección. El clic secundario mantiene disponible
+ese menú.
 
 El cálculo es solo de lectura y mantiene límites de seguridad de archivos,
 nodos, dependencias, cancelación y carpetas generadas. La posición del grafo
