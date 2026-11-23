@@ -78,6 +78,8 @@ public final class DependencyGraphPane extends BorderPane {
     private final VBox inspector = new VBox(8);
     private final Label inspectorTitle = new Label();
     private final Label inspectorPath = new Label();
+    private final Label partialBranchNote = new Label(
+            "Esta rama continúa fuera de la vista parcial.");
     private final ListView<String> inspectorFiles = AppControls.navigationList();
     private final ListView<String> inspectorFolders = AppControls.navigationList();
     private final Label filesHeading = new Label("Archivos");
@@ -640,6 +642,10 @@ public final class DependencyGraphPane extends BorderPane {
         inspectorTitle.setMaxWidth(Double.MAX_VALUE);
         inspectorPath.getStyleClass().add("dependency-map-inspector-path");
         inspectorPath.setWrapText(true);
+        partialBranchNote.getStyleClass().add("dependency-map-partial-branch");
+        partialBranchNote.setWrapText(true);
+        partialBranchNote.setVisible(false);
+        partialBranchNote.setManaged(false);
         filesHeading.getStyleClass().add("app-section-heading");
         foldersHeading.getStyleClass().add("app-section-heading");
 
@@ -699,7 +705,8 @@ public final class DependencyGraphPane extends BorderPane {
         inspectorFolders.setMaxHeight(165);
         VBox.setVgrow(inspectorFiles, Priority.ALWAYS);
         inspector.getChildren().addAll(header, inspectorPath,
-                filesHeading, inspectorFiles, foldersHeading, inspectorFolders);
+                partialBranchNote, filesHeading, inspectorFiles,
+                foldersHeading, inspectorFolders);
     }
 
     private void openSelectedFile() {
@@ -738,6 +745,18 @@ public final class DependencyGraphPane extends BorderPane {
         return path.substring(path.lastIndexOf('/') + 1);
     }
 
+    /**
+     * An analyzed source folder with no direct sources cannot be a true leaf:
+     * if it has no visible children, the bounded breadth-first view omitted
+     * its descendants. Do not misreport the real filesystem as empty.
+     */
+    public boolean hasHiddenDescendants(String directory) {
+        return directory != null && model.truncated()
+                && layout.containsKey(directory)
+                && model.files(directory).isEmpty()
+                && model.subfolders(directory).isEmpty();
+    }
+
     private void showInspector(String directory) {
         if (directory == null) {
             setRight(null);
@@ -749,7 +768,14 @@ public final class DependencyGraphPane extends BorderPane {
         inspectorFiles.getItems().setAll(model.files(directory));
         inspectorFolders.getItems().setAll(model.subfolders(directory));
         filesHeading.setText("Archivos (" + inspectorFiles.getItems().size() + ")");
-        foldersHeading.setText("Subcarpetas (" + inspectorFolders.getItems().size() + ")");
+        boolean hidden = hasHiddenDescendants(directory);
+        foldersHeading.setText("Subcarpetas visibles ("
+                + inspectorFolders.getItems().size() + ")");
+        partialBranchNote.setVisible(hidden);
+        partialBranchNote.setManaged(hidden);
+        inspectorFolders.setPlaceholder(new Label(hidden
+                ? "Subcarpetas omitidas por límite del mapa"
+                : "Sin subcarpetas visibles"));
         inspectorPath.setTooltip(new Tooltip(inspectorPath.getText()));
         inspectorFiles.getSelectionModel().clearSelection();
         inspectorFolders.getSelectionModel().clearSelection();
@@ -864,7 +890,9 @@ public final class DependencyGraphPane extends BorderPane {
         long incoming = model.edges().stream()
                 .filter(e -> e.target().equals(selected)).count();
         return outgoing + " dependencias salientes · " + incoming
-                + " entrantes · " + model.subfolders(selected).size() + " subcarpetas";
+                + " entrantes · " + model.subfolders(selected).size()
+                + " subcarpetas visibles"
+                + (hasHiddenDescendants(selected) ? " · rama parcial" : "");
     }
 
     public void clearSelection() { selectNode(null); }
@@ -1147,6 +1175,7 @@ public final class DependencyGraphPane extends BorderPane {
             String label = path.equals(".") && !model.folder().isEmpty()
                     ? shortName(model.folder()) : shortName(path);
             if (label.length() > 35) label = label.substring(0, 32) + "...";
+            if (hasHiddenDescendants(path)) label += " · …";
             double labelWidth = Math.min(241, Math.max(70, label.length() * 6.5 + 12));
             g.setFill(Color.web(active ? "#ede9fb" : neighbor ? "#dff6f5" : "#f8fafb"));
             g.fillRect(p.x() + 14, p.y() - 13, labelWidth, 26);
