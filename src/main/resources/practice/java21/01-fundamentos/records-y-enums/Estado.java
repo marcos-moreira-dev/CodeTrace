@@ -15,3 +15,18 @@ public enum Estado {
  *   Pedido[codigo=P-002, total=20.0, estado=ENTREGADO]
  * Este tipo no tiene main; su cliente demuestra el comportamiento.
  */
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ *
+ * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
+ *   $out=Join-Path $env:TEMP "ct-practica-java"
+ *   New-Item -ItemType Directory -Force -Path $out | Out-Null
+ *   javac --release 21 -encoding UTF-8 -d $out (Get-ChildItem -Recurse -Filter *.java).FullName
+ *   java -cp $out RecordsYEnums
+ * Nota: Estado.java es un componente; la salida corresponde al cliente RecordsYEnums.java.
+ * Salida esperada:
+ *   Pedido[codigo=P-001, total=12.5, estado=RECIBIDO]
+ *   Pedido[codigo=P-002, total=20.0, estado=ENTREGADO]
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */
