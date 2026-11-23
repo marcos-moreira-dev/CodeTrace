@@ -531,6 +531,17 @@ class CodeTraceAppSmokeTest {
                         "Navigation mode must never drag source files");
                 assertNull(fileLayoutSaved.get(),
                         "Navigation mode must not persist any layout changes");
+                // JavaFX sends a click after a drag, which resets the
+                // gesture-suppression flag before the next actual click.
+                leafSurface.getOnMouseClicked().handle(
+                        new javafx.scene.input.MouseEvent(
+                                javafx.scene.input.MouseEvent.MOUSE_CLICKED,
+                                safeX + 75, safeY, 225, 130,
+                                javafx.scene.input.MouseButton.PRIMARY, 1,
+                                false, false, false, false, true, false, false,
+                                false, false, false,
+                                new javafx.scene.input.PickResult(
+                                        leafSurface, safeX + 75, safeY)));
 
                 // A click still selects a file, but even a double click must
                 // not open another tab while navigation-only is enabled.
