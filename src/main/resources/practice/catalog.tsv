@@ -14,9 +14,9 @@ c	01-fundamentos/sintaxis/variables.c
 c	01-fundamentos/structs-y-enums/structs_y_enums.c
 c	02-estructuras-datos/cola-circular/cola_circular.c
 c	02-estructuras-datos/lista-enlazada/lista_enlazada.c
+c	02-estructuras-datos/pila-capacidad-fija/Pila.c
 c	02-estructuras-datos/pila/main.c
 c	02-estructuras-datos/pila/pila.c
-c	02-estructuras-datos/pila-capacidad-fija/Pila.c
 c	02-estructuras-datos/pila/pila.h
 c	02-estructuras-datos/tabla-hash/tabla_hash.c
 c	03-algoritmos/bfs-matriz/bfs_matriz.c
@@ -253,8 +253,8 @@ java21	01-fundamentos/funciones/Lambdas.java
 java21	01-fundamentos/funciones/ReferenciasYCallbacks.java
 java21	01-fundamentos/genericos-y-contratos/GenericosYContratos.java
 java21	01-fundamentos/optional-y-resultados/OptionalYResultados.java
-java21	01-fundamentos/records-y-enums/Pedido.java
 java21	01-fundamentos/records-y-enums/Estado.java
+java21	01-fundamentos/records-y-enums/Pedido.java
 java21	01-fundamentos/records-y-enums/RecordsYEnums.java
 java21	01-fundamentos/sintaxis/Control.java
 java21	01-fundamentos/sintaxis/Tipos.java
@@ -341,7 +341,11 @@ java21	03-algoritmos/programacion-dinamica/cambio-monedas/Monedas.java
 java21	03-algoritmos/programacion-dinamica/mochila-01/Mochila01.java
 java21	03-algoritmos/recursion/FibonacciMemoizado.java
 java21	03-algoritmos/voraces/SeleccionActividades.java
-java21	04-patrones-diseno/abstract-factory/tema-consola/FamiliaInterfaz.java
+java21	04-patrones-diseno/abstract-factory/tema-consola/Boton.java
+java21	04-patrones-diseno/abstract-factory/tema-consola/Dialogo.java
+java21	04-patrones-diseno/abstract-factory/tema-consola/Fabrica.java
+java21	04-patrones-diseno/abstract-factory/tema-consola/FabricaClara.java
+java21	04-patrones-diseno/abstract-factory/tema-consola/FabricaOscura.java
 java21	04-patrones-diseno/abstract-factory/tema-consola/MainAbstractFactory.java
 java21	04-patrones-diseno/adapter/AdaptadorTemperatura.java
 java21	04-patrones-diseno/adapter/MainAdapter.java
@@ -349,9 +353,12 @@ java21	04-patrones-diseno/adapter/SensorCelsius.java
 java21	04-patrones-diseno/adapter/TermometroLegado.java
 java21	04-patrones-diseno/builder/solicitud/MainBuilder.java
 java21	04-patrones-diseno/builder/solicitud/Solicitud.java
+java21	04-patrones-diseno/command/deshacer/AgregarTexto.java
 java21	04-patrones-diseno/command/deshacer/Comando.java
 java21	04-patrones-diseno/command/deshacer/Editor.java
 java21	04-patrones-diseno/command/deshacer/MainCommand.java
+java21	04-patrones-diseno/composite/arbol-archivos/Archivo.java
+java21	04-patrones-diseno/composite/arbol-archivos/Carpeta.java
 java21	04-patrones-diseno/composite/arbol-archivos/Elemento.java
 java21	04-patrones-diseno/composite/arbol-archivos/MainComposite.java
 java21	04-patrones-diseno/decorator/MainDecorator.java
@@ -363,9 +370,10 @@ java21	04-patrones-diseno/factory-method/Exportador.java
 java21	04-patrones-diseno/factory-method/ExportadorTexto.java
 java21	04-patrones-diseno/factory-method/MainFactoryMethod.java
 java21	04-patrones-diseno/factory/basico/Correo.java
-java21	04-patrones-diseno/factory/basico/Mensaje.java
 java21	04-patrones-diseno/factory/basico/Factory.java
 java21	04-patrones-diseno/factory/basico/MainFactoryBasica.java
+java21	04-patrones-diseno/factory/basico/Mensaje.java
+java21	04-patrones-diseno/observer/basico/Escucha.java
 java21	04-patrones-diseno/observer/basico/MainObservadorBasico.java
 java21	04-patrones-diseno/observer/basico/Observador.java
 java21	04-patrones-diseno/observer/CentroEventos.java
@@ -375,6 +383,7 @@ java21	04-patrones-diseno/observer/Observador.java
 java21	04-patrones-diseno/strategy-tarifas/EstrategiaTarifa.java
 java21	04-patrones-diseno/strategy-tarifas/MainTarifas.java
 java21	04-patrones-diseno/strategy-tarifas/Tarifas.java
+java21	04-patrones-diseno/strategy/basico/Descuento.java
 java21	04-patrones-diseno/strategy/basico/MainStrategy.java
 java21	04-patrones-diseno/strategy/basico/Strategy.java
 java21	04-patrones-diseno/template-method/reportes/MainTemplateMethod.java
