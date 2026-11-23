@@ -15,11 +15,6 @@ import java.util.List;
  * esas políticas de ciclo de vida y manejo de excepciones.
  */
 public final class Observador {
-    @FunctionalInterface
-    public interface Escucha {
-        void alCambiar(int nuevoValor);
-    }
-
     private final List<Escucha> oyentes = new ArrayList<>();
     private int valor;
 
