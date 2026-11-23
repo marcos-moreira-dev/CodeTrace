@@ -7,19 +7,12 @@
  * Fábrica simple de mensajes, no patrón Factory Method por herencia.
  *
  * <p>Su única responsabilidad es concentrar el conocimiento de la clase
- * concreta Correo y devolverla mediante el contrato Mensaje. El cliente
+ * concreta Correo y devolverla mediante el contrato Mensaje.
+ * Ambos se definen en sus propios archivos para visualizar la arquitectura. El cliente
  * depende del contrato, no de la decisión de creación. La versión GoF
  * con creadores polimórficos está en factory-method/.
  */
 public final class Factory {
-    interface Mensaje {
-        String enviar();
-    }
-
-    record Correo(String destino) implements Mensaje {
-        public String enviar() { return "Correo a " + destino; }
-    }
-
     public static Mensaje crear(String destino) {
         return new Correo(destino);
     }
