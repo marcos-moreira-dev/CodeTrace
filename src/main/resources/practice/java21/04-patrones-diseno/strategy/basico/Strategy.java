@@ -9,9 +9,6 @@
  * expresiones lambda y referencias a métodos de Java 21.
  */
 public final class Strategy {
-    @FunctionalInterface
-    public interface Descuento { double aplicar(double total); }
-
     public static double cobrar(double total, Descuento estrategia) {
         if (total < 0) throw new IllegalArgumentException("Subtotal");
         return estrategia.aplicar(total);
