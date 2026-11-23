@@ -282,7 +282,8 @@ public final class DependencyGraphPane extends BorderPane {
                 double offsetX = expansion == null ? 0 : expansion.getX();
                 double offsetY = expansion == null ? 0 : expansion.getY();
                 baseLayout.put(pressed, new GraphLayout.Point(
-                        x - offsetX, y - offsetY));
+                        clamp(x - offsetX, -MAX_NODE_COORDINATE, MAX_NODE_COORDINATE),
+                        clamp(y - offsetY, -MAX_NODE_COORDINATE, MAX_NODE_COORDINATE)));
                 edgeRoutes = null;
                 redraw();
                 event.consume();
