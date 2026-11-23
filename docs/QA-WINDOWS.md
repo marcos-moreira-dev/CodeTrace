@@ -73,11 +73,13 @@
   conjunto y las islas quedan próximas a su carpeta sin atravesar etiquetas.
   Al ocultarlos se recuperan las posiciones originales sin modificar .ctrace.
 - **GRAPH-FILES-16:** En una vista parcial por el límite de 180 carpetas,
-  seleccionar una rama intermedia cuyo código aparece en descendientes
-  omitidos. El inspector no debe presentar su ausencia de hijos VISIBLES
-  como si la carpeta del disco estuviera vacía: indicará rama parcial y
-  «Subcarpetas visibles». Comprobar que las líneas discontinuas mantienen
-  significado de contención, no herencia.
+  seleccionar una rama intermedia cuyos hijos reales no caben. Debe aparecer
+  **una conexión discontinua de continuación** con nombre de hijo omitido,
+  no un nodo «desnudo». El inspector enumera tanto los hijos visibles como
+  los omitidos («fuera del mapa»). Doble clic en uno de los omitidos abre
+  un mapa del mismo tipo centrado en esa subcarpeta. Una carpeta sin hijos
+  reales no muestra advertencias de truncamiento aunque otra rama se corte.
+  Las líneas discontinuas siempre significan contención, nunca herencia.
 - **GRAPH-FILES-17:** Mover manualmente una carpeta en modo archivos visibles
   y alternar varias veces el modo. La posición persistida de la carpeta
   debe seguir siendo un dato válido y recuperable, sin incorporar el
