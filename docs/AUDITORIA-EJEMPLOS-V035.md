@@ -4,9 +4,9 @@
 
 ## Alcance y criterio
 
-La biblioteca mantiene **un único catálogo** con **917 archivos de referencia en 14 lenguajes**, repartidos entre fundamentos, estructuras de datos, algoritmos y patrones. Un archivo es una unidad de mecanografía, **no necesariamente un ejercicio autónomo**. El paquete Java 21 contiene **243 archivos**. El catálogo v0.3.4 tenía 813: este cambio suma 104 netos por separar roles Java y sustituir un contenedor de tipos anidados.
+La biblioteca mantiene **un único catálogo** con **918 archivos de referencia en 14 lenguajes**, repartidos entre fundamentos, estructuras de datos, algoritmos y patrones. Un archivo es una unidad de mecanografía, **no necesariamente un ejercicio autónomo**. El paquete Java 21 contiene **244 archivos**. El catálogo v0.3.4 tenía 813: este cambio suma 105 netos por separar roles Java y sustituir un contenedor de tipos anidados.
 
-La revisión de integridad recorre todos los elementos del catálogo: ruta segura, recurso real, código no vacío, cabecera de versión y comando de compilación/comprobación. Los clientes representativos se compilan y ejecutan mediante los verificadores por plataforma. Esto **no equivale** a validar semánticamente cada línea de los 917 archivos en todos los compiladores.
+La revisión de integridad recorre todos los elementos del catálogo: ruta segura, recurso real, código no vacío, cabecera de versión y comando de compilación/comprobación. Los clientes representativos se compilan y ejecutan mediante los verificadores por plataforma. Esto **no equivale** a validar semánticamente cada línea de los 918 archivos en todos los compiladores.
 
 ## Decisión de diseño didáctico
 
@@ -31,7 +31,7 @@ La revisión de integridad recorre todos los elementos del catálogo: ruta segur
 | Callbacks | `Receptor` estaba dentro del cliente `Callbacks` | `Receptor.java` y `Callbacks.java` |
 | Tipos de grafo | `Orientacion` era un `enum` público anidado en `Grafo` | `Orientacion.java`, `Grafo.java`, `MainTiposGrafo.java` |
 
-Las nuevas fuentes conservan cabeceras con Java 21, instrucciones de compilación, cliente y salida esperada. Se actualizaron los consumidores para usar los contratos independientes y el catálogo de recursos. La biblioteca pasa a caché `v12` para no reutilizar los archivos obsoletos de `v8`.
+Las nuevas fuentes conservan cabeceras con Java 21, instrucciones de compilación, cliente y salida esperada. Se actualizaron los consumidores para usar los contratos independientes y el catálogo de recursos. La biblioteca pasa a caché `v13` para no reutilizar los archivos obsoletos de `v8`.
 
 ## Hallazgo de la revisión automática de Java
 
@@ -50,7 +50,7 @@ comprueba las unidades que sí se separaron.
 
 ## Cómo verificar
 
-- `scripts/verificar-biblioteca.sh`: integridad de las 917 rutas, compilación integral de los Java 21, ejecución de clientes Java y comprobaciones representativas de otros lenguajes.
+- `scripts/verificar-biblioteca.sh`: integridad de las 918 rutas, compilación integral de los Java 21, ejecución de clientes Java y comprobaciones representativas de otros lenguajes.
 - `scripts/auditar-biblioteca.ps1`: integridad y estructura desde Windows PowerShell 5.1; con `-EjecutarClientes`, compila y ejecuta los clientes Java seleccionados en un temporal.
 - `BuiltInLibraryTest`: versión del catálogo, extracción offline, compilación de todo Java y cabeceras de los ejercicios.
 - `PracticeCurriculumStructureAuditTest`: inventario por idioma y diagnóstico de tipos Java de nivel superior o anidados; la detección por texto es **heurística**, no sustituye al compilador.
@@ -94,3 +94,7 @@ con el resultado de la ejecución Java 21 durante la auditoría Linux.
 La separación modelo/vista/controlador permite explicar cada modificación
 de estado con comentarios localizados, sin convertir `Main` en una clase
 monolítica. [Detalles y glosario](COUNTER-STRIKE-PATRONES-JAVA.md).
+
+## Fachada del simulador
+
+Se incorpora `facade/FachadaCounterStrike.java` como patrón GoF aplicado al cliente integrador raíz. Los 13 clientes individuales se mantienen sin cambios. La pista 05 suma 79 fuentes (67 originales, 11 de integración MVC y una fachada). Los comentarios de modelo, vista y controlador describen los objetos y eventos concretos de Counter-Strike; la muestra de consola del Main recoge las tres rondas. La salida ejecutable no cambia.

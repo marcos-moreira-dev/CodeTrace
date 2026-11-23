@@ -22,6 +22,8 @@ import java.util.Objects;
  */
 public final class Rehen {
     private final String nombre;
+    // Lugar de aparición del NPC al iniciar la ronda. Es una etiqueta fija,
+    // no cambia durante la escolta; el avance se guarda en progreso/estado.
     private final String ubicacion;
     private final int integridadInicial;
     private final int calmaInicial;
@@ -39,6 +41,8 @@ public final class Rehen {
             throw new IllegalArgumentException("Ficha del rehén inválida");
         this.nombre = nombre;
         this.ubicacion = ubicacion;
+        // Guardamos los atributos iniciales para que el siguiente reinicio
+        // vuelva a colocar al mismo NPC en las condiciones de partida.
         this.integridadInicial = integridad;
         this.calmaInicial = calma;
         reiniciar();
@@ -53,8 +57,10 @@ public final class Rehen {
     public EstadoRehen estado() { return estado; }
 
     public void reiniciar() {
-        // Reutilizamos la misma ficha en cada ronda de prueba; restaurar sus
-        // valores evita que una simulación anterior contamine la siguiente.
+        // Al comenzar una nueva ronda, el objetivo de rescate vuelve a
+        // estar pendiente: recupera su calma e integridad iniciales, pierde
+        // la asignación anterior de escolta y su progreso vuelve a cero.
+        // No se crea otro objeto ni se borra el historial de EstadoPartida.
         integridad = integridadInicial;
         calma = calmaInicial;
         progreso = 0;
@@ -64,7 +70,8 @@ public final class Rehen {
 
     public void tranquilizar(int puntos) {
         if (puntos < 0) throw new IllegalArgumentException("Puntos negativos");
-        // La calma nunca puede superar 100, incluso si sumamos más puntos.
+        // En nuestro dominio, la calma representa el estado narrativo del
+        // NPC; Math.min limita el atributo a 100 tras sumar el incremento.
         calma = Math.min(100, calma + puntos);
     }
 
@@ -74,6 +81,8 @@ public final class Rehen {
         // RETENIDO. Esto impide rescatarlo dos veces por accidente.
         if (estado != EstadoRehen.RETENIDO || jugador.bando() != Bando.CT)
             throw new IllegalStateException("No se puede iniciar esa escolta");
+        // Registramos el alias del CT dentro de la ficha del NPC para
+        // mostrar luego quién lo acompañó en la narración de la ronda.
         escolta = jugador.alias();
         estado = EstadoRehen.ESCOLTADO;
     }
@@ -81,8 +90,10 @@ public final class Rehen {
     public void avanzarHaciaSalida(int porcentaje) {
         if (estado != EstadoRehen.ESCOLTADO || porcentaje <= 0)
             throw new IllegalStateException("Primero debe comenzar la escolta");
-        // El porcentaje representa el trayecto del escenario ficticio.
-        // Al llegar a 100, dejamos un estado RESCATADO comprobable.
+        // El avance es un indicador abstracto del objetivo de evacuación.
+        // Un porcentaje de 100 equivale a entregar el NPC en la zona segura
+        // del escenario narrativo; no almacenamos coordenadas ni trayectos.
+        // El controlador leerá RESCATADO para relatar el objetivo completado.
         progreso = Math.min(100, progreso + porcentaje);
         if (progreso == 100) estado = EstadoRehen.RESCATADO;
     }

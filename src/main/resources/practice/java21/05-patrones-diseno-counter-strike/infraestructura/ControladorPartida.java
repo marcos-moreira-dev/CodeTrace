@@ -64,10 +64,14 @@ public final class ControladorPartida {
         ConfiguracionSala configuracion = new ConfiguradorSala()
                 .mapa("cs_office").rondas(3).rescateRehenes(true).construir();
 
+        // La sesión guarda en memoria el mapa seleccionado, las etiquetas
+        // del objetivo de rescate y el reloj inicial de cada ronda (115 s).
+        // Son datos de nuestro escenario, no coordenadas del mapa real.
         MapaPartida mapa = new MapaPartida(
                 "cs_office", "Oficinas", "Salas interiores", "Zona de extracción", 115);
-        // List.of fija el roster: estos personajes ficticios no se crean
-        // ni se eliminan durante las tres rondas de la demostración.
+        // Creamos cuatro personajes virtuales con 1600 créditos cada uno.
+        // List.of fija las alineaciones CT y T: durante la partida cambian
+        // sus atributos, pero no aparecen ni desaparecen nuevos jugadores.
         Jugador guiaCt = new Jugador("Astra", Bando.CT, 1600);
         Equipo ct = new Equipo(Bando.CT, List.of(
                 guiaCt, new Jugador("Nilo", Bando.CT, 1600)));
@@ -75,10 +79,15 @@ public final class ControladorPartida {
                 new Jugador("Rook", Bando.T, 1600),
                 new Jugador("Vega", Bando.T, 1600)));
 
-        // Dos rehenes con rasgos DISTINTOS: uno está más calmado y otro
-        // necesita más apoyo. Son personajes virtuales del objetivo.
+        // En el modo rescate los objetivos son NPC, no jugadores de CT/T.
+        // Creamos sus fichas en memoria: Elena empieza en el archivo y Omar
+        // en la sala de juntas. Los dos poseen integridad y calma distintas.
         Rehen elena = new Rehen("Elena", "Archivo de oficinas", 92, 38);
         Rehen omar = new Rehen("Omar", "Sala de juntas", 86, 24);
+
+        // Registramos ambas referencias en la partida. El controlador y la
+        // vista consultarán esos mismos objetos, no copias de los rehenes.
+        // List.of fija los dos objetivos, pero sus estados sí pueden cambiar.
         EstadoPartida partida = new EstadoPartida(
                 configuracion, mapa, ct, t, List.of(elena, omar));
         vista.presentar(partida, semilla);
@@ -114,15 +123,19 @@ public final class ControladorPartida {
         GestorEconomia economia = new GestorEconomia(new PoliticaEco());
         ObjetoVirtual mp9 = new ObjetoVirtual("MP9", "subfusil", 950, 30);
 
-        // Esta lista representa las rondas por ejecutar: NO hay Scanner
-        // ni decisiones de usuario. Random(semilla) genera la misma secuencia.
+        // Cada iteración representa una ronda completa de Counter-Strike:
+        // reinicio de objetivos, economía, desenlace, marcador y HUD.
+        // No existe una lista de rondas ni esperamos decisiones del usuario;
+        // el contador del for y la configuración determinan cuántas se juegan.
         for (int numero = 1; numero <= configuracion.rondas(); numero++) {
             partida.iniciarRonda(numero);
             vista.abrirRonda(partida);
 
+            // El módulo (%) separa las rondas impares de las pares. En esta
+            // simulación la fase de ahorro se alterna con una fase de compra.
             boolean rondaEco = numero % 2 != 0;
-            // Cambiamos la estrategia según el número de ronda. Strategy
-            // evita escribir las dos políticas dentro de GestorEconomia.
+            // Strategy intercambia la política económica que se anuncia;
+            // el saldo y el inventario continúan siendo datos de Astra.
             economia.cambiarPolitica(rondaEco
                     ? new PoliticaEco() : new PoliticaEquipo());
             vista.evento("ECONOMÍA", economia.plan(guiaCt.creditos()));
@@ -150,20 +163,33 @@ public final class ControladorPartida {
                     + " | desenlace=" + (rescate ? "rescate" : "sin rescate"));
 
             if (rescate) {
-                // Las rondas 1 y 3 son de rescate con esta semilla:
-                // avanzamos al siguiente rehén cada dos rondas para que
-                // las fichas de Elena y Omar aparezcan ambas en la historia.
+                // Con la semilla 42, la primera y la tercera ronda terminan
+                // con rescate. Elegimos el NPC registrado en la lista:
+                // el índice es 0 en ronda 1 (Elena) y 1 en ronda 3 (Omar).
+                // 'elegido' referencia la ficha existente en EstadoPartida;
+                // no crea otro NPC ni duplica sus atributos en memoria.
                 Rehen elegido = partida.rehenes().get(
                         ((numero - 1) / 2) % partida.rehenes().size());
+
+                // La historia representa el encuentro de Astra con el NPC.
+                // Aumentamos la calma y guardamos su alias como escolta;
+                // iniciarEscolta comprueba que sea CT y que siga RETENIDO.
                 elegido.tranquilizar(12);
                 elegido.iniciarEscolta(guiaCt);
 
-                // Dos incrementos de progreso narran el recorrido hacia la
-                // zona segura; al completar 100, el estado pasa a RESCATADO.
+                // El rescate se representa con dos cambios del progreso
+                // abstracto del NPC: 40 % y 100 %. Al completarlo, la ficha
+                // en memoria queda RESCATADA. No calculamos una ruta real.
                 elegido.avanzarHaciaSalida(40);
                 elegido.avanzarHaciaSalida(60);
+
+                // Descontamos el tiempo ficticio de la ronda. No usamos
+                // sleep(): el reloj es un dato, no una espera del programa.
                 partida.avanzarReloj(50 + numero * 5);
 
+                // Mostramos la ficha ya actualizada y anunciamos la llegada
+                // a la zona de extracción. La ubicación de la ficha sigue
+                // siendo su lugar de aparición, no una posición en tiempo real.
                 vista.fichaRehen(elegido);
                 vista.evento("CADENA", primero.atender(new AvisoRonda(
                         TipoAviso.REHEN, elegido.nombre() + " llegó a "
@@ -174,19 +200,25 @@ public final class ControladorPartida {
                 vista.evento("NOTIFICACIÓN", new AvisoDeRonda(
                         new AvisoUrgente(new AvisoBase(
                                 "Objetivo de rescate completado")), numero).texto());
+                // El objetivo completado da un punto a CT y conserva el
+                // nombre del NPC rescatado en el historial de esta ronda.
+                // Ese registro sobrevivirá al reinicio de los rehenes.
                 partida.registrarVictoria(Bando.CT,
                         "rescate de " + elegido.nombre());
             } else {
-                // Simulamos que el reloj de la ronda llegó a cero. La ficha
-                // del rehén sigue RETENIDO: nadie inició una escolta.
+                // Vence el reloj sin que ningún NPC haya cambiado a RESCATADO.
+                // Sus fichas siguen RETENIDO y T recibe el punto de la ronda.
+                // El aviso OTRO muestra también el caso sin handler compatible.
                 partida.avanzarReloj(partida.segundosRestantes());
                 vista.evento("CADENA", primero.atender(new AvisoRonda(
                         TipoAviso.OTRO, "tiempo agotado sin rescate")));
                 partida.registrarVictoria(Bando.T, "objetivo sin completar");
             }
 
-            // Los créditos que se agregan son una REGLA DIDÁCTICA fija.
-            // No afirmamos que sean las recompensas oficiales del juego.
+            // Astra cobra 300 créditos ficticios al finalizar cada ronda.
+            // La recompensa se suma al saldo restante después de las compras;
+            // por eso la próxima ronda comienza con una economía diferente.
+            // Es una regla de nuestro ejemplo, no una recompensa oficial.
             guiaCt.recibirCreditos(300);
             vista.evento("ESTADO", "tiempo restante="
                     + partida.segundosRestantes() + " s | créditos de "

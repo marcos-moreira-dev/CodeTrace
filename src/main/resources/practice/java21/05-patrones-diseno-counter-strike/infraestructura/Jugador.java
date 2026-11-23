@@ -21,6 +21,8 @@ import java.util.Objects;
 public final class Jugador {
     private final String alias;
     private final Bando bando;
+    // Una lista mutable representa las fichas de equipamiento adquirido
+    // durante la partida. Se modifica a través de comprar(), no del HUD.
     private final List<ObjetoVirtual> inventario = new ArrayList<>();
     private int vida = 100;
     private int armadura = 35;
@@ -59,6 +61,8 @@ public final class Jugador {
         // Una compra solo tiene efecto si el jugador conserva suficientes
         // créditos. Rechazarla no cambia ni saldo ni inventario.
         if (creditos < objeto.precio()) return false;
+        // La compra virtual reduce el saldo y registra la ficha del objeto.
+        // El HUD podrá consultar después el nombre que realmente compró.
         creditos -= objeto.precio();
         inventario.add(objeto);
         return true;

@@ -38,6 +38,9 @@ public final class EstadoPartida {
         this.mapa = Objects.requireNonNull(mapa);
         this.ct = Objects.requireNonNull(ct);
         this.t = Objects.requireNonNull(t);
+        // Conservamos la relación de NPC asignados al mapa. List.copyOf
+        // impide añadir o retirar objetivos desde fuera, pero los Rehen
+        // que contiene son las mismas referencias mutables de la partida.
         this.rehenes = List.copyOf(rehenes);
         if (ct.bando() != Bando.CT || t.bando() != Bando.T || rehenes.isEmpty())
             throw new IllegalArgumentException("Partida mal configurada");
@@ -60,16 +63,22 @@ public final class EstadoPartida {
         rondaActual = numero;
         segundosRestantes = mapa.duracionRondaSegundos();
 
-        // El ciclo prepara CADA rehén y jugador, no solo al protagonista.
-        // La misión y los puntos de vida se reinician por ronda, pero el
-        // marcador total, los créditos y el historial deben continuar.
+        // Como se reinicia el escenario al comenzar la ronda siguiente,
+        // recorremos TODOS los NPC registrados y restauramos cada objetivo.
+        // El historial de rescates anteriores no se borra: pertenece a
+        // la partida completa, igual que el marcador y los créditos.
         for (Rehen rehen : rehenes) rehen.reiniciar();
+
+        // Los jugadores también recuperan sus atributos iniciales de ronda.
+        // Sus inventarios y créditos se conservan en este ejemplo didáctico.
         for (Jugador jugador : ct.jugadores()) jugador.prepararRonda();
         for (Jugador jugador : t.jugadores()) jugador.prepararRonda();
     }
 
     public void avanzarReloj(int segundos) {
         if (segundos < 0) throw new IllegalArgumentException("Tiempo negativo");
+        // El HUD no puede mostrar tiempo negativo cuando termina la ronda.
+        // Por ello limitamos el reloj a cero tras descontar el tiempo.
         segundosRestantes = Math.max(0, segundosRestantes - segundos);
     }
 
@@ -87,6 +96,9 @@ public final class EstadoPartida {
         } else {
             puntosT++; // El contador T es directo: aquí no necesitamos deshacer.
         }
+        // Guardamos una descripción inmutable del resultado (por ejemplo,
+        // rescate de Elena), no una referencia a un Rehen que se reiniciará.
+        // Así el resumen final conserva el acontecimiento de cada ronda.
         historial.add("Ronda " + rondaActual + ": "
                 + ganador.name() + " — " + motivo);
     }

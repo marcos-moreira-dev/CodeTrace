@@ -21,6 +21,8 @@ package codetrace.practica.counterstrike.infraestructura;
 public record ObjetoVirtual(String nombre, String categoria,
                             int precio, int capacidadVirtual) {
     public ObjetoVirtual {
+        // La tienda no admite fichas sin nombre/categoría ni costes
+        // negativos: comprar una ficha no debe aumentar los créditos.
         if (nombre == null || nombre.isBlank()
                 || categoria == null || categoria.isBlank()
                 || precio < 0 || capacidadVirtual < 0)

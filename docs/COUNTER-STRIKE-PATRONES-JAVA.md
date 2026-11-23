@@ -1,7 +1,7 @@
 # Counter-Strike — patrones de diseño para Java 21
 
 **Pista didáctica experimental:** `java21/05-patrones-diseno-counter-strike/`.
-**Hay 13 clientes de patrones individuales y un cliente integrador de simulación.**
+**Hay 13 clientes de patrones individuales y un cliente integrador que utiliza Facade.**
 
 Esta pista conserva el nombre del videojuego **Counter-Strike** como
 contexto de aprendizaje. Es material educativo independiente: no es
@@ -94,7 +94,7 @@ se ha reemplazado ni duplicado todavía con este recorrido `05`.
 ## Ejercicio final: una partida completa narrada por consola
 
 La carpeta raíz `05-patrones-diseno-counter-strike/` contiene
-`MainCounterStrike.java`. No es un decimocuarto patrón GoF: es el
+`MainCounterStrike.java`. No es un ejemplo aislado adicional: es el
 **cliente integrador**. No solicita entradas ni abre interfaces gráficas.
 Ejecuta automáticamente tres rondas ficticias en `cs_office` con semilla
 `42`, lo que permite repetir las mismas pruebas y salidas.
@@ -102,6 +102,8 @@ Ejecuta automáticamente tres rondas ficticias en `cs_office` con semilla
 ```text
 05-patrones-diseno-counter-strike/
 ├── MainCounterStrike.java             <- entrada única del simulador
+├── facade/
+│   └── FachadaCounterStrike.java    <- entrada de alto nivel al subsistema MVC
 ├── infraestructura/
 │   ├── Bando.java                   <- CT / T
 │   ├── EstadoRehen.java             <- retenido / escoltado / rescatado
@@ -118,6 +120,10 @@ Ejecuta automáticamente tres rondas ficticias en `cs_office` con semilla
 ├── strategy/
 └── ... los restantes patrones originales de la pista 05
 ```
+
+### Facade y MVC colaboran
+
+`MainCounterStrike` llama a `FachadaCounterStrike.jugarPartida(42L)`. La fachada construye una vista y un controlador nuevos, y delega la ejecución. Así el cliente desconoce el ensamblaje de la sesión; MVC conserva sus responsabilidades internas. La fachada devuelve el estado final para que otro cliente pueda consultar el resultado sin interpretar la consola.
 
 ### Por qué usamos MVC
 
@@ -157,3 +163,7 @@ El simulador no necesita un motor de juego, físicas, imágenes ni librerías
 adicionales. El propósito es la **mecanografía, orientación a objetos y
 colaboración entre patrones**. Los resultados de la narración se cotejan
 con `scripts/salidas_practica.json` durante la auditoría automatizada.
+
+### Comentarios ligados al dominio
+
+Las fichas de Elena y Omar se registran en la lista de la partida; la variable `elegido` apunta al mismo NPC que consulta la vista. El atributo `ubicacion` conserva su lugar de aparición, mientras `progreso` y `estado` representan la evacuación abstracta. El historial guarda una descripción de la ronda antes de que se reinicien las fichas. El cliente raíz contiene un extracto real de las tres rondas en comentarios; el manifiesto conserva las 52 líneas completas para la comparación automática.

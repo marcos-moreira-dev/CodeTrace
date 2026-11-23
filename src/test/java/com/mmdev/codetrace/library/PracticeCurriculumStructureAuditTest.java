@@ -157,7 +157,7 @@ class PracticeCurriculumStructureAuditTest {
         List<String> paths = library.entries(javaPack).stream()
                 .filter(path -> path.startsWith("05-patrones-diseno-counter-strike/"))
                 .toList();
-        assertEquals(78, paths.size());
+        assertEquals(79, paths.size());
         long clients = 0;
         for (String relative : paths) {
             String source = Files.readString(root.resolve(relative));
@@ -180,6 +180,15 @@ class PracticeCurriculumStructureAuditTest {
             }
         }
         assertEquals(14, clients);
+        String mainSource = Files.readString(root.resolve(
+                "05-patrones-diseno-counter-strike/MainCounterStrike.java"));
+        assertTrue(mainSource.contains("new FachadaCounterStrike()"),
+                "The root client enters through Facade");
+        assertFalse(mainSource.contains("new ControladorPartida("),
+                "Facade owns subsystem initialization");
+        assertTrue(paths.contains(
+                "05-patrones-diseno-counter-strike/facade/FachadaCounterStrike.java"));
+
     }
 
     /**

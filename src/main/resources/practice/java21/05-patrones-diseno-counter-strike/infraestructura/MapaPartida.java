@@ -18,6 +18,8 @@ public record MapaPartida(String codigo, String nombre,
                           String zonaRehenes, String zonaSegura,
                           int duracionRondaSegundos) {
     public MapaPartida {
+        // El modo rescate necesita un escenario identificado, una zona de
+        // objetivos, un destino de evacuación y un reloj inicial positivo.
         if (codigo == null || codigo.isBlank()
                 || nombre == null || nombre.isBlank()
                 || zonaRehenes == null || zonaRehenes.isBlank()

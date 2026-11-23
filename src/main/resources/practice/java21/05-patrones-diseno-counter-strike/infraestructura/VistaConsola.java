@@ -43,8 +43,9 @@ public final class VistaConsola {
     }
 
     public void fichaRehen(Rehen rehen) {
-        // Esta ficha explica qué propiedades han cambiado tras la escolta:
-        // la calma, la identidad del escolta y el progreso hasta la salida.
+        // La consola muestra la ficha del NPC que ya está en memoria.
+        // Ubicación significa su lugar de aparición; progreso y estado
+        // cuentan si llegó a la extracción. La vista no mueve al personaje.
         evento("REHÉN", rehen.nombre() + " | ubicación=" + rehen.ubicacion()
                 + " | calma=" + rehen.calma() + "/100"
                 + " | integridad=" + rehen.integridad() + "/100"

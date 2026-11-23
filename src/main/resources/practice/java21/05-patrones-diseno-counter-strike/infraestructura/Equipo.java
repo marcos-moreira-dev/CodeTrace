@@ -20,6 +20,8 @@ public final class Equipo {
 
     public Equipo(Bando bando, List<Jugador> jugadores) {
         this.bando = Objects.requireNonNull(bando, "bando");
+        // El equipo mantiene las referencias a los personajes registrados:
+        // si Astra compra un objeto, el roster sigue apuntando al mismo Astra.
         this.jugadores = List.copyOf(jugadores);
         // Verificamos que ningún personaje T haya entrado por error al
         // roster CT, o viceversa: sería una simulación contradictoria.

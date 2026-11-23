@@ -26,7 +26,7 @@ import java.util.Set;
 */
 public final class BuiltInLibrary {
     /** v4 relocates study files; v2-v8 cached copies are left untouched for prior sessions. */
-    public static final String CATALOG_VERSION = "v12";
+    public static final String CATALOG_VERSION = "v13";
 
     public record Pack(String id, String name, String extension) {
         public Pack {

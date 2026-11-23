@@ -444,6 +444,7 @@ java21	05-patrones-diseno-counter-strike/factory-method/ExportadorCsv.java
 java21	05-patrones-diseno-counter-strike/factory-method/ExportadorResultado.java
 java21	05-patrones-diseno-counter-strike/factory-method/ExportadorTexto.java
 java21	05-patrones-diseno-counter-strike/factory-method/MainFactoryMethodCS.java
+java21	05-patrones-diseno-counter-strike/facade/FachadaCounterStrike.java
 java21	05-patrones-diseno-counter-strike/factory/FabricaMensaje.java
 java21	05-patrones-diseno-counter-strike/factory/MainFactoryCS.java
 java21	05-patrones-diseno-counter-strike/factory/MensajeChat.java
