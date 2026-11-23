@@ -250,6 +250,7 @@ java21	01-fundamentos/excepciones/unchecked-dominio/StockInsuficienteException.j
 java21	01-fundamentos/funciones/Callbacks.java
 java21	01-fundamentos/funciones/Excepciones.java
 java21	01-fundamentos/funciones/Lambdas.java
+java21	01-fundamentos/funciones/Receptor.java
 java21	01-fundamentos/funciones/ReferenciasYCallbacks.java
 java21	01-fundamentos/genericos-y-contratos/GenericosYContratos.java
 java21	01-fundamentos/optional-y-resultados/OptionalYResultados.java
@@ -285,6 +286,7 @@ java21	02-estructuras-datos/grafos/representaciones/MainRepresentaciones.java
 java21	02-estructuras-datos/grafos/representaciones/MatrizAdyacencia.java
 java21	02-estructuras-datos/grafos/tipos/Grafo.java
 java21	02-estructuras-datos/grafos/tipos/MainTiposGrafo.java
+java21	02-estructuras-datos/grafos/tipos/Orientacion.java
 java21	02-estructuras-datos/heap-maximo/HeapMaximo.java
 java21	02-estructuras-datos/heap-maximo/MainHeapMaximo.java
 java21	02-estructuras-datos/heaps/MainColaPrioridad.java
@@ -388,6 +390,8 @@ java21	04-patrones-diseno/strategy/basico/MainStrategy.java
 java21	04-patrones-diseno/strategy/basico/Strategy.java
 java21	04-patrones-diseno/template-method/reportes/MainTemplateMethod.java
 java21	04-patrones-diseno/template-method/reportes/ProcesoReporte.java
+java21	04-patrones-diseno/template-method/reportes/ReporteCsv.java
+java21	04-patrones-diseno/template-method/reportes/ReporteTexto.java
 javascript	01-fundamentos/closures/closures.js
 javascript	01-fundamentos/event-loop/event_loop.js
 javascript	01-fundamentos/funciones/funciones.js
