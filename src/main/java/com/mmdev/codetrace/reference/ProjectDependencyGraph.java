@@ -27,12 +27,23 @@ public final class ProjectDependencyGraph {
                         int inspected, boolean truncated, String fingerprint,
                         Map<String, List<String>> filesByFolder,
                         List<FolderLink> hierarchy,
-                        Map<Edge, List<FileLink>> evidence) {
+                        Map<Edge, List<FileLink>> evidence,
+                        Map<String, List<String>> hiddenSubfoldersByFolder) {
         /** Kept for existing graph/layout tests and older in-memory callers. */
         public Graph(String folder, List<String> nodes, List<Edge> edges,
                      int inspected, boolean truncated, String fingerprint) {
             this(folder, nodes, edges, inspected, truncated, fingerprint,
-                    Map.of(), List.of(), Map.of());
+                    Map.of(), List.of(), Map.of(), Map.of());
+        }
+
+        /** Compatibility for existing tests and in-memory graph callers. */
+        public Graph(String folder, List<String> nodes, List<Edge> edges,
+                     int inspected, boolean truncated, String fingerprint,
+                     Map<String, List<String>> filesByFolder,
+                     List<FolderLink> hierarchy,
+                     Map<Edge, List<FileLink>> evidence) {
+            this(folder, nodes, edges, inspected, truncated, fingerprint,
+                    filesByFolder, hierarchy, evidence, Map.of());
         }
 
         public Graph {
@@ -45,6 +56,10 @@ public final class ProjectDependencyGraph {
             Map<Edge, List<FileLink>> sources = new HashMap<>();
             evidence.forEach((key, value) -> sources.put(key, List.copyOf(value)));
             evidence = Map.copyOf(sources);
+            Map<String, List<String>> hidden = new TreeMap<>();
+            hiddenSubfoldersByFolder.forEach((key, value) ->
+                    hidden.put(key, List.copyOf(value)));
+            hiddenSubfoldersByFolder = Map.copyOf(hidden);
         }
 
         public List<String> files(String directory) {
@@ -54,6 +69,11 @@ public final class ProjectDependencyGraph {
         public List<String> subfolders(String directory) {
             return hierarchy.stream().filter(link -> link.parent().equals(directory))
                     .map(FolderLink::child).sorted().toList();
+        }
+
+        /** Actual direct children omitted from the bounded visual map. */
+        public List<String> hiddenSubfolders(String directory) {
+            return hiddenSubfoldersByFolder.getOrDefault(directory, List.of());
         }
     }
 
@@ -201,6 +221,12 @@ public final class ProjectDependencyGraph {
             pending.addAll(children.getOrDefault(dir, List.of()));
         }
         Set<String> visibleSet = Set.copyOf(visibleNodes);
+        Map<String, List<String>> hiddenChildren = new TreeMap<>();
+        for (String dir : visibleNodes) {
+            List<String> omitted = children.getOrDefault(dir, List.of()).stream()
+                    .filter(child -> !visibleSet.contains(child)).toList();
+            if (!omitted.isEmpty()) hiddenChildren.put(dir, omitted);
+        }
         List<FolderLink> hierarchy = new ArrayList<>();
         for (String dir : visibleNodes) {
             if (!dir.equals(selectedId))
@@ -220,7 +246,7 @@ public final class ProjectDependencyGraph {
                 || evidence.size() > visibleEdges.size();
         return new Graph(relative(root, folder), visibleNodes, visibleEdges,
                 source.size(), truncated, HexFormat.of().formatHex(signature.digest()),
-                visibleFiles, hierarchy, visibleEvidence);
+                visibleFiles, hierarchy, visibleEvidence, hiddenChildren);
     }
 
     private static String folderId(String path) {
