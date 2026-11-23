@@ -24,42 +24,51 @@ implícitos de símbolos. El mapa es una exploración estática limitada.
 ## Archivos como nodos secundarios (opcional)
 
 Desde el menú contextual del **único mapa**, activar o desactivar
-**Mostrar archivos de código**. El estado inicial es desactivado para conservar
-la visión general de carpetas. Al activarlo, cada archivo de código compatible
-ya reconocido por el análisis aparece como un nodo pequeño, unido a su
-**carpeta inmediata** mediante una línea fina de pertenencia, **sin flecha**.
-No es una dependencia, una llamada, una herencia ni un análisis semántico.
+**Mostrar archivos de código**. Por defecto se ocultan para conservar la
+visión general de carpetas. Los archivos reconocidos por el analizador
+actual se muestran como nodos secundarios: **no se añade análisis semántico**.
 
-- Los archivos de código se detectan con el catálogo existente del analizador;
-  no se añaden analizadores por versión del lenguaje ni se incorporan archivos
-  de texto, imágenes o configuración ajenos a ese catálogo.
-- Clic sobre un archivo: selecciona su carpeta en el inspector y resalta el
-  archivo; doble clic: abre su pestaña habitual de CodeTrace.
-- Las carpetas siguen siendo los nodos principales; mostrar/ocultar archivos
-  **no modifica** sus posiciones, la disposición elegida ni las sesiones
-  `.ctrace`. Las posiciones de archivo son temporales, deterministas y
-  se recalculan después de desplazar una carpeta.
-- Cada carpeta con archivos tiene una **isla compacta en rejilla** próxima
-  al nodo padre. El algoritmo busca un espacio libre alrededor de la carpeta
-  sin mover las posiciones originales. Reserva el rectángulo de la isla como
-  una unidad: dos islas no mezclan archivos y ninguna cubre los rótulos de
-  las carpetas. Si el espacio está ocupado, la isla puede quedar más lejos.
-  Una conexión tenue une la carpeta con su isla, evitando centenares de
-  líneas que se cruzan. El contorno indica pertenencia, no dependencia.
-- Seleccionar una carpeta resalta **en morado suave toda su isla y sus
-  archivos**; seleccionar un archivo usa un morado más intenso para ese
-  documento. Los demás grupos permanecen neutros. Los archivos usan un
-  pequeño pictograma vectorial de documento, también en el Canvas.
-- Los archivos e islas se dibujan únicamente en la zona visible. El cálculo
-  está limitado a **1.200** archivos secundarios como máximo, y el analizador
-  existente también limita su inspección a 1.200 fuentes y el mapa a 180
-  carpetas. Si se supera un límite, se indica que la vista es **parcial**;
-  no se afirma que el resto de archivos no exista. La ausencia de
-  solapamientos se aplica a las **islas y etiquetas**; las líneas entre
-  carpetas pueden cruzarse y el usuario puede arrastrar nodos manualmente.
-- La leyenda es contextual: **se oculta si hay un solo tipo de conexión** y
-  muestra únicamente los tipos presentes (dependencia dirigida, contención
-  entre carpetas y pertenencia de archivo). No se crean otras vistas.
+### Isla y proximidad
+
+- Cada carpeta con código tiene una isla en rejilla. Se reservan primero las
+  islas pequeñas para evitar que una carpeta enorme relegue a una de un solo
+  archivo hasta el extremo del mapa. Se busca la posición libre más cercana
+  entre ocho orientaciones alrededor de la carpeta.
+- El rectángulo completo de una isla se reserva para que no se mezcle con
+  otras islas ni cubra etiquetas de carpetas. Si el proyecto está muy lleno,
+  algunos grupos todavía pueden quedar lejos: es la contrapartida de impedir
+  solapamientos **sin mover las carpetas existentes**.
+- Una línea **continua, sin punta de flecha** une la carpeta con su isla.
+  No representa dependencia ni importación; una flecha continua sí indica
+  dependencia detectada y una línea discontinua, contención de subcarpetas.
+
+### Selección y movimiento
+
+- Clic sobre una carpeta: se resalta su isla en morado y se engrosan sus
+  aristas incidentes (dependencias, jerarquía y pertenencia).
+- Clic sobre un archivo: se resalta el archivo en morado intenso y se muestra
+  una **arista continua más gruesa** que lo une con su carpeta madre.
+  Doble clic abre su archivo en la pestaña habitual.
+- **Arrastrar un archivo** lo mueve individualmente; las otras carpetas e
+  islas no se mueven. Si sale de su isla aparece su enlace directo a la
+  carpeta. El movimiento que cubra otra etiqueta de carpeta, archivo o isla
+  ajena se rechaza para preservar la legibilidad.
+- El desplazamiento manual del archivo se guarda **solo mientras la pestaña
+  del mapa está abierta**, incluso al ocultar y volver a mostrar archivos.
+  Si se mueve su carpeta, el archivo intenta seguirla conservando su
+  posición relativa, siempre que el destino permanezca libre.
+  **Restablecer distribución** o cerrar la pestaña descarta estos ajustes:
+  no se guardan en sesiones `.ctrace`. Las posiciones normales de las
+  carpetas sí siguen guardándose como antes.
+
+### Límites
+
+Las islas y los archivos se dibujan sobre el Canvas únicamente cuando están
+dentro del área visible. Se respeta el límite existente de 1.200 archivos
+de código inspeccionados, 1.200 nodos secundarios y 180 carpetas visibles.
+Si un límite impide representar todo, se muestra «vista parcial». La
+ausencia de flechas no demuestra ausencia de dependencias. La leyenda se
+oculta cuando solo existe un tipo de relación.
 
 ## Navegación
 
