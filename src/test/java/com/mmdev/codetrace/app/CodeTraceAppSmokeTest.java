@@ -401,7 +401,20 @@ class CodeTraceAppSmokeTest {
                 assertEquals(3, filePane.availableCodeFileCount());
                 assertEquals(0, filePane.getCenter()
                         .lookupAll(".dependency-map-legend-marker").size());
-                filePane.setShowCodeFiles(true);
+                // No matching text must not enable hidden code leaves.
+                var initialSearch = (javafx.scene.control.TextField)
+                        filePane.getCenter().lookup(".dependency-map-search");
+                assertNotNull(initialSearch);
+                initialSearch.setText("not-a-source");
+                assertFalse(filePane.isShowingCodeFiles());
+                assertTrue(filePane.getSearchMatches().isEmpty());
+                // A real match reveals file leaves without opening any source.
+                initialSearch.setText("main");
+                assertTrue(filePane.isShowingCodeFiles());
+                assertEquals(java.util.Set.of("src/Main.java"), filePane.getSearchMatches());
+                assertNull(openedSource.get());
+                initialSearch.clear();
+                assertTrue(filePane.getSearchMatches().isEmpty());
                 assertTrue(filePane.isShowingCodeFiles());
                 assertEquals(3, filePane.visibleCodeFileCount());
                 assertEquals(3, filePane.fileNodePositions().size());
@@ -452,6 +465,31 @@ class CodeTraceAppSmokeTest {
                 assertEquals(1, sourceInspector.getSelectionModel().getSelectedItems().size());
                 assertEquals("src/Main.java",
                         sourceInspector.getSelectionModel().getSelectedItem());
+
+                // Search is separate from selectedFile: multiple orange matches
+                // may coexist with the one purple manually selected file.
+                var graphSearch = (javafx.scene.control.TextField)
+                        filePane.getCenter().lookup(".dependency-map-search");
+                assertNotNull(graphSearch);
+                var beforeSearchPositions = filePane.fileNodePositions();
+                int beforeSearchZoom = filePane.getZoomPercent();
+                double beforeSearchX = filePane.getCameraX();
+                graphSearch.setText(".JAVA");
+                assertEquals(java.util.Set.of("src/Main.java", "src/Second.java"),
+                        filePane.getSearchMatches());
+                assertEquals("src/Main.java", filePane.getSelectedFile());
+                graphSearch.setText("helper");
+                assertEquals(java.util.Set.of("src/demo/Helper.py"),
+                        filePane.getSearchMatches());
+                graphSearch.setText("no-such-file");
+                assertTrue(filePane.getSearchMatches().isEmpty());
+                graphSearch.clear();
+                assertTrue(filePane.getSearchMatches().isEmpty());
+                assertEquals(beforeSearchPositions, filePane.fileNodePositions());
+                assertEquals(beforeSearchZoom, filePane.getZoomPercent());
+                assertEquals(beforeSearchX, filePane.getCameraX(), 0.001);
+                assertEquals("src/Main.java", openedSource.get(),
+                        "Typing a search must not open another file");
 
                 // The WHOLE container moves: file positions remain rigid
                 // relative to one another, even when drag begins on a file.

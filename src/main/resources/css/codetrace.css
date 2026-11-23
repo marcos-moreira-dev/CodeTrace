@@ -1522,6 +1522,16 @@
     -fx-font-size: 11px;
     -fx-text-fill: #345268;
 }
+.dependency-map-legend .dependency-map-search {
+    -fx-font-size: 11px;
+    -fx-background-radius: 3;
+    -fx-border-radius: 3;
+    -fx-pref-width: 205px;
+    -fx-prompt-text-fill: #8193a0;
+}
+.dependency-map-legend .dependency-map-search-status {
+    -fx-text-fill: #a34e10;
+}
 .dependency-map-legend .separator:horizontal .line {
     -fx-border-color: #e0e8ef;
     -fx-border-width: 1px 0 0 0;

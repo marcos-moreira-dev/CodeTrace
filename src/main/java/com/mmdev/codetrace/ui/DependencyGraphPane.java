@@ -11,6 +11,7 @@ import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.LinkedHashSet;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Consumer;
@@ -33,6 +34,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.Separator;
 import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.control.Tooltip;
+import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -43,6 +45,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polyline;
 import javafx.scene.text.Font;
 import org.kordamp.ikonli.javafx.FontIcon;
@@ -59,6 +62,10 @@ public final class DependencyGraphPane extends BorderPane {
     private final Pane viewport = new Pane();
     private final Canvas canvas = new Canvas();
     private final VBox legend = new VBox(5);
+    private static final Color ROOT_COLOR = Color.web("#c23939");
+    private final TextField graphSearch = new TextField();
+    private final Label graphSearchStatus = new Label();
+    private Set<String> searchMatches = Set.of();
     /** Navigation-only mode protects the architecture layout from mouse drags. */
     private final CheckBox navigationOnly = AppControls.checkBox(
             "Solo panear y hacer zoom",
@@ -187,6 +194,35 @@ public final class DependencyGraphPane extends BorderPane {
         navigationOnly.getStyleClass().add("dependency-map-navigation-only");
         navigationOnly.setAccessibleText("Solo panear y hacer zoom, sin mover nodos");
         navigationOnly.setOnAction(event -> canvas.requestFocus());
+        graphSearch.getStyleClass().add("dependency-map-search");
+        graphSearch.setPromptText("Buscar archivo…");
+        graphSearch.setAccessibleText("Buscar archivos de código en el mapa");
+        graphSearch.setPrefColumnCount(18);
+        graphSearch.setTooltip(new Tooltip(
+                "Busca por nombre de archivo, sin distinguir mayúsculas. "
+                        + "Naranja: coincidencia; morado: selección manual."));
+        graphSearchStatus.getStyleClass().add("dependency-map-search-status");
+        graphSearchStatus.setWrapText(true);
+        graphSearchStatus.setMaxWidth(235);
+        graphSearch.textProperty().addListener((obs, old, value) -> {
+            // Reveal files once when a name actually matches. Never pan,
+            // zoom or rebuild the graph just because another letter is typed.
+            String query = normalizedSearch();
+            if (!query.isEmpty() && !showFilesItem.isSelected()
+                    && model.nodes().stream().anyMatch(folder ->
+                            model.files(folder).stream().anyMatch(file ->
+                                    matchesFilename(file, query)))) {
+                setShowCodeFiles(true);
+            } else {
+                redraw();
+            }
+        });
+        graphSearch.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ESCAPE) {
+                graphSearch.clear();
+                event.consume();
+            }
+        });
         updateLegend();
         // Keep the original Pane -> Canvas structure for existing JavaFX clients.
         // Overlay is anchored in viewport coordinates, never graph/world space.
@@ -400,6 +436,40 @@ public final class DependencyGraphPane extends BorderPane {
 
     public String getSelectedFile() { return selectedFile; }
 
+    /** Search is a transient highlight, independent of the clicked selection. */
+    public Set<String> getSearchMatches() { return searchMatches; }
+
+    private String normalizedSearch() {
+        return graphSearch.getText().strip().toLowerCase(Locale.ROOT);
+    }
+
+    private static boolean matchesFilename(String file, String query) {
+        return !query.isEmpty() && shortName(file).toLowerCase(Locale.ROOT).contains(query);
+    }
+
+    private void refreshSearchMatches() {
+        String query = normalizedSearch();
+        Set<String> matches = new LinkedHashSet<>();
+        if (!query.isEmpty()) {
+            for (String file : filePositions.keySet())
+                if (matchesFilename(file, query)) matches.add(file);
+        }
+        searchMatches = Set.copyOf(matches);
+        String status = query.isEmpty() ? ""
+                : matches.isEmpty() ? "Sin coincidencias visibles"
+                : matches.size() + (matches.size() == 1
+                        ? " coincidencia visible" : " coincidencias visibles");
+        if (!status.equals(graphSearchStatus.getText())) graphSearchStatus.setText(status);
+        boolean showStatus = !query.isEmpty();
+        graphSearchStatus.setVisible(showStatus);
+        graphSearchStatus.setManaged(showStatus);
+    }
+
+    /** The selected map's directory, not necessarily the entire project root. */
+    private boolean isMapRoot(String path) {
+        return path.equals(model.folder().isEmpty() ? "." : model.folder());
+    }
+
     public void setNavigationOnly(boolean value) {
         navigationOnly.setSelected(value);
         canvas.setCursor(Cursor.OPEN_HAND);
@@ -603,7 +673,12 @@ public final class DependencyGraphPane extends BorderPane {
             }
             legend.getChildren().add(new Separator());
         }
-        legend.getChildren().add(navigationOnly);
+        Circle rootSymbol = new Circle(5, ROOT_COLOR);
+        HBox rootRow = new HBox(7, rootSymbol, new Label("Raíz del mapa"));
+        rootRow.setAlignment(Pos.CENTER_LEFT);
+        legend.getChildren().addAll(rootRow, navigationOnly, new Separator(),
+                graphSearch, graphSearchStatus);
+        refreshSearchMatches();
         legend.setVisible(true);
         legend.setManaged(true);
     }
@@ -1096,6 +1171,7 @@ public final class DependencyGraphPane extends BorderPane {
             GraphLayout.Point p = file.getValue();
             if (!visibleAt(p, w, h, zoom)) continue;
             boolean active = file.getKey().equals(selectedFile);
+            boolean match = searchMatches.contains(file.getKey());
             String parent = file.getKey().contains("/")
                     ? file.getKey().substring(0, file.getKey().lastIndexOf('/'))
                     : ".";
@@ -1104,15 +1180,16 @@ public final class DependencyGraphPane extends BorderPane {
             if (label.length() > 32) label = label.substring(0, 29) + "...";
             double labelWidth = Math.min(208, Math.max(60,
                     label.length() * 6.0 + 12));
+            // Explicit selection wins over the temporary search colour.
             g.setFill(Color.web(active ? "#d9c8f4"
-                    : related ? "#ede5fa" : "#ffffff"));
+                    : match ? "#ffc978" : related ? "#ede5fa" : "#ffffff"));
             g.fillRoundRect(p.x() + 11, p.y() - 12, labelWidth, 24, 4, 4);
 
             // Compact document glyph with a folded corner, independent of
             // per-language icon packs and readable at moderate graph zoom.
             g.setStroke(Color.web(active ? "#68449e"
-                    : related ? "#8c6bbb" : "#88a6b8"));
-            g.setLineWidth(active ? 1.6 : 1.1);
+                    : match ? "#c05a08" : related ? "#8c6bbb" : "#88a6b8"));
+            g.setLineWidth(active || match ? 1.6 : 1.1);
             g.beginPath();
             g.moveTo(p.x() - 6, p.y() - 8);
             g.lineTo(p.x() + 2, p.y() - 8);
@@ -1126,7 +1203,7 @@ public final class DependencyGraphPane extends BorderPane {
             g.strokeLine(p.x() + 2, p.y() - 3,
                     p.x() + 7, p.y() - 3);
             g.setFill(Color.web(active ? "#553489"
-                    : related ? "#61468b" : "#456071"));
+                    : match ? "#873b08" : related ? "#61468b" : "#456071"));
             g.setFont(Font.font("Segoe UI", active ? 11.5 : 11));
             g.fillText(label, p.x() + 17, p.y() + 4, 194);
         }
@@ -1188,6 +1265,7 @@ public final class DependencyGraphPane extends BorderPane {
     }
 
     private void redraw() {
+        refreshSearchMatches();
         GraphicsContext g = canvas.getGraphicsContext2D();
         double w = canvas.getWidth(), h = canvas.getHeight();
         g.setTransform(1, 0, 0, 1, 0, 0);
@@ -1258,21 +1336,27 @@ public final class DependencyGraphPane extends BorderPane {
             if (p == null) continue;
             boolean active = path.equals(selected);
             boolean neighbor = selectedNeighbors.contains(path);
+            boolean root = isMapRoot(path);
             String label = path.equals(".") && !model.folder().isEmpty()
                     ? shortName(model.folder()) : shortName(path);
             if (label.length() > 35) label = label.substring(0, 32) + "...";
             if (hasHiddenDescendants(path)) label += " · …";
             double labelWidth = Math.min(241, Math.max(70, label.length() * 6.5 + 12));
-            g.setFill(Color.web(active ? "#ede9fb" : neighbor ? "#dff6f5" : "#f8fafb"));
+            g.setFill(Color.web(active ? "#ede9fb"
+                    : root ? "#fce9e8" : neighbor ? "#dff6f5" : "#f8fafb"));
             g.fillRect(p.x() + 14, p.y() - 13, labelWidth, 26);
-            g.setFill(Color.web(active ? "#7254b5" : neighbor ? "#07919a" : "#4b7593"));
+            // Root identity stays red even if the root is selected. The
+            // purple label and outline still identify manual selection.
+            g.setFill(root ? ROOT_COLOR
+                    : Color.web(active ? "#7254b5" : neighbor ? "#07919a" : "#4b7593"));
             g.fillOval(p.x() - NODE_RADIUS, p.y() - NODE_RADIUS,
                     NODE_RADIUS * 2, NODE_RADIUS * 2);
-            g.setStroke(Color.WHITE);
+            g.setStroke(root && active ? Color.web("#7254b5") : Color.WHITE);
+            g.setLineWidth(root && active ? 2.4 : 1.3);
             g.strokeOval(p.x() - NODE_RADIUS, p.y() - NODE_RADIUS,
                     NODE_RADIUS * 2, NODE_RADIUS * 2);
             g.setFill(Color.web(active ? "#423174"
-                    : neighbor ? "#135e68" : "#263f51"));
+                    : root ? "#a82f2f" : neighbor ? "#135e68" : "#263f51"));
             g.setFont(Font.font("Segoe UI", active ? 13 : 12));
             g.fillText(label, p.x() + 20, p.y() + 4, 226);
         }
