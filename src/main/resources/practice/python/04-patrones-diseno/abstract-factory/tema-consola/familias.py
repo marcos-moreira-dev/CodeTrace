@@ -1,4 +1,8 @@
 # CodeTrace | Referencia: Python 3.12
+# Universo compartido: Arena Táctica, juego competitivo ficticio por equipos.
+# Dominio: Interfaz de usuario del panel de la partida, con temas claro y oscuro.
+# Patrón abstract-factory: Crear familias de componentes compatibles.
+# Glosario: HUD: indicadores informativos superpuestos a la pantalla del jugador.
 # Comprobar desde COPIA de esta unidad: python -c "import ast,pathlib; ast.parse(pathlib.Path('familias.py').read_text(encoding='utf-8'))"
 # Ejecutar: python -B main.py (cliente de esta carpeta, sin __pycache__)
 

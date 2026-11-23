@@ -4,9 +4,9 @@
 
 ## Alcance y criterio
 
-La biblioteca mantiene **un único catálogo** con **830 archivos de referencia en 14 lenguajes**, repartidos entre fundamentos, estructuras de datos, algoritmos y patrones. Un archivo es una unidad de mecanografía, **no necesariamente un ejercicio autónomo**. El paquete Java 21 contiene **158 archivos**. El catálogo v0.3.4 tenía 813: este cambio suma 17 netos por separar roles Java y sustituir un contenedor de tipos anidados.
+La biblioteca mantiene **un único catálogo** con **839 archivos de referencia en 14 lenguajes**, repartidos entre fundamentos, estructuras de datos, algoritmos y patrones. Un archivo es una unidad de mecanografía, **no necesariamente un ejercicio autónomo**. El paquete Java 21 contiene **165 archivos**. El catálogo v0.3.4 tenía 813: este cambio suma 26 netos por separar roles Java y sustituir un contenedor de tipos anidados.
 
-La revisión de integridad recorre todos los elementos del catálogo: ruta segura, recurso real, código no vacío, cabecera de versión y comando de compilación/comprobación. Los clientes representativos se compilan y ejecutan mediante los verificadores por plataforma. Esto **no equivale** a validar semánticamente cada línea de los 830 archivos en todos los compiladores.
+La revisión de integridad recorre todos los elementos del catálogo: ruta segura, recurso real, código no vacío, cabecera de versión y comando de compilación/comprobación. Los clientes representativos se compilan y ejecutan mediante los verificadores por plataforma. Esto **no equivale** a validar semánticamente cada línea de los 839 archivos en todos los compiladores.
 
 ## Decisión de diseño didáctico
 
@@ -31,7 +31,7 @@ La revisión de integridad recorre todos los elementos del catálogo: ruta segur
 | Callbacks | `Receptor` estaba dentro del cliente `Callbacks` | `Receptor.java` y `Callbacks.java` |
 | Tipos de grafo | `Orientacion` era un `enum` público anidado en `Grafo` | `Orientacion.java`, `Grafo.java`, `MainTiposGrafo.java` |
 
-Las nuevas fuentes conservan cabeceras con Java 21, instrucciones de compilación, cliente y salida esperada. Se actualizaron los consumidores para usar los contratos independientes y el catálogo de recursos. La biblioteca pasa a caché `v9` para no reutilizar los archivos obsoletos de `v8`.
+Las nuevas fuentes conservan cabeceras con Java 21, instrucciones de compilación, cliente y salida esperada. Se actualizaron los consumidores para usar los contratos independientes y el catálogo de recursos. La biblioteca pasa a caché `v10` para no reutilizar los archivos obsoletos de `v8`.
 
 ## Hallazgo de la revisión automática de Java
 
@@ -50,10 +50,29 @@ comprueba las unidades que sí se separaron.
 
 ## Cómo verificar
 
-- `scripts/verificar-biblioteca.sh`: integridad de las 830 rutas, compilación integral de los Java 21, ejecución de clientes Java y comprobaciones representativas de otros lenguajes.
+- `scripts/verificar-biblioteca.sh`: integridad de las 839 rutas, compilación integral de los Java 21, ejecución de clientes Java y comprobaciones representativas de otros lenguajes.
 - `scripts/auditar-biblioteca.ps1`: integridad y estructura desde Windows PowerShell 5.1; con `-EjecutarClientes`, compila y ejecuta los clientes Java seleccionados en un temporal.
 - `BuiltInLibraryTest`: versión del catálogo, extracción offline, compilación de todo Java y cabeceras de los ejercicios.
 - `PracticeCurriculumStructureAuditTest`: inventario por idioma y diagnóstico de tipos Java de nivel superior o anidados; la detección por texto es **heurística**, no sustituye al compilador.
 - Validar en CodeTracer que cada nuevo archivo aparece en el árbol y que puede practicarse independientemente sin introducir análisis sintáctico por lenguaje.
 
 **Límite consciente:** los ejercicios existentes de otros lenguajes conservan su estructura, salvo fallos evidentes detectados por las comprobaciones. Una reorganización masiva de cientos de módulos sin demanda didáctica real sería sobreingeniería y podría romper los comandos y la progresión de aprendizaje.
+
+## Ampliación didáctica: Arena Táctica
+
+En la rama experimental, **todos los patrones Java 21 y Python** reciben una
+introducción breve sobre el dominio compartido, el objetivo del patrón y un
+glosario de términos del videojuego. Los clientes mantienen su carácter de
+**ejercicios de consola**, sin motores gráficos ni implementación de armas.
+La temática funciona como contexto de ejemplos ya existentes (interfaces,
+reportes, inscripciones, eventos, recursos) sin modificar sus algoritmos
+innecesariamente.
+
+Se añade **Chain of Responsibility** como ejercicio paralelo en ambos lenguajes:
+Java separa interfaz abstracta, handlers, enum, record y Main en **siete
+archivos**; Python utiliza un módulo de colaboradores y otro de ejecución (**dos
+archivos**), conforme a las convenciones de cada lenguaje. Se comprueba que
+sus salidas de consola coincidan. El escenario incluye un rehén *virtual*
+y la etiqueta MP9 de equipamiento ficticio, explicados en los comentarios.
+
+Ver [glosario y mapa de patrones](ARENA-TACTICA-PATRONES.md).

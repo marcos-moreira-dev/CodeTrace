@@ -1,4 +1,8 @@
 // CodeTrace | Referencia: Java 21 LTS / JDK 21
+// Universo compartido: Arena Táctica, juego competitivo ficticio por equipos.
+// Dominio: Avisos que recibe un equipo durante una ronda ficticia.
+// Patrón decorator: Añadir formato o información sin cambiar el notificador original.
+// Glosario: Ronda: segmento breve de la partida; equipo: conjunto de jugadores.
 // Compilar desde copia del paquete (PowerShell): New-Item -ItemType Directory -Force "$env:TEMP\ct-java21" | Out-Null; javac --release 21 -encoding UTF-8 -d "$env:TEMP\ct-java21" (Get-ChildItem -Recurse -Filter *.java | ForEach-Object FullName)
 // Ejecutar: ejecutar desde el archivo cliente del mismo ejercicio
 

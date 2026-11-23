@@ -355,6 +355,13 @@ java21	04-patrones-diseno/adapter/SensorCelsius.java
 java21	04-patrones-diseno/adapter/TermometroLegado.java
 java21	04-patrones-diseno/builder/solicitud/MainBuilder.java
 java21	04-patrones-diseno/builder/solicitud/Solicitud.java
+java21	04-patrones-diseno/chain-of-responsibility/reportes-partida/EventoPartida.java
+java21	04-patrones-diseno/chain-of-responsibility/reportes-partida/MainCadenaResponsabilidad.java
+java21	04-patrones-diseno/chain-of-responsibility/reportes-partida/ManejadorEquipamiento.java
+java21	04-patrones-diseno/chain-of-responsibility/reportes-partida/ManejadorEvento.java
+java21	04-patrones-diseno/chain-of-responsibility/reportes-partida/ManejadorObjetivo.java
+java21	04-patrones-diseno/chain-of-responsibility/reportes-partida/ManejadorReconocimiento.java
+java21	04-patrones-diseno/chain-of-responsibility/reportes-partida/TipoEvento.java
 java21	04-patrones-diseno/command/deshacer/AgregarTexto.java
 java21	04-patrones-diseno/command/deshacer/Comando.java
 java21	04-patrones-diseno/command/deshacer/Editor.java
@@ -640,6 +647,8 @@ python	04-patrones-diseno/adapter/conversor.py
 python	04-patrones-diseno/adapter/main.py
 python	04-patrones-diseno/builder/solicitud/main.py
 python	04-patrones-diseno/builder/solicitud/solicitud.py
+python	04-patrones-diseno/chain-of-responsibility/reportes-partida/cadena.py
+python	04-patrones-diseno/chain-of-responsibility/reportes-partida/main.py
 python	04-patrones-diseno/command/deshacer/comandos.py
 python	04-patrones-diseno/command/deshacer/main.py
 python	04-patrones-diseno/composite/arbol-archivos/elementos.py

@@ -1,4 +1,8 @@
 # CodeTrace | Referencia: Python 3.12
+# Universo compartido: Arena Táctica, juego competitivo ficticio por equipos.
+# Dominio: Editor del plan de equipo para una ronda del videojuego.
+# Patrón command: Encapsular una edición y permitir deshacerla.
+# Glosario: Ronda: segmento breve de la partida; deshacer: restaurar el estado anterior.
 # Comprobar desde COPIA de esta unidad: python -c "import ast,pathlib; ast.parse(pathlib.Path('comandos.py').read_text(encoding='utf-8'))"
 # Ejecutar: python -B main.py (cliente de esta carpeta, sin __pycache__)
 

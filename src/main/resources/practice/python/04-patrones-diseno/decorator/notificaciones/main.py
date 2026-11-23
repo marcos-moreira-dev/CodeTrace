@@ -1,4 +1,8 @@
 # CodeTrace | Referencia: Python 3.12
+# Universo compartido: Arena Táctica, juego competitivo ficticio por equipos.
+# Dominio: Mensajes que recibe un equipo durante una partida ficticia.
+# Patrón decorator: Añadir información a una notificación sin modificar el receptor.
+# Glosario: Ronda: segmento breve de una partida; equipo: conjunto de jugadores.
 # Comprobar en COPIA: python -c "import ast,pathlib; ast.parse(pathlib.Path('main.py').read_text(encoding='utf-8'))"
 # Ejecutar desde la carpeta de unidad: python -B main.py
 # Con -B no se generan archivos __pycache__ en el proyecto.

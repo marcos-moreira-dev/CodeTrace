@@ -1,4 +1,8 @@
 // CodeTrace | Referencia: Java 21 LTS / JDK 21
+// Universo compartido: Arena Táctica, juego competitivo ficticio por equipos.
+// Dominio: Correo de avisos de una competición ficticia por equipos.
+// Patrón factory: Crear mensajes mediante un contrato en lugar de acoplar el cliente.
+// Glosario: Torneo: competición que agrupa varias partidas.
 // Componente didáctico reutilizable: este archivo no tiene main.
 // Compilar: en una copia desde java21: javac --release 21 -encoding UTF-8 -d "$env:TEMP\\ct-java21" (Get-ChildItem -Recurse -Filter *.java).FullName
 

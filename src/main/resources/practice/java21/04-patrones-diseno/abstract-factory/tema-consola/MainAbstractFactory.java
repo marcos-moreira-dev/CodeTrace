@@ -1,4 +1,8 @@
 // CodeTrace | Referencia: Java 21 LTS / JDK 21
+// Universo compartido: Arena Táctica, juego competitivo ficticio por equipos.
+// Dominio: Interfaz del torneo, con paneles claros y oscuros.
+// Patrón abstract-factory: Crear familias de componentes compatibles sin conocer sus clases concretas.
+// Glosario: HUD: indicadores gráficos de la partida mostrados en pantalla.
 // Compilar en COPIA desde java21: javac --release 21 -encoding UTF-8 -d "$env:TEMP\ct-practice" (Get-ChildItem -Recurse -Filter *.java).FullName
 // Ejecutar: java -cp "$env:TEMP\ct-practice" codetrace.practica.patrones.abstractfactory.MainAbstractFactory
 

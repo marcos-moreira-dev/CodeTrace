@@ -1,4 +1,8 @@
 // CodeTrace | Referencia: Java 21 LTS / JDK 21
+// Universo compartido: Arena Táctica, juego competitivo ficticio por equipos.
+// Dominio: Reglas de descuento en la inscripción del torneo.
+// Patrón strategy: Intercambiar la política de cálculo sin alterar el cliente.
+// Glosario: Torneo: competición de varias partidas entre equipos.
 // Compilar en COPIA: javac --release 21 -encoding UTF-8 Strategy.java MainStrategy.java
 // Ejecutar: java MainStrategy
 

@@ -1,4 +1,7 @@
 # CodeTrace | Referencia: Python 3.12
+# Universo: Arena Táctica; reportes de ronda en partida ficticia.
+# Glosario: rehén = personaje virtual a rescatar; MP9 = subfusil del juego.
+# Minimapa: vista reducida del escenario; nada describe armas reales.
 # Comprobar: python -c "import ast,pathlib; ast.parse(pathlib.Path('04-patrones-diseno/chain-of-responsibility/reportes-partida/cadena.py').read_text(encoding='utf-8'))"
 # Ejecutar: python -B 04-patrones-diseno/chain-of-responsibility/reportes-partida/main.py
 
@@ -16,7 +19,7 @@ from enum import Enum, auto
 class TipoEvento(Enum):
     OBJETIVO = auto()
     ENEMIGO = auto()
-    MUNICION = auto()
+    EQUIPAMIENTO = auto()
     OTRO = auto()
 
 
@@ -58,8 +61,8 @@ class ManejadorReconocimiento(ManejadorEvento):
 
 class ManejadorEquipamiento(ManejadorEvento):
     def atender(self, evento: EventoPartida) -> str:
-        if evento.tipo is TipoEvento.MUNICION:
-            return f"Apoyo: {evento.detalle}"
+        if evento.tipo is TipoEvento.EQUIPAMIENTO:
+            return f"Equipamiento: {evento.detalle}"
         return super().atender(evento)
 
 # CodeTrace | EJEMPLO DE CONSOLA (practica)
@@ -67,8 +70,8 @@ class ManejadorEquipamiento(ManejadorEvento):
 # Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
 #   python -B .\04-patrones-diseno\chain-of-responsibility\reportes-partida\main.py
 # Salida esperada:
-#   Objetivo: asegurar el sitio B
-#   Reconocimiento: enemigo en pasillo central
-#   Apoyo: solicitar munición adicional
+#   Objetivo: rehén virtual rescatado
+#   Reconocimiento: rival visto en el minimapa
+#   Equipamiento: MP9 registrado en inventario virtual
 #   Sin responsable: señal desconocida
 # CodeTrace | FIN EJEMPLO DE CONSOLA

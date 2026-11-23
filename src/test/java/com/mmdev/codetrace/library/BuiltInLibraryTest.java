@@ -110,8 +110,8 @@ class BuiltInLibraryTest {
     @Test
     void allFourCurriculumPurposesAndDocumentedJavaClientsArePresent() throws Exception {
         var library = new BuiltInLibrary(temp.resolve("curriculum"));
-        assertEquals("v9", BuiltInLibrary.CATALOG_VERSION);
-        assertEquals(830, library.packs().stream().mapToInt(library::size).sum());
+        assertEquals("v10", BuiltInLibrary.CATALOG_VERSION);
+        assertEquals(839, library.packs().stream().mapToInt(library::size).sum());
         for (var pack : library.packs()) {
             var entries = library.entries(pack);
             assertTrue(entries.stream().allMatch(x -> x.split("/").length >= 3),
@@ -205,6 +205,10 @@ class BuiltInLibraryTest {
         assertTrue(library.entries(all.get("java21")).contains(
                 "04-patrones-diseno/factory-method/MainFactoryMethod.java"));
         assertTrue(library.entries(all.get("java21")).contains(
+                "04-patrones-diseno/chain-of-responsibility/reportes-partida/MainCadenaResponsabilidad.java"));
+        assertTrue(library.entries(all.get("python")).contains(
+                "04-patrones-diseno/chain-of-responsibility/reportes-partida/main.py"));
+        assertTrue(library.entries(all.get("java21")).contains(
                 "04-patrones-diseno/observer/CentroEventos.java"));
         assertTrue(library.entries(all.get("typescript")).contains(
                 "04-patrones-diseno/observer/BusEventos.ts"));
@@ -216,7 +220,7 @@ class BuiltInLibraryTest {
                 "03-algoritmos/euclides/euclides.asm"));
         assertTrue(library.entries(all.get("java21")).contains(
                 "03-algoritmos/dijkstra/Dijkstra.java"));
-        assertEquals(830, library.packs().stream().mapToInt(library::size).sum());
+        assertEquals(839, library.packs().stream().mapToInt(library::size).sum());
     }
 
 }

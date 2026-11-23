@@ -1,4 +1,8 @@
 // CodeTrace | Referencia: Java 21 LTS / JDK 21
+// Universo compartido: Arena Táctica, juego competitivo ficticio por equipos.
+// Dominio: Informe del torneo que se publica con formatos diferentes.
+// Patrón template-method: Fijar el proceso común y personalizar sus pasos concretos.
+// Glosario: Reporte: resumen de datos de las rondas, no instrucciones tácticas.
 // Compilar: javac --release 21 -encoding UTF-8 -d "$env:TEMP\\ct-java21" (Get-ChildItem -Recurse -Filter *.java).FullName
 // Ejecutar: java -cp "$env:TEMP\\ct-java21" codetrace.practica.patrones.templatemethod.MainTemplateMethod
 // Salida esperada: == ventas == / Total: 15 / titulo,total / ventas,15

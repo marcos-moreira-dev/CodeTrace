@@ -1,4 +1,8 @@
 // CodeTrace | Referencia: Java 21 LTS / JDK 21
+// Universo compartido: Arena Táctica, juego competitivo ficticio por equipos.
+// Dominio: Editor de las notas de una ronda en un juego ficticio.
+// Patrón command: Deshacer o rehacer acciones encapsuladas.
+// Glosario: Ronda: segmento breve de una partida; deshacer: restaurar la nota anterior.
 // Este archivo define exactamente un tipo reutilizable, sin main.
 // Compilar: desde la carpeta java21: javac --release 21 -encoding UTF-8 -d "$env:TEMP\\ct-java21" (Get-ChildItem -Recurse -Filter *.java).FullName
 

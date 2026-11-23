@@ -1,4 +1,7 @@
 // CodeTrace | Referencia: Java 21 LTS / JDK 21
+// Dominio: Arena Táctica; reportes de una ronda ficticia por equipos.
+// Glosario: rehén = personaje virtual a rescatar; MP9 = subfusil del juego.
+// Minimapa: pequeña vista del mapa; no se enseña uso real de armas.
 // Compilar: javac --release 21 -encoding UTF-8 -d "$env:TEMP\ct-practica-java" (Get-ChildItem -Recurse -Filter *.java).FullName
 // Ejecutar: java -cp "$env:TEMP\ct-practica-java" codetrace.practica.patrones.cadena.MainCadenaResponsabilidad
 package codetrace.practica.patrones.cadena;
@@ -21,15 +24,15 @@ public final class MainCadenaResponsabilidad {
                .enlazar(new ManejadorEquipamiento());
 
         List<EventoPartida> eventos = List.of(
-                new EventoPartida(TipoEvento.OBJETIVO, "asegurar el sitio B"),
-                new EventoPartida(TipoEvento.ENEMIGO, "enemigo en pasillo central"),
-                new EventoPartida(TipoEvento.MUNICION, "solicitar munición adicional"),
+                new EventoPartida(TipoEvento.OBJETIVO, "rehén virtual rescatado"),
+                new EventoPartida(TipoEvento.ENEMIGO, "rival visto en el minimapa"),
+                new EventoPartida(TipoEvento.EQUIPAMIENTO, "MP9 registrado en inventario virtual"),
                 new EventoPartida(TipoEvento.OTRO, "señal desconocida")
         );
         List<String> esperado = List.of(
-                "Objetivo: asegurar el sitio B",
-                "Reconocimiento: enemigo en pasillo central",
-                "Apoyo: solicitar munición adicional",
+                "Objetivo: rehén virtual rescatado",
+                "Reconocimiento: rival visto en el minimapa",
+                "Equipamiento: MP9 registrado en inventario virtual",
                 "Sin responsable: señal desconocida"
         );
         for (int i = 0; i < eventos.size(); i++) {
@@ -52,9 +55,9 @@ public final class MainCadenaResponsabilidad {
  *   java -cp $out codetrace.practica.patrones.cadena.MainCadenaResponsabilidad
  * Nota: MainCadenaResponsabilidad.java forma parte del mismo ejercicio; ejecutar MainCadenaResponsabilidad.java.
  * Salida esperada:
- *   Objetivo: asegurar el sitio B
- *   Reconocimiento: enemigo en pasillo central
- *   Apoyo: solicitar munición adicional
+ *   Objetivo: rehén virtual rescatado
+ *   Reconocimiento: rival visto en el minimapa
+ *   Equipamiento: MP9 registrado en inventario virtual
  *   Sin responsable: señal desconocida
  * CodeTrace | FIN EJEMPLO DE CONSOLA
  */

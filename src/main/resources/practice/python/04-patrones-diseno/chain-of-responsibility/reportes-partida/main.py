@@ -1,4 +1,7 @@
 # CodeTrace | Referencia: Python 3.12
+# Universo: Arena Táctica; reportes de ronda en partida ficticia.
+# Glosario: rehén = personaje virtual a rescatar; MP9 = subfusil del juego.
+# Minimapa: vista reducida del escenario; nada describe armas reales.
 # Comprobar: python -m py_compile 04-patrones-diseno/chain-of-responsibility/reportes-partida/main.py
 # Ejecutar: python -B 04-patrones-diseno/chain-of-responsibility/reportes-partida/main.py
 
@@ -17,15 +20,15 @@ def main() -> None:
     primero = ManejadorObjetivo()
     primero.enlazar(ManejadorReconocimiento()).enlazar(ManejadorEquipamiento())
     eventos = [
-        EventoPartida(TipoEvento.OBJETIVO, "asegurar el sitio B"),
-        EventoPartida(TipoEvento.ENEMIGO, "enemigo en pasillo central"),
-        EventoPartida(TipoEvento.MUNICION, "solicitar munición adicional"),
+        EventoPartida(TipoEvento.OBJETIVO, "rehén virtual rescatado"),
+        EventoPartida(TipoEvento.ENEMIGO, "rival visto en el minimapa"),
+        EventoPartida(TipoEvento.EQUIPAMIENTO, "MP9 registrado en inventario virtual"),
         EventoPartida(TipoEvento.OTRO, "señal desconocida"),
     ]
     esperado = [
-        "Objetivo: asegurar el sitio B",
-        "Reconocimiento: enemigo en pasillo central",
-        "Apoyo: solicitar munición adicional",
+        "Objetivo: rehén virtual rescatado",
+        "Reconocimiento: rival visto en el minimapa",
+        "Equipamiento: MP9 registrado en inventario virtual",
         "Sin responsable: señal desconocida",
     ]
     respuestas = [primero.atender(evento) for evento in eventos]
@@ -42,8 +45,8 @@ if __name__ == "__main__":
 # Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
 #   python -B .\04-patrones-diseno\chain-of-responsibility\reportes-partida\main.py
 # Salida esperada:
-#   Objetivo: asegurar el sitio B
-#   Reconocimiento: enemigo en pasillo central
-#   Apoyo: solicitar munición adicional
+#   Objetivo: rehén virtual rescatado
+#   Reconocimiento: rival visto en el minimapa
+#   Equipamiento: MP9 registrado en inventario virtual
 #   Sin responsable: señal desconocida
 # CodeTrace | FIN EJEMPLO DE CONSOLA

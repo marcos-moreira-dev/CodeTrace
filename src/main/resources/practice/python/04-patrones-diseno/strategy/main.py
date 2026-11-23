@@ -1,4 +1,8 @@
 # CodeTrace | Referencia: Python 3.12
+# Universo compartido: Arena Táctica, juego competitivo ficticio por equipos.
+# Dominio: Descuentos de inscripción a un torneo de partidas tácticas.
+# Patrón strategy: Cambiar la política de cálculo sin alterar el cliente.
+# Glosario: Inscripción: registro de un equipo en el torneo.
 # Compilar/Comprobar: python -B ARCHIVO.py
 # Ejecutar: python -B .\04-patrones-diseno\strategy\main.py
 

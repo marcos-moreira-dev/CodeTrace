@@ -127,6 +127,26 @@ class PracticeCurriculumStructureAuditTest {
         }
     }
 
+    @Test
+    void tacticalThemeIsExplainedInBothLanguagePatternPacks() throws Exception {
+        BuiltInLibrary library = new BuiltInLibrary(temp.resolve("tactical-patterns"));
+        for (String packId : List.of("java21", "python")) {
+            BuiltInLibrary.Pack pack = library.packs().stream()
+                    .filter(p -> p.id().equals(packId)).findFirst().orElseThrow();
+            Path root = library.open(pack);
+            List<String> patternFiles = library.entries(pack).stream()
+                    .filter(p -> p.startsWith("04-patrones-diseno/")).toList();
+            assertTrue(patternFiles.size() >= 22);
+            for (String relative : patternFiles) {
+                String body = Files.readString(root.resolve(relative));
+                assertTrue(body.contains("Dominio:"),
+                        "Describe briefly the domain in " + packId + "/" + relative);
+                assertTrue(body.contains("Glosario:"),
+                        "Explain contextual terms in " + packId + "/" + relative);
+            }
+        }
+    }
+
     /**
      * Mask strings and comments, preserving positions and line breaks so a
      * brace-depth counter distinguishes nested named types from file-level

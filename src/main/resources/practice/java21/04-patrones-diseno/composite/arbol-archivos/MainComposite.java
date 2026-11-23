@@ -1,4 +1,8 @@
 // CodeTrace | Referencia: Java 21 LTS / JDK 21
+// Universo compartido: Arena Táctica, juego competitivo ficticio por equipos.
+// Dominio: Árbol de archivos de mapas y recursos del videojuego.
+// Patrón composite: Tratar hojas y contenedores con una misma interfaz.
+// Glosario: Mapa: escenario virtual; recurso: archivo usado por el juego.
 // Compilar en COPIA desde java21: javac --release 21 -encoding UTF-8 -d "$env:TEMP\ct-practice" (Get-ChildItem -Recurse -Filter *.java).FullName
 // Ejecutar: java -cp "$env:TEMP\ct-practice" codetrace.practica.patrones.composite.MainComposite
 
