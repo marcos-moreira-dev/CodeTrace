@@ -635,7 +635,7 @@ class CodeTraceAppSmokeTest {
                 assertTrue(srcMenu.getItems().stream().anyMatch(item ->
                         "Colapsar todas las subcarpetas".equals(item.getText())));
                 assertTrue(srcMenu.getItems().stream().anyMatch(item ->
-                        "Mapa de dependencias...".equals(item.getText())));
+                        "Mapa de estructura y dependencias...".equals(item.getText())));
                 ContextMenu folderMenu = (ContextMenu) menuFor.invoke(fileTree, nested);
                 assertTrue(folderMenu.getItems().stream().anyMatch(item ->
                         "Colapsar todas las subcarpetas".equals(item.getText())),
@@ -644,7 +644,7 @@ class CodeTraceAppSmokeTest {
                         .getItems().stream().anyMatch(item ->
                         "Colapsar todas las subcarpetas".equals(item.getText())));
                 assertTrue(folderMenu.getItems().stream().anyMatch(item ->
-                        "Mapa de dependencias...".equals(item.getText())));
+                        "Mapa de estructura y dependencias...".equals(item.getText())));
                 assertTrue(folderMenu.getItems().stream().anyMatch(
                         item -> "Crear esta carpeta".equals(item.getText())));
                 assertTrue(folderMenu.getItems().stream().anyMatch(
