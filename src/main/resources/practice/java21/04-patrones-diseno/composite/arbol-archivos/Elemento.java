@@ -13,19 +13,9 @@ import java.util.List;
  * Cada tamaño se calcula de forma recursiva O(n), n nodos.
  * No son archivos reales del disco: modelo puro de consola.
  */
-public sealed interface Elemento permits Elemento.Archivo, Elemento.Carpeta {
+/** Contrato común de hojas y contenedores: Composite. */
+public sealed interface Elemento permits Archivo, Carpeta {
     int bytes();
-    record Archivo(String nombre,int bytes) implements Elemento {
-        public Archivo { if(bytes<0)throw new IllegalArgumentException("bytes"); }
-    }
-    final class Carpeta implements Elemento {
-        private final String nombre;
-        private final List<Elemento> hijos=new ArrayList<>();
-        public Carpeta(String nombre){this.nombre=nombre;}
-        public void agregar(Elemento e){if(e==this)throw new IllegalArgumentException("Ciclo directo");hijos.add(e);}
-        public int bytes(){return hijos.stream().mapToInt(Elemento::bytes).sum();}
-        public String nombre(){return nombre;}
-    }
 }
 
 /*
