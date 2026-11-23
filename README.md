@@ -46,7 +46,7 @@ programa es **Marcos Moreira**, también identificado en sus metadatos.
 
 La biblioteca integrada comprende **14 lenguajes y 813 archivos de referencia** en v0.3.4. Son *archivos*, no 813 ejercicios independientes. Sus contenidos cubren fundamentos, estructuras de datos, algoritmos y patrones de diseño; los ejemplos incluyen guías de consola y salidas esperadas, algunas todavía pendientes de validación cruzada en todos los entornos.
 
-**En la rama experimental v0.3.5**, el catálogo interno `v9` incluye **826 archivos**, con contratos, `record`, `enum` y clases colaboradoras Java 21 separados donde aportan claridad. Los otros lenguajes conservan las estructuras idiomáticas de sus módulos. [Auditoría de los ejemplos y criterio didáctico](docs/AUDITORIA-EJEMPLOS-V035.md).
+**En la rama experimental v0.3.5**, el catálogo interno `v9` incluye **830 archivos**, con contratos, `record`, `enum` y clases colaboradoras Java 21 separados donde aportan claridad. Los otros lenguajes conservan las estructuras idiomáticas de sus módulos. [Auditoría de los ejemplos y criterio didáctico](docs/AUDITORIA-EJEMPLOS-V035.md).
 
 ### Consulta documentación directamente dentro del proyecto
 
