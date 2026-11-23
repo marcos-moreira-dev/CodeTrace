@@ -44,30 +44,26 @@ actual se muestran como nodos secundarios: **no se añade análisis semántico**
 
 ### Selección y movimiento
 
-- Clic sobre una carpeta: se resalta su isla en morado y se engrosan sus
-  aristas incidentes (dependencias, jerarquía y pertenencia).
-- Clic sobre un archivo: se resalta en morado intenso y se enfatiza el
-  vínculo **carpeta → borde de la isla**, sin trazar una línea gruesa que
-  atraviese otras etiquetas del grupo. Los archivos movidos individualmente
-  sí conservan un vínculo directo hasta su posición manual. Doble clic abre
-  el archivo en su pestaña habitual cuando está desactivado el modo de navegación.
-- El inspector derecho tiene **selección única**. El color de hover es más
-  tenue y distinto del de la selección para que no parezcan dos archivos
-  seleccionados al mismo tiempo.
-- **Arrastrar un archivo** lo mueve individualmente; las otras carpetas e
-  islas no se mueven. Si sale de su isla aparece su enlace directo a la
-  carpeta. El movimiento que cubra otra etiqueta de carpeta, archivo o isla
-  ajena se rechaza para preservar la legibilidad.
-- El desplazamiento manual del archivo se guarda **solo mientras la pestaña
-  del mapa está abierta**, incluso al ocultar y volver a mostrar archivos.
-  Si se mueve su carpeta, el archivo intenta seguirla conservando su
-  posición relativa, siempre que el destino permanezca libre.
-  **Restablecer distribución** o cerrar la pestaña descarta estos ajustes:
-  no se guardan en sesiones `.ctrace`. Las posiciones normales de las
-  carpetas sí siguen guardándose como antes.
-- Todas las conexiones del grafo se dibujan **debajo** de las islas y
-  etiquetas de archivos. Sus fondos opacos evitan que líneas de dependencia,
-  contención o pertenencia tapen visualmente nombres de documentos.
+- Un clic sobre una carpeta resalta su isla y las aristas incidentes.
+  Un clic en un archivo lo selecciona en el inspector, sin alterar la
+  posición del archivo dentro del grupo. El doble clic sobre un archivo
+  abre su pestaña, excepto en modo navegación segura.
+- **Los archivos individuales no se pueden arrastrar.** Al arrastrar desde
+  cualquier punto del rectángulo de una isla (incluido un archivo), se
+  desplaza el **contenedor completo**, con los archivos formando un único
+  bloque rígido, sin cambiar su distribución interna. Al soltar, ninguna
+  carpeta ni otro grupo cambia de posición.
+- Las islas no se pueden arrastrar encima de los rótulos de las carpetas,
+  otras islas o fuera de las coordenadas admitidas. Una isla movida mantiene
+  su enlace de pertenencia con la carpeta correspondiente.
+- Los desplazamientos manuales de contenedores persisten en esa pestaña
+  mientras esté abierta, incluso al ocultar y volver a mostrar los archivos
+  y, si hay espacio, al mover la carpeta madre. No se guardan en `.ctrace`.
+  **Restablecer distribución** reconstruye las islas automáticas.
+- El vínculo entre la carpeta y la isla termina **antes de su borde**,
+  no encima del pictograma del primer archivo. Los enlaces se pintan debajo
+  de las superficies opacas del grupo para que no parezcan superpuestos.
+- El inspector conserva selección única y distingue hover de selección.
 
 ### Límites
 
@@ -91,14 +87,14 @@ La leyenda, cuando hay más de un tipo de conexión, permanece fija abajo a
 la izquierda durante el paneo y zoom. Sus trazos y flechas vectoriales no
 dependen de la fuente del sistema.
 
-**«Solo panear y desplazar»**, casilla situada debajo de la leyenda, activa
-la exploración segura: puedes arrastrar desde cualquier lugar del Canvas
-(incluso sobre nodos y archivos) para mover la **cámara**, y usar la rueda
-sin Ctrl para acercar o alejar. Los clics simples siguen seleccionando
-elementos y muestran el inspector, pero los arrastres no mueven nodos ni
-archivos y el doble clic en un archivo no abre otra pestaña por accidente.
-Desactivarla restaura los arrastres normales y Ctrl+rueda para el zoom.
-La preferencia afecta solo a la pestaña actual del mapa.
+**«Solo panear y hacer zoom»** es la casilla debajo de la leyenda.
+Activada: arrastrar desde cualquier lugar (sobre nodos, islas o fondo)
+mueve exclusivamente la cámara, sin cambiar el diseño del grafo; un
+clic normal selecciona, pero el doble clic en un archivo no lo abre.
+Desactivada: se permite mover carpetas e islas enteras. **En ambos
+modos**, girar la rueda del ratón acerca o aleja el mapa sin necesidad
+de Ctrl, centrando el zoom alrededor del puntero. La casilla se aplica
+solo a la pestaña del mapa.
 
 Un clic primario o central en el área de trabajo cierra el menú contextual
 «Centrar y ajustar a ventana / Restablecer distribución /
