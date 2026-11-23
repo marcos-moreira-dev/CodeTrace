@@ -258,7 +258,7 @@ def main():
             # a complete non-generic, executable and correctly delimited guide.
             if not (args.check and valid_complete_guide(src, p)):
                 changes.append(p)
-                if args.write: p.write_text(new,encoding='utf-8',newline='\\n')
+                if args.write: p.write_text(new,encoding='utf-8',newline='\n')
         if state=='pendiente': incomplete.append(str(p.relative_to(root)))
     print(f'CodeTrace: archivos={len(sources)}; bloques originales={expected}; cambios={len(changes)}; estados={dict(stats)}')
     if incomplete: print('Salidas pendientes de verificar:\n'+'\n'.join(incomplete[:120]))
