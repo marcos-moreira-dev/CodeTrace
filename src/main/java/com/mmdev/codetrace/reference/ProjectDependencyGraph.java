@@ -268,14 +268,23 @@ public final class ProjectDependencyGraph {
             case "rb" ->
                     grab(text, "\\brequire_relative\\s*\\(?\\s*['\"]([^'\"]+)['\"]",
                             false, "require_relative", refs);
-            case "sh", "bash", "ps1", "psm1" -> {
+            case "sh", "bash", "zsh", "ps1", "psm1" -> {
                 grab(text, "(?m)^\\s*source\\s+['\"]?([.][^\\s'\";]+)",
                         false, "source", refs);
                 grab(text, "(?m)^\\s*\\.\\s+['\"]?([.][^\\s'\";]+)",
                         false, "source", refs);
                 grab(text, "(?m)^\\s*Import-Module\\s+['\"]?([.][^\\s'\";]+)",
                         false, "Import-Module", refs);
+                if (ext(file).equals("ps1") || ext(file).equals("psm1")) {
+                    // $PSScriptRoot is the one safe built-in directory variable
+                    // that can be resolved without evaluating PowerShell.
+                    grab(text, "(?im)^\\s*\\.\\s+[\"']?(\\$PSScriptRoot[/\\\\][^\\s\"';]+)",
+                            false, "source", refs);
+                }
             }
+            case "asm", "nasm" ->
+                    grab(text, "(?im)^\\s*%include\\s+[\"']([^\"']+)[\"']",
+                            false, "include", refs);
             case "cmd", "bat" ->
                     grab(text, "(?im)^\\s*call\\s+\"?([^\"\\r\\n]+\\.(?:cmd|bat))",
                             false, "call", refs);
@@ -300,6 +309,12 @@ public final class ProjectDependencyGraph {
     private static String resolve(Path root, Path from, ResolutionIndex index,
                                   ImportRef ref, String goModule) {
         String requested = ref.target().replace('\\', '/').strip();
+        // Only well-defined source-directory macros, never arbitrary variables.
+        if (requested.regionMatches(true, 0, "$PSScriptRoot/", 0,
+                "$PSScriptRoot/".length()))
+            requested = "./" + requested.substring("$PSScriptRoot/".length());
+        if (requested.regionMatches(true, 0, "%~dp0", 0, 5))
+            requested = "./" + requested.substring(5);
         if (requested.isEmpty() || requested.contains("$" + "{")
                 || requested.contains("$(")) return null;
         if (ref.kind().equals("go-import")) {

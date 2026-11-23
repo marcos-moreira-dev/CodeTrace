@@ -183,6 +183,26 @@ class ProjectDependencyGraphTest {
         assertNotEquals(before.fingerprint(), after.fingerprint());
     }
 
+    @Test
+    void resolvesCommonScriptDirectoryMacrosAndAssemblyInclude() throws Exception {
+        Path scripts = Files.createDirectories(root.resolve("scripts"));
+        Path common = Files.createDirectories(root.resolve("common"));
+        Files.writeString(common.resolve("Eventos.ps1"), "function Publicar-Evento {}\n");
+        Files.writeString(common.resolve("helper.cmd"), "@echo off\r\n");
+        Files.writeString(common.resolve("module.asm"), "global util\n");
+        Files.writeString(scripts.resolve("main.ps1"),
+                ". \"$PSScriptRoot/../common/Eventos.ps1\"\n");
+        Files.writeString(scripts.resolve("main.cmd"),
+                "call \"%~dp0../common/helper.cmd\"\r\n");
+        Files.writeString(scripts.resolve("main.asm"),
+                "%include \"../common/module.asm\"\n");
+
+        var graph = ProjectDependencyGraph.analyze(root, root, () -> false);
+        assertEquals(1, graph.edges().size(), "One folder arrow despite three uses.");
+        assertEdge(graph, "scripts", "common");
+        assertEquals(3, graph.evidence().get(graph.edges().getFirst()).size());
+    }
+
     private static void assertEdge(ProjectDependencyGraph.Graph graph,
                                    String source, String target) {
         assertTrue(graph.edges().stream().anyMatch(edge ->
