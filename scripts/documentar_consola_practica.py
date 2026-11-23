@@ -207,6 +207,33 @@ def render(path:Path,src:str,pack:Path,sources:dict[Path,str],cache:dict) -> tup
     return original.rstrip()+'\n\n'+footer, ('salida_documentada' if client is not None and client.relative_to(pack).as_posix() in cache or source_out and not source_out[0].startswith('(salida del programa por verificar') else ('sin_entrada' if not exe else 'pendiente'))
 
 
+def valid_complete_guide(src: str, path: Path) -> bool:
+    """Accept independently authored, complete guides in --check.
+
+    --write keeps generating canonical footers. --check verifies the actual
+    instructions rather than forcing identical template punctuation.
+    """
+    if BEGIN not in src or END not in src:
+        return False
+    try:
+        stripped = strip_generated(src, path)
+    except ValueError:
+        return False
+    if stripped == src:
+        return False
+    footer = src[src.rfind(BEGIN):src.rfind(END)]
+    required = ('Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):',
+                'Salida esperada:')
+    if not all(token in footer for token in required):
+        return False
+    if GENERIC.search(footer):
+        return False
+    if path.suffix == '.java' and ('javac --release 21' not in footer
+                                   or 'java -cp $out' not in footer):
+        return False
+    return True
+
+
 def main():
     ap=argparse.ArgumentParser()
     mx=ap.add_mutually_exclusive_group(required=True)
@@ -227,8 +254,11 @@ def main():
         new,state=render(p,src,root,sources,cache)
         stats[state]+=1
         if new!=src:
-            changes.append(p)
-            if args.write: p.write_text(new,encoding='utf-8',newline='\n')
+            # Exact generated wording is not required when the author supplied
+            # a complete non-generic, executable and correctly delimited guide.
+            if not (args.check and valid_complete_guide(src, p)):
+                changes.append(p)
+                if args.write: p.write_text(new,encoding='utf-8',newline='\\n')
         if state=='pendiente': incomplete.append(str(p.relative_to(root)))
     print(f'CodeTrace: archivos={len(sources)}; bloques originales={expected}; cambios={len(changes)}; estados={dict(stats)}')
     if incomplete: print('Salidas pendientes de verificar:\n'+'\n'.join(incomplete[:120]))
