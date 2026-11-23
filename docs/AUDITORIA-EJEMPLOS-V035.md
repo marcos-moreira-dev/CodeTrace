@@ -27,8 +27,26 @@ La revisión de integridad recorre todos los elementos del catálogo: ruta segur
 | Command con deshacer | `Comando.java` mezclaba contrato e implementación `AgregarTexto` | `Comando.java`, `AgregarTexto.java`, `Editor.java`, `MainCommand.java` |
 | Composite | `Elemento.java` anidaba `Archivo` y `Carpeta` | `Elemento.java`, `Archivo.java`, `Carpeta.java`, `MainComposite.java` |
 | Abstract Factory | `FamiliaInterfaz.java` agrupaba cinco roles anidados | `Boton.java`, `Dialogo.java`, `Fabrica.java`, `FabricaClara.java`, `FabricaOscura.java`, `MainAbstractFactory.java` |
+| Template Method | `ProcesoReporte.java` incluía otras dos clases de nivel superior | `ProcesoReporte.java`, `ReporteTexto.java`, `ReporteCsv.java`, `MainTemplateMethod.java` |
+| Callbacks | `Receptor` estaba dentro del cliente `Callbacks` | `Receptor.java` y `Callbacks.java` |
+| Tipos de grafo | `Orientacion` era un `enum` público anidado en `Grafo` | `Orientacion.java`, `Grafo.java`, `MainTiposGrafo.java` |
 
 Las nuevas fuentes conservan cabeceras con Java 21, instrucciones de compilación, cliente y salida esperada. Se actualizaron los consumidores para usar los contratos independientes y el catálogo de recursos. La biblioteca pasa a caché `v9` para no reutilizar los archivos obsoletos de `v8`.
+
+## Hallazgo de la revisión automática de Java
+
+El primer inventario encontró **una fuente con varios tipos de nivel superior**
+(`ProcesoReporte.java`) y **22 archivos con tipos anidados**. La fuente de
+Template Method ya se dividió. También se extrajeron el contrato `Receptor`
+y el `enum Orientacion`, con responsabilidad didáctica explícita.
+
+Los tipos anidados restantes se revisan como **detalles de implementación**,
+no como incumplimientos automáticos: `Nodo` privado de una estructura, estado
+interno de algoritmos (`Arista`, `Resultado`), datos locales para un
+ejemplo y el `Builder` anidado que Java utiliza idiomáticamente.
+Separarlos todos por obligación aumentaría archivos sin mejorar su estudio.
+La nueva prueba **rechaza** varios tipos de nivel superior por archivo y
+comprueba las unidades que sí se separaron.
 
 ## Cómo verificar
 
