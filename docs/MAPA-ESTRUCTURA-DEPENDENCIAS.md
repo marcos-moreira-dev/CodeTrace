@@ -39,12 +39,24 @@ No es una dependencia, una llamada, una herencia ni un análisis semántico.
   **no modifica** sus posiciones, la disposición elegida ni las sesiones
   `.ctrace`. Las posiciones de archivo son temporales, deterministas y
   se recalculan después de desplazar una carpeta.
-- Las etiquetas de archivos reservan espacio para evitar solapamientos y se
-  dibujan sobre el Canvas únicamente dentro de la zona visible. El cálculo
+- Cada carpeta con archivos tiene una **isla compacta en rejilla** próxima
+  al nodo padre. El algoritmo busca un espacio libre alrededor de la carpeta
+  sin mover las posiciones originales. Reserva el rectángulo de la isla como
+  una unidad: dos islas no mezclan archivos y ninguna cubre los rótulos de
+  las carpetas. Si el espacio está ocupado, la isla puede quedar más lejos.
+  Una conexión tenue une la carpeta con su isla, evitando centenares de
+  líneas que se cruzan. El contorno indica pertenencia, no dependencia.
+- Seleccionar una carpeta resalta **en morado suave toda su isla y sus
+  archivos**; seleccionar un archivo usa un morado más intenso para ese
+  documento. Los demás grupos permanecen neutros. Los archivos usan un
+  pequeño pictograma vectorial de documento, también en el Canvas.
+- Los archivos e islas se dibujan únicamente en la zona visible. El cálculo
   está limitado a **1.200** archivos secundarios como máximo, y el analizador
   existente también limita su inspección a 1.200 fuentes y el mapa a 180
   carpetas. Si se supera un límite, se indica que la vista es **parcial**;
-  no se afirma que el resto de archivos no exista.
+  no se afirma que el resto de archivos no exista. La ausencia de
+  solapamientos se aplica a las **islas y etiquetas**; las líneas entre
+  carpetas pueden cruzarse y el usuario puede arrastrar nodos manualmente.
 - La leyenda es contextual: **se oculta si hay un solo tipo de conexión** y
   muestra únicamente los tipos presentes (dependencia dirigida, contención
   entre carpetas y pertenencia de archivo). No se crean otras vistas.
