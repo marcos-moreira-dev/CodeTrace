@@ -3,6 +3,7 @@ package com.mmdev.codetrace.ui;
 import com.mmdev.codetrace.reference.GraphLayout;
 import com.mmdev.codetrace.reference.GraphLayoutEngine;
 import com.mmdev.codetrace.reference.ProjectDependencyGraph;
+import java.nio.file.Path;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
@@ -12,9 +13,11 @@ import javafx.application.Platform;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.geometry.Point2D;
+import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Label;
@@ -23,12 +26,17 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.Tooltip;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
+import javafx.scene.shape.Polyline;
 import javafx.scene.text.Font;
+import org.kordamp.ikonli.javafx.FontIcon;
 
 /**
  * Read-only dependency graph on a viewport-sized Canvas with a logical camera.
@@ -44,8 +52,10 @@ public final class DependencyGraphPane extends BorderPane {
     private final VBox inspector = new VBox(8);
     private final Label inspectorTitle = new Label();
     private final Label inspectorPath = new Label();
-    private final ListView<String> inspectorFiles = new ListView<>();
-    private final ListView<String> inspectorFolders = new ListView<>();
+    private final ListView<String> inspectorFiles = AppControls.navigationList();
+    private final ListView<String> inspectorFolders = AppControls.navigationList();
+    private final Label filesHeading = new Label("Archivos");
+    private final Label foldersHeading = new Label("Subcarpetas");
     private final GraphCamera camera = new GraphCamera();
     private final Map<String, GraphLayout.Point> layout = new LinkedHashMap<>();
     /** Recompute edge curves on layout changes, not zoom, pan or selection. */
@@ -128,10 +138,10 @@ public final class DependencyGraphPane extends BorderPane {
         legend.setMaxSize(VBox.USE_PREF_SIZE, VBox.USE_PREF_SIZE);
         Label legendTitle = new Label("Leyenda");
         legendTitle.getStyleClass().add("dependency-map-legend-title");
-        Label dependency = new Label("━━▶  Origen depende del destino");
-        dependency.getStyleClass().add("dependency-map-legend-dependency");
-        Label containment = new Label("┄┄┄   Contiene subcarpeta");
-        legend.getChildren().addAll(legendTitle, dependency, containment);
+        // Draw real JavaFX vectors rather than font-dependent Unicode arrows.
+        legend.getChildren().addAll(legendTitle,
+                legendRow(true, "Origen depende del destino"),
+                legendRow(false, "Contiene subcarpeta"));
         legend.setMouseTransparent(true);
         // Keep the original Pane -> Canvas structure for existing JavaFX clients.
         // Overlay is anchored in viewport coordinates, never graph/world space.
@@ -151,6 +161,13 @@ public final class DependencyGraphPane extends BorderPane {
         ContextMenu graphMenu = new ContextMenu(fit, reset);
         viewport.setOnContextMenuRequested(event -> graphMenu.show(
                 viewport, event.getScreenX(), event.getScreenY()));
+        // The canvas consumes mouse presses for its drag gestures, so relying
+        // solely on JavaFX's popup auto-hide leaves the menu on screen.
+        // An event filter runs before the canvas handler without stealing focus,
+        // selection, or panning from the user's actual click.
+        viewport.addEventFilter(MouseEvent.MOUSE_PRESSED, event -> {
+            if (event.getButton() != MouseButton.SECONDARY) graphMenu.hide();
+        });
 
         canvas.setOnMouseMoved(event -> {
             if (!panning && pressed == null)
@@ -238,6 +255,7 @@ public final class DependencyGraphPane extends BorderPane {
         });
         canvas.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ESCAPE) {
+                graphMenu.hide();
                 clearSelection();
             } else if (event.getCode() == KeyCode.HOME) {
                 fitToViewport();
@@ -255,49 +273,128 @@ public final class DependencyGraphPane extends BorderPane {
         redraw();
     }
 
+    /** Glyphs match the stroke, dash and arrowhead of the actual graph. */
+    private static HBox legendRow(boolean dependency, String caption) {
+        Pane glyph = new Pane();
+        glyph.getStyleClass().add("dependency-map-legend-marker");
+        glyph.setMinSize(34, 16);
+        glyph.setPrefSize(34, 16);
+        glyph.setMaxSize(34, 16);
+        Line segment = new Line(1, 8, dependency ? 26 : 32, 8);
+        segment.setStroke(Color.web(dependency ? "#168a97" : "#9bacb9"));
+        segment.setStrokeWidth(dependency ? 2 : 1.4);
+        if (dependency) {
+            Polyline head = new Polyline(20, 3.5, 26, 8, 20, 12.5);
+            head.setFill(Color.TRANSPARENT);
+            head.setStroke(Color.web("#168a97"));
+            head.setStrokeWidth(2);
+            glyph.getChildren().addAll(segment, head);
+        } else {
+            segment.getStrokeDashArray().addAll(5.0, 4.0);
+            glyph.getChildren().add(segment);
+        }
+        Label label = new Label(caption);
+        if (dependency) label.getStyleClass().add("dependency-map-legend-dependency");
+        HBox row = new HBox(7, glyph, label);
+        row.getStyleClass().add("dependency-map-legend-row");
+        row.setAlignment(Pos.CENTER_LEFT);
+        return row;
+    }
+
+    /** A compact right-hand inspector built from the application's shared controls. */
     private void initializeInspector() {
         inspector.getStyleClass().add("dependency-map-inspector");
-        inspector.setPrefWidth(265);
+        inspector.setPrefWidth(272);
         inspector.setMinWidth(220);
+        inspector.setMaxWidth(312);
+
         inspectorTitle.getStyleClass().add("dependency-map-inspector-title");
         inspectorTitle.setWrapText(true);
+        inspectorTitle.setMaxWidth(Double.MAX_VALUE);
         inspectorPath.getStyleClass().add("dependency-map-inspector-path");
         inspectorPath.setWrapText(true);
-        inspectorFiles.setPlaceholder(new Label("Sin archivos directos"));
-        inspectorFolders.setPlaceholder(new Label("Sin subcarpetas visibles"));
-        inspectorFiles.setCellFactory(list -> pathCell());
-        inspectorFolders.setCellFactory(list -> pathCell());
+        filesHeading.getStyleClass().add("app-section-heading");
+        foldersHeading.getStyleClass().add("app-section-heading");
+
+        Button close = new Button();
+        FontIcon closeIcon = new FontIcon("fth-x");
+        closeIcon.setIconSize(15);
+        close.setGraphic(closeIcon);
+        close.setTooltip(new Tooltip("Cerrar inspector (Esc)"));
+        close.setAccessibleText("Cerrar inspector");
+        close.getStyleClass().add("app-panel-close");
+        close.setOnAction(event -> clearSelection());
+
+        HBox header = new HBox(8,
+                FileTypeIcons.forPath(Path.of("."), true), inspectorTitle, close);
+        header.getStyleClass().add("dependency-map-inspector-header");
+        header.setAlignment(Pos.CENTER_LEFT);
+        HBox.setHgrow(inspectorTitle, Priority.ALWAYS);
+
+        Label noFiles = new Label("Sin archivos directos");
+        noFiles.getStyleClass().add("app-list-placeholder");
+        Label noFolders = new Label("Sin subcarpetas visibles");
+        noFolders.getStyleClass().add("app-list-placeholder");
+        inspectorFiles.setPlaceholder(noFiles);
+        inspectorFolders.setPlaceholder(noFolders);
+        inspectorFiles.setCellFactory(list -> pathCell(false));
+        inspectorFolders.setCellFactory(list -> pathCell(true));
+
         inspectorFiles.setOnMouseClicked(event -> {
-            if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
-                String file = inspectorFiles.getSelectionModel().getSelectedItem();
-                if (file != null) openSource.accept(file);
+            if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2)
+                openSelectedFile();
+        });
+        inspectorFiles.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                openSelectedFile();
+                event.consume();
             }
         });
         inspectorFolders.setOnMouseClicked(event -> {
-            if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
-                String folder = inspectorFolders.getSelectionModel().getSelectedItem();
-                if (folder != null) {
-                    selectNode(folder);
-                    GraphLayout.Point at = layout.get(folder);
-                    if (at != null) camera.center(at.x() + 120, at.y());
-                    redraw();
-                }
+            if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2)
+                navigateToSelectedFolder();
+        });
+        inspectorFolders.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                navigateToSelectedFolder();
+                event.consume();
             }
         });
+
         inspectorFolders.setPrefHeight(115);
         inspectorFolders.setMaxHeight(165);
         VBox.setVgrow(inspectorFiles, Priority.ALWAYS);
-        inspector.getChildren().addAll(inspectorTitle, inspectorPath,
-                new Label("Archivos"), inspectorFiles,
-                new Label("Subcarpetas"), inspectorFolders);
+        inspector.getChildren().addAll(header, inspectorPath,
+                filesHeading, inspectorFiles, foldersHeading, inspectorFolders);
     }
 
-    private static ListCell<String> pathCell() {
+    private void openSelectedFile() {
+        String file = inspectorFiles.getSelectionModel().getSelectedItem();
+        if (file != null) openSource.accept(file);
+    }
+
+    private void navigateToSelectedFolder() {
+        String folder = inspectorFolders.getSelectionModel().getSelectedItem();
+        if (folder == null) return;
+        selectNode(folder);
+        GraphLayout.Point at = layout.get(folder);
+        if (at != null) camera.center(at.x() + 120, at.y());
+        redraw();
+    }
+
+    private static ListCell<String> pathCell(boolean folder) {
         return new ListCell<>() {
             @Override protected void updateItem(String path, boolean empty) {
                 super.updateItem(path, empty);
-                setText(empty || path == null ? null : shortName(path));
-                setTooltip(empty || path == null ? null : new Tooltip(path));
+                if (empty || path == null) {
+                    setText(null);
+                    setGraphic(null);
+                    setTooltip(null);
+                    return;
+                }
+                setText(shortName(path));
+                setGraphic(FileTypeIcons.forPath(Path.of(path), folder));
+                setTooltip(new Tooltip(path));
             }
         };
     }
@@ -317,6 +414,11 @@ public final class DependencyGraphPane extends BorderPane {
         inspectorPath.setText(directory.equals(".") ? "Carpeta del proyecto" : directory);
         inspectorFiles.getItems().setAll(model.files(directory));
         inspectorFolders.getItems().setAll(model.subfolders(directory));
+        filesHeading.setText("Archivos (" + inspectorFiles.getItems().size() + ")");
+        foldersHeading.setText("Subcarpetas (" + inspectorFolders.getItems().size() + ")");
+        inspectorPath.setTooltip(new Tooltip(inspectorPath.getText()));
+        inspectorFiles.getSelectionModel().clearSelection();
+        inspectorFolders.getSelectionModel().clearSelection();
         setRight(inspector);
     }
 
