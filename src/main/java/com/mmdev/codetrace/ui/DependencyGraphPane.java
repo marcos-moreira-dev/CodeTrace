@@ -1,9 +1,12 @@
 package com.mmdev.codetrace.ui;
 
+import com.mmdev.codetrace.reference.GraphFileLayout;
 import com.mmdev.codetrace.reference.GraphLayout;
 import com.mmdev.codetrace.reference.GraphLayoutEngine;
 import com.mmdev.codetrace.reference.ProjectDependencyGraph;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
@@ -18,11 +21,13 @@ import javafx.scene.Cursor;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.control.Tooltip;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
@@ -49,6 +54,12 @@ public final class DependencyGraphPane extends BorderPane {
     private static final double MAX_NODE_COORDINATE = 100_000;
     private final Pane viewport = new Pane();
     private final Canvas canvas = new Canvas();
+    private final VBox legend = new VBox(5);
+    private final CheckMenuItem showFilesItem = new CheckMenuItem("Mostrar archivos de código");
+    /** Secondary file positions are derived, never saved with folder layouts. */
+    private Map<String, GraphLayout.Point> filePositions = Map.of();
+    private boolean fileLayoutLimited;
+    private String selectedFile, pressedFile;
     private final VBox inspector = new VBox(8);
     private final Label inspectorTitle = new Label();
     private final Label inspectorPath = new Label();
@@ -133,16 +144,10 @@ public final class DependencyGraphPane extends BorderPane {
         canvas.heightProperty().bind(viewport.heightProperty());
         canvas.widthProperty().addListener((obs, old, value) -> onViewportResized());
         canvas.heightProperty().addListener((obs, old, value) -> onViewportResized());
-        VBox legend = new VBox(5);
         legend.getStyleClass().add("dependency-map-legend");
         legend.setMaxSize(VBox.USE_PREF_SIZE, VBox.USE_PREF_SIZE);
-        Label legendTitle = new Label("Leyenda");
-        legendTitle.getStyleClass().add("dependency-map-legend-title");
-        // Draw real JavaFX vectors rather than font-dependent Unicode arrows.
-        legend.getChildren().addAll(legendTitle,
-                legendRow(true, "Origen depende del destino"),
-                legendRow(false, "Contiene subcarpeta"));
         legend.setMouseTransparent(true);
+        updateLegend();
         // Keep the original Pane -> Canvas structure for existing JavaFX clients.
         // Overlay is anchored in viewport coordinates, never graph/world space.
         viewport.getChildren().add(legend);
@@ -158,7 +163,10 @@ public final class DependencyGraphPane extends BorderPane {
         reset.setOnAction(event -> resetLayout());
         MenuItem fit = new MenuItem("Centrar y ajustar a ventana");
         fit.setOnAction(event -> fitToViewport());
-        ContextMenu graphMenu = new ContextMenu(fit, reset);
+        showFilesItem.setSelected(false);
+        showFilesItem.setOnAction(event -> applyFileVisibility());
+        ContextMenu graphMenu = new ContextMenu(
+                fit, reset, new SeparatorMenuItem(), showFilesItem);
         viewport.setOnContextMenuRequested(event -> graphMenu.show(
                 viewport, event.getScreenX(), event.getScreenY()));
         // The canvas consumes mouse presses for its drag gestures, so relying
@@ -171,14 +179,15 @@ public final class DependencyGraphPane extends BorderPane {
 
         canvas.setOnMouseMoved(event -> {
             if (!panning && pressed == null)
-                canvas.setCursor(pickNode(event.getX(), event.getY()) == null
-                        ? Cursor.OPEN_HAND : Cursor.HAND);
+                canvas.setCursor(isHit(event.getX(), event.getY())
+                        ? Cursor.HAND : Cursor.OPEN_HAND);
         });
         canvas.setOnMouseExited(event -> {
             if (!panning && pressed == null) canvas.setCursor(Cursor.DEFAULT);
         });
         canvas.setOnMousePressed(event -> {
             pressed = null;
+            pressedFile = null;
             panning = false;
             moved = false;
             if (event.getButton() != MouseButton.PRIMARY
@@ -189,6 +198,10 @@ public final class DependencyGraphPane extends BorderPane {
             if (hit != null) {
                 pressed = hit;
                 initialPosition = layout.get(hit);
+                pressX = event.getX();
+                pressY = event.getY();
+            } else if (event.getButton() == MouseButton.PRIMARY
+                    && (pressedFile = pickFile(event.getX(), event.getY())) != null) {
                 pressX = event.getX();
                 pressY = event.getY();
             } else {
@@ -216,6 +229,11 @@ public final class DependencyGraphPane extends BorderPane {
                 edgeRoutes = null;
                 redraw();
                 event.consume();
+            } else if (pressedFile != null) {
+                // A file is a read-only leaf: dragging must not move it.
+                moved = Math.abs(event.getX() - pressX)
+                        + Math.abs(event.getY() - pressY) >= 3;
+                event.consume();
             } else if (panning) {
                 camera.center(panStartX - (event.getSceneX() - panSceneX) / camera.scale(),
                         panStartY - (event.getSceneY() - panSceneY) / camera.scale());
@@ -226,15 +244,17 @@ public final class DependencyGraphPane extends BorderPane {
         });
         canvas.setOnMouseReleased(event -> {
             if (pressed != null && moved) {
+                if (showFilesItem.isSelected()) rebuildFilePositions();
                 selectNode(pressed);
                 notifyLayoutChanged();
                 event.consume();
             }
             pressed = null;
+            pressedFile = null;
             initialPosition = null;
             panning = false;
-            canvas.setCursor(pickNode(event.getX(), event.getY()) == null
-                    ? Cursor.OPEN_HAND : Cursor.HAND);
+            canvas.setCursor(isHit(event.getX(), event.getY())
+                    ? Cursor.HAND : Cursor.OPEN_HAND);
         });
         canvas.setOnMouseClicked(event -> {
             if (event.getButton() != MouseButton.PRIMARY || moved) {
@@ -242,8 +262,22 @@ public final class DependencyGraphPane extends BorderPane {
                 return;
             }
             String hit = pickNode(event.getX(), event.getY());
-            selectNode(hit);
-            // Directory nodes are explored through the inspector, not opened as files.
+            if (hit != null) {
+                selectNode(hit);
+            } else {
+                String file = pickFile(event.getX(), event.getY());
+                if (file == null) {
+                    clearSelection();
+                } else {
+                    String parent = file.contains("/")
+                            ? file.substring(0, file.lastIndexOf('/')) : ".";
+                    selectNode(parent);
+                    selectedFile = file;
+                    inspectorFiles.getSelectionModel().select(file);
+                    if (event.getClickCount() == 2) openSource.accept(file);
+                    redraw();
+                }
+            }
             event.consume();
         });
         viewport.addEventFilter(javafx.scene.input.ScrollEvent.SCROLL, event -> {
@@ -271,6 +305,93 @@ public final class DependencyGraphPane extends BorderPane {
             event.consume();
         });
         redraw();
+    }
+
+    /** A single graph: the checkbox only adds or removes filesystem leaves. */
+    public boolean isShowingCodeFiles() { return showFilesItem.isSelected(); }
+
+    public void setShowCodeFiles(boolean show) {
+        if (showFilesItem.isSelected() == show) return;
+        showFilesItem.setSelected(show);
+        applyFileVisibility();
+    }
+
+    public int availableCodeFileCount() {
+        int total = 0;
+        for (String folder : model.nodes()) total += model.files(folder).size();
+        return total;
+    }
+
+    public int visibleCodeFileCount() { return filePositions.size(); }
+
+    /** Snapshot for deterministic diagram and regression tests. */
+    public Map<String, GraphLayout.Point> fileNodePositions() {
+        return Map.copyOf(filePositions);
+    }
+
+    private void rebuildFilePositions() {
+        if (!showFilesItem.isSelected()) {
+            filePositions = Map.of();
+            fileLayoutLimited = false;
+            return;
+        }
+        GraphFileLayout.Result positions = GraphFileLayout.arrange(model, layout);
+        filePositions = positions.positions();
+        fileLayoutLimited = positions.limited();
+    }
+
+    private void applyFileVisibility() {
+        selectedFile = null;
+        rebuildFilePositions();
+        updateLegend();
+        fitToViewport();
+        onNodeSelected.accept(selected);
+    }
+
+    /** Show a legend only when at least two connection conventions coexist. */
+    private void updateLegend() {
+        boolean hasDependencies = !model.edges().isEmpty();
+        boolean hasHierarchy = !model.hierarchy().isEmpty();
+        boolean hasFiles = showFilesItem.isSelected() && !filePositions.isEmpty();
+        int types = (hasDependencies ? 1 : 0)
+                + (hasHierarchy ? 1 : 0) + (hasFiles ? 1 : 0);
+        legend.setVisible(types > 1);
+        legend.setManaged(types > 1);
+        legend.getChildren().clear();
+        if (types <= 1) return;
+        Label heading = new Label("Leyenda");
+        heading.getStyleClass().add("dependency-map-legend-title");
+        legend.getChildren().add(heading);
+        if (hasDependencies)
+            legend.getChildren().add(legendRow(true, "Origen depende del destino"));
+        if (hasHierarchy)
+            legend.getChildren().add(legendRow(false, "Contiene subcarpeta"));
+        if (hasFiles) {
+            Pane symbol = new Pane();
+            symbol.getStyleClass().add("dependency-map-legend-marker");
+            symbol.setMinSize(34, 16);
+            symbol.setPrefSize(34, 16);
+            symbol.setMaxSize(34, 16);
+            Line membership = new Line(1, 8, 30, 8);
+            membership.setStroke(Color.web("#91a5b3"));
+            membership.setStrokeWidth(1.2);
+            membership.getStrokeDashArray().addAll(2.0, 5.0);
+            symbol.getChildren().add(membership);
+            HBox row = new HBox(7, symbol, new Label("Archivo en carpeta"));
+            row.getStyleClass().add("dependency-map-legend-row");
+            row.setAlignment(Pos.CENTER_LEFT);
+            legend.getChildren().add(row);
+        }
+    }
+
+    private Collection<GraphLayout.Point> visiblePoints() {
+        if (!showFilesItem.isSelected() || filePositions.isEmpty())
+            return layout.values();
+        ArrayList<GraphLayout.Point> points = new ArrayList<>(
+                layout.size() + filePositions.size());
+        points.addAll(layout.values());
+        points.addAll(filePositions.values());
+        return points;
     }
 
     /** Glyphs match the stroke, dash and arrowhead of the actual graph. */
@@ -439,14 +560,15 @@ public final class DependencyGraphPane extends BorderPane {
     public void fitToViewport() {
         double w = canvas.getWidth(), h = canvas.getHeight();
         centerCameraOnGraph();
-        if (w >= 120 && h >= 120 && !layout.isEmpty()) {
-            double minX = layout.values().stream()
+        Collection<GraphLayout.Point> points = visiblePoints();
+        if (w >= 120 && h >= 120 && !points.isEmpty()) {
+            double minX = points.stream()
                     .mapToDouble(GraphLayout.Point::x).min().orElse(0);
-            double maxX = layout.values().stream()
+            double maxX = points.stream()
                     .mapToDouble(GraphLayout.Point::x).max().orElse(0);
-            double minY = layout.values().stream()
+            double minY = points.stream()
                     .mapToDouble(GraphLayout.Point::y).min().orElse(0);
-            double maxY = layout.values().stream()
+            double maxY = points.stream()
                     .mapToDouble(GraphLayout.Point::y).max().orElse(0);
             double graphWidth = Math.max(250, maxX - minX + 270);
             double graphHeight = Math.max(110, maxY - minY + 90);
@@ -460,13 +582,14 @@ public final class DependencyGraphPane extends BorderPane {
     }
 
     private void centerCameraOnGraph() {
-        double minX = layout.values().stream().mapToDouble(GraphLayout.Point::x)
+        Collection<GraphLayout.Point> points = visiblePoints();
+        double minX = points.stream().mapToDouble(GraphLayout.Point::x)
                 .min().orElse(0);
-        double maxX = layout.values().stream().mapToDouble(GraphLayout.Point::x)
+        double maxX = points.stream().mapToDouble(GraphLayout.Point::x)
                 .max().orElse(0);
-        double minY = layout.values().stream().mapToDouble(GraphLayout.Point::y)
+        double minY = points.stream().mapToDouble(GraphLayout.Point::y)
                 .min().orElse(0);
-        double maxY = layout.values().stream().mapToDouble(GraphLayout.Point::y)
+        double maxY = points.stream().mapToDouble(GraphLayout.Point::y)
                 .max().orElse(0);
         // Include filename labels to the right of each node.
         camera.center((minX + maxX + 235) / 2, (minY + maxY) / 2);
@@ -505,7 +628,7 @@ public final class DependencyGraphPane extends BorderPane {
     public double getCameraX() { return camera.centerX(); }
     public double getCameraY() { return camera.centerY(); }
     public boolean hasUnboundedPan() { return true; }
-    public boolean isPartial() { return model.truncated(); }
+    public boolean isPartial() { return model.truncated() || fileLayoutLimited; }
     public int nodeCount() { return model.nodes().size(); }
     public int connectionCount() { return model.edges().size(); }
     public String folder() { return model.folder(); }
@@ -519,7 +642,10 @@ public final class DependencyGraphPane extends BorderPane {
     public String selectedNodeSummary() {
         if (selected == null) return nodeCount() + " carpetas · "
                 + connectionCount() + " dependencias · "
-                + model.hierarchy().size() + " subcarpetas";
+                + model.hierarchy().size() + " subcarpetas"
+                + (showFilesItem.isSelected()
+                    ? " · " + visibleCodeFileCount() + " archivos de código"
+                    : "") + (isPartial() ? " · vista parcial" : "");
         long outgoing = model.edges().stream()
                 .filter(e -> e.source().equals(selected)).count();
         long incoming = model.edges().stream()
@@ -533,6 +659,7 @@ public final class DependencyGraphPane extends BorderPane {
     private void selectNode(String path) {
         if (path != null && !layout.containsKey(path)) return;
         selected = path;
+        selectedFile = null;
         if (path == null) {
             selectedNeighbors = Set.of();
         } else {
@@ -564,6 +691,7 @@ public final class DependencyGraphPane extends BorderPane {
         layout.clear();
         layout.putAll(GraphLayoutEngine.arrange(model, layoutMode));
         edgeRoutes = null;
+        if (showFilesItem.isSelected()) rebuildFilePositions();
         fitToViewport();
         notifyLayoutChanged();
     }
@@ -587,6 +715,72 @@ public final class DependencyGraphPane extends BorderPane {
                 return path;
         }
         return null;
+    }
+
+    private boolean isHit(double x, double y) {
+        return pickNode(x, y) != null || pickFile(x, y) != null;
+    }
+
+    /** A code-file leaf can be opened, but never dragged or persisted. */
+    private String pickFile(double screenX, double screenY) {
+        if (!showFilesItem.isSelected()) return null;
+        double x = camera.worldX(screenX, canvas.getWidth());
+        double y = camera.worldY(screenY, canvas.getHeight());
+        for (var file : filePositions.entrySet()) {
+            GraphLayout.Point point = file.getValue();
+            if (x >= point.x() - 8 && x <= point.x() + 218
+                    && Math.abs(y - point.y()) <= 15)
+                return file.getKey();
+        }
+        return null;
+    }
+
+    private void drawCodeFiles(GraphicsContext g, double w, double h, double zoom) {
+        if (!showFilesItem.isSelected()) return;
+        g.setLineDashes(2.0, 5.0);
+        g.setLineWidth(1.15);
+        g.setStroke(Color.web("#9fb2be"));
+        for (String folder : model.nodes()) {
+            GraphLayout.Point parent = layout.get(folder);
+            if (parent == null) continue;
+            for (String source : model.files(folder)) {
+                GraphLayout.Point leaf = filePositions.get(source);
+                if (leaf == null) continue;
+                if (!visibleOnCanvas(parent, leaf, w, h, zoom)) continue;
+                g.strokeLine(parent.x(), parent.y(), leaf.x(), leaf.y());
+            }
+        }
+        g.setLineDashes();
+        for (var file : filePositions.entrySet()) {
+            GraphLayout.Point p = file.getValue();
+            if (!visibleAt(p, w, h, zoom)) continue;
+            boolean active = file.getKey().equals(selectedFile);
+            String label = shortName(file.getKey());
+            if (label.length() > 32) label = label.substring(0, 29) + "...";
+            double labelWidth = Math.min(208, Math.max(60, label.length() * 6.0 + 12));
+            g.setFill(Color.web(active ? "#e7e6fa" : "#ffffff"));
+            g.fillRoundRect(p.x() + 11, p.y() - 12, labelWidth, 24, 4, 4);
+            g.setStroke(Color.web(active ? "#7054ad" : "#88a6b8"));
+            g.setLineWidth(1);
+            g.strokeRoundRect(p.x() - 6, p.y() - 6, 12, 12, 2, 2);
+            g.setFill(Color.web(active ? "#7054ad" : "#7e9aac"));
+            g.fillRoundRect(p.x() - 4, p.y() - 4, 8, 8, 1, 1);
+            g.setFill(Color.web(active ? "#423174" : "#456071"));
+            g.setFont(Font.font("Segoe UI", 11));
+            g.fillText(label, p.x() + 17, p.y() + 4, 194);
+        }
+    }
+
+    private boolean visibleAt(GraphLayout.Point p, double w, double h, double zoom) {
+        double x = w / 2 + (p.x() - camera.centerX()) * zoom;
+        double y = h / 2 + (p.y() - camera.centerY()) * zoom;
+        return x >= -240 * zoom && x <= w + 22 * zoom
+                && y >= -23 * zoom && y <= h + 23 * zoom;
+    }
+
+    private boolean visibleOnCanvas(GraphLayout.Point a, GraphLayout.Point b,
+                                    double w, double h, double zoom) {
+        return visibleAt(a, w, h, zoom) || visibleAt(b, w, h, zoom);
     }
 
     private void redraw() {
@@ -647,6 +841,7 @@ public final class DependencyGraphPane extends BorderPane {
                     tipX - 7 * Math.cos(angle + 0.5),
                     tipY - 7 * Math.sin(angle + 0.5));
         }
+        drawCodeFiles(g, w, h, zoom);
         for (String path : model.nodes()) {
             GraphLayout.Point p = layout.get(path);
             if (p == null) continue;
