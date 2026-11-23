@@ -1,6 +1,6 @@
 // CodeTrace | Referencia: Java 21 LTS / JDK 21
 // Componente didáctico reutilizable: este archivo no tiene main.
-// Compilar en una copia desde java21: javac --release 21 -encoding UTF-8 -d "$env:TEMP\\ct-java21" (Get-ChildItem -Recurse -Filter *.java).FullName
+// Compilar: en una copia desde java21: javac --release 21 -encoding UTF-8 -d "$env:TEMP\\ct-java21" (Get-ChildItem -Recurse -Filter *.java).FullName
 
 /** Contrato independiente: la fábrica devuelve esta abstracción. */
 public interface Mensaje {
