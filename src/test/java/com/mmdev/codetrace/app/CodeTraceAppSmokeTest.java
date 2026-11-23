@@ -354,8 +354,9 @@ class CodeTraceAppSmokeTest {
                 // a read-only leaf without changing saved directory positions.
                 var fileModel = new com.mmdev.codetrace.reference.ProjectDependencyGraph.Graph(
                         "src", java.util.List.of("src", "src/demo"),
-                        java.util.List.of(), 2, false, "c".repeat(64),
-                        java.util.Map.of("src", java.util.List.of("src/Main.java"),
+                        java.util.List.of(), 3, false, "c".repeat(64),
+                        java.util.Map.of("src", java.util.List.of(
+                                        "src/Main.java", "src/Second.java"),
                                 "src/demo", java.util.List.of("src/demo/Helper.py")),
                         java.util.List.of(new com.mmdev.codetrace.reference
                                 .ProjectDependencyGraph.FolderLink("src", "src/demo")),
@@ -373,13 +374,13 @@ class CodeTraceAppSmokeTest {
                 stage.getScene().getRoot().layout();
                 assertFalse(filePane.isShowingCodeFiles());
                 assertEquals(0, filePane.visibleCodeFileCount());
-                assertEquals(2, filePane.availableCodeFileCount());
+                assertEquals(3, filePane.availableCodeFileCount());
                 assertEquals(0, filePane.getCenter()
                         .lookupAll(".dependency-map-legend-marker").size());
                 filePane.setShowCodeFiles(true);
                 assertTrue(filePane.isShowingCodeFiles());
-                assertEquals(2, filePane.visibleCodeFileCount());
-                assertEquals(2, filePane.fileNodePositions().size());
+                assertEquals(3, filePane.visibleCodeFileCount());
+                assertEquals(3, filePane.fileNodePositions().size());
                 assertEquals(2, filePane.fileIslandBounds().size(),
                         "Each folder with code owns its own non-overlapping island");
                 assertFalse(filePane.fileIslandBounds().get("src").overlaps(
@@ -408,6 +409,25 @@ class CodeTraceAppSmokeTest {
                 assertEquals("src/Main.java", openedSource.get(),
                         "Double-clicking a file opens the existing reference tab");
                 assertEquals("src", filePane.getSelectedNode());
+
+                // Inspector selection must be exclusive and reflected on the
+                // canvas: stale highlights of an earlier file are forbidden.
+                @SuppressWarnings("unchecked")
+                var sourceInspector = (javafx.scene.control.ListView<String>)
+                        filePane.getRight().lookupAll(".app-navigation-list").stream()
+                            .filter(node -> node instanceof javafx.scene.control.ListView<?> list
+                                    && list.getItems().contains("src/Second.java"))
+                            .findFirst().orElseThrow();
+                assertEquals(javafx.scene.control.SelectionMode.SINGLE,
+                        sourceInspector.getSelectionModel().getSelectionMode());
+                sourceInspector.getSelectionModel().select("src/Second.java");
+                assertEquals("src/Second.java", filePane.getSelectedFile());
+                assertEquals(1, sourceInspector.getSelectionModel().getSelectedItems().size());
+                sourceInspector.getSelectionModel().select("src/Main.java");
+                assertEquals("src/Main.java", filePane.getSelectedFile());
+                assertEquals(1, sourceInspector.getSelectionModel().getSelectedItems().size());
+                assertEquals("src/Main.java",
+                        sourceInspector.getSelectionModel().getSelectedItem());
 
                 // A normal primary-button drag relocates ONLY the source file.
                 // Its parent remains a folder node and no source text changes.
@@ -467,6 +487,72 @@ class CodeTraceAppSmokeTest {
                         "Manual file relocation survives toggling within the open map");
                 assertNull(fileLayoutSaved.get(),
                         "Showing or moving files must not overwrite the folder layout");
+
+                // Exploration-only checkbox lives beneath the contextual
+                // legend and protects files and folders against accidental drag.
+                assertNotNull(filePane.getCenter().lookup(".dependency-map-navigation-only"));
+                filePane.setNavigationOnly(true);
+                assertTrue(filePane.isNavigationOnly());
+                var safeFile = filePane.fileNodePositions().get("src/Second.java");
+                var savedFilePositions = filePane.fileNodePositions();
+                double beforePan = filePane.getCameraX();
+                double safeScale = filePane.getZoomPercent() / 100.0;
+                double safeX = leafSurface.getWidth() / 2
+                        + (safeFile.x() - filePane.getCameraX()) * safeScale;
+                double safeY = leafSurface.getHeight() / 2
+                        + (safeFile.y() - filePane.getCameraY()) * safeScale;
+                leafSurface.getOnMousePressed().handle(
+                        new javafx.scene.input.MouseEvent(
+                                javafx.scene.input.MouseEvent.MOUSE_PRESSED,
+                                safeX, safeY, 150, 130,
+                                javafx.scene.input.MouseButton.PRIMARY, 1,
+                                false, false, false, false, true, false, false,
+                                false, false, false,
+                                new javafx.scene.input.PickResult(leafSurface, safeX, safeY)));
+                leafSurface.getOnMouseDragged().handle(
+                        new javafx.scene.input.MouseEvent(
+                                javafx.scene.input.MouseEvent.MOUSE_DRAGGED,
+                                safeX + 75, safeY, 225, 130,
+                                javafx.scene.input.MouseButton.PRIMARY, 1,
+                                false, false, false, false, true, false, false,
+                                false, false, false,
+                                new javafx.scene.input.PickResult(leafSurface, safeX + 75, safeY)));
+                leafSurface.getOnMouseReleased().handle(
+                        new javafx.scene.input.MouseEvent(
+                                javafx.scene.input.MouseEvent.MOUSE_RELEASED,
+                                safeX + 75, safeY, 225, 130,
+                                javafx.scene.input.MouseButton.PRIMARY, 1,
+                                false, false, false, false, false, false, false,
+                                false, false, false,
+                                new javafx.scene.input.PickResult(leafSurface, safeX + 75, safeY)));
+                assertNotEquals(beforePan, filePane.getCameraX(),
+                        "Navigation mode drags should pan even when starting on a file");
+                assertEquals(savedFilePositions, filePane.fileNodePositions(),
+                        "Navigation mode must never drag source files");
+                assertNull(fileLayoutSaved.get(),
+                        "Navigation mode must not persist any layout changes");
+
+                // A click still selects a file, but even a double click must
+                // not open another tab while navigation-only is enabled.
+                safeScale = filePane.getZoomPercent() / 100.0;
+                safeX = leafSurface.getWidth() / 2
+                        + (safeFile.x() - filePane.getCameraX()) * safeScale;
+                safeY = leafSurface.getHeight() / 2
+                        + (safeFile.y() - filePane.getCameraY()) * safeScale;
+                leafSurface.getOnMouseClicked().handle(
+                        new javafx.scene.input.MouseEvent(
+                                javafx.scene.input.MouseEvent.MOUSE_CLICKED,
+                                safeX, safeY, 0, 0,
+                                javafx.scene.input.MouseButton.PRIMARY, 2,
+                                false, false, false, false, true, false, false,
+                                false, false, false,
+                                new javafx.scene.input.PickResult(leafSurface, safeX, safeY)));
+                assertEquals("src/Second.java", filePane.getSelectedFile());
+                assertEquals("src/Main.java", openedSource.get(),
+                        "Navigation-only mode forbids accidental file opening");
+                filePane.setNavigationOnly(false);
+                assertFalse(filePane.isNavigationOnly());
+
                 tabPane.getTabs().remove(fileTab);
                 tabPane.getSelectionModel().select(previousTab);
                 Slider fontSlider = (Slider) zoom.lookup(".slider");
