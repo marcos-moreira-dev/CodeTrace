@@ -35,4 +35,18 @@ Ejemplo individual: añadir `observer` al comando de Python o C++, o `-- observe
 
 `python scripts/verificar-counter-strike.py` compila las fuentes en temporales y compara exactamente las 42 ejecuciones con el manifiesto. Requiere Python 3.12, SDK .NET 8 y g++ con C++20. La salida de las tres narraciones es idéntica; Java conserva su narración más extensa, sin cambios. Las colecciones generales y los demás idiomas permanecen intactos.
 
-**Alcance:** 72 fuentes nuevas (33 Python, 18 C#, 21 C++), incluidos módulos de paquetes, 13 demostraciones por idioma y MVC/Facade. Catálogo v14: 990 referencias, 14 lenguajes. Los ejemplos son didácticos e independientes, no una implementación oficial de Counter-Strike.
+**Alcance:** 72 fuentes nuevas (33 Python, 18 C#, 21 C++), incluidos módulos de paquetes, 13 demostraciones por idioma y MVC/Facade. Catálogo v15: 1037 referencias, 14 lenguajes. Los ejemplos son didácticos e independientes, no una implementación oficial de Counter-Strike.
+
+## Ampliación v15: TypeScript y compilación separada C++
+
+TypeScript 5.9 usa interfaces, tipos literales, readonly, funciones tipadas, módulos y `tsc --strict`. Cada patrón dispone de un cliente `Main*.ts` independiente. El integrador recibe una interfaz `VistaPartida`, por lo que otra presentación podría sustituir la consola sin alterar el modelo. Observer devuelve una función de desuscripción, útil al desmontar una vista web.
+
+Desde la raíz del repositorio:
+
+```powershell
+$out=Join-Path $env:TEMP 'ct-ts-integrador'
+tsc --strict --target ES2022 --module commonjs --outDir $out .\src\main\resources\practice\typescript\05-patrones-diseno-counter-strike\MainCounterStrike.ts
+node (Join-Path $out 'MainCounterStrike.js')
+```
+
+C++ tiene 14 archivos `.cpp` adicionales (13 patrones y Facade), con declaraciones en `.hpp` y operaciones principales fuera de línea. Las funciones triviales pueden seguir inline. Los comandos de compilación recursiva enlazan todos los `.cpp`, no solo `main.cpp`. El verificador conjunto ejecuta 56 clientes de los cuatro lenguajes no Java y contrasta su salida exacta. La pista Java permanece sin cambios. Total: 1037 referencias en 14 lenguajes; 33 TypeScript y 35 C++ dentro de la pista temática.

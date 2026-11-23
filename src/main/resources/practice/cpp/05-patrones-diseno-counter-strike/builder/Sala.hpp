@@ -3,6 +3,7 @@
 // Dominio: Counter-Strike — configurar una sala de rescate en cs_office.
 // Patrón: Builder.
 // Glosario: CT/T = bandos; NPC = personaje no jugable; HUD = indicadores de pantalla.
+// Cabecera: declara la interfaz; las operaciones principales se definen en el .cpp.
 #pragma once
 #include <iostream>
 #include <string>
@@ -17,20 +18,12 @@ struct Sala { std::string mapa; int rondas; bool rehenes; };
 class Configurador {
     Sala sala_{"de_dust2", 6, false};
 public:
-    Configurador& mapa(std::string nombre) { sala_.mapa = std::move(nombre); return *this; }
-    Configurador& rondas(int n) { sala_.rondas = n; return *this; }
-    Configurador& rescate(bool valor) { sala_.rehenes = valor; return *this; }
-    Sala construir() const {
-        // Devolvemos una copia: futuros cambios del builder no afectan a la sala.
-        if (sala_.mapa.empty() || sala_.rondas <= 0) throw std::invalid_argument("Sala inválida");
-        return sala_;
-    }
+    Configurador& mapa(std::string nombre);
+    Configurador& rondas(int n);
+    Configurador& rescate(bool valor);
+    Sala construir() const;
 };
-inline void demo_builder() {
-    auto s = Configurador().mapa("cs_office").rondas(12).rescate(true).construir();
-    std::cout << "Sala: " << s.mapa << ", rondas=" << s.rondas
-              << ", rehenes=" << (s.rehenes ? "true" : "false") << '\n';
-}
+void demo_builder();
 
 } // namespace cs
 

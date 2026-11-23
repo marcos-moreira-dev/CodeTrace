@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Compila y ejecuta los 13 patrones y el integrador en Python, C# y C++.
+"""Compila y ejecuta los 13 patrones y el integrador en Python, C#, C++ y TypeScript.
 Las fuentes se conservan intactas: los artefactos viven en un temporal.
 """
 from pathlib import Path
@@ -63,6 +63,10 @@ def main():
             target.parent.mkdir(parents=True, exist_ok=True)
             shutil.copy2(file, target)
         execute(["dotnet", "build", project, "--nologo", "-o", tmp / "out"])
+        ts_root = PRACTICE / "typescript" / TRACK
+        ts_out = tmp / "ts"
+        execute(["tsc", "--strict", "--target", "ES2022", "--module", "commonjs",
+                 "--rootDir", ts_root, "--outDir", ts_out, *sorted(ts_root.rglob("*.ts"))])
         commands = {
             "python": [sys.executable, "-B", PRACTICE / "python" / TRACK / "main.py"],
             "csharp": ["dotnet", tmp / "out" / "CounterStrike.dll"],
@@ -75,15 +79,23 @@ def main():
             stories[lang] = execute(commands[lang])
             assert stories[lang] == expected(lang, clients[lang]), (lang, stories[lang])
         assert len(set(stories.values())) == 1, stories
-        print("OK: las tres partidas completas tienen la misma narración")
+        ts_story = execute(["node", ts_out / "MainCounterStrike.js"])
+        assert ts_story == expected("typescript", "MainCounterStrike.ts"), ts_story
+        assert ts_story == stories["cpp"], ts_story
+        print("OK: las cuatro partidas completas tienen la misma narración")
         for slug, *paths in PATTERNS:
             results = {}
             for lang, path in zip(LANGS, paths):
                 results[lang] = execute([*commands[lang], slug])
                 assert results[lang] == expected(lang, path), (lang, slug, results[lang])
+            ts_name = Path(paths[2]).stem
+            ts_client = f"{slug}/Main{ts_name}.ts"
+            ts_result = execute(["node", ts_out / Path(ts_client).with_suffix(".js")])
+            assert ts_result == expected("typescript", ts_client), (slug, ts_result)
+            results["typescript"] = ts_result
             assert len(set(results.values())) == 1, (slug, results)
             print("OK:", slug)
-        print("OK: 42 ejecuciones verificadas (13 patrones + integrador por lenguaje).")
+        print("OK: 56 ejecuciones verificadas (13 patrones + integrador por lenguaje).")
 
 
 if __name__ == "__main__":

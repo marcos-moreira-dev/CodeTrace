@@ -3,6 +3,7 @@
 // Dominio: Counter-Strike — ping = latencia de la conexión al servidor.
 // Patrón: Adapter.
 // Glosario: CT/T = bandos; NPC = personaje no jugable; HUD = indicadores de pantalla.
+// Cabecera: declara la interfaz; las operaciones principales se definen en el .cpp.
 #pragma once
 #include <iostream>
 #include <string>
@@ -21,14 +22,9 @@ class AdaptadorPing {
 public:
     explicit AdaptadorPing(const TelemetriaLegada& origen) : origen_(origen) {}
     // La referencia no posee el servidor: debe vivir más que este adaptador.
-    std::string mostrar() const {
-        return "Ping: " + std::to_string(origen_.microsegundos() / 1000) + " ms";
-    }
+    std::string mostrar() const;
 };
-inline void demo_adapter() {
-    TelemetriaLegada servidor;
-    std::cout << AdaptadorPing(servidor).mostrar() << '\n';
-}
+void demo_adapter();
 
 } // namespace cs
 

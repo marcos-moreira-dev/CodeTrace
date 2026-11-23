@@ -3,6 +3,7 @@
 // Dominio: Counter-Strike — puntuaciones ficticias de torneos.
 // Patrón: Strategy.
 // Glosario: CT/T = bandos; NPC = personaje no jugable; HUD = indicadores de pantalla.
+// Cabecera: declara la interfaz; las operaciones principales se definen en el .cpp.
 #pragma once
 #include <iostream>
 #include <string>
@@ -13,14 +14,8 @@
 #include <stdexcept>
 namespace cs {
 
-inline int puntos(int victorias, const std::function<int(int)>& regla) {
-    return regla(victorias);
-}
-inline void demo_puntuacion() {
-    // Dos políticas inventadas, no reglas oficiales del juego.
-    std::cout << "Casual: " << puntos(2, [](int v) { return v * 2; }) << " puntos\n";
-    std::cout << "Competitivo: " << puntos(2, [](int v) { return v * 3; }) << " puntos\n";
-}
+int puntos(int victorias, const std::function<int(int)>& regla);
+void demo_puntuacion();
 
 } // namespace cs
 

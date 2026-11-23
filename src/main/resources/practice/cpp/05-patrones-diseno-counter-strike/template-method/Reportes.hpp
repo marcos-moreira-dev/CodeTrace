@@ -3,6 +3,7 @@
 // Dominio: Counter-Strike — resumen de una ronda virtual en dos formatos.
 // Patrón: Template Method.
 // Glosario: CT/T = bandos; NPC = personaje no jugable; HUD = indicadores de pantalla.
+// Cabecera: declara la interfaz; las operaciones principales se definen en el .cpp.
 #pragma once
 #include <iostream>
 #include <string>
@@ -16,26 +17,20 @@ namespace cs {
 class Reporte {
 public:
     virtual ~Reporte() = default;
-    std::string generar(const std::string& mapa, int puntos) const {
-        // El algoritmo fijo prepara el encabezado y después los datos.
-        return encabezado(mapa) + detalle(puntos);
-    }
+    std::string generar(const std::string& mapa, int puntos) const;
 protected:
     virtual std::string encabezado(const std::string&) const = 0;
     virtual std::string detalle(int) const = 0;
 };
 class ReporteTexto final : public Reporte {
-    std::string encabezado(const std::string& mapa) const override { return "Partida " + mapa + ": "; }
-    std::string detalle(int p) const override { return "CT=" + std::to_string(p); }
+    std::string encabezado(const std::string& mapa) const override;
+    std::string detalle(int p) const override;
 };
 class ReporteCsv final : public Reporte {
-    std::string encabezado(const std::string& mapa) const override { return "mapa,rondasCt;" + mapa + ","; }
-    std::string detalle(int p) const override { return std::to_string(p); }
+    std::string encabezado(const std::string& mapa) const override;
+    std::string detalle(int p) const override;
 };
-inline void demo_template() {
-    std::cout << "Texto: " << ReporteTexto().generar("de_dust2", 7) << '\n';
-    std::cout << "CSV: " << ReporteCsv().generar("de_dust2", 7) << '\n';
-}
+void demo_template();
 
 } // namespace cs
 

@@ -3,18 +3,13 @@
 // Dominio: Counter-Strike — rescate de NPC y marcador de una partida virtual.
 // Glosario: CT/T = bandos; MP9 = subfusil como objeto virtual; eco = ahorro.
 
+// Cabecera: declara la interfaz; las operaciones principales se definen en el .cpp.
 #pragma once
 #include "../infraestructura/Controlador.hpp"
 namespace cs {
 class FachadaCounterStrike {
 public:
-    Partida jugar_partida() const {
-        // RAII: la vista y el controlador viven solo durante esta sesión.
-        // El estado final se devuelve al cliente sin punteros colgantes.
-        VistaConsola vista;
-        ControladorPartida controlador(vista);
-        return controlador.simular();
-    }
+    Partida jugar_partida() const;
 };
 }
 

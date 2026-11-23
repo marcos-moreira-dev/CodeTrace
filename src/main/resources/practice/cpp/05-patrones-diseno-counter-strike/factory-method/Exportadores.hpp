@@ -3,6 +3,7 @@
 // Dominio: Counter-Strike — publicar puntuación CT como texto o CSV.
 // Patrón: Factory Method.
 // Glosario: CT/T = bandos; NPC = personaje no jugable; HUD = indicadores de pantalla.
+// Cabecera: declara la interfaz; las operaciones principales se definen en el .cpp.
 #pragma once
 #include <iostream>
 #include <string>
@@ -17,27 +18,17 @@ using Exportador = std::function<std::string(int)>;
 class CreadorReporte {
 public:
     virtual ~CreadorReporte() = default;
-    std::string publicar(int puntos) const {
-        // Las variantes eligen el exportador; el flujo publicar es común.
-        return crear()(puntos);
-    }
+    std::string publicar(int puntos) const;
 protected:
     virtual Exportador crear() const = 0;
 };
 class CreadorTexto final : public CreadorReporte {
-    Exportador crear() const override {
-        return [](int p) { return "CT=" + std::to_string(p); };
-    }
+    Exportador crear() const override;
 };
 class CreadorCsv final : public CreadorReporte {
-    Exportador crear() const override {
-        return [](int p) { return "equipo,rondas;CT," + std::to_string(p); };
-    }
+    Exportador crear() const override;
 };
-inline void demo_factory_method() {
-    std::cout << "Texto: " << CreadorTexto().publicar(7) << '\n';
-    std::cout << "CSV: " << CreadorCsv().publicar(7) << '\n';
-}
+void demo_factory_method();
 
 } // namespace cs
 

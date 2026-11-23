@@ -3,6 +3,7 @@
 // Dominio: Counter-Strike — etiquetas de ronda y urgencia de un aviso.
 // Patrón: Decorator.
 // Glosario: CT/T = bandos; NPC = personaje no jugable; HUD = indicadores de pantalla.
+// Cabecera: declara la interfaz; las operaciones principales se definen en el .cpp.
 #pragma once
 #include <iostream>
 #include <string>
@@ -14,19 +15,9 @@
 namespace cs {
 
 using AvisoEquipo = std::function<std::string()>;
-inline AvisoEquipo urgente(AvisoEquipo aviso) {
-    // Captura por valor: el aviso anterior sobrevive al retorno de la función.
-    return [aviso = std::move(aviso)] { return "[URGENTE] " + aviso(); };
-}
-inline AvisoEquipo de_ronda(AvisoEquipo aviso, int ronda) {
-    return [aviso = std::move(aviso), ronda] {
-        return "[RONDA " + std::to_string(ronda) + "] " + aviso();
-    };
-}
-inline void demo_decorator() {
-    auto mensaje = de_ronda(urgente([] { return std::string("Rehén virtual rescatado"); }), 12);
-    std::cout << mensaje() << '\n';
-}
+AvisoEquipo urgente(AvisoEquipo aviso);
+AvisoEquipo de_ronda(AvisoEquipo aviso, int ronda);
+void demo_decorator();
 
 } // namespace cs
 

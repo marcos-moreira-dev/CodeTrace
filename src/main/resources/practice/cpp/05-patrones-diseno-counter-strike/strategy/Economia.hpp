@@ -3,6 +3,7 @@
 // Dominio: Counter-Strike — eco = fase de ahorro de créditos virtuales.
 // Patrón: Strategy.
 // Glosario: CT/T = bandos; NPC = personaje no jugable; HUD = indicadores de pantalla.
+// Cabecera: declara la interfaz; las operaciones principales se definen en el .cpp.
 #pragma once
 #include <iostream>
 #include <string>
@@ -13,22 +14,16 @@
 #include <stdexcept>
 namespace cs {
 
-inline std::string eco(int p) { return "Eco: guardar " + std::to_string(p) + " créditos"; }
-inline std::string equipo(int p) { return "Equipo: asignar " + std::to_string(p) + " créditos virtuales"; }
+std::string eco(int p);
+std::string equipo(int p);
 class Economia {
     std::function<std::string(int)> politica_;
 public:
     explicit Economia(std::function<std::string(int)> politica) : politica_(std::move(politica)) {}
-    void cambiar(std::function<std::string(int)> politica) { politica_ = std::move(politica); }
-    std::string plan(int creditos) const { return politica_(creditos); }
+    void cambiar(std::function<std::string(int)> politica);
+    std::string plan(int creditos) const;
 };
-inline void demo_strategy() {
-    Economia economia(eco);
-    std::cout << economia.plan(1500) << '\n';
-    // Cambia la función invocada, no el saldo del personaje virtual.
-    economia.cambiar(equipo);
-    std::cout << economia.plan(1500) << '\n';
-}
+void demo_strategy();
 
 } // namespace cs
 

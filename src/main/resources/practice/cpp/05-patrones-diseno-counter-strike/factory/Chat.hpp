@@ -3,6 +3,7 @@
 // Dominio: Counter-Strike — mensajes del chat de equipo.
 // Patrón: Simple Factory.
 // Glosario: CT/T = bandos; NPC = personaje no jugable; HUD = indicadores de pantalla.
+// Cabecera: declara la interfaz; las operaciones principales se definen en el .cpp.
 #pragma once
 #include <iostream>
 #include <string>
@@ -21,13 +22,10 @@ class MensajeChat final : public MensajeSala {
     std::string contenido_;
 public:
     explicit MensajeChat(std::string contenido) : contenido_(std::move(contenido)) {}
-    std::string mostrar() const override { return "Chat de equipo: " + contenido_; }
+    std::string mostrar() const override;
 };
-inline std::unique_ptr<MensajeSala> crear_aviso(std::string texto) {
-    // El cliente posee un mensaje mediante el contrato abstracto.
-    return std::make_unique<MensajeChat>(std::move(texto));
-}
-inline void demo_factory() { std::cout << crear_aviso("Ronda iniciada")->mostrar() << '\n'; }
+std::unique_ptr<MensajeSala> crear_aviso(std::string texto);
+void demo_factory();
 
 } // namespace cs
 

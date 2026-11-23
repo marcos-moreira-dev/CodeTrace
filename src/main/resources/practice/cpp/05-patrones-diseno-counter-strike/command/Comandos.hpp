@@ -3,6 +3,7 @@
 // Dominio: Counter-Strike — registro reversible de una ronda CT.
 // Patrón: Command.
 // Glosario: CT/T = bandos; NPC = personaje no jugable; HUD = indicadores de pantalla.
+// Cabecera: declara la interfaz; las operaciones principales se definen en el .cpp.
 #pragma once
 #include <iostream>
 #include <string>
@@ -24,24 +25,10 @@ class SumarCt final : public Comando {
     bool ejecutado_ = false;
 public:
     explicit SumarCt(Marcador& receptor) : receptor_(receptor) {}
-    void ejecutar() override {
-        if (ejecutado_) throw std::logic_error("Ya ejecutado");
-        // La referencia conserva el marcador original, no una copia de los puntos.
-        ++receptor_.ct; ejecutado_ = true;
-    }
-    void deshacer() override {
-        if (!ejecutado_) throw std::logic_error("No ejecutado");
-        --receptor_.ct; ejecutado_ = false;
-    }
+    void ejecutar() override;
+    void deshacer() override;
 };
-inline void demo_command() {
-    Marcador m;
-    SumarCt comando(m);
-    comando.ejecutar();
-    std::cout << "Tras ejecutar: CT=" << m.ct << '\n';
-    comando.deshacer();
-    std::cout << "Tras deshacer: CT=" << m.ct << '\n';
-}
+void demo_command();
 
 } // namespace cs
 

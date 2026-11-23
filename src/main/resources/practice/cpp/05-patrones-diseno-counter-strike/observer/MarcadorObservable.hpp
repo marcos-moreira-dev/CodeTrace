@@ -3,6 +3,7 @@
 // Dominio: Counter-Strike — notificar a los HUD de espectadores.
 // Patrón: Observer.
 // Glosario: CT/T = bandos; NPC = personaje no jugable; HUD = indicadores de pantalla.
+// Cabecera: declara la interfaz; las operaciones principales se definen en el .cpp.
 #pragma once
 #include <iostream>
 #include <string>
@@ -17,20 +18,10 @@ class MarcadorObservable {
     using Receptor = std::function<void(const std::string&, int)>;
     std::vector<Receptor> observadores_;
 public:
-    void suscribir(Receptor receptor) { observadores_.push_back(std::move(receptor)); }
-    void anotar(const std::string& equipo, int puntos) const {
-        // El marcador entrega el dato a todos, no elige un responsable único.
-        for (const auto& receptor : observadores_) receptor(equipo, puntos);
-    }
+    void suscribir(Receptor receptor);
+    void anotar(const std::string& equipo, int puntos) const;
 };
-inline void demo_observer() {
-    MarcadorObservable marcador;
-    marcador.suscribir([](const std::string& equipo, int puntos) {
-        std::cout << "HUD: " << equipo << "=" << puntos << '\n';
-    });
-    marcador.anotar("CT", 2);
-    marcador.anotar("T", 1);
-}
+void demo_observer();
 
 } // namespace cs
 

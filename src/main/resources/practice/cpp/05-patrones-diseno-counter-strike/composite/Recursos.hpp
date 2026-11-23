@@ -3,6 +3,7 @@
 // Dominio: Counter-Strike — árbol de mapas de Counter-Strike.
 // Patrón: Composite.
 // Glosario: CT/T = bandos; NPC = personaje no jugable; HUD = indicadores de pantalla.
+// Cabecera: declara la interfaz; las operaciones principales se definen en el .cpp.
 #pragma once
 #include <iostream>
 #include <string>
@@ -21,29 +22,15 @@ class ArchivoMapa final : public Recurso {
     std::string nombre_;
 public:
     explicit ArchivoMapa(std::string nombre) : nombre_(std::move(nombre)) {}
-    int contar() const override { return 1; }
+    int contar() const override;
 };
 class CarpetaMapa final : public Recurso {
     std::vector<std::unique_ptr<Recurso>> hijos_;
 public:
-    void agregar(std::unique_ptr<Recurso> hijo) { hijos_.push_back(std::move(hijo)); }
-    int contar() const override {
-        int total = 0;
-        // Cada recurso, hoja o carpeta, implementa la misma operación virtual.
-        for (const auto& hijo : hijos_) total += hijo->contar();
-        return total;
-    }
+    void agregar(std::unique_ptr<Recurso> hijo);
+    int contar() const override;
 };
-inline void demo_composite() {
-    CarpetaMapa raiz;
-    auto oficiales = std::make_unique<CarpetaMapa>();
-    oficiales->agregar(std::make_unique<ArchivoMapa>("de_dust2"));
-    oficiales->agregar(std::make_unique<ArchivoMapa>("de_inferno"));
-    // move transfiere la propiedad de la subcarpeta al árbol.
-    raiz.agregar(std::move(oficiales));
-    raiz.agregar(std::make_unique<ArchivoMapa>("cs_office"));
-    std::cout << "Mapas registrados: " << raiz.contar() << '\n';
-}
+void demo_composite();
 
 } // namespace cs
 

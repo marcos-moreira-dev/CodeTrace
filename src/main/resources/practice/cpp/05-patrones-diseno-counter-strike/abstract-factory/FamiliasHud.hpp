@@ -3,6 +3,7 @@
 // Dominio: Counter-Strike — HUD de marcador e inventario con temas compatibles.
 // Patrón: Abstract Factory.
 // Glosario: CT/T = bandos; NPC = personaje no jugable; HUD = indicadores de pantalla.
+// Cabecera: declara la interfaz; las operaciones principales se definen en el .cpp.
 #pragma once
 #include <iostream>
 #include <string>
@@ -25,17 +26,13 @@ class MarcadorTema final : public EtiquetaMarcador {
     std::string tema_;
 public:
     explicit MarcadorTema(std::string tema) : tema_(std::move(tema)) {}
-    std::string mostrar(int p) const override {
-        return "[" + tema_ + "] CT=" + std::to_string(p);
-    }
+    std::string mostrar(int p) const override;
 };
 class InventarioTema final : public EtiquetaInventario {
     std::string tema_;
 public:
     explicit InventarioTema(std::string tema) : tema_(std::move(tema)) {}
-    std::string mostrar(const std::string& item) const override {
-        return "[" + tema_ + "] equipo=" + item;
-    }
+    std::string mostrar(const std::string& item) const override;
 };
 struct FamiliaHud {
     virtual ~FamiliaHud() = default;
@@ -47,21 +44,10 @@ class FamiliaTema final : public FamiliaHud {
 public:
     explicit FamiliaTema(std::string tema) : tema_(std::move(tema)) {}
     // Cada puntero posee su producto: se destruye automáticamente (RAII).
-    std::unique_ptr<EtiquetaMarcador> marcador() const override {
-        return std::make_unique<MarcadorTema>(tema_);
-    }
-    std::unique_ptr<EtiquetaInventario> inventario() const override {
-        return std::make_unique<InventarioTema>(tema_);
-    }
+    std::unique_ptr<EtiquetaMarcador> marcador() const override;
+    std::unique_ptr<EtiquetaInventario> inventario() const override;
 };
-inline void demo_abstract_factory() {
-    for (const auto& [nombre, tema] : std::vector<std::pair<std::string,std::string>>{
-            {"Claro","CLARO"}, {"Oscuro","OSCURO"}}) {
-        FamiliaTema familia(tema);
-        std::cout << nombre << ": " << familia.marcador()->mostrar(5)
-                  << " | " << familia.inventario()->mostrar("MP9") << '\n';
-    }
-}
+void demo_abstract_factory();
 
 } // namespace cs
 
