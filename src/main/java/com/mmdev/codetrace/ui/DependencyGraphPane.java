@@ -375,6 +375,8 @@ public final class DependencyGraphPane extends BorderPane {
     /** Exploration mode: click selects, drag pans, wheel zooms, double-click is safe. */
     public boolean isNavigationOnly() { return navigationOnly.isSelected(); }
 
+    public String getSelectedFile() { return selectedFile; }
+
     public void setNavigationOnly(boolean value) {
         navigationOnly.setSelected(value);
         canvas.setCursor(Cursor.OPEN_HAND);
