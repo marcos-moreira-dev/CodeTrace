@@ -59,7 +59,7 @@ public final class DependencyGraphPane extends BorderPane {
     private final VBox legend = new VBox(5);
     /** Navigation-only mode protects the architecture layout from mouse drags. */
     private final CheckBox navigationOnly = AppControls.checkBox(
-            "Solo panear y desplazar",
+            "Solo panear y hacer zoom",
             "Arrastra en cualquier lugar para mover el mapa. "
                     + "Clic para seleccionar; doble clic no abre archivos. "
                     + "Rueda para acercar o alejar.");
@@ -69,10 +69,11 @@ public final class DependencyGraphPane extends BorderPane {
     private Map<String, GraphLayout.Point> filePositions = Map.of();
     private Map<String, GraphFileLayout.Bounds> fileIslands = Map.of();
     private boolean fileLayoutLimited;
-    private String selectedFile, pressedFile;
-    private GraphLayout.Point initialFilePosition;
-    /** Manual file drags stay relative to their folder while this map is open. */
-    private final Map<String, Point2D> manualFileOffsets = new LinkedHashMap<>();
+    private String selectedFile;
+    private String pressedIsland;
+    private GraphFileLayout.Bounds initialIslandBounds;
+    /** Move islands as indivisible groups; offsets are relative to parent folders. */
+    private final Map<String, Point2D> manualIslandOffsets = new LinkedHashMap<>();
     private final VBox inspector = new VBox(8);
     private final Label inspectorTitle = new Label();
     private final Label inspectorPath = new Label();
@@ -162,7 +163,7 @@ public final class DependencyGraphPane extends BorderPane {
         legend.setMouseTransparent(false);
         legend.setPickOnBounds(true);
         navigationOnly.getStyleClass().add("dependency-map-navigation-only");
-        navigationOnly.setAccessibleText("Solo panear y desplazar el mapa");
+        navigationOnly.setAccessibleText("Solo panear y hacer zoom, sin mover nodos");
         navigationOnly.setOnAction(event -> canvas.requestFocus());
         updateLegend();
         // Keep the original Pane -> Canvas structure for existing JavaFX clients.
@@ -201,17 +202,20 @@ public final class DependencyGraphPane extends BorderPane {
         });
 
         canvas.setOnMouseMoved(event -> {
-            if (!panning && pressed == null)
-                canvas.setCursor(isHit(event.getX(), event.getY())
-                        ? Cursor.HAND : Cursor.OPEN_HAND);
+            if (!panning && pressed == null && pressedIsland == null)
+                canvas.setCursor(navigationOnly.isSelected()
+                        ? Cursor.OPEN_HAND
+                        : isHit(event.getX(), event.getY())
+                                ? Cursor.HAND : Cursor.OPEN_HAND);
         });
         canvas.setOnMouseExited(event -> {
-            if (!panning && pressed == null) canvas.setCursor(Cursor.DEFAULT);
+            if (!panning && pressed == null && pressedIsland == null)
+                canvas.setCursor(Cursor.DEFAULT);
         });
         canvas.setOnMousePressed(event -> {
             pressed = null;
-            pressedFile = null;
-            initialFilePosition = null;
+            pressedIsland = null;
+            initialIslandBounds = null;
             panning = false;
             moved = false;
             if (event.getButton() != MouseButton.PRIMARY
@@ -237,8 +241,10 @@ public final class DependencyGraphPane extends BorderPane {
                 pressX = event.getX();
                 pressY = event.getY();
             } else if (event.getButton() == MouseButton.PRIMARY
-                    && (pressedFile = pickFile(event.getX(), event.getY())) != null) {
-                initialFilePosition = filePositions.get(pressedFile);
+                    && (pressedIsland = pickIsland(event.getX(), event.getY())) != null) {
+                // The whole file island is a drag target, including its files.
+                // A click without drag still selects an individual source.
+                initialIslandBounds = fileIslands.get(pressedIsland);
                 pressX = event.getX();
                 pressY = event.getY();
             } else {
@@ -266,30 +272,17 @@ public final class DependencyGraphPane extends BorderPane {
                 edgeRoutes = null;
                 redraw();
                 event.consume();
-            } else if (pressedFile != null && initialFilePosition != null) {
+            } else if (pressedIsland != null && initialIslandBounds != null) {
                 if (!event.isPrimaryButtonDown()) return;
-                double dx = event.getX() - pressX;
-                double dy = event.getY() - pressY;
-                if (!moved && Math.abs(dx) + Math.abs(dy) < 3) return;
+                double dx = (event.getX() - pressX) / camera.scale();
+                double dy = (event.getY() - pressY) / camera.scale();
+                if (!moved && Math.abs(event.getX() - pressX)
+                        + Math.abs(event.getY() - pressY) < 3) return;
                 moved = true;
-                double x = clamp(initialFilePosition.x() + dx / camera.scale(),
-                        -MAX_NODE_COORDINATE + 230, MAX_NODE_COORDINATE - 230);
-                double y = clamp(initialFilePosition.y() + dy / camera.scale(),
-                        -MAX_NODE_COORDINATE + 30, MAX_NODE_COORDINATE - 30);
-                GraphLayout.Point candidate = new GraphLayout.Point(x, y);
-                if (canPlaceFile(pressedFile, candidate)) {
-                    Map<String, GraphLayout.Point> movedFiles =
-                            new LinkedHashMap<>(filePositions);
-                    movedFiles.put(pressedFile, candidate);
-                    filePositions = Map.copyOf(movedFiles);
-                    GraphLayout.Point parent = layout.get(parentOfFile(pressedFile));
-                    if (parent != null) {
-                        manualFileOffsets.put(pressedFile,
-                                new Point2D(x - parent.x(), y - parent.y()));
-                    }
-                    selectedFile = pressedFile;
-                    redraw();
-                }
+                GraphFileLayout.Bounds candidate = shiftIsland(
+                        initialIslandBounds, dx, dy);
+                if (canPlaceIsland(pressedIsland, candidate))
+                    moveIsland(pressedIsland, candidate);
                 event.consume();
             } else if (panning) {
                 camera.center(panStartX - (event.getSceneX() - panSceneX) / camera.scale(),
@@ -305,17 +298,15 @@ public final class DependencyGraphPane extends BorderPane {
                 selectNode(pressed);
                 notifyLayoutChanged();
                 event.consume();
-            } else if (pressedFile != null && moved) {
-                String file = pressedFile;
-                selectNode(parentOfFile(file));
-                selectedFile = file;
-                inspectorFiles.getSelectionModel().select(file);
+            } else if (pressedIsland != null && moved) {
+                // Do not accidentally select or open a file after moving its
+                // entire group. Island movement never touches .ctrace.
                 redraw();
                 event.consume();
             }
             pressed = null;
-            pressedFile = null;
-            initialFilePosition = null;
+            pressedIsland = null;
+            initialIslandBounds = null;
             initialPosition = null;
             panning = false;
             canvas.setCursor(isHit(event.getX(), event.getY())
@@ -332,7 +323,9 @@ public final class DependencyGraphPane extends BorderPane {
             } else {
                 String file = pickFile(event.getX(), event.getY());
                 if (file == null) {
-                    clearSelection();
+                    String island = pickIsland(event.getX(), event.getY());
+                    if (island == null) clearSelection();
+                    else selectNode(island);
                 } else {
                     selectNode(parentOfFile(file));
                     selectedFile = file;
@@ -345,8 +338,9 @@ public final class DependencyGraphPane extends BorderPane {
             event.consume();
         });
         viewport.addEventFilter(javafx.scene.input.ScrollEvent.SCROLL, event -> {
-            if (!navigationOnly.isSelected()
-                    && !event.isControlDown() && !event.isShortcutDown()) return;
+            if (event.getDeltaY() == 0) return;
+            // Wheel zoom is universal; the checkbox affects DRAG gestures
+            // only. Keep the point under the mouse fixed while zooming.
             Point2D local = viewport.sceneToLocal(event.getSceneX(), event.getSceneY());
             zoomAt(getZoomPercent() + (event.getDeltaY() > 0 ? 10 : -10),
                     local.getX(), local.getY());
@@ -413,38 +407,65 @@ public final class DependencyGraphPane extends BorderPane {
                 ? file.substring(0, file.lastIndexOf('/')) : ".";
     }
 
-    /**
-     * Manual positions must not cover source labels or other source nodes.
-     * Dragging changes only Canvas coordinates, never reference files.
-     */
-    private boolean canPlaceFile(String source, GraphLayout.Point candidate) {
-        GraphFileLayout.Bounds footprint = new GraphFileLayout.Bounds(
-                candidate.x() - 8, candidate.y() - 15,
-                candidate.x() + 220, candidate.y() + 15);
-        if (footprint.minX() < -MAX_NODE_COORDINATE
-                || footprint.minY() < -MAX_NODE_COORDINATE
-                || footprint.maxX() > MAX_NODE_COORDINATE
-                || footprint.maxY() > MAX_NODE_COORDINATE) return false;
-
-        for (GraphLayout.Point folder : layout.values()) {
-            GraphFileLayout.Bounds label = new GraphFileLayout.Bounds(
-                    folder.x() - 13, folder.y() - 18,
-                    folder.x() + 261, folder.y() + 18);
-            if (footprint.overlaps(label, 7)) return false;
-        }
-        for (var entry : filePositions.entrySet()) {
-            if (entry.getKey().equals(source)) continue;
-            GraphLayout.Point other = entry.getValue();
-            GraphFileLayout.Bounds label = new GraphFileLayout.Bounds(
-                    other.x() - 8, other.y() - 15,
-                    other.x() + 220, other.y() + 15);
-            if (footprint.overlaps(label, 7)) return false;
-        }
+    /** Screen hit-test over the group bounding box, including the file labels. */
+    private String pickIsland(double screenX, double screenY) {
+        if (!showFilesItem.isSelected()) return null;
+        double x = camera.worldX(screenX, canvas.getWidth());
+        double y = camera.worldY(screenY, canvas.getHeight());
         for (var entry : fileIslands.entrySet()) {
-            if (entry.getKey().equals(parentOfFile(source))) continue;
-            if (footprint.overlaps(entry.getValue(), 7)) return false;
+            GraphFileLayout.Bounds box = entry.getValue();
+            if (x >= box.minX() - 5 && x <= box.maxX() + 5
+                    && y >= box.minY() - 5 && y <= box.maxY() + 5)
+                return entry.getKey();
+        }
+        return null;
+    }
+
+    private static GraphFileLayout.Bounds shiftIsland(
+            GraphFileLayout.Bounds box, double dx, double dy) {
+        return new GraphFileLayout.Bounds(box.minX() + dx, box.minY() + dy,
+                box.maxX() + dx, box.maxY() + dy);
+    }
+
+    private boolean canPlaceIsland(String owner, GraphFileLayout.Bounds box) {
+        if (box.minX() < -MAX_NODE_COORDINATE || box.minY() < -MAX_NODE_COORDINATE
+                || box.maxX() > MAX_NODE_COORDINATE || box.maxY() > MAX_NODE_COORDINATE)
+            return false;
+        for (GraphLayout.Point point : layout.values()) {
+            GraphFileLayout.Bounds label = new GraphFileLayout.Bounds(
+                    point.x() - 13, point.y() - 18,
+                    point.x() + 261, point.y() + 18);
+            if (box.overlaps(label, 10)) return false;
+        }
+        for (var other : fileIslands.entrySet()) {
+            if (!other.getKey().equals(owner) && box.overlaps(other.getValue(), 10))
+                return false;
         }
         return true;
+    }
+
+    private void moveIsland(String owner, GraphFileLayout.Bounds target) {
+        GraphFileLayout.Bounds original = fileIslands.get(owner);
+        if (original == null) return;
+        double dx = target.minX() - original.minX();
+        double dy = target.minY() - original.minY();
+        if (dx == 0 && dy == 0) return;
+
+        Map<String, GraphLayout.Point> changed = new LinkedHashMap<>(filePositions);
+        for (String file : model.files(owner)) {
+            GraphLayout.Point p = changed.get(file);
+            if (p != null)
+                changed.put(file, new GraphLayout.Point(p.x() + dx, p.y() + dy));
+        }
+        Map<String, GraphFileLayout.Bounds> groups = new LinkedHashMap<>(fileIslands);
+        groups.put(owner, target);
+        filePositions = Map.copyOf(changed);
+        fileIslands = Map.copyOf(groups);
+        GraphLayout.Point parent = layout.get(owner);
+        if (parent != null)
+            manualIslandOffsets.put(owner, new Point2D(
+                    target.minX() - parent.x(), target.minY() - parent.y()));
+        redraw();
     }
 
     private void rebuildFilePositions() {
@@ -454,38 +475,30 @@ public final class DependencyGraphPane extends BorderPane {
             fileLayoutLimited = false;
             return;
         }
-        GraphFileLayout.Result positions = GraphFileLayout.arrange(model, layout);
-        filePositions = positions.positions();
-        fileIslands = positions.islands();
-        fileLayoutLimited = positions.limited();
-        if (!manualFileOffsets.isEmpty()) {
-            Map<String, GraphLayout.Point> adjusted =
-                    new LinkedHashMap<>(filePositions);
-            // Apply only valid offsets after a folder is moved or the toggle
-            // is restored. Discard an offset if the new layout blocks it.
-            for (var entry : new LinkedHashMap<>(manualFileOffsets).entrySet()) {
-                String file = entry.getKey();
-                GraphLayout.Point parent = layout.get(parentOfFile(file));
-                if (parent == null || !adjusted.containsKey(file)) {
-                    manualFileOffsets.remove(file);
-                    continue;
-                }
-                double x = parent.x() + entry.getValue().getX();
-                double y = parent.y() + entry.getValue().getY();
-                if (Math.abs(x) > MAX_NODE_COORDINATE - 230
-                        || Math.abs(y) > MAX_NODE_COORDINATE - 30) {
-                    manualFileOffsets.remove(file);
-                    continue;
-                }
-                GraphLayout.Point wanted = new GraphLayout.Point(x, y);
-                if (canPlaceFile(file, wanted)) {
-                    adjusted.put(file, wanted);
-                    filePositions = Map.copyOf(adjusted);
-                } else {
-                    manualFileOffsets.remove(file);
-                }
+        GraphFileLayout.Result arranged = GraphFileLayout.arrange(model, layout);
+        filePositions = arranged.positions();
+        fileIslands = arranged.islands();
+        fileLayoutLimited = arranged.limited();
+
+        // Restore whole-island offsets after toggling or moving parent folders.
+        // Invalid manual placements fall back to collision-free automatic ones.
+        for (var entry : new LinkedHashMap<>(manualIslandOffsets).entrySet()) {
+            String owner = entry.getKey();
+            GraphLayout.Point parent = layout.get(owner);
+            GraphFileLayout.Bounds automatic = fileIslands.get(owner);
+            if (parent == null || automatic == null) {
+                manualIslandOffsets.remove(owner);
+                continue;
             }
-            filePositions = Map.copyOf(adjusted);
+            double targetX = parent.x() + entry.getValue().getX();
+            double targetY = parent.y() + entry.getValue().getY();
+            GraphFileLayout.Bounds target = shiftIsland(automatic,
+                    targetX - automatic.minX(), targetY - automatic.minY());
+            if (canPlaceIsland(owner, target)) {
+                moveIsland(owner, target);
+            } else {
+                manualIslandOffsets.remove(owner);
+            }
         }
     }
 
@@ -855,7 +868,7 @@ public final class DependencyGraphPane extends BorderPane {
     public void resetLayout() {
         layout.clear();
         layout.putAll(GraphLayoutEngine.arrange(model, layoutMode));
-        manualFileOffsets.clear();
+        manualIslandOffsets.clear();
         edgeRoutes = null;
         if (showFilesItem.isSelected()) rebuildFilePositions();
         fitToViewport();
@@ -884,10 +897,10 @@ public final class DependencyGraphPane extends BorderPane {
     }
 
     private boolean isHit(double x, double y) {
-        return pickNode(x, y) != null || pickFile(x, y) != null;
+        return pickNode(x, y) != null || pickIsland(x, y) != null;
     }
 
-    /** A code-file leaf can be opened, but never dragged or persisted. */
+    /** An individual file is selectable but not draggable or persisted. */
     private String pickFile(double screenX, double screenY) {
         if (!showFilesItem.isSelected()) return null;
         double x = camera.worldX(screenX, canvas.getWidth());
