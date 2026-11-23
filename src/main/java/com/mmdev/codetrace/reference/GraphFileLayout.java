@@ -1,95 +1,137 @@
 package com.mmdev.codetrace.reference;
 
+import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
+import java.util.Comparator;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
- * Optional file satellites for the existing directory graph. This is a
- * filesystem-only presentation: it never parses source code or changes folder
- * positions, dependencies, source files or the persisted .ctrace layout.
+ * Compact, collision-free islands of source files around their directory nodes.
  *
- * <p>Engineering rationale: a coarse deterministic occupancy grid keeps labels
- * distinct without running an additional force simulation for up to 1,200
- * source files. Folder labels reserve their full rectangular footprint.
- * Satellites are recomputed only when files are shown or folder positions
- * change, never for camera movement or zoom.</p>
+ * <p>This is strictly a filesystem presentation: no semantic analysis, no
+ * changes to the directory layout, and no new fields persisted in .ctrace.
+ * A single bounding rectangle is reserved for every island. Whole-island
+ * collision checks prevent unrelated files from interleaving and stop files
+ * from covering directory labels, even after a directory is dragged.</p>
  */
 public final class GraphFileLayout {
     public static final int MAX_VISIBLE_FILES = 1200;
-    private static final double COLUMN = 270;
-    private static final double ROW = 56;
-    private static final int MAX_RING = 80;
+    private static final double FILE_STEP_X = 252;
+    private static final double FILE_STEP_Y = 44;
+    private static final int MAX_COLUMNS = 12;
+    private static final int SEARCH_RINGS = 260;
+    private static final double SEARCH_STEP = 90;
+    private static final double GAP = 12;
+    private static final double WORLD_LIMIT = 100_000;
 
-    /** Positions only for source files, never for directory nodes. */
+    /** World-space footprint of a directory label or an entire file island. */
+    public record Bounds(double minX, double minY, double maxX, double maxY) {
+        public boolean overlaps(Bounds other, double margin) {
+            return minX < other.maxX + margin && maxX + margin > other.minX
+                    && minY < other.maxY + margin && maxY + margin > other.minY;
+        }
+        public double centerX() { return (minX + maxX) / 2; }
+        public double centerY() { return (minY + maxY) / 2; }
+    }
+
+    /** File positions and their group's reserved visual footprint. */
     public record Result(Map<String, GraphLayout.Point> positions,
+                         Map<String, Bounds> islands,
                          int eligible, boolean limited) {
         public Result {
             positions = Collections.unmodifiableMap(new LinkedHashMap<>(positions));
+            islands = Collections.unmodifiableMap(new LinkedHashMap<>(islands));
         }
     }
+
+    private record IslandPlacement(double originX, double originY, Bounds bounds) {}
 
     private GraphFileLayout() {}
 
     public static Result arrange(ProjectDependencyGraph.Graph graph,
                                  Map<String, GraphLayout.Point> folders) {
-        Set<Long> occupied = new HashSet<>();
-        for (GraphLayout.Point center : folders.values()) {
-            // Folder footprint: x-12..x+258, y-16..y+16.
-            // File footprint: x-8..x+218, y-15..y+15. Eight pixels
-            // of clearance between a folder label and a file label.
-            int minCol = (int) Math.ceil((center.x() - 238) / COLUMN);
-            int maxCol = (int) Math.floor((center.x() + 274) / COLUMN);
-            int minRow = (int) Math.ceil((center.y() - 39) / ROW);
-            int maxRow = (int) Math.floor((center.y() + 39) / ROW);
-            for (int col = minCol; col <= maxCol; col++) {
-                for (int row = minRow; row <= maxRow; row++)
-                    occupied.add(key(col, row));
-            }
-        }
+        List<Bounds> reserved = new ArrayList<>(folders.size() + graph.nodes().size());
+        // Full directory label extents, including text and node circle.
+        for (GraphLayout.Point center : folders.values())
+            reserved.add(new Bounds(center.x() - 13, center.y() - 18,
+                    center.x() + 261, center.y() + 18));
 
         int eligible = 0;
         for (String folder : graph.nodes()) eligible += graph.files(folder).size();
         Map<String, GraphLayout.Point> placed = new LinkedHashMap<>();
-        for (String folder : graph.nodes()) {
-            GraphLayout.Point parent = folders.get(folder);
-            if (parent == null) continue;
-            int centerCol = (int) Math.round(parent.x() / COLUMN);
-            int centerRow = (int) Math.round(parent.y() / ROW);
-            for (String file : graph.files(folder)) {
-                if (placed.size() >= MAX_VISIBLE_FILES)
-                    return new Result(placed, eligible, true);
-                boolean allocated = false;
-                // Pack each file near its real parent, preferring free slots
-                // to its right. All loops have explicit limits.
-                for (int radius = 1; radius <= MAX_RING && !allocated; radius++) {
-                    for (int dx = radius; dx >= -radius && !allocated; dx--) {
-                        for (int dy = -radius; dy <= radius; dy++) {
-                            if (Math.max(Math.abs(dx), Math.abs(dy)) != radius)
-                                continue;
-                            int col = centerCol + dx;
-                            int row = centerRow + dy;
-                            double x = col * COLUMN, y = row * ROW;
-                            // GraphLayout.Point intentionally limits world
-                            // coordinates; do not throw at the viewport edge.
-                            if (Math.abs(x) > 100_000 || Math.abs(y) > 100_000)
-                                continue;
-                            if (!occupied.add(key(col, row))) continue;
-                            placed.put(file, new GraphLayout.Point(x, y));
-                            allocated = true;
-                            break;
-                        }
-                    }
-                }
-                if (!allocated) return new Result(placed, eligible, true);
+        Map<String, Bounds> islands = new LinkedHashMap<>();
+
+        // Give large islands the nearest free space before small islands
+        // consume it. Ties use directory paths, never map iteration order.
+        List<String> owners = graph.nodes().stream()
+                .filter(dir -> folders.containsKey(dir) && !graph.files(dir).isEmpty())
+                .sorted(Comparator.<String>comparingInt(
+                        dir -> graph.files(dir).size()).reversed()
+                        .thenComparing(Comparator.naturalOrder()))
+                .toList();
+
+        boolean limited = false;
+        for (String owner : owners) {
+            int remaining = MAX_VISIBLE_FILES - placed.size();
+            if (remaining <= 0) { limited = true; break; }
+            List<String> files = graph.files(owner);
+            int count = Math.min(remaining, files.size());
+            if (count < files.size()) limited = true;
+            int columns = Math.min(MAX_COLUMNS, Math.max(1,
+                    (int) Math.ceil(Math.sqrt(count * FILE_STEP_Y / FILE_STEP_X))));
+            int rows = (count + columns - 1) / columns;
+            double width = (columns - 1) * FILE_STEP_X + 230;
+            double height = (rows - 1) * FILE_STEP_Y + 30;
+
+            IslandPlacement island = nearestFreeIsland(
+                    folders.get(owner), width, height, reserved);
+            if (island == null) { limited = true; continue; }
+            reserved.add(island.bounds());
+            islands.put(owner, island.bounds());
+            for (int i = 0; i < count; i++) {
+                double x = island.originX() + (i % columns) * FILE_STEP_X;
+                double y = island.originY() + (i / columns) * FILE_STEP_Y;
+                placed.put(files.get(i), new GraphLayout.Point(x, y));
             }
         }
-        return new Result(placed, eligible, false);
+        return new Result(placed, islands, eligible, limited || eligible > placed.size());
     }
 
-    private static long key(int column, int row) {
-        return ((long) column << 32) ^ (row & 0xffffffffL);
+    private static IslandPlacement nearestFreeIsland(
+            GraphLayout.Point parent, double width, double height,
+            List<Bounds> reserved) {
+        // Try right, diagonals, below, above and left in concentric shells.
+        // This keeps each island as close as space allows to its own folder.
+        double[] angles = {0, Math.PI / 4, -Math.PI / 4,
+                Math.PI / 2, -Math.PI / 2,
+                3 * Math.PI / 4, -3 * Math.PI / 4, Math.PI};
+        for (int ring = 0; ring < SEARCH_RINGS; ring++) {
+            double extra = ring * SEARCH_STEP;
+            for (double angle : angles) {
+                double cx = parent.x() + 123
+                        + (width / 2 + 190 + extra) * Math.cos(angle);
+                double cy = parent.y()
+                        + (height / 2 + 75 + extra) * Math.sin(angle);
+                double originX = Math.rint(cx - width / 2 + 8);
+                double originY = Math.rint(cy - height / 2 + 14);
+                Bounds candidate = new Bounds(originX - 8, originY - 14,
+                        originX - 8 + width, originY - 14 + height);
+                if (candidate.minX() < -WORLD_LIMIT || candidate.minY() < -WORLD_LIMIT
+                        || candidate.maxX() > WORLD_LIMIT
+                        || candidate.maxY() > WORLD_LIMIT) continue;
+                boolean collision = false;
+                for (Bounds blocked : reserved) {
+                    if (candidate.overlaps(blocked, GAP)) {
+                        collision = true;
+                        break;
+                    }
+                }
+                if (!collision)
+                    return new IslandPlacement(originX, originY, candidate);
+            }
+        }
+        return null;
     }
 }
