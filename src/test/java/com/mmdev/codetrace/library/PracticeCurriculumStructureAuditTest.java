@@ -78,6 +78,9 @@ class PracticeCurriculumStructureAuditTest {
         multipleTopLevel.forEach(line -> System.out.println("JAVA_MULTITOP " + line));
         nestedNamedTypes.forEach(line -> System.out.println("JAVA_NESTED " + line));
         System.out.println("CODETRACE_PRACTICE_AUDIT_END");
+        assertTrue(multipleTopLevel.isEmpty(),
+                "Cada fuente Java debe declarar como máximo un tipo de nivel superior: "
+                        + multipleTopLevel);
     }
 
     @Test
@@ -106,7 +109,12 @@ class PracticeCurriculumStructureAuditTest {
                 "04-patrones-diseno/abstract-factory/tema-consola/Dialogo.java",
                 "04-patrones-diseno/abstract-factory/tema-consola/Fabrica.java",
                 "04-patrones-diseno/abstract-factory/tema-consola/FabricaClara.java",
-                "04-patrones-diseno/abstract-factory/tema-consola/FabricaOscura.java");
+                "04-patrones-diseno/abstract-factory/tema-consola/FabricaOscura.java",
+                "04-patrones-diseno/template-method/reportes/ProcesoReporte.java",
+                "04-patrones-diseno/template-method/reportes/ReporteTexto.java",
+                "04-patrones-diseno/template-method/reportes/ReporteCsv.java",
+                "01-fundamentos/funciones/Receptor.java",
+                "02-estructuras-datos/grafos/tipos/Orientacion.java");
         for (String relative : roles) {
             assertTrue(library.entries(java).contains(relative), relative);
             List<Type> declared = findNamedJavaTypes(Files.readString(root.resolve(relative)));
