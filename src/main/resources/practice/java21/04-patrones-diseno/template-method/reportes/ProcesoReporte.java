@@ -18,14 +18,6 @@ public abstract class ProcesoReporte {
     protected abstract String detalle(int total);
     protected String pie(){return "\n";} // Hook opcional.
 }
-final class ReporteTexto extends ProcesoReporte {
-    protected String encabezado(String titulo){return "== "+titulo+" ==\n";}
-    protected String detalle(int total){return "Total: "+total;}
-}
-final class ReporteCsv extends ProcesoReporte {
-    protected String encabezado(String titulo){return "titulo,total\n";}
-    protected String detalle(int total){return "ventas,"+total;}
-}
 
 /*
  * CodeTrace | EJEMPLO DE CONSOLA (practica)
