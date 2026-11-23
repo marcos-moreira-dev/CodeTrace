@@ -1,4 +1,6 @@
 // CodeTrace | Referencia: Java 21 LTS / JDK 21
+// Compilar: javac --release 21 -encoding UTF-8 -d $out (Get-ChildItem -Recurse -Filter *.java).FullName
+// Ejecutar: java -cp $out codetrace.practica.counterstrike.MainCounterStrike
 // Dominio: Counter-Strike; simulación automática del mapa cs_office.
 // Glosario: CT/T = bandos; MP9 = objeto virtual; HUD = información de pantalla.
 // Arquitectura: CONTROLADOR MVC. Coordina varios patrones de diseño existentes.

@@ -35,7 +35,12 @@ foreach ($linea in (Get-Content -LiteralPath $catalogo -Encoding UTF8)) {
         throw "Ruta de referencia insegura: $linea"
     }
     $partes = $ruta -split '/'
-    if ($partes.Count -lt 3 -or $tipos -notcontains $partes[0]) {
+    # MVC entrypoint is intentionally at the root of the 05 practice
+    # category; only this exact file is exempted from the usual depth rule.
+    $integradorCS = ($paquete -eq 'java21' -and
+        $ruta -eq '05-patrones-diseno-counter-strike/MainCounterStrike.java')
+    if (($partes.Count -lt 3 -and -not $integradorCS) -or
+        $tipos -notcontains $partes[0]) {
         throw "Archivo fuera de su carpeta de unidad: $linea"
     }
     $identificador = $paquete + '/' + $ruta

@@ -1,4 +1,6 @@
 // CodeTrace | Referencia: Java 21 LTS / JDK 21
+// Compilar: javac --release 21 -encoding UTF-8 -d $out (Get-ChildItem -Recurse -Filter *.java).FullName
+// Ejecutar: java -cp $out codetrace.practica.counterstrike.MainCounterStrike
 // Dominio: Counter-Strike, simulador narrativo de 3 rondas automáticas.
 // Glosario: CT = antiterroristas; T = terroristas; PV = vida del jugador.
 // Patrón de organización: infraestructura MVC, no un nuevo patrón GoF.

@@ -18,7 +18,11 @@ items=[x.split("\t",1) for x in (root/"catalog.tsv").read_text(encoding="utf-8")
 assert len(items)==917, len(items)
 assert len({p for p,_ in items})==14
 assert len(set(map(tuple,items)))==len(items)
-assert all(len(path.split("/"))>=3 for _,path in items)
+# The integrator intentionally lives in the 05 root; all pattern
+# components still require their own named exercise directory.
+assert all(len(path.split("/"))>=3 or
+           (pack=="java21" and path=="05-patrones-diseno-counter-strike/MainCounterStrike.java")
+           for pack,path in items)
 actual={str(x.relative_to(root)).replace("\\","/") for x in root.rglob("*")
         if x.is_file() and x.name!="catalog.tsv"}
 declared={p+"/"+path for p,path in items}

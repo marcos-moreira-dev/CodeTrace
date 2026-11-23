@@ -114,8 +114,11 @@ class BuiltInLibraryTest {
         assertEquals(917, library.packs().stream().mapToInt(library::size).sum());
         for (var pack : library.packs()) {
             var entries = library.entries(pack);
-            assertTrue(entries.stream().allMatch(x -> x.split("/").length >= 3),
-                    "Every reference must be inside a named exercise directory: " + pack.id());
+            assertTrue(entries.stream().allMatch(x -> x.split("/").length >= 3
+                    || (pack.id().equals("java21")
+                        && x.equals("05-patrones-diseno-counter-strike/MainCounterStrike.java"))),
+                    "Every reference is in an exercise directory except the documented integrator: "
+                            + pack.id());
             assertTrue(entries.stream().anyMatch(x -> x.startsWith("01-fundamentos/")), pack.id());
             assertTrue(entries.stream().anyMatch(x -> x.startsWith("03-algoritmos/")), pack.id());
             assertTrue(entries.stream().noneMatch(x -> x.contains("07-proyectos/")

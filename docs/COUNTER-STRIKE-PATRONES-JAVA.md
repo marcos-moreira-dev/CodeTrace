@@ -135,7 +135,7 @@ Ejecuta automáticamente tres rondas ficticias en `cs_office` con semilla
 jugador) que en el modo rescate debe llegar a una zona segura. Aquí tiene
 `nombre`, `ubicacion`, `integridad` (indicador 0–100), `calma`
 (0–100), `escolta` (alias del CT acompañante), `progreso` (0–100 %)
-y `EstadoRehen`. `RETenido → ESCOLTADO → RESCATADO` es una transición
+y `EstadoRehen`. `RETENIDO → ESCOLTADO → RESCATADO` es una transición
 simplificada. La propiedad `integridad` no representa reglas oficiales;
 es material de práctica Java. Los jugadores tienen alias, bando,
 vida/armadura ilustrativas, créditos e inventario de objetos virtuales.

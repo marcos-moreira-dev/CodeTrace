@@ -1,4 +1,6 @@
 // CodeTrace | Referencia: Java 21 LTS / JDK 21
+// Compilar: javac --release 21 -encoding UTF-8 -d $out (Get-ChildItem -Recurse -Filter *.java).FullName
+// Ejecutar: java -cp $out codetrace.practica.counterstrike.MainCounterStrike
 // Dominio: Counter-Strike; narración de una partida ficticia de rescate.
 // Glosario: HUD = indicadores de pantalla; CT/T = equipos; PV = puntos de vida.
 // Patrón de organización: MVC. Esta VISTA imprime texto sin alterar la partida.
