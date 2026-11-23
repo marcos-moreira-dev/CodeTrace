@@ -1124,7 +1124,7 @@ public final class CodeTraceApp extends Application {
 
     /** Used by Tools and by the exact folder that received a right click. */
     private void openDependencyGraphForFolder(Path folder) {
-        if (reference == null || folder == null || !tree.isFolderPath(folder)
+        if (reference == null || folder == null || !Files.isDirectory(folder)
                 || !folder.toAbsolutePath().normalize()
                           .startsWith(reference.toAbsolutePath().normalize())) {
             showGraphNotice("Selecciona una carpeta de la referencia actual.");
@@ -1171,7 +1171,11 @@ public final class CodeTraceApp extends Application {
                             : selectedPath);
                     refreshMetrics();
                 }
-            }, settings.graphLayoutMode());
+            }, settings.graphLayoutMode(), hiddenFolder -> {
+                Path child = reference.resolve(hiddenFolder).normalize();
+                if (child.startsWith(reference) && Files.isDirectory(child))
+                    openDependencyGraphForFolder(child);
+            });
             view.zoomPercentProperty().addListener((obs, old, value) -> {
                 if (tabs.getSelectionModel().getSelectedItem() != null
                         && tabs.getSelectionModel().getSelectedItem().getContent() == view)
