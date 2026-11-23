@@ -55,6 +55,7 @@ public final class DependencyGraphPane extends BorderPane {
     private final Pane viewport = new Pane();
     private final Canvas canvas = new Canvas();
     private final VBox legend = new VBox(5);
+    private final Label fileSummary = new Label();
     private final CheckMenuItem showFilesItem = new CheckMenuItem("Mostrar archivos de código");
     /** Secondary file positions are derived, never saved with folder layouts. */
     private Map<String, GraphLayout.Point> filePositions = Map.of();
@@ -151,6 +152,12 @@ public final class DependencyGraphPane extends BorderPane {
         // Keep the original Pane -> Canvas structure for existing JavaFX clients.
         // Overlay is anchored in viewport coordinates, never graph/world space.
         viewport.getChildren().add(legend);
+        fileSummary.getStyleClass().add("dependency-map-file-summary");
+        fileSummary.setMouseTransparent(true);
+        fileSummary.setLayoutX(12);
+        fileSummary.setLayoutY(12);
+        fileSummary.setVisible(false);
+        viewport.getChildren().add(fileSummary);
         legend.setLayoutX(12);
         legend.layoutYProperty().bind(viewport.heightProperty()
                 .subtract(legend.heightProperty()).subtract(12));
@@ -344,6 +351,9 @@ public final class DependencyGraphPane extends BorderPane {
         selectedFile = null;
         rebuildFilePositions();
         updateLegend();
+        fileSummary.setVisible(showFilesItem.isSelected());
+        fileSummary.setText("Archivos de código: " + filePositions.size()
+                + (isPartial() ? " · vista parcial" : ""));
         fitToViewport();
         onNodeSelected.accept(selected);
     }
