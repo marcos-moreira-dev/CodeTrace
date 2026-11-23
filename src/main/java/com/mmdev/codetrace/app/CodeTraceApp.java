@@ -1534,7 +1534,8 @@ public final class CodeTraceApp extends Application {
                             + "relaciones caben en el mapa.\n" : "")
                     + map.nodeCount() + " carpetas · " + map.connectionCount()
                             + " dependencias explícitas\n"
-                            + "Arrastra un círculo o su nombre para moverlo. "
+                            + "Arrastra un círculo o su nombre para mover la carpeta. "
+                            + "Los archivos de código también se pueden arrastrar. "
                             + "Arrastra el fondo para desplazarte."));
         } else if (!hasEditor) {
             fileInfo.setText("");
