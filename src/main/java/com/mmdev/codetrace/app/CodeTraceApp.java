@@ -320,7 +320,7 @@ public final class CodeTraceApp extends Application {
                 KeyCombination.SHORTCUT_DOWN, KeyCombination.SHIFT_DOWN));
         findProject.setOnAction(event ->
                 openSearch(ProjectSearchWindow.Scope.PROJECT));
-        MenuItem dependencyMap = new MenuItem("Mapa de dependencias de carpeta...");
+        MenuItem dependencyMap = new MenuItem("Mapa de estructura y dependencias...");
         dependencyMap.setGraphic(new FontIcon("fth-map"));
         dependencyMap.setOnAction(event -> openDependencyGraphForSelectedFolder());
         Menu toolsMenu = new Menu("Herramientas", null, findCurrent, findProject,
@@ -1200,7 +1200,7 @@ public final class CodeTraceApp extends Application {
     private void showGraphNotice(String message) {
         Alert info = new Alert(Alert.AlertType.INFORMATION, message, ButtonType.OK);
         info.initOwner(stage);
-        info.setTitle("Mapa de dependencias — CodeTrace");
+        info.setTitle("Mapa de estructura y dependencias — CodeTrace");
         info.setHeaderText("Exploración de relaciones");
         info.showAndWait();
     }
