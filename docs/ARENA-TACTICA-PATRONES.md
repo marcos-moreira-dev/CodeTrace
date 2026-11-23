@@ -1,6 +1,8 @@
-# Arena Táctica — universo didáctico de patrones Java y Python
+# Arena Táctica — contexto general de patrones Java y Python
 
-**Estado:** rama experimental v0.3.5. **Alcance:** la sección
+**Estado:** rama experimental v0.3.5.
+
+> Esta es la colección general `04`. Para los 13 patrones ambientados explícitamente en **Counter-Strike** y comentados paso a paso, consultar [la nueva colección Java `05`](COUNTER-STRIKE-PATRONES-JAVA.md). **Alcance:** la sección
 `04-patrones-diseno/` de Java 21 y Python.
 
 ## Idea

@@ -4,9 +4,9 @@
 
 ## Alcance y criterio
 
-La biblioteca mantiene **un único catálogo** con **839 archivos de referencia en 14 lenguajes**, repartidos entre fundamentos, estructuras de datos, algoritmos y patrones. Un archivo es una unidad de mecanografía, **no necesariamente un ejercicio autónomo**. El paquete Java 21 contiene **165 archivos**. El catálogo v0.3.4 tenía 813: este cambio suma 26 netos por separar roles Java y sustituir un contenedor de tipos anidados.
+La biblioteca mantiene **un único catálogo** con **906 archivos de referencia en 14 lenguajes**, repartidos entre fundamentos, estructuras de datos, algoritmos y patrones. Un archivo es una unidad de mecanografía, **no necesariamente un ejercicio autónomo**. El paquete Java 21 contiene **232 archivos**. El catálogo v0.3.4 tenía 813: este cambio suma 26 netos por separar roles Java y sustituir un contenedor de tipos anidados.
 
-La revisión de integridad recorre todos los elementos del catálogo: ruta segura, recurso real, código no vacío, cabecera de versión y comando de compilación/comprobación. Los clientes representativos se compilan y ejecutan mediante los verificadores por plataforma. Esto **no equivale** a validar semánticamente cada línea de los 839 archivos en todos los compiladores.
+La revisión de integridad recorre todos los elementos del catálogo: ruta segura, recurso real, código no vacío, cabecera de versión y comando de compilación/comprobación. Los clientes representativos se compilan y ejecutan mediante los verificadores por plataforma. Esto **no equivale** a validar semánticamente cada línea de los 906 archivos en todos los compiladores.
 
 ## Decisión de diseño didáctico
 
@@ -31,7 +31,7 @@ La revisión de integridad recorre todos los elementos del catálogo: ruta segur
 | Callbacks | `Receptor` estaba dentro del cliente `Callbacks` | `Receptor.java` y `Callbacks.java` |
 | Tipos de grafo | `Orientacion` era un `enum` público anidado en `Grafo` | `Orientacion.java`, `Grafo.java`, `MainTiposGrafo.java` |
 
-Las nuevas fuentes conservan cabeceras con Java 21, instrucciones de compilación, cliente y salida esperada. Se actualizaron los consumidores para usar los contratos independientes y el catálogo de recursos. La biblioteca pasa a caché `v10` para no reutilizar los archivos obsoletos de `v8`.
+Las nuevas fuentes conservan cabeceras con Java 21, instrucciones de compilación, cliente y salida esperada. Se actualizaron los consumidores para usar los contratos independientes y el catálogo de recursos. La biblioteca pasa a caché `v11` para no reutilizar los archivos obsoletos de `v8`.
 
 ## Hallazgo de la revisión automática de Java
 
@@ -50,7 +50,7 @@ comprueba las unidades que sí se separaron.
 
 ## Cómo verificar
 
-- `scripts/verificar-biblioteca.sh`: integridad de las 839 rutas, compilación integral de los Java 21, ejecución de clientes Java y comprobaciones representativas de otros lenguajes.
+- `scripts/verificar-biblioteca.sh`: integridad de las 906 rutas, compilación integral de los Java 21, ejecución de clientes Java y comprobaciones representativas de otros lenguajes.
 - `scripts/auditar-biblioteca.ps1`: integridad y estructura desde Windows PowerShell 5.1; con `-EjecutarClientes`, compila y ejecuta los clientes Java seleccionados en un temporal.
 - `BuiltInLibraryTest`: versión del catálogo, extracción offline, compilación de todo Java y cabeceras de los ejercicios.
 - `PracticeCurriculumStructureAuditTest`: inventario por idioma y diagnóstico de tipos Java de nivel superior o anidados; la detección por texto es **heurística**, no sustituye al compilador.
@@ -76,3 +76,7 @@ sus salidas de consola coincidan. El escenario incluye un rehén *virtual*
 y la etiqueta MP9 de equipamiento ficticio, explicados en los comentarios.
 
 Ver [glosario y mapa de patrones](ARENA-TACTICA-PATRONES.md).
+
+## Pista separada de Counter-Strike (Java 21)
+
+Se añade `05-patrones-diseno-counter-strike/` con **67 archivos y 13 clientes de consola** para 13 patrones o variantes de patrones ya representados en la colección general. Mantener ambos recorridos evita destruir los ejemplos originales. Los nuevos ejemplos incluyen glosario de términos del videojuego, tipos por archivo y comentarios **dentro** de listas, iteraciones, llamadas y métodos. [Guía detallada](COUNTER-STRIKE-PATRONES-JAVA.md).

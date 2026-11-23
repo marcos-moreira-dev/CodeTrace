@@ -147,6 +147,41 @@ class PracticeCurriculumStructureAuditTest {
         }
     }
 
+    @Test
+    void counterStrikeTrackKeepsOneNamedTypePerFileAndCommentsInsideClients()
+            throws Exception {
+        BuiltInLibrary library = new BuiltInLibrary(temp.resolve("counter-strike"));
+        BuiltInLibrary.Pack javaPack = library.packs().stream()
+                .filter(pack -> pack.id().equals("java21")).findFirst().orElseThrow();
+        Path root = library.open(javaPack);
+        List<String> paths = library.entries(javaPack).stream()
+                .filter(path -> path.startsWith("05-patrones-diseno-counter-strike/"))
+                .toList();
+        assertEquals(67, paths.size());
+        long clients = 0;
+        for (String relative : paths) {
+            String source = Files.readString(root.resolve(relative));
+            assertTrue(source.contains("Dominio: Counter-Strike"), relative);
+            assertTrue(source.contains("Glosario:"), relative);
+            List<Type> declared = findNamedJavaTypes(source);
+            assertEquals(1, declared.size(), "One named Java type: " + relative);
+            assertEquals(0, declared.getFirst().depth(), relative);
+            String filename = Path.of(relative).getFileName().toString()
+                    .replaceFirst("\\.java$", "");
+            assertEquals(filename, declared.getFirst().name(), relative);
+
+            if (filename.startsWith("Main")) {
+                clients++;
+                int declaration = source.indexOf("public final class " + filename);
+                assertTrue(declaration >= 0, relative);
+                assertTrue(source.indexOf("//", declaration) > declaration,
+                        "Explain at least one statement inside main(): " + relative);
+                assertTrue(source.contains("Salida esperada:"), relative);
+            }
+        }
+        assertEquals(13, clients);
+    }
+
     /**
      * Mask strings and comments, preserving positions and line breaks so a
      * brace-depth counter distinguishes nested named types from file-level

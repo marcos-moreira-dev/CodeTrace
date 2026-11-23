@@ -46,7 +46,9 @@ programa es **Marcos Moreira**, también identificado en sus metadatos.
 
 La biblioteca integrada comprende **14 lenguajes y 813 archivos de referencia** en v0.3.4. Son *archivos*, no 813 ejercicios independientes. Sus contenidos cubren fundamentos, estructuras de datos, algoritmos y patrones de diseño; los ejemplos incluyen guías de consola y salidas esperadas, algunas todavía pendientes de validación cruzada en todos los entornos.
 
-**En la rama experimental v0.3.5**, el catálogo interno `v10` incluye **839 archivos**, con contratos, `record`, `enum` y clases colaboradoras Java 21 separados donde aportan claridad. Los otros lenguajes conservan las estructuras idiomáticas de sus módulos. [Auditoría de los ejemplos y criterio didáctico](docs/AUDITORIA-EJEMPLOS-V035.md). Los ejemplos Java 21 y Python de patrones comparten el universo ficticio **Arena Táctica**, con [glosario y correspondencias](docs/ARENA-TACTICA-PATRONES.md).
+**En la rama experimental v0.3.5**, el catálogo interno `v11` incluye **906 archivos**, con contratos, `record`, `enum` y clases colaboradoras Java 21 separados donde aportan claridad. Los otros lenguajes conservan las estructuras idiomáticas de sus módulos. [Auditoría de los ejemplos y criterio didáctico](docs/AUDITORIA-EJEMPLOS-V035.md). Los ejemplos Java 21 y Python de patrones comparten el universo ficticio **Arena Táctica**, con [glosario y correspondencias](docs/ARENA-TACTICA-PATRONES.md).
+
+En **Java 21** existe además la nueva colección independiente **`05-patrones-diseno-counter-strike/`**: 13 patrones o variantes, 67 archivos y ejemplos de consola comentados paso a paso, todos ambientados explícitamente en Counter-Strike. [Guía y glosario de Counter-Strike](docs/COUNTER-STRIKE-PATRONES-JAVA.md). La colección general `04` no se reemplaza.
 
 ### Consulta documentación directamente dentro del proyecto
 
