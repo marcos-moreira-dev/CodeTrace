@@ -15,11 +15,11 @@ package codetrace.practica.patrones.composite;
  */
 public final class MainComposite {
     public static void main(String[] args) {
-        var raiz=new Elemento.Carpeta("proyecto");
-        var fuentes=new Elemento.Carpeta("src");
-        fuentes.agregar(new Elemento.Archivo("Main.java",120));
-        fuentes.agregar(new Elemento.Archivo("App.java",80));
-        raiz.agregar(fuentes);raiz.agregar(new Elemento.Archivo("README.md",20));
+        var raiz=new Carpeta("proyecto");
+        var fuentes=new Carpeta("src");
+        fuentes.agregar(new Archivo("Main.java",120));
+        fuentes.agregar(new Archivo("App.java",80));
+        raiz.agregar(fuentes);raiz.agregar(new Archivo("README.md",20));
         if(raiz.bytes()!=220)throw new AssertionError("Composite");
         System.out.println("Bytes: "+raiz.bytes());
     }
