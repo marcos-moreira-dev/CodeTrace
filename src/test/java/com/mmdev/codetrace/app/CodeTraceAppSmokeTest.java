@@ -380,6 +380,10 @@ class CodeTraceAppSmokeTest {
                 assertTrue(filePane.isShowingCodeFiles());
                 assertEquals(2, filePane.visibleCodeFileCount());
                 assertEquals(2, filePane.fileNodePositions().size());
+                assertEquals(2, filePane.fileIslandBounds().size(),
+                        "Each folder with code owns its own non-overlapping island");
+                assertFalse(filePane.fileIslandBounds().get("src").overlaps(
+                        filePane.fileIslandBounds().get("src/demo"), 10));
                 assertEquals(2, filePane.getCenter()
                         .lookupAll(".dependency-map-legend-marker").size(),
                         "Hierarchy and file membership require two legend symbols");
@@ -407,6 +411,7 @@ class CodeTraceAppSmokeTest {
                 filePane.setShowCodeFiles(false);
                 assertFalse(filePane.isShowingCodeFiles());
                 assertTrue(filePane.fileNodePositions().isEmpty());
+                assertTrue(filePane.fileIslandBounds().isEmpty());
                 assertNull(fileLayoutSaved.get(),
                         "Hiding files must not overwrite the saved layout");
                 tabPane.getTabs().remove(fileTab);
