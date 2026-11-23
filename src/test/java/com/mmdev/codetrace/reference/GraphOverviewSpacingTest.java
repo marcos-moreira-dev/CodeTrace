@@ -57,9 +57,10 @@ class GraphOverviewSpacingTest {
         var positions = new java.util.LinkedHashMap<String, GraphLayout.Point>();
         var files = new java.util.LinkedHashMap<String, List<String>>();
         for (int i = 0; i < dirs.size(); i++) {
-            positions.put(dirs.get(i), new GraphLayout.Point(i * 500.0, i * 500.0));
-            files.put(dirs.get(i), IntStream.range(0, 35)
-                    .mapToObj(n -> dirs.get(i) + "/F" + n + ".java").toList());
+            String folder = dirs.get(i);
+            positions.put(folder, new GraphLayout.Point(i * 500.0, i * 500.0));
+            files.put(folder, IntStream.range(0, 35)
+                    .mapToObj(n -> folder + "/F" + n + ".java").toList());
         }
         var graph = new ProjectDependencyGraph.Graph(".",
                 dirs, List.of(), 1200, true, "c".repeat(64),
