@@ -429,11 +429,13 @@ class CodeTraceAppSmokeTest {
                 assertEquals("src/Main.java",
                         sourceInspector.getSelectionModel().getSelectedItem());
 
-                // A normal primary-button drag relocates ONLY the source file.
-                // Its parent remains a folder node and no source text changes.
+                // The WHOLE container moves: file positions remain rigid
+                // relative to one another, even when drag begins on a file.
                 stage.getScene().getRoot().layout();
                 var oldFilePosition = filePane.fileNodePositions().get("src/Main.java");
+                var oldSiblingPosition = filePane.fileNodePositions().get("src/Second.java");
                 var oldOtherFile = filePane.fileNodePositions().get("src/demo/Helper.py");
+                var oldIsland = filePane.fileIslandBounds().get("src");
                 double dragScale = filePane.getZoomPercent() / 100.0;
                 double pressFileX = leafSurface.getWidth() / 2
                         + (oldFilePosition.x() - filePane.getCameraX()) * dragScale;
@@ -468,15 +470,21 @@ class CodeTraceAppSmokeTest {
                                 new javafx.scene.input.PickResult(
                                         leafSurface, pressFileX, dropFileY)));
                 var draggedFile = filePane.fileNodePositions().get("src/Main.java");
+                var draggedSibling = filePane.fileNodePositions().get("src/Second.java");
+                var draggedIsland = filePane.fileIslandBounds().get("src");
                 assertEquals(oldFilePosition.x(), draggedFile.x(), 1.0);
                 assertEquals(oldFilePosition.y() - 900, draggedFile.y(), 1.0,
-                        "An individual file should be draggable on the graph");
+                        "A drag starting on a file moves its whole island");
+                assertEquals(oldSiblingPosition.x(), draggedSibling.x(), 1.0);
+                assertEquals(oldSiblingPosition.y() - 900, draggedSibling.y(), 1.0,
+                        "Every sibling must move the same distance");
+                assertEquals(oldIsland.minY() - 900, draggedIsland.minY(), 1.0);
                 assertEquals(oldOtherFile,
                         filePane.fileNodePositions().get("src/demo/Helper.py"),
-                        "Dragging one file must not move its siblings or other islands");
+                        "An island drag cannot move another folder's files");
                 assertEquals("src", filePane.getSelectedNode());
                 assertNull(fileLayoutSaved.get(),
-                        "Manual source-file drags do not corrupt folder layout state");
+                        "Island movement cannot modify persisted folder coordinates");
 
                 filePane.setShowCodeFiles(false);
                 assertFalse(filePane.isShowingCodeFiles());
@@ -484,9 +492,11 @@ class CodeTraceAppSmokeTest {
                 assertTrue(filePane.fileIslandBounds().isEmpty());
                 filePane.setShowCodeFiles(true);
                 assertEquals(draggedFile, filePane.fileNodePositions().get("src/Main.java"),
-                        "Manual file relocation survives toggling within the open map");
+                        "The whole island offset survives toggling in the open map");
+                assertEquals(draggedSibling,
+                        filePane.fileNodePositions().get("src/Second.java"));
                 assertNull(fileLayoutSaved.get(),
-                        "Showing or moving files must not overwrite the folder layout");
+                        "Showing or moving file islands must not persist folder changes");
 
                 // Exploration-only checkbox lives beneath the contextual
                 // legend and protects files and folders against accidental drag.
