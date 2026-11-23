@@ -78,6 +78,7 @@ public final class DependencyGraphPane extends BorderPane {
     private final VBox inspector = new VBox(8);
     private final Label inspectorTitle = new Label();
     private final Label inspectorPath = new Label();
+    private String inspectorFolderPath = "";
     private final Label partialBranchNote = new Label(
             "Esta rama continúa fuera de la vista parcial.");
     private final ListView<String> inspectorFiles = AppControls.navigationList();
@@ -96,6 +97,7 @@ public final class DependencyGraphPane extends BorderPane {
     private final Consumer<GraphLayout> onLayoutChanged;
     private final Consumer<String> onNodeSelected;
     private final Consumer<String> openSource;
+    private final Consumer<String> openHiddenFolder;
     private final IntegerProperty zoomPercent = new SimpleIntegerProperty(100);
     private GraphLayoutEngine.Mode layoutMode;
     private String selected;
@@ -133,8 +135,19 @@ public final class DependencyGraphPane extends BorderPane {
                                Consumer<GraphLayout> onLayoutChanged,
                                Consumer<String> onNodeSelected,
                                GraphLayoutEngine.Mode initialMode) {
+        this(graph, openSource, restored, onLayoutChanged, onNodeSelected,
+                initialMode, ignored -> {});
+    }
+
+    public DependencyGraphPane(ProjectDependencyGraph.Graph graph,
+                               Consumer<String> openSource, GraphLayout restored,
+                               Consumer<GraphLayout> onLayoutChanged,
+                               Consumer<String> onNodeSelected,
+                               GraphLayoutEngine.Mode initialMode,
+                               Consumer<String> openHiddenFolder) {
         model = graph;
         this.openSource = openSource;
+        this.openHiddenFolder = openHiddenFolder;
         this.onLayoutChanged = onLayoutChanged;
         this.onNodeSelected = onNodeSelected;
         layoutMode = initialMode == null
@@ -672,7 +685,25 @@ public final class DependencyGraphPane extends BorderPane {
         inspectorFiles.setPlaceholder(noFiles);
         inspectorFolders.setPlaceholder(noFolders);
         inspectorFiles.setCellFactory(list -> pathCell(false));
-        inspectorFolders.setCellFactory(list -> pathCell(true));
+        inspectorFolders.setCellFactory(list -> new ListCell<>() {
+            @Override protected void updateItem(String path, boolean empty) {
+                super.updateItem(path, empty);
+                if (empty || path == null) {
+                    setText(null);
+                    setGraphic(null);
+                    setTooltip(null);
+                    return;
+                }
+                boolean omitted = model.hiddenSubfolders(
+                        inspectorFolderPath).contains(path);
+                setText(shortName(path) + (omitted ? " · fuera del mapa" : ""));
+                setGraphic(FileTypeIcons.forPath(Path.of(path), true));
+                setOpacity(omitted ? 0.78 : 1);
+                setTooltip(new Tooltip(omitted
+                        ? path + "\nDoble clic para abrir el mapa de esta subcarpeta."
+                        : path));
+            }
+        });
 
         inspectorFiles.getSelectionModel().selectedItemProperty()
                 .addListener((obs, oldValue, next) -> {
@@ -718,6 +749,13 @@ public final class DependencyGraphPane extends BorderPane {
     private void navigateToSelectedFolder() {
         String folder = inspectorFolders.getSelectionModel().getSelectedItem();
         if (folder == null) return;
+        if (!layout.containsKey(folder)) {
+            // Child is real and indexed, but excluded by the 180-node budget.
+            // Open a scoped map instead of pretending the node is selectable.
+            if (model.hiddenSubfolders(inspectorFolderPath).contains(folder))
+                openHiddenFolder.accept(folder);
+            return;
+        }
         selectNode(folder);
         GraphLayout.Point at = layout.get(folder);
         if (at != null) camera.center(at.x() + 120, at.y());
@@ -746,16 +784,9 @@ public final class DependencyGraphPane extends BorderPane {
         return path.substring(path.lastIndexOf('/') + 1);
     }
 
-    /**
-     * An analyzed source folder with no direct sources cannot be a true leaf:
-     * if it has no visible children, the bounded breadth-first view omitted
-     * its descendants. Do not misreport the real filesystem as empty.
-     */
+    /** Only report branches with actual omitted child paths, not guessed leaves. */
     public boolean hasHiddenDescendants(String directory) {
-        return directory != null && model.truncated()
-                && layout.containsKey(directory)
-                && model.files(directory).isEmpty()
-                && model.subfolders(directory).isEmpty();
+        return directory != null && !model.hiddenSubfolders(directory).isEmpty();
     }
 
     private void showInspector(String directory) {
@@ -763,20 +794,27 @@ public final class DependencyGraphPane extends BorderPane {
             setRight(null);
             return;
         }
+        inspectorFolderPath = directory;
         inspectorTitle.setText(shortName(directory.equals(".") && !model.folder().isEmpty()
                 ? model.folder() : directory));
         inspectorPath.setText(directory.equals(".") ? "Carpeta del proyecto" : directory);
         inspectorFiles.getItems().setAll(model.files(directory));
-        inspectorFolders.getItems().setAll(model.subfolders(directory));
+        List<String> visibleChildren = model.subfolders(directory);
+        List<String> omittedChildren = model.hiddenSubfolders(directory);
+        List<String> directChildren = new ArrayList<>(visibleChildren);
+        directChildren.addAll(omittedChildren);
+        inspectorFolders.getItems().setAll(directChildren);
         filesHeading.setText("Archivos (" + inspectorFiles.getItems().size() + ")");
-        boolean hidden = hasHiddenDescendants(directory);
-        foldersHeading.setText("Subcarpetas visibles ("
-                + inspectorFolders.getItems().size() + ")");
+        boolean hidden = !omittedChildren.isEmpty();
+        foldersHeading.setText("Subcarpetas (" + directChildren.size()
+                + (hidden ? " · " + omittedChildren.size() + " fuera del mapa" : "") + ")");
+        partialBranchNote.setText(hidden
+                ? omittedChildren.size() + " subcarpeta(s) continúa(n) fuera de esta "
+                    + "vista. Doble clic sobre una de ellas para explorarla."
+                : "");
         partialBranchNote.setVisible(hidden);
         partialBranchNote.setManaged(hidden);
-        inspectorFolders.setPlaceholder(new Label(hidden
-                ? "Subcarpetas omitidas por límite del mapa"
-                : "Sin subcarpetas visibles"));
+        inspectorFolders.setPlaceholder(new Label("Sin subcarpetas"));
         inspectorPath.setTooltip(new Tooltip(inspectorPath.getText()));
         inspectorFiles.getSelectionModel().clearSelection();
         inspectorFolders.getSelectionModel().clearSelection();
@@ -891,9 +929,12 @@ public final class DependencyGraphPane extends BorderPane {
         long incoming = model.edges().stream()
                 .filter(e -> e.target().equals(selected)).count();
         return outgoing + " dependencias salientes · " + incoming
-                + " entrantes · " + model.subfolders(selected).size()
-                + " subcarpetas visibles"
-                + (hasHiddenDescendants(selected) ? " · rama parcial" : "");
+                + " entrantes · " + (model.subfolders(selected).size()
+                        + model.hiddenSubfolders(selected).size())
+                + " subcarpetas directas"
+                + (hasHiddenDescendants(selected)
+                        ? " · " + model.hiddenSubfolders(selected).size()
+                          + " fuera del mapa" : "");
     }
 
     public void clearSelection() { selectNode(null); }
@@ -1105,6 +1146,39 @@ public final class DependencyGraphPane extends BorderPane {
         return visibleAt(a, w, h, zoom) || visibleAt(b, w, h, zoom);
     }
 
+    /**
+     * Collapse omitted *real* direct child folders into a readable continuation
+     * connected to the actual parent. No invented dependencies or extra graph
+     * nodes are added, and the 180-node simulation remains bounded.
+     */
+    private void drawHiddenBranches(GraphicsContext g,
+                                    double width, double height, double zoom) {
+        for (var entry : model.hiddenSubfoldersByFolder().entrySet()) {
+            GraphLayout.Point parent = layout.get(entry.getKey());
+            if (parent == null || !visibleAt(parent, width, height, zoom)) continue;
+            List<String> children = entry.getValue();
+            if (children.isEmpty()) continue;
+            double x = parent.x(), y = parent.y();
+            boolean active = entry.getKey().equals(selected);
+            // Keep the continuation within the existing directory label cell.
+            g.setStroke(Color.web(active ? "#5c728d" : "#a1b3c2"));
+            g.setLineWidth(active ? 2 : 1.25);
+            g.setLineDashes(4, 4);
+            g.strokeLine(x + 1, y + 13, x + 16, y + 34);
+            g.setLineDashes();
+            String name = shortName(children.getFirst());
+            String caption = children.size() == 1
+                    ? name + " (fuera de vista)"
+                    : name + " y " + (children.size() - 1) + " más";
+            if (caption.length() > 31) caption = caption.substring(0, 28) + "...";
+            g.setFill(Color.web("#f8fafb"));
+            g.fillRoundRect(x + 13, y + 28, 244, 23, 4, 4);
+            g.setFill(Color.web(active ? "#3e566e" : "#5f7689"));
+            g.setFont(Font.font("Segoe UI", 11));
+            g.fillText(caption, x + 20, y + 44, 227);
+        }
+    }
+
     private void redraw() {
         GraphicsContext g = canvas.getGraphicsContext2D();
         double w = canvas.getWidth(), h = canvas.getHeight();
@@ -1166,6 +1240,9 @@ public final class DependencyGraphPane extends BorderPane {
                     tipY - 7 * Math.sin(angle + 0.5));
         }
         drawFileMembership(g, w, h, zoom);
+        // A real truncated child must not appear as an isolated parent.
+        // Compact dashed stubs mark the omitted hierarchy in the same graph.
+        drawHiddenBranches(g, w, h, zoom);
         drawFileIslands(g, w, h, zoom);
         drawCodeFiles(g, w, h, zoom);
         for (String path : model.nodes()) {
