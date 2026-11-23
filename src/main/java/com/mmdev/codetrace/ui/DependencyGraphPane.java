@@ -2,6 +2,7 @@ package com.mmdev.codetrace.ui;
 
 import com.mmdev.codetrace.reference.GraphFileLayout;
 import com.mmdev.codetrace.reference.GraphLayout;
+import com.mmdev.codetrace.reference.GraphOverviewSpacing;
 import com.mmdev.codetrace.reference.GraphLayoutEngine;
 import com.mmdev.codetrace.reference.ProjectDependencyGraph;
 import java.nio.file.Path;
@@ -82,7 +83,11 @@ public final class DependencyGraphPane extends BorderPane {
     private final Label filesHeading = new Label("Archivos");
     private final Label foldersHeading = new Label("Subcarpetas");
     private final GraphCamera camera = new GraphCamera();
+    /** Persistent folder-only coordinates, never modified by enabling files. */
+    private final Map<String, GraphLayout.Point> baseLayout = new LinkedHashMap<>();
+    /** Visual folder coordinates; spaced adaptively while file islands appear. */
     private final Map<String, GraphLayout.Point> layout = new LinkedHashMap<>();
+    private final Map<String, Point2D> folderDisplayOffsets = new LinkedHashMap<>();
     /** Recompute edge curves on layout changes, not zoom, pan or selection. */
     private Map<ProjectDependencyGraph.Edge, GraphEdgeRouting.Route> edgeRoutes;
     private final ProjectDependencyGraph.Graph model;
@@ -148,6 +153,7 @@ public final class DependencyGraphPane extends BorderPane {
             // Organized preference; repair invalid overlap layouts as well.
             Platform.runLater(this::notifyLayoutChanged);
         }
+        baseLayout.putAll(layout);
         centerCameraOnGraph();
 
         viewport.getStyleClass().add("dependency-map-viewport");
@@ -268,7 +274,13 @@ public final class DependencyGraphPane extends BorderPane {
                         -MAX_NODE_COORDINATE, MAX_NODE_COORDINATE);
                 double y = clamp(initialPosition.y() + dy / camera.scale(),
                         -MAX_NODE_COORDINATE, MAX_NODE_COORDINATE);
-                layout.put(pressed, new GraphLayout.Point(x, y));
+                GraphLayout.Point displayed = new GraphLayout.Point(x, y);
+                layout.put(pressed, displayed);
+                Point2D expansion = folderDisplayOffsets.get(pressed);
+                double offsetX = expansion == null ? 0 : expansion.getX();
+                double offsetY = expansion == null ? 0 : expansion.getY();
+                baseLayout.put(pressed, new GraphLayout.Point(
+                        x - offsetX, y - offsetY));
                 edgeRoutes = null;
                 redraw();
                 event.consume();
@@ -502,8 +514,31 @@ public final class DependencyGraphPane extends BorderPane {
         }
     }
 
+    /**
+     * Keep the folder-only arrangement as source of truth while the
+     * file-expanded mode gets extra space for local islands. This transform
+     * affects the entire graph coherently, not isolated individual files.
+     */
+    private void updateDisplayedFolderLayout() {
+        Map<String, GraphLayout.Point> visual = showFilesItem.isSelected()
+                ? GraphOverviewSpacing.expand(model, baseLayout)
+                : Map.copyOf(baseLayout);
+        layout.clear();
+        layout.putAll(visual);
+        folderDisplayOffsets.clear();
+        for (var entry : layout.entrySet()) {
+            GraphLayout.Point base = baseLayout.get(entry.getKey());
+            if (base != null)
+                folderDisplayOffsets.put(entry.getKey(), new Point2D(
+                        entry.getValue().x() - base.x(),
+                        entry.getValue().y() - base.y()));
+        }
+        edgeRoutes = null;
+    }
+
     private void applyFileVisibility() {
         selectedFile = null;
+        updateDisplayedFolderLayout();
         rebuildFilePositions();
         updateLegend();
         fileSummary.setVisible(showFilesItem.isSelected());
@@ -866,17 +901,18 @@ public final class DependencyGraphPane extends BorderPane {
     }
 
     public void resetLayout() {
-        layout.clear();
-        layout.putAll(GraphLayoutEngine.arrange(model, layoutMode));
+        baseLayout.clear();
+        baseLayout.putAll(GraphLayoutEngine.arrange(model, layoutMode));
         manualIslandOffsets.clear();
-        edgeRoutes = null;
+        updateDisplayedFolderLayout();
         if (showFilesItem.isSelected()) rebuildFilePositions();
         fitToViewport();
         notifyLayoutChanged();
     }
 
     private void notifyLayoutChanged() {
-        onLayoutChanged.accept(new GraphLayout(model.fingerprint(), layout, layoutMode));
+        onLayoutChanged.accept(
+                new GraphLayout(model.fingerprint(), baseLayout, layoutMode));
     }
 
     private static double clamp(double value, double min, double max) {
