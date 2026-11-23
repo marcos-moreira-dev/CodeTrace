@@ -1547,6 +1547,13 @@
     -fx-font-weight: bold;
     -fx-text-fill: #28485c;
 }
+.dependency-map-partial-branch {
+    -fx-background-color: #edf2f7;
+    -fx-text-fill: #526a7e;
+    -fx-font-size: 11px;
+    -fx-padding: 7px 8px;
+    -fx-background-radius: 4px;
+}
 .dependency-map-inspector .dependency-map-inspector-path {
     -fx-font-size: 11px;
     -fx-text-fill: #647989;
