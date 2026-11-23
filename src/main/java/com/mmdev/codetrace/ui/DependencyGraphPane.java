@@ -581,7 +581,8 @@ public final class DependencyGraphPane extends BorderPane {
             heading.getStyleClass().add("dependency-map-legend-title");
             legend.getChildren().add(heading);
             if (hasDependencies)
-                legend.getChildren().add(legendRow(true, "Origen depende del destino"));
+                legend.getChildren().add(legendRow(true,
+                        "A → B: A depende de B\n(p. ej., A importa B)"));
             if (hasHierarchy)
                 legend.getChildren().add(legendRow(false, "Contiene subcarpeta"));
             if (hasFiles) {
@@ -638,7 +639,12 @@ public final class DependencyGraphPane extends BorderPane {
             glyph.getChildren().add(segment);
         }
         Label label = new Label(caption);
-        if (dependency) label.getStyleClass().add("dependency-map-legend-dependency");
+        label.setWrapText(true);
+        label.setMaxWidth(205);
+        if (dependency) {
+            label.getStyleClass().add("dependency-map-legend-dependency");
+            label.setTooltip(new Tooltip("Una flecha A → B significa que A utiliza una referencia de B; no representa herencia."));
+        }
         HBox row = new HBox(7, glyph, label);
         row.getStyleClass().add("dependency-map-legend-row");
         row.setAlignment(Pos.CENTER_LEFT);
