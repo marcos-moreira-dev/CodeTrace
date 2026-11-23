@@ -7,7 +7,9 @@
   No debe aparecer ninguna flecha semántica nueva al activar esta opción.
 - **GRAPH-FILES-02:** Clic en un archivo: resalta el archivo e inspecciona
   su carpeta derecha. Doble clic: abre su referencia. Arrastrar un archivo
-  no debe moverlo ni desplazar la cámara accidentalmente.
+  debe mover **ese archivo** sin desplazar la cámara ni los demás nodos.
+  Comprobar que al moverlo lejos aparece su conexión continua hasta la
+  carpeta, y que al intentar invadir otra etiqueta el movimiento se bloquea.
 - **GRAPH-FILES-03:** Mover una carpeta y alternar mostrar/ocultar tres veces:
   sus posiciones y el diseño organizado/cuadrícula no deben cambiar.
   Guardar y restaurar .ctrace debe conservar posiciones de carpetas; no
@@ -30,13 +32,24 @@
   La selección desde el inspector debe sincronizar el mismo resaltado.
 - **GRAPH-FILES-08:** Con carpetas próximas y numerosos archivos,
   ninguna isla debe cubrir rótulos de carpetas ni solaparse con otra isla.
-  Cada carpeta se une a su grupo con **una sola línea de pertenencia**, sin
-  crear nuevas dependencias ni alterar las posiciones persistidas.
+  Cada carpeta se une a su grupo con **una sola línea continua, sin flecha**.
+  Al seleccionar una carpeta se engrosan las aristas incidentes; al seleccionar
+  un archivo se engrosa su conexión a la carpeta. Las dependencias dirigidas
+  conservan sus flechas y la jerarquía su línea discontinua.
+  No se crean nuevas dependencias ni se alteran las posiciones persistidas.
   Los enlaces entre carpetas pueden cruzarse: no representan objetos sólidos.
 - **GRAPH-FILES-09:** Arrastrar carpetas, cambiar entre organizado y
   cuadrícula, ocultar y mostrar los archivos: recalcular islas sin
   intercalar los archivos de dos carpetas. Revisar también un proyecto de
   más de 1.200 fuentes y una carpeta cerca del borde del espacio lógico.
+- **GRAPH-FILES-10:** En una carpeta con 198 fuentes al lado de una carpeta
+  con solo un archivo, este último debe quedar en una isla próxima a su
+  carpeta y no ser expulsado por la isla grande.
+- **GRAPH-FILES-11:** Arrastrar un archivo, ocultar/mostrar archivos y mover
+  su carpeta: se mantiene el desplazamiento relativo si hay espacio.
+  Restablecer distribución descarta esos movimientos de archivos y devuelve
+  el empaquetado automático. La sesión .ctrace solo conserva posiciones
+  manuales de **carpetas**, no de archivos.
 
 Las pruebas automáticas comprueban distribución, límites y eventos JavaFX;
 la fluidez y legibilidad requieren revisión manual en Windows.
