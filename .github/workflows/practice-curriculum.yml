@@ -1,11 +1,12 @@
 name: Verify practice curriculum
 on:
   push:
-    branches: ['feature/practice-curriculum-20261120']
+    branches: [main, 'feature/practice-curriculum-20261120']
   pull_request:
     paths:
       - 'src/main/resources/practice/**'
       - 'scripts/verificar-biblioteca.sh'
+      - 'scripts/verificar-counter-strike.py'
       - '.github/workflows/practice-curriculum.yml'
 jobs:
   practice:

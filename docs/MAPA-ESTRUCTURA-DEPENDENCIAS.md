@@ -1,4 +1,4 @@
-# Mapa de estructura y dependencias — avance 0.3.5
+# Mapa de estructura y dependencias — versión 0.3.5
 
 ## Alcance
 
@@ -149,3 +149,7 @@ Este desarrollo se realiza en una rama separada identificada como
 y la rama main no debe sustituirse antes de aprobar la nueva interfaz.
 Ningún ejercicio de la biblioteca se modifica ni se actualizan las versiones
 didácticas de sus lenguajes.
+
+## Búsqueda dentro del mapa
+
+La raíz se representa en rojo. El cuadro Buscar archivo resalta coincidencias parciales del nombre en naranja, sin distinguir mayúsculas; la selección manual permanece morada. Una búsqueda válida puede mostrar los archivos de código que estaban ocultos. No se desplazan nodos ni se abren archivos al escribir; Escape limpia las coincidencias. La búsqueda está limitada a los nodos de archivos representados por el mapa.

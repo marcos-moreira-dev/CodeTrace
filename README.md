@@ -25,7 +25,7 @@ Java 21 · JavaFX · Windows 11 · 14 lenguajes en la biblioteca de práctica ·
 - **Reconstruir un proyecto de manera virtual.** Reproduce su estructura de carpetas y archivos, manualmente o mediante reglas automáticas, sin escribir encima de la referencia original.
 - **Seguir el progreso.** Consulta el avance por archivo y proyecto; filtra carpetas y categorías, registra aciertos y velocidad, y guarda sesiones `.ctrace` para retomarlas más adelante.
 - **Explorar proyectos existentes.** Navega el árbol de archivos, busca contenido y consulta código o archivos de configuración de solo lectura. La navegación está optimizada para proyectos grandes.
-- **Explorar la dimensión del código (rama experimental v0.3.5).** El mapa representa carpetas y dependencias explícitas detectadas. Desde su menú contextual puedes **mostrar u ocultar archivos de código** como nodos secundarios, conectados a la carpeta que los contiene. Doble clic abre el archivo; no se realizan análisis semánticos nuevos. El dibujo está limitado para proteger el rendimiento y señala las vistas parciales. [Comportamiento del mapa](docs/MAPA-ESTRUCTURA-DEPENDENCIAS.md).
+- **Explorar la dimensión del código.** El mapa representa carpetas y dependencias explícitas detectadas. Desde su menú contextual puedes **mostrar u ocultar archivos de código** como nodos secundarios, conectados a la carpeta que los contiene. La raíz se identifica en rojo; la búsqueda por nombre resalta coincidencias en naranja y el clic selecciona en morado. Doble clic abre el archivo salvo en navegación segura; no se realizan análisis semánticos nuevos. El dibujo está limitado para proteger el rendimiento y señala las vistas parciales. [Comportamiento del mapa](docs/MAPA-ESTRUCTURA-DEPENDENCIAS.md).
 - **Estudiar recursos complementarios.** Abre README con Markdown renderizado e imágenes locales; consulta imágenes, audio y vídeo compatibles, y utiliza una consola para ejecutar **comandos explícitos** sobre el proyecto real.
 
 ## Identidad de CodeTrace
@@ -44,11 +44,11 @@ programa es **Marcos Moreira**, también identificado en sus metadatos.
 
 ![Biblioteca Java con fundamentos, estructuras de datos, algoritmos y patrones](docs/media/01-biblioteca-java.jpg)
 
-La biblioteca integrada comprende **14 lenguajes y 813 archivos de referencia** en v0.3.4. Son *archivos*, no 813 ejercicios independientes. Sus contenidos cubren fundamentos, estructuras de datos, algoritmos y patrones de diseño; los ejemplos incluyen guías de consola y salidas esperadas, algunas todavía pendientes de validación cruzada en todos los entornos.
+La biblioteca integrada comprende **14 lenguajes y 1.037 archivos de referencia**. Son *archivos*, no 1.037 ejercicios independientes. Sus contenidos cubren fundamentos, estructuras de datos, algoritmos y patrones de diseño; los ejemplos incluyen guías de consola y salidas esperadas, algunas todavía pendientes de validación cruzada en todos los entornos.
 
-**En la rama experimental v0.3.5**, el catálogo interno `v15` incluye **1037 archivos**, con contratos, `record`, `enum` y clases colaboradoras Java 21 separados donde aportan claridad. Los otros lenguajes conservan las estructuras idiomáticas de sus módulos. [Auditoría de los ejemplos y criterio didáctico](docs/AUDITORIA-EJEMPLOS-V035.md). Los ejemplos Java 21 y Python de patrones comparten el universo ficticio **Arena Táctica**, con [glosario y correspondencias](docs/ARENA-TACTICA-PATRONES.md).
+**En v0.3.5**, el catálogo interno `v15` incluye **1037 archivos**, con contratos, `record`, `enum` y clases colaboradoras Java 21 separados donde aportan claridad. Los otros lenguajes conservan las estructuras idiomáticas de sus módulos. [Auditoría de los ejemplos y criterio didáctico](docs/AUDITORIA-EJEMPLOS-V035.md). Los ejemplos Java 21 y Python de patrones comparten el universo ficticio **Arena Táctica**, con [glosario y correspondencias](docs/ARENA-TACTICA-PATRONES.md).
 
-En **Java 21** existe además la nueva colección independiente **`05-patrones-diseno-counter-strike/`**: 13 patrones o variantes, 67 archivos y ejemplos de consola comentados paso a paso, todos ambientados explícitamente en Counter-Strike. [Guía y glosario de Counter-Strike](docs/COUNTER-STRIKE-PATRONES-JAVA.md). La colección general `04` no se reemplaza. La misma carpeta `05` incorpora además **`MainCounterStrike.java`**, una simulación automática de tres rondas en `cs_office`, apoyada por clases `infraestructura/` (modelo, vista de consola y controlador), con rehenes, jugadores y estado de partida explicados en comentarios. El cliente raíz usa ahora el patrón **Facade** (`facade/FachadaCounterStrike.java`) como entrada al subsistema MVC; los trece clientes individuales se conservan.
+En **Java 21** existe además la nueva colección independiente **`05-patrones-diseno-counter-strike/`**: 13 ejercicios de patrones o variantes y una partida integradora, 79 archivos y ejemplos de consola comentados paso a paso, todos ambientados explícitamente en Counter-Strike. [Guía y glosario de Counter-Strike](docs/COUNTER-STRIKE-PATRONES-JAVA.md). La colección general `04` no se reemplaza. La misma carpeta `05` incorpora además **`MainCounterStrike.java`**, una simulación automática de tres rondas en `cs_office`, apoyada por clases `infraestructura/` (modelo, vista de consola y controlador), con rehenes, jugadores y estado de partida explicados en comentarios. El cliente raíz usa ahora el patrón **Facade** (`facade/FachadaCounterStrike.java`) como entrada al subsistema MVC; los trece clientes individuales se conservan.
 
 ### Consulta documentación directamente dentro del proyecto
 
@@ -72,15 +72,15 @@ En **Java 21** existe además la nueva colección independiente **`05-patrones-d
 
 **Plataforma principal:** Windows 11.
 
-**Descargas oficiales:** [CodeTrace v0.3.4 — Windows](https://github.com/marcos-moreira-dev/CodeTrace/releases/tag/v0.3.4).
+**Descargas oficiales:** [CodeTrace v0.3.5 — Windows](https://github.com/marcos-moreira-dev/CodeTrace/releases/tag/v0.3.5).
 
 - **Instalador `.exe`:** instalación normal y asociación de sesiones `.ctrace`.
 - **Archivo `.zip` portable:** descomprime y ejecuta `CodeTrace.exe` sin instalar Java por separado.
 - **SHA-256:** se publica junto a ambos archivos para verificar sus descargas.
 
-Esta versión 0.3.4 corrige la coherencia de **Reglas de práctica**: la barra de progreso utiliza como denominador únicamente los caracteres realmente exigidos, incluyendo las omisiones por Turbo, comentarios y dependencias. «Omitir dependencias de código» se convierte en una opción reversible con estado visible; desaparece el control redundante «Todos». Al desactivar «Autocrear archivos y carpetas» se retiran solo los nodos virtuales creados automáticamente durante la sesión actual que estén vacíos y sin trabajo del usuario. Las sesiones `.ctrace` siguen siendo compatibles y los archivos reales no se modifican.
+La versión anterior 0.3.4 corrigió la coherencia de **Reglas de práctica**: la barra de progreso utiliza como denominador únicamente los caracteres realmente exigidos, incluyendo las omisiones por Turbo, comentarios y dependencias. «Omitir dependencias de código» se convierte en una opción reversible con estado visible; desaparece el control redundante «Todos». Al desactivar «Autocrear archivos y carpetas» se retiran solo los nodos virtuales creados automáticamente durante la sesión actual que estén vacíos y sin trabajo del usuario. Las sesiones `.ctrace` siguen siendo compatibles y los archivos reales no se modifican.
 
-CodeTrace es una **versión de prueba**. El instalador no tiene firma digital; Windows puede mostrar advertencias de SmartScreen. Se han realizado pruebas automatizadas y uso real del autor, pero no una certificación exhaustiva en todos los equipos. Consulta [los límites y las pruebas](docs/CIERRE-V0.3.md).
+CodeTrace v0.3.5 es una **versión oficial**, sin certificación exhaustiva de compatibilidad. El instalador no tiene firma digital; Windows puede mostrar advertencias de SmartScreen. Se han realizado pruebas automatizadas y uso real del autor, pero no una certificación exhaustiva en todos los equipos. Consulta [los límites y las pruebas](docs/CIERRE-V0.3.md).
 
 Para probar el código fuente necesitas **Eclipse Temurin JDK 21**, **Maven** y un entorno gráfico de Windows:
 
@@ -118,7 +118,7 @@ Para generar un ZIP portable, y opcionalmente el instalador con las herramientas
 
 ## Estado del proyecto
 
-**CodeTrace v0.3.4 — primera versión pública de prueba.** El autor verificó informalmente las funciones habituales y el repositorio realiza pruebas automatizadas; no se afirma aceptación exhaustiva en todos los equipos Windows. La biblioteca contiene 813 archivos de referencia en 14 lenguajes, con anotaciones de consola. Algunas salidas de otros lenguajes se infirieron a partir del código y requieren comprobación en su entorno específico.
+**CodeTrace v0.3.5 — versión pública oficial.** El autor verificó informalmente las funciones habituales y el repositorio realiza pruebas automatizadas; no se afirma aceptación exhaustiva en todos los equipos Windows. La biblioteca contiene 1.037 archivos de referencia en 14 lenguajes, con anotaciones de consola. Algunas salidas de otros lenguajes se infirieron a partir del código y requieren comprobación en su entorno específico.
 
 **Código fuente original:** licencia [MIT](LICENSE), © 2026 Marcos Moreira. Puedes usarlo, modificarlo y distribuirlo, incluso comercialmente, conservando el aviso y la licencia; no debes mostrar ningún contacto personal. Los elementos gráficos originales y los componentes de terceros tienen alcances distintos: [identidad y recursos](LICENSING.md) y [avisos de terceros](THIRD-PARTY-NOTICES.md). El nombre CodeTrace no se declara marca registrada.
 
@@ -132,7 +132,7 @@ Desarrollado por Marcos Moreira.
 
 </div>
 
-### Counter-Strike en cuatro lenguajes
+### Counter-Strike en cinco lenguajes
 
 La pista `05-patrones-diseno-counter-strike/` ahora también existe en C# 12/.NET 8, Python 3.12 y C++20. Cada una ofrece trece demostraciones de patrones o variantes y una partida automática con Facade y MVC. Conserva los ejercicios generales `04` y toda la pista Java. [Guía comparativa y comandos](docs/COUNTER-STRIKE-MULTILENGUAJE.md).
 

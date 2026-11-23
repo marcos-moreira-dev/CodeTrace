@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>com.mmdev</groupId><artifactId>codetrace</artifactId><version>0.3.5-SNAPSHOT</version>
+  <groupId>com.mmdev</groupId><artifactId>codetrace</artifactId><version>0.3.5</version>
   <name>CodeTrace</name>
   <description>Práctica de mecanografía de código y exploración virtual de proyectos.</description>
   <url>https://github.com/marcos-moreira-dev/CodeTrace</url>
