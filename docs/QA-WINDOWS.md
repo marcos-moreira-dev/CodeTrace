@@ -1,3 +1,32 @@
+## Mapa de estructura con archivos opcionales — v0.3.5 experimental
+
+- **GRAPH-FILES-01:** Abrir un proyecto con carpetas y varios archivos Java,
+  Python o TypeScript. Por defecto solo deben verse las carpetas. Clic
+  derecho en el fondo del grafo → **Mostrar archivos de código**: aparecen
+  los archivos como nodos secundarios con línea fina hasta su carpeta directa.
+  No debe aparecer ninguna flecha semántica nueva al activar esta opción.
+- **GRAPH-FILES-02:** Clic en un archivo: resalta el archivo e inspecciona
+  su carpeta derecha. Doble clic: abre su referencia. Arrastrar un archivo
+  no debe moverlo ni desplazar la cámara accidentalmente.
+- **GRAPH-FILES-03:** Mover una carpeta y alternar mostrar/ocultar tres veces:
+  sus posiciones y el diseño organizado/cuadrícula no deben cambiar.
+  Guardar y restaurar .ctrace debe conservar posiciones de carpetas; no
+  requiere persistir posiciones de archivos.
+- **GRAPH-FILES-04:** Si únicamente existe una clase de conexión, se oculta la
+  leyenda. Con contención y archivos visibles, se muestra una leyenda para
+  esas dos clases. Si además hay dependencias detectadas, aparecen los tres
+  símbolos diferenciados.
+- **GRAPH-FILES-05:** Abrir una referencia extensa. Comprobar que el canvas
+  permite pan y zoom, informa cuántos archivos se visualizan y advierte
+  «vista parcial» cuando se alcanzan los límites del analizador o dibujo.
+  No debe bloquearse al activar/desactivar los nodos de archivo.
+- **GRAPH-FILES-06:** En la vista, nunca representar configuraciones,
+  Markdown, imágenes u otros archivos que el catálogo de código no reconoce.
+  El inspector sigue ofreciendo navegación mediante doble clic e Intro.
+
+Las pruebas automáticas comprueban distribución, límites y eventos JavaFX;
+la fluidez y legibilidad requieren revisión manual en Windows.
+
 # CodeTrace — aceptación manual en Windows
 
 **Estado: pendiente de ejecutar en hardware real.** El CI prueba compilación y arranque básico, pero no sustituye la inspección visual de JavaFX WebView ni la reproducción real de códecs. Utiliza una copia desechable del proyecto de referencia si pruebas comandos externos.
