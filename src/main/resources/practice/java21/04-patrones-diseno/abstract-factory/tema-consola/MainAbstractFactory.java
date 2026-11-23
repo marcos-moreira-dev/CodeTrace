@@ -15,13 +15,13 @@ import java.util.List;
  * JavaFX. El ejemplo enseña familias compatibles sin forzar MVC.
  */
 public final class MainAbstractFactory {
-    private static String pantalla(FamiliaInterfaz.Fabrica fabrica) {
+    private static String pantalla(Fabrica fabrica) {
         return fabrica.boton().pintar()+" / "+fabrica.dialogo().pintar();
     }
     public static void main(String[] args) {
         var resultados=List.of(
-            pantalla(new FamiliaInterfaz.Claro()),
-            pantalla(new FamiliaInterfaz.Oscuro()));
+            pantalla(new FabricaClara()),
+            pantalla(new FabricaOscura()));
         if(resultados.get(0).equals(resultados.get(1)))
             throw new AssertionError("Fábricas indistinguibles");
         resultados.forEach(System.out::println);
