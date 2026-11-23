@@ -915,14 +915,13 @@ public final class DependencyGraphPane extends BorderPane {
     }
 
     /**
-     * Each folder owns one visually grouped island. The backgrounds sit
-     * beneath architecture edges; ownership connectors are drawn above them.
+     * One opaque backdrop per folder island is painted over ALL edges.
+     * The grouped file glyphs are painted after it and remain unobstructed.
      */
     private void drawFileIslands(GraphicsContext g, double w, double h,
                                  double zoom) {
         if (!showFilesItem.isSelected()) return;
         for (var entry : fileIslands.entrySet()) {
-            if (!islandHasDockedFiles(entry.getKey())) continue;
             GraphFileLayout.Bounds box = entry.getValue();
             if (!visibleBounds(box, w, h, zoom)) continue;
             boolean related = entry.getKey().equals(selected);
@@ -942,71 +941,37 @@ public final class DependencyGraphPane extends BorderPane {
 
     }
 
-    /** Files moved by hand no longer occupy their automatically packed slot. */
-    private boolean islandHasDockedFiles(String owner) {
-        for (String source : model.files(owner)) {
-            if (filePositions.containsKey(source)
-                    && !manualFileOffsets.containsKey(source)) return true;
-        }
-        return false;
+    /**
+     * Return a connector endpoint before the island border. Together with
+     * painting the solid island background over all edges, this prevents
+     * an edge from running underneath the first file's document pictogram.
+     */
+    private static GraphLayout.Point membershipEndpoint(
+            GraphLayout.Point parent, GraphFileLayout.Bounds box) {
+        double nearX = clamp(parent.x(), box.minX(), box.maxX());
+        double nearY = clamp(parent.y(), box.minY(), box.maxY());
+        double dx = nearX - parent.x();
+        double dy = nearY - parent.y();
+        double distance = Math.hypot(dx, dy);
+        double factor = distance < 0.001 ? 0 : Math.max(0, (distance - 16) / distance);
+        return new GraphLayout.Point(parent.x() + dx * factor,
+                parent.y() + dy * factor);
     }
 
-    /**
-     * Solid membership lines have no arrowhead, so they cannot be confused
-     * with directed source dependencies. Selected relationships are drawn last.
-     */
+    /** Draw only one solid, arrowless membership link per whole file island. */
     private void drawFileMembership(GraphicsContext g,
                                     double w, double h, double zoom) {
         if (!showFilesItem.isSelected()) return;
         g.setLineDashes();
-
-        // One connector per ordinary island, not one per file.
         for (var entry : fileIslands.entrySet()) {
-            if (!islandHasDockedFiles(entry.getKey())) continue;
             GraphLayout.Point parent = layout.get(entry.getKey());
             if (parent == null) continue;
-            GraphFileLayout.Bounds box = entry.getValue();
-            double nearestX = clamp(parent.x(), box.minX(), box.maxX());
-            double nearestY = clamp(parent.y(), box.minY(), box.maxY());
-            GraphLayout.Point target = new GraphLayout.Point(nearestX, nearestY);
-            if (!visibleOnCanvas(parent, target, w, h, zoom)) continue;
-            boolean related = entry.getKey().equals(selected);
-            g.setStroke(Color.web(related ? "#8863bc" : "#8fa5b5"));
-            g.setLineWidth(related ? 2.8 : 1.35);
-            g.strokeLine(parent.x(), parent.y(), target.x(), target.y());
-        }
-
-        // Explicitly dragged files have their own line to the parent.
-        for (String source : manualFileOffsets.keySet()) {
-            GraphLayout.Point parent = layout.get(parentOfFile(source));
-            GraphLayout.Point file = filePositions.get(source);
-            if (parent == null || file == null
-                    || !visibleOnCanvas(parent, file, w, h, zoom)) continue;
-            boolean related = selected != null
-                    && selected.equals(parentOfFile(source));
-            g.setStroke(Color.web(source.equals(selectedFile)
-                    ? "#7251ae" : related ? "#a183cc" : "#8fa5b5"));
-            g.setLineWidth(source.equals(selectedFile) ? 3.3
-                    : related ? 2.6 : 1.25);
-            g.strokeLine(parent.x(), parent.y(), file.x(), file.y());
-        }
-
-        // For a docked file, emphasize the folder-to-ISLAND connector.
-        // A direct line through the island crossed unrelated file labels.
-        if (selectedFile != null && !manualFileOffsets.containsKey(selectedFile)) {
-            String owner = parentOfFile(selectedFile);
-            GraphLayout.Point parent = layout.get(owner);
-            GraphFileLayout.Bounds box = fileIslands.get(owner);
-            if (parent != null && box != null) {
-                double x = clamp(parent.x(), box.minX(), box.maxX());
-                double y = clamp(parent.y(), box.minY(), box.maxY());
-                GraphLayout.Point endpoint = new GraphLayout.Point(x, y);
-                if (visibleOnCanvas(parent, endpoint, w, h, zoom)) {
-                    g.setStroke(Color.web("#7251ae"));
-                    g.setLineWidth(3.3);
-                    g.strokeLine(parent.x(), parent.y(), x, y);
-                }
-            }
+            GraphLayout.Point endpoint = membershipEndpoint(parent, entry.getValue());
+            if (!visibleOnCanvas(parent, endpoint, w, h, zoom)) continue;
+            boolean selectedOwner = entry.getKey().equals(selected);
+            g.setStroke(Color.web(selectedOwner ? "#8863bc" : "#8fa5b5"));
+            g.setLineWidth(selectedOwner ? 3.0 : 1.35);
+            g.strokeLine(parent.x(), parent.y(), endpoint.x(), endpoint.y());
         }
     }
 
