@@ -172,6 +172,44 @@ class ProjectDependencyGraphTest {
     }
 
     @Test
+    void interruptedCodetraceBranchRetainsRealOmittedChildLinks() throws Exception {
+        // Reproduce the screenshot: the breadth-first budget is exhausted
+        // near src/test/java/com/mmdev/codetrace, so the folder itself is
+        // visible while one of its real immediate subfolders is omitted.
+        for (int i = 0; i < 172; i++) {
+            Path dir = Files.createDirectory(root.resolve(
+                    String.format("dir%03d", i)));
+            Files.writeString(dir.resolve("source.java"), "class T {}");
+        }
+        Path parent = Files.createDirectories(
+                root.resolve("src/test/java/com/mmdev/codetrace"));
+        Files.writeString(Files.createDirectories(parent.resolve("app"))
+                .resolve("App.java"), "class App {}");
+        Files.writeString(Files.createDirectories(parent.resolve("ui"))
+                .resolve("Ui.java"), "class Ui {}");
+
+        var graph = ProjectDependencyGraph.analyze(root, root, () -> false);
+        String path = "src/test/java/com/mmdev/codetrace";
+        assertTrue(graph.truncated());
+        assertTrue(graph.nodes().contains(path),
+                "The parent must survive breadth-first truncation");
+        assertEquals(180, graph.nodes().size());
+        assertEquals(2, graph.subfolders(path).size()
+                + graph.hiddenSubfolders(path).size(),
+                "Both actual direct child paths must remain accounted for");
+        assertFalse(graph.hiddenSubfolders(path).isEmpty(),
+                "Omitted child path(s) must be retained for visible continuations");
+        assertTrue(graph.hiddenSubfolders(path).stream().allMatch(
+                child -> child.startsWith(path + "/")));
+        assertTrue(graph.hiddenSubfolders("dir000").isEmpty(),
+                "A true leaf must never be marked as a truncated branch");
+        for (var link : graph.hierarchy()) {
+            assertTrue(graph.nodes().contains(link.parent()));
+            assertTrue(graph.nodes().contains(link.child()));
+        }
+    }
+
+    @Test
     void sourceContentChangesInvalidateSavedPositions() throws Exception {
         Files.writeString(root.resolve("one.ts"), "const a = 1;");
         Path dependency = Files.writeString(root.resolve("two.ts"),
