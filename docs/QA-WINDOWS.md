@@ -51,6 +51,22 @@
   el empaquetado automático. La sesión .ctrace solo conserva posiciones
   manuales de **carpetas**, no de archivos.
 
+- **GRAPH-FILES-12:** La línea de un archivo seleccionado debe terminar
+  en el borde de su isla, sin atravesar otras etiquetas. Las conexiones
+  del grafo se dibujan debajo de fondos y textos de las islas; verificarlo
+  en un mapa grande con numerosas relaciones.
+- **GRAPH-FILES-13:** Seleccionar dos archivos distintos del mismo inspector
+  de manera sucesiva. Solo el último queda seleccionado en el ListView
+  y resaltado en el Canvas. El hover debe distinguirse visualmente de
+  la selección, también cuando el puntero permanece encima de una fila.
+- **GRAPH-FILES-14:** Activar «Solo panear y desplazar» debajo de la leyenda.
+  Arrastrar desde un nodo o archivo debe mover únicamente la cámara, no
+  alterar posiciones ni marcar la sesión como modificada. La rueda sin Ctrl
+  ajusta el zoom; un clic selecciona; doble clic en archivo NO abre pestaña.
+  Desactivar la casilla restablece movimiento de nodos, doble clic de archivo
+  y Ctrl+rueda para zoom. Repetir con la leyenda oculta por tener una sola
+  relación: la casilla debe seguir visible.
+
 Las pruebas automáticas comprueban distribución, límites y eventos JavaFX;
 la fluidez y legibilidad requieren revisión manual en Windows.
 
