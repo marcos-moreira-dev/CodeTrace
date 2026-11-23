@@ -1513,6 +1513,15 @@
 }
 .dependency-map-legend .dependency-map-legend-dependency { -fx-text-fill: #168a97; }
 .dependency-map-legend-row { -fx-alignment: center-left; }
+.dependency-map-file-summary {
+    -fx-background-color: rgba(255,255,255,0.94);
+    -fx-background-radius: 4;
+    -fx-border-color: #cbd9e2;
+    -fx-border-radius: 4;
+    -fx-padding: 6 9;
+    -fx-font-size: 11px;
+    -fx-text-fill: #35566a;
+}
 .dependency-map-inspector {
     -fx-background-color: #f6f9fb;
     -fx-border-color: #d0dce5;
