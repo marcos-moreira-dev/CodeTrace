@@ -574,6 +574,28 @@ class CodeTraceAppSmokeTest {
                 filePane.setNavigationOnly(false);
                 assertFalse(filePane.isNavigationOnly());
 
+                // The wheel zooms without Ctrl in both exploration modes.
+                for (boolean safeMode : new boolean[] {false, true}) {
+                    filePane.setNavigationOnly(safeMode);
+                    int previousZoom = filePane.getZoomPercent();
+                    javafx.event.Event.fireEvent(filePane.getCenter(),
+                            new javafx.scene.input.ScrollEvent(
+                                    javafx.scene.input.ScrollEvent.SCROLL,
+                                    30, 30, 30, 30,
+                                    false, false, false, false,
+                                    false, false,
+                                    0, 40, 0, 40,
+                                    javafx.scene.input.ScrollEvent.HorizontalTextScrollUnits.NONE,
+                                    0,
+                                    javafx.scene.input.ScrollEvent.VerticalTextScrollUnits.NONE,
+                                    0, 0,
+                                    new javafx.scene.input.PickResult(
+                                            filePane.getCenter(), 30, 30)));
+                    assertEquals(previousZoom + 10, filePane.getZoomPercent(),
+                            "Wheel zoom must work without Ctrl regardless of checkbox");
+                }
+                filePane.setNavigationOnly(false);
+
                 tabPane.getTabs().remove(fileTab);
                 tabPane.getSelectionModel().select(previousTab);
                 Slider fontSlider = (Slider) zoom.lookup(".slider");
