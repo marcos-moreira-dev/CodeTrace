@@ -15,7 +15,7 @@ import sys
 root=Path(sys.argv[1])
 items=[x.split("\t",1) for x in (root/"catalog.tsv").read_text(encoding="utf-8").splitlines()
        if x and not x.startswith("#")]
-assert len(items)==826, len(items)
+assert len(items)==830, len(items)
 assert len({p for p,_ in items})==14
 assert len(set(map(tuple,items)))==len(items)
 assert all(len(path.split("/"))>=3 for _,path in items)
@@ -350,4 +350,4 @@ for path in root.rglob("*"):
 print("OK: rutas de la biblioteca sin colisiones por mayusculas/minusculas")
 PY
 
-echo "OK: catálogo v9, 14 paquetes, 826 fuentes documentadas y clientes seleccionados"
+echo "OK: catálogo v9, 14 paquetes, 830 fuentes documentadas y clientes seleccionados"
