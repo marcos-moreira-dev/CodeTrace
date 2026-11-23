@@ -59,6 +59,7 @@ public final class DependencyGraphPane extends BorderPane {
     private final CheckMenuItem showFilesItem = new CheckMenuItem("Mostrar archivos de código");
     /** Secondary file positions are derived, never saved with folder layouts. */
     private Map<String, GraphLayout.Point> filePositions = Map.of();
+    private Map<String, GraphFileLayout.Bounds> fileIslands = Map.of();
     private boolean fileLayoutLimited;
     private String selectedFile, pressedFile;
     private final VBox inspector = new VBox(8);
@@ -331,19 +332,25 @@ public final class DependencyGraphPane extends BorderPane {
 
     public int visibleCodeFileCount() { return filePositions.size(); }
 
-    /** Snapshot for deterministic diagram and regression tests. */
+    /** Snapshots for repeatable layout and collision tests. */
     public Map<String, GraphLayout.Point> fileNodePositions() {
         return Map.copyOf(filePositions);
+    }
+
+    public Map<String, GraphFileLayout.Bounds> fileIslandBounds() {
+        return Map.copyOf(fileIslands);
     }
 
     private void rebuildFilePositions() {
         if (!showFilesItem.isSelected()) {
             filePositions = Map.of();
+            fileIslands = Map.of();
             fileLayoutLimited = false;
             return;
         }
         GraphFileLayout.Result positions = GraphFileLayout.arrange(model, layout);
         filePositions = positions.positions();
+        fileIslands = positions.islands();
         fileLayoutLimited = positions.limited();
     }
 
@@ -471,6 +478,13 @@ public final class DependencyGraphPane extends BorderPane {
         inspectorFiles.setCellFactory(list -> pathCell(false));
         inspectorFolders.setCellFactory(list -> pathCell(true));
 
+        inspectorFiles.getSelectionModel().selectedItemProperty()
+                .addListener((obs, oldValue, next) -> {
+                    if (!showFilesItem.isSelected()) return;
+                    selectedFile = next != null && filePositions.containsKey(next)
+                            ? next : null;
+                    redraw();
+                });
         inspectorFiles.setOnMouseClicked(event -> {
             if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2)
                 openSelectedFile();
@@ -745,40 +759,100 @@ public final class DependencyGraphPane extends BorderPane {
         return null;
     }
 
-    private void drawCodeFiles(GraphicsContext g, double w, double h, double zoom) {
+    /**
+     * Each folder owns one visually grouped island. A single membership
+     * connector avoids hundreds of crossing edges from one directory.
+     * The island backgrounds sit below all graph edges and labels.
+     */
+    private void drawFileIslands(GraphicsContext g, double w, double h,
+                                 double zoom) {
         if (!showFilesItem.isSelected()) return;
-        g.setLineDashes(2.0, 5.0);
-        g.setLineWidth(1.15);
-        g.setStroke(Color.web("#9fb2be"));
-        for (String folder : model.nodes()) {
-            GraphLayout.Point parent = layout.get(folder);
+        for (var entry : fileIslands.entrySet()) {
+            GraphFileLayout.Bounds box = entry.getValue();
+            if (!visibleBounds(box, w, h, zoom)) continue;
+            boolean related = entry.getKey().equals(selected);
+            g.setFill(Color.web(related ? "#ebe3fa" : "#eaf0f5",
+                    related ? 0.58 : 0.30));
+            g.fillRoundRect(box.minX() - 5, box.minY() - 5,
+                    box.maxX() - box.minX() + 10,
+                    box.maxY() - box.minY() + 10, 10, 10);
+            g.setStroke(Color.web(related ? "#b29ad9" : "#d6e1ea"));
+            g.setLineWidth(related ? 1.5 : 1);
+            g.setLineDashes(3, 5);
+            g.strokeRoundRect(box.minX() - 5, box.minY() - 5,
+                    box.maxX() - box.minX() + 10,
+                    box.maxY() - box.minY() + 10, 10, 10);
+            g.setLineDashes();
+        }
+
+        g.setLineWidth(1.35);
+        g.setLineDashes(2, 5);
+        for (var entry : fileIslands.entrySet()) {
+            GraphLayout.Point parent = layout.get(entry.getKey());
             if (parent == null) continue;
-            for (String source : model.files(folder)) {
-                GraphLayout.Point leaf = filePositions.get(source);
-                if (leaf == null) continue;
-                if (!visibleOnCanvas(parent, leaf, w, h, zoom)) continue;
-                g.strokeLine(parent.x(), parent.y(), leaf.x(), leaf.y());
-            }
+            GraphFileLayout.Bounds box = entry.getValue();
+            double nearestX = clamp(parent.x(), box.minX(), box.maxX());
+            double nearestY = clamp(parent.y(), box.minY(), box.maxY());
+            if (!visibleOnCanvas(parent, new GraphLayout.Point(
+                    nearestX, nearestY), w, h, zoom)) continue;
+            g.setStroke(Color.web(entry.getKey().equals(selected)
+                    ? "#9c7acb" : "#9aafbf"));
+            g.strokeLine(parent.x(), parent.y(), nearestX, nearestY);
         }
         g.setLineDashes();
+    }
+
+    /** Only visualized source files are drawn; labels never become graph edges. */
+    private void drawCodeFiles(GraphicsContext g, double w, double h, double zoom) {
+        if (!showFilesItem.isSelected()) return;
         for (var file : filePositions.entrySet()) {
             GraphLayout.Point p = file.getValue();
             if (!visibleAt(p, w, h, zoom)) continue;
             boolean active = file.getKey().equals(selectedFile);
+            String parent = file.getKey().contains("/")
+                    ? file.getKey().substring(0, file.getKey().lastIndexOf('/'))
+                    : ".";
+            boolean related = parent.equals(selected);
             String label = shortName(file.getKey());
             if (label.length() > 32) label = label.substring(0, 29) + "...";
-            double labelWidth = Math.min(208, Math.max(60, label.length() * 6.0 + 12));
-            g.setFill(Color.web(active ? "#e7e6fa" : "#ffffff"));
+            double labelWidth = Math.min(208, Math.max(60,
+                    label.length() * 6.0 + 12));
+            g.setFill(Color.web(active ? "#d9c8f4"
+                    : related ? "#ede5fa" : "#ffffff"));
             g.fillRoundRect(p.x() + 11, p.y() - 12, labelWidth, 24, 4, 4);
-            g.setStroke(Color.web(active ? "#7054ad" : "#88a6b8"));
-            g.setLineWidth(1);
-            g.strokeRoundRect(p.x() - 6, p.y() - 6, 12, 12, 2, 2);
-            g.setFill(Color.web(active ? "#7054ad" : "#7e9aac"));
-            g.fillRoundRect(p.x() - 4, p.y() - 4, 8, 8, 1, 1);
-            g.setFill(Color.web(active ? "#423174" : "#456071"));
-            g.setFont(Font.font("Segoe UI", 11));
+
+            // Compact document glyph with a folded corner, independent of
+            // per-language icon packs and readable at moderate graph zoom.
+            g.setStroke(Color.web(active ? "#68449e"
+                    : related ? "#8c6bbb" : "#88a6b8"));
+            g.setLineWidth(active ? 1.6 : 1.1);
+            g.beginPath();
+            g.moveTo(p.x() - 6, p.y() - 8);
+            g.lineTo(p.x() + 2, p.y() - 8);
+            g.lineTo(p.x() + 7, p.y() - 3);
+            g.lineTo(p.x() + 7, p.y() + 8);
+            g.lineTo(p.x() - 6, p.y() + 8);
+            g.closePath();
+            g.stroke();
+            g.strokeLine(p.x() + 2, p.y() - 8,
+                    p.x() + 2, p.y() - 3);
+            g.strokeLine(p.x() + 2, p.y() - 3,
+                    p.x() + 7, p.y() - 3);
+            g.setFill(Color.web(active ? "#553489"
+                    : related ? "#61468b" : "#456071"));
+            g.setFont(Font.font("Segoe UI", active ? 11.5 : 11));
             g.fillText(label, p.x() + 17, p.y() + 4, 194);
         }
+    }
+
+    private boolean visibleBounds(GraphFileLayout.Bounds box,
+                                  double w, double h, double zoom) {
+        double left = w / 2 + (box.minX() - camera.centerX()) * zoom;
+        double right = w / 2 + (box.maxX() - camera.centerX()) * zoom;
+        double top = h / 2 + (box.minY() - camera.centerY()) * zoom;
+        double bottom = h / 2 + (box.maxY() - camera.centerY()) * zoom;
+        return right >= -8 && left <= w + 8
+                && bottom >= -8 && top <= h + 8;
     }
 
     private boolean visibleAt(GraphLayout.Point p, double w, double h, double zoom) {
@@ -803,6 +877,7 @@ public final class DependencyGraphPane extends BorderPane {
         g.setTransform(zoom, 0, 0, zoom,
                 w / 2 - camera.centerX() * zoom,
                 h / 2 - camera.centerY() * zoom);
+        drawFileIslands(g, w, h, zoom);
         g.setLineWidth(1.15);
         // Dashed containment links are independent from directed code dependencies.
         g.setLineDashes(7, 6);
