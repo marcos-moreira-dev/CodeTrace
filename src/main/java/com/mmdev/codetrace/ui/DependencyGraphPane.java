@@ -692,6 +692,7 @@ public final class DependencyGraphPane extends BorderPane {
                     setText(null);
                     setGraphic(null);
                     setTooltip(null);
+                    setOpacity(1);
                     return;
                 }
                 boolean omitted = model.hiddenSubfolders(
