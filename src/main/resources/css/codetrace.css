@@ -1449,3 +1449,20 @@
 .reference-flat-explorer .list-cell.reference-outside-scope:selected .reference-tree-row {
     -fx-opacity: 0.68;
 }
+
+/* Directory graph: overlay legend stays fixed during pan/zoom. */
+.dependency-map-legend {
+    -fx-background-color: rgba(255,255,255,0.93);
+    -fx-background-radius: 8;
+    -fx-border-color: #cbd9e2;
+    -fx-border-radius: 8;
+    -fx-padding: 9 11 9 11;
+}
+.dependency-map-legend .label { -fx-font-size: 11px; -fx-text-fill: #536979; }
+.dependency-map-legend .dependency-map-legend-title { -fx-font-weight: bold; -fx-font-size: 12px; -fx-text-fill: #344f63; }
+.dependency-map-legend .dependency-map-legend-dependency { -fx-text-fill: #168a97; }
+.dependency-map-inspector { -fx-background-color: #f6f9fb; -fx-border-color: #dce6ed; -fx-border-width: 0 0 0 1; -fx-padding: 12; }
+.dependency-map-inspector .dependency-map-inspector-title { -fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #28485c; }
+.dependency-map-inspector .dependency-map-inspector-path { -fx-font-size: 11px; -fx-text-fill: #647989; }
+.dependency-map-inspector .list-view { -fx-background-insets: 0; }
+.dependency-map-inspector .list-cell { -fx-padding: 7 6 7 6; }
