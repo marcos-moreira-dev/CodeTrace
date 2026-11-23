@@ -5,11 +5,11 @@
   derecho en el fondo del grafo → **Mostrar archivos de código**: aparecen
   los archivos como nodos secundarios con línea fina hasta su carpeta directa.
   No debe aparecer ninguna flecha semántica nueva al activar esta opción.
-- **GRAPH-FILES-02:** Clic en un archivo: resalta el archivo e inspecciona
-  su carpeta derecha. Doble clic: abre su referencia. Arrastrar un archivo
-  debe mover **ese archivo** sin desplazar la cámara ni los demás nodos.
-  Comprobar que al moverlo lejos aparece su conexión continua hasta la
-  carpeta, y que al intentar invadir otra etiqueta el movimiento se bloquea.
+- **GRAPH-FILES-02:** Clic sobre un archivo: resalta el archivo y su
+  carpeta en el inspector. Doble clic: abre la referencia. Arrastrar desde
+  un archivo, o desde el espacio libre dentro de su isla, mueve **toda la
+  isla rígida**, con todos sus archivos a la misma distancia relativa.
+  Ningún archivo se puede arrastrar fuera de su contenedor.
 - **GRAPH-FILES-03:** Mover una carpeta y alternar mostrar/ocultar tres veces:
   sus posiciones y el diseño organizado/cuadrícula no deben cambiar.
   Guardar y restaurar .ctrace debe conservar posiciones de carpetas; no
@@ -45,27 +45,27 @@
 - **GRAPH-FILES-10:** En una carpeta con 198 fuentes al lado de una carpeta
   con solo un archivo, este último debe quedar en una isla próxima a su
   carpeta y no ser expulsado por la isla grande.
-- **GRAPH-FILES-11:** Arrastrar un archivo, ocultar/mostrar archivos y mover
-  su carpeta: se mantiene el desplazamiento relativo si hay espacio.
-  Restablecer distribución descarta esos movimientos de archivos y devuelve
-  el empaquetado automático. La sesión .ctrace solo conserva posiciones
-  manuales de **carpetas**, no de archivos.
+- **GRAPH-FILES-11:** Arrastrar una isla, ocultar/mostrar archivos y mover
+  su carpeta: se conserva el desplazamiento relativo del **grupo completo**
+  si hay espacio. Restablecer distribución descarta los movimientos de islas.
+  La sesión .ctrace sigue guardando posiciones de carpetas, no de islas.
 
-- **GRAPH-FILES-12:** La línea de un archivo seleccionado debe terminar
-  en el borde de su isla, sin atravesar otras etiquetas. Las conexiones
+- **GRAPH-FILES-12:** La línea de pertenencia debe terminar **antes**
+  del borde de la isla, sin atravesar el icono del primer archivo. Las conexiones
   del grafo se dibujan debajo de fondos y textos de las islas; verificarlo
   en un mapa grande con numerosas relaciones.
 - **GRAPH-FILES-13:** Seleccionar dos archivos distintos del mismo inspector
   de manera sucesiva. Solo el último queda seleccionado en el ListView
   y resaltado en el Canvas. El hover debe distinguirse visualmente de
   la selección, también cuando el puntero permanece encima de una fila.
-- **GRAPH-FILES-14:** Activar «Solo panear y desplazar» debajo de la leyenda.
+- **GRAPH-FILES-14:** Activar «Solo panear y hacer zoom» debajo de la leyenda.
   Arrastrar desde un nodo o archivo debe mover únicamente la cámara, no
   alterar posiciones ni marcar la sesión como modificada. La rueda sin Ctrl
   ajusta el zoom; un clic selecciona; doble clic en archivo NO abre pestaña.
-  Desactivar la casilla restablece movimiento de nodos, doble clic de archivo
-  y Ctrl+rueda para zoom. Repetir con la leyenda oculta por tener una sola
-  relación: la casilla debe seguir visible.
+  Desactivar la casilla restablece el movimiento de carpetas e islas y el
+  doble clic de archivo; **la rueda sin Ctrl hace zoom en ambos modos**.
+  Repetir con la leyenda oculta por tener una sola relación: la casilla
+  debe seguir visible.
 
 Las pruebas automáticas comprueban distribución, límites y eventos JavaFX;
 la fluidez y legibilidad requieren revisión manual en Windows.
