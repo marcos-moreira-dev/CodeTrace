@@ -1470,10 +1470,14 @@
     -fx-padding: 6px 10px;
 }
 .app-navigation-list .list-cell:empty { -fx-background-color: #ffffff; }
-.app-navigation-list .list-cell:filled:hover { -fx-background-color: #e7f0f5; }
+/* Hover and selection must NOT look the same; otherwise two rows seem active. */
+.app-navigation-list .list-cell:filled:hover:!selected {
+    -fx-background-color: #f1f6f9;
+}
 .app-navigation-list .list-cell:filled:selected,
-.app-navigation-list:focused .list-cell:filled:selected {
-    -fx-background-color: #d7e7f0;
+.app-navigation-list:focused .list-cell:filled:selected,
+.app-navigation-list .list-cell:filled:selected:hover {
+    -fx-background-color: #c9dfeb;
     -fx-text-fill: #243f54;
     -fx-border-color: transparent transparent transparent #4a7894;
     -fx-border-width: 0 0 0 3px;
@@ -1513,6 +1517,15 @@
 }
 .dependency-map-legend .dependency-map-legend-dependency { -fx-text-fill: #168a97; }
 .dependency-map-legend-row { -fx-alignment: center-left; }
+.dependency-map-legend .dependency-map-navigation-only {
+    -fx-padding: 0 0 0 0;
+    -fx-font-size: 11px;
+    -fx-text-fill: #345268;
+}
+.dependency-map-legend .separator:horizontal .line {
+    -fx-border-color: #e0e8ef;
+    -fx-border-width: 1px 0 0 0;
+}
 .dependency-map-file-summary {
     -fx-background-color: rgba(255,255,255,0.94);
     -fx-background-radius: 4;
