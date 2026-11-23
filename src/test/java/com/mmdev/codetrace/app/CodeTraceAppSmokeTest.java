@@ -525,7 +525,7 @@ class CodeTraceAppSmokeTest {
                                 false, false, false, false, false, false, false,
                                 false, false, false,
                                 new javafx.scene.input.PickResult(leafSurface, safeX + 75, safeY)));
-                assertNotEquals(beforePan, filePane.getCameraX(),
+                assertTrue(Math.abs(beforePan - filePane.getCameraX()) > 0.01,
                         "Navigation mode drags should pan even when starting on a file");
                 assertEquals(savedFilePositions, filePane.fileNodePositions(),
                         "Navigation mode must never drag source files");
