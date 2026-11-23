@@ -4,9 +4,9 @@
 
 ## Alcance y criterio
 
-La biblioteca mantiene **un único catálogo** con **826 archivos de referencia en 14 lenguajes**, repartidos entre fundamentos, estructuras de datos, algoritmos y patrones. Un archivo es una unidad de mecanografía, **no necesariamente un ejercicio autónomo**. El paquete Java 21 contiene **154 archivos**. El catálogo v0.3.4 tenía 813: este cambio suma 13 netos por separar roles Java y sustituir un contenedor de tipos anidados.
+La biblioteca mantiene **un único catálogo** con **830 archivos de referencia en 14 lenguajes**, repartidos entre fundamentos, estructuras de datos, algoritmos y patrones. Un archivo es una unidad de mecanografía, **no necesariamente un ejercicio autónomo**. El paquete Java 21 contiene **158 archivos**. El catálogo v0.3.4 tenía 813: este cambio suma 17 netos por separar roles Java y sustituir un contenedor de tipos anidados.
 
-La revisión de integridad recorre todos los elementos del catálogo: ruta segura, recurso real, código no vacío, cabecera de versión y comando de compilación/comprobación. Los clientes representativos se compilan y ejecutan mediante los verificadores por plataforma. Esto **no equivale** a validar semánticamente cada línea de los 826 archivos en todos los compiladores.
+La revisión de integridad recorre todos los elementos del catálogo: ruta segura, recurso real, código no vacío, cabecera de versión y comando de compilación/comprobación. Los clientes representativos se compilan y ejecutan mediante los verificadores por plataforma. Esto **no equivale** a validar semánticamente cada línea de los 830 archivos en todos los compiladores.
 
 ## Decisión de diseño didáctico
 
@@ -32,7 +32,7 @@ Las nuevas fuentes conservan cabeceras con Java 21, instrucciones de compilació
 
 ## Cómo verificar
 
-- `scripts/verificar-biblioteca.sh`: integridad de las 826 rutas, compilación integral de los Java 21, ejecución de clientes Java y comprobaciones representativas de otros lenguajes.
+- `scripts/verificar-biblioteca.sh`: integridad de las 830 rutas, compilación integral de los Java 21, ejecución de clientes Java y comprobaciones representativas de otros lenguajes.
 - `scripts/auditar-biblioteca.ps1`: integridad y estructura desde Windows PowerShell 5.1; con `-EjecutarClientes`, compila y ejecuta los clientes Java seleccionados en un temporal.
 - `BuiltInLibraryTest`: versión del catálogo, extracción offline, compilación de todo Java y cabeceras de los ejercicios.
 - `PracticeCurriculumStructureAuditTest`: inventario por idioma y diagnóstico de tipos Java de nivel superior o anidados; la detección por texto es **heurística**, no sustituye al compilador.
