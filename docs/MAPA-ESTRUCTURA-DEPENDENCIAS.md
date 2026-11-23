@@ -21,6 +21,34 @@ La ausencia de flechas **no demuestra ausencia de dependencias**: CodeTrace no
 compila el proyecto, no ejecuta sus archivos y no resuelve todos los usos
 implícitos de símbolos. El mapa es una exploración estática limitada.
 
+## Archivos como nodos secundarios (opcional)
+
+Desde el menú contextual del **único mapa**, activar o desactivar
+**Mostrar archivos de código**. El estado inicial es desactivado para conservar
+la visión general de carpetas. Al activarlo, cada archivo de código compatible
+ya reconocido por el análisis aparece como un nodo pequeño, unido a su
+**carpeta inmediata** mediante una línea fina de pertenencia, **sin flecha**.
+No es una dependencia, una llamada, una herencia ni un análisis semántico.
+
+- Los archivos de código se detectan con el catálogo existente del analizador;
+  no se añaden analizadores por versión del lenguaje ni se incorporan archivos
+  de texto, imágenes o configuración ajenos a ese catálogo.
+- Clic sobre un archivo: selecciona su carpeta en el inspector y resalta el
+  archivo; doble clic: abre su pestaña habitual de CodeTrace.
+- Las carpetas siguen siendo los nodos principales; mostrar/ocultar archivos
+  **no modifica** sus posiciones, la disposición elegida ni las sesiones
+  `.ctrace`. Las posiciones de archivo son temporales, deterministas y
+  se recalculan después de desplazar una carpeta.
+- Las etiquetas de archivos reservan espacio para evitar solapamientos y se
+  dibujan sobre el Canvas únicamente dentro de la zona visible. El cálculo
+  está limitado a **1.200** archivos secundarios como máximo, y el analizador
+  existente también limita su inspección a 1.200 fuentes y el mapa a 180
+  carpetas. Si se supera un límite, se indica que la vista es **parcial**;
+  no se afirma que el resto de archivos no exista.
+- La leyenda es contextual: **se oculta si hay un solo tipo de conexión** y
+  muestra únicamente los tipos presentes (dependencia dirigida, contención
+  entre carpetas y pertenencia de archivo). No se crean otras vistas.
+
 ## Navegación
 
 Seleccionar un nodo abre el **inspector a la derecha**, con archivos de código
@@ -29,13 +57,13 @@ listas con el estilo transversal de navegación. Doble clic o Intro sobre
 un archivo abre su pestaña normal; sobre una subcarpeta, selecciona su nodo.
 El botón de cerrar o Esc quitan la selección y ocultan el inspector.
 
-La leyenda permanece fija abajo a la izquierda durante el paneo y zoom.
-Sus trazos y puntas de flecha son vectoriales, independientes de la fuente
-del sistema; la flecha indica dependencia y la línea discontinua indica
-contención sin dirección.
+La leyenda, cuando hay más de un tipo de conexión, permanece fija abajo a
+la izquierda durante el paneo y zoom. Sus trazos y flechas vectoriales no
+dependen de la fuente del sistema.
 
 Un clic primario o central en el área de trabajo cierra el menú contextual
-«Centrar y ajustar a ventana / Restablecer distribución», sin interferir
+«Centrar y ajustar a ventana / Restablecer distribución /
+Mostrar archivos de código», sin interferir
 con el arrastre, zoom o selección. El clic secundario mantiene disponible
 ese menú.
 
