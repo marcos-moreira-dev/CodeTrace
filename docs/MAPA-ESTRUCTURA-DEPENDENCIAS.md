@@ -46,9 +46,14 @@ actual se muestran como nodos secundarios: **no se añade análisis semántico**
 
 - Clic sobre una carpeta: se resalta su isla en morado y se engrosan sus
   aristas incidentes (dependencias, jerarquía y pertenencia).
-- Clic sobre un archivo: se resalta el archivo en morado intenso y se muestra
-  una **arista continua más gruesa** que lo une con su carpeta madre.
-  Doble clic abre su archivo en la pestaña habitual.
+- Clic sobre un archivo: se resalta en morado intenso y se enfatiza el
+  vínculo **carpeta → borde de la isla**, sin trazar una línea gruesa que
+  atraviese otras etiquetas del grupo. Los archivos movidos individualmente
+  sí conservan un vínculo directo hasta su posición manual. Doble clic abre
+  el archivo en su pestaña habitual cuando está desactivado el modo de navegación.
+- El inspector derecho tiene **selección única**. El color de hover es más
+  tenue y distinto del de la selección para que no parezcan dos archivos
+  seleccionados al mismo tiempo.
 - **Arrastrar un archivo** lo mueve individualmente; las otras carpetas e
   islas no se mueven. Si sale de su isla aparece su enlace directo a la
   carpeta. El movimiento que cubra otra etiqueta de carpeta, archivo o isla
@@ -60,6 +65,9 @@ actual se muestran como nodos secundarios: **no se añade análisis semántico**
   **Restablecer distribución** o cerrar la pestaña descarta estos ajustes:
   no se guardan en sesiones `.ctrace`. Las posiciones normales de las
   carpetas sí siguen guardándose como antes.
+- Todas las conexiones del grafo se dibujan **debajo** de las islas y
+  etiquetas de archivos. Sus fondos opacos evitan que líneas de dependencia,
+  contención o pertenencia tapen visualmente nombres de documentos.
 
 ### Límites
 
@@ -67,8 +75,9 @@ Las islas y los archivos se dibujan sobre el Canvas únicamente cuando están
 dentro del área visible. Se respeta el límite existente de 1.200 archivos
 de código inspeccionados, 1.200 nodos secundarios y 180 carpetas visibles.
 Si un límite impide representar todo, se muestra «vista parcial». La
-ausencia de flechas no demuestra ausencia de dependencias. La leyenda se
-oculta cuando solo existe un tipo de relación.
+ausencia de flechas no demuestra ausencia de dependencias. Los símbolos
+de la leyenda se ocultan cuando solo existe un tipo de relación; la casilla
+de navegación permanece disponible.
 
 ## Navegación
 
@@ -81,6 +90,15 @@ El botón de cerrar o Esc quitan la selección y ocultan el inspector.
 La leyenda, cuando hay más de un tipo de conexión, permanece fija abajo a
 la izquierda durante el paneo y zoom. Sus trazos y flechas vectoriales no
 dependen de la fuente del sistema.
+
+**«Solo panear y desplazar»**, casilla situada debajo de la leyenda, activa
+la exploración segura: puedes arrastrar desde cualquier lugar del Canvas
+(incluso sobre nodos y archivos) para mover la **cámara**, y usar la rueda
+sin Ctrl para acercar o alejar. Los clics simples siguen seleccionando
+elementos y muestran el inspector, pero los arrastres no mueven nodos ni
+archivos y el doble clic en un archivo no abre otra pestaña por accidente.
+Desactivarla restaura los arrastres normales y Ctrl+rueda para el zoom.
+La preferencia afecta solo a la pestaña actual del mapa.
 
 Un clic primario o central en el área de trabajo cierra el menú contextual
 «Centrar y ajustar a ventana / Restablecer distribución /
