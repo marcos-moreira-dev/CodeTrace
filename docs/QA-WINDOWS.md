@@ -23,6 +23,20 @@
 - **GRAPH-FILES-06:** En la vista, nunca representar configuraciones,
   Markdown, imágenes u otros archivos que el catálogo de código no reconoce.
   El inspector sigue ofreciendo navegación mediante doble clic e Intro.
+- **GRAPH-FILES-07:** Con 11 archivos dentro de app, confirmar una isla
+  compacta cerca de su carpeta (rejilla local, no un barrido global de filas).
+  Seleccionar app resalta la isla y sus archivos en violeta tenue; seleccionar
+  AppSettings.java destaca solo ese documento con violeta más intenso.
+  La selección desde el inspector debe sincronizar el mismo resaltado.
+- **GRAPH-FILES-08:** Con carpetas próximas y numerosos archivos,
+  ninguna isla debe cubrir rótulos de carpetas ni solaparse con otra isla.
+  Cada carpeta se une a su grupo con **una sola línea de pertenencia**, sin
+  crear nuevas dependencias ni alterar las posiciones persistidas.
+  Los enlaces entre carpetas pueden cruzarse: no representan objetos sólidos.
+- **GRAPH-FILES-09:** Arrastrar carpetas, cambiar entre organizado y
+  cuadrícula, ocultar y mostrar los archivos: recalcular islas sin
+  intercalar los archivos de dos carpetas. Revisar también un proyecto de
+  más de 1.200 fuentes y una carpeta cerca del borde del espacio lógico.
 
 Las pruebas automáticas comprueban distribución, límites y eventos JavaFX;
 la fluidez y legibilidad requieren revisión manual en Windows.
