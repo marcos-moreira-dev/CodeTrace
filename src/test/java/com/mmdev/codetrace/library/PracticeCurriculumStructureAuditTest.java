@@ -157,7 +157,7 @@ class PracticeCurriculumStructureAuditTest {
         List<String> paths = library.entries(javaPack).stream()
                 .filter(path -> path.startsWith("05-patrones-diseno-counter-strike/"))
                 .toList();
-        assertEquals(67, paths.size());
+        assertEquals(78, paths.size());
         long clients = 0;
         for (String relative : paths) {
             String source = Files.readString(root.resolve(relative));
@@ -179,7 +179,7 @@ class PracticeCurriculumStructureAuditTest {
                 assertTrue(source.contains("Salida esperada:"), relative);
             }
         }
-        assertEquals(13, clients);
+        assertEquals(14, clients);
     }
 
     /**

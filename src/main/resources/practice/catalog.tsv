@@ -448,6 +448,17 @@ java21	05-patrones-diseno-counter-strike/factory/FabricaMensaje.java
 java21	05-patrones-diseno-counter-strike/factory/MainFactoryCS.java
 java21	05-patrones-diseno-counter-strike/factory/MensajeChat.java
 java21	05-patrones-diseno-counter-strike/factory/MensajeSala.java
+java21	05-patrones-diseno-counter-strike/infraestructura/Bando.java
+java21	05-patrones-diseno-counter-strike/infraestructura/ControladorPartida.java
+java21	05-patrones-diseno-counter-strike/infraestructura/Equipo.java
+java21	05-patrones-diseno-counter-strike/infraestructura/EstadoPartida.java
+java21	05-patrones-diseno-counter-strike/infraestructura/EstadoRehen.java
+java21	05-patrones-diseno-counter-strike/infraestructura/Jugador.java
+java21	05-patrones-diseno-counter-strike/infraestructura/MapaPartida.java
+java21	05-patrones-diseno-counter-strike/infraestructura/ObjetoVirtual.java
+java21	05-patrones-diseno-counter-strike/infraestructura/Rehen.java
+java21	05-patrones-diseno-counter-strike/infraestructura/VistaConsola.java
+java21	05-patrones-diseno-counter-strike/MainCounterStrike.java
 java21	05-patrones-diseno-counter-strike/observer/MainObserverCS.java
 java21	05-patrones-diseno-counter-strike/observer/MarcadorRonda.java
 java21	05-patrones-diseno-counter-strike/observer/ObservadorPuntuacion.java

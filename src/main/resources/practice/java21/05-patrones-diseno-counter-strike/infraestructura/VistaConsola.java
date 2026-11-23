@@ -1,0 +1,88 @@
+// CodeTrace | Referencia: Java 21 LTS / JDK 21
+// Dominio: Counter-Strike; narración de una partida ficticia de rescate.
+// Glosario: HUD = indicadores de pantalla; CT/T = equipos; PV = puntos de vida.
+// Patrón de organización: MVC. Esta VISTA imprime texto sin alterar la partida.
+package codetrace.practica.counterstrike.infraestructura;
+
+import java.util.stream.Collectors;
+
+/**
+ * VISTA de consola: convierte el estado de la simulación en una narración.
+ *
+ * No decide quién gana, no actualiza créditos ni elige rehenes. Son tareas
+ * del controlador y del modelo. Cambiar aquí la redacción o el formato
+ * NO debe cambiar la partida. No hay Scanner ni entrada del usuario.
+ */
+public final class VistaConsola {
+    public void presentar(EstadoPartida partida, long semilla) {
+        System.out.println("=== COUNTER-STRIKE | PARTIDA DIDÁCTICA ===");
+        System.out.println("Semilla: " + semilla + " (misma semilla = misma secuencia)");
+        System.out.println("Mapa: " + partida.mapa().codigo()
+                + " | Rescate de rehenes | Rondas: " + partida.configuracion().rondas());
+        // Recorremos la lista de jugadores para presentar sus alias; no
+        // imprimimos sus objetos directamente (eso daría un toString poco útil).
+        String ct = partida.ct().jugadores().stream()
+                .map(Jugador::alias).collect(Collectors.joining(", "));
+        String t = partida.t().jugadores().stream()
+                .map(Jugador::alias).collect(Collectors.joining(", "));
+        System.out.println("Equipos: CT (" + ct + ") vs T (" + t + ")");
+        System.out.println("Rehenes registrados: " + partida.rehenes().size());
+    }
+
+    public void evento(String categoria, String descripcion) {
+        // Una etiqueta permite distinguir un aviso de red de uno de economía.
+        System.out.println("[" + categoria + "] " + descripcion);
+    }
+
+    public void abrirRonda(EstadoPartida partida) {
+        System.out.println();
+        System.out.println("--- RONDA " + partida.rondaActual()
+                + " | Reloj: " + partida.segundosRestantes() + " s ---");
+    }
+
+    public void fichaRehen(Rehen rehen) {
+        // Esta ficha explica qué propiedades han cambiado tras la escolta:
+        // la calma, la identidad del escolta y el progreso hasta la salida.
+        evento("REHÉN", rehen.nombre() + " | ubicación=" + rehen.ubicacion()
+                + " | calma=" + rehen.calma() + "/100"
+                + " | integridad=" + rehen.integridad() + "/100"
+                + " | escolta=" + rehen.escolta()
+                + " | progreso=" + rehen.progreso() + "%"
+                + " | estado=" + rehen.estado());
+    }
+
+    public void marcador(EstadoPartida partida) {
+        System.out.println("Marcador: CT " + partida.puntosCt()
+                + " - " + partida.puntosT() + " T");
+    }
+
+    public void cerrarPartida(EstadoPartida partida) {
+        System.out.println();
+        System.out.println("=== FIN DE LA PARTIDA ===");
+        marcador(partida);
+        String resultado = partida.puntosCt() == partida.puntosT() ? "Empate"
+                : partida.puntosCt() > partida.puntosT() ? "Gana CT" : "Gana T";
+        System.out.println("Resultado: " + resultado);
+
+        // Este ciclo recorre el historial, UNA entrada por ronda. El modelo
+        // conserva el motivo de cada victoria para poder explicarla después.
+        for (String registro : partida.historial())
+            System.out.println("  " + registro);
+    }
+}
+
+/*
+ * CodeTrace | EJEMPLO DE CONSOLA (practica)
+ * Ejemplo en consola (PowerShell; desde la carpeta java21):
+ *   $out=Join-Path $env:TEMP "ct-practica-java"
+ *   New-Item -ItemType Directory -Force -Path $out | Out-Null
+ *   javac --release 21 -encoding UTF-8 -d $out (Get-ChildItem -Recurse -Filter *.java).FullName
+ *   java -cp $out codetrace.practica.counterstrike.MainCounterStrike
+ * Esta clase imprime los datos; no cambia qué equipo gana la simulación.
+ * Salida esperada:
+ *   === COUNTER-STRIKE | PARTIDA DIDÁCTICA ===
+ *   Semilla: 42 (misma semilla = misma secuencia)
+ *   === FIN DE LA PARTIDA ===
+ *   Resultado: Gana CT
+ * CodeTrace | FIN EJEMPLO DE CONSOLA
+ */

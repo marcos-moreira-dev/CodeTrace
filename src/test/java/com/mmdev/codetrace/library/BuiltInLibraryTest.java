@@ -110,8 +110,8 @@ class BuiltInLibraryTest {
     @Test
     void allFourCurriculumPurposesAndDocumentedJavaClientsArePresent() throws Exception {
         var library = new BuiltInLibrary(temp.resolve("curriculum"));
-        assertEquals("v11", BuiltInLibrary.CATALOG_VERSION);
-        assertEquals(906, library.packs().stream().mapToInt(library::size).sum());
+        assertEquals("v12", BuiltInLibrary.CATALOG_VERSION);
+        assertEquals(917, library.packs().stream().mapToInt(library::size).sum());
         for (var pack : library.packs()) {
             var entries = library.entries(pack);
             assertTrue(entries.stream().allMatch(x -> x.split("/").length >= 3),
@@ -125,13 +125,16 @@ class BuiltInLibraryTest {
         assertTrue(library.entries(javaPack).contains("01-fundamentos/comparadores/ComparadoresEncadenados.java"));
         assertTrue(library.entries(javaPack).contains("03-algoritmos/programacion-dinamica/cambio-monedas/MainMonedas.java"));
         assertTrue(library.entries(javaPack).contains("04-patrones-diseno/strategy-tarifas/MainTarifas.java"));
-        assertEquals(67, library.entries(javaPack).stream()
+        assertEquals(78, library.entries(javaPack).stream()
                 .filter(path -> path.startsWith("05-patrones-diseno-counter-strike/"))
                 .count(), "Separate Counter-Strike track preserves the original 04 lessons");
-        assertEquals(13, library.entries(javaPack).stream()
+        assertEquals(14, library.entries(javaPack).stream()
                 .filter(path -> path.startsWith("05-patrones-diseno-counter-strike/")
                         && path.substring(path.lastIndexOf('/') + 1).startsWith("Main"))
                 .count(), "One runnable client for each Counter-Strike pattern");
+        assertTrue(library.entries(javaPack).contains(
+                "05-patrones-diseno-counter-strike/MainCounterStrike.java"),
+                "The MVC integration client lives at the Counter-Strike track root");
         assertTrue(library.entries(javaPack).contains("02-estructuras-datos/arbol-bst/MainArbol.java"));
         assertTrue(library.entries(javaPack).contains("02-estructuras-datos/tabla-hash/MainHash.java"));
         assertTrue(library.entries(javaPack).contains("03-algoritmos/backtracking/CuatroReinas.java"));
@@ -227,7 +230,7 @@ class BuiltInLibraryTest {
                 "03-algoritmos/euclides/euclides.asm"));
         assertTrue(library.entries(all.get("java21")).contains(
                 "03-algoritmos/dijkstra/Dijkstra.java"));
-        assertEquals(906, library.packs().stream().mapToInt(library::size).sum());
+        assertEquals(917, library.packs().stream().mapToInt(library::size).sum());
     }
 
 }

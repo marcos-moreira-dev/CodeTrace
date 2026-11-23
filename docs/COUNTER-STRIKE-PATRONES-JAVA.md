@@ -1,6 +1,7 @@
 # Counter-Strike — patrones de diseño para Java 21
 
 **Pista didáctica experimental:** `java21/05-patrones-diseno-counter-strike/`.
+**Hay 13 clientes de patrones individuales y un cliente integrador de simulación.**
 
 Esta pista conserva el nombre del videojuego **Counter-Strike** como
 contexto de aprendizaje. Es material educativo independiente: no es
@@ -89,3 +90,70 @@ ejemplo de consola y las salidas de su cliente.
 
 La pista Python existente continúa en `python/04-patrones-diseno/`; no
 se ha reemplazado ni duplicado todavía con este recorrido `05`.
+
+## Ejercicio final: una partida completa narrada por consola
+
+La carpeta raíz `05-patrones-diseno-counter-strike/` contiene
+`MainCounterStrike.java`. No es un decimocuarto patrón GoF: es el
+**cliente integrador**. No solicita entradas ni abre interfaces gráficas.
+Ejecuta automáticamente tres rondas ficticias en `cs_office` con semilla
+`42`, lo que permite repetir las mismas pruebas y salidas.
+
+```text
+05-patrones-diseno-counter-strike/
+├── MainCounterStrike.java             <- entrada única del simulador
+├── infraestructura/
+│   ├── Bando.java                   <- CT / T
+│   ├── EstadoRehen.java             <- retenido / escoltado / rescatado
+│   ├── ObjetoVirtual.java           <- inventario, coste y capacidad ficticios
+│   ├── Jugador.java                 <- vida, armadura, créditos, compras
+│   ├── Equipo.java                  <- miembros y bando
+│   ├── Rehen.java                   <- ficha de NPC y progreso de rescate
+│   ├── MapaPartida.java             <- cs_office y reloj ilustrativo
+│   ├── EstadoPartida.java           <- estado y marcador de las rondas (modelo)
+│   ├── VistaConsola.java            <- narra y muestra las fichas (vista)
+│   └── ControladorPartida.java       <- coordina eventos y patrones
+├── chain-of-responsibility/
+├── observer/
+├── strategy/
+└── ... los restantes patrones originales de la pista 05
+```
+
+### Por qué usamos MVC
+
+- **Modelo:** conserva jugadores, rehenes, equipos, inventario, reloj,
+  puntuación e historial. No decide cómo imprimir el resultado.
+- **Vista:** narra lo sucedido. No puede adjudicar una victoria ni inventar
+  créditos. Explica qué significa la integridad, calma, progreso y estado
+  de cada rehén.
+- **Controlador:** aplica una semilla pseudoaleatoria, avanza las rondas
+  y llama a los colaboradores de patrones existentes: Builder, Adapter,
+  Composite, Strategy, Chain of Responsibility, Decorator, Command,
+  Observer, Abstract Factory y Factory Method cuando corresponda.
+
+**Glosario ampliado:** un rehén es un NPC (personaje no controlado por el
+jugador) que en el modo rescate debe llegar a una zona segura. Aquí tiene
+`nombre`, `ubicacion`, `integridad` (indicador 0–100), `calma`
+(0–100), `escolta` (alias del CT acompañante), `progreso` (0–100 %)
+y `EstadoRehen`. `RETenido → ESCOLTADO → RESCATADO` es una transición
+simplificada. La propiedad `integridad` no representa reglas oficiales;
+es material de práctica Java. Los jugadores tienen alias, bando,
+vida/armadura ilustrativas, créditos e inventario de objetos virtuales.
+
+Los comentarios son **locales y específicos**: por ejemplo, explican por
+qué el bucle reinicia los rehenes y la vida entre rondas pero conserva el
+marcador y los créditos; por qué la lista del `Main` de Chain of
+Responsibility representa solicitudes y no responsables; qué papel
+cumple `Random(42)`; y por qué el HUD consulta el inventario real del
+jugador en vez de mostrar una MP9 antes de comprarla.
+
+Ejecutar solo el cliente integrador después de compilar todo Java 21:
+
+```powershell
+java -cp $out codetrace.practica.counterstrike.MainCounterStrike
+```
+
+El simulador no necesita un motor de juego, físicas, imágenes ni librerías
+adicionales. El propósito es la **mecanografía, orientación a objetos y
+colaboración entre patrones**. Los resultados de la narración se cotejan
+con `scripts/salidas_practica.json` durante la auditoría automatizada.
