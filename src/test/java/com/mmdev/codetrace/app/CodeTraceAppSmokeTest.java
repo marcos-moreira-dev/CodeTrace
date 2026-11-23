@@ -350,6 +350,23 @@ class CodeTraceAppSmokeTest {
                 tabPane.getTabs().remove(mapTab);
                 tabPane.getSelectionModel().select(previousTab);
 
+                // The 180-folder limit can show an ancestor without its
+                // descendants. That ancestor is an incomplete branch, not
+                // evidence of an empty real directory.
+                var cappedModel = new com.mmdev.codetrace.reference.ProjectDependencyGraph.Graph(
+                        "src", java.util.List.of("src", "src/test"),
+                        java.util.List.of(), 200, true, "f".repeat(64),
+                        java.util.Map.of("src", java.util.List.of("src/Main.java")),
+                        java.util.List.of(new com.mmdev.codetrace.reference
+                                .ProjectDependencyGraph.FolderLink("src", "src/test")),
+                        java.util.Map.of());
+                var cappedPane = new com.mmdev.codetrace.ui.DependencyGraphPane(
+                        cappedModel, ignored -> {});
+                assertTrue(cappedPane.hasHiddenDescendants("src/test"),
+                        "A truncated fileless visible leaf must be marked incomplete");
+                assertFalse(cappedPane.hasHiddenDescendants("src"),
+                        "Visible descendants mean this parent isn't a truncated leaf");
+
                 // The same graph can reveal every recognized source file as
                 // a read-only leaf without changing saved directory positions.
                 var fileModel = new com.mmdev.codetrace.reference.ProjectDependencyGraph.Graph(
