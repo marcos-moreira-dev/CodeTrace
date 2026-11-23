@@ -80,6 +80,45 @@ class PracticeCurriculumStructureAuditTest {
         System.out.println("CODETRACE_PRACTICE_AUDIT_END");
     }
 
+    @Test
+    void independentJavaTeachingRolesReallyHaveOneNamedTypePerFile() throws Exception {
+        BuiltInLibrary library = new BuiltInLibrary(temp.resolve("roles"));
+        BuiltInLibrary.Pack java = library.packs().stream()
+                .filter(pack -> pack.id().equals("java21")).findFirst().orElseThrow();
+        Path root = library.open(java);
+        List<String> roles = List.of(
+                "04-patrones-diseno/factory/basico/Factory.java",
+                "04-patrones-diseno/factory/basico/Mensaje.java",
+                "04-patrones-diseno/factory/basico/Correo.java",
+                "01-fundamentos/records-y-enums/RecordsYEnums.java",
+                "01-fundamentos/records-y-enums/Estado.java",
+                "01-fundamentos/records-y-enums/Pedido.java",
+                "04-patrones-diseno/strategy/basico/Strategy.java",
+                "04-patrones-diseno/strategy/basico/Descuento.java",
+                "04-patrones-diseno/observer/basico/Observador.java",
+                "04-patrones-diseno/observer/basico/Escucha.java",
+                "04-patrones-diseno/command/deshacer/Comando.java",
+                "04-patrones-diseno/command/deshacer/AgregarTexto.java",
+                "04-patrones-diseno/composite/arbol-archivos/Elemento.java",
+                "04-patrones-diseno/composite/arbol-archivos/Archivo.java",
+                "04-patrones-diseno/composite/arbol-archivos/Carpeta.java",
+                "04-patrones-diseno/abstract-factory/tema-consola/Boton.java",
+                "04-patrones-diseno/abstract-factory/tema-consola/Dialogo.java",
+                "04-patrones-diseno/abstract-factory/tema-consola/Fabrica.java",
+                "04-patrones-diseno/abstract-factory/tema-consola/FabricaClara.java",
+                "04-patrones-diseno/abstract-factory/tema-consola/FabricaOscura.java");
+        for (String relative : roles) {
+            assertTrue(library.entries(java).contains(relative), relative);
+            List<Type> declared = findNamedJavaTypes(Files.readString(root.resolve(relative)));
+            assertEquals(1, declared.size(),
+                    "One independent named type per file: " + relative + " " + declared);
+            assertEquals(0, declared.getFirst().depth(), relative);
+            String basename = Path.of(relative).getFileName().toString()
+                    .replaceFirst("\\.java$", "");
+            assertEquals(basename, declared.getFirst().name(), relative);
+        }
+    }
+
     /**
      * Mask strings and comments, preserving positions and line breaks so a
      * brace-depth counter distinguishes nested named types from file-level
