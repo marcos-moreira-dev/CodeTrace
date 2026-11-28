@@ -150,46 +150,46 @@ area	unidad	modalidad	archivo	objetivo	estado
 09-sistemas-operativos-y-procesos	24-planificacion-prioridades	T	Prioridades.java	Prioridad, inanición y envejecimiento.	implementado_pendiente_ci
 09-sistemas-operativos-y-procesos	24-planificacion-prioridades	T	Aging.java	Prioridad, inanición y envejecimiento.	implementado_pendiente_ci
 09-sistemas-operativos-y-procesos	24-planificacion-prioridades	T	MainPrioridades.java	Prioridad, inanición y envejecimiento.	implementado_pendiente_ci
-10-concurrencia-y-paralelismo	01-hilos	R	CrearHilo.java	Crear, iniciar y esperar hilos.	planificado
-10-concurrencia-y-paralelismo	01-hilos	R	RunnableBasico.java	Crear, iniciar y esperar hilos.	planificado
-10-concurrencia-y-paralelismo	01-hilos	R	JoinHilos.java	Crear, iniciar y esperar hilos.	planificado
-10-concurrencia-y-paralelismo	02-estados-hilo	R	EstadosHilo.java	Observar estados de Thread con coordinación acotada; interrupción básica ya se enseña en EstadoInterrupcion.java.	planificado
-10-concurrencia-y-paralelismo	03-estado-compartido	R	VariablesCompartidas.java	Datos compartidos y estado local por hilo.	planificado
-10-concurrencia-y-paralelismo	03-estado-compartido	R	EstadoLocal.java	Datos compartidos y estado local por hilo.	planificado
-10-concurrencia-y-paralelismo	03-estado-compartido	R	ThreadLocalDemo.java	Datos compartidos y estado local por hilo.	planificado
-10-concurrencia-y-paralelismo	04-intercalaciones	M	IntercalacionIncremento.java	Leer-modificar-escribir y pérdida de actualización reproducible.	planificado
-10-concurrencia-y-paralelismo	04-intercalaciones	M	CarreraControlada.java	Leer-modificar-escribir y pérdida de actualización reproducible.	planificado
-10-concurrencia-y-paralelismo	05-seccion-critica	R	ContadorInseguro.java	Exclusión mutua en un contador compartido.	planificado
-10-concurrencia-y-paralelismo	05-seccion-critica	R	ContadorSincronizado.java	Exclusión mutua en un contador compartido.	planificado
-10-concurrencia-y-paralelismo	06-visibilidad	R	PublicacionSegura.java	Aplicar visibilidad a publicación segura y comparar con bloqueo; volatile básico y lecturas separadas ya existen en 00.	planificado
-10-concurrencia-y-paralelismo	07-atomicos	R	AtomicIntegerDemo.java	Operaciones atómicas y CAS.	planificado
-10-concurrencia-y-paralelismo	07-atomicos	R	CompareAndSet.java	Operaciones atómicas y CAS.	planificado
-10-concurrencia-y-paralelismo	09-locks	R	ReentrantLockDemo.java	Bloqueo explícito, espera acotada y condiciones.	planificado
-10-concurrencia-y-paralelismo	09-locks	R	TryLockTimeout.java	Bloqueo explícito, espera acotada y condiciones.	planificado
-10-concurrencia-y-paralelismo	09-locks	R	ConditionDemo.java	Bloqueo explícito, espera acotada y condiciones.	planificado
-10-concurrencia-y-paralelismo	10-semaforos	R	SemaforoBinario.java	P/V como acquire/release; permisos y finally.	planificado
-10-concurrencia-y-paralelismo	10-semaforos	R	SemaforoContador.java	P/V como acquire/release; permisos y finally.	planificado
-10-concurrencia-y-paralelismo	10-semaforos	R	OperacionesPV.java	P/V como acquire/release; permisos y finally.	planificado
-10-concurrencia-y-paralelismo	11-funciones-seguras	R	FuncionNoSegura.java	Estado compartido, copias defensivas y reentrancia.	planificado
-10-concurrencia-y-paralelismo	11-funciones-seguras	R	FuncionThreadSafe.java	Estado compartido, copias defensivas y reentrancia.	planificado
-10-concurrencia-y-paralelismo	11-funciones-seguras	R	FuncionReentrante.java	Estado compartido, copias defensivas y reentrancia.	planificado
-10-concurrencia-y-paralelismo	12-productor-consumidor-01	R	BufferCircular.java	Buffer finito, tres semáforos: slots, items y mutex; terminación explícita.	planificado
-10-concurrencia-y-paralelismo	12-productor-consumidor-01	R	Productor.java	Buffer finito, tres semáforos: slots, items y mutex; terminación explícita.	planificado
-10-concurrencia-y-paralelismo	12-productor-consumidor-01	R	Consumidor.java	Buffer finito, tres semáforos: slots, items y mutex; terminación explícita.	planificado
-10-concurrencia-y-paralelismo	12-productor-consumidor-01	R	MainProductorConsumidor.java	Buffer finito, tres semáforos: slots, items y mutex; terminación explícita.	planificado
-10-concurrencia-y-paralelismo	13-productor-consumidor-02	R	Productor.java	Solución estándar con ArrayBlockingQueue y cierre definido.	planificado
-10-concurrencia-y-paralelismo	13-productor-consumidor-02	R	Consumidor.java	Solución estándar con ArrayBlockingQueue y cierre definido.	planificado
-10-concurrencia-y-paralelismo	13-productor-consumidor-02	R	MainBlockingQueue.java	Solución estándar con ArrayBlockingQueue y cierre definido.	planificado
-10-concurrencia-y-paralelismo	14-lectores-escritores-01	R	RecursoCompartido.java	Dos semáforos y contador; explicar inanición del escritor.	planificado
-10-concurrencia-y-paralelismo	14-lectores-escritores-01	R	Lector.java	Dos semáforos y contador; explicar inanición del escritor.	planificado
-10-concurrencia-y-paralelismo	14-lectores-escritores-01	R	Escritor.java	Dos semáforos y contador; explicar inanición del escritor.	planificado
-10-concurrencia-y-paralelismo	14-lectores-escritores-01	R	MainPrioridadLectores.java	Dos semáforos y contador; explicar inanición del escritor.	planificado
-10-concurrencia-y-paralelismo	15-lectores-escritores-02	R	RecursoCompartido.java	Restringir entrada de lectores nuevos si esperan escritores; no prometer equidad absoluta.	planificado
-10-concurrencia-y-paralelismo	15-lectores-escritores-02	R	Lector.java	Restringir entrada de lectores nuevos si esperan escritores; no prometer equidad absoluta.	planificado
-10-concurrencia-y-paralelismo	15-lectores-escritores-02	R	Escritor.java	Restringir entrada de lectores nuevos si esperan escritores; no prometer equidad absoluta.	planificado
-10-concurrencia-y-paralelismo	15-lectores-escritores-02	R	MainPrioridadEscritores.java	Restringir entrada de lectores nuevos si esperan escritores; no prometer equidad absoluta.	planificado
-10-concurrencia-y-paralelismo	16-lectores-escritores-03	R	RecursoCompartido.java	ReentrantReadWriteLock(true); política aproximadamente por llegada, no FIFO absoluta.	planificado
-10-concurrencia-y-paralelismo	16-lectores-escritores-03	R	MainLectoresEscritoresEquitativo.java	ReentrantReadWriteLock(true); política aproximadamente por llegada, no FIFO absoluta.	planificado
+10-concurrencia-y-paralelismo	01-hilos	R	CrearHilo.java	Crear, iniciar y esperar hilos.	implementado_pendiente_ci
+10-concurrencia-y-paralelismo	01-hilos	R	RunnableBasico.java	Crear, iniciar y esperar hilos.	implementado_pendiente_ci
+10-concurrencia-y-paralelismo	01-hilos	R	JoinHilos.java	Crear, iniciar y esperar hilos.	implementado_pendiente_ci
+10-concurrencia-y-paralelismo	02-estados-hilo	R	EstadosHilo.java	Observar estados de Thread con coordinación acotada; interrupción básica ya se enseña en EstadoInterrupcion.java.	implementado_pendiente_ci
+10-concurrencia-y-paralelismo	03-estado-compartido	R	VariablesCompartidas.java	Datos compartidos y estado local por hilo.	implementado_pendiente_ci
+10-concurrencia-y-paralelismo	03-estado-compartido	R	EstadoLocal.java	Datos compartidos y estado local por hilo.	implementado_pendiente_ci
+10-concurrencia-y-paralelismo	03-estado-compartido	R	ThreadLocalDemo.java	Datos compartidos y estado local por hilo.	implementado_pendiente_ci
+10-concurrencia-y-paralelismo	04-intercalaciones	M	IntercalacionIncremento.java	Leer-modificar-escribir y pérdida de actualización reproducible.	implementado_pendiente_ci
+10-concurrencia-y-paralelismo	04-intercalaciones	M	CarreraControlada.java	Leer-modificar-escribir y pérdida de actualización reproducible.	implementado_pendiente_ci
+10-concurrencia-y-paralelismo	05-seccion-critica	R	ContadorInseguro.java	Exclusión mutua en un contador compartido.	implementado_pendiente_ci
+10-concurrencia-y-paralelismo	05-seccion-critica	R	ContadorSincronizado.java	Exclusión mutua en un contador compartido.	implementado_pendiente_ci
+10-concurrencia-y-paralelismo	06-visibilidad	R	PublicacionSegura.java	Aplicar visibilidad a publicación segura y comparar con bloqueo; volatile básico y lecturas separadas ya existen en 00.	implementado_pendiente_ci
+10-concurrencia-y-paralelismo	07-atomicos	R	AtomicIntegerDemo.java	Operaciones atómicas y CAS.	implementado_pendiente_ci
+10-concurrencia-y-paralelismo	07-atomicos	R	CompareAndSet.java	Operaciones atómicas y CAS.	implementado_pendiente_ci
+10-concurrencia-y-paralelismo	09-locks	R	ReentrantLockDemo.java	Bloqueo explícito, espera acotada y condiciones.	implementado_pendiente_ci
+10-concurrencia-y-paralelismo	09-locks	R	TryLockTimeout.java	Bloqueo explícito, espera acotada y condiciones.	implementado_pendiente_ci
+10-concurrencia-y-paralelismo	09-locks	R	ConditionDemo.java	Bloqueo explícito, espera acotada y condiciones.	implementado_pendiente_ci
+10-concurrencia-y-paralelismo	10-semaforos	R	SemaforoBinario.java	P/V como acquire/release; permisos y finally.	implementado_pendiente_ci
+10-concurrencia-y-paralelismo	10-semaforos	R	SemaforoContador.java	P/V como acquire/release; permisos y finally.	implementado_pendiente_ci
+10-concurrencia-y-paralelismo	10-semaforos	R	OperacionesPV.java	P/V como acquire/release; permisos y finally.	implementado_pendiente_ci
+10-concurrencia-y-paralelismo	11-funciones-seguras	R	FuncionNoSegura.java	Estado compartido, copias defensivas y reentrancia.	implementado_pendiente_ci
+10-concurrencia-y-paralelismo	11-funciones-seguras	R	FuncionThreadSafe.java	Estado compartido, copias defensivas y reentrancia.	implementado_pendiente_ci
+10-concurrencia-y-paralelismo	11-funciones-seguras	R	FuncionReentrante.java	Estado compartido, copias defensivas y reentrancia.	implementado_pendiente_ci
+10-concurrencia-y-paralelismo	12-productor-consumidor-01	R	BufferCircular.java	Buffer finito, tres semáforos: slots, items y mutex; terminación explícita.	implementado_pendiente_ci
+10-concurrencia-y-paralelismo	12-productor-consumidor-01	R	Productor.java	Buffer finito, tres semáforos: slots, items y mutex; terminación explícita.	implementado_pendiente_ci
+10-concurrencia-y-paralelismo	12-productor-consumidor-01	R	Consumidor.java	Buffer finito, tres semáforos: slots, items y mutex; terminación explícita.	implementado_pendiente_ci
+10-concurrencia-y-paralelismo	12-productor-consumidor-01	R	MainProductorConsumidor.java	Buffer finito, tres semáforos: slots, items y mutex; terminación explícita.	implementado_pendiente_ci
+10-concurrencia-y-paralelismo	13-productor-consumidor-02	R	Productor.java	Solución estándar con ArrayBlockingQueue y cierre definido.	implementado_pendiente_ci
+10-concurrencia-y-paralelismo	13-productor-consumidor-02	R	Consumidor.java	Solución estándar con ArrayBlockingQueue y cierre definido.	implementado_pendiente_ci
+10-concurrencia-y-paralelismo	13-productor-consumidor-02	R	MainBlockingQueue.java	Solución estándar con ArrayBlockingQueue y cierre definido.	implementado_pendiente_ci
+10-concurrencia-y-paralelismo	14-lectores-escritores-01	R	RecursoCompartido.java	Dos semáforos y contador; explicar inanición del escritor.	implementado_pendiente_ci
+10-concurrencia-y-paralelismo	14-lectores-escritores-01	R	Lector.java	Dos semáforos y contador; explicar inanición del escritor.	implementado_pendiente_ci
+10-concurrencia-y-paralelismo	14-lectores-escritores-01	R	Escritor.java	Dos semáforos y contador; explicar inanición del escritor.	implementado_pendiente_ci
+10-concurrencia-y-paralelismo	14-lectores-escritores-01	R	MainPrioridadLectores.java	Dos semáforos y contador; explicar inanición del escritor.	implementado_pendiente_ci
+10-concurrencia-y-paralelismo	15-lectores-escritores-02	R	RecursoCompartido.java	Restringir entrada de lectores nuevos si esperan escritores; no prometer equidad absoluta.	implementado_pendiente_ci
+10-concurrencia-y-paralelismo	15-lectores-escritores-02	R	Lector.java	Restringir entrada de lectores nuevos si esperan escritores; no prometer equidad absoluta.	implementado_pendiente_ci
+10-concurrencia-y-paralelismo	15-lectores-escritores-02	R	Escritor.java	Restringir entrada de lectores nuevos si esperan escritores; no prometer equidad absoluta.	implementado_pendiente_ci
+10-concurrencia-y-paralelismo	15-lectores-escritores-02	R	MainPrioridadEscritores.java	Restringir entrada de lectores nuevos si esperan escritores; no prometer equidad absoluta.	implementado_pendiente_ci
+10-concurrencia-y-paralelismo	16-lectores-escritores-03	R	RecursoCompartido.java	ReentrantReadWriteLock(true); política aproximadamente por llegada, no FIFO absoluta.	implementado_pendiente_ci
+10-concurrencia-y-paralelismo	16-lectores-escritores-03	R	MainLectoresEscritoresEquitativo.java	ReentrantReadWriteLock(true); política aproximadamente por llegada, no FIFO absoluta.	implementado_pendiente_ci
 10-concurrencia-y-paralelismo	17-filosofos-comensales	R	Mesa.java	Recursos compartidos, orden total o árbitro y finalización acotada.	planificado
 10-concurrencia-y-paralelismo	17-filosofos-comensales	R	Filosofo.java	Recursos compartidos, orden total o árbitro y finalización acotada.	planificado
 10-concurrencia-y-paralelismo	17-filosofos-comensales	R	MainFilosofos.java	Recursos compartidos, orden total o árbitro y finalización acotada.	planificado

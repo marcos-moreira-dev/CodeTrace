@@ -1124,5 +1124,269 @@
     "main": "MainPrioridades",
     "mode": "T",
     "stdout": "Fija: ACB\nAging: ABC\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/01-hilos/CrearHilo.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/01-hilos/CrearHilo.java"
+    ],
+    "main": "CrearHilo",
+    "mode": "R",
+    "stdout": "Trabajo del hilo\nMain termina\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/01-hilos/RunnableBasico.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/01-hilos/RunnableBasico.java"
+    ],
+    "main": "RunnableBasico",
+    "mode": "R",
+    "stdout": "Tarea ejecutada\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/01-hilos/JoinHilos.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/01-hilos/JoinHilos.java"
+    ],
+    "main": "JoinHilos",
+    "mode": "R",
+    "stdout": "13\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/02-estados-hilo/EstadosHilo.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/02-estados-hilo/EstadosHilo.java"
+    ],
+    "main": "EstadosHilo",
+    "mode": "R",
+    "stdout": "NEW\nWAITING\nTERMINATED\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/03-estado-compartido/VariablesCompartidas.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/03-estado-compartido/VariablesCompartidas.java"
+    ],
+    "main": "VariablesCompartidas",
+    "mode": "R",
+    "stdout": "15\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/03-estado-compartido/EstadoLocal.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/03-estado-compartido/EstadoLocal.java"
+    ],
+    "main": "EstadoLocal",
+    "mode": "R",
+    "stdout": "4 16\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/03-estado-compartido/ThreadLocalDemo.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/03-estado-compartido/ThreadLocalDemo.java"
+    ],
+    "main": "ThreadLocalDemo",
+    "mode": "R",
+    "stdout": "trabajador\nmain\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/04-intercalaciones/IntercalacionIncremento.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/04-intercalaciones/IntercalacionIncremento.java"
+    ],
+    "main": "IntercalacionIncremento",
+    "mode": "M",
+    "stdout": "Esperado: 2\nObservado: 1\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/04-intercalaciones/CarreraControlada.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/04-intercalaciones/CarreraControlada.java"
+    ],
+    "main": "CarreraControlada",
+    "mode": "M",
+    "stdout": "Contador: 1\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/05-seccion-critica/ContadorInseguro.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/05-seccion-critica/ContadorInseguro.java"
+    ],
+    "main": "ContadorInseguro",
+    "mode": "R",
+    "stdout": "Contador: 1\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/05-seccion-critica/ContadorSincronizado.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/05-seccion-critica/ContadorSincronizado.java"
+    ],
+    "main": "ContadorSincronizado",
+    "mode": "R",
+    "stdout": "Contador: 2000\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/06-visibilidad/PublicacionSegura.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/06-visibilidad/PublicacionSegura.java"
+    ],
+    "main": "PublicacionSegura",
+    "mode": "R",
+    "stdout": "Dato: 42\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/07-atomicos/AtomicIntegerDemo.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/07-atomicos/AtomicIntegerDemo.java"
+    ],
+    "main": "AtomicIntegerDemo",
+    "mode": "R",
+    "stdout": "2000\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/07-atomicos/CompareAndSet.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/07-atomicos/CompareAndSet.java"
+    ],
+    "main": "CompareAndSet",
+    "mode": "R",
+    "stdout": "true\nfalse\n15\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/09-locks/ReentrantLockDemo.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/09-locks/ReentrantLockDemo.java"
+    ],
+    "main": "ReentrantLockDemo",
+    "mode": "R",
+    "stdout": "1000\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/09-locks/TryLockTimeout.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/09-locks/TryLockTimeout.java"
+    ],
+    "main": "TryLockTimeout",
+    "mode": "R",
+    "stdout": "Obtenido: false\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/09-locks/ConditionDemo.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/09-locks/ConditionDemo.java"
+    ],
+    "main": "ConditionDemo",
+    "mode": "R",
+    "stdout": "Listo: true\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/10-semaforos/SemaforoBinario.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/10-semaforos/SemaforoBinario.java"
+    ],
+    "main": "SemaforoBinario",
+    "mode": "R",
+    "stdout": "1000\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/10-semaforos/SemaforoContador.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/10-semaforos/SemaforoContador.java"
+    ],
+    "main": "SemaforoContador",
+    "mode": "R",
+    "stdout": "Disponible: 0\nTercero: false\nDisponible: 2\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/10-semaforos/OperacionesPV.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/10-semaforos/OperacionesPV.java"
+    ],
+    "main": "OperacionesPV",
+    "mode": "R",
+    "stdout": "Evento recibido\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/11-funciones-seguras/FuncionNoSegura.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/11-funciones-seguras/FuncionNoSegura.java"
+    ],
+    "main": "FuncionNoSegura",
+    "mode": "R",
+    "stdout": "25 25\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/11-funciones-seguras/FuncionThreadSafe.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/11-funciones-seguras/FuncionThreadSafe.java"
+    ],
+    "main": "FuncionThreadSafe",
+    "mode": "R",
+    "stdout": "4 25\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/11-funciones-seguras/FuncionReentrante.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/11-funciones-seguras/FuncionReentrante.java"
+    ],
+    "main": "FuncionReentrante",
+    "mode": "R",
+    "stdout": "4 25\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/12-productor-consumidor-01/MainProductorConsumidor.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/12-productor-consumidor-01/BufferCircular.java",
+      "10-concurrencia-y-paralelismo/12-productor-consumidor-01/Productor.java",
+      "10-concurrencia-y-paralelismo/12-productor-consumidor-01/Consumidor.java",
+      "10-concurrencia-y-paralelismo/12-productor-consumidor-01/MainProductorConsumidor.java"
+    ],
+    "main": "MainProductorConsumidor",
+    "mode": "R",
+    "stdout": "Suma: 10\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/13-productor-consumidor-02/MainBlockingQueue.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/13-productor-consumidor-02/Productor.java",
+      "10-concurrencia-y-paralelismo/13-productor-consumidor-02/Consumidor.java",
+      "10-concurrencia-y-paralelismo/13-productor-consumidor-02/MainBlockingQueue.java"
+    ],
+    "main": "MainBlockingQueue",
+    "mode": "R",
+    "stdout": "Suma: 10\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/14-lectores-escritores-01/MainPrioridadLectores.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/14-lectores-escritores-01/RecursoCompartido.java",
+      "10-concurrencia-y-paralelismo/14-lectores-escritores-01/Lector.java",
+      "10-concurrencia-y-paralelismo/14-lectores-escritores-01/Escritor.java",
+      "10-concurrencia-y-paralelismo/14-lectores-escritores-01/MainPrioridadLectores.java"
+    ],
+    "main": "MainPrioridadLectores",
+    "mode": "R",
+    "stdout": "Valor final: 2\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/15-lectores-escritores-02/MainPrioridadEscritores.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/15-lectores-escritores-02/RecursoCompartido.java",
+      "10-concurrencia-y-paralelismo/15-lectores-escritores-02/Lector.java",
+      "10-concurrencia-y-paralelismo/15-lectores-escritores-02/Escritor.java",
+      "10-concurrencia-y-paralelismo/15-lectores-escritores-02/MainPrioridadEscritores.java"
+    ],
+    "main": "MainPrioridadEscritores",
+    "mode": "R",
+    "stdout": "Valor final: 2\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/16-lectores-escritores-03/MainLectoresEscritoresEquitativo.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/16-lectores-escritores-03/RecursoCompartido.java",
+      "10-concurrencia-y-paralelismo/16-lectores-escritores-03/MainLectoresEscritoresEquitativo.java"
+    ],
+    "main": "MainLectoresEscritoresEquitativo",
+    "mode": "R",
+    "stdout": "Valor final: 2\n"
   }
 ]
