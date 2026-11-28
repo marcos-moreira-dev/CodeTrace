@@ -1,5 +1,6 @@
 """Compile and run each declared independent Java integral exercise."""
 import json
+import os
 import subprocess
 import tempfile
 from pathlib import Path
@@ -22,10 +23,31 @@ def verify(case):
         s = p.read_text(encoding="utf-8")
         assert s.startswith("// Tema:\n") and "Compilar:" in s and "Salida esperada:" in s, p
     with tempfile.TemporaryDirectory() as tmp:
-        compilation = subprocess.run(["javac", "--release", "21", "-encoding", "UTF-8", "-d", tmp,
-                        *map(str, sources)], timeout=30, capture_output=True, text=True, encoding="utf-8")
-        assert compilation.returncode == 0, (case["path"], compilation.stderr)
-        run = subprocess.run(["java", "-Dfile.encoding=UTF-8", "-cp", tmp, case["main"],
+        classpath = tmp
+        def checked(command):
+            result = subprocess.run(command, cwd=tmp, timeout=30,
+                                    capture_output=True, text=True, encoding="utf-8")
+            assert result.returncode == 0, (case["path"], command[0], result.stderr)
+        if "jar" in case:
+            # Verify the real library boundary: compile separately, package,
+            # then compile and run the client using the JAR, not loose classes.
+            spec = case["jar"]
+            assert set(spec["library"] + spec["client"]) == set(case["sources"])
+            lib = Path(tmp) / "lib"
+            app = Path(tmp) / "app"
+            jar = Path(tmp) / "biblioteca.jar"
+            lib.mkdir()
+            app.mkdir()
+            checked(["javac", "--release", "21", "-encoding", "UTF-8", "-d", str(lib),
+                     *[str(root / p) for p in spec["library"]]])
+            checked(["jar", "--create", "--file", str(jar), "-C", str(lib), "."])
+            checked(["javac", "--release", "21", "-encoding", "UTF-8", "-cp", str(jar),
+                     "-d", str(app), *[str(root / p) for p in spec["client"]]])
+            classpath = os.pathsep.join([str(jar), str(app)])
+        else:
+            checked(["javac", "--release", "21", "-encoding", "UTF-8", "-d", tmp,
+                     *map(str, sources)])
+        run = subprocess.run(["java", "-Dfile.encoding=UTF-8", "-cp", classpath, case["main"],
                               *case.get("args", [])], cwd=tmp, timeout=20, input=case.get("stdin", ""),
                              capture_output=True, text=True, encoding="utf-8")
         assert run.returncode == 0 and run.stderr == case.get("stderr", "") and run.stdout in case.get("allowed_stdout", [case["stdout"]]), (

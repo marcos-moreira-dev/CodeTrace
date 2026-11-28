@@ -19,8 +19,9 @@ Plan completo: `JAVA-INTEGRAL-PLAN.md`. Inventario por fuente: `JAVA-INTEGRAL-IN
 - 14: 7 unidades, 16 fuentes Java y 1 README documental; tramas, paridad, CRC, Hamming, canal y telemetría simulados. Pendiente CI.
 - 15: 7 unidades, 16 fuentes; imágenes, transformaciones, filtros, rasterización, gráficos 2D y WAV locales. Pendiente CI.
 - 16: 9 unidades, 21 fuentes; compilación, bytecode, JAR, carga de clases, lexer, parser, AST y comandos. Pendiente CI.
-- 17–20: pendientes.
+- 17: 10 unidades, 24 fuentes; mensajería, relojes, reintentos, idempotencia, detección de fallos, elección, replicación y exclusión distribuida simuladas. Pendiente CI.
+- 18–20: pendientes.
 - Verificador separado: scripts/verificar-java-integral.py, manifiesto scripts/java-integral-casos.json. Compila solo las fuentes declaradas por cliente y compara salida; verifica cobertura de archivos. Los scripts históricos excluyen nuevas áreas de la compilación conjunta.
-- Catálogo v32: 1988 entradas.
+- Catálogo v33: 2012 entradas.
 
 No se publica instalador ni se modifica C o TypeScript en este cambio.

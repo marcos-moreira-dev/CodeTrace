@@ -2547,5 +2547,117 @@
     "main": "MaquinaEstados",
     "mode": "R",
     "stdout": "GUARDAR: ERROR\nABRIR: OK\nGUARDAR: OK\nCERRAR: OK\nCERRAR: ERROR\n"
+  },
+  {
+    "path": "17-sistemas-distribuidos/01-mensajeria/MainMensajeria.java",
+    "sources": [
+      "17-sistemas-distribuidos/01-mensajeria/Mensaje.java",
+      "17-sistemas-distribuidos/01-mensajeria/Buzon.java",
+      "17-sistemas-distribuidos/01-mensajeria/MainMensajeria.java"
+    ],
+    "main": "MainMensajeria",
+    "mode": "T",
+    "stdout": "Pendientes: 2\npedido\nconfirmacion\nVacio: true\n"
+  },
+  {
+    "path": "17-sistemas-distribuidos/02-relojes-logicos/MainLamport.java",
+    "sources": [
+      "17-sistemas-distribuidos/02-relojes-logicos/RelojLamport.java",
+      "17-sistemas-distribuidos/02-relojes-logicos/MainLamport.java"
+    ],
+    "main": "MainLamport",
+    "mode": "T",
+    "stdout": "A local: 1\nA envia: 2\nB recibe: 3\nB local: 4\n"
+  },
+  {
+    "path": "17-sistemas-distribuidos/03-relojes-vectoriales/MainCausalidad.java",
+    "sources": [
+      "17-sistemas-distribuidos/03-relojes-vectoriales/RelojVectorial.java",
+      "17-sistemas-distribuidos/03-relojes-vectoriales/MainCausalidad.java"
+    ],
+    "main": "MainCausalidad",
+    "mode": "T",
+    "stdout": "A: [1, 0]\nB: [0, 1]\nConcurrentes: true\nB recibe: [1, 2]\nA precede: true\n"
+  },
+  {
+    "path": "17-sistemas-distribuidos/04-reintentos/MainReintento.java",
+    "sources": [
+      "17-sistemas-distribuidos/04-reintentos/CanalSimulado.java",
+      "17-sistemas-distribuidos/04-reintentos/ReintentoAcotado.java",
+      "17-sistemas-distribuidos/04-reintentos/MainReintento.java"
+    ],
+    "main": "MainReintento",
+    "mode": "T",
+    "stdout": "Intento 1 en t=0\nIntento 2 en t=3\nIntento 3 en t=7\nExito: true\nIntento 1 en t=0\nIntento 2 en t=3\nExito: false\n"
+  },
+  {
+    "path": "17-sistemas-distribuidos/05-idempotencia/MainDuplicados.java",
+    "sources": [
+      "17-sistemas-distribuidos/05-idempotencia/Peticion.java",
+      "17-sistemas-distribuidos/05-idempotencia/ServidorIdempotente.java",
+      "17-sistemas-distribuidos/05-idempotencia/MainDuplicados.java"
+    ],
+    "main": "MainDuplicados",
+    "mode": "T",
+    "stdout": "3\n3\n5\nTotal: 5\nID conflictivo\n"
+  },
+  {
+    "path": "17-sistemas-distribuidos/06-heartbeat/MainHeartbeat.java",
+    "sources": [
+      "17-sistemas-distribuidos/06-heartbeat/Nodo.java",
+      "17-sistemas-distribuidos/06-heartbeat/DetectorFallos.java",
+      "17-sistemas-distribuidos/06-heartbeat/MainHeartbeat.java"
+    ],
+    "main": "MainHeartbeat",
+    "mode": "T",
+    "stdout": "t=4: false\nt=5: true\nt=6: false\n"
+  },
+  {
+    "path": "17-sistemas-distribuidos/07-eleccion-lider/MainEleccion.java",
+    "sources": [
+      "17-sistemas-distribuidos/07-eleccion-lider/EleccionAnillo.java",
+      "17-sistemas-distribuidos/07-eleccion-lider/MainEleccion.java"
+    ],
+    "main": "MainEleccion",
+    "mode": "T",
+    "stdout": "Visita 2: candidato 7\nVisita 9: candidato 9\nVisita 4: candidato 9\nLider: 9\n"
+  },
+  {
+    "path": "17-sistemas-distribuidos/08-replicacion/MainReplicacion.java",
+    "sources": [
+      "17-sistemas-distribuidos/08-replicacion/Replica.java",
+      "17-sistemas-distribuidos/08-replicacion/MainReplicacion.java"
+    ],
+    "main": "MainReplicacion",
+    "mode": "T",
+    "stdout": "Primaria: 20\nSecundaria antes: 10\nSecundaria despues: 20\n"
+  },
+  {
+    "path": "17-sistemas-distribuidos/09-consistencia/LecturaEventual.java",
+    "sources": [
+      "17-sistemas-distribuidos/09-consistencia/LecturaEventual.java"
+    ],
+    "main": "LecturaEventual",
+    "mode": "T",
+    "stdout": "Lectura remota: 10\nConvergencia: true\n"
+  },
+  {
+    "path": "17-sistemas-distribuidos/09-consistencia/QuorumSimulado.java",
+    "sources": [
+      "17-sistemas-distribuidos/09-consistencia/QuorumSimulado.java"
+    ],
+    "main": "QuorumSimulado",
+    "mode": "T",
+    "stdout": "Interseccion: true\nValor: 20\n"
+  },
+  {
+    "path": "17-sistemas-distribuidos/10-exclusion-distribuida/MainTokenAnillo.java",
+    "sources": [
+      "17-sistemas-distribuidos/10-exclusion-distribuida/TokenAnillo.java",
+      "17-sistemas-distribuidos/10-exclusion-distribuida/MainTokenAnillo.java"
+    ],
+    "main": "MainTokenAnillo",
+    "mode": "T",
+    "stdout": "Nodo 1 antes: false\nNodo 0: true\nNodo 1: true\nNodo 2: true\n"
   }
 ]

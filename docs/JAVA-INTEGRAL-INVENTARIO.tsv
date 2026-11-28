@@ -390,30 +390,30 @@ area	unidad	modalidad	archivo	objetivo	estado
 16-interpretes-y-procesamiento-de-lenguajes	13-evaluacion-ast	T	MainEvaluador.java	Evaluar un árbol de expresión pequeño.	implementado_pendiente_ci
 16-interpretes-y-procesamiento-de-lenguajes	14-maquina-estados-comandos	R	ReconocerComando.java	Reconocer comandos sencillos y distinguir estados, entradas válidas e inválidas; no construir máquina virtual.	implementado_pendiente_ci
 16-interpretes-y-procesamiento-de-lenguajes	14-maquina-estados-comandos	R	MaquinaEstados.java	Reconocer comandos sencillos y distinguir estados, entradas válidas e inválidas; no construir máquina virtual.	implementado_pendiente_ci
-17-sistemas-distribuidos	01-mensajeria	T	Mensaje.java	Comunicación asíncrona y orden de entrega simulado.	planificado
-17-sistemas-distribuidos	01-mensajeria	T	Buzon.java	Comunicación asíncrona y orden de entrega simulado.	planificado
-17-sistemas-distribuidos	01-mensajeria	T	MainMensajeria.java	Comunicación asíncrona y orden de entrega simulado.	planificado
-17-sistemas-distribuidos	02-relojes-logicos	T	RelojLamport.java	Orden causal parcial y marcas de tiempo lógicas.	planificado
-17-sistemas-distribuidos	02-relojes-logicos	T	MainLamport.java	Orden causal parcial y marcas de tiempo lógicas.	planificado
-17-sistemas-distribuidos	03-relojes-vectoriales	T	RelojVectorial.java	Distinguir precedencia causal de concurrencia.	planificado
-17-sistemas-distribuidos	03-relojes-vectoriales	T	MainCausalidad.java	Distinguir precedencia causal de concurrencia.	planificado
-17-sistemas-distribuidos	04-reintentos	T	CanalSimulado.java	Timeout, fallos transitorios y backoff en reloj simulado.	planificado
-17-sistemas-distribuidos	04-reintentos	T	ReintentoAcotado.java	Timeout, fallos transitorios y backoff en reloj simulado.	planificado
-17-sistemas-distribuidos	04-reintentos	T	MainReintento.java	Timeout, fallos transitorios y backoff en reloj simulado.	planificado
-17-sistemas-distribuidos	05-idempotencia	T	Peticion.java	Deduplicar mensajes con identificadores estables.	planificado
-17-sistemas-distribuidos	05-idempotencia	T	ServidorIdempotente.java	Deduplicar mensajes con identificadores estables.	planificado
-17-sistemas-distribuidos	05-idempotencia	T	MainDuplicados.java	Deduplicar mensajes con identificadores estables.	planificado
-17-sistemas-distribuidos	06-heartbeat	T	Nodo.java	Sospechas de fallo bajo tiempo simulado; no certeza absoluta.	planificado
-17-sistemas-distribuidos	06-heartbeat	T	DetectorFallos.java	Sospechas de fallo bajo tiempo simulado; no certeza absoluta.	planificado
-17-sistemas-distribuidos	06-heartbeat	T	MainHeartbeat.java	Sospechas de fallo bajo tiempo simulado; no certeza absoluta.	planificado
-17-sistemas-distribuidos	07-eleccion-lider	T	EleccionAnillo.java	Elección bajo supuestos explícitos, participantes fijos y entrega fiable.	planificado
-17-sistemas-distribuidos	07-eleccion-lider	T	MainEleccion.java	Elección bajo supuestos explícitos, participantes fijos y entrega fiable.	planificado
-17-sistemas-distribuidos	08-replicacion	T	Replica.java	Copia primaria/secundaria y retraso controlado.	planificado
-17-sistemas-distribuidos	08-replicacion	T	MainReplicacion.java	Copia primaria/secundaria y retraso controlado.	planificado
-17-sistemas-distribuidos	09-consistencia	T	LecturaEventual.java	Visibilidad de escrituras, quórums bajo supuestos; no consenso completo.	planificado
-17-sistemas-distribuidos	09-consistencia	T	QuorumSimulado.java	Visibilidad de escrituras, quórums bajo supuestos; no consenso completo.	planificado
-17-sistemas-distribuidos	10-exclusion-distribuida	T	TokenAnillo.java	Acceso exclusivo mediante token bajo entrega fiable y sin pérdidas.	planificado
-17-sistemas-distribuidos	10-exclusion-distribuida	T	MainTokenAnillo.java	Acceso exclusivo mediante token bajo entrega fiable y sin pérdidas.	planificado
+17-sistemas-distribuidos	01-mensajeria	T	Mensaje.java	Comunicación asíncrona y orden de entrega simulado.	implementado_pendiente_ci
+17-sistemas-distribuidos	01-mensajeria	T	Buzon.java	Comunicación asíncrona y orden de entrega simulado.	implementado_pendiente_ci
+17-sistemas-distribuidos	01-mensajeria	T	MainMensajeria.java	Comunicación asíncrona y orden de entrega simulado.	implementado_pendiente_ci
+17-sistemas-distribuidos	02-relojes-logicos	T	RelojLamport.java	Orden causal parcial y marcas de tiempo lógicas.	implementado_pendiente_ci
+17-sistemas-distribuidos	02-relojes-logicos	T	MainLamport.java	Orden causal parcial y marcas de tiempo lógicas.	implementado_pendiente_ci
+17-sistemas-distribuidos	03-relojes-vectoriales	T	RelojVectorial.java	Distinguir precedencia causal de concurrencia.	implementado_pendiente_ci
+17-sistemas-distribuidos	03-relojes-vectoriales	T	MainCausalidad.java	Distinguir precedencia causal de concurrencia.	implementado_pendiente_ci
+17-sistemas-distribuidos	04-reintentos	T	CanalSimulado.java	Timeout, fallos transitorios y backoff en reloj simulado.	implementado_pendiente_ci
+17-sistemas-distribuidos	04-reintentos	T	ReintentoAcotado.java	Timeout, fallos transitorios y backoff en reloj simulado.	implementado_pendiente_ci
+17-sistemas-distribuidos	04-reintentos	T	MainReintento.java	Timeout, fallos transitorios y backoff en reloj simulado.	implementado_pendiente_ci
+17-sistemas-distribuidos	05-idempotencia	T	Peticion.java	Deduplicar mensajes con identificadores estables.	implementado_pendiente_ci
+17-sistemas-distribuidos	05-idempotencia	T	ServidorIdempotente.java	Deduplicar mensajes con identificadores estables.	implementado_pendiente_ci
+17-sistemas-distribuidos	05-idempotencia	T	MainDuplicados.java	Deduplicar mensajes con identificadores estables.	implementado_pendiente_ci
+17-sistemas-distribuidos	06-heartbeat	T	Nodo.java	Sospechas de fallo bajo tiempo simulado; no certeza absoluta.	implementado_pendiente_ci
+17-sistemas-distribuidos	06-heartbeat	T	DetectorFallos.java	Sospechas de fallo bajo tiempo simulado; no certeza absoluta.	implementado_pendiente_ci
+17-sistemas-distribuidos	06-heartbeat	T	MainHeartbeat.java	Sospechas de fallo bajo tiempo simulado; no certeza absoluta.	implementado_pendiente_ci
+17-sistemas-distribuidos	07-eleccion-lider	T	EleccionAnillo.java	Elección bajo supuestos explícitos, participantes fijos y entrega fiable.	implementado_pendiente_ci
+17-sistemas-distribuidos	07-eleccion-lider	T	MainEleccion.java	Elección bajo supuestos explícitos, participantes fijos y entrega fiable.	implementado_pendiente_ci
+17-sistemas-distribuidos	08-replicacion	T	Replica.java	Copia primaria/secundaria y retraso controlado.	implementado_pendiente_ci
+17-sistemas-distribuidos	08-replicacion	T	MainReplicacion.java	Copia primaria/secundaria y retraso controlado.	implementado_pendiente_ci
+17-sistemas-distribuidos	09-consistencia	T	LecturaEventual.java	Visibilidad de escrituras, quórums bajo supuestos; no consenso completo.	implementado_pendiente_ci
+17-sistemas-distribuidos	09-consistencia	T	QuorumSimulado.java	Visibilidad de escrituras, quórums bajo supuestos; no consenso completo.	implementado_pendiente_ci
+17-sistemas-distribuidos	10-exclusion-distribuida	T	TokenAnillo.java	Acceso exclusivo mediante token bajo entrega fiable y sin pérdidas.	implementado_pendiente_ci
+17-sistemas-distribuidos	10-exclusion-distribuida	T	MainTokenAnillo.java	Acceso exclusivo mediante token bajo entrega fiable y sin pérdidas.	implementado_pendiente_ci
 18-pruebas-depuracion-y-rendimiento	01-contratos	R	PrePostcondiciones.java	Validación de entradas, resultados e invariantes.	planificado
 18-pruebas-depuracion-y-rendimiento	01-contratos	R	Invariantes.java	Validación de entradas, resultados e invariantes.	planificado
 18-pruebas-depuracion-y-rendimiento	02-pruebas-unitarias	R	Calculadora.java	Pruebas sin JUnit, AssertionError explícito y código de salida.	planificado

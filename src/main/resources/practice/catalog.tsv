@@ -1,4 +1,4 @@
-# CodeTrace | Biblioteca offline v32 | una entrada por archivo, no por ejercicio
+# CodeTrace | Biblioteca offline v33 | una entrada por archivo, no por ejercicio
 c	01-fundamentos/bits-y-mascaras/bits_y_mascaras.c
 c	01-fundamentos/callbacks-y-funciones/callbacks_y_funciones.c
 c	01-fundamentos/compilacion-y-enlazado/biblioteca-estatica-dinamica/compilar.sh
@@ -1482,6 +1482,30 @@ java21	16-interpretes-y-procesamiento-de-lenguajes/13-evaluacion-ast/Expresion.j
 java21	16-interpretes-y-procesamiento-de-lenguajes/13-evaluacion-ast/MainEvaluador.java
 java21	16-interpretes-y-procesamiento-de-lenguajes/14-maquina-estados-comandos/MaquinaEstados.java
 java21	16-interpretes-y-procesamiento-de-lenguajes/14-maquina-estados-comandos/ReconocerComando.java
+java21	17-sistemas-distribuidos/01-mensajeria/Buzon.java
+java21	17-sistemas-distribuidos/01-mensajeria/MainMensajeria.java
+java21	17-sistemas-distribuidos/01-mensajeria/Mensaje.java
+java21	17-sistemas-distribuidos/02-relojes-logicos/MainLamport.java
+java21	17-sistemas-distribuidos/02-relojes-logicos/RelojLamport.java
+java21	17-sistemas-distribuidos/03-relojes-vectoriales/MainCausalidad.java
+java21	17-sistemas-distribuidos/03-relojes-vectoriales/RelojVectorial.java
+java21	17-sistemas-distribuidos/04-reintentos/CanalSimulado.java
+java21	17-sistemas-distribuidos/04-reintentos/MainReintento.java
+java21	17-sistemas-distribuidos/04-reintentos/ReintentoAcotado.java
+java21	17-sistemas-distribuidos/05-idempotencia/MainDuplicados.java
+java21	17-sistemas-distribuidos/05-idempotencia/Peticion.java
+java21	17-sistemas-distribuidos/05-idempotencia/ServidorIdempotente.java
+java21	17-sistemas-distribuidos/06-heartbeat/DetectorFallos.java
+java21	17-sistemas-distribuidos/06-heartbeat/MainHeartbeat.java
+java21	17-sistemas-distribuidos/06-heartbeat/Nodo.java
+java21	17-sistemas-distribuidos/07-eleccion-lider/EleccionAnillo.java
+java21	17-sistemas-distribuidos/07-eleccion-lider/MainEleccion.java
+java21	17-sistemas-distribuidos/08-replicacion/MainReplicacion.java
+java21	17-sistemas-distribuidos/08-replicacion/Replica.java
+java21	17-sistemas-distribuidos/09-consistencia/LecturaEventual.java
+java21	17-sistemas-distribuidos/09-consistencia/QuorumSimulado.java
+java21	17-sistemas-distribuidos/10-exclusion-distribuida/MainTokenAnillo.java
+java21	17-sistemas-distribuidos/10-exclusion-distribuida/TokenAnillo.java
 javascript	01-fundamentos/closures/closures.js
 javascript	01-fundamentos/event-loop/event_loop.js
 javascript	01-fundamentos/funciones/funciones.js
