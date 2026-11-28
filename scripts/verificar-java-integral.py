@@ -43,6 +43,8 @@ def verify(case):
     with tempfile.TemporaryDirectory() as tmp:
         classpath = tmp
         def checked(command):
+            if command[0] in {"javac", "jar"}:
+                command = [command[0], "-J-Dstdout.encoding=UTF-8", "-J-Dstderr.encoding=UTF-8", *command[1:]]
             result = subprocess.run(command, cwd=tmp, timeout=30,
                                     capture_output=True, text=True, encoding="utf-8")
             assert result.returncode == 0, (case["path"], command[0], result.stderr)
@@ -67,7 +69,7 @@ def verify(case):
                      *map(str, sources)])
         if case["path"].startswith("20-arquitectura-de-software/"):
             verify_bytecode_boundaries(case, Path(tmp), checked)
-        command = ["java", "-Dfile.encoding=UTF-8", "-cp", classpath, case["main"]]
+        command = ["java", "-Dfile.encoding=UTF-8", "-Dstdout.encoding=UTF-8", "-Dstderr.encoding=UTF-8", "-cp", classpath, case["main"]]
         if case.get("executable_jar"):
             # Compile into a dedicated directory; package it and validate the
             # actual executable JAR's stdout using the same assertions below.
@@ -77,7 +79,7 @@ def verify(case):
                      *map(str, sources)])
             jar = Path(tmp) / "aplicacion.jar"
             checked(["jar", "--create", "--file", str(jar), "--main-class", case["main"], "-C", str(classes), "."])
-            command = ["java", "-Dfile.encoding=UTF-8", "-jar", str(jar)]
+            command = ["java", "-Dfile.encoding=UTF-8", "-Dstdout.encoding=UTF-8", "-Dstderr.encoding=UTF-8", "-jar", str(jar)]
         run = subprocess.run([*command,
                               *case.get("args", [])], cwd=tmp, timeout=20, input=case.get("stdin", ""),
                              capture_output=True, text=True, encoding="utf-8")
@@ -112,7 +114,7 @@ def verify_bytecode_boundaries(case, compiled, checked):
     allowed = rules[folder]
     classes = {".".join(p.relative_to(compiled).with_suffix("").parts)
                for p in compiled.rglob("*.class")}
-    command = ["jdeps", "-verbose:class", "-filter:none", "-cp", str(compiled), str(compiled)]
+    command = ["jdeps", "-J-Dstdout.encoding=UTF-8", "-J-Dstderr.encoding=UTF-8", "-verbose:class", "-filter:none", "-cp", str(compiled), str(compiled)]
     result = subprocess.run(command, cwd=compiled, timeout=30, capture_output=True,
                             text=True, encoding="utf-8")
     assert result.returncode == 0, (case["path"], result.stderr)

@@ -30,6 +30,8 @@ Implementación completa: 523 fuentes Java y 2 documentos en las 15 áreas; 320 
 
 ## Auditoría de cierre
 
+- En Windows v38 (job 140869527747), 3 ejercicios de Unicode/archivos fallaron porque stdout utilizaba la página de códigos del sistema, pese a file.encoding=UTF-8. Se fija explícitamente stdout.encoding y stderr.encoding en las JVM verificadas y herramientas JDK. El mismo fallo de Onion que en Linux quedó corregido; no se flexibilizan los resultados esperados.
+
 - La comprobación jdeps de v38 detectó una dependencia implícita de presentación a dominio en Onion (job 140869527775). Se corrigió el servicio para retornar únicamente el nombre reservado; no se amplía la regla de dependencias. Se sincronizó la aceptación TCP antes de probar SO_TIMEOUT y se explicitó la restricción de transacciones del WAL didáctico. v39 pendiente de nueva CI.
 
 - Comprobación Git de 00–05: las seis huellas de árbol coinciden exactamente con c6362835, sin cambios en fuentes congeladas.
