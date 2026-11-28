@@ -1,4 +1,4 @@
-# CodeTrace | Biblioteca offline v28 | una entrada por archivo, no por ejercicio
+# CodeTrace | Biblioteca offline v29 | una entrada por archivo, no por ejercicio
 c	01-fundamentos/bits-y-mascaras/bits_y_mascaras.c
 c	01-fundamentos/callbacks-y-funciones/callbacks_y_funciones.c
 c	01-fundamentos/compilacion-y-enlazado/biblioteca-estatica-dinamica/compilar.sh
@@ -1411,6 +1411,23 @@ java21	12-persistencia-y-gestion-de-datos/08-write-ahead-log/EntradaLog.java
 java21	12-persistencia-y-gestion-de-datos/08-write-ahead-log/MainRecuperacion.java
 java21	12-persistencia-y-gestion-de-datos/09-jdbc-api/ContratoJdbc.java
 java21	12-persistencia-y-gestion-de-datos/09-jdbc-api/MainConsultaSimulada.java
+java21	13-criptografia-y-seguridad/01-integridad/HashSHA256.java
+java21	13-criptografia-y-seguridad/01-integridad/VerificarArchivo.java
+java21	13-criptografia-y-seguridad/02-checksum/ChecksumSuma.java
+java21	13-criptografia-y-seguridad/03-autenticacion-mensajes/HmacSHA256.java
+java21	13-criptografia-y-seguridad/03-autenticacion-mensajes/VerificarHmac.java
+java21	13-criptografia-y-seguridad/04-aleatoriedad/SecureRandomDemo.java
+java21	13-criptografia-y-seguridad/05-contrasenas/PBKDF2Demo.java
+java21	13-criptografia-y-seguridad/06-cifrado-simetrico/AesGcmDemo.java
+java21	13-criptografia-y-seguridad/07-claves-publicas/FirmaDigital.java
+java21	13-criptografia-y-seguridad/07-claves-publicas/ParClaves.java
+java21	13-criptografia-y-seguridad/08-intercambio-claves/AcuerdoX25519.java
+java21	13-criptografia-y-seguridad/09-certificados/LeerCertificado.java
+java21	13-criptografia-y-seguridad/09-certificados/MainCertificado.java
+java21	13-criptografia-y-seguridad/10-validacion-entradas/ValidarLongitud.java
+java21	13-criptografia-y-seguridad/10-validacion-entradas/ValidarRuta.java
+java21	13-criptografia-y-seguridad/11-control-acceso/MainControlAcceso.java
+java21	13-criptografia-y-seguridad/11-control-acceso/PermisosRoles.java
 javascript	01-fundamentos/closures/closures.js
 javascript	01-fundamentos/event-loop/event_loop.js
 javascript	01-fundamentos/funciones/funciones.js

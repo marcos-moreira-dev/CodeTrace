@@ -319,23 +319,23 @@ area	unidad	modalidad	archivo	objetivo	estado
 12-persistencia-y-gestion-de-datos	08-write-ahead-log	T	MainRecuperacion.java	Escritura previa y recuperación simulada.	implementado_pendiente_ci
 12-persistencia-y-gestion-de-datos	09-jdbc-api	T	ContratoJdbc.java	Connection, PreparedStatement y ResultSet como contrato conceptual; no conexión real sin driver, usar dobles explícitos sin fingir una BD.	implementado_pendiente_ci
 12-persistencia-y-gestion-de-datos	09-jdbc-api	T	MainConsultaSimulada.java	Connection, PreparedStatement y ResultSet como contrato conceptual; no conexión real sin driver, usar dobles explícitos sin fingir una BD.	implementado_pendiente_ci
-13-criptografia-y-seguridad	01-integridad	R	HashSHA256.java	Huella criptográfica e integridad; hash no equivale a autenticación.	planificado
-13-criptografia-y-seguridad	01-integridad	R	VerificarArchivo.java	Huella criptográfica e integridad; hash no equivale a autenticación.	planificado
-13-criptografia-y-seguridad	02-checksum	R	ChecksumSuma.java	Checksum elemental y sus colisiones; CRC se estudia en 14. No es una función criptográfica.	planificado
-13-criptografia-y-seguridad	03-autenticacion-mensajes	R	HmacSHA256.java	Autenticidad e integridad con clave compartida.	planificado
-13-criptografia-y-seguridad	03-autenticacion-mensajes	R	VerificarHmac.java	Autenticidad e integridad con clave compartida.	planificado
-13-criptografia-y-seguridad	04-aleatoriedad	R	SecureRandomDemo.java	Aleatoriedad criptográfica; no exigir valores exactos de salida.	planificado
-13-criptografia-y-seguridad	05-contrasenas	R	PBKDF2Demo.java	Sal aleatoria y derivación; parámetros de práctica, no receta de producción.	planificado
-13-criptografia-y-seguridad	06-cifrado-simetrico	R	AesGcmDemo.java	Cifrado autenticado, nonce único y verificación de etiqueta.	planificado
-13-criptografia-y-seguridad	07-claves-publicas	R	ParClaves.java	Generación de claves y firma/verificación, no usar claves reales.	planificado
-13-criptografia-y-seguridad	07-claves-publicas	R	FirmaDigital.java	Generación de claves y firma/verificación, no usar claves reales.	planificado
-13-criptografia-y-seguridad	08-intercambio-claves	R	AcuerdoX25519.java	Acuerdo de secreto; no constituye autenticación por sí solo.	planificado
-13-criptografia-y-seguridad	09-certificados	R	LeerCertificado.java	Interpretar certificado de prueba empaquetado o generado localmente; no confiar solo por leerlo.	planificado
-13-criptografia-y-seguridad	09-certificados	R	MainCertificado.java	Interpretar certificado de prueba empaquetado o generado localmente; no confiar solo por leerlo.	planificado
-13-criptografia-y-seguridad	10-validacion-entradas	R	ValidarLongitud.java	Límites de mensajes y confinamiento de rutas en temporales.	planificado
-13-criptografia-y-seguridad	10-validacion-entradas	R	ValidarRuta.java	Límites de mensajes y confinamiento de rutas en temporales.	planificado
-13-criptografia-y-seguridad	11-control-acceso	T	PermisosRoles.java	Autorización por roles simulada; distinta de sincronización lectores-escritores.	planificado
-13-criptografia-y-seguridad	11-control-acceso	T	MainControlAcceso.java	Autorización por roles simulada; distinta de sincronización lectores-escritores.	planificado
+13-criptografia-y-seguridad	01-integridad	R	HashSHA256.java	Huella criptográfica e integridad; hash no equivale a autenticación.	implementado_pendiente_ci
+13-criptografia-y-seguridad	01-integridad	R	VerificarArchivo.java	Huella criptográfica e integridad; hash no equivale a autenticación.	implementado_pendiente_ci
+13-criptografia-y-seguridad	02-checksum	R	ChecksumSuma.java	Checksum elemental y sus colisiones; CRC se estudia en 14. No es una función criptográfica.	implementado_pendiente_ci
+13-criptografia-y-seguridad	03-autenticacion-mensajes	R	HmacSHA256.java	Autenticidad e integridad con clave compartida.	implementado_pendiente_ci
+13-criptografia-y-seguridad	03-autenticacion-mensajes	R	VerificarHmac.java	Autenticidad e integridad con clave compartida.	implementado_pendiente_ci
+13-criptografia-y-seguridad	04-aleatoriedad	R	SecureRandomDemo.java	Aleatoriedad criptográfica; no exigir valores exactos de salida.	implementado_pendiente_ci
+13-criptografia-y-seguridad	05-contrasenas	R	PBKDF2Demo.java	Sal aleatoria y derivación; parámetros de práctica, no receta de producción.	implementado_pendiente_ci
+13-criptografia-y-seguridad	06-cifrado-simetrico	R	AesGcmDemo.java	Cifrado autenticado, nonce único y verificación de etiqueta.	implementado_pendiente_ci
+13-criptografia-y-seguridad	07-claves-publicas	R	ParClaves.java	Generación de claves y firma/verificación, no usar claves reales.	implementado_pendiente_ci
+13-criptografia-y-seguridad	07-claves-publicas	R	FirmaDigital.java	Generación de claves y firma/verificación, no usar claves reales.	implementado_pendiente_ci
+13-criptografia-y-seguridad	08-intercambio-claves	R	AcuerdoX25519.java	Acuerdo de secreto; no constituye autenticación por sí solo.	implementado_pendiente_ci
+13-criptografia-y-seguridad	09-certificados	R	LeerCertificado.java	Interpretar certificado de prueba empaquetado o generado localmente; no confiar solo por leerlo.	implementado_pendiente_ci
+13-criptografia-y-seguridad	09-certificados	R	MainCertificado.java	Interpretar certificado de prueba empaquetado o generado localmente; no confiar solo por leerlo.	implementado_pendiente_ci
+13-criptografia-y-seguridad	10-validacion-entradas	R	ValidarLongitud.java	Límites de mensajes y confinamiento de rutas en temporales.	implementado_pendiente_ci
+13-criptografia-y-seguridad	10-validacion-entradas	R	ValidarRuta.java	Límites de mensajes y confinamiento de rutas en temporales.	implementado_pendiente_ci
+13-criptografia-y-seguridad	11-control-acceso	T	PermisosRoles.java	Autorización por roles simulada; distinta de sincronización lectores-escritores.	implementado_pendiente_ci
+13-criptografia-y-seguridad	11-control-acceso	T	MainControlAcceso.java	Autorización por roles simulada; distinta de sincronización lectores-escritores.	implementado_pendiente_ci
 14-comunicacion-con-dispositivos	03-transmision-serial	T	TramaSerial.java	Modelar trama serial con inicio, datos, paridad y parada como secuencia de bits, sin implementar controlador físico.	planificado
 14-comunicacion-con-dispositivos	04-paridad	T	ParidadPar.java	Detectar cambios de paridad y límites de detección.	planificado
 14-comunicacion-con-dispositivos	04-paridad	T	ParidadImpar.java	Detectar cambios de paridad y límites de detección.	planificado

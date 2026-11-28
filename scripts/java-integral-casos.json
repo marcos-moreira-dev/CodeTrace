@@ -2085,5 +2085,142 @@
     "main": "MainConsultaSimulada",
     "mode": "T",
     "stdout": "pan: 12\nNo encontrado\n"
+  },
+  {
+    "path": "13-criptografia-y-seguridad/01-integridad/HashSHA256.java",
+    "sources": [
+      "13-criptografia-y-seguridad/01-integridad/HashSHA256.java"
+    ],
+    "main": "HashSHA256",
+    "mode": "R",
+    "stdout": "Bytes: 32\nba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad\n"
+  },
+  {
+    "path": "13-criptografia-y-seguridad/01-integridad/VerificarArchivo.java",
+    "sources": [
+      "13-criptografia-y-seguridad/01-integridad/VerificarArchivo.java"
+    ],
+    "main": "VerificarArchivo",
+    "mode": "R",
+    "stdout": "Integro: true\nIntegro: false\n"
+  },
+  {
+    "path": "13-criptografia-y-seguridad/02-checksum/ChecksumSuma.java",
+    "sources": [
+      "13-criptografia-y-seguridad/02-checksum/ChecksumSuma.java"
+    ],
+    "main": "ChecksumSuma",
+    "mode": "R",
+    "stdout": "A: 6\nB: 6\nColision: true\n"
+  },
+  {
+    "path": "13-criptografia-y-seguridad/03-autenticacion-mensajes/HmacSHA256.java",
+    "sources": [
+      "13-criptografia-y-seguridad/03-autenticacion-mensajes/HmacSHA256.java"
+    ],
+    "main": "HmacSHA256",
+    "mode": "R",
+    "stdout": "Bytes: 32\nRepetible con misma clave: true\n"
+  },
+  {
+    "path": "13-criptografia-y-seguridad/03-autenticacion-mensajes/VerificarHmac.java",
+    "sources": [
+      "13-criptografia-y-seguridad/03-autenticacion-mensajes/VerificarHmac.java"
+    ],
+    "main": "VerificarHmac",
+    "mode": "R",
+    "stdout": "Original: true\nModificado: false\n"
+  },
+  {
+    "path": "13-criptografia-y-seguridad/04-aleatoriedad/SecureRandomDemo.java",
+    "sources": [
+      "13-criptografia-y-seguridad/04-aleatoriedad/SecureRandomDemo.java"
+    ],
+    "main": "SecureRandomDemo",
+    "mode": "R",
+    "stdout": "Nonce: 12 bytes\nSal: 16 bytes\n"
+  },
+  {
+    "path": "13-criptografia-y-seguridad/05-contrasenas/PBKDF2Demo.java",
+    "sources": [
+      "13-criptografia-y-seguridad/05-contrasenas/PBKDF2Demo.java"
+    ],
+    "main": "PBKDF2Demo",
+    "mode": "R",
+    "stdout": "Correcta: true\nIncorrecta: false\n"
+  },
+  {
+    "path": "13-criptografia-y-seguridad/06-cifrado-simetrico/AesGcmDemo.java",
+    "sources": [
+      "13-criptografia-y-seguridad/06-cifrado-simetrico/AesGcmDemo.java"
+    ],
+    "main": "AesGcmDemo",
+    "mode": "R",
+    "stdout": "pan:12\nEtiqueta invalida\n"
+  },
+  {
+    "path": "13-criptografia-y-seguridad/07-claves-publicas/ParClaves.java",
+    "sources": [
+      "13-criptografia-y-seguridad/07-claves-publicas/ParClaves.java"
+    ],
+    "main": "ParClaves",
+    "mode": "R",
+    "stdout": "Publica: X.509\nPrivada: PKCS#8\n"
+  },
+  {
+    "path": "13-criptografia-y-seguridad/07-claves-publicas/FirmaDigital.java",
+    "sources": [
+      "13-criptografia-y-seguridad/07-claves-publicas/FirmaDigital.java"
+    ],
+    "main": "FirmaDigital",
+    "mode": "R",
+    "stdout": "Original: true\nAlterado: false\n"
+  },
+  {
+    "path": "13-criptografia-y-seguridad/08-intercambio-claves/AcuerdoX25519.java",
+    "sources": [
+      "13-criptografia-y-seguridad/08-intercambio-claves/AcuerdoX25519.java"
+    ],
+    "main": "AcuerdoX25519",
+    "mode": "R",
+    "stdout": "Coinciden: true\nBytes: 32\n"
+  },
+  {
+    "path": "13-criptografia-y-seguridad/09-certificados/MainCertificado.java",
+    "sources": [
+      "13-criptografia-y-seguridad/09-certificados/LeerCertificado.java",
+      "13-criptografia-y-seguridad/09-certificados/MainCertificado.java"
+    ],
+    "main": "MainCertificado",
+    "mode": "R",
+    "stdout": "Tipo: X.509\nSujeto: CN=CodeTrace Demo\nAutofirma valida\n"
+  },
+  {
+    "path": "13-criptografia-y-seguridad/10-validacion-entradas/ValidarLongitud.java",
+    "sources": [
+      "13-criptografia-y-seguridad/10-validacion-entradas/ValidarLongitud.java"
+    ],
+    "main": "ValidarLongitud",
+    "mode": "R",
+    "stdout": "0: true\n32: true\n-1: false\n1025: false\n"
+  },
+  {
+    "path": "13-criptografia-y-seguridad/10-validacion-entradas/ValidarRuta.java",
+    "sources": [
+      "13-criptografia-y-seguridad/10-validacion-entradas/ValidarRuta.java"
+    ],
+    "main": "ValidarRuta",
+    "mode": "R",
+    "stdout": "ventas.txt: true\n../afuera.txt: false\n"
+  },
+  {
+    "path": "13-criptografia-y-seguridad/11-control-acceso/MainControlAcceso.java",
+    "sources": [
+      "13-criptografia-y-seguridad/11-control-acceso/PermisosRoles.java",
+      "13-criptografia-y-seguridad/11-control-acceso/MainControlAcceso.java"
+    ],
+    "main": "MainControlAcceso",
+    "mode": "T",
+    "stdout": "Cajero vende: true\nCajero elimina: false\nAdmin elimina: true\nDesconocido lee: false\n"
   }
 ]
