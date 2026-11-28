@@ -93,9 +93,9 @@ class PracticeCurriculumStructureAuditTest {
                 "04-patrones-diseno/factory/basico/Factory.java",
                 "04-patrones-diseno/factory/basico/Mensaje.java",
                 "04-patrones-diseno/factory/basico/Correo.java",
-                "01-fundamentos/records-y-enums/RecordsYEnums.java",
-                "01-fundamentos/records-y-enums/Estado.java",
-                "01-fundamentos/records-y-enums/Pedido.java",
+                "01-fundamentos-en-accion/records-y-enums/RecordsYEnums.java",
+                "01-fundamentos-en-accion/records-y-enums/Estado.java",
+                "01-fundamentos-en-accion/records-y-enums/Pedido.java",
                 "04-patrones-diseno/strategy/basico/Strategy.java",
                 "04-patrones-diseno/strategy/basico/Descuento.java",
                 "04-patrones-diseno/observer/basico/Observador.java",
@@ -113,7 +113,7 @@ class PracticeCurriculumStructureAuditTest {
                 "04-patrones-diseno/template-method/reportes/ProcesoReporte.java",
                 "04-patrones-diseno/template-method/reportes/ReporteTexto.java",
                 "04-patrones-diseno/template-method/reportes/ReporteCsv.java",
-                "01-fundamentos/funciones/Receptor.java",
+                "01-fundamentos-en-accion/funciones/Receptor.java",
                 "02-estructuras-datos/grafos/tipos/Orientacion.java");
         for (String relative : roles) {
             assertTrue(library.entries(java).contains(relative), relative);

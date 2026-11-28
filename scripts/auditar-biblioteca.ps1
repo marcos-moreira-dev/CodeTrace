@@ -25,7 +25,7 @@ if (-not (Test-Path -LiteralPath $catalogo -PathType Leaf)) {
 
 $referencias = New-Object 'System.Collections.Generic.List[object]'
 $rutasVistas = [System.Collections.Generic.HashSet[string]]::new([StringComparer]::Ordinal)
-$tipos = @('00-fundamentos-especificacion-oficial', '01-fundamentos', '02-estructuras-datos', '03-algoritmos', '04-patrones-diseno', '05-patrones-diseno-counter-strike')
+$tipos = @('00-fundamentos-especificacion-oficial', '01-fundamentos-en-accion', '01-fundamentos', '02-estructuras-datos', '03-algoritmos', '04-patrones-diseno', '05-patrones-diseno-counter-strike')
 foreach ($linea in (Get-Content -LiteralPath $catalogo -Encoding UTF8)) {
     if ([string]::IsNullOrWhiteSpace($linea) -or $linea.StartsWith('#')) { continue }
     $campos = $linea -split ([string][char]9), 2

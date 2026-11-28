@@ -56,6 +56,22 @@ class BuiltInLibraryTest {
     }
 
     @Test
+    void javaCatalogRenamesOnlyTheExistingFundamentalsAndKeepsOldCache() throws Exception {
+        Path cache = temp.resolve("practice-library");
+        Path previous = cache.resolve("v15/java21/01-fundamentos");
+        Files.createDirectories(previous);
+        Path prior = previous.resolve("prior.java");
+        Files.writeString(prior, "prior session reference");
+        var library = new BuiltInLibrary(cache.resolve(BuiltInLibrary.CATALOG_VERSION));
+        var javaPack = library.packs().getFirst();
+        assertEquals(28, library.entries(javaPack).stream()
+                .filter(p -> p.startsWith("01-fundamentos-en-accion/")).count());
+        assertFalse(library.entries(javaPack).stream().anyMatch(p -> p.startsWith("01-fundamentos/")));
+        assertTrue(Files.isDirectory(library.open(javaPack).resolve("01-fundamentos-en-accion")));
+        assertEquals("prior session reference", Files.readString(prior));
+    }
+
+    @Test
     void restoresInternalReferenceWithoutTouchingOtherProjects() throws Exception {
         var library = new BuiltInLibrary(temp.resolve("cache"));
         var javaPack = library.packs().getFirst();
@@ -112,7 +128,7 @@ class BuiltInLibraryTest {
     @Test
     void allFourCurriculumPurposesAndDocumentedJavaClientsArePresent() throws Exception {
         var library = new BuiltInLibrary(temp.resolve("curriculum"));
-        assertEquals("v16", BuiltInLibrary.CATALOG_VERSION);
+        assertEquals("v17", BuiltInLibrary.CATALOG_VERSION);
         assertEquals(1501, library.packs().stream().mapToInt(library::size).sum());
         for (var pack : library.packs()) {
             var entries = library.entries(pack);
@@ -126,13 +142,13 @@ class BuiltInLibraryTest {
                     ).get(pack.id()))),
                     "Every reference is in an exercise directory except the documented integrator: "
                             + pack.id());
-            assertTrue(entries.stream().anyMatch(x -> x.startsWith("01-fundamentos/")), pack.id());
+            assertTrue(entries.stream().anyMatch(x -> x.startsWith(pack.id().equals("java21") ? "01-fundamentos-en-accion/" : "01-fundamentos/")), pack.id());
             assertTrue(entries.stream().anyMatch(x -> x.startsWith("03-algoritmos/")), pack.id());
             assertTrue(entries.stream().noneMatch(x -> x.contains("07-proyectos/")
                     || x.contains("laboratorios/") || x.contains("/complejidad/")), pack.id());
         }
         var javaPack = library.packs().stream().filter(x -> x.id().equals("java21")).findFirst().orElseThrow();
-        assertTrue(library.entries(javaPack).contains("01-fundamentos/comparadores/ComparadoresEncadenados.java"));
+        assertTrue(library.entries(javaPack).contains("01-fundamentos-en-accion/comparadores/ComparadoresEncadenados.java"));
         assertTrue(library.entries(javaPack).contains("03-algoritmos/programacion-dinamica/cambio-monedas/MainMonedas.java"));
         assertTrue(library.entries(javaPack).contains("04-patrones-diseno/strategy-tarifas/MainTarifas.java"));
         for (var expected : java.util.Map.of("python", 33L, "csharp", 18L, "cpp", 35L, "typescript", 33L).entrySet()) {
@@ -166,8 +182,8 @@ class BuiltInLibraryTest {
         assertTrue(library.entries(javaPack).contains("03-algoritmos/grafos/recorridos/caminos-sin-peso/MainCaminosSinPeso.java"));
         assertTrue(library.entries(javaPack).contains("04-patrones-diseno/factory/basico/MainFactoryBasica.java"));
         assertTrue(library.entries(javaPack).contains("04-patrones-diseno/observer/basico/MainObservadorBasico.java"));
-        assertTrue(library.entries(javaPack).contains("01-fundamentos/excepciones/checked-personalizada/MainExcepcionChecked.java"));
-        assertTrue(library.entries(javaPack).contains("01-fundamentos/excepciones/unchecked-dominio/MainExcepcionUnchecked.java"));
+        assertTrue(library.entries(javaPack).contains("01-fundamentos-en-accion/excepciones/checked-personalizada/MainExcepcionChecked.java"));
+        assertTrue(library.entries(javaPack).contains("01-fundamentos-en-accion/excepciones/unchecked-dominio/MainExcepcionUnchecked.java"));
         assertTrue(library.entries(javaPack).contains("02-estructuras-datos/cola-circular/MainColaCircular.java"));
         assertTrue(library.entries(javaPack).contains("04-patrones-diseno/strategy/basico/MainStrategy.java"));
 

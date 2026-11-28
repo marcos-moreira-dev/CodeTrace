@@ -253,4 +253,6 @@ Ejemplos originales basados en la [JLS SE 21](https://docs.oracle.com/javase/spe
 | 15.9.4; ejemplo 15.9.4-1 | 15-expresiones/15-09-04-01-memoria-antes-argumento/Nodo.java | Implementado; confirmar CI de la rama actual |
 | 15.10.2; ejemplo 15.10.2-3 | 15-expresiones/15-10-02-03-memoria-despues-dimension/MemoriaArreglo.java | Implementado; confirmar CI de la rama actual |
 
-Pendientes: revisión de fidelidad y casos secundarios, inventariar fragmentos no numerados, migrar carpeta anterior y publicar. Los casos de memoria ejecutan una JVM separada con heap de 16 MiB. Los módulos se compilan con module-source-path. No se incluye el PDF.
+Pendientes: revisión de fidelidad y casos secundarios, inventariar fragmentos no numerados, validar el cambio de carpeta anterior y publicar. Los casos de memoria ejecutan una JVM separada con heap de 16 MiB. Los módulos se compilan con module-source-path. No se incluye el PDF.
+
+La carpeta anterior se renombró a `01-fundamentos-en-accion/` conservando el mismo árbol Git (28 archivos). Se creó una versión de caché v17; el contenido anterior no se elimina.

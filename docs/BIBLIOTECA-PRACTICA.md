@@ -19,7 +19,7 @@ Los comentarios iniciales de cada archivo registran versión/estándar y comando
 
 ### Casos relevantes
 
-- Java: `01-fundamentos/comparadores/`, `01-fundamentos/streams/`, `03-algoritmos/programacion-dinamica/`, `02-estructuras-datos/heaps/`, `04-patrones-diseno/strategy-tarifas/`.
+- Java: `01-fundamentos-en-accion/comparadores/`, `01-fundamentos-en-accion/streams/`, `03-algoritmos/programacion-dinamica/`, `02-estructuras-datos/heaps/`, `04-patrones-diseno/strategy-tarifas/`.
 - Python: generadores, decoradores, cola circular, monedas y Strategy.
 - C: punteros, callbacks, pila opaca con `.h/.c`, enlace estático/compartido, búsqueda binaria.
 - C++: RAII, STL, iteradores, cola de prioridad y Strategy multiarchivo.
@@ -100,3 +100,7 @@ Se unifica `02-estructuras-datos/linked-list/simple/` para dejar juntas las vari
 - En Java: **Bubble Sort optimizado**, **Insertion Sort**, **Merge Sort**, **HeapSort**, **QuickSort** (comparativa compartiendo una misma entrada); **Binary Insertion Sort** (menos comparaciones, pero movimientos cuadraticos) y **Lower/Upper Bound** (posiciones de insercion y rangos repetidos). Son temas distintos. Se incluyen casos vacios y repetidos y algunas pruebas adversas.
 - Se replican los escenarios en Python, TypeScript, Kotlin, C#, C++, Ruby y JavaScript con idiomatismos de lenguaje. El libro `De las matematicas a la computadora` sustenta los cinco sorts y la distincion entre complejidad, estabilidad e in-place; el repo AlgoKit aporta Upper/Lower Bound y cuatro sorts.
 - No confundir `813 archivos` con `813 ejercicios` ni el exito de una prueba funcional con una medicion valida de complejidad temporal.
+
+## Fundamentos de Java 21
+
+La carpeta `java21/01-fundamentos-en-accion/` conserva los 28 archivos originales. La nueva `java21/00-fundamentos-especificacion-oficial/` contiene adaptaciones de la JLS 21, con unidades independientes, casos de rechazo intencional y compilaciones sucesivas. No compilar todo `java21/` de una vez: para ejemplos anteriores, excluir la nueva carpeta; para JLS, seguir los comandos por unidad o usar `python3 scripts/verificar-jls21.py`. Las cachés de versiones previas se conservan; queda pendiente comprobar la reapertura de sesiones reales de la versión anterior.
