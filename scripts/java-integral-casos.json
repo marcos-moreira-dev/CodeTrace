@@ -2974,5 +2974,89 @@
     "main": "Minimax",
     "mode": "R",
     "stdout": "Quitar 1: 1\nQuitar 2: -1\nValor inicial: 1\n"
+  },
+  {
+    "path": "20-arquitectura-de-software/01-en-capas-verduleria/Main.java",
+    "sources": [
+      "20-arquitectura-de-software/01-en-capas-verduleria/dominio/Verdura.java",
+      "20-arquitectura-de-software/01-en-capas-verduleria/persistencia/InventarioEnMemoria.java",
+      "20-arquitectura-de-software/01-en-capas-verduleria/servicio/ServicioVentas.java",
+      "20-arquitectura-de-software/01-en-capas-verduleria/presentacion/ConsolaVentas.java",
+      "20-arquitectura-de-software/01-en-capas-verduleria/Main.java"
+    ],
+    "main": "Main",
+    "mode": "R",
+    "stdout": "Venta: tomate x2\nStock: 3\nVenta rechazada\nStock: 3\n"
+  },
+  {
+    "path": "20-arquitectura-de-software/02-mvc-biblioteca/Main.java",
+    "sources": [
+      "20-arquitectura-de-software/02-mvc-biblioteca/modelo/Libro.java",
+      "20-arquitectura-de-software/02-mvc-biblioteca/modelo/Biblioteca.java",
+      "20-arquitectura-de-software/02-mvc-biblioteca/vista/VistaBiblioteca.java",
+      "20-arquitectura-de-software/02-mvc-biblioteca/controlador/ControladorPrestamos.java",
+      "20-arquitectura-de-software/02-mvc-biblioteca/Main.java"
+    ],
+    "main": "Main",
+    "mode": "R",
+    "stdout": "El principito: prestado\nOperacion rechazada\nEl principito: disponible\n"
+  },
+  {
+    "path": "20-arquitectura-de-software/03-mvp-panaderia/Main.java",
+    "sources": [
+      "20-arquitectura-de-software/03-mvp-panaderia/modelo/PedidoPan.java",
+      "20-arquitectura-de-software/03-mvp-panaderia/vista/VistaPedidos.java",
+      "20-arquitectura-de-software/03-mvp-panaderia/vista/ConsolaPedidos.java",
+      "20-arquitectura-de-software/03-mvp-panaderia/presentador/PresentadorPedidos.java",
+      "20-arquitectura-de-software/03-mvp-panaderia/Main.java"
+    ],
+    "main": "Main",
+    "mode": "R",
+    "stdout": "Total: 100 centavos\nPedido rechazado\n"
+  },
+  {
+    "path": "20-arquitectura-de-software/04-mvvm-heladeria/Main.java",
+    "sources": [
+      "20-arquitectura-de-software/04-mvvm-heladeria/modelo/Helado.java",
+      "20-arquitectura-de-software/04-mvvm-heladeria/viewmodel/HeladoViewModel.java",
+      "20-arquitectura-de-software/04-mvvm-heladeria/vista/VistaHeladeria.java",
+      "20-arquitectura-de-software/04-mvvm-heladeria/Main.java"
+    ],
+    "main": "Main",
+    "mode": "R",
+    "stdout": "vainilla: 200 centavos\nchocolate: 450 centavos\nSeleccion rechazada\n"
+  },
+  {
+    "path": "20-arquitectura-de-software/05-hexagonal-centro-ecuestre/Main.java",
+    "sources": [
+      "20-arquitectura-de-software/05-hexagonal-centro-ecuestre/dominio/Caballo.java",
+      "20-arquitectura-de-software/05-hexagonal-centro-ecuestre/dominio/Reserva.java",
+      "20-arquitectura-de-software/05-hexagonal-centro-ecuestre/aplicacion/puertos/ServicioReservas.java",
+      "20-arquitectura-de-software/05-hexagonal-centro-ecuestre/aplicacion/puertos/RepositorioCaballos.java",
+      "20-arquitectura-de-software/05-hexagonal-centro-ecuestre/aplicacion/ReservarCaballo.java",
+      "20-arquitectura-de-software/05-hexagonal-centro-ecuestre/infraestructura/entrada/ConsolaReservas.java",
+      "20-arquitectura-de-software/05-hexagonal-centro-ecuestre/infraestructura/salida/RepositorioEnMemoria.java",
+      "20-arquitectura-de-software/05-hexagonal-centro-ecuestre/Main.java"
+    ],
+    "main": "Main",
+    "mode": "R",
+    "stdout": "Reserva: Luna para Ana\nReserva rechazada\n"
+  },
+  {
+    "path": "20-arquitectura-de-software/06-clean-peluqueria-canina/Main.java",
+    "sources": [
+      "20-arquitectura-de-software/06-clean-peluqueria-canina/entidades/Cita.java",
+      "20-arquitectura-de-software/06-clean-peluqueria-canina/casosdeuso/EntradaCita.java",
+      "20-arquitectura-de-software/06-clean-peluqueria-canina/casosdeuso/SalidaCita.java",
+      "20-arquitectura-de-software/06-clean-peluqueria-canina/casosdeuso/RepositorioCitas.java",
+      "20-arquitectura-de-software/06-clean-peluqueria-canina/casosdeuso/AgendarCita.java",
+      "20-arquitectura-de-software/06-clean-peluqueria-canina/adaptadores/ControladorCitas.java",
+      "20-arquitectura-de-software/06-clean-peluqueria-canina/adaptadores/PresentadorCitas.java",
+      "20-arquitectura-de-software/06-clean-peluqueria-canina/infraestructura/CitasEnMemoria.java",
+      "20-arquitectura-de-software/06-clean-peluqueria-canina/Main.java"
+    ],
+    "main": "Main",
+    "mode": "R",
+    "stdout": "Cita: Toby a las 10\nRechazada: Hora ocupada\nRechazada: Hora invalida\n"
   }
 ]
