@@ -1,0 +1,3457 @@
+{
+  "source": "https://github.com/gibbok/typescript-book/blob/typescript-7-book-v1-4/README.md",
+  "commit": "859f4c958bc9bc45a904a8c7a4d34f6d76b50bec",
+  "units": [
+    {
+      "order": 1,
+      "section": [
+        "TypeScript Introduction",
+        "TypeScript and JavaScript"
+      ],
+      "path": "01-fundamentos/001-typescript-and-javascript/01.ts",
+      "language": "typescript",
+      "source_lines": 1,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 2,
+      "section": [
+        "TypeScript Introduction",
+        "TypeScript and JavaScript"
+      ],
+      "path": "01-fundamentos/001-typescript-and-javascript/02.ts",
+      "language": "typescript",
+      "source_lines": 1,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 3,
+      "section": [
+        "TypeScript Introduction",
+        "TypeScript and JavaScript"
+      ],
+      "path": "01-fundamentos/001-typescript-and-javascript/03.ts",
+      "language": "typescript",
+      "source_lines": 2,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 4,
+      "section": [
+        "TypeScript Introduction",
+        "TypeScript and JavaScript"
+      ],
+      "path": "apoyo/001-typescript-and-javascript/04.txt",
+      "language": "text",
+      "source_lines": 1,
+      "added_header_lines": 0,
+      "status": "material_de_apoyo"
+    },
+    {
+      "order": 5,
+      "section": [
+        "TypeScript Introduction",
+        "TypeScript and JavaScript"
+      ],
+      "path": "01-fundamentos/001-typescript-and-javascript/05.ts",
+      "language": "typescript",
+      "source_lines": 1,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 6,
+      "section": [
+        "TypeScript Introduction",
+        "TypeScript and JavaScript"
+      ],
+      "path": "01-fundamentos/001-typescript-and-javascript/06.ts",
+      "language": "typescript",
+      "source_lines": 1,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 7,
+      "section": [
+        "TypeScript Introduction",
+        "TypeScript and JavaScript"
+      ],
+      "path": "apoyo/001-typescript-and-javascript/07.txt",
+      "language": "text",
+      "source_lines": 1,
+      "added_header_lines": 0,
+      "status": "material_de_apoyo"
+    },
+    {
+      "order": 8,
+      "section": [
+        "TypeScript Introduction",
+        "TypeScript Code Generation"
+      ],
+      "path": "01-fundamentos/002-typescript-code-generation/01.ts",
+      "language": "typescript",
+      "source_lines": 2,
+      "added_header_lines": 5,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 9,
+      "section": [
+        "TypeScript Introduction",
+        "TypeScript Code Generation"
+      ],
+      "path": "01-fundamentos/002-typescript-code-generation/02.ts",
+      "language": "typescript",
+      "source_lines": 3,
+      "added_header_lines": 5,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 10,
+      "section": [
+        "TypeScript Introduction",
+        "TypeScript Code Generation"
+      ],
+      "path": "01-fundamentos/002-typescript-code-generation/03.ts",
+      "language": "typescript",
+      "source_lines": 15,
+      "added_header_lines": 5,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 11,
+      "section": [
+        "TypeScript Introduction",
+        "TypeScript Code Generation"
+      ],
+      "path": "01-fundamentos/002-typescript-code-generation/04.ts",
+      "language": "typescript",
+      "source_lines": 23,
+      "added_header_lines": 5,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 12,
+      "section": [
+        "TypeScript Introduction",
+        "TypeScript Code Generation"
+      ],
+      "path": "01-fundamentos/002-typescript-code-generation/05.ts",
+      "language": "typescript",
+      "source_lines": 31,
+      "added_header_lines": 5,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 13,
+      "section": [
+        "Getting Started With TypeScript",
+        "Installation"
+      ],
+      "path": "apoyo/003-installation/01.txt",
+      "language": "shell",
+      "source_lines": 1,
+      "added_header_lines": 0,
+      "status": "material_de_apoyo"
+    },
+    {
+      "order": 14,
+      "section": [
+        "Getting Started With TypeScript",
+        "Installation"
+      ],
+      "path": "apoyo/003-installation/02.txt",
+      "language": "shell",
+      "source_lines": 1,
+      "added_header_lines": 0,
+      "status": "material_de_apoyo"
+    },
+    {
+      "order": 15,
+      "section": [
+        "Getting Started With TypeScript",
+        "Installation"
+      ],
+      "path": "apoyo/003-installation/03.txt",
+      "language": "shell",
+      "source_lines": 1,
+      "added_header_lines": 0,
+      "status": "material_de_apoyo"
+    },
+    {
+      "order": 16,
+      "section": [
+        "Getting Started With TypeScript",
+        "Installation"
+      ],
+      "path": "apoyo/003-installation/04.txt",
+      "language": "shell",
+      "source_lines": 1,
+      "added_header_lines": 0,
+      "status": "material_de_apoyo"
+    },
+    {
+      "order": 17,
+      "section": [
+        "Getting Started With TypeScript",
+        "Installation"
+      ],
+      "path": "apoyo/003-installation/05.txt",
+      "language": "shell",
+      "source_lines": 1,
+      "added_header_lines": 0,
+      "status": "material_de_apoyo"
+    },
+    {
+      "order": 18,
+      "section": [
+        "Getting Started With TypeScript",
+        "Installation"
+      ],
+      "path": "apoyo/003-installation/06.txt",
+      "language": "shell",
+      "source_lines": 1,
+      "added_header_lines": 0,
+      "status": "material_de_apoyo"
+    },
+    {
+      "order": 19,
+      "section": [
+        "Getting Started With TypeScript",
+        "Installation"
+      ],
+      "path": "apoyo/003-installation/07.txt",
+      "language": "shell",
+      "source_lines": 1,
+      "added_header_lines": 0,
+      "status": "material_de_apoyo"
+    },
+    {
+      "order": 20,
+      "section": [
+        "Getting Started With TypeScript",
+        "Configuration"
+      ],
+      "path": "apoyo/004-configuration/01.txt",
+      "language": "shell",
+      "source_lines": 1,
+      "added_header_lines": 0,
+      "status": "material_de_apoyo"
+    },
+    {
+      "order": 21,
+      "section": [
+        "Getting Started With TypeScript",
+        "Configuration"
+      ],
+      "path": "apoyo/004-configuration/02.txt",
+      "language": "shell",
+      "source_lines": 3,
+      "added_header_lines": 0,
+      "status": "material_de_apoyo"
+    },
+    {
+      "order": 22,
+      "section": [
+        "Getting Started With TypeScript",
+        "Migration to TypeScript Advice"
+      ],
+      "path": "apoyo/005-migration-to-typescript-advice/01.txt",
+      "language": "shell",
+      "source_lines": 1,
+      "added_header_lines": 0,
+      "status": "material_de_apoyo"
+    },
+    {
+      "order": 23,
+      "section": [
+        "Getting Started With TypeScript",
+        "Migration to TypeScript Advice"
+      ],
+      "path": "apoyo/005-migration-to-typescript-advice/02.txt",
+      "language": "shell",
+      "source_lines": 1,
+      "added_header_lines": 0,
+      "status": "material_de_apoyo"
+    },
+    {
+      "order": 24,
+      "section": [
+        "Exploring the Type System",
+        "Structural Typing"
+      ],
+      "path": "01-fundamentos/006-structural-typing/01.ts",
+      "language": "typescript",
+      "source_lines": 8,
+      "added_header_lines": 3,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 25,
+      "section": [
+        "Exploring the Type System",
+        "TypeScript Fundamental Comparison Rules"
+      ],
+      "path": "01-fundamentos/007-typescript-fundamental-comparison-rules/01.ts",
+      "language": "typescript",
+      "source_lines": 5,
+      "added_header_lines": 5,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 26,
+      "section": [
+        "Exploring the Type System",
+        "TypeScript Fundamental Comparison Rules"
+      ],
+      "path": "01-fundamentos/007-typescript-fundamental-comparison-rules/02.ts",
+      "language": "typescript",
+      "source_lines": 6,
+      "added_header_lines": 5,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 27,
+      "section": [
+        "Exploring the Type System",
+        "TypeScript Fundamental Comparison Rules"
+      ],
+      "path": "01-fundamentos/007-typescript-fundamental-comparison-rules/03.ts",
+      "language": "typescript",
+      "source_lines": 6,
+      "added_header_lines": 5,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 28,
+      "section": [
+        "Exploring the Type System",
+        "TypeScript Fundamental Comparison Rules"
+      ],
+      "path": "01-fundamentos/007-typescript-fundamental-comparison-rules/04.ts",
+      "language": "typescript",
+      "source_lines": 4,
+      "added_header_lines": 5,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 29,
+      "section": [
+        "Exploring the Type System",
+        "TypeScript Fundamental Comparison Rules"
+      ],
+      "path": "01-fundamentos/007-typescript-fundamental-comparison-rules/05.ts",
+      "language": "typescript",
+      "source_lines": 1,
+      "added_header_lines": 5,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 30,
+      "section": [
+        "Exploring the Type System",
+        "TypeScript Fundamental Comparison Rules"
+      ],
+      "path": "01-fundamentos/007-typescript-fundamental-comparison-rules/06.ts",
+      "language": "typescript",
+      "source_lines": 5,
+      "added_header_lines": 5,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 31,
+      "section": [
+        "Exploring the Type System",
+        "TypeScript Fundamental Comparison Rules"
+      ],
+      "path": "01-fundamentos/007-typescript-fundamental-comparison-rules/07.ts",
+      "language": "typescript",
+      "source_lines": 6,
+      "added_header_lines": 5,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 32,
+      "section": [
+        "Exploring the Type System",
+        "TypeScript Fundamental Comparison Rules"
+      ],
+      "path": "01-fundamentos/007-typescript-fundamental-comparison-rules/08.ts",
+      "language": "typescript",
+      "source_lines": 6,
+      "added_header_lines": 5,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 33,
+      "section": [
+        "Exploring the Type System",
+        "TypeScript Fundamental Comparison Rules"
+      ],
+      "path": "01-fundamentos/007-typescript-fundamental-comparison-rules/09.ts",
+      "language": "typescript",
+      "source_lines": 2,
+      "added_header_lines": 5,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 34,
+      "section": [
+        "Exploring the Type System",
+        "TypeScript Fundamental Comparison Rules"
+      ],
+      "path": "01-fundamentos/007-typescript-fundamental-comparison-rules/10.ts",
+      "language": "typescript",
+      "source_lines": 15,
+      "added_header_lines": 5,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 35,
+      "section": [
+        "Exploring the Type System",
+        "TypeScript Fundamental Comparison Rules"
+      ],
+      "path": "01-fundamentos/007-typescript-fundamental-comparison-rules/11.ts",
+      "language": "typescript",
+      "source_lines": 19,
+      "added_header_lines": 5,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 36,
+      "section": [
+        "Exploring the Type System",
+        "TypeScript Fundamental Comparison Rules"
+      ],
+      "path": "01-fundamentos/007-typescript-fundamental-comparison-rules/12.ts",
+      "language": "typescript",
+      "source_lines": 12,
+      "added_header_lines": 5,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 37,
+      "section": [
+        "Exploring the Type System",
+        "TypeScript Fundamental Comparison Rules"
+      ],
+      "path": "01-fundamentos/007-typescript-fundamental-comparison-rules/13.ts",
+      "language": "typescript",
+      "source_lines": 15,
+      "added_header_lines": 5,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 38,
+      "section": [
+        "Exploring the Type System",
+        "TypeScript Fundamental Comparison Rules"
+      ],
+      "path": "01-fundamentos/007-typescript-fundamental-comparison-rules/14.ts",
+      "language": "typescript",
+      "source_lines": 24,
+      "added_header_lines": 5,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 39,
+      "section": [
+        "Exploring the Type System",
+        "TypeScript Fundamental Comparison Rules"
+      ],
+      "path": "01-fundamentos/007-typescript-fundamental-comparison-rules/15.ts",
+      "language": "typescript",
+      "source_lines": 6,
+      "added_header_lines": 5,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 40,
+      "section": [
+        "Exploring the Type System",
+        "TypeScript Fundamental Comparison Rules"
+      ],
+      "path": "01-fundamentos/007-typescript-fundamental-comparison-rules/16.ts",
+      "language": "typescript",
+      "source_lines": 4,
+      "added_header_lines": 5,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 41,
+      "section": [
+        "Exploring the Type System",
+        "TypeScript Fundamental Comparison Rules"
+      ],
+      "path": "01-fundamentos/007-typescript-fundamental-comparison-rules/17.ts",
+      "language": "typescript",
+      "source_lines": 5,
+      "added_header_lines": 5,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 42,
+      "section": [
+        "Exploring the Type System",
+        "TypeScript Fundamental Comparison Rules"
+      ],
+      "path": "01-fundamentos/007-typescript-fundamental-comparison-rules/18.ts",
+      "language": "typescript",
+      "source_lines": 22,
+      "added_header_lines": 5,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 43,
+      "section": [
+        "Exploring the Type System",
+        "Types as Sets"
+      ],
+      "path": "01-fundamentos/008-types-as-sets/01.ts",
+      "language": "typescript",
+      "source_lines": 8,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 44,
+      "section": [
+        "Exploring the Type System",
+        "Types as Sets"
+      ],
+      "path": "01-fundamentos/008-types-as-sets/02.ts",
+      "language": "typescript",
+      "source_lines": 10,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 45,
+      "section": [
+        "Exploring the Type System",
+        "Types as Sets"
+      ],
+      "path": "01-fundamentos/008-types-as-sets/03.ts",
+      "language": "typescript",
+      "source_lines": 25,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 46,
+      "section": [
+        "Exploring the Type System",
+        "Assign a type: Type Declarations and Type Assertions",
+        "Type Declaration"
+      ],
+      "path": "01-fundamentos/009-type-declaration/01.ts",
+      "language": "typescript",
+      "source_lines": 8,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 47,
+      "section": [
+        "Exploring the Type System",
+        "Assign a type: Type Declarations and Type Assertions",
+        "Type Declaration"
+      ],
+      "path": "01-fundamentos/009-type-declaration/02.ts",
+      "language": "typescript",
+      "source_lines": 8,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 48,
+      "section": [
+        "Exploring the Type System",
+        "Assign a type: Type Declarations and Type Assertions",
+        "Type Assertion"
+      ],
+      "path": "01-fundamentos/010-type-assertion/01.ts",
+      "language": "typescript",
+      "source_lines": 7,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 49,
+      "section": [
+        "Exploring the Type System",
+        "Assign a type: Type Declarations and Type Assertions",
+        "Type Assertion"
+      ],
+      "path": "01-fundamentos/010-type-assertion/02.ts",
+      "language": "typescript",
+      "source_lines": 1,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 50,
+      "section": [
+        "Exploring the Type System",
+        "Assign a type: Type Declarations and Type Assertions",
+        "Type Assertion"
+      ],
+      "path": "01-fundamentos/010-type-assertion/03.ts",
+      "language": "typescript",
+      "source_lines": 9,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 51,
+      "section": [
+        "Exploring the Type System",
+        "Assign a type: Type Declarations and Type Assertions",
+        "Ambient Declarations"
+      ],
+      "path": "apoyo/011-ambient-declarations/01.txt",
+      "language": "shell",
+      "source_lines": 1,
+      "added_header_lines": 0,
+      "status": "material_de_apoyo"
+    },
+    {
+      "order": 52,
+      "section": [
+        "Exploring the Type System",
+        "Assign a type: Type Declarations and Type Assertions",
+        "Ambient Declarations"
+      ],
+      "path": "01-fundamentos/011-ambient-declarations/02.ts",
+      "language": "typescript",
+      "source_lines": 1,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 53,
+      "section": [
+        "Exploring the Type System",
+        "Property Checking and Excess Property Checking"
+      ],
+      "path": "01-fundamentos/012-property-checking-and-excess-property-checking/01.ts",
+      "language": "typescript",
+      "source_lines": 6,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 54,
+      "section": [
+        "Exploring the Type System",
+        "Weak Types"
+      ],
+      "path": "01-fundamentos/013-weak-types/01.ts",
+      "language": "typescript",
+      "source_lines": 4,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 55,
+      "section": [
+        "Exploring the Type System",
+        "Weak Types"
+      ],
+      "path": "01-fundamentos/013-weak-types/02.ts",
+      "language": "typescript",
+      "source_lines": 8,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 56,
+      "section": [
+        "Exploring the Type System",
+        "Weak Types"
+      ],
+      "path": "01-fundamentos/013-weak-types/03.ts",
+      "language": "typescript",
+      "source_lines": 6,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 57,
+      "section": [
+        "Exploring the Type System",
+        "Weak Types"
+      ],
+      "path": "01-fundamentos/013-weak-types/04.ts",
+      "language": "typescript",
+      "source_lines": 8,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 58,
+      "section": [
+        "Exploring the Type System",
+        "Strict Object Literal Checking (Freshness)"
+      ],
+      "path": "01-fundamentos/014-strict-object-literal-checking-freshness/01.ts",
+      "language": "typescript",
+      "source_lines": 18,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 59,
+      "section": [
+        "Exploring the Type System",
+        "Type Inference"
+      ],
+      "path": "01-fundamentos/015-type-inference/01.ts",
+      "language": "typescript",
+      "source_lines": 1,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 60,
+      "section": [
+        "Exploring the Type System",
+        "More Advanced Inferences"
+      ],
+      "path": "01-fundamentos/016-more-advanced-inferences/01.ts",
+      "language": "typescript",
+      "source_lines": 1,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 61,
+      "section": [
+        "Exploring the Type System",
+        "More Advanced Inferences"
+      ],
+      "path": "01-fundamentos/016-more-advanced-inferences/02.ts",
+      "language": "typescript",
+      "source_lines": 1,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 62,
+      "section": [
+        "Exploring the Type System",
+        "More Advanced Inferences"
+      ],
+      "path": "01-fundamentos/016-more-advanced-inferences/03.ts",
+      "language": "typescript",
+      "source_lines": 1,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 63,
+      "section": [
+        "Exploring the Type System",
+        "Type Widening"
+      ],
+      "path": "01-fundamentos/017-type-widening/01.ts",
+      "language": "typescript",
+      "source_lines": 3,
+      "added_header_lines": 3,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 64,
+      "section": [
+        "Exploring the Type System",
+        "Const"
+      ],
+      "path": "01-fundamentos/018-const/01.ts",
+      "language": "typescript",
+      "source_lines": 3,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 65,
+      "section": [
+        "Exploring the Type System",
+        "Const",
+        "Const Modifier on Type Parameters"
+      ],
+      "path": "01-fundamentos/019-const-modifier-on-type-parameters/01.ts",
+      "language": "typescript",
+      "source_lines": 5,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 66,
+      "section": [
+        "Exploring the Type System",
+        "Const",
+        "Const Modifier on Type Parameters"
+      ],
+      "path": "01-fundamentos/019-const-modifier-on-type-parameters/02.ts",
+      "language": "typescript",
+      "source_lines": 5,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 67,
+      "section": [
+        "Exploring the Type System",
+        "Const",
+        "Const assertion"
+      ],
+      "path": "01-fundamentos/020-const-assertion/01.ts",
+      "language": "typescript",
+      "source_lines": 4,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 68,
+      "section": [
+        "Exploring the Type System",
+        "Const",
+        "Const assertion"
+      ],
+      "path": "01-fundamentos/020-const-assertion/02.ts",
+      "language": "typescript",
+      "source_lines": 4,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 69,
+      "section": [
+        "Exploring the Type System",
+        "Const",
+        "Const assertion"
+      ],
+      "path": "01-fundamentos/020-const-assertion/03.ts",
+      "language": "typescript",
+      "source_lines": 2,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 70,
+      "section": [
+        "Exploring the Type System",
+        "Explicit Type Annotation"
+      ],
+      "path": "01-fundamentos/021-explicit-type-annotation/01.ts",
+      "language": "typescript",
+      "source_lines": 4,
+      "added_header_lines": 3,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 71,
+      "section": [
+        "Exploring the Type System",
+        "Explicit Type Annotation"
+      ],
+      "path": "01-fundamentos/021-explicit-type-annotation/02.ts",
+      "language": "typescript",
+      "source_lines": 5,
+      "added_header_lines": 3,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 72,
+      "section": [
+        "Exploring the Type System",
+        "Type Narrowing",
+        "Conditions"
+      ],
+      "path": "01-fundamentos/022-conditions/01.ts",
+      "language": "typescript",
+      "source_lines": 5,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 73,
+      "section": [
+        "Exploring the Type System",
+        "Type Narrowing",
+        "Throwing or returning"
+      ],
+      "path": "01-fundamentos/023-throwing-or-returning/01.ts",
+      "language": "typescript",
+      "source_lines": 6,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 74,
+      "section": [
+        "Exploring the Type System",
+        "Type Narrowing",
+        "Discriminated Union"
+      ],
+      "path": "01-fundamentos/024-discriminated-union/01.ts",
+      "language": "typescript",
+      "source_lines": 11,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 75,
+      "section": [
+        "Exploring the Type System",
+        "Type Narrowing",
+        "User-Defined Type Guards"
+      ],
+      "path": "01-fundamentos/025-user-defined-type-guards/01.ts",
+      "language": "typescript",
+      "source_lines": 7,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 76,
+      "section": [
+        "Exploring the Type System",
+        "Type Narrowing",
+        "Switch-true narrowing"
+      ],
+      "path": "01-fundamentos/026-switch-true-narrowing/01.ts",
+      "language": "typescript",
+      "source_lines": 12,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 77,
+      "section": [
+        "Primitive Types",
+        "string"
+      ],
+      "path": "01-fundamentos/027-string/01.ts",
+      "language": "typescript",
+      "source_lines": 2,
+      "added_header_lines": 3,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 78,
+      "section": [
+        "Primitive Types",
+        "string"
+      ],
+      "path": "01-fundamentos/027-string/02.ts",
+      "language": "typescript",
+      "source_lines": 2,
+      "added_header_lines": 3,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 79,
+      "section": [
+        "Primitive Types",
+        "boolean"
+      ],
+      "path": "01-fundamentos/028-boolean/01.ts",
+      "language": "typescript",
+      "source_lines": 1,
+      "added_header_lines": 3,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 80,
+      "section": [
+        "Primitive Types",
+        "number"
+      ],
+      "path": "01-fundamentos/029-number/01.ts",
+      "language": "typescript",
+      "source_lines": 4,
+      "added_header_lines": 3,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 81,
+      "section": [
+        "Primitive Types",
+        "bigint"
+      ],
+      "path": "01-fundamentos/030-bigint/01.ts",
+      "language": "typescript",
+      "source_lines": 2,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 82,
+      "section": [
+        "Primitive Types",
+        "Symbol"
+      ],
+      "path": "01-fundamentos/031-symbol/01.ts",
+      "language": "typescript",
+      "source_lines": 12,
+      "added_header_lines": 3,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 83,
+      "section": [
+        "Primitive Types",
+        "Array"
+      ],
+      "path": "01-fundamentos/032-array/01.ts",
+      "language": "typescript",
+      "source_lines": 3,
+      "added_header_lines": 3,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 84,
+      "section": [
+        "Primitive Types",
+        "Array"
+      ],
+      "path": "01-fundamentos/032-array/02.ts",
+      "language": "typescript",
+      "source_lines": 4,
+      "added_header_lines": 3,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 85,
+      "section": [
+        "Primitive Types",
+        "Array"
+      ],
+      "path": "01-fundamentos/032-array/03.ts",
+      "language": "typescript",
+      "source_lines": 2,
+      "added_header_lines": 3,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 86,
+      "section": [
+        "Type Annotations"
+      ],
+      "path": "01-fundamentos/033-type-annotations/01.ts",
+      "language": "typescript",
+      "source_lines": 1,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 87,
+      "section": [
+        "Type Annotations"
+      ],
+      "path": "01-fundamentos/033-type-annotations/02.ts",
+      "language": "typescript",
+      "source_lines": 3,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 88,
+      "section": [
+        "Type Annotations"
+      ],
+      "path": "01-fundamentos/033-type-annotations/03.ts",
+      "language": "typescript",
+      "source_lines": 1,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 89,
+      "section": [
+        "Type Annotations"
+      ],
+      "path": "01-fundamentos/033-type-annotations/04.ts",
+      "language": "typescript",
+      "source_lines": 1,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 90,
+      "section": [
+        "Type Annotations"
+      ],
+      "path": "01-fundamentos/033-type-annotations/05.ts",
+      "language": "typescript",
+      "source_lines": 1,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 91,
+      "section": [
+        "Optional Properties"
+      ],
+      "path": "01-fundamentos/034-optional-properties/01.ts",
+      "language": "typescript",
+      "source_lines": 4,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 92,
+      "section": [
+        "Optional Properties"
+      ],
+      "path": "01-fundamentos/034-optional-properties/02.ts",
+      "language": "typescript",
+      "source_lines": 5,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 93,
+      "section": [
+        "Readonly Properties"
+      ],
+      "path": "01-fundamentos/035-readonly-properties/01.ts",
+      "language": "typescript",
+      "source_lines": 15,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 94,
+      "section": [
+        "Index Signatures"
+      ],
+      "path": "01-fundamentos/036-index-signatures/01.ts",
+      "language": "typescript",
+      "source_lines": 7,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 95,
+      "section": [
+        "Extending Types"
+      ],
+      "path": "01-fundamentos/037-extending-types/01.ts",
+      "language": "typescript",
+      "source_lines": 6,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 96,
+      "section": [
+        "Extending Types"
+      ],
+      "path": "01-fundamentos/037-extending-types/02.ts",
+      "language": "typescript",
+      "source_lines": 9,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 97,
+      "section": [
+        "Extending Types"
+      ],
+      "path": "01-fundamentos/037-extending-types/03.ts",
+      "language": "typescript",
+      "source_lines": 7,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 98,
+      "section": [
+        "Extending Types"
+      ],
+      "path": "01-fundamentos/037-extending-types/04.ts",
+      "language": "typescript",
+      "source_lines": 6,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 99,
+      "section": [
+        "Literal Types"
+      ],
+      "path": "01-fundamentos/038-literal-types/01.ts",
+      "language": "typescript",
+      "source_lines": 3,
+      "added_header_lines": 3,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 100,
+      "section": [
+        "Literal Types"
+      ],
+      "path": "01-fundamentos/038-literal-types/02.ts",
+      "language": "typescript",
+      "source_lines": 1,
+      "added_header_lines": 3,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 101,
+      "section": [
+        "Literal Inference"
+      ],
+      "path": "01-fundamentos/039-literal-inference/01.ts",
+      "language": "typescript",
+      "source_lines": 2,
+      "added_header_lines": 3,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 102,
+      "section": [
+        "Literal Inference"
+      ],
+      "path": "01-fundamentos/039-literal-inference/02.ts",
+      "language": "typescript",
+      "source_lines": 9,
+      "added_header_lines": 3,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 103,
+      "section": [
+        "Literal Inference"
+      ],
+      "path": "01-fundamentos/039-literal-inference/03.ts",
+      "language": "typescript",
+      "source_lines": 3,
+      "added_header_lines": 3,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 104,
+      "section": [
+        "Literal Inference"
+      ],
+      "path": "01-fundamentos/039-literal-inference/04.ts",
+      "language": "typescript",
+      "source_lines": 3,
+      "added_header_lines": 3,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 105,
+      "section": [
+        "Enums"
+      ],
+      "path": "01-fundamentos/040-enums/01.ts",
+      "language": "typescript",
+      "source_lines": 5,
+      "added_header_lines": 3,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 106,
+      "section": [
+        "Enums",
+        "Numeric enums"
+      ],
+      "path": "01-fundamentos/041-numeric-enums/01.ts",
+      "language": "typescript",
+      "source_lines": 5,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 107,
+      "section": [
+        "Enums",
+        "Numeric enums"
+      ],
+      "path": "01-fundamentos/041-numeric-enums/02.ts",
+      "language": "typescript",
+      "source_lines": 6,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 108,
+      "section": [
+        "Enums",
+        "String enums"
+      ],
+      "path": "01-fundamentos/042-string-enums/01.ts",
+      "language": "typescript",
+      "source_lines": 4,
+      "added_header_lines": 3,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 109,
+      "section": [
+        "Enums",
+        "Constant enums"
+      ],
+      "path": "01-fundamentos/043-constant-enums/01.ts",
+      "language": "typescript",
+      "source_lines": 5,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 110,
+      "section": [
+        "Enums",
+        "Constant enums"
+      ],
+      "path": "01-fundamentos/043-constant-enums/02.ts",
+      "language": "typescript",
+      "source_lines": 1,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 111,
+      "section": [
+        "Enums",
+        "Reverse mapping"
+      ],
+      "path": "01-fundamentos/044-reverse-mapping/01.ts",
+      "language": "typescript",
+      "source_lines": 6,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 112,
+      "section": [
+        "Enums",
+        "Reverse mapping"
+      ],
+      "path": "apoyo/044-reverse-mapping/02.js",
+      "language": "javascript",
+      "source_lines": 8,
+      "added_header_lines": 0,
+      "status": "material_de_apoyo"
+    },
+    {
+      "order": 113,
+      "section": [
+        "Enums",
+        "Reverse mapping"
+      ],
+      "path": "01-fundamentos/044-reverse-mapping/03.ts",
+      "language": "typescript",
+      "source_lines": 13,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 114,
+      "section": [
+        "Enums",
+        "Computed and constant members"
+      ],
+      "path": "01-fundamentos/045-computed-and-constant-members/01.ts",
+      "language": "typescript",
+      "source_lines": 7,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 115,
+      "section": [
+        "Enums",
+        "Computed and constant members"
+      ],
+      "path": "01-fundamentos/045-computed-and-constant-members/02.ts",
+      "language": "typescript",
+      "source_lines": 7,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 116,
+      "section": [
+        "Enums",
+        "Computed and constant members"
+      ],
+      "path": "01-fundamentos/045-computed-and-constant-members/03.ts",
+      "language": "typescript",
+      "source_lines": 9,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 117,
+      "section": [
+        "Narrowing",
+        "typeof type guards"
+      ],
+      "path": "01-fundamentos/046-typeof-type-guards/01.ts",
+      "language": "typescript",
+      "source_lines": 6,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 118,
+      "section": [
+        "Narrowing",
+        "Truthiness narrowing"
+      ],
+      "path": "01-fundamentos/047-truthiness-narrowing/01.ts",
+      "language": "typescript",
+      "source_lines": 7,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 119,
+      "section": [
+        "Narrowing",
+        "Equality narrowing"
+      ],
+      "path": "01-fundamentos/048-equality-narrowing/01.ts",
+      "language": "typescript",
+      "source_lines": 8,
+      "added_header_lines": 3,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 120,
+      "section": [
+        "Narrowing",
+        "In Operator narrowing"
+      ],
+      "path": "01-fundamentos/049-in-operator-narrowing/01.ts",
+      "language": "typescript",
+      "source_lines": 17,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 121,
+      "section": [
+        "Narrowing",
+        "instanceof narrowing"
+      ],
+      "path": "01-fundamentos/050-instanceof-narrowing/01.ts",
+      "language": "typescript",
+      "source_lines": 20,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 122,
+      "section": [
+        "Assignments"
+      ],
+      "path": "01-fundamentos/051-assignments/01.ts",
+      "language": "typescript",
+      "source_lines": 9,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 123,
+      "section": [
+        "Control Flow Analysis"
+      ],
+      "path": "01-fundamentos/052-control-flow-analysis/01.ts",
+      "language": "typescript",
+      "source_lines": 17,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 124,
+      "section": [
+        "Control Flow Analysis"
+      ],
+      "path": "01-fundamentos/052-control-flow-analysis/02.ts",
+      "language": "typescript",
+      "source_lines": 16,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 125,
+      "section": [
+        "Type Predicates"
+      ],
+      "path": "01-fundamentos/053-type-predicates/01.ts",
+      "language": "typescript",
+      "source_lines": 9,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 126,
+      "section": [
+        "Type Predicates"
+      ],
+      "path": "01-fundamentos/053-type-predicates/02.ts",
+      "language": "typescript",
+      "source_lines": 1,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 127,
+      "section": [
+        "Discriminated Unions"
+      ],
+      "path": "01-fundamentos/054-discriminated-unions/01.ts",
+      "language": "typescript",
+      "source_lines": 26,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 128,
+      "section": [
+        "The never Type"
+      ],
+      "path": "01-fundamentos/055-the-never-type/01.ts",
+      "language": "typescript",
+      "source_lines": 11,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 129,
+      "section": [
+        "Exhaustiveness checking"
+      ],
+      "path": "01-fundamentos/056-exhaustiveness-checking/01.ts",
+      "language": "typescript",
+      "source_lines": 15,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 130,
+      "section": [
+        "Object Types"
+      ],
+      "path": "01-fundamentos/057-object-types/01.ts",
+      "language": "typescript",
+      "source_lines": 5,
+      "added_header_lines": 3,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 131,
+      "section": [
+        "Object Types"
+      ],
+      "path": "01-fundamentos/057-object-types/02.ts",
+      "language": "typescript",
+      "source_lines": 4,
+      "added_header_lines": 3,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 132,
+      "section": [
+        "Object Types"
+      ],
+      "path": "01-fundamentos/057-object-types/03.ts",
+      "language": "typescript",
+      "source_lines": 2,
+      "added_header_lines": 3,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 133,
+      "section": [
+        "Tuple Type (Anonymous)"
+      ],
+      "path": "01-fundamentos/058-tuple-type-anonymous/01.ts",
+      "language": "typescript",
+      "source_lines": 1,
+      "added_header_lines": 3,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 134,
+      "section": [
+        "Named Tuple Type (Labeled)"
+      ],
+      "path": "01-fundamentos/059-named-tuple-type-labeled/01.ts",
+      "language": "typescript",
+      "source_lines": 4,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 135,
+      "section": [
+        "Fixed Length Tuple"
+      ],
+      "path": "01-fundamentos/060-fixed-length-tuple/01.ts",
+      "language": "typescript",
+      "source_lines": 2,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 136,
+      "section": [
+        "Union Type"
+      ],
+      "path": "01-fundamentos/061-union-type/01.ts",
+      "language": "typescript",
+      "source_lines": 3,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 137,
+      "section": [
+        "Intersection Types"
+      ],
+      "path": "01-fundamentos/062-intersection-types/01.ts",
+      "language": "typescript",
+      "source_lines": 14,
+      "added_header_lines": 3,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 138,
+      "section": [
+        "Type Indexing"
+      ],
+      "path": "01-fundamentos/063-type-indexing/01.ts",
+      "language": "typescript",
+      "source_lines": 5,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 139,
+      "section": [
+        "Type from Value"
+      ],
+      "path": "01-fundamentos/064-type-from-value/01.ts",
+      "language": "typescript",
+      "source_lines": 1,
+      "added_header_lines": 3,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 140,
+      "section": [
+        "Type from Func Return"
+      ],
+      "path": "01-fundamentos/065-type-from-func-return/01.ts",
+      "language": "typescript",
+      "source_lines": 1,
+      "added_header_lines": 3,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 141,
+      "section": [
+        "Type from Module"
+      ],
+      "path": "01-fundamentos/066-type-from-module/01.ts",
+      "language": "typescript",
+      "source_lines": 5,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 142,
+      "section": [
+        "Mapped Types"
+      ],
+      "path": "01-fundamentos/067-mapped-types/01.ts",
+      "language": "typescript",
+      "source_lines": 12,
+      "added_header_lines": 3,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 143,
+      "section": [
+        "Mapped Type Modifiers"
+      ],
+      "path": "01-fundamentos/068-mapped-type-modifiers/01.ts",
+      "language": "typescript",
+      "source_lines": 5,
+      "added_header_lines": 3,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 144,
+      "section": [
+        "Conditional Types"
+      ],
+      "path": "01-fundamentos/069-conditional-types/01.ts",
+      "language": "typescript",
+      "source_lines": 7,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 145,
+      "section": [
+        "Distributive Conditional Types"
+      ],
+      "path": "01-fundamentos/070-distributive-conditional-types/01.ts",
+      "language": "typescript",
+      "source_lines": 3,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 146,
+      "section": [
+        "infer Type Inference in Conditional Types"
+      ],
+      "path": "01-fundamentos/071-infer-type-inference-in-conditional-types/01.ts",
+      "language": "typescript",
+      "source_lines": 3,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 147,
+      "section": [
+        "Template Union Types"
+      ],
+      "path": "01-fundamentos/072-template-union-types/01.ts",
+      "language": "typescript",
+      "source_lines": 3,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 148,
+      "section": [
+        "Any type"
+      ],
+      "path": "01-fundamentos/073-any-type/01.ts",
+      "language": "typescript",
+      "source_lines": 3,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 149,
+      "section": [
+        "Unknown type"
+      ],
+      "path": "01-fundamentos/074-unknown-type/01.ts",
+      "language": "typescript",
+      "source_lines": 6,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 150,
+      "section": [
+        "Unknown type"
+      ],
+      "path": "01-fundamentos/074-unknown-type/02.ts",
+      "language": "typescript",
+      "source_lines": 4,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 151,
+      "section": [
+        "Void type"
+      ],
+      "path": "01-fundamentos/075-void-type/01.ts",
+      "language": "typescript",
+      "source_lines": 3,
+      "added_header_lines": 3,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 152,
+      "section": [
+        "Never type"
+      ],
+      "path": "01-fundamentos/076-never-type/01.ts",
+      "language": "typescript",
+      "source_lines": 5,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 153,
+      "section": [
+        "Never type"
+      ],
+      "path": "01-fundamentos/076-never-type/02.ts",
+      "language": "typescript",
+      "source_lines": 3,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 154,
+      "section": [
+        "Never type"
+      ],
+      "path": "01-fundamentos/076-never-type/03.ts",
+      "language": "typescript",
+      "source_lines": 14,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 155,
+      "section": [
+        "Interface and Type",
+        "Common Syntax"
+      ],
+      "path": "01-fundamentos/077-common-syntax/01.ts",
+      "language": "typescript",
+      "source_lines": 6,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 156,
+      "section": [
+        "Interface and Type",
+        "Common Syntax"
+      ],
+      "path": "01-fundamentos/077-common-syntax/02.ts",
+      "language": "typescript",
+      "source_lines": 6,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 157,
+      "section": [
+        "Interface and Type",
+        "Common Syntax"
+      ],
+      "path": "01-fundamentos/077-common-syntax/03.ts",
+      "language": "typescript",
+      "source_lines": 5,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 158,
+      "section": [
+        "Interface and Type",
+        "Common Syntax"
+      ],
+      "path": "01-fundamentos/077-common-syntax/04.ts",
+      "language": "typescript",
+      "source_lines": 4,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 159,
+      "section": [
+        "Interface and Type",
+        "Basic Types"
+      ],
+      "path": "01-fundamentos/078-basic-types/01.ts",
+      "language": "typescript",
+      "source_lines": 4,
+      "added_header_lines": 3,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 160,
+      "section": [
+        "Interface and Type",
+        "Objects and Interfaces"
+      ],
+      "path": "01-fundamentos/079-objects-and-interfaces/01.ts",
+      "language": "typescript",
+      "source_lines": 1,
+      "added_header_lines": 3,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 161,
+      "section": [
+        "Interface and Type",
+        "Union and Intersection Types"
+      ],
+      "path": "01-fundamentos/080-union-and-intersection-types/01.ts",
+      "language": "typescript",
+      "source_lines": 8,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 162,
+      "section": [
+        "Overloads"
+      ],
+      "path": "01-fundamentos/081-overloads/01.ts",
+      "language": "typescript",
+      "source_lines": 16,
+      "added_header_lines": 3,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 163,
+      "section": [
+        "Overloads"
+      ],
+      "path": "01-fundamentos/081-overloads/02.ts",
+      "language": "typescript",
+      "source_lines": 22,
+      "added_header_lines": 3,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 164,
+      "section": [
+        "Merging and Extension"
+      ],
+      "path": "01-fundamentos/082-merging-and-extension/01.ts",
+      "language": "typescript",
+      "source_lines": 12,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 165,
+      "section": [
+        "Merging and Extension"
+      ],
+      "path": "01-fundamentos/082-merging-and-extension/02.ts",
+      "language": "typescript",
+      "source_lines": 18,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 166,
+      "section": [
+        "Differences between Type and Interface"
+      ],
+      "path": "01-fundamentos/083-differences-between-type-and-interface/01.ts",
+      "language": "typescript",
+      "source_lines": 10,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 167,
+      "section": [
+        "Differences between Type and Interface"
+      ],
+      "path": "01-fundamentos/083-differences-between-type-and-interface/02.ts",
+      "language": "typescript",
+      "source_lines": 12,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 168,
+      "section": [
+        "Differences between Type and Interface"
+      ],
+      "path": "01-fundamentos/083-differences-between-type-and-interface/03.ts",
+      "language": "typescript",
+      "source_lines": 14,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 169,
+      "section": [
+        "Differences between Type and Interface"
+      ],
+      "path": "01-fundamentos/083-differences-between-type-and-interface/04.ts",
+      "language": "typescript",
+      "source_lines": 13,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 170,
+      "section": [
+        "Differences between Type and Interface"
+      ],
+      "path": "01-fundamentos/083-differences-between-type-and-interface/05.ts",
+      "language": "typescript",
+      "source_lines": 8,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 171,
+      "section": [
+        "Class",
+        "Class Common Syntax"
+      ],
+      "path": "01-fundamentos/084-class-common-syntax/01.ts",
+      "language": "typescript",
+      "source_lines": 13,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 172,
+      "section": [
+        "Class",
+        "Class Common Syntax"
+      ],
+      "path": "01-fundamentos/084-class-common-syntax/02.ts",
+      "language": "typescript",
+      "source_lines": 2,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 173,
+      "section": [
+        "Class",
+        "Constructor"
+      ],
+      "path": "01-fundamentos/085-constructor/01.ts",
+      "language": "typescript",
+      "source_lines": 18,
+      "added_header_lines": 3,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 174,
+      "section": [
+        "Class",
+        "Constructor"
+      ],
+      "path": "01-fundamentos/085-constructor/02.ts",
+      "language": "typescript",
+      "source_lines": 17,
+      "added_header_lines": 3,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 175,
+      "section": [
+        "Class",
+        "Constructor"
+      ],
+      "path": "01-fundamentos/085-constructor/03.ts",
+      "language": "typescript",
+      "source_lines": 25,
+      "added_header_lines": 3,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 176,
+      "section": [
+        "Class",
+        "Private and Protected Constructors"
+      ],
+      "path": "01-fundamentos/086-private-and-protected-constructors/01.ts",
+      "language": "typescript",
+      "source_lines": 18,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 177,
+      "section": [
+        "Class",
+        "Get and Set"
+      ],
+      "path": "01-fundamentos/087-get-and-set/01.ts",
+      "language": "typescript",
+      "source_lines": 13,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 178,
+      "section": [
+        "Class",
+        "Auto-Accessors in Classes"
+      ],
+      "path": "01-fundamentos/088-auto-accessors-in-classes/01.ts",
+      "language": "typescript",
+      "source_lines": 7,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 179,
+      "section": [
+        "Class",
+        "Auto-Accessors in Classes"
+      ],
+      "path": "01-fundamentos/088-auto-accessors-in-classes/02.ts",
+      "language": "typescript",
+      "source_lines": 14,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 180,
+      "section": [
+        "Class",
+        "this"
+      ],
+      "path": "01-fundamentos/089-this/01.ts",
+      "language": "typescript",
+      "source_lines": 12,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 181,
+      "section": [
+        "Class",
+        "Parameter Properties"
+      ],
+      "path": "01-fundamentos/090-parameter-properties/01.ts",
+      "language": "typescript",
+      "source_lines": 16,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 182,
+      "section": [
+        "Class",
+        "Abstract Classes"
+      ],
+      "path": "01-fundamentos/091-abstract-classes/01.ts",
+      "language": "typescript",
+      "source_lines": 18,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 183,
+      "section": [
+        "Class",
+        "With Generics"
+      ],
+      "path": "01-fundamentos/092-with-generics/01.ts",
+      "language": "typescript",
+      "source_lines": 22,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 184,
+      "section": [
+        "Class",
+        "Decorators",
+        "Class Decorators"
+      ],
+      "path": "01-fundamentos/093-class-decorators/01.ts",
+      "language": "typescript",
+      "source_lines": 32,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 185,
+      "section": [
+        "Class",
+        "Decorators",
+        "Property Decorator"
+      ],
+      "path": "01-fundamentos/094-property-decorator/01.ts",
+      "language": "typescript",
+      "source_lines": 15,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 186,
+      "section": [
+        "Class",
+        "Decorators",
+        "Method Decorator"
+      ],
+      "path": "01-fundamentos/095-method-decorator/01.ts",
+      "language": "typescript",
+      "source_lines": 27,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 187,
+      "section": [
+        "Class",
+        "Decorators",
+        "Method Decorator"
+      ],
+      "path": "apoyo/095-method-decorator/02.txt",
+      "language": "shell",
+      "source_lines": 3,
+      "added_header_lines": 0,
+      "status": "material_de_apoyo"
+    },
+    {
+      "order": 188,
+      "section": [
+        "Class",
+        "Decorators",
+        "Getter and Setter Decorators"
+      ],
+      "path": "01-fundamentos/096-getter-and-setter-decorators/01.ts",
+      "language": "typescript",
+      "source_lines": 36,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 189,
+      "section": [
+        "Class",
+        "Decorators",
+        "Decorator Metadata"
+      ],
+      "path": "01-fundamentos/097-decorator-metadata/01.ts",
+      "language": "typescript",
+      "source_lines": 27,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 190,
+      "section": [
+        "Class",
+        "Inheritance"
+      ],
+      "path": "01-fundamentos/098-inheritance/01.ts",
+      "language": "typescript",
+      "source_lines": 32,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 191,
+      "section": [
+        "Class",
+        "Inheritance"
+      ],
+      "path": "01-fundamentos/098-inheritance/02.ts",
+      "language": "typescript",
+      "source_lines": 21,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 192,
+      "section": [
+        "Class",
+        "Statics"
+      ],
+      "path": "01-fundamentos/099-statics/01.ts",
+      "language": "typescript",
+      "source_lines": 12,
+      "added_header_lines": 3,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 193,
+      "section": [
+        "Class",
+        "Property initialization"
+      ],
+      "path": "01-fundamentos/100-property-initialization/01.ts",
+      "language": "typescript",
+      "source_lines": 4,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 194,
+      "section": [
+        "Class",
+        "Property initialization"
+      ],
+      "path": "01-fundamentos/100-property-initialization/02.ts",
+      "language": "typescript",
+      "source_lines": 9,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 195,
+      "section": [
+        "Class",
+        "Property initialization"
+      ],
+      "path": "01-fundamentos/100-property-initialization/03.ts",
+      "language": "typescript",
+      "source_lines": 13,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 196,
+      "section": [
+        "Class",
+        "Method overloading"
+      ],
+      "path": "01-fundamentos/101-method-overloading/01.ts",
+      "language": "typescript",
+      "source_lines": 17,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 197,
+      "section": [
+        "Generics",
+        "Generic Type"
+      ],
+      "path": "01-fundamentos/102-generic-type/01.ts",
+      "language": "typescript",
+      "source_lines": 8,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 198,
+      "section": [
+        "Generics",
+        "Generic Classes"
+      ],
+      "path": "01-fundamentos/103-generic-classes/01.ts",
+      "language": "typescript",
+      "source_lines": 17,
+      "added_header_lines": 3,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 199,
+      "section": [
+        "Generics",
+        "Generic Constraints"
+      ],
+      "path": "01-fundamentos/104-generic-constraints/01.ts",
+      "language": "typescript",
+      "source_lines": 8,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 200,
+      "section": [
+        "Generics",
+        "Generic Constraints"
+      ],
+      "path": "01-fundamentos/104-generic-constraints/02.ts",
+      "language": "typescript",
+      "source_lines": 10,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 201,
+      "section": [
+        "Generics",
+        "Generic contextual narrowing"
+      ],
+      "path": "01-fundamentos/105-generic-contextual-narrowing/01.ts",
+      "language": "typescript",
+      "source_lines": 12,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 202,
+      "section": [
+        "Erased Structural Types"
+      ],
+      "path": "01-fundamentos/106-erased-structural-types/01.ts",
+      "language": "typescript",
+      "source_lines": 14,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 203,
+      "section": [
+        "Namespacing"
+      ],
+      "path": "01-fundamentos/107-namespacing/01.ts",
+      "language": "typescript",
+      "source_lines": 12,
+      "added_header_lines": 3,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 204,
+      "section": [
+        "Symbols"
+      ],
+      "path": "01-fundamentos/108-symbols/01.ts",
+      "language": "typescript",
+      "source_lines": 10,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 205,
+      "section": [
+        "Triple-Slash Directives"
+      ],
+      "path": "01-fundamentos/109-triple-slash-directives/01.ts",
+      "language": "typescript",
+      "source_lines": 1,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 206,
+      "section": [
+        "Triple-Slash Directives"
+      ],
+      "path": "01-fundamentos/109-triple-slash-directives/02.ts",
+      "language": "typescript",
+      "source_lines": 1,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 207,
+      "section": [
+        "Triple-Slash Directives"
+      ],
+      "path": "01-fundamentos/109-triple-slash-directives/03.ts",
+      "language": "typescript",
+      "source_lines": 1,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 208,
+      "section": [
+        "Type Manipulation",
+        "Creating Types from Types"
+      ],
+      "path": "01-fundamentos/110-creating-types-from-types/01.ts",
+      "language": "typescript",
+      "source_lines": 4,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 209,
+      "section": [
+        "Type Manipulation",
+        "Creating Types from Types"
+      ],
+      "path": "01-fundamentos/110-creating-types-from-types/02.ts",
+      "language": "typescript",
+      "source_lines": 3,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 210,
+      "section": [
+        "Type Manipulation",
+        "Creating Types from Types"
+      ],
+      "path": "01-fundamentos/110-creating-types-from-types/03.ts",
+      "language": "typescript",
+      "source_lines": 8,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 211,
+      "section": [
+        "Type Manipulation",
+        "Creating Types from Types"
+      ],
+      "path": "01-fundamentos/110-creating-types-from-types/04.ts",
+      "language": "typescript",
+      "source_lines": 3,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 212,
+      "section": [
+        "Type Manipulation",
+        "Indexed Access Types"
+      ],
+      "path": "01-fundamentos/111-indexed-access-types/01.ts",
+      "language": "typescript",
+      "source_lines": 6,
+      "added_header_lines": 3,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 213,
+      "section": [
+        "Type Manipulation",
+        "Indexed Access Types"
+      ],
+      "path": "01-fundamentos/111-indexed-access-types/02.ts",
+      "language": "typescript",
+      "source_lines": 2,
+      "added_header_lines": 3,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 214,
+      "section": [
+        "Type Manipulation",
+        "Utility Types",
+        "Awaited\\<T\\>"
+      ],
+      "path": "01-fundamentos/112-awaited-t/01.ts",
+      "language": "typescript",
+      "source_lines": 1,
+      "added_header_lines": 3,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 215,
+      "section": [
+        "Type Manipulation",
+        "Utility Types",
+        "Partial\\<T\\>"
+      ],
+      "path": "01-fundamentos/113-partial-t/01.ts",
+      "language": "typescript",
+      "source_lines": 6,
+      "added_header_lines": 3,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 216,
+      "section": [
+        "Type Manipulation",
+        "Utility Types",
+        "Required\\<T\\>"
+      ],
+      "path": "01-fundamentos/114-required-t/01.ts",
+      "language": "typescript",
+      "source_lines": 6,
+      "added_header_lines": 3,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 217,
+      "section": [
+        "Type Manipulation",
+        "Utility Types",
+        "Readonly\\<T\\>"
+      ],
+      "path": "01-fundamentos/115-readonly-t/01.ts",
+      "language": "typescript",
+      "source_lines": 9,
+      "added_header_lines": 3,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 218,
+      "section": [
+        "Type Manipulation",
+        "Utility Types",
+        "Record\\<K, T\\>"
+      ],
+      "path": "01-fundamentos/116-record-k-t/01.ts",
+      "language": "typescript",
+      "source_lines": 11,
+      "added_header_lines": 3,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 219,
+      "section": [
+        "Type Manipulation",
+        "Utility Types",
+        "Pick\\<T, K\\>"
+      ],
+      "path": "01-fundamentos/117-pick-t-k/01.ts",
+      "language": "typescript",
+      "source_lines": 6,
+      "added_header_lines": 3,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 220,
+      "section": [
+        "Type Manipulation",
+        "Utility Types",
+        "Omit\\<T, K\\>"
+      ],
+      "path": "01-fundamentos/118-omit-t-k/01.ts",
+      "language": "typescript",
+      "source_lines": 6,
+      "added_header_lines": 3,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 221,
+      "section": [
+        "Type Manipulation",
+        "Utility Types",
+        "Exclude\\<T, U\\>"
+      ],
+      "path": "01-fundamentos/119-exclude-t-u/01.ts",
+      "language": "typescript",
+      "source_lines": 2,
+      "added_header_lines": 3,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 222,
+      "section": [
+        "Type Manipulation",
+        "Utility Types",
+        "Extract\\<T, U\\>"
+      ],
+      "path": "01-fundamentos/120-extract-t-u/01.ts",
+      "language": "typescript",
+      "source_lines": 2,
+      "added_header_lines": 3,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 223,
+      "section": [
+        "Type Manipulation",
+        "Utility Types",
+        "NonNullable\\<T\\>"
+      ],
+      "path": "01-fundamentos/121-nonnullable-t/01.ts",
+      "language": "typescript",
+      "source_lines": 2,
+      "added_header_lines": 3,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 224,
+      "section": [
+        "Type Manipulation",
+        "Utility Types",
+        "Parameters\\<T\\>"
+      ],
+      "path": "01-fundamentos/122-parameters-t/01.ts",
+      "language": "typescript",
+      "source_lines": 2,
+      "added_header_lines": 3,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 225,
+      "section": [
+        "Type Manipulation",
+        "Utility Types",
+        "ConstructorParameters\\<T\\>"
+      ],
+      "path": "01-fundamentos/123-constructorparameters-t/01.ts",
+      "language": "typescript",
+      "source_lines": 10,
+      "added_header_lines": 3,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 226,
+      "section": [
+        "Type Manipulation",
+        "Utility Types",
+        "ReturnType\\<T\\>"
+      ],
+      "path": "01-fundamentos/124-returntype-t/01.ts",
+      "language": "typescript",
+      "source_lines": 2,
+      "added_header_lines": 3,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 227,
+      "section": [
+        "Type Manipulation",
+        "Utility Types",
+        "InstanceType\\<T\\>"
+      ],
+      "path": "01-fundamentos/125-instancetype-t/01.ts",
+      "language": "typescript",
+      "source_lines": 17,
+      "added_header_lines": 3,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 228,
+      "section": [
+        "Type Manipulation",
+        "Utility Types",
+        "ThisParameterType\\<T\\>"
+      ],
+      "path": "01-fundamentos/126-thisparametertype-t/01.ts",
+      "language": "typescript",
+      "source_lines": 5,
+      "added_header_lines": 3,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 229,
+      "section": [
+        "Type Manipulation",
+        "Utility Types",
+        "OmitThisParameter\\<T\\>"
+      ],
+      "path": "01-fundamentos/127-omitthisparameter-t/01.ts",
+      "language": "typescript",
+      "source_lines": 5,
+      "added_header_lines": 3,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 230,
+      "section": [
+        "Type Manipulation",
+        "Utility Types",
+        "ThisType\\<T\\>"
+      ],
+      "path": "01-fundamentos/128-thistype-t/01.ts",
+      "language": "typescript",
+      "source_lines": 10,
+      "added_header_lines": 3,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 231,
+      "section": [
+        "Type Manipulation",
+        "Utility Types",
+        "Uppercase\\<T\\>"
+      ],
+      "path": "01-fundamentos/129-uppercase-t/01.ts",
+      "language": "typescript",
+      "source_lines": 1,
+      "added_header_lines": 3,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 232,
+      "section": [
+        "Type Manipulation",
+        "Utility Types",
+        "Lowercase\\<T\\>"
+      ],
+      "path": "01-fundamentos/130-lowercase-t/01.ts",
+      "language": "typescript",
+      "source_lines": 1,
+      "added_header_lines": 3,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 233,
+      "section": [
+        "Type Manipulation",
+        "Utility Types",
+        "Capitalize\\<T\\>"
+      ],
+      "path": "01-fundamentos/131-capitalize-t/01.ts",
+      "language": "typescript",
+      "source_lines": 1,
+      "added_header_lines": 3,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 234,
+      "section": [
+        "Type Manipulation",
+        "Utility Types",
+        "Uncapitalize\\<T\\>"
+      ],
+      "path": "01-fundamentos/132-uncapitalize-t/01.ts",
+      "language": "typescript",
+      "source_lines": 1,
+      "added_header_lines": 3,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 235,
+      "section": [
+        "Type Manipulation",
+        "Utility Types",
+        "NoInfer\\<T\\>"
+      ],
+      "path": "01-fundamentos/133-noinfer-t/01.ts",
+      "language": "typescript",
+      "source_lines": 5,
+      "added_header_lines": 3,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 236,
+      "section": [
+        "Type Manipulation",
+        "Utility Types",
+        "NoInfer\\<T\\>"
+      ],
+      "path": "01-fundamentos/133-noinfer-t/02.ts",
+      "language": "typescript",
+      "source_lines": 6,
+      "added_header_lines": 3,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 237,
+      "section": [
+        "Others",
+        "Errors and Exception Handling"
+      ],
+      "path": "01-fundamentos/134-errors-and-exception-handling/01.ts",
+      "language": "typescript",
+      "source_lines": 7,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 238,
+      "section": [
+        "Others",
+        "Errors and Exception Handling"
+      ],
+      "path": "01-fundamentos/134-errors-and-exception-handling/02.ts",
+      "language": "typescript",
+      "source_lines": 11,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 239,
+      "section": [
+        "Others",
+        "Errors and Exception Handling"
+      ],
+      "path": "01-fundamentos/134-errors-and-exception-handling/03.ts",
+      "language": "typescript",
+      "source_lines": 8,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 240,
+      "section": [
+        "Others",
+        "Mixin classes"
+      ],
+      "path": "01-fundamentos/135-mixin-classes/01.ts",
+      "language": "typescript",
+      "source_lines": 45,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 241,
+      "section": [
+        "Others",
+        "Iterators and Generators"
+      ],
+      "path": "01-fundamentos/136-iterators-and-generators/01.ts",
+      "language": "typescript",
+      "source_lines": 30,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 242,
+      "section": [
+        "Others",
+        "Iterators and Generators"
+      ],
+      "path": "01-fundamentos/136-iterators-and-generators/02.ts",
+      "language": "typescript",
+      "source_lines": 11,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 243,
+      "section": [
+        "Others",
+        "TsDocs JSDoc Reference"
+      ],
+      "path": "01-fundamentos/137-tsdocs-jsdoc-reference/01.ts",
+      "language": "typescript",
+      "source_lines": 10,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 244,
+      "section": [
+        "Others",
+        "@types"
+      ],
+      "path": "apoyo/138-types/01.txt",
+      "language": "shell",
+      "source_lines": 1,
+      "added_header_lines": 0,
+      "status": "material_de_apoyo"
+    },
+    {
+      "order": 245,
+      "section": [
+        "Others",
+        "ES6 Modules"
+      ],
+      "path": "apoyo/139-es6-modules/01.json",
+      "language": "json",
+      "source_lines": 10,
+      "added_header_lines": 0,
+      "status": "material_de_apoyo"
+    },
+    {
+      "order": 246,
+      "section": [
+        "Others",
+        "ES7 Exponentiation Operator"
+      ],
+      "path": "01-fundamentos/140-es7-exponentiation-operator/01.ts",
+      "language": "typescript",
+      "source_lines": 1,
+      "added_header_lines": 3,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 247,
+      "section": [
+        "Others",
+        "The for-await-of Statement"
+      ],
+      "path": "01-fundamentos/141-the-for-await-of-statement/01.ts",
+      "language": "typescript",
+      "source_lines": 11,
+      "added_header_lines": 3,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 248,
+      "section": [
+        "Others",
+        "New target meta-property"
+      ],
+      "path": "01-fundamentos/142-new-target-meta-property/01.ts",
+      "language": "typescript",
+      "source_lines": 14,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 249,
+      "section": [
+        "Others",
+        "Dynamic Import Expressions"
+      ],
+      "path": "01-fundamentos/143-dynamic-import-expressions/01.ts",
+      "language": "typescript",
+      "source_lines": 9,
+      "added_header_lines": 3,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 250,
+      "section": [
+        "Others",
+        "\"tsc –watch\""
+      ],
+      "path": "apoyo/144-tsc-watch/01.txt",
+      "language": "shell",
+      "source_lines": 1,
+      "added_header_lines": 0,
+      "status": "material_de_apoyo"
+    },
+    {
+      "order": 251,
+      "section": [
+        "Others",
+        "Non-null Assertion Operator"
+      ],
+      "path": "01-fundamentos/145-non-null-assertion-operator/01.ts",
+      "language": "typescript",
+      "source_lines": 7,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 252,
+      "section": [
+        "Others",
+        "Defaulted declarations"
+      ],
+      "path": "01-fundamentos/146-defaulted-declarations/01.ts",
+      "language": "typescript",
+      "source_lines": 5,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 253,
+      "section": [
+        "Others",
+        "Optional Chaining"
+      ],
+      "path": "01-fundamentos/147-optional-chaining/01.ts",
+      "language": "typescript",
+      "source_lines": 14,
+      "added_header_lines": 3,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 254,
+      "section": [
+        "Others",
+        "Nullish coalescing operator"
+      ],
+      "path": "01-fundamentos/148-nullish-coalescing-operator/01.ts",
+      "language": "typescript",
+      "source_lines": 7,
+      "added_header_lines": 3,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 255,
+      "section": [
+        "Others",
+        "Template Literal Types"
+      ],
+      "path": "01-fundamentos/149-template-literal-types/01.ts",
+      "language": "typescript",
+      "source_lines": 3,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 256,
+      "section": [
+        "Others",
+        "Function overloading"
+      ],
+      "path": "01-fundamentos/150-function-overloading/01.ts",
+      "language": "typescript",
+      "source_lines": 14,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 257,
+      "section": [
+        "Others",
+        "Recursive Types"
+      ],
+      "path": "01-fundamentos/151-recursive-types/01.ts",
+      "language": "typescript",
+      "source_lines": 4,
+      "added_header_lines": 3,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 258,
+      "section": [
+        "Others",
+        "Recursive Conditional Types"
+      ],
+      "path": "01-fundamentos/152-recursive-conditional-types/01.ts",
+      "language": "typescript",
+      "source_lines": 3,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 259,
+      "section": [
+        "Others",
+        "Recursive Conditional Types"
+      ],
+      "path": "01-fundamentos/152-recursive-conditional-types/02.ts",
+      "language": "typescript",
+      "source_lines": 9,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 260,
+      "section": [
+        "Others",
+        "Recursive Conditional Types"
+      ],
+      "path": "01-fundamentos/152-recursive-conditional-types/03.ts",
+      "language": "typescript",
+      "source_lines": 4,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 261,
+      "section": [
+        "Others",
+        "ECMAScript Module Support in Node"
+      ],
+      "path": "apoyo/153-ecmascript-module-support-in-node/01.json",
+      "language": "json",
+      "source_lines": 7,
+      "added_header_lines": 0,
+      "status": "material_de_apoyo"
+    },
+    {
+      "order": 262,
+      "section": [
+        "Others",
+        "Assertion Functions"
+      ],
+      "path": "01-fundamentos/154-assertion-functions/01.ts",
+      "language": "typescript",
+      "source_lines": 5,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 263,
+      "section": [
+        "Others",
+        "Assertion Functions"
+      ],
+      "path": "01-fundamentos/154-assertion-functions/02.ts",
+      "language": "typescript",
+      "source_lines": 6,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 264,
+      "section": [
+        "Others",
+        "Assertion Functions"
+      ],
+      "path": "01-fundamentos/154-assertion-functions/03.ts",
+      "language": "typescript",
+      "source_lines": 1,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 265,
+      "section": [
+        "Others",
+        "Variadic Tuple Types"
+      ],
+      "path": "01-fundamentos/155-variadic-tuple-types/01.ts",
+      "language": "typescript",
+      "source_lines": 2,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 266,
+      "section": [
+        "Others",
+        "Variadic Tuple Types"
+      ],
+      "path": "01-fundamentos/155-variadic-tuple-types/02.ts",
+      "language": "typescript",
+      "source_lines": 5,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 267,
+      "section": [
+        "Others",
+        "Variadic Tuple Types"
+      ],
+      "path": "01-fundamentos/155-variadic-tuple-types/03.ts",
+      "language": "typescript",
+      "source_lines": 4,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 268,
+      "section": [
+        "Others",
+        "Variadic Tuple Types"
+      ],
+      "path": "01-fundamentos/155-variadic-tuple-types/04.ts",
+      "language": "typescript",
+      "source_lines": 10,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 269,
+      "section": [
+        "Others",
+        "Boxed types"
+      ],
+      "path": "01-fundamentos/156-boxed-types/01.ts",
+      "language": "typescript",
+      "source_lines": 6,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 270,
+      "section": [
+        "Others",
+        "Covariance and Contravariance in TypeScript"
+      ],
+      "path": "01-fundamentos/157-covariance-and-contravariance-in-typescript/01.ts",
+      "language": "typescript",
+      "source_lines": 15,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 271,
+      "section": [
+        "Others",
+        "Covariance and Contravariance in TypeScript"
+      ],
+      "path": "01-fundamentos/157-covariance-and-contravariance-in-typescript/02.ts",
+      "language": "typescript",
+      "source_lines": 7,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 272,
+      "section": [
+        "Others",
+        "Covariance and Contravariance in TypeScript"
+      ],
+      "path": "01-fundamentos/157-covariance-and-contravariance-in-typescript/03.ts",
+      "language": "typescript",
+      "source_lines": 5,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 273,
+      "section": [
+        "Others",
+        "Covariance and Contravariance in TypeScript",
+        "Optional Variance Annotations for Type Parameters"
+      ],
+      "path": "01-fundamentos/158-optional-variance-annotations-for-type-parameters/01.ts",
+      "language": "typescript",
+      "source_lines": 3,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 274,
+      "section": [
+        "Others",
+        "Template String Pattern Index Signatures"
+      ],
+      "path": "01-fundamentos/159-template-string-pattern-index-signatures/01.ts",
+      "language": "typescript",
+      "source_lines": 18,
+      "added_header_lines": 3,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 275,
+      "section": [
+        "Others",
+        "The satisfies Operator"
+      ],
+      "path": "01-fundamentos/160-the-satisfies-operator/01.ts",
+      "language": "typescript",
+      "source_lines": 35,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 276,
+      "section": [
+        "Others",
+        "Type-Only Imports and Export"
+      ],
+      "path": "01-fundamentos/161-type-only-imports-and-export/01.ts",
+      "language": "typescript",
+      "source_lines": 1,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 277,
+      "section": [
+        "Others",
+        "Type-Only Imports and Export"
+      ],
+      "path": "01-fundamentos/161-type-only-imports-and-export/02.ts",
+      "language": "typescript",
+      "source_lines": 5,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 278,
+      "section": [
+        "Others",
+        "using declaration and Explicit Resource Management"
+      ],
+      "path": "apoyo/162-using-declaration-and-explicit-resource-management/01.json",
+      "language": "json",
+      "source_lines": 6,
+      "added_header_lines": 0,
+      "status": "material_de_apoyo"
+    },
+    {
+      "order": 279,
+      "section": [
+        "Others",
+        "using declaration and Explicit Resource Management"
+      ],
+      "path": "01-fundamentos/162-using-declaration-and-explicit-resource-management/02.ts",
+      "language": "typescript",
+      "source_lines": 19,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 280,
+      "section": [
+        "Others",
+        "using declaration and Explicit Resource Management"
+      ],
+      "path": "apoyo/162-using-declaration-and-explicit-resource-management/03.txt",
+      "language": "shell",
+      "source_lines": 4,
+      "added_header_lines": 0,
+      "status": "material_de_apoyo"
+    },
+    {
+      "order": 281,
+      "section": [
+        "Others",
+        "using declaration and Explicit Resource Management"
+      ],
+      "path": "01-fundamentos/162-using-declaration-and-explicit-resource-management/04.ts",
+      "language": "typescript",
+      "source_lines": 4,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 282,
+      "section": [
+        "Others",
+        "using declaration and Explicit Resource Management"
+      ],
+      "path": "01-fundamentos/162-using-declaration-and-explicit-resource-management/05.ts",
+      "language": "typescript",
+      "source_lines": 5,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 283,
+      "section": [
+        "Others",
+        "using declaration and Explicit Resource Management",
+        "await using declaration"
+      ],
+      "path": "01-fundamentos/163-await-using-declaration/01.ts",
+      "language": "typescript",
+      "source_lines": 3,
+      "added_header_lines": 3,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 284,
+      "section": [
+        "Others",
+        "using declaration and Explicit Resource Management",
+        "await using declaration"
+      ],
+      "path": "01-fundamentos/163-await-using-declaration/02.ts",
+      "language": "typescript",
+      "source_lines": 4,
+      "added_header_lines": 3,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 285,
+      "section": [
+        "Others",
+        "using declaration and Explicit Resource Management",
+        "await using declaration"
+      ],
+      "path": "01-fundamentos/163-await-using-declaration/03.ts",
+      "language": "typescript",
+      "source_lines": 24,
+      "added_header_lines": 3,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 286,
+      "section": [
+        "Others",
+        "using declaration and Explicit Resource Management",
+        "await using declaration"
+      ],
+      "path": "apoyo/163-await-using-declaration/04.txt",
+      "language": "shell",
+      "source_lines": 3,
+      "added_header_lines": 0,
+      "status": "material_de_apoyo"
+    },
+    {
+      "order": 287,
+      "section": [
+        "Others",
+        "Import Attributes"
+      ],
+      "path": "01-fundamentos/164-import-attributes/01.ts",
+      "language": "typescript",
+      "source_lines": 1,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 288,
+      "section": [
+        "Others",
+        "Import Attributes"
+      ],
+      "path": "01-fundamentos/164-import-attributes/02.ts",
+      "language": "typescript",
+      "source_lines": 1,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    },
+    {
+      "order": 289,
+      "section": [
+        "Others",
+        "Regular Expression Syntax Checking"
+      ],
+      "path": "01-fundamentos/165-regular-expression-syntax-checking/01.ts",
+      "language": "typescript",
+      "source_lines": 1,
+      "added_header_lines": 4,
+      "status": "pendiente_de_clasificacion"
+    }
+  ]
+}
