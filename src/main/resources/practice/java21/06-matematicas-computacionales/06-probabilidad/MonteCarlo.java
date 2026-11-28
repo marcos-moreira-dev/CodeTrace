@@ -16,9 +16,9 @@ public class MonteCarlo {
             if (x * x + y * y <= 1) dentro++;
         }
         double estimacion = 4.0 * dentro / pruebas;
-        System.out.println(Math.abs(estimacion - Math.PI) < 0.1);
+        System.out.printf(java.util.Locale.ROOT, "Pi aproximado: %.4f%n", estimacion);
     }
 }
 
 // Salida esperada:
-// true
+// Pi aproximado: 3.1254

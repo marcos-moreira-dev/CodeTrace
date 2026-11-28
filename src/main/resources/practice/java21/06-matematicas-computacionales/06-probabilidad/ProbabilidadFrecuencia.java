@@ -15,9 +15,9 @@ public class ProbabilidadFrecuencia {
             if (azar.nextInt(6) == 0) exitos++;
         }
         double frecuencia = (double) exitos / pruebas;
-        System.out.println(frecuencia > 0.14 && frecuencia < 0.20);
+        System.out.printf(java.util.Locale.ROOT, "Frecuencia: %.4f%n", frecuencia);
     }
 }
 
 // Salida esperada:
-// true
+// Frecuencia: 0.1623

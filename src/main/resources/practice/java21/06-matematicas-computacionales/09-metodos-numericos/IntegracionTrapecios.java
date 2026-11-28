@@ -7,7 +7,7 @@
 
 public class IntegracionTrapecios {
     public static void main(String[] args) {
-        int n = 1000;
+        int n = 100;
         double h = 1.0 / n;
         double suma = 0.5; // (f(0) + f(1)) / 2
         for (int i = 1; i < n; i++) {
@@ -19,4 +19,4 @@ public class IntegracionTrapecios {
 }
 
 // Salida esperada:
-// 0.333334
+// 0.333350

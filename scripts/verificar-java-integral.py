@@ -3,7 +3,7 @@ import json
 import subprocess
 import tempfile
 from pathlib import Path
-from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
 repo = Path(__file__).resolve().parent.parent
 root = repo / "src/main/resources/practice/java21"
@@ -22,8 +22,9 @@ def verify(case):
         s = p.read_text(encoding="utf-8")
         assert s.startswith("// Tema:\n") and "Compilar:" in s and "Salida esperada:" in s, p
     with tempfile.TemporaryDirectory() as tmp:
-        subprocess.run(["javac", "--release", "21", "-encoding", "UTF-8", "-d", tmp,
-                        *map(str, sources)], check=True, timeout=30, capture_output=True)
+        compilation = subprocess.run(["javac", "--release", "21", "-encoding", "UTF-8", "-d", tmp,
+                        *map(str, sources)], timeout=30, capture_output=True, text=True, encoding="utf-8")
+        assert compilation.returncode == 0, (case["path"], compilation.stderr)
         run = subprocess.run(["java", "-Dfile.encoding=UTF-8", "-cp", tmp, case["main"],
                               *case.get("args", [])], cwd=tmp, timeout=20,
                              capture_output=True, text=True, encoding="utf-8")
@@ -31,7 +32,15 @@ def verify(case):
             case["path"], run.returncode, run.stdout, run.stderr, case["stdout"])
     return case["path"]
 
+failures = []
 with ThreadPoolExecutor(max_workers=4) as pool:
-    for result in pool.map(verify, cases):
-        print("OK", result)
+    futures = {pool.submit(verify, c): c["path"] for c in cases}
+    for future in as_completed(futures):
+        try:
+            print("OK", future.result())
+        except Exception as e:
+            failures.append((futures[future], str(e)))
+            print("FALLO", futures[future], repr(e))
+if failures:
+    raise SystemExit(f"{len(failures)} de {len(cases)} casos fallaron")
 print(f"Java integral: {len(cases)} casos, {len(actual)} fuentes verificadas")
