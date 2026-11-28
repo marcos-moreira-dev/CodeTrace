@@ -15,7 +15,7 @@ import sys
 root=Path(sys.argv[1])
 items=[x.split("\t",1) for x in (root/"catalog.tsv").read_text(encoding="utf-8").splitlines()
        if x and not x.startswith("#")]
-assert len(items)==1037, len(items)
+assert len(items)==1049, len(items)
 assert len({p for p,_ in items})==14
 assert len(set(map(tuple,items)))==len(items)
 # The integrator intentionally lives in the 05 root; all pattern
@@ -80,7 +80,7 @@ print("OK catálogo:",len(items), "| clientes documentados:", len(clientes),
 PY
 
 echo "Java 21: clases, contratos y clientes"
-find "$base/java21" -name '*.java' -print0 | xargs -0 javac --release 21 -encoding UTF-8 -d "$tmp/java"
+find "$base/java21" -path '*/00-fundamentos-especificacion-oficial' -prune -o -name '*.java' -print0 | xargs -0 javac --release 21 -encoding UTF-8 -d "$tmp/java"
 for cls in \
  MainExcepcionChecked MainExcepcionUnchecked MainRecursosYSuppressed \
  MainColaCircular MainListaSimple MainPila MainBusquedaBinaria \
@@ -102,7 +102,7 @@ from pathlib import Path
 import re, subprocess, sys
 root=Path(sys.argv[1])
 classpath=sys.argv[2]
-clientes=sorted(root.rglob("Main*.java"))
+clientes=sorted(p for p in root.rglob("Main*.java") if "00-fundamentos-especificacion-oficial" not in p.parts)
 for archivo in clientes:
     texto=archivo.read_text(encoding="utf-8")
     paquete=re.search(r"(?m)^\s*package\s+([\w.]+)\s*;", texto)
@@ -115,6 +115,8 @@ for archivo in clientes:
 assert len(clientes)>=50, len(clientes)
 print("OK: ejecutados",len(clientes),"clientes Java 21")
 PY
+
+python3 scripts/verificar-jls21.py
 
 echo "Counter-Strike: ejecutar y comparar salidas de los 13 patrones Java"
 python3 - "$tmp/java" <<'PY'
@@ -403,4 +405,4 @@ for path in root.rglob("*"):
 print("OK: rutas de la biblioteca sin colisiones por mayusculas/minusculas")
 PY
 
-echo "OK: catálogo v15, 14 paquetes, 1037 fuentes documentadas y clientes seleccionados"
+echo "OK: catálogo v15, 14 paquetes, 1049 fuentes documentadas y clientes seleccionados"

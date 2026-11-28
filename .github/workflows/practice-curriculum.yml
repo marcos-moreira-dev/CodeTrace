@@ -6,6 +6,8 @@ on:
     paths:
       - 'src/main/resources/practice/**'
       - 'scripts/verificar-biblioteca.sh'
+      - 'scripts/verificar-jls21.py'
+      - 'scripts/jls21-casos.json'
       - 'scripts/verificar-counter-strike.py'
       - '.github/workflows/practice-curriculum.yml'
 jobs:
