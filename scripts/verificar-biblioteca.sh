@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# CodeTrace | Referencia: biblioteca de práctica v29 / verificador GNU/Linux-WSL
+# CodeTrace | Referencia: biblioteca de práctica v30 / verificador GNU/Linux-WSL
 # Ejecutar en COPIA: bash scripts/verificar-biblioteca.sh
 # Artefactos de compilación aislados en mktemp, sin tocar referencias.
 set -euo pipefail
@@ -15,7 +15,7 @@ import sys
 root=Path(sys.argv[1])
 items=[x.split("\t",1) for x in (root/"catalog.tsv").read_text(encoding="utf-8").splitlines()
        if x and not x.startswith("#")]
-assert len(items)==1934, len(items)
+assert len(items)==1951, len(items)
 assert len({p for p,_ in items})==14
 assert len(set(map(tuple,items)))==len(items)
 # The integrator intentionally lives in the 05 root; all pattern
@@ -33,6 +33,9 @@ actual={str(x.relative_to(root)).replace("\\","/") for x in root.rglob("*")
 declared={p+"/"+path for p,path in items}
 assert actual==declared, (actual-declared,declared-actual)
 for pack,path in items:
+    if pack=="java21" and path=="14-comunicacion-con-dispositivos/12-interoperabilidad-nativa/README.md":
+        assert (root/pack/path).read_text(encoding="utf-8").startswith("# Interoperabilidad nativa"), path
+        continue
     if pack=="java21" and (path.startswith("00-fundamentos-especificacion-oficial/") or path.split("/")[0].split("-")[0] in {f"{n:02}" for n in range(6,21)}):
         text=(root/pack/path).read_text(encoding="utf-8")
         assert text.startswith("// Tema:\n") and "Compilar:" in text and "Salida esperada:" in text, (pack,path)
@@ -243,7 +246,7 @@ for dir in \
 done
 
 
-echo "v29: Java 21 — pruebas de las nuevas familias y patrones"
+echo "v30: Java 21 — pruebas de las nuevas familias y patrones"
 for clase in \
   codetrace.practica.estructuras.listadoble.MainListaDoble \
   codetrace.practica.estructuras.listacircular.MainListaCircular \
@@ -264,7 +267,7 @@ for clase in \
   java -cp "$tmp/java" "$clase" >/dev/null
 done
 
-echo "v29: C++20 — miniproyectos completos por carpeta"
+echo "v30: C++20 — miniproyectos completos por carpeta"
 for unidad in \
   02-estructuras-datos/linked-list/simple \
   02-estructuras-datos/linked-list/doble \
@@ -284,11 +287,11 @@ for unidad in \
   04-patrones-diseno/command/deshacer \
   04-patrones-diseno/template-method/reportes; do
   ruta="$base/cpp/$unidad"
-  g++ -std=c++20 -Wall -Wextra -Werror "$ruta/"*.cpp -o "$tmp/cpp-v29"
-  "$tmp/cpp-v29" >/dev/null
+  g++ -std=c++20 -Wall -Wextra -Werror "$ruta/"*.cpp -o "$tmp/cpp-v30"
+  "$tmp/cpp-v30" >/dev/null
 done
 
-echo "v29: TypeScript 5.9 — transpilar y ejecutar el cliente de cada unidad"
+echo "v30: TypeScript 5.9 — transpilar y ejecutar el cliente de cada unidad"
 tsc --strict --target ES2022 --module commonjs --outDir "$tmp/ts" "$base/typescript/02-estructuras-datos/linked-list/simple/MainListaSimple.ts"
 node "$tmp/ts/MainListaSimple.js" >/dev/null
 tsc --strict --target ES2022 --module commonjs --outDir "$tmp/ts" "$base/typescript/02-estructuras-datos/linked-list/doble/MainListaDoble.ts"
@@ -324,7 +327,7 @@ node "$tmp/ts/MainCommand.js" >/dev/null
 tsc --strict --target ES2022 --module commonjs --outDir "$tmp/ts" "$base/typescript/04-patrones-diseno/template-method/reportes/MainTemplateMethod.ts"
 node "$tmp/ts/MainTemplateMethod.js" >/dev/null
 
-echo "v29: Python, Ruby y JavaScript — todos los nuevos clientes"
+echo "v30: Python, Ruby y JavaScript — todos los nuevos clientes"
 for unidad in \
   02-estructuras-datos/linked-list/simple \
   02-estructuras-datos/linked-list/doble \
@@ -351,7 +354,7 @@ for unidad in \
 done
 
 
-echo "v29: comparativa de cinco sorts, insercion binaria y limites ordenados"
+echo "v30: comparativa de cinco sorts, insercion binaria y limites ordenados"
 for clase in \
   codetrace.practica.ordenamientos.MainOrdenamientos \
   codetrace.practica.algoritmos.burbuja.MainBurbuja \
@@ -395,7 +398,7 @@ python3 -B "$base/python/04-patrones-diseno/chain-of-responsibility/reportes-par
 diff -u "$tmp/cadena-java.txt" "$tmp/cadena-python.txt"
 echo "OK: salidas Java/Python idénticas para la cadena de responsabilidad"
 
-echo "v29: comprobar documentación de consola en todas las fuentes"
+echo "v30: comprobar documentación de consola en todas las fuentes"
 python3 -B scripts/documentar_consola_practica.py --check \
   --root "$base" --outcomes scripts/salidas_practica.json
 python3 - "$base" <<'PY'
@@ -411,4 +414,4 @@ for path in root.rglob("*"):
 print("OK: rutas de la biblioteca sin colisiones por mayusculas/minusculas")
 PY
 
-echo "OK: catálogo v29, 14 paquetes, 1934 fuentes documentadas y clientes seleccionados"
+echo "OK: catálogo v30, 14 paquetes, 1951 fuentes documentadas y clientes seleccionados"

@@ -2222,5 +2222,93 @@
     "main": "MainControlAcceso",
     "mode": "T",
     "stdout": "Cajero vende: true\nCajero elimina: false\nAdmin elimina: true\nDesconocido lee: false\n"
+  },
+  {
+    "path": "14-comunicacion-con-dispositivos/03-transmision-serial/TramaSerial.java",
+    "sources": [
+      "14-comunicacion-con-dispositivos/03-transmision-serial/TramaSerial.java"
+    ],
+    "main": "TramaSerial",
+    "mode": "T",
+    "stdout": "01100101001\nBits: 11\n"
+  },
+  {
+    "path": "14-comunicacion-con-dispositivos/04-paridad/ParidadPar.java",
+    "sources": [
+      "14-comunicacion-con-dispositivos/04-paridad/ParidadPar.java"
+    ],
+    "main": "ParidadPar",
+    "mode": "T",
+    "stdout": "Paridad: 1\nOriginal: true\nUn cambio: false\nDos cambios: true\n"
+  },
+  {
+    "path": "14-comunicacion-con-dispositivos/04-paridad/ParidadImpar.java",
+    "sources": [
+      "14-comunicacion-con-dispositivos/04-paridad/ParidadImpar.java"
+    ],
+    "main": "ParidadImpar",
+    "mode": "T",
+    "stdout": "Paridad: 1\nOriginal: true\nAlterado: false\n"
+  },
+  {
+    "path": "14-comunicacion-con-dispositivos/05-crc-y-hamming/CRCModelo.java",
+    "sources": [
+      "14-comunicacion-con-dispositivos/05-crc-y-hamming/CRCModelo.java"
+    ],
+    "main": "CRCModelo",
+    "mode": "T",
+    "stdout": "CRC: 1\nValido: true\nAlterado: false\nCRC32 conocido: cbf43926\n"
+  },
+  {
+    "path": "14-comunicacion-con-dispositivos/05-crc-y-hamming/MainHamming.java",
+    "sources": [
+      "14-comunicacion-con-dispositivos/05-crc-y-hamming/Hamming74.java",
+      "14-comunicacion-con-dispositivos/05-crc-y-hamming/MainHamming.java"
+    ],
+    "main": "MainHamming",
+    "mode": "T",
+    "stdout": "Sindrome original: 0\nPosicion alterada: 5\nDato recuperado: 11\n"
+  },
+  {
+    "path": "14-comunicacion-con-dispositivos/06-canal-serial/MainSerial.java",
+    "sources": [
+      "14-comunicacion-con-dispositivos/06-canal-serial/CanalBytesSimulado.java",
+      "14-comunicacion-con-dispositivos/06-canal-serial/Emisor.java",
+      "14-comunicacion-con-dispositivos/06-canal-serial/Receptor.java",
+      "14-comunicacion-con-dispositivos/06-canal-serial/MainSerial.java"
+    ],
+    "main": "MainSerial",
+    "mode": "T",
+    "stdout": "TEMP25\nOK\n"
+  },
+  {
+    "path": "14-comunicacion-con-dispositivos/08-mensajes-medicion-y-control/MedicionSimulada.java",
+    "sources": [
+      "14-comunicacion-con-dispositivos/08-mensajes-medicion-y-control/MedicionSimulada.java"
+    ],
+    "main": "MedicionSimulada",
+    "mode": "T",
+    "stdout": "Temperatura: 25\n"
+  },
+  {
+    "path": "14-comunicacion-con-dispositivos/08-mensajes-medicion-y-control/ControlPorUmbral.java",
+    "sources": [
+      "14-comunicacion-con-dispositivos/08-mensajes-medicion-y-control/ControlPorUmbral.java"
+    ],
+    "main": "ControlPorUmbral",
+    "mode": "T",
+    "stdout": "24: APAGAR\n30: ENCENDER\n28: ENCENDER\n"
+  },
+  {
+    "path": "14-comunicacion-con-dispositivos/11-telemetria/MainTelemetria.java",
+    "sources": [
+      "14-comunicacion-con-dispositivos/11-telemetria/TramaMedicion.java",
+      "14-comunicacion-con-dispositivos/11-telemetria/Codificador.java",
+      "14-comunicacion-con-dispositivos/11-telemetria/Decodificador.java",
+      "14-comunicacion-con-dispositivos/11-telemetria/MainTelemetria.java"
+    ],
+    "main": "MainTelemetria",
+    "mode": "T",
+    "stdout": "3: 25\nChecksum invalido\n"
   }
 ]

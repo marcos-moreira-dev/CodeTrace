@@ -1,4 +1,4 @@
-# CodeTrace | Biblioteca offline v29 | una entrada por archivo, no por ejercicio
+# CodeTrace | Biblioteca offline v30 | una entrada por archivo, no por ejercicio
 c	01-fundamentos/bits-y-mascaras/bits_y_mascaras.c
 c	01-fundamentos/callbacks-y-funciones/callbacks_y_funciones.c
 c	01-fundamentos/compilacion-y-enlazado/biblioteca-estatica-dinamica/compilar.sh
@@ -1428,6 +1428,23 @@ java21	13-criptografia-y-seguridad/10-validacion-entradas/ValidarLongitud.java
 java21	13-criptografia-y-seguridad/10-validacion-entradas/ValidarRuta.java
 java21	13-criptografia-y-seguridad/11-control-acceso/MainControlAcceso.java
 java21	13-criptografia-y-seguridad/11-control-acceso/PermisosRoles.java
+java21	14-comunicacion-con-dispositivos/03-transmision-serial/TramaSerial.java
+java21	14-comunicacion-con-dispositivos/04-paridad/ParidadImpar.java
+java21	14-comunicacion-con-dispositivos/04-paridad/ParidadPar.java
+java21	14-comunicacion-con-dispositivos/05-crc-y-hamming/CRCModelo.java
+java21	14-comunicacion-con-dispositivos/05-crc-y-hamming/Hamming74.java
+java21	14-comunicacion-con-dispositivos/05-crc-y-hamming/MainHamming.java
+java21	14-comunicacion-con-dispositivos/06-canal-serial/CanalBytesSimulado.java
+java21	14-comunicacion-con-dispositivos/06-canal-serial/Emisor.java
+java21	14-comunicacion-con-dispositivos/06-canal-serial/MainSerial.java
+java21	14-comunicacion-con-dispositivos/06-canal-serial/Receptor.java
+java21	14-comunicacion-con-dispositivos/08-mensajes-medicion-y-control/ControlPorUmbral.java
+java21	14-comunicacion-con-dispositivos/08-mensajes-medicion-y-control/MedicionSimulada.java
+java21	14-comunicacion-con-dispositivos/11-telemetria/Codificador.java
+java21	14-comunicacion-con-dispositivos/11-telemetria/Decodificador.java
+java21	14-comunicacion-con-dispositivos/11-telemetria/MainTelemetria.java
+java21	14-comunicacion-con-dispositivos/11-telemetria/TramaMedicion.java
+java21	14-comunicacion-con-dispositivos/12-interoperabilidad-nativa/README.md
 javascript	01-fundamentos/closures/closures.js
 javascript	01-fundamentos/event-loop/event_loop.js
 javascript	01-fundamentos/funciones/funciones.js

@@ -336,23 +336,23 @@ area	unidad	modalidad	archivo	objetivo	estado
 13-criptografia-y-seguridad	10-validacion-entradas	R	ValidarRuta.java	Límites de mensajes y confinamiento de rutas en temporales.	implementado_pendiente_ci
 13-criptografia-y-seguridad	11-control-acceso	T	PermisosRoles.java	Autorización por roles simulada; distinta de sincronización lectores-escritores.	implementado_pendiente_ci
 13-criptografia-y-seguridad	11-control-acceso	T	MainControlAcceso.java	Autorización por roles simulada; distinta de sincronización lectores-escritores.	implementado_pendiente_ci
-14-comunicacion-con-dispositivos	03-transmision-serial	T	TramaSerial.java	Modelar trama serial con inicio, datos, paridad y parada como secuencia de bits, sin implementar controlador físico.	planificado
-14-comunicacion-con-dispositivos	04-paridad	T	ParidadPar.java	Detectar cambios de paridad y límites de detección.	planificado
-14-comunicacion-con-dispositivos	04-paridad	T	ParidadImpar.java	Detectar cambios de paridad y límites de detección.	planificado
-14-comunicacion-con-dispositivos	05-crc-y-hamming	T	CRCModelo.java	Implementar CRC elemental y Hamming(7,4) para detectar/corregir errores; comparar con CRC32 del JDK solo como comprobación.	planificado
-14-comunicacion-con-dispositivos	05-crc-y-hamming	T	Hamming74.java	Implementar CRC elemental y Hamming(7,4) para detectar/corregir errores; comparar con CRC32 del JDK solo como comprobación.	planificado
-14-comunicacion-con-dispositivos	05-crc-y-hamming	T	MainHamming.java	Implementar CRC elemental y Hamming(7,4) para detectar/corregir errores; comparar con CRC32 del JDK solo como comprobación.	planificado
-14-comunicacion-con-dispositivos	06-canal-serial	T	CanalBytesSimulado.java	Flujo de bytes, delimitadores y recepción fragmentada.	planificado
-14-comunicacion-con-dispositivos	06-canal-serial	T	Emisor.java	Flujo de bytes, delimitadores y recepción fragmentada.	planificado
-14-comunicacion-con-dispositivos	06-canal-serial	T	Receptor.java	Flujo de bytes, delimitadores y recepción fragmentada.	planificado
-14-comunicacion-con-dispositivos	06-canal-serial	T	MainSerial.java	Flujo de bytes, delimitadores y recepción fragmentada.	planificado
-14-comunicacion-con-dispositivos	08-mensajes-medicion-y-control	T	MedicionSimulada.java	Procesar una medición recibida y producir un comando textual; sin sensor, GPIO ni hardware.	planificado
-14-comunicacion-con-dispositivos	08-mensajes-medicion-y-control	T	ControlPorUmbral.java	Procesar una medición recibida y producir un comando textual; sin sensor, GPIO ni hardware.	planificado
-14-comunicacion-con-dispositivos	11-telemetria	T	TramaMedicion.java	Campos binarios, checksum, límites y reensamblaje.	planificado
-14-comunicacion-con-dispositivos	11-telemetria	T	Codificador.java	Campos binarios, checksum, límites y reensamblaje.	planificado
-14-comunicacion-con-dispositivos	11-telemetria	T	Decodificador.java	Campos binarios, checksum, límites y reensamblaje.	planificado
-14-comunicacion-con-dispositivos	11-telemetria	T	MainTelemetria.java	Campos binarios, checksum, límites y reensamblaje.	planificado
-14-comunicacion-con-dispositivos	12-interoperabilidad-nativa	D	README.md	Explicar límites de la API Java 21 para puertos seriales y JNI/FFM; no integrar drivers, C ni API preview obligatoria.	planificado
+14-comunicacion-con-dispositivos	03-transmision-serial	T	TramaSerial.java	Modelar trama serial con inicio, datos, paridad y parada como secuencia de bits, sin implementar controlador físico.	implementado_pendiente_ci
+14-comunicacion-con-dispositivos	04-paridad	T	ParidadPar.java	Detectar cambios de paridad y límites de detección.	implementado_pendiente_ci
+14-comunicacion-con-dispositivos	04-paridad	T	ParidadImpar.java	Detectar cambios de paridad y límites de detección.	implementado_pendiente_ci
+14-comunicacion-con-dispositivos	05-crc-y-hamming	T	CRCModelo.java	Implementar CRC elemental y Hamming(7,4) para detectar/corregir errores; comparar con CRC32 del JDK solo como comprobación.	implementado_pendiente_ci
+14-comunicacion-con-dispositivos	05-crc-y-hamming	T	Hamming74.java	Implementar CRC elemental y Hamming(7,4) para detectar/corregir errores; comparar con CRC32 del JDK solo como comprobación.	implementado_pendiente_ci
+14-comunicacion-con-dispositivos	05-crc-y-hamming	T	MainHamming.java	Implementar CRC elemental y Hamming(7,4) para detectar/corregir errores; comparar con CRC32 del JDK solo como comprobación.	implementado_pendiente_ci
+14-comunicacion-con-dispositivos	06-canal-serial	T	CanalBytesSimulado.java	Flujo de bytes, delimitadores y recepción fragmentada.	implementado_pendiente_ci
+14-comunicacion-con-dispositivos	06-canal-serial	T	Emisor.java	Flujo de bytes, delimitadores y recepción fragmentada.	implementado_pendiente_ci
+14-comunicacion-con-dispositivos	06-canal-serial	T	Receptor.java	Flujo de bytes, delimitadores y recepción fragmentada.	implementado_pendiente_ci
+14-comunicacion-con-dispositivos	06-canal-serial	T	MainSerial.java	Flujo de bytes, delimitadores y recepción fragmentada.	implementado_pendiente_ci
+14-comunicacion-con-dispositivos	08-mensajes-medicion-y-control	T	MedicionSimulada.java	Procesar una medición recibida y producir un comando textual; sin sensor, GPIO ni hardware.	implementado_pendiente_ci
+14-comunicacion-con-dispositivos	08-mensajes-medicion-y-control	T	ControlPorUmbral.java	Procesar una medición recibida y producir un comando textual; sin sensor, GPIO ni hardware.	implementado_pendiente_ci
+14-comunicacion-con-dispositivos	11-telemetria	T	TramaMedicion.java	Campos binarios, checksum, límites y reensamblaje.	implementado_pendiente_ci
+14-comunicacion-con-dispositivos	11-telemetria	T	Codificador.java	Campos binarios, checksum, límites y reensamblaje.	implementado_pendiente_ci
+14-comunicacion-con-dispositivos	11-telemetria	T	Decodificador.java	Campos binarios, checksum, límites y reensamblaje.	implementado_pendiente_ci
+14-comunicacion-con-dispositivos	11-telemetria	T	MainTelemetria.java	Campos binarios, checksum, límites y reensamblaje.	implementado_pendiente_ci
+14-comunicacion-con-dispositivos	12-interoperabilidad-nativa	D	README.md	Explicar límites de la API Java 21 para puertos seriales y JNI/FFM; no integrar drivers, C ni API preview obligatoria.	implementado_pendiente_ci
 15-graficos-y-multimedia	01-pixeles	R	ColorRGB.java	Componentes RGB/ARGB y coordenadas con BufferedImage.	planificado
 15-graficos-y-multimedia	01-pixeles	R	ImagenPixeles.java	Componentes RGB/ARGB y coordenadas con BufferedImage.	planificado
 15-graficos-y-multimedia	02-archivos-imagen	R	LeerEscribirPNG.java	ImageIO y archivos temporales, sin imágenes externas.	planificado

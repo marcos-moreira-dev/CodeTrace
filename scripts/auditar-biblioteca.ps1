@@ -2,7 +2,7 @@
 # UTF-8 BOM required for the legacy Windows PowerShell 5.1 parser.
 <#
 .SYNOPSIS
-  Audita la biblioteca offline de CodeTrace v29 (1934 referencias / 14 lenguajes).
+  Audita la biblioteca offline de CodeTrace v30 (1951 referencias / 14 lenguajes).
 .DESCRIPTION
   Revisa el catálogo, archivos existentes, carpetas de ejercicio, versiones
   y comandos de compilación. Por defecto NO compila ni modifica referencias.
@@ -58,7 +58,9 @@ foreach ($linea in (Get-Content -LiteralPath $catalogo -Encoding UTF8)) {
         throw "Archivo inexistente: $destino"
     }
     $cabecera = (Get-Content -LiteralPath $destino -Encoding UTF8 -TotalCount 12) -join [Environment]::NewLine
-    if ($paquete -eq 'java21' -and ($ruta.StartsWith('00-fundamentos-especificacion-oficial/') -or $ruta -match '^(0[6-9]|1[0-9]|20)-')) {
+    if ($paquete -eq 'java21' -and $ruta -eq '14-comunicacion-con-dispositivos/12-interoperabilidad-nativa/README.md') {
+        if ($cabecera -notmatch '^# Interoperabilidad nativa') { throw "Unidad documental inválida: $identificador" }
+    } elseif ($paquete -eq 'java21' -and ($ruta.StartsWith('00-fundamentos-especificacion-oficial/') -or $ruta -match '^(0[6-9]|1[0-9]|20)-')) {
         $contenido = Get-Content -LiteralPath $destino -Encoding UTF8 -Raw
         if ($contenido -notmatch '^// Tema:' -or $contenido -notmatch 'Compilar:' -or
             $contenido -notmatch 'Salida esperada:' -or $contenido -match 'Referencia: Java SE 21|Tema JLS:') {
@@ -78,10 +80,10 @@ foreach ($linea in (Get-Content -LiteralPath $catalogo -Encoding UTF8)) {
 }
 
 $idiomas = @($referencias.Lenguaje | Sort-Object -Unique)
-if ($referencias.Count -ne 1934 -or $idiomas.Count -ne 14) {
+if ($referencias.Count -ne 1951 -or $idiomas.Count -ne 14) {
     throw "Catálogo inconsistente: $($referencias.Count) archivos, $($idiomas.Count) lenguajes"
 }
-Write-Host "CodeTrace v29 — catálogo íntegro: $($referencias.Count) archivos / $($idiomas.Count) lenguajes"
+Write-Host "CodeTrace v30 — catálogo íntegro: $($referencias.Count) archivos / $($idiomas.Count) lenguajes"
 foreach ($grupo in ($referencias | Group-Object Lenguaje | Sort-Object Name)) {
     $unidades = @($grupo.Group.Unidad | Sort-Object -Unique).Count
     Write-Host ("  {0,-16} {1,3} archivos  {2,3} carpetas con código" -f

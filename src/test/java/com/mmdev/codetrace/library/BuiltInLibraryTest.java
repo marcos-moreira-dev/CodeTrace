@@ -112,6 +112,10 @@ class BuiltInLibraryTest {
             Path root = library.open(pack);
             for (String relative : library.entries(pack)) {
                 String text = Files.readString(root.resolve(relative));
+                if (pack.id().equals("java21") && relative.equals("14-comunicacion-con-dispositivos/12-interoperabilidad-nativa/README.md")) {
+                    assertTrue(text.startsWith("# Interoperabilidad nativa"), relative);
+                    continue;
+                }
                 if (pack.id().equals("java21")
                         && (relative.startsWith("00-fundamentos-especificacion-oficial/")
                         || relative.matches("(0[6-9]|1[0-9]|20)-.*"))) {
@@ -136,8 +140,8 @@ class BuiltInLibraryTest {
     @Test
     void allFourCurriculumPurposesAndDocumentedJavaClientsArePresent() throws Exception {
         var library = new BuiltInLibrary(temp.resolve("curriculum"));
-        assertEquals("v29", BuiltInLibrary.CATALOG_VERSION);
-        assertEquals(1934, library.packs().stream().mapToInt(library::size).sum());
+        assertEquals("v30", BuiltInLibrary.CATALOG_VERSION);
+        assertEquals(1951, library.packs().stream().mapToInt(library::size).sum());
         for (var pack : library.packs()) {
             var entries = library.entries(pack);
             assertTrue(entries.stream().allMatch(x -> x.split("/").length >= 3
@@ -271,7 +275,7 @@ class BuiltInLibraryTest {
                 "03-algoritmos/euclides/euclides.asm"));
         assertTrue(library.entries(all.get("java21")).contains(
                 "03-algoritmos/dijkstra/Dijkstra.java"));
-        assertEquals(1934, library.packs().stream().mapToInt(library::size).sum());
+        assertEquals(1951, library.packs().stream().mapToInt(library::size).sum());
     }
 
 }

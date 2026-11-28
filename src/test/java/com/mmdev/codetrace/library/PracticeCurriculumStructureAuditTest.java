@@ -52,7 +52,7 @@ class PracticeCurriculumStructureAuditTest {
                 if (lower.contains("salida esperada")
                         || lower.contains("output esperado")
                         || lower.contains("resultado esperado")) withOutput++;
-                if (pack.id().equals("java21")) {
+                if (pack.id().equals("java21") && relative.endsWith(".java")) {
                     List<Type> types = findNamedJavaTypes(source);
                     long top = types.stream().filter(t -> t.depth() == 0).count();
                     if (top > 1) multipleTopLevel.add(relative + " " + types);
