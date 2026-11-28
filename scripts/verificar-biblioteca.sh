@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# CodeTrace | Referencia: biblioteca de práctica v25 / verificador GNU/Linux-WSL
+# CodeTrace | Referencia: biblioteca de práctica v26 / verificador GNU/Linux-WSL
 # Ejecutar en COPIA: bash scripts/verificar-biblioteca.sh
 # Artefactos de compilación aislados en mktemp, sin tocar referencias.
 set -euo pipefail
@@ -15,7 +15,7 @@ import sys
 root=Path(sys.argv[1])
 items=[x.split("\t",1) for x in (root/"catalog.tsv").read_text(encoding="utf-8").splitlines()
        if x and not x.startswith("#")]
-assert len(items)==1828, len(items)
+assert len(items)==1870, len(items)
 assert len({p for p,_ in items})==14
 assert len(set(map(tuple,items)))==len(items)
 # The integrator intentionally lives in the 05 root; all pattern
@@ -243,7 +243,7 @@ for dir in \
 done
 
 
-echo "v25: Java 21 — pruebas de las nuevas familias y patrones"
+echo "v26: Java 21 — pruebas de las nuevas familias y patrones"
 for clase in \
   codetrace.practica.estructuras.listadoble.MainListaDoble \
   codetrace.practica.estructuras.listacircular.MainListaCircular \
@@ -264,7 +264,7 @@ for clase in \
   java -cp "$tmp/java" "$clase" >/dev/null
 done
 
-echo "v25: C++20 — miniproyectos completos por carpeta"
+echo "v26: C++20 — miniproyectos completos por carpeta"
 for unidad in \
   02-estructuras-datos/linked-list/simple \
   02-estructuras-datos/linked-list/doble \
@@ -284,11 +284,11 @@ for unidad in \
   04-patrones-diseno/command/deshacer \
   04-patrones-diseno/template-method/reportes; do
   ruta="$base/cpp/$unidad"
-  g++ -std=c++20 -Wall -Wextra -Werror "$ruta/"*.cpp -o "$tmp/cpp-v25"
-  "$tmp/cpp-v25" >/dev/null
+  g++ -std=c++20 -Wall -Wextra -Werror "$ruta/"*.cpp -o "$tmp/cpp-v26"
+  "$tmp/cpp-v26" >/dev/null
 done
 
-echo "v25: TypeScript 5.9 — transpilar y ejecutar el cliente de cada unidad"
+echo "v26: TypeScript 5.9 — transpilar y ejecutar el cliente de cada unidad"
 tsc --strict --target ES2022 --module commonjs --outDir "$tmp/ts" "$base/typescript/02-estructuras-datos/linked-list/simple/MainListaSimple.ts"
 node "$tmp/ts/MainListaSimple.js" >/dev/null
 tsc --strict --target ES2022 --module commonjs --outDir "$tmp/ts" "$base/typescript/02-estructuras-datos/linked-list/doble/MainListaDoble.ts"
@@ -324,7 +324,7 @@ node "$tmp/ts/MainCommand.js" >/dev/null
 tsc --strict --target ES2022 --module commonjs --outDir "$tmp/ts" "$base/typescript/04-patrones-diseno/template-method/reportes/MainTemplateMethod.ts"
 node "$tmp/ts/MainTemplateMethod.js" >/dev/null
 
-echo "v25: Python, Ruby y JavaScript — todos los nuevos clientes"
+echo "v26: Python, Ruby y JavaScript — todos los nuevos clientes"
 for unidad in \
   02-estructuras-datos/linked-list/simple \
   02-estructuras-datos/linked-list/doble \
@@ -351,7 +351,7 @@ for unidad in \
 done
 
 
-echo "v25: comparativa de cinco sorts, insercion binaria y limites ordenados"
+echo "v26: comparativa de cinco sorts, insercion binaria y limites ordenados"
 for clase in \
   codetrace.practica.ordenamientos.MainOrdenamientos \
   codetrace.practica.algoritmos.burbuja.MainBurbuja \
@@ -395,7 +395,7 @@ python3 -B "$base/python/04-patrones-diseno/chain-of-responsibility/reportes-par
 diff -u "$tmp/cadena-java.txt" "$tmp/cadena-python.txt"
 echo "OK: salidas Java/Python idénticas para la cadena de responsabilidad"
 
-echo "v25: comprobar documentación de consola en todas las fuentes"
+echo "v26: comprobar documentación de consola en todas las fuentes"
 python3 -B scripts/documentar_consola_practica.py --check \
   --root "$base" --outcomes scripts/salidas_practica.json
 python3 - "$base" <<'PY'
@@ -411,4 +411,4 @@ for path in root.rglob("*"):
 print("OK: rutas de la biblioteca sin colisiones por mayusculas/minusculas")
 PY
 
-echo "OK: catálogo v25, 14 paquetes, 1828 fuentes documentadas y clientes seleccionados"
+echo "OK: catálogo v26, 14 paquetes, 1870 fuentes documentadas y clientes seleccionados"

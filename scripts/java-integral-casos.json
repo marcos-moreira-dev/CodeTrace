@@ -1636,5 +1636,239 @@
     "main": "ConcurrentLinkedQueueDemo",
     "mode": "R",
     "stdout": "Suma: 10\nVacia: true\n"
+  },
+  {
+    "path": "11-redes-y-protocolos-de-comunicacion/01-modelo-cliente-servidor/MainClienteServidor.java",
+    "sources": [
+      "11-redes-y-protocolos-de-comunicacion/01-modelo-cliente-servidor/Servidor.java",
+      "11-redes-y-protocolos-de-comunicacion/01-modelo-cliente-servidor/Cliente.java",
+      "11-redes-y-protocolos-de-comunicacion/01-modelo-cliente-servidor/MainClienteServidor.java"
+    ],
+    "main": "MainClienteServidor",
+    "mode": "T",
+    "stdout": "Disponible\nNo encontrado\n"
+  },
+  {
+    "path": "11-redes-y-protocolos-de-comunicacion/02-interfaces-red/InterfacesLocales.java",
+    "sources": [
+      "11-redes-y-protocolos-de-comunicacion/02-interfaces-red/InterfacesLocales.java"
+    ],
+    "main": "InterfacesLocales",
+    "mode": "R",
+    "stdout": "Loopback: true\nConsulta local completada: true\n"
+  },
+  {
+    "path": "11-redes-y-protocolos-de-comunicacion/02-interfaces-red/Loopback.java",
+    "sources": [
+      "11-redes-y-protocolos-de-comunicacion/02-interfaces-red/Loopback.java"
+    ],
+    "main": "Loopback",
+    "mode": "R",
+    "stdout": "Es local: true\nFormato IP valido: true\n"
+  },
+  {
+    "path": "11-redes-y-protocolos-de-comunicacion/03-direccionamiento-ip/IPv4Bytes.java",
+    "sources": [
+      "11-redes-y-protocolos-de-comunicacion/03-direccionamiento-ip/IPv4Bytes.java"
+    ],
+    "main": "IPv4Bytes",
+    "mode": "R",
+    "stdout": "Bits: 32\n192.0.2.17\n"
+  },
+  {
+    "path": "11-redes-y-protocolos-de-comunicacion/03-direccionamiento-ip/IPv6Bytes.java",
+    "sources": [
+      "11-redes-y-protocolos-de-comunicacion/03-direccionamiento-ip/IPv6Bytes.java"
+    ],
+    "main": "IPv6Bytes",
+    "mode": "R",
+    "stdout": "Bits: 128\nPrefijo: 2001:0db8\nUltimo octeto: 1\n"
+  },
+  {
+    "path": "11-redes-y-protocolos-de-comunicacion/04-subredes/MascaraCIDR.java",
+    "sources": [
+      "11-redes-y-protocolos-de-comunicacion/04-subredes/MascaraCIDR.java"
+    ],
+    "main": "MascaraCIDR",
+    "mode": "T",
+    "stdout": "/0: 0.0.0.0\n/24: 255.255.255.0\n/26: 255.255.255.192\n/32: 255.255.255.255\n"
+  },
+  {
+    "path": "11-redes-y-protocolos-de-comunicacion/04-subredes/PerteneceSubred.java",
+    "sources": [
+      "11-redes-y-protocolos-de-comunicacion/04-subredes/PerteneceSubred.java"
+    ],
+    "main": "PerteneceSubred",
+    "mode": "T",
+    "stdout": "192.0.2.70: true\n192.0.2.130: false\n"
+  },
+  {
+    "path": "11-redes-y-protocolos-de-comunicacion/04-subredes/RedYBroadcast.java",
+    "sources": [
+      "11-redes-y-protocolos-de-comunicacion/04-subredes/RedYBroadcast.java"
+    ],
+    "main": "RedYBroadcast",
+    "mode": "T",
+    "stdout": "Red: 192.0.2.64\nBroadcast: 192.0.2.127\n"
+  },
+  {
+    "path": "11-redes-y-protocolos-de-comunicacion/05-mac-y-tramas/DireccionMAC.java",
+    "sources": [
+      "11-redes-y-protocolos-de-comunicacion/05-mac-y-tramas/DireccionMAC.java"
+    ],
+    "main": "DireccionMAC",
+    "mode": "T",
+    "stdout": "02:00:00:00:00:11\nGrupo: false\n"
+  },
+  {
+    "path": "11-redes-y-protocolos-de-comunicacion/05-mac-y-tramas/TramaEthernet.java",
+    "sources": [
+      "11-redes-y-protocolos-de-comunicacion/05-mac-y-tramas/TramaEthernet.java"
+    ],
+    "main": "TramaEthernet",
+    "mode": "T",
+    "stdout": "Cabecera: 14\nEtherType: 0800\nCarga: 3\n"
+  },
+  {
+    "path": "11-redes-y-protocolos-de-comunicacion/06-conmutacion/MainSwitch.java",
+    "sources": [
+      "11-redes-y-protocolos-de-comunicacion/06-conmutacion/SwitchSimulado.java",
+      "11-redes-y-protocolos-de-comunicacion/06-conmutacion/MainSwitch.java"
+    ],
+    "main": "MainSwitch",
+    "mode": "T",
+    "stdout": "[2, 3]\n[1]\n[2]\n"
+  },
+  {
+    "path": "11-redes-y-protocolos-de-comunicacion/07-enrutamiento/MainPrefijoMasLargo.java",
+    "sources": [
+      "11-redes-y-protocolos-de-comunicacion/07-enrutamiento/Ruta.java",
+      "11-redes-y-protocolos-de-comunicacion/07-enrutamiento/TablaRutas.java",
+      "11-redes-y-protocolos-de-comunicacion/07-enrutamiento/MainPrefijoMasLargo.java"
+    ],
+    "main": "MainPrefijoMasLargo",
+    "mode": "T",
+    "stdout": "/26 -> R2\n/24 -> R1\n/0 -> R0\n"
+  },
+  {
+    "path": "11-redes-y-protocolos-de-comunicacion/08-orden-red/NetworkByteOrder.java",
+    "sources": [
+      "11-redes-y-protocolos-de-comunicacion/08-orden-red/NetworkByteOrder.java"
+    ],
+    "main": "NetworkByteOrder",
+    "mode": "R",
+    "stdout": "01 02 03 04 \n"
+  },
+  {
+    "path": "11-redes-y-protocolos-de-comunicacion/09-puertos/PuertoLocal.java",
+    "sources": [
+      "11-redes-y-protocolos-de-comunicacion/09-puertos/PuertoLocal.java"
+    ],
+    "main": "PuertoLocal",
+    "mode": "R",
+    "stdout": "Asignado: true\nLoopback: true\n"
+  },
+  {
+    "path": "11-redes-y-protocolos-de-comunicacion/09-puertos/DireccionSocket.java",
+    "sources": [
+      "11-redes-y-protocolos-de-comunicacion/09-puertos/DireccionSocket.java"
+    ],
+    "main": "DireccionSocket",
+    "mode": "R",
+    "stdout": "Puerto: 8080\nLoopback: true\n"
+  },
+  {
+    "path": "11-redes-y-protocolos-de-comunicacion/10-dns/ResolverLocalhost.java",
+    "sources": [
+      "11-redes-y-protocolos-de-comunicacion/10-dns/ResolverLocalhost.java"
+    ],
+    "main": "ResolverLocalhost",
+    "mode": "M",
+    "stdout": "Resuelto: true\n"
+  },
+  {
+    "path": "11-redes-y-protocolos-de-comunicacion/10-dns/CacheDNSSimulada.java",
+    "sources": [
+      "11-redes-y-protocolos-de-comunicacion/10-dns/CacheDNSSimulada.java"
+    ],
+    "main": "CacheDNSSimulada",
+    "mode": "M",
+    "stdout": "10: Cache\n14: Cache\n15: Expirado\n"
+  },
+  {
+    "path": "11-redes-y-protocolos-de-comunicacion/11-tcp-echo/MainEcho.java",
+    "sources": [
+      "11-redes-y-protocolos-de-comunicacion/11-tcp-echo/Servidor.java",
+      "11-redes-y-protocolos-de-comunicacion/11-tcp-echo/Cliente.java",
+      "11-redes-y-protocolos-de-comunicacion/11-tcp-echo/MainEcho.java"
+    ],
+    "main": "MainEcho",
+    "mode": "R",
+    "stdout": "Hola TCP\n"
+  },
+  {
+    "path": "11-redes-y-protocolos-de-comunicacion/12-tcp-framing/MainFraming.java",
+    "sources": [
+      "11-redes-y-protocolos-de-comunicacion/12-tcp-framing/CodificadorTrama.java",
+      "11-redes-y-protocolos-de-comunicacion/12-tcp-framing/Servidor.java",
+      "11-redes-y-protocolos-de-comunicacion/12-tcp-framing/Cliente.java",
+      "11-redes-y-protocolos-de-comunicacion/12-tcp-framing/MainFraming.java"
+    ],
+    "main": "MainFraming",
+    "mode": "R",
+    "stdout": "OK pan\nOK leche\n"
+  },
+  {
+    "path": "11-redes-y-protocolos-de-comunicacion/13-tcp-lectura-parcial/MainLecturaParcial.java",
+    "sources": [
+      "11-redes-y-protocolos-de-comunicacion/13-tcp-lectura-parcial/Servidor.java",
+      "11-redes-y-protocolos-de-comunicacion/13-tcp-lectura-parcial/Cliente.java",
+      "11-redes-y-protocolos-de-comunicacion/13-tcp-lectura-parcial/MainLecturaParcial.java"
+    ],
+    "main": "MainLecturaParcial",
+    "mode": "R",
+    "stdout": "Truncado: 3\n"
+  },
+  {
+    "path": "11-redes-y-protocolos-de-comunicacion/14-udp/MainDatagrama.java",
+    "sources": [
+      "11-redes-y-protocolos-de-comunicacion/14-udp/Receptor.java",
+      "11-redes-y-protocolos-de-comunicacion/14-udp/Emisor.java",
+      "11-redes-y-protocolos-de-comunicacion/14-udp/MainDatagrama.java"
+    ],
+    "main": "MainDatagrama",
+    "mode": "R",
+    "stdout": "Hola UDP\n"
+  },
+  {
+    "path": "11-redes-y-protocolos-de-comunicacion/15-udp-fiabilidad-modelo/MainStopAndWait.java",
+    "sources": [
+      "11-redes-y-protocolos-de-comunicacion/15-udp-fiabilidad-modelo/CanalSimulado.java",
+      "11-redes-y-protocolos-de-comunicacion/15-udp-fiabilidad-modelo/StopAndWait.java",
+      "11-redes-y-protocolos-de-comunicacion/15-udp-fiabilidad-modelo/MainStopAndWait.java"
+    ],
+    "main": "MainStopAndWait",
+    "mode": "T",
+    "stdout": "Intentos: 2\nEntregas: 1\n"
+  },
+  {
+    "path": "11-redes-y-protocolos-de-comunicacion/16-ventana-deslizante/MainVentana.java",
+    "sources": [
+      "11-redes-y-protocolos-de-comunicacion/16-ventana-deslizante/VentanaDeslizante.java",
+      "11-redes-y-protocolos-de-comunicacion/16-ventana-deslizante/MainVentana.java"
+    ],
+    "main": "MainVentana",
+    "mode": "T",
+    "stdout": "0\n1\nLlena: true\n2\n"
+  },
+  {
+    "path": "11-redes-y-protocolos-de-comunicacion/17-congestion-y-tasa/MainTokenBucket.java",
+    "sources": [
+      "11-redes-y-protocolos-de-comunicacion/17-congestion-y-tasa/TokenBucket.java",
+      "11-redes-y-protocolos-de-comunicacion/17-congestion-y-tasa/MainTokenBucket.java"
+    ],
+    "main": "MainTokenBucket",
+    "mode": "T",
+    "stdout": "0: true\n0: true\n0: false\n1: true\n"
   }
 ]

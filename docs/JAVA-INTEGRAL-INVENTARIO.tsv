@@ -230,48 +230,48 @@ area	unidad	modalidad	archivo	objetivo	estado
 10-concurrencia-y-paralelismo	31-hilos-virtuales	R	CompararHilosBloqueantes.java	Comparar resultado de un lote acotado de tareas bloqueantes con hilos de plataforma y virtuales; sin prometer aceleración ni repetir ConcurrenciaVirtual.java.	implementado_pendiente_ci
 10-concurrencia-y-paralelismo	32-colecciones-concurrentes	R	ConcurrentHashMapDemo.java	Operaciones thread-safe y acciones compuestas.	implementado_pendiente_ci
 10-concurrencia-y-paralelismo	32-colecciones-concurrentes	R	ConcurrentLinkedQueueDemo.java	Operaciones thread-safe y acciones compuestas.	implementado_pendiente_ci
-11-redes-y-protocolos-de-comunicacion	01-modelo-cliente-servidor	T	Cliente.java	Roles, petición, procesamiento y respuesta sin red todavía.	planificado
-11-redes-y-protocolos-de-comunicacion	01-modelo-cliente-servidor	T	Servidor.java	Roles, petición, procesamiento y respuesta sin red todavía.	planificado
-11-redes-y-protocolos-de-comunicacion	01-modelo-cliente-servidor	T	MainClienteServidor.java	Roles, petición, procesamiento y respuesta sin red todavía.	planificado
-11-redes-y-protocolos-de-comunicacion	02-interfaces-red	R	InterfacesLocales.java	NetworkInterface e InetAddress; solo direcciones necesarias, no escaneo.	planificado
-11-redes-y-protocolos-de-comunicacion	02-interfaces-red	R	Loopback.java	NetworkInterface e InetAddress; solo direcciones necesarias, no escaneo.	planificado
-11-redes-y-protocolos-de-comunicacion	03-direccionamiento-ip	R	IPv4Bytes.java	Representación de 32 y 128 bits.	planificado
-11-redes-y-protocolos-de-comunicacion	03-direccionamiento-ip	R	IPv6Bytes.java	Representación de 32 y 128 bits.	planificado
-11-redes-y-protocolos-de-comunicacion	04-subredes	T	MascaraCIDR.java	Operaciones con prefijos IPv4; no configuración real.	planificado
-11-redes-y-protocolos-de-comunicacion	04-subredes	T	PerteneceSubred.java	Operaciones con prefijos IPv4; no configuración real.	planificado
-11-redes-y-protocolos-de-comunicacion	04-subredes	T	RedYBroadcast.java	Operaciones con prefijos IPv4; no configuración real.	planificado
-11-redes-y-protocolos-de-comunicacion	05-mac-y-tramas	T	DireccionMAC.java	Dirección MAC, trama abstracta y campos; sin sockets crudos.	planificado
-11-redes-y-protocolos-de-comunicacion	05-mac-y-tramas	T	TramaEthernet.java	Dirección MAC, trama abstracta y campos; sin sockets crudos.	planificado
-11-redes-y-protocolos-de-comunicacion	06-conmutacion	T	SwitchSimulado.java	Aprendizaje de MAC y reenvío simulado.	planificado
-11-redes-y-protocolos-de-comunicacion	06-conmutacion	T	MainSwitch.java	Aprendizaje de MAC y reenvío simulado.	planificado
-11-redes-y-protocolos-de-comunicacion	07-enrutamiento	T	Ruta.java	Selección de prefijo más largo sobre rutas ficticias.	planificado
-11-redes-y-protocolos-de-comunicacion	07-enrutamiento	T	TablaRutas.java	Selección de prefijo más largo sobre rutas ficticias.	planificado
-11-redes-y-protocolos-de-comunicacion	07-enrutamiento	T	MainPrefijoMasLargo.java	Selección de prefijo más largo sobre rutas ficticias.	planificado
-11-redes-y-protocolos-de-comunicacion	08-orden-red	R	NetworkByteOrder.java	Big-endian para campos multibyte de protocolos.	planificado
-11-redes-y-protocolos-de-comunicacion	09-puertos	R	PuertoLocal.java	Dirección y puerto local, puerto efímero asignado por el SO.	planificado
-11-redes-y-protocolos-de-comunicacion	09-puertos	R	DireccionSocket.java	Dirección y puerto local, puerto efímero asignado por el SO.	planificado
-11-redes-y-protocolos-de-comunicacion	10-dns	M	ResolverLocalhost.java	Resolución mediante InetAddress y modelo de caché/TTL sin depender de Internet.	planificado
-11-redes-y-protocolos-de-comunicacion	10-dns	M	CacheDNSSimulada.java	Resolución mediante InetAddress y modelo de caché/TTL sin depender de Internet.	planificado
-11-redes-y-protocolos-de-comunicacion	11-tcp-echo	R	Servidor.java	Bind, accept, connect, streams, EOF y cierre en loopback.	planificado
-11-redes-y-protocolos-de-comunicacion	11-tcp-echo	R	Cliente.java	Bind, accept, connect, streams, EOF y cierre en loopback.	planificado
-11-redes-y-protocolos-de-comunicacion	11-tcp-echo	R	MainEcho.java	Bind, accept, connect, streams, EOF y cierre en loopback.	planificado
-11-redes-y-protocolos-de-comunicacion	12-tcp-framing	R	CodificadorTrama.java	Longitud de mensaje; TCP es flujo de bytes, no conserva límites de mensajes.	planificado
-11-redes-y-protocolos-de-comunicacion	12-tcp-framing	R	Servidor.java	Longitud de mensaje; TCP es flujo de bytes, no conserva límites de mensajes.	planificado
-11-redes-y-protocolos-de-comunicacion	12-tcp-framing	R	Cliente.java	Longitud de mensaje; TCP es flujo de bytes, no conserva límites de mensajes.	planificado
-11-redes-y-protocolos-de-comunicacion	12-tcp-framing	R	MainFraming.java	Longitud de mensaje; TCP es flujo de bytes, no conserva límites de mensajes.	planificado
-11-redes-y-protocolos-de-comunicacion	13-tcp-lectura-parcial	R	Servidor.java	Procesar bytes acumulados y detectar truncamiento; no asumir tamaño de cada read.	planificado
-11-redes-y-protocolos-de-comunicacion	13-tcp-lectura-parcial	R	Cliente.java	Procesar bytes acumulados y detectar truncamiento; no asumir tamaño de cada read.	planificado
-11-redes-y-protocolos-de-comunicacion	13-tcp-lectura-parcial	R	MainLecturaParcial.java	Procesar bytes acumulados y detectar truncamiento; no asumir tamaño de cada read.	planificado
-11-redes-y-protocolos-de-comunicacion	14-udp	R	Receptor.java	DatagramSocket, límites de datagrama y timeout.	planificado
-11-redes-y-protocolos-de-comunicacion	14-udp	R	Emisor.java	DatagramSocket, límites de datagrama y timeout.	planificado
-11-redes-y-protocolos-de-comunicacion	14-udp	R	MainDatagrama.java	DatagramSocket, límites de datagrama y timeout.	planificado
-11-redes-y-protocolos-de-comunicacion	15-udp-fiabilidad-modelo	T	CanalSimulado.java	ACK, pérdida y retransmisión con secuencia fija.	planificado
-11-redes-y-protocolos-de-comunicacion	15-udp-fiabilidad-modelo	T	StopAndWait.java	ACK, pérdida y retransmisión con secuencia fija.	planificado
-11-redes-y-protocolos-de-comunicacion	15-udp-fiabilidad-modelo	T	MainStopAndWait.java	ACK, pérdida y retransmisión con secuencia fija.	planificado
-11-redes-y-protocolos-de-comunicacion	16-ventana-deslizante	T	VentanaDeslizante.java	Flujo, números de secuencia y confirmaciones; modelo no TCP completo.	planificado
-11-redes-y-protocolos-de-comunicacion	16-ventana-deslizante	T	MainVentana.java	Flujo, números de secuencia y confirmaciones; modelo no TCP completo.	planificado
-11-redes-y-protocolos-de-comunicacion	17-congestion-y-tasa	T	TokenBucket.java	Limitar tasa con reloj simulado; no confundir con control de congestión TCP.	planificado
-11-redes-y-protocolos-de-comunicacion	17-congestion-y-tasa	T	MainTokenBucket.java	Limitar tasa con reloj simulado; no confundir con control de congestión TCP.	planificado
+11-redes-y-protocolos-de-comunicacion	01-modelo-cliente-servidor	T	Cliente.java	Roles, petición, procesamiento y respuesta sin red todavía.	implementado_pendiente_ci
+11-redes-y-protocolos-de-comunicacion	01-modelo-cliente-servidor	T	Servidor.java	Roles, petición, procesamiento y respuesta sin red todavía.	implementado_pendiente_ci
+11-redes-y-protocolos-de-comunicacion	01-modelo-cliente-servidor	T	MainClienteServidor.java	Roles, petición, procesamiento y respuesta sin red todavía.	implementado_pendiente_ci
+11-redes-y-protocolos-de-comunicacion	02-interfaces-red	R	InterfacesLocales.java	NetworkInterface e InetAddress; solo direcciones necesarias, no escaneo.	implementado_pendiente_ci
+11-redes-y-protocolos-de-comunicacion	02-interfaces-red	R	Loopback.java	NetworkInterface e InetAddress; solo direcciones necesarias, no escaneo.	implementado_pendiente_ci
+11-redes-y-protocolos-de-comunicacion	03-direccionamiento-ip	R	IPv4Bytes.java	Representación de 32 y 128 bits.	implementado_pendiente_ci
+11-redes-y-protocolos-de-comunicacion	03-direccionamiento-ip	R	IPv6Bytes.java	Representación de 32 y 128 bits.	implementado_pendiente_ci
+11-redes-y-protocolos-de-comunicacion	04-subredes	T	MascaraCIDR.java	Operaciones con prefijos IPv4; no configuración real.	implementado_pendiente_ci
+11-redes-y-protocolos-de-comunicacion	04-subredes	T	PerteneceSubred.java	Operaciones con prefijos IPv4; no configuración real.	implementado_pendiente_ci
+11-redes-y-protocolos-de-comunicacion	04-subredes	T	RedYBroadcast.java	Operaciones con prefijos IPv4; no configuración real.	implementado_pendiente_ci
+11-redes-y-protocolos-de-comunicacion	05-mac-y-tramas	T	DireccionMAC.java	Dirección MAC, trama abstracta y campos; sin sockets crudos.	implementado_pendiente_ci
+11-redes-y-protocolos-de-comunicacion	05-mac-y-tramas	T	TramaEthernet.java	Dirección MAC, trama abstracta y campos; sin sockets crudos.	implementado_pendiente_ci
+11-redes-y-protocolos-de-comunicacion	06-conmutacion	T	SwitchSimulado.java	Aprendizaje de MAC y reenvío simulado.	implementado_pendiente_ci
+11-redes-y-protocolos-de-comunicacion	06-conmutacion	T	MainSwitch.java	Aprendizaje de MAC y reenvío simulado.	implementado_pendiente_ci
+11-redes-y-protocolos-de-comunicacion	07-enrutamiento	T	Ruta.java	Selección de prefijo más largo sobre rutas ficticias.	implementado_pendiente_ci
+11-redes-y-protocolos-de-comunicacion	07-enrutamiento	T	TablaRutas.java	Selección de prefijo más largo sobre rutas ficticias.	implementado_pendiente_ci
+11-redes-y-protocolos-de-comunicacion	07-enrutamiento	T	MainPrefijoMasLargo.java	Selección de prefijo más largo sobre rutas ficticias.	implementado_pendiente_ci
+11-redes-y-protocolos-de-comunicacion	08-orden-red	R	NetworkByteOrder.java	Big-endian para campos multibyte de protocolos.	implementado_pendiente_ci
+11-redes-y-protocolos-de-comunicacion	09-puertos	R	PuertoLocal.java	Dirección y puerto local, puerto efímero asignado por el SO.	implementado_pendiente_ci
+11-redes-y-protocolos-de-comunicacion	09-puertos	R	DireccionSocket.java	Dirección y puerto local, puerto efímero asignado por el SO.	implementado_pendiente_ci
+11-redes-y-protocolos-de-comunicacion	10-dns	M	ResolverLocalhost.java	Resolución mediante InetAddress y modelo de caché/TTL sin depender de Internet.	implementado_pendiente_ci
+11-redes-y-protocolos-de-comunicacion	10-dns	M	CacheDNSSimulada.java	Resolución mediante InetAddress y modelo de caché/TTL sin depender de Internet.	implementado_pendiente_ci
+11-redes-y-protocolos-de-comunicacion	11-tcp-echo	R	Servidor.java	Bind, accept, connect, streams, EOF y cierre en loopback.	implementado_pendiente_ci
+11-redes-y-protocolos-de-comunicacion	11-tcp-echo	R	Cliente.java	Bind, accept, connect, streams, EOF y cierre en loopback.	implementado_pendiente_ci
+11-redes-y-protocolos-de-comunicacion	11-tcp-echo	R	MainEcho.java	Bind, accept, connect, streams, EOF y cierre en loopback.	implementado_pendiente_ci
+11-redes-y-protocolos-de-comunicacion	12-tcp-framing	R	CodificadorTrama.java	Longitud de mensaje; TCP es flujo de bytes, no conserva límites de mensajes.	implementado_pendiente_ci
+11-redes-y-protocolos-de-comunicacion	12-tcp-framing	R	Servidor.java	Longitud de mensaje; TCP es flujo de bytes, no conserva límites de mensajes.	implementado_pendiente_ci
+11-redes-y-protocolos-de-comunicacion	12-tcp-framing	R	Cliente.java	Longitud de mensaje; TCP es flujo de bytes, no conserva límites de mensajes.	implementado_pendiente_ci
+11-redes-y-protocolos-de-comunicacion	12-tcp-framing	R	MainFraming.java	Longitud de mensaje; TCP es flujo de bytes, no conserva límites de mensajes.	implementado_pendiente_ci
+11-redes-y-protocolos-de-comunicacion	13-tcp-lectura-parcial	R	Servidor.java	Procesar bytes acumulados y detectar truncamiento; no asumir tamaño de cada read.	implementado_pendiente_ci
+11-redes-y-protocolos-de-comunicacion	13-tcp-lectura-parcial	R	Cliente.java	Procesar bytes acumulados y detectar truncamiento; no asumir tamaño de cada read.	implementado_pendiente_ci
+11-redes-y-protocolos-de-comunicacion	13-tcp-lectura-parcial	R	MainLecturaParcial.java	Procesar bytes acumulados y detectar truncamiento; no asumir tamaño de cada read.	implementado_pendiente_ci
+11-redes-y-protocolos-de-comunicacion	14-udp	R	Receptor.java	DatagramSocket, límites de datagrama y timeout.	implementado_pendiente_ci
+11-redes-y-protocolos-de-comunicacion	14-udp	R	Emisor.java	DatagramSocket, límites de datagrama y timeout.	implementado_pendiente_ci
+11-redes-y-protocolos-de-comunicacion	14-udp	R	MainDatagrama.java	DatagramSocket, límites de datagrama y timeout.	implementado_pendiente_ci
+11-redes-y-protocolos-de-comunicacion	15-udp-fiabilidad-modelo	T	CanalSimulado.java	ACK, pérdida y retransmisión con secuencia fija.	implementado_pendiente_ci
+11-redes-y-protocolos-de-comunicacion	15-udp-fiabilidad-modelo	T	StopAndWait.java	ACK, pérdida y retransmisión con secuencia fija.	implementado_pendiente_ci
+11-redes-y-protocolos-de-comunicacion	15-udp-fiabilidad-modelo	T	MainStopAndWait.java	ACK, pérdida y retransmisión con secuencia fija.	implementado_pendiente_ci
+11-redes-y-protocolos-de-comunicacion	16-ventana-deslizante	T	VentanaDeslizante.java	Flujo, números de secuencia y confirmaciones; modelo no TCP completo.	implementado_pendiente_ci
+11-redes-y-protocolos-de-comunicacion	16-ventana-deslizante	T	MainVentana.java	Flujo, números de secuencia y confirmaciones; modelo no TCP completo.	implementado_pendiente_ci
+11-redes-y-protocolos-de-comunicacion	17-congestion-y-tasa	T	TokenBucket.java	Limitar tasa con reloj simulado; no confundir con control de congestión TCP.	implementado_pendiente_ci
+11-redes-y-protocolos-de-comunicacion	17-congestion-y-tasa	T	MainTokenBucket.java	Limitar tasa con reloj simulado; no confundir con control de congestión TCP.	implementado_pendiente_ci
 11-redes-y-protocolos-de-comunicacion	18-servidor-multicliente	R	Servidor.java	Un hilo por cliente con número limitado de conexiones.	planificado
 11-redes-y-protocolos-de-comunicacion	18-servidor-multicliente	R	Cliente.java	Un hilo por cliente con número limitado de conexiones.	planificado
 11-redes-y-protocolos-de-comunicacion	18-servidor-multicliente	R	MainMultiCliente.java	Un hilo por cliente con número limitado de conexiones.	planificado
