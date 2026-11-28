@@ -2,7 +2,7 @@
 
 Ejemplos originales basados en la [JLS SE 21](https://docs.oracle.com/javase/specs/jls/se21/html/index.html). No constituyen una publicación oficial de Oracle.
 
-112 unidades, 180 fuentes. [Inventario de los 233 ejemplos numerados](JLS21-INVENTARIO.tsv): 99 identificadores con adaptación inicial; no equivale a cobertura semántica completa. Fragmentos sin numeración pendientes de inventario.
+149 unidades, 223 fuentes. [Inventario de los 233 ejemplos numerados](JLS21-INVENTARIO.tsv): 136 identificadores con adaptación inicial; no equivale a cobertura semántica completa. Fragmentos sin numeración pendientes de inventario.
 
 | Sección | Unidad | Estado |
 | --- | --- | --- |
@@ -118,5 +118,42 @@ Ejemplos originales basados en la [JLS SE 21](https://docs.oracle.com/javase/spe
 | 12.5; ejemplo 12.5-2 | 12-ejecucion/12-05-02-despacho-en-constructor/ConstructorBase.java | Implementado; confirmar CI de la rama actual |
 | 13.4.23; ejemplo 13.4.23-1 | 13-compatibilidad-binaria/13-04-23-01-agregar-sobrecarga/v1/SalidaBinaria.java | Implementado; confirmar CI de la rama actual |
 | 18.5.5; ejemplo 18.5.5-1 | 18-inferencia-de-tipos/18-05-05-01-inferencia-patron-record/Transformador.java | Implementado; confirmar CI de la rama actual |
+| 4.2.4; ejemplo 4.2.4-1 | 04-tipos-valores-variables/04-02-04-01-aritmetica-flotante/AritmeticaFlotante.java | Implementado; confirmar CI de la rama actual |
+| 6.4.1; ejemplo 6.4.1-2 | 06-nombres/06-04-01-02-tipo-local-sombrea-import/Date.java | Implementado; confirmar CI de la rama actual |
+| 6.5.6.1; ejemplo 6.5.6.1-1 | 06-nombres/06-05-06-01-01-asignar-constante/NombreConstante.java | Implementado; confirmar CI de la rama actual |
+| 6.5.6.1; ejemplo 6.5.6.1-2 | 06-nombres/06-05-06-01-02-instancia-en-static/InstanciaInvalida.java | Implementado; confirmar CI de la rama actual |
+| 6.5.6.1; ejemplo 6.5.6.1-3 | 06-nombres/06-05-06-01-03-captura-parametro/CapturaParametro.java | Implementado; confirmar CI de la rama actual |
+| 6.6; ejemplo 6.6-5 | 06-nombres/06-06-05-miembro-privado/Privado.java | Implementado; confirmar CI de la rama actual |
+| 7.5.1; ejemplo 7.5.1-2 | 07-paquetes-y-modulos/07-05-01-02-import-duplicado/ArrayList.java | Implementado; confirmar CI de la rama actual |
+| 7.5.1; ejemplo 7.5.1-3 | 07-paquetes-y-modulos/07-05-01-03-importar-paquete/ImportarPaquete.java | Implementado; confirmar CI de la rama actual |
+| 7.5.2; ejemplo 7.5.2-1 | 07-paquetes-y-modulos/07-05-02-01-importacion-demanda/ImportacionDemanda.java | Implementado; confirmar CI de la rama actual |
+| 7.6; ejemplo 7.6-1 | 07-paquetes-y-modulos/07-06-01-declaracion-conflictiva/a/Entidad.java | Implementado; confirmar CI de la rama actual |
+| 14.4; ejemplo 14.4-1 | 14-bloques-sentencias-patrones/14-04-01-var-sin-inicializar/VarInvalida.java | Implementado; confirmar CI de la rama actual |
+| 14.4.1; ejemplo 14.4.1-1 | 14-bloques-sentencias-patrones/14-04-01-01-tipo-inferido-var/TipoInferidoVar.java | Implementado; confirmar CI de la rama actual |
+| 14.7; ejemplo 14.7-1 | 14-bloques-sentencias-patrones/14-07-01-etiqueta-y-variable/EtiquetaVariable.java | Implementado; confirmar CI de la rama actual |
+| 14.13; ejemplo 14.13-1 | 14-bloques-sentencias-patrones/14-13-01-do-hexadecimal/DoHexadecimal.java | Implementado; confirmar CI de la rama actual |
+| 14.14; ejemplo 14.14-2 | 14-bloques-sentencias-patrones/14-14-02-for-unboxing/Frecuencias.java | Implementado; confirmar CI de la rama actual |
+| 14.19; ejemplo 14.19-1 | 14-bloques-sentencias-patrones/14-19-01-monitor-reentrante/MonitorReentrante.java | Implementado; confirmar CI de la rama actual |
+| 14.20.1; ejemplo 14.20.1-1 | 14-bloques-sentencias-patrones/14-20-01-01-seleccion-catch/FalloLectura.java | Implementado; confirmar CI de la rama actual |
+| 14.20.2; ejemplo 14.20.2-1 | 14-bloques-sentencias-patrones/14-20-02-01-finally-excepcion-no-capturada/FalloArchivo.java | Implementado; confirmar CI de la rama actual |
+| 15.7.1; ejemplo 15.7.1-2 | 15-expresiones/15-07-01-02-operando-guardado/OperandoGuardado.java | Implementado; confirmar CI de la rama actual |
+| 15.7.1; ejemplo 15.7.1-3 | 15-expresiones/15-07-01-03-operando-interrumpido/OperandoInterrumpido.java | Implementado; confirmar CI de la rama actual |
+| 15.7.2; ejemplo 15.7.2-1 | 15-expresiones/15-07-02-01-evaluar-antes-dividir/AntesDeDividir.java | Implementado; confirmar CI de la rama actual |
+| 15.7.4; ejemplo 15.7.4-1 | 15-expresiones/15-07-04-01-orden-argumentos/OrdenArgumentos.java | Implementado; confirmar CI de la rama actual |
+| 15.7.4; ejemplo 15.7.4-2 | 15-expresiones/15-07-04-02-argumento-fallido/ArgumentoFallido.java | Implementado; confirmar CI de la rama actual |
+| 15.10.2; ejemplo 15.10.2-1 | 15-expresiones/15-10-02-01-evaluar-dimensiones/EvaluarDimensiones.java | Implementado; confirmar CI de la rama actual |
+| 15.10.2; ejemplo 15.10.2-2 | 15-expresiones/15-10-02-02-arreglos-multidimensionales/MatricesEquivalentes.java | Implementado; confirmar CI de la rama actual |
+| 15.10.4; ejemplo 15.10.4-1 | 15-expresiones/15-10-04-01-referencia-antes-indice/ReferenciaAntesIndice.java | Implementado; confirmar CI de la rama actual |
+| 15.10.4; ejemplo 15.10.4-2 | 15-expresiones/15-10-04-02-referencia-fallida/ReferenciaFallida.java | Implementado; confirmar CI de la rama actual |
+| 15.10.4; ejemplo 15.10.4-3 | 15-expresiones/15-10-04-03-null-antes-indice/NullAntesIndice.java | Implementado; confirmar CI de la rama actual |
+| 15.11.1; ejemplo 15.11.1-2 | 15-expresiones/15-11-01-02-campo-static-null/CampoStaticNull.java | Implementado; confirmar CI de la rama actual |
+| 15.17.3; ejemplo 15.17.3-2 | 15-expresiones/15-17-03-02-resto-flotante/RestoFlotante.java | Implementado; confirmar CI de la rama actual |
+| 15.26.2; ejemplo 15.26.2-2 | 15-expresiones/15-26-02-02-guardar-valor-izquierdo/GuardarValorIzquierdo.java | Implementado; confirmar CI de la rama actual |
+| 15.29; ejemplo 15.29-1 | 15-expresiones/15-29-01-expresiones-constantes/ConstantesCompilacion.java | Implementado; confirmar CI de la rama actual |
+| 17.4; ejemplo 17.4-1 | 17-hilos-y-bloqueos/17-04-01-reordenamiento-carrera/ReordenamientoCarrera.java | Implementado; confirmar CI de la rama actual |
+| 17.4.5; ejemplo 17.4.5-1 | 17-hilos-y-bloqueos/17-04-05-01-happens-before/ConsistenciaHappensBefore.java | Implementado; confirmar CI de la rama actual |
+| 17.4.8; ejemplo 17.4.8-1 | 17-hilos-y-bloqueos/17-04-08-01-causalidad/Causalidad.java | Implementado; confirmar CI de la rama actual |
+| 17.5; ejemplo 17.5-1 | 17-hilos-y-bloqueos/17-05-01-publicacion-final/DatoPublicado.java | Implementado; confirmar CI de la rama actual |
+| 17.6; ejemplo 17.6-1 | 17-hilos-y-bloqueos/17-06-01-componentes-independientes/ComponentesIndependientes.java | Implementado; confirmar CI de la rama actual |
 
-Pendientes: revisión de fidelidad y casos secundarios, completar ejemplos numerados y fragmentos, migrar carpeta anterior, publicar. El caso de compatibilidad binaria compila y ejecuta versiones sucesivas separadamente. No se incluye el PDF.
+Pendientes: revisión de fidelidad y casos secundarios, completar ejemplos numerados y fragmentos, migrar carpeta anterior, publicar. Los ejemplos concurrentes se verifican contra el conjunto de resultados permitidos, sin exigir reproducir comportamientos infrecuentes. No se incluye el PDF.

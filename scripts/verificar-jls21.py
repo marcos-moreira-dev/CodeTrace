@@ -50,7 +50,8 @@ for case in cases:
         result = subprocess.run(["java", "-Dfile.encoding=UTF-8", "-cp", tmp,
                                  case["main"], *case["args"]], capture_output=True,
                                 text=True, encoding="utf-8", timeout=20)
-        assert result.stdout == case["stdout"], (case["path"], repr(result.stdout))
+        allowed = case.get("allowed_stdout", [case["stdout"]])
+        assert result.stdout in allowed, (case["path"], repr(result.stdout), allowed)
         if "exception" in case:
             assert result.returncode != 0 and case["exception"] in result.stderr, case["path"]
         else:

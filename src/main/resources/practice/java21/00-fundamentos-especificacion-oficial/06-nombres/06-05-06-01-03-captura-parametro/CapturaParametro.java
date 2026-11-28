@@ -1,0 +1,17 @@
+// CodeTrace | Fundamentos - Especificación oficial
+// Referencia: Java SE 21, JLS §6.5.6.1; ejemplo 6.5.6.1-3
+// Compilar: javac --release 21 -encoding UTF-8 -d . CapturaParametro.java
+// ERROR INTENCIONAL de compilación. No ejecutar.
+// Comandos desde la carpeta de la unidad.
+
+public class CapturaParametro {
+    static void comprobar(String[] valores) {
+        class Local {
+            String leer() { return valores[0]; }
+            static String leerEstatico() { return valores[0]; }
+        }
+    }
+}
+
+// Salida esperada:
+// Error: non-static variable valores cannot be referenced from a static context

@@ -932,5 +932,327 @@
     "main": "InferenciaRecord",
     "args": [],
     "stdout": "false\ntrue\n"
+  },
+  {
+    "path": "04-tipos-valores-variables/04-02-04-01-aritmetica-flotante/AritmeticaFlotante.java",
+    "unit": "04-tipos-valores-variables/04-02-04-01-aritmetica-flotante",
+    "section": "4.2.4; ejemplo 4.2.4-1",
+    "main": "AritmeticaFlotante",
+    "args": [],
+    "stdout": "Infinity\ntrue\n0.0\nNaN\nfalse\n-Infinity\n"
+  },
+  {
+    "path": "06-nombres/06-04-01-02-tipo-local-sombrea-import/Date.java",
+    "unit": "06-nombres/06-04-01-02-tipo-local-sombrea-import",
+    "section": "6.4.1; ejemplo 6.4.1-2",
+    "main": "TipoPreferido",
+    "args": [],
+    "stdout": "12\n"
+  },
+  {
+    "path": "06-nombres/06-05-06-01-01-asignar-constante/NombreConstante.java",
+    "unit": "06-nombres/06-05-06-01-01-asignar-constante",
+    "section": "6.5.6.1; ejemplo 6.5.6.1-1",
+    "main": "NombreConstante",
+    "args": [],
+    "stdout": "\n",
+    "reject": "cannot assign a value to final variable LIMITE"
+  },
+  {
+    "path": "06-nombres/06-05-06-01-02-instancia-en-static/InstanciaInvalida.java",
+    "unit": "06-nombres/06-05-06-01-02-instancia-en-static",
+    "section": "6.5.6.1; ejemplo 6.5.6.1-2",
+    "main": "InstanciaInvalida",
+    "args": [],
+    "stdout": "\n",
+    "reject": "non-static variable sufijo cannot be referenced from a static context"
+  },
+  {
+    "path": "06-nombres/06-05-06-01-03-captura-parametro/CapturaParametro.java",
+    "unit": "06-nombres/06-05-06-01-03-captura-parametro",
+    "section": "6.5.6.1; ejemplo 6.5.6.1-3",
+    "main": "CapturaParametro",
+    "args": [],
+    "stdout": "\n",
+    "reject": "non-static variable valores cannot be referenced from a static context"
+  },
+  {
+    "path": "06-nombres/06-06-05-miembro-privado/Privado.java",
+    "unit": "06-nombres/06-06-05-miembro-privado",
+    "section": "6.6; ejemplo 6.6-5",
+    "main": "",
+    "args": [],
+    "stdout": "\n",
+    "reject": "dato has private access"
+  },
+  {
+    "path": "07-paquetes-y-modulos/07-05-01-02-import-duplicado/ArrayList.java",
+    "unit": "07-paquetes-y-modulos/07-05-01-02-import-duplicado",
+    "section": "7.5.1; ejemplo 7.5.1-2",
+    "main": "ArrayList",
+    "args": [],
+    "stdout": "\n",
+    "reject": "ArrayList is already defined"
+  },
+  {
+    "path": "07-paquetes-y-modulos/07-05-01-03-importar-paquete/ImportarPaquete.java",
+    "unit": "07-paquetes-y-modulos/07-05-01-03-importar-paquete",
+    "section": "7.5.1; ejemplo 7.5.1-3",
+    "main": "ImportarPaquete",
+    "args": [],
+    "stdout": "\n",
+    "reject": "cannot find symbol"
+  },
+  {
+    "path": "07-paquetes-y-modulos/07-05-02-01-importacion-demanda/ImportacionDemanda.java",
+    "unit": "07-paquetes-y-modulos/07-05-02-01-importacion-demanda",
+    "section": "7.5.2; ejemplo 7.5.2-1",
+    "main": "ImportacionDemanda",
+    "args": [],
+    "stdout": "uno\n"
+  },
+  {
+    "path": "07-paquetes-y-modulos/07-06-01-declaracion-conflictiva/a/Entidad.java",
+    "unit": "07-paquetes-y-modulos/07-06-01-declaracion-conflictiva",
+    "section": "7.6; ejemplo 7.6-1",
+    "main": "",
+    "args": [],
+    "stdout": "\n",
+    "reject": "duplicate class: a.Entidad"
+  },
+  {
+    "path": "14-bloques-sentencias-patrones/14-04-01-var-sin-inicializar/VarInvalida.java",
+    "unit": "14-bloques-sentencias-patrones/14-04-01-var-sin-inicializar",
+    "section": "14.4; ejemplo 14.4-1",
+    "main": "VarInvalida",
+    "args": [],
+    "stdout": "\n",
+    "reject": "cannot infer type for local variable dato"
+  },
+  {
+    "path": "14-bloques-sentencias-patrones/14-04-01-01-tipo-inferido-var/TipoInferidoVar.java",
+    "unit": "14-bloques-sentencias-patrones/14-04-01-01-tipo-inferido-var",
+    "section": "14.4.1; ejemplo 14.4.1-1",
+    "main": "TipoInferidoVar",
+    "args": [],
+    "stdout": "9\nString\n4\n3\n"
+  },
+  {
+    "path": "14-bloques-sentencias-patrones/14-07-01-etiqueta-y-variable/EtiquetaVariable.java",
+    "unit": "14-bloques-sentencias-patrones/14-07-01-etiqueta-y-variable",
+    "section": "14.7; ejemplo 14.7-1",
+    "main": "EtiquetaVariable",
+    "args": [],
+    "stdout": "2\n"
+  },
+  {
+    "path": "14-bloques-sentencias-patrones/14-13-01-do-hexadecimal/DoHexadecimal.java",
+    "unit": "14-bloques-sentencias-patrones/14-13-01-do-hexadecimal",
+    "section": "14.13; ejemplo 14.13-1",
+    "main": "DoHexadecimal",
+    "args": [],
+    "stdout": "0\nff\n"
+  },
+  {
+    "path": "14-bloques-sentencias-patrones/14-14-02-for-unboxing/Frecuencias.java",
+    "unit": "14-bloques-sentencias-patrones/14-14-02-for-unboxing",
+    "section": "14.14; ejemplo 14.14-2",
+    "main": "Frecuencias",
+    "args": [],
+    "stdout": "azul 0.75\nrojo 0.25\n"
+  },
+  {
+    "path": "14-bloques-sentencias-patrones/14-19-01-monitor-reentrante/MonitorReentrante.java",
+    "unit": "14-bloques-sentencias-patrones/14-19-01-monitor-reentrante",
+    "section": "14.19; ejemplo 14.19-1",
+    "main": "MonitorReentrante",
+    "args": [],
+    "stdout": "dos bloqueos del mismo hilo\n"
+  },
+  {
+    "path": "14-bloques-sentencias-patrones/14-20-01-01-seleccion-catch/FalloLectura.java",
+    "unit": "14-bloques-sentencias-patrones/14-20-01-01-seleccion-catch",
+    "section": "14.20.1; ejemplo 14.20.1-1",
+    "main": "SeleccionCatch",
+    "args": [],
+    "stdout": "lectura\n"
+  },
+  {
+    "path": "14-bloques-sentencias-patrones/14-20-02-01-finally-excepcion-no-capturada/FalloArchivo.java",
+    "unit": "14-bloques-sentencias-patrones/14-20-02-01-finally-excepcion-no-capturada",
+    "section": "14.20.2; ejemplo 14.20.2-1",
+    "main": "FinallyNoCapturada",
+    "args": [],
+    "stdout": "limpieza\n",
+    "exception": "NullPointerException"
+  },
+  {
+    "path": "15-expresiones/15-07-01-02-operando-guardado/OperandoGuardado.java",
+    "unit": "15-expresiones/15-07-01-02-operando-guardado",
+    "section": "15.7.1; ejemplo 15.7.1-2",
+    "main": "OperandoGuardado",
+    "args": [],
+    "stdout": "10\n10\n"
+  },
+  {
+    "path": "15-expresiones/15-07-01-03-operando-interrumpido/OperandoInterrumpido.java",
+    "unit": "15-expresiones/15-07-01-03-operando-interrumpido",
+    "section": "15.7.1; ejemplo 15.7.1-3",
+    "main": "OperandoInterrumpido",
+    "args": [],
+    "stdout": "4\n"
+  },
+  {
+    "path": "15-expresiones/15-07-02-01-evaluar-antes-dividir/AntesDeDividir.java",
+    "unit": "15-expresiones/15-07-02-01-evaluar-antes-dividir",
+    "section": "15.7.2; ejemplo 15.7.2-1",
+    "main": "AntesDeDividir",
+    "args": [],
+    "stdout": "operando\n"
+  },
+  {
+    "path": "15-expresiones/15-07-04-01-orden-argumentos/OrdenArgumentos.java",
+    "unit": "15-expresiones/15-07-04-01-orden-argumentos",
+    "section": "15.7.4; ejemplo 15.7.4-1",
+    "main": "OrdenArgumentos",
+    "args": [],
+    "stdout": "antes antes después\n"
+  },
+  {
+    "path": "15-expresiones/15-07-04-02-argumento-fallido/ArgumentoFallido.java",
+    "unit": "15-expresiones/15-07-04-02-argumento-fallido",
+    "section": "15.7.4; ejemplo 15.7.4-2",
+    "main": "ArgumentoFallido",
+    "args": [],
+    "stdout": "2\n"
+  },
+  {
+    "path": "15-expresiones/15-10-02-01-evaluar-dimensiones/EvaluarDimensiones.java",
+    "unit": "15-expresiones/15-10-02-01-evaluar-dimensiones",
+    "section": "15.10.2; ejemplo 15.10.2-1",
+    "main": "EvaluarDimensiones",
+    "args": [],
+    "stdout": "5 2\n2\n"
+  },
+  {
+    "path": "15-expresiones/15-10-02-02-arreglos-multidimensionales/MatricesEquivalentes.java",
+    "unit": "15-expresiones/15-10-02-02-arreglos-multidimensionales",
+    "section": "15.10.2; ejemplo 15.10.2-2",
+    "main": "MatricesEquivalentes",
+    "args": [],
+    "stdout": "true\n"
+  },
+  {
+    "path": "15-expresiones/15-10-04-01-referencia-antes-indice/ReferenciaAntesIndice.java",
+    "unit": "15-expresiones/15-10-04-01-referencia-antes-indice",
+    "section": "15.10.4; ejemplo 15.10.4-1",
+    "main": "ReferenciaAntesIndice",
+    "args": [],
+    "stdout": "30\n2\n"
+  },
+  {
+    "path": "15-expresiones/15-10-04-02-referencia-fallida/ReferenciaFallida.java",
+    "unit": "15-expresiones/15-10-04-02-referencia-fallida",
+    "section": "15.10.4; ejemplo 15.10.4-2",
+    "main": "ReferenciaFallida",
+    "args": [],
+    "stdout": "1\n"
+  },
+  {
+    "path": "15-expresiones/15-10-04-03-null-antes-indice/NullAntesIndice.java",
+    "unit": "15-expresiones/15-10-04-03-null-antes-indice",
+    "section": "15.10.4; ejemplo 15.10.4-3",
+    "main": "NullAntesIndice",
+    "args": [],
+    "stdout": "2\n"
+  },
+  {
+    "path": "15-expresiones/15-11-01-02-campo-static-null/CampoStaticNull.java",
+    "unit": "15-expresiones/15-11-01-02-campo-static-null",
+    "section": "15.11.1; ejemplo 15.11.1-2",
+    "main": "CampoStaticNull",
+    "args": [],
+    "stdout": "receptor evaluado\n7\n"
+  },
+  {
+    "path": "15-expresiones/15-17-03-02-resto-flotante/RestoFlotante.java",
+    "unit": "15-expresiones/15-17-03-02-resto-flotante",
+    "section": "15.17.3; ejemplo 15.17.3-2",
+    "main": "RestoFlotante",
+    "args": [],
+    "stdout": "1.5\n1.5\n-1.5\n-1.5\n"
+  },
+  {
+    "path": "15-expresiones/15-26-02-02-guardar-valor-izquierdo/GuardarValorIzquierdo.java",
+    "unit": "15-expresiones/15-26-02-02-guardar-valor-izquierdo",
+    "section": "15.26.2; ejemplo 15.26.2-2",
+    "main": "GuardarValorIzquierdo",
+    "args": [],
+    "stdout": "14\n14\n"
+  },
+  {
+    "path": "15-expresiones/15-29-01-expresiones-constantes/ConstantesCompilacion.java",
+    "unit": "15-expresiones/15-29-01-expresiones-constantes",
+    "section": "15.29; ejemplo 15.29-1",
+    "main": "ConstantesCompilacion",
+    "args": [],
+    "stdout": "6\ntrue\n"
+  },
+  {
+    "path": "17-hilos-y-bloqueos/17-04-01-reordenamiento-carrera/ReordenamientoCarrera.java",
+    "unit": "17-hilos-y-bloqueos/17-04-01-reordenamiento-carrera",
+    "section": "17.4; ejemplo 17.4-1",
+    "main": "ReordenamientoCarrera",
+    "args": [],
+    "stdout": "\n",
+    "allowed_stdout": [
+      "0 0\n",
+      "0 1\n",
+      "2 0\n",
+      "2 1\n"
+    ]
+  },
+  {
+    "path": "17-hilos-y-bloqueos/17-04-05-01-happens-before/ConsistenciaHappensBefore.java",
+    "unit": "17-hilos-y-bloqueos/17-04-05-01-happens-before",
+    "section": "17.4.5; ejemplo 17.4.5-1",
+    "main": "ConsistenciaHappensBefore",
+    "args": [],
+    "stdout": "\n",
+    "allowed_stdout": [
+      "0 0\n",
+      "0 1\n",
+      "2 0\n",
+      "2 1\n"
+    ]
+  },
+  {
+    "path": "17-hilos-y-bloqueos/17-04-08-01-causalidad/Causalidad.java",
+    "unit": "17-hilos-y-bloqueos/17-04-08-01-causalidad",
+    "section": "17.4.8; ejemplo 17.4.8-1",
+    "main": "Causalidad",
+    "args": [],
+    "stdout": "0 0\n"
+  },
+  {
+    "path": "17-hilos-y-bloqueos/17-05-01-publicacion-final/DatoPublicado.java",
+    "unit": "17-hilos-y-bloqueos/17-05-01-publicacion-final",
+    "section": "17.5; ejemplo 17.5-1",
+    "main": "PublicacionFinal",
+    "args": [],
+    "stdout": "\n",
+    "allowed_stdout": [
+      "sin referencia\n",
+      "7 0\n",
+      "7 9\n"
+    ]
+  },
+  {
+    "path": "17-hilos-y-bloqueos/17-06-01-componentes-independientes/ComponentesIndependientes.java",
+    "unit": "17-hilos-y-bloqueos/17-06-01-componentes-independientes",
+    "section": "17.6; ejemplo 17.6-1",
+    "main": "ComponentesIndependientes",
+    "args": [],
+    "stdout": "[16, 16, 16, 16]\n"
   }
 ]
