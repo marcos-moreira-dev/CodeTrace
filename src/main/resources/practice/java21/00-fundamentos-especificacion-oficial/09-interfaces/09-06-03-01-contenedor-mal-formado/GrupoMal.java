@@ -7,4 +7,4 @@
 @interface GrupoMal { String[] value(); }
 
 // Salida esperada:
-// Error: return type
+// Error: el contenedor debe declarar value() con tipo Repetible[].

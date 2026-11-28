@@ -9,4 +9,4 @@ import java.lang.annotation.Repeatable;
 @interface Repetible {}
 
 // Salida esperada:
-// Error: return type
+// Error: el contenedor debe declarar value() con tipo Repetible[].

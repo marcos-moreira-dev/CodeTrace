@@ -1465,7 +1465,7 @@
     "main": "",
     "args": [],
     "stdout": "\n",
-    "reject": "return type"
+    "reject": "must declare an element named 'value'"
   },
   {
     "path": "09-interfaces/09-06-03-02-restriccion-repeticion/MarcaTipo.java",
