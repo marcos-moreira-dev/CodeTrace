@@ -65,6 +65,8 @@ def verify(case):
         else:
             checked(["javac", "--release", "21", "-encoding", "UTF-8", "-d", tmp,
                      *map(str, sources)])
+        if case["path"].startswith("20-arquitectura-de-software/"):
+            verify_bytecode_boundaries(case, Path(tmp), checked)
         command = ["java", "-Dfile.encoding=UTF-8", "-cp", classpath, case["main"]]
         if case.get("executable_jar"):
             # Compile into a dedicated directory; package it and validate the
@@ -103,6 +105,36 @@ rules = {
     "11-comparacion-verduleria/02-hexagonal": {"dominio": set(), "aplicacion": {"dominio", "aplicacion.puertos"}, "aplicacion.puertos": {"dominio"}, "infraestructura": {"aplicacion.puertos", "dominio"}},
     "11-comparacion-verduleria/03-clean": {"entidades": set(), "casosdeuso": {"entidades"}, "adaptadores": {"casosdeuso"}, "infraestructura": {"casosdeuso", "entidades"}},
 }
+def verify_bytecode_boundaries(case, compiled, checked):
+    # Unlike import inspection, jdeps sees compiled references even if Java
+    # uses fully qualified names. Match only classes belonging to this unit.
+    folder = case["path"].removeprefix("20-arquitectura-de-software/").rsplit("/", 1)[0]
+    allowed = rules[folder]
+    classes = {".".join(p.relative_to(compiled).with_suffix("").parts)
+               for p in compiled.rglob("*.class")}
+    command = ["jdeps", "-verbose:class", "-filter:none", "-cp", str(compiled), str(compiled)]
+    result = subprocess.run(command, cwd=compiled, timeout=30, capture_output=True,
+                            text=True, encoding="utf-8")
+    assert result.returncode == 0, (case["path"], result.stderr)
+    checked_classes = set()
+    for line in result.stdout.splitlines():
+        match = re.match(r"^\s+(\S+)\s+->\s+(\S+)\s+(.+)$", line)
+        if not match:
+            continue
+        source, target, location = match.groups()
+        if source not in classes:
+            continue
+        checked_classes.add(source)
+        assert location.strip() != "not found", (case["path"], source, target)
+        if target not in classes:
+            continue  # standard library
+        origin = source.rpartition(".")[0]
+        destination = target.rpartition(".")[0]
+        if not origin or origin == destination:
+            continue  # composition root or intra-package detail
+        assert origin in allowed and destination in allowed[origin], (case["path"], source, target)
+    assert checked_classes, ("jdeps returned no classes", case["path"])
+
 for folder, allowed in rules.items():
     base = architecture / folder
     graph = defaultdict(set)

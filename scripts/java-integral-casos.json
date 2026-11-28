@@ -1655,7 +1655,11 @@
     ],
     "main": "InterfacesLocales",
     "mode": "R",
-    "stdout": "Loopback: true\nConsulta local completada: true\n"
+    "stdout": "Loopback: true\nInterfaz encontrada: true\n",
+    "allowed_stdout": [
+      "Loopback: true\nInterfaz encontrada: true\n",
+      "Loopback: true\nInterfaz encontrada: false\n"
+    ]
   },
   {
     "path": "11-redes-y-protocolos-de-comunicacion/02-interfaces-red/Loopback.java",

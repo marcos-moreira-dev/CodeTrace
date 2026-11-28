@@ -1,10 +1,10 @@
-# Biblioteca de práctica CodeTrace — catálogo v8
+# Biblioteca de práctica CodeTrace — catálogo v38
 
-**813 archivos de referencia en 14 paquetes**, incorporados en la aplicación. Un ejercicio con varios archivos cuenta varias entradas; no confundir cantidad de archivos con cantidad de ejercicios.
+**2.122 archivos de referencia en 14 paquetes**, incorporados en la aplicación. Un ejercicio con varios archivos cuenta varias entradas; no confundir cantidad de archivos con cantidad de ejercicios.
 
 ## Organización curricular
 
-- `01-fundamentos/`: sintaxis, tipos, control de flujo, funciones y especialidades del lenguaje.
+- `00-fundamentos-especificacion-oficial/` y `01-fundamentos-en-accion/` (Java 21): fundamentos y ejemplos independientes; `01-fundamentos/` en los demás lenguajes.
 - `02-estructuras-datos/`: pilas, colas, listas, heaps, tablas, grafos y su implementación.
 - `03-algoritmos/`: búsqueda, ordenamiento, recursión, grafos, backtracking, voraces y programación dinámica. **Complejidad temporal y espacial integrada**, sin carpeta separada.
 - `04-patrones-diseno/`: contratos, Strategy, Observer, Factory y otros patrones donde tengan sentido; organización idiomática en C/C++ y lenguajes funcionales.
@@ -35,7 +35,7 @@ Los ejemplos se cargan como **recursos internos**, sin conexión ni compiladores
 
 Fuentes de orientación: los repositorios personales Estructuras-de-Datos-y-Algoritmos, Patrones-de-dise-o-Java y PrincipiosSOLID, además del libro facilitado *De las matemáticas a la computadora*. Las implementaciones integradas deben validarse contra sus comandos y contratos; una fuente original con complejidad anotada no se considera automáticamente correcta.
 
-**Estado:** desarrollo en rama `feature/practice-curriculum-20261120`. Publicación/merge sujetos a aceptación manual y condiciones de `CIERRE-V0.3.md`.
+**Estado:** Java integral 06–20 implementado, en revisión en `feature/java21-jls-fundamentos` (PR #7). 523 fuentes y dos documentos nuevos, 320 clientes verificables mediante `scripts/verificar-java-integral.py`. El catálogo contiene también el contenido histórico de los demás lenguajes. Las ampliaciones siguientes de esta página son históricas. Publicación y merge pendientes de CI y aceptación manual.
 
 ## Ampliación de cobertura (347 fuentes)
 

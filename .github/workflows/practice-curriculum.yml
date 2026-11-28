@@ -10,6 +10,8 @@ on:
       - 'scripts/jls21-casos.json'
       - 'scripts/java-integral-casos.json'
       - 'scripts/verificar-java-integral.py'
+      - 'docs/JAVA-INTEGRAL-INVENTARIO.tsv'
+      - 'scripts/auditar-biblioteca.ps1'
       - 'scripts/verificar-counter-strike.py'
       - '.github/workflows/practice-curriculum.yml'
 jobs:
@@ -43,9 +45,19 @@ jobs:
       - name: Compile and run representative clients
         run: bash scripts/verificar-biblioteca.sh
   java-integral:
-    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Preserve frozen Java 00–05
+        shell: bash
+        run: |
+          git diff --exit-code c6362835720b02cab83493940f55127cdb9b66e6 HEAD -- 'src/main/resources/practice/java21/0[0-5]-*'
       - uses: actions/setup-java@v4
         with:
           distribution: temurin

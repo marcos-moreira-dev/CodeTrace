@@ -11,10 +11,12 @@ public class InterfacesLocales {
         InetAddress local = InetAddress.getLoopbackAddress();
         NetworkInterface interfaz = NetworkInterface.getByInetAddress(local);
         System.out.println("Loopback: " + local.isLoopbackAddress());
-        System.out.println("Consulta local completada: true");
+        // La interfaz puede no estar disponible según el entorno de ejecución.
+        System.out.println("Interfaz encontrada: " + (interfaz != null));
     }
 }
 
 // Salida esperada:
 // Loopback: true
-// Consulta local completada: true
+// Interfaz encontrada: true
+// Alternativa si no existe una interfaz asociada: Interfaz encontrada: false

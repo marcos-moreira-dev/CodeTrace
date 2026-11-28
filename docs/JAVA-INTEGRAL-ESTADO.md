@@ -26,6 +26,14 @@ Implementación completa: 523 fuentes Java y 2 documentos en las 15 áreas; 320 
 - 19: 12 unidades, 13 fuentes; patrones, dígitos, KNN, perceptrón, red neuronal, K-means, A*, genéticos, regresión, evaluación y minimax. Verificación Java integral aprobada en e217f617; no implica release publicada.
 - 20: 13 unidades (12 microproyectos ejecutables y 1 documental), 73 fuentes Java y 1 README; diez arquitecturas y comparación de una misma venta en capas, hexagonal y clean. Implementación completa; pendiente CI y auditoría final.
 - Verificador separado: scripts/verificar-java-integral.py, manifiesto scripts/java-integral-casos.json. Compila solo las fuentes declaradas por cliente y compara salida; verifica cobertura de archivos. Los scripts históricos excluyen nuevas áreas de la compilación conjunta.
-- Catálogo v37: 2122 entradas.
+- Catálogo v38: 2122 entradas.
+
+## Auditoría de cierre
+
+- Cobertura del inventario: 525 rutas, 523 fuentes, 2 documentos, 214 unidades y 320 clientes.
+- Verificador reforzado: análisis de dependencias de clases compiladas con jdeps; los imports siguen auditándose por separado.
+- CI Java integral ampliada a Linux y Windows, con comparación de 00–05 contra el commit congelado.
+- Correcciones puntuales: consulta real de NetworkInterface y terminología de semáforos. La salida alternativa indica explícitamente que la interfaz no existe.
+- Pendiente: resultados de la nueva matriz, empaquetado Windows y prueba manual de interfaz, grafo y reapertura de sesión. No equivale a una revisión semántica exhaustiva de las 523 fuentes.
 
 No se publica instalador ni se modifica C o TypeScript en este cambio.

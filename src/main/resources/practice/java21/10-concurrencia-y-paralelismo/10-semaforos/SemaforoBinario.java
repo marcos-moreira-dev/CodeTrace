@@ -1,5 +1,5 @@
 // Tema:
-// Un semáforo de un permiso puede proteger la sección crítica. Se libera únicamente tras adquirir; unlike un lock, no tiene propiedad de hilo.
+// Un semáforo de un permiso puede proteger la sección crítica. Se libera únicamente tras adquirir; a diferencia de un cerrojo (lock), no tiene propiedad de hilo.
 // Modalidad: ejecución real.
 // Compilar: javac --release 21 -encoding UTF-8 SemaforoBinario.java
 // Ejecutar: java SemaforoBinario
