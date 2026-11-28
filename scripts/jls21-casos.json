@@ -1,0 +1,2823 @@
+[
+  {
+    "path": "01-introduccion/01-02-programas-de-ejemplo/ArgumentosJls.java",
+    "section": "1.2",
+    "main": "ArgumentosJls",
+    "args": [
+      "Java",
+      "21"
+    ],
+    "stdout": "Java 21\n"
+  },
+  {
+    "path": "03-estructura-lexica/03-10-01-literales-enteros/LiteralesEnterosJls.java",
+    "section": "3.10.1",
+    "main": "LiteralesEnterosJls",
+    "args": [],
+    "stdout": "42 42 42 42\n"
+  },
+  {
+    "path": "03-estructura-lexica/03-10-02-literales-flotantes/LiteralesFlotantesJls.java",
+    "section": "3.10.2",
+    "main": "LiteralesFlotantesJls",
+    "args": [],
+    "stdout": "1.25\n125.0\n6.0\n"
+  },
+  {
+    "path": "03-estructura-lexica/03-10-03-literales-booleanos/LiteralesBooleanosJls.java",
+    "section": "3.10.3",
+    "main": "LiteralesBooleanosJls",
+    "args": [],
+    "stdout": "true\nfalse\n"
+  },
+  {
+    "path": "03-estructura-lexica/03-10-04-literales-caracter/LiteralesCaracterJls.java",
+    "section": "3.10.4",
+    "main": "LiteralesCaracterJls",
+    "args": [],
+    "stdout": "A\nΩ\n"
+  },
+  {
+    "path": "03-estructura-lexica/03-10-05-literales-cadena/LiteralesCadenaJls.java",
+    "section": "3.10.5",
+    "main": "LiteralesCadenaJls",
+    "args": [],
+    "stdout": "true\nfalse\ntrue\n"
+  },
+  {
+    "path": "03-estructura-lexica/03-10-06-bloques-de-texto/BloqueTextoJls.java",
+    "section": "3.10.6",
+    "main": "BloqueTextoJls",
+    "args": [],
+    "stdout": "uno\ndos\n"
+  },
+  {
+    "path": "03-estructura-lexica/03-10-07-secuencias-escape/EscapesJls.java",
+    "section": "3.10.7",
+    "main": "EscapesJls",
+    "args": [],
+    "stdout": "uno\tdos\ncomillas: \"Java\"\nruta: C:\\java\n"
+  },
+  {
+    "path": "03-estructura-lexica/03-10-08-literal-null/LiteralNullJls.java",
+    "section": "3.10.8",
+    "main": "LiteralNullJls",
+    "args": [],
+    "stdout": "true\n"
+  },
+  {
+    "path": "04-tipos-valores-variables/04-02-02-operaciones-enteras/OperacionesEnterasJls.java",
+    "section": "4.2.2; ejemplo 4.2.2-1",
+    "main": "OperacionesEnterasJls",
+    "args": [],
+    "stdout": "-1794967296\n2500000000\n",
+    "exception": "ArithmeticException"
+  },
+  {
+    "path": "05-conversiones-y-contextos/05-01-02-ampliacion-primitiva/AmpliacionPrimitivaJls.java",
+    "section": "5.1.2; ejemplo 5.1.2-1",
+    "main": "AmpliacionPrimitivaJls",
+    "args": [],
+    "stdout": "1\n"
+  },
+  {
+    "path": "05-conversiones-y-contextos/05-01-03-reduccion-primitiva/ReduccionPrimitivaJls.java",
+    "section": "5.1.3; ejemplo 5.1.3-2",
+    "main": "ReduccionPrimitivaJls",
+    "args": [],
+    "stdout": "-21555\n-56\n2147483647\n0\n-Infinity\n0.0\n"
+  },
+  {
+    "path": "03-estructura-lexica/03-10-05-identidad-entre-paquetes/saludos/IdentidadCadenas.java",
+    "unit": "03-estructura-lexica/03-10-05-identidad-entre-paquetes",
+    "section": "3.10.5; ejemplo 3.10.5-1",
+    "main": "saludos.IdentidadCadenas",
+    "args": [],
+    "stdout": "true\ntrue\ntrue\ntrue\nfalse\ntrue\n"
+  },
+  {
+    "path": "03-estructura-lexica/03-10-06-01-comparacion-cadenas/TextoEquivalente.java",
+    "unit": "03-estructura-lexica/03-10-06-01-comparacion-cadenas",
+    "section": "3.10.6; ejemplo 3.10.6-1",
+    "main": "TextoEquivalente",
+    "args": [],
+    "stdout": "inicio\n    dato\nfin\ntrue\n"
+  },
+  {
+    "path": "03-estructura-lexica/03-10-06-03-orden-transformaciones/TransformacionTexto.java",
+    "unit": "03-estructura-lexica/03-10-06-03-orden-transformaciones",
+    "section": "3.10.6; ejemplo 3.10.6-3",
+    "main": "TransformacionTexto",
+    "args": [],
+    "stdout": "xCRLFyCRLF\n"
+  },
+  {
+    "path": "03-estructura-lexica/03-10-06-04-tipo-string/BloqueComoCadena.java",
+    "unit": "03-estructura-lexica/03-10-06-04-tipo-string",
+    "section": "3.10.6; ejemplo 3.10.6-4",
+    "main": "BloqueComoCadena",
+    "args": [],
+    "stdout": "Sol y planeta\nneta\ntrue\n"
+  },
+  {
+    "path": "04-tipos-valores-variables/04-03-01-02-identidad/IdentidadValores.java",
+    "unit": "04-tipos-valores-variables/04-03-01-02-identidad",
+    "section": "4.3.1; ejemplo 4.3.1-2",
+    "main": "IdentidadValores",
+    "args": [],
+    "stdout": "7 9\n18 18\n"
+  },
+  {
+    "path": "04-tipos-valores-variables/04-12-03-clases-de-variables/TiposVariables.java",
+    "unit": "04-tipos-valores-variables/04-12-03-clases-de-variables",
+    "section": "4.12.3; ejemplo 4.12.3-1",
+    "main": "TiposVariables",
+    "args": [],
+    "stdout": "0\ntrue\n0\n"
+  },
+  {
+    "path": "04-tipos-valores-variables/04-12-04-final/ReferenciaFinal.java",
+    "unit": "04-tipos-valores-variables/04-12-04-final",
+    "section": "4.12.4; ejemplo 4.12.4-1",
+    "main": "ReferenciaFinal",
+    "args": [],
+    "stdout": "5\n"
+  },
+  {
+    "path": "04-tipos-valores-variables/04-12-05-valores-iniciales/ValoresIniciales.java",
+    "unit": "04-tipos-valores-variables/04-12-05-valores-iniciales",
+    "section": "4.12.5; ejemplo 4.12.5-1",
+    "main": "ValoresIniciales",
+    "args": [],
+    "stdout": "0\n0\nfalse\nnull\n"
+  },
+  {
+    "path": "05-conversiones-y-contextos/05-01-07-boxing/Empaquetado.java",
+    "unit": "05-conversiones-y-contextos/05-01-07-boxing",
+    "section": "5.1.7",
+    "main": "Empaquetado",
+    "args": [],
+    "stdout": "true\n42\n"
+  },
+  {
+    "path": "05-conversiones-y-contextos/05-01-08-unboxing-null/DesempaquetadoNulo.java",
+    "unit": "05-conversiones-y-contextos/05-01-08-unboxing-null",
+    "section": "5.1.8",
+    "main": "DesempaquetadoNulo",
+    "args": [],
+    "stdout": "15\n",
+    "exception": "NullPointerException"
+  },
+  {
+    "path": "05-conversiones-y-contextos/05-02-constantes/AsignacionConstante.java",
+    "unit": "05-conversiones-y-contextos/05-02-constantes",
+    "section": "5.2",
+    "main": "AsignacionConstante",
+    "args": [],
+    "stdout": "120\n40\n"
+  },
+  {
+    "path": "05-conversiones-y-contextos/05-02-error-reduccion/AsignacionInvalida.java",
+    "unit": "05-conversiones-y-contextos/05-02-error-reduccion",
+    "section": "5.2",
+    "main": "AsignacionInvalida",
+    "args": [],
+    "stdout": "\n",
+    "reject": "possible lossy conversion from int to byte"
+  },
+  {
+    "path": "03-estructura-lexica/03-10-06-02-escapes-en-bloques/EscapeBloque.java",
+    "unit": "03-estructura-lexica/03-10-06-02-escapes-en-bloques",
+    "section": "3.10.6; ejemplo 3.10.6-2",
+    "main": "EscapeBloque",
+    "args": [],
+    "stdout": "norte_|sureste|\n"
+  },
+  {
+    "path": "04-tipos-valores-variables/04-03-01-01-creacion-objetos/CreacionObjetos.java",
+    "unit": "04-tipos-valores-variables/04-03-01-01-creacion-objetos",
+    "section": "4.3.1; ejemplo 4.3.1-1",
+    "main": "CreacionObjetos",
+    "args": [],
+    "stdout": "[0]\n[1]\n[2] [4]\nab\n"
+  },
+  {
+    "path": "04-tipos-valores-variables/04-04-01-miembros-variable-tipo/MiembrosTipo.java",
+    "unit": "04-tipos-valores-variables/04-04-01-miembros-variable-tipo",
+    "section": "4.4; ejemplo 4.4-1",
+    "main": "MiembrosTipo",
+    "args": [],
+    "stdout": "7\ndato\n"
+  },
+  {
+    "path": "04-tipos-valores-variables/04-05-01-01-comodin-sin-limite/ComodinLibre.java",
+    "unit": "04-tipos-valores-variables/04-05-01-01-comodin-sin-limite",
+    "section": "4.5.1; ejemplo 4.5.1-1",
+    "main": "ComodinLibre",
+    "args": [],
+    "stdout": "3\n4\nsol\nmar\n"
+  },
+  {
+    "path": "04-tipos-valores-variables/04-05-01-02-comodin-acotado/ComodinAcotado.java",
+    "unit": "04-tipos-valores-variables/04-05-01-02-comodin-acotado",
+    "section": "4.5.1; ejemplo 4.5.1-2",
+    "main": "ComodinAcotado",
+    "args": [],
+    "stdout": "5.0\n4.0\n"
+  },
+  {
+    "path": "04-tipos-valores-variables/04-08-01-tipo-raw/TipoRaw.java",
+    "unit": "04-tipos-valores-variables/04-08-01-tipo-raw",
+    "section": "4.8; ejemplo 4.8-1",
+    "main": "TipoRaw",
+    "args": [],
+    "stdout": "",
+    "exception": "ClassCastException"
+  },
+  {
+    "path": "04-tipos-valores-variables/04-12-06-01-tipo-y-clase/TipoYClase.java",
+    "unit": "04-tipos-valores-variables/04-12-06-01-tipo-y-clase",
+    "section": "4.12.6; ejemplo 4.12.6-1",
+    "main": "TipoYClase",
+    "args": [],
+    "stdout": "Integer\nDouble\n"
+  },
+  {
+    "path": "05-conversiones-y-contextos/05-00-02-contextos-conversion/ContextosConversion.java",
+    "unit": "05-conversiones-y-contextos/05-00-02-contextos-conversion",
+    "section": "5.0; ejemplo 5.0-2",
+    "main": "ContextosConversion",
+    "args": [],
+    "stdout": "7\n7.0\n49.0\n7.0\n"
+  },
+  {
+    "path": "05-conversiones-y-contextos/05-01-03-01-infinitos-a-enteros/InfinitosEnteros.java",
+    "unit": "05-conversiones-y-contextos/05-01-03-01-infinitos-a-enteros",
+    "section": "5.1.3; ejemplo 5.1.3-1",
+    "main": "InfinitosEnteros",
+    "args": [],
+    "stdout": "-9223372036854775808 9223372036854775807\n-2147483648 2147483647\n0 -1\n0 65535\n0 -1\n"
+  },
+  {
+    "path": "05-conversiones-y-contextos/05-02-01-asignacion-primitivos/AsignacionPrimitivos.java",
+    "unit": "05-conversiones-y-contextos/05-02-01-asignacion-primitivos",
+    "section": "5.2; ejemplo 5.2-1",
+    "main": "AsignacionPrimitivos",
+    "args": [],
+    "stdout": "20.0\n-126\n"
+  },
+  {
+    "path": "05-conversiones-y-contextos/05-02-02-asignacion-referencias/AsignacionReferencias.java",
+    "unit": "05-conversiones-y-contextos/05-02-02-asignacion-referencias",
+    "section": "5.2; ejemplo 5.2-2",
+    "main": "AsignacionReferencias",
+    "args": [],
+    "stdout": "true\n4\n"
+  },
+  {
+    "path": "05-conversiones-y-contextos/05-02-03-asignacion-arreglos/AsignacionArreglos.java",
+    "unit": "05-conversiones-y-contextos/05-02-03-asignacion-arreglos",
+    "section": "5.2; ejemplo 5.2-3",
+    "main": "AsignacionArreglos",
+    "args": [],
+    "stdout": "uno\ntrue\n"
+  },
+  {
+    "path": "05-conversiones-y-contextos/05-05-03-cast-incompatible/CastIncompatible.java",
+    "unit": "05-conversiones-y-contextos/05-05-03-cast-incompatible",
+    "section": "5.5; ejemplo 5.5-3",
+    "main": "CastIncompatible",
+    "args": [],
+    "stdout": "",
+    "exception": "ClassCastException"
+  },
+  {
+    "path": "05-conversiones-y-contextos/05-06-01-promocion-unaria/PromocionUnaria.java",
+    "unit": "05-conversiones-y-contextos/05-06-01-promocion-unaria",
+    "section": "5.6; ejemplo 5.6-1",
+    "main": "PromocionUnaria",
+    "args": [],
+    "stdout": "-3\n-4\n12\n"
+  },
+  {
+    "path": "05-conversiones-y-contextos/05-06-02-promocion-binaria/PromocionBinaria.java",
+    "unit": "05-conversiones-y-contextos/05-06-02-promocion-binaria",
+    "section": "5.6; ejemplo 5.6-2",
+    "main": "PromocionBinaria",
+    "args": [],
+    "stdout": "7\n2.5\n0.75\n"
+  },
+  {
+    "path": "06-nombres/06-03-01-alcance-clases/AlcanceClases.java",
+    "unit": "06-nombres/06-03-01-alcance-clases",
+    "section": "6.3; ejemplo 6.3-1",
+    "main": "AlcanceClases",
+    "args": [],
+    "stdout": "true\n"
+  },
+  {
+    "path": "06-nombres/06-03-02-variable-no-inicializada/AlcanceLocalInvalido.java",
+    "unit": "06-nombres/06-03-02-variable-no-inicializada",
+    "section": "6.3; ejemplo 6.3-2",
+    "main": "AlcanceLocalInvalido",
+    "args": [],
+    "stdout": "\n",
+    "reject": "variable valor might not have been initialized"
+  },
+  {
+    "path": "06-nombres/06-04-01-sombreado-local-invalido/SombreadoInvalido.java",
+    "unit": "06-nombres/06-04-01-sombreado-local-invalido",
+    "section": "6.4; ejemplo 6.4-1",
+    "main": "SombreadoInvalido",
+    "args": [],
+    "stdout": "\n",
+    "reject": "variable indice is already defined"
+  },
+  {
+    "path": "06-nombres/06-04-01-01-sombreado-campo/SombreadoCampo.java",
+    "unit": "06-nombres/06-04-01-01-sombreado-campo",
+    "section": "6.4.1; ejemplo 6.4.1-1",
+    "main": "SombreadoCampo",
+    "args": [],
+    "stdout": "9\n2\n"
+  },
+  {
+    "path": "07-paquetes-y-modulos/07-05-01-01-importacion-simple/app/ImportacionSimple.java",
+    "unit": "07-paquetes-y-modulos/07-05-01-01-importacion-simple",
+    "section": "7.5.1; ejemplo 7.5.1-1",
+    "main": "app.ImportacionSimple",
+    "args": [],
+    "stdout": "hola\n"
+  },
+  {
+    "path": "08-clases/08-01-01-01-01-clase-abstracta/ClaseAbstracta.java",
+    "unit": "08-clases/08-01-01-01-01-clase-abstracta",
+    "section": "8.1.1.1; ejemplo 8.1.1.1-1",
+    "main": "ClaseAbstracta",
+    "args": [],
+    "stdout": "16\n"
+  },
+  {
+    "path": "08-clases/08-03-01-01-01-campos-static/CamposCompartidos.java",
+    "unit": "08-clases/08-03-01-01-01-campos-static",
+    "section": "8.3.1.1; ejemplo 8.3.1.1-1",
+    "main": "CamposCompartidos",
+    "args": [],
+    "stdout": "2\n1 1\n"
+  },
+  {
+    "path": "08-clases/08-04-09-01-sobrecarga/SobrecargaMetodos.java",
+    "unit": "08-clases/08-04-09-01-sobrecarga",
+    "section": "8.4.9; ejemplo 8.4.9-1",
+    "main": "SobrecargaMetodos",
+    "args": [],
+    "stdout": "int 4\ndouble 4.5\n"
+  },
+  {
+    "path": "08-clases/08-09-03-01-recorrer-enum/RecorrerEnum.java",
+    "unit": "08-clases/08-09-03-01-recorrer-enum",
+    "section": "8.9.3; ejemplo 8.9.3-1",
+    "main": "RecorrerEnum",
+    "args": [],
+    "stdout": "INICIO\nPROCESO\nFIN\n"
+  },
+  {
+    "path": "09-interfaces/09-08-01-interfaz-funcional/InterfazFuncional.java",
+    "unit": "09-interfaces/09-08-01-interfaz-funcional",
+    "section": "9.8; ejemplo 9.8-1",
+    "main": "InterfazFuncional",
+    "args": [],
+    "stdout": "10\n"
+  },
+  {
+    "path": "10-arreglos/10-02-02-declaradores-arreglos/DeclaradoresArreglos.java",
+    "unit": "10-arreglos/10-02-02-declaradores-arreglos",
+    "section": "10.2; ejemplo 10.2-2",
+    "main": "DeclaradoresArreglos",
+    "args": [],
+    "stdout": "3\n4\n5\n"
+  },
+  {
+    "path": "10-arreglos/10-04-01-acceso-arreglo/AccesoArreglo.java",
+    "unit": "10-arreglos/10-04-01-acceso-arreglo",
+    "section": "10.4; ejemplo 10.4-1",
+    "main": "AccesoArreglo",
+    "args": [],
+    "stdout": "8\n",
+    "exception": "ArrayIndexOutOfBoundsException"
+  },
+  {
+    "path": "10-arreglos/10-05-01-almacenamiento-incompatible/AlmacenamientoArreglo.java",
+    "unit": "10-arreglos/10-05-01-almacenamiento-incompatible",
+    "section": "10.5; ejemplo 10.5-1",
+    "main": "AlmacenamientoArreglo",
+    "args": [],
+    "stdout": "4\n",
+    "exception": "ArrayStoreException"
+  },
+  {
+    "path": "10-arreglos/10-06-01-inicializador-arreglo/InicializadorArreglo.java",
+    "unit": "10-arreglos/10-06-01-inicializador-arreglo",
+    "section": "10.6; ejemplo 10.6-1",
+    "main": "InicializadorArreglo",
+    "args": [],
+    "stdout": "7\n11\n13\n"
+  },
+  {
+    "path": "10-arreglos/10-07-01-clonar-arreglo/ClonarArreglo.java",
+    "unit": "10-arreglos/10-07-01-clonar-arreglo",
+    "section": "10.7; ejemplo 10.7-1",
+    "main": "ClonarArreglo",
+    "args": [],
+    "stdout": "false\n1 9\n"
+  },
+  {
+    "path": "10-arreglos/10-07-02-subarreglos-compartidos/ClonarMatriz.java",
+    "unit": "10-arreglos/10-07-02-subarreglos-compartidos",
+    "section": "10.7; ejemplo 10.7-2",
+    "main": "ClonarMatriz",
+    "args": [],
+    "stdout": "false\ntrue\n9\n"
+  },
+  {
+    "path": "10-arreglos/10-08-02-clases-arreglos/ClaseArreglos.java",
+    "unit": "10-arreglos/10-08-02-clases-arreglos",
+    "section": "10.8; ejemplo 10.8-2",
+    "main": "ClaseArreglos",
+    "args": [],
+    "stdout": "true\nint\n"
+  },
+  {
+    "path": "11-excepciones/11-02-03-01-catch-checked/CapturaCheckedInvalida.java",
+    "unit": "11-excepciones/11-02-03-01-catch-checked",
+    "section": "11.2.3; ejemplo 11.2.3-1",
+    "main": "CapturaCheckedInvalida",
+    "args": [],
+    "stdout": "\n",
+    "reject": "exception IOException is never thrown"
+  },
+  {
+    "path": "11-excepciones/11-03-01-lanzar-capturar/LanzarCapturar.java",
+    "unit": "11-excepciones/11-03-01-lanzar-capturar",
+    "section": "11.3; ejemplo 11.3-1",
+    "main": "LanzarCapturar",
+    "args": [],
+    "stdout": "capturada\ncontinúa\n"
+  },
+  {
+    "path": "12-ejecucion/12-04-01-01-orden-inicializacion/OrdenInicializacion.java",
+    "unit": "12-ejecucion/12-04-01-01-orden-inicializacion",
+    "section": "12.4.1; ejemplo 12.4.1-1",
+    "main": "OrdenInicializacion",
+    "args": [],
+    "stdout": "padre\nhija\n"
+  },
+  {
+    "path": "14-bloques-sentencias-patrones/14-11-03-01-switch-caida/SwitchCaida.java",
+    "unit": "14-bloques-sentencias-patrones/14-11-03-01-switch-caida",
+    "section": "14.11.3; ejemplo 14.11.3-1",
+    "main": "SwitchCaida",
+    "args": [],
+    "stdout": "uno\ndos\n"
+  },
+  {
+    "path": "14-bloques-sentencias-patrones/14-14-01-for-mejorado/ForMejorado.java",
+    "unit": "14-bloques-sentencias-patrones/14-14-01-for-mejorado",
+    "section": "14.14; ejemplo 14.14-1",
+    "main": "ForMejorado",
+    "args": [],
+    "stdout": "12\n"
+  },
+  {
+    "path": "14-bloques-sentencias-patrones/14-21-01-yield/YieldSwitch.java",
+    "unit": "14-bloques-sentencias-patrones/14-21-01-yield",
+    "section": "14.21; ejemplo 14.21-1",
+    "main": "YieldSwitch",
+    "args": [],
+    "stdout": "21\n"
+  },
+  {
+    "path": "15-expresiones/15-07-01-01-orden-izquierda/OrdenIzquierda.java",
+    "unit": "15-expresiones/15-07-01-01-orden-izquierda",
+    "section": "15.7.1; ejemplo 15.7.1-1",
+    "main": "OrdenIzquierda",
+    "args": [],
+    "stdout": "11\n8\n"
+  },
+  {
+    "path": "15-expresiones/15-17-03-01-resto-entero/RestoEntero.java",
+    "unit": "15-expresiones/15-17-03-01-resto-entero",
+    "section": "15.17.3; ejemplo 15.17.3-1",
+    "main": "RestoEntero",
+    "args": [],
+    "stdout": "1\n-1\n1\n-1\n"
+  },
+  {
+    "path": "15-expresiones/15-18-01-01-concatenacion/Concatenacion.java",
+    "unit": "15-expresiones/15-18-01-01-concatenacion",
+    "section": "15.18.1; ejemplo 15.18.1-1",
+    "main": "Concatenacion",
+    "args": [],
+    "stdout": "5x\nx23\n"
+  },
+  {
+    "path": "16-asignacion-definida/16-01-asignacion-definida/AsignacionDefinida.java",
+    "unit": "16-asignacion-definida/16-01-asignacion-definida",
+    "section": "16; ejemplo 16-1",
+    "main": "AsignacionDefinida",
+    "args": [],
+    "stdout": "6\n"
+  },
+  {
+    "path": "16-asignacion-definida/16-02-asignacion-no-garantizada/AsignacionNoGarantizada.java",
+    "unit": "16-asignacion-definida/16-02-asignacion-no-garantizada",
+    "section": "16; ejemplo 16-2",
+    "main": "AsignacionNoGarantizada",
+    "args": [],
+    "stdout": "\n",
+    "reject": "variable valor might not have been initialized"
+  },
+  {
+    "path": "16-asignacion-definida/16-03-final-ramas/FinalRamas.java",
+    "unit": "16-asignacion-definida/16-03-final-ramas",
+    "section": "16; ejemplo 16-3",
+    "main": "FinalRamas",
+    "args": [],
+    "stdout": "3\n7\n"
+  },
+  {
+    "path": "08-clases/08-01-01-01-02-abstracta-incompatible/Actualizable.java",
+    "unit": "08-clases/08-01-01-01-02-abstracta-incompatible",
+    "section": "8.1.1.1; ejemplo 8.1.1.1-2",
+    "main": "",
+    "args": [],
+    "stdout": "\n",
+    "reject": "return type int is not compatible with void"
+  },
+  {
+    "path": "08-clases/08-01-02-01-limites-reciprocos/Convertible.java",
+    "unit": "08-clases/08-01-02-01-limites-reciprocos",
+    "section": "8.1.2; ejemplo 8.1.2-1",
+    "main": "LimitesReciprocos",
+    "args": [],
+    "stdout": "3\n300\n"
+  },
+  {
+    "path": "08-clases/08-01-03-01-miembros-estaticos-internos/InternaEstatica.java",
+    "unit": "08-clases/08-01-03-01-miembros-estaticos-internos",
+    "section": "8.1.3; ejemplo 8.1.3-1",
+    "main": "InternaEstatica",
+    "args": [],
+    "stdout": "inicializada\n8\n"
+  },
+  {
+    "path": "08-clases/08-01-03-02-contexto-estatico-invalido/ContextoEstaticoInvalido.java",
+    "unit": "08-clases/08-01-03-02-contexto-estatico-invalido",
+    "section": "8.1.3; ejemplo 8.1.3-2",
+    "main": "ContextoEstaticoInvalido",
+    "args": [],
+    "stdout": "\n",
+    "reject": "non-static variable valor cannot be referenced from a static context"
+  },
+  {
+    "path": "08-clases/08-01-04-01-herencia-final/RaizFinal.java",
+    "unit": "08-clases/08-01-04-01-herencia-final",
+    "section": "8.1.4; ejemplo 8.1.4-1",
+    "main": "",
+    "args": [],
+    "stdout": "\n",
+    "reject": "cannot inherit from final"
+  },
+  {
+    "path": "08-clases/08-01-04-02-jerarquia/Antepasado.java",
+    "unit": "08-clases/08-01-04-02-jerarquia",
+    "section": "8.1.4; ejemplo 8.1.4-2",
+    "main": "Jerarquia",
+    "args": [],
+    "stdout": "true\ntrue\ntrue\n"
+  },
+  {
+    "path": "08-clases/08-01-04-03-herencia-circular/CircularA.java",
+    "unit": "08-clases/08-01-04-03-herencia-circular",
+    "section": "8.1.4; ejemplo 8.1.4-3",
+    "main": "",
+    "args": [],
+    "stdout": "\n",
+    "reject": "cyclic inheritance"
+  },
+  {
+    "path": "08-clases/08-01-05-01-interfaz-duplicada/Duplicada.java",
+    "unit": "08-clases/08-01-05-01-interfaz-duplicada",
+    "section": "8.1.5; ejemplo 8.1.5-1",
+    "main": "Duplicada",
+    "args": [],
+    "stdout": "\n",
+    "reject": "repeated interface"
+  },
+  {
+    "path": "08-clases/08-01-05-03-parametros-incompatibles/Identificable.java",
+    "unit": "08-clases/08-01-05-03-parametros-incompatibles",
+    "section": "8.1.5; ejemplo 8.1.5-3",
+    "main": "",
+    "args": [],
+    "stdout": "\n",
+    "reject": "cannot be inherited with different arguments"
+  },
+  {
+    "path": "08-clases/08-01-05-04-metodos-obligatorios/Medible.java",
+    "unit": "08-clases/08-01-05-04-metodos-obligatorios",
+    "section": "8.1.5; ejemplo 8.1.5-4",
+    "main": "",
+    "args": [],
+    "stdout": "\n",
+    "reject": "does not override abstract method"
+  },
+  {
+    "path": "08-clases/08-03-01-01-02-ocultar-campo-estatico/BaseEstatica.java",
+    "unit": "08-clases/08-03-01-01-02-ocultar-campo-estatico",
+    "section": "8.3.1.1; ejemplo 8.3.1.1-2",
+    "main": "OcultarEstatico",
+    "args": [],
+    "stdout": "6.5 3\n"
+  },
+  {
+    "path": "08-clases/08-03-01-01-03-ocultar-campo-instancia/BaseInstancia.java",
+    "unit": "08-clases/08-03-01-01-03-ocultar-campo-instancia",
+    "section": "8.3.1.1; ejemplo 8.3.1.1-3",
+    "main": "OcultarInstancia",
+    "args": [],
+    "stdout": "6.5 3\n6.5 3\n"
+  },
+  {
+    "path": "08-clases/08-03-02-01-inicializar-campos/Coordenada.java",
+    "unit": "08-clases/08-03-02-01-inicializar-campos",
+    "section": "8.3.2; ejemplo 8.3.2-1",
+    "main": "InicializarCampos",
+    "args": [],
+    "stdout": "2 7\n"
+  },
+  {
+    "path": "08-clases/08-03-02-02-referencia-estatica-posterior/ReferenciaPosterior.java",
+    "unit": "08-clases/08-03-02-02-referencia-estatica-posterior",
+    "section": "8.3.2; ejemplo 8.3.2-2",
+    "main": "ReferenciaPosterior",
+    "args": [],
+    "stdout": "9.0\n4.0\n"
+  },
+  {
+    "path": "08-clases/08-03-03-01-referencia-adelantada-invalida/CampoAdelantado.java",
+    "unit": "08-clases/08-03-03-01-referencia-adelantada-invalida",
+    "section": "8.3.3; ejemplo 8.3.3-1",
+    "main": "CampoAdelantado",
+    "args": [],
+    "stdout": "\n",
+    "reject": "illegal forward reference"
+  },
+  {
+    "path": "08-clases/08-04-08-01-01-sobrescritura/Desplazable.java",
+    "unit": "08-clases/08-04-08-01-01-sobrescritura",
+    "section": "8.4.8.1; ejemplo 8.4.8.1-1",
+    "main": "SobrescrituraMovimiento",
+    "args": [],
+    "stdout": "3\n0\n"
+  },
+  {
+    "path": "08-clases/08-04-08-02-01-ocultacion-metodo-static/OrigenMetodo.java",
+    "unit": "08-clases/08-04-08-02-01-ocultacion-metodo-static",
+    "section": "8.4.8.2; ejemplo 8.4.8.2-1",
+    "main": "OcultacionMetodos",
+    "args": [],
+    "stdout": "origen\nderivado\n"
+  },
+  {
+    "path": "08-clases/08-04-08-03-01-retorno-covariante/Generador.java",
+    "unit": "08-clases/08-04-08-03-01-retorno-covariante",
+    "section": "8.4.8.3; ejemplo 8.4.8.3-1",
+    "main": "RetornoCovariante",
+    "args": [],
+    "stdout": "7\n"
+  },
+  {
+    "path": "08-clases/08-04-08-03-03-throws-incompatible/Trabajo.java",
+    "unit": "08-clases/08-04-08-03-03-throws-incompatible",
+    "section": "8.4.8.3; ejemplo 8.4.8.3-3",
+    "main": "",
+    "args": [],
+    "stdout": "\n",
+    "reject": "overridden method does not throw"
+  },
+  {
+    "path": "08-clases/08-04-08-03-04-borrado-conflicto/IdentidadGenerica.java",
+    "unit": "08-clases/08-04-08-03-04-borrado-conflicto",
+    "section": "8.4.8.3; ejemplo 8.4.8.3-4",
+    "main": "",
+    "args": [],
+    "stdout": "\n",
+    "reject": "name clash"
+  },
+  {
+    "path": "08-clases/08-08-01-constructor/ConstructorSimple.java",
+    "unit": "08-clases/08-08-01-constructor",
+    "section": "8.8; ejemplo 8.8-1",
+    "main": "ConstructorSimple",
+    "args": [],
+    "stdout": "3 5\n"
+  },
+  {
+    "path": "08-clases/08-08-07-01-this-y-super/Elemento.java",
+    "unit": "08-clases/08-08-07-01-this-y-super",
+    "section": "8.8.7; ejemplo 8.8.7-1",
+    "main": "ConstructoresEncadenados",
+    "args": [],
+    "stdout": "5 normal\n"
+  },
+  {
+    "path": "08-clases/08-08-07-01-01-this-antes-super/ConstructorInvalido.java",
+    "unit": "08-clases/08-08-07-01-01-this-antes-super",
+    "section": "8.8.7.1; ejemplo 8.8.7.1-1",
+    "main": "ConstructorInvalido",
+    "args": [],
+    "stdout": "\n",
+    "reject": "cannot reference valor before supertype constructor has been called"
+  },
+  {
+    "path": "08-clases/08-08-09-01-constructor-implicito/RectanguloImplicit.java",
+    "unit": "08-clases/08-08-09-01-constructor-implicito",
+    "section": "8.8.9; ejemplo 8.8.9-1",
+    "main": "ConstructorImplicito",
+    "args": [],
+    "stdout": "0\ntrue\n"
+  },
+  {
+    "path": "08-clases/08-08-10-01-constructor-privado/SoloClase.java",
+    "unit": "08-clases/08-08-10-01-constructor-privado",
+    "section": "8.8.10; ejemplo 8.8.10-1",
+    "main": "",
+    "args": [],
+    "stdout": "\n",
+    "reject": "has private access"
+  },
+  {
+    "path": "08-clases/08-09-02-01-enum-con-campos/Nivel.java",
+    "unit": "08-clases/08-09-02-01-enum-con-campos",
+    "section": "8.9.2; ejemplo 8.9.2-1",
+    "main": "EnumCampos",
+    "args": [],
+    "stdout": "BAJO 1\nMEDIO 5\nALTO 10\n"
+  },
+  {
+    "path": "08-clases/08-09-02-02-enum-referencia-invalida/EstadoInvalido.java",
+    "unit": "08-clases/08-09-02-02-enum-referencia-invalida",
+    "section": "8.9.2; ejemplo 8.9.2-2",
+    "main": "EstadoInvalido",
+    "args": [],
+    "stdout": "\n",
+    "reject": "illegal reference to static field from initializer"
+  },
+  {
+    "path": "08-clases/08-09-03-02-switch-enum/Semaforo.java",
+    "unit": "08-clases/08-09-03-02-switch-enum",
+    "section": "8.9.3; ejemplo 8.9.3-2",
+    "main": "SwitchEnum",
+    "args": [],
+    "stdout": "parar\nesperar\navanzar\n"
+  },
+  {
+    "path": "08-clases/08-09-03-03-enum-comportamiento/CalculoEnum.java",
+    "unit": "08-clases/08-09-03-03-enum-comportamiento",
+    "section": "8.9.3; ejemplo 8.9.3-3",
+    "main": "CalculoEnum",
+    "args": [],
+    "stdout": "8\n15\n"
+  },
+  {
+    "path": "09-interfaces/09-03-01-campos-ambiguos/TarifaA.java",
+    "unit": "09-interfaces/09-03-01-campos-ambiguos",
+    "section": "9.3; ejemplo 9.3-1",
+    "main": "",
+    "args": [],
+    "stdout": "\n",
+    "reject": "reference to COSTO is ambiguous"
+  },
+  {
+    "path": "09-interfaces/09-03-02-campo-heredado-dos-veces/Comun.java",
+    "unit": "09-interfaces/09-03-02-campo-heredado-dos-veces",
+    "section": "9.3; ejemplo 9.3-2",
+    "main": "CampoCompartido",
+    "args": [],
+    "stdout": "12\n"
+  },
+  {
+    "path": "09-interfaces/09-03-01-01-campo-adelantado-interfaz/CampoInterfazInvalido.java",
+    "unit": "09-interfaces/09-03-01-01-campo-adelantado-interfaz",
+    "section": "9.3.1; ejemplo 9.3.1-1",
+    "main": "CampoInterfazInvalido",
+    "args": [],
+    "stdout": "\n",
+    "reject": "illegal forward reference"
+  },
+  {
+    "path": "09-interfaces/09-04-02-01-sobrecarga-interfaz/Movil.java",
+    "unit": "09-interfaces/09-04-02-01-sobrecarga-interfaz",
+    "section": "9.4.2; ejemplo 9.4.2-1",
+    "main": "SobrecargaInterfaz",
+    "args": [],
+    "stdout": "int\nfloat\ndouble\n"
+  },
+  {
+    "path": "09-interfaces/09-06-01-01-declarar-anotacion/Ficha.java",
+    "unit": "09-interfaces/09-06-01-01-declarar-anotacion",
+    "section": "9.6.1; ejemplo 9.6.1-1",
+    "main": "AnotacionDeclarada",
+    "args": [],
+    "stdout": "Anotación declarada\n"
+  },
+  {
+    "path": "09-interfaces/09-06-01-02-anotacion-marcadora/Experimental.java",
+    "unit": "09-interfaces/09-06-01-02-anotacion-marcadora",
+    "section": "9.6.1; ejemplo 9.6.1-2",
+    "main": "Marcada",
+    "args": [],
+    "stdout": "experimental\n"
+  },
+  {
+    "path": "09-interfaces/09-06-02-01-anotacion-default/Tarea.java",
+    "unit": "09-interfaces/09-06-02-01-anotacion-default",
+    "section": "9.6.2; ejemplo 9.6.2-1",
+    "main": "AnotacionDefault",
+    "args": [],
+    "stdout": "pendiente\n"
+  },
+  {
+    "path": "09-interfaces/09-07-03-01-anotacion-value/Etiqueta.java",
+    "unit": "09-interfaces/09-07-03-01-anotacion-value",
+    "section": "9.7.3; ejemplo 9.7.3-1",
+    "main": "AnotacionValue",
+    "args": [],
+    "stdout": "value implícito\n"
+  },
+  {
+    "path": "10-arreglos/10-02-01-declarar-arreglos/DeclararArreglos.java",
+    "unit": "10-arreglos/10-02-01-declarar-arreglos",
+    "section": "10.2; ejemplo 10.2-1",
+    "main": "DeclararArreglos",
+    "args": [],
+    "stdout": "3\n4\nb\n"
+  },
+  {
+    "path": "10-arreglos/10-08-01-objeto-class-arreglo/ObjetoClassArreglo.java",
+    "unit": "10-arreglos/10-08-01-objeto-class-arreglo",
+    "section": "10.8; ejemplo 10.8-1",
+    "main": "ObjetoClassArreglo",
+    "args": [],
+    "stdout": "[I\njava.lang.Object\njava.lang.Cloneable\njava.io.Serializable\n"
+  },
+  {
+    "path": "12-ejecucion/12-04-01-02-inicializar-clase-declarante/Declarante.java",
+    "unit": "12-ejecucion/12-04-01-02-inicializar-clase-declarante",
+    "section": "12.4.1; ejemplo 12.4.1-2",
+    "main": "InicializarDeclarante",
+    "args": [],
+    "stdout": "43\n"
+  },
+  {
+    "path": "12-ejecucion/12-04-01-03-inicializacion-interfaces/AbuelaI.java",
+    "unit": "12-ejecucion/12-04-01-03-inicializacion-interfaces",
+    "section": "12.4.1; ejemplo 12.4.1-3",
+    "main": "InicializarInterfaces",
+    "args": [],
+    "stdout": "1\nB=3\nC=4\n3\n"
+  },
+  {
+    "path": "12-ejecucion/12-05-02-despacho-en-constructor/ConstructorBase.java",
+    "unit": "12-ejecucion/12-05-02-despacho-en-constructor",
+    "section": "12.5; ejemplo 12.5-2",
+    "main": "DespachoConstructor",
+    "args": [],
+    "stdout": "0\n8\n"
+  },
+  {
+    "path": "13-compatibilidad-binaria/13-04-23-01-agregar-sobrecarga/v1/SalidaBinaria.java",
+    "unit": "13-compatibilidad-binaria/13-04-23-01-agregar-sobrecarga",
+    "section": "13.4.23; ejemplo 13.4.23-1",
+    "main": "ClienteBinario",
+    "args": [],
+    "stdout": "long\nlong\nint\n",
+    "stages": [
+      {
+        "sources": [
+          "v1/SalidaBinaria.java",
+          "ClienteBinario.java"
+        ],
+        "stdout": "long\n"
+      },
+      {
+        "sources": [
+          "v2/SalidaBinaria.java"
+        ],
+        "stdout": "long\n"
+      },
+      {
+        "sources": [
+          "ClienteBinario.java"
+        ],
+        "stdout": "int\n"
+      }
+    ]
+  },
+  {
+    "path": "18-inferencia-de-tipos/18-05-05-01-inferencia-patron-record/Transformador.java",
+    "unit": "18-inferencia-de-tipos/18-05-05-01-inferencia-patron-record",
+    "section": "18.5.5; ejemplo 18.5.5-1",
+    "main": "InferenciaRecord",
+    "args": [],
+    "stdout": "false\ntrue\n"
+  },
+  {
+    "path": "04-tipos-valores-variables/04-02-04-01-aritmetica-flotante/AritmeticaFlotante.java",
+    "unit": "04-tipos-valores-variables/04-02-04-01-aritmetica-flotante",
+    "section": "4.2.4; ejemplo 4.2.4-1",
+    "main": "AritmeticaFlotante",
+    "args": [],
+    "stdout": "Infinity\ntrue\n0.0\nNaN\nfalse\n-Infinity\n"
+  },
+  {
+    "path": "06-nombres/06-04-01-02-tipo-local-sombrea-import/Date.java",
+    "unit": "06-nombres/06-04-01-02-tipo-local-sombrea-import",
+    "section": "6.4.1; ejemplo 6.4.1-2",
+    "main": "TipoPreferido",
+    "args": [],
+    "stdout": "12\n"
+  },
+  {
+    "path": "06-nombres/06-05-06-01-01-asignar-constante/NombreConstante.java",
+    "unit": "06-nombres/06-05-06-01-01-asignar-constante",
+    "section": "6.5.6.1; ejemplo 6.5.6.1-1",
+    "main": "NombreConstante",
+    "args": [],
+    "stdout": "\n",
+    "reject": "final variable LIMITE"
+  },
+  {
+    "path": "06-nombres/06-05-06-01-02-instancia-en-static/InstanciaInvalida.java",
+    "unit": "06-nombres/06-05-06-01-02-instancia-en-static",
+    "section": "6.5.6.1; ejemplo 6.5.6.1-2",
+    "main": "InstanciaInvalida",
+    "args": [],
+    "stdout": "\n",
+    "reject": "non-static variable sufijo cannot be referenced from a static context"
+  },
+  {
+    "path": "06-nombres/06-05-06-01-03-captura-parametro/CapturaParametro.java",
+    "unit": "06-nombres/06-05-06-01-03-captura-parametro",
+    "section": "6.5.6.1; ejemplo 6.5.6.1-3",
+    "main": "CapturaParametro",
+    "args": [],
+    "stdout": "\n",
+    "reject": "non-static variable valores cannot be referenced from a static context"
+  },
+  {
+    "path": "06-nombres/06-06-05-miembro-privado/Privado.java",
+    "unit": "06-nombres/06-06-05-miembro-privado",
+    "section": "6.6; ejemplo 6.6-5",
+    "main": "",
+    "args": [],
+    "stdout": "\n",
+    "reject": "dato has private access"
+  },
+  {
+    "path": "07-paquetes-y-modulos/07-05-01-02-import-duplicado/ArrayList.java",
+    "unit": "07-paquetes-y-modulos/07-05-01-02-import-duplicado",
+    "section": "7.5.1; ejemplo 7.5.1-2",
+    "main": "ArrayList",
+    "args": [],
+    "stdout": "\n",
+    "reject": "ArrayList is already defined"
+  },
+  {
+    "path": "07-paquetes-y-modulos/07-05-01-03-importar-paquete/ImportarPaquete.java",
+    "unit": "07-paquetes-y-modulos/07-05-01-03-importar-paquete",
+    "section": "7.5.1; ejemplo 7.5.1-3",
+    "main": "ImportarPaquete",
+    "args": [],
+    "stdout": "\n",
+    "reject": "cannot find symbol"
+  },
+  {
+    "path": "07-paquetes-y-modulos/07-05-02-01-importacion-demanda/ImportacionDemanda.java",
+    "unit": "07-paquetes-y-modulos/07-05-02-01-importacion-demanda",
+    "section": "7.5.2; ejemplo 7.5.2-1",
+    "main": "ImportacionDemanda",
+    "args": [],
+    "stdout": "uno\n"
+  },
+  {
+    "path": "07-paquetes-y-modulos/07-06-01-declaracion-conflictiva/a/Entidad.java",
+    "unit": "07-paquetes-y-modulos/07-06-01-declaracion-conflictiva",
+    "section": "7.6; ejemplo 7.6-1",
+    "main": "",
+    "args": [],
+    "stdout": "\n",
+    "reject": "duplicate class: a.Entidad"
+  },
+  {
+    "path": "14-bloques-sentencias-patrones/14-04-01-var-sin-inicializar/VarInvalida.java",
+    "unit": "14-bloques-sentencias-patrones/14-04-01-var-sin-inicializar",
+    "section": "14.4; ejemplo 14.4-1",
+    "main": "VarInvalida",
+    "args": [],
+    "stdout": "\n",
+    "reject": "cannot infer type for local variable dato"
+  },
+  {
+    "path": "14-bloques-sentencias-patrones/14-04-01-01-tipo-inferido-var/TipoInferidoVar.java",
+    "unit": "14-bloques-sentencias-patrones/14-04-01-01-tipo-inferido-var",
+    "section": "14.4.1; ejemplo 14.4.1-1",
+    "main": "TipoInferidoVar",
+    "args": [],
+    "stdout": "9\nString\n4\n3\n"
+  },
+  {
+    "path": "14-bloques-sentencias-patrones/14-07-01-etiqueta-y-variable/EtiquetaVariable.java",
+    "unit": "14-bloques-sentencias-patrones/14-07-01-etiqueta-y-variable",
+    "section": "14.7; ejemplo 14.7-1",
+    "main": "EtiquetaVariable",
+    "args": [],
+    "stdout": "2\n"
+  },
+  {
+    "path": "14-bloques-sentencias-patrones/14-13-01-do-hexadecimal/DoHexadecimal.java",
+    "unit": "14-bloques-sentencias-patrones/14-13-01-do-hexadecimal",
+    "section": "14.13; ejemplo 14.13-1",
+    "main": "DoHexadecimal",
+    "args": [],
+    "stdout": "0\nff\n"
+  },
+  {
+    "path": "14-bloques-sentencias-patrones/14-14-02-for-unboxing/Frecuencias.java",
+    "unit": "14-bloques-sentencias-patrones/14-14-02-for-unboxing",
+    "section": "14.14; ejemplo 14.14-2",
+    "main": "Frecuencias",
+    "args": [],
+    "stdout": "azul 0.75\nrojo 0.25\n"
+  },
+  {
+    "path": "14-bloques-sentencias-patrones/14-19-01-monitor-reentrante/MonitorReentrante.java",
+    "unit": "14-bloques-sentencias-patrones/14-19-01-monitor-reentrante",
+    "section": "14.19; ejemplo 14.19-1",
+    "main": "MonitorReentrante",
+    "args": [],
+    "stdout": "dos bloqueos del mismo hilo\n"
+  },
+  {
+    "path": "14-bloques-sentencias-patrones/14-20-01-01-seleccion-catch/FalloLectura.java",
+    "unit": "14-bloques-sentencias-patrones/14-20-01-01-seleccion-catch",
+    "section": "14.20.1; ejemplo 14.20.1-1",
+    "main": "SeleccionCatch",
+    "args": [],
+    "stdout": "lectura\n"
+  },
+  {
+    "path": "14-bloques-sentencias-patrones/14-20-02-01-finally-excepcion-no-capturada/FalloArchivo.java",
+    "unit": "14-bloques-sentencias-patrones/14-20-02-01-finally-excepcion-no-capturada",
+    "section": "14.20.2; ejemplo 14.20.2-1",
+    "main": "FinallyNoCapturada",
+    "args": [],
+    "stdout": "limpieza\n",
+    "exception": "NullPointerException"
+  },
+  {
+    "path": "15-expresiones/15-07-01-02-operando-guardado/OperandoGuardado.java",
+    "unit": "15-expresiones/15-07-01-02-operando-guardado",
+    "section": "15.7.1; ejemplo 15.7.1-2",
+    "main": "OperandoGuardado",
+    "args": [],
+    "stdout": "10\n10\n"
+  },
+  {
+    "path": "15-expresiones/15-07-01-03-operando-interrumpido/OperandoInterrumpido.java",
+    "unit": "15-expresiones/15-07-01-03-operando-interrumpido",
+    "section": "15.7.1; ejemplo 15.7.1-3",
+    "main": "OperandoInterrumpido",
+    "args": [],
+    "stdout": "4\n"
+  },
+  {
+    "path": "15-expresiones/15-07-02-01-evaluar-antes-dividir/AntesDeDividir.java",
+    "unit": "15-expresiones/15-07-02-01-evaluar-antes-dividir",
+    "section": "15.7.2; ejemplo 15.7.2-1",
+    "main": "AntesDeDividir",
+    "args": [],
+    "stdout": "operando\n"
+  },
+  {
+    "path": "15-expresiones/15-07-04-01-orden-argumentos/OrdenArgumentos.java",
+    "unit": "15-expresiones/15-07-04-01-orden-argumentos",
+    "section": "15.7.4; ejemplo 15.7.4-1",
+    "main": "OrdenArgumentos",
+    "args": [],
+    "stdout": "antes antes después\n"
+  },
+  {
+    "path": "15-expresiones/15-07-04-02-argumento-fallido/ArgumentoFallido.java",
+    "unit": "15-expresiones/15-07-04-02-argumento-fallido",
+    "section": "15.7.4; ejemplo 15.7.4-2",
+    "main": "ArgumentoFallido",
+    "args": [],
+    "stdout": "2\n"
+  },
+  {
+    "path": "15-expresiones/15-10-02-01-evaluar-dimensiones/EvaluarDimensiones.java",
+    "unit": "15-expresiones/15-10-02-01-evaluar-dimensiones",
+    "section": "15.10.2; ejemplo 15.10.2-1",
+    "main": "EvaluarDimensiones",
+    "args": [],
+    "stdout": "5 2\n2\n"
+  },
+  {
+    "path": "15-expresiones/15-10-02-02-arreglos-multidimensionales/MatricesEquivalentes.java",
+    "unit": "15-expresiones/15-10-02-02-arreglos-multidimensionales",
+    "section": "15.10.2; ejemplo 15.10.2-2",
+    "main": "MatricesEquivalentes",
+    "args": [],
+    "stdout": "true\n"
+  },
+  {
+    "path": "15-expresiones/15-10-04-01-referencia-antes-indice/ReferenciaAntesIndice.java",
+    "unit": "15-expresiones/15-10-04-01-referencia-antes-indice",
+    "section": "15.10.4; ejemplo 15.10.4-1",
+    "main": "ReferenciaAntesIndice",
+    "args": [],
+    "stdout": "30\n2\n"
+  },
+  {
+    "path": "15-expresiones/15-10-04-02-referencia-fallida/ReferenciaFallida.java",
+    "unit": "15-expresiones/15-10-04-02-referencia-fallida",
+    "section": "15.10.4; ejemplo 15.10.4-2",
+    "main": "ReferenciaFallida",
+    "args": [],
+    "stdout": "1\n"
+  },
+  {
+    "path": "15-expresiones/15-10-04-03-null-antes-indice/NullAntesIndice.java",
+    "unit": "15-expresiones/15-10-04-03-null-antes-indice",
+    "section": "15.10.4; ejemplo 15.10.4-3",
+    "main": "NullAntesIndice",
+    "args": [],
+    "stdout": "2\n"
+  },
+  {
+    "path": "15-expresiones/15-11-01-02-campo-static-null/CampoStaticNull.java",
+    "unit": "15-expresiones/15-11-01-02-campo-static-null",
+    "section": "15.11.1; ejemplo 15.11.1-2",
+    "main": "CampoStaticNull",
+    "args": [],
+    "stdout": "receptor evaluado\n7\n"
+  },
+  {
+    "path": "15-expresiones/15-17-03-02-resto-flotante/RestoFlotante.java",
+    "unit": "15-expresiones/15-17-03-02-resto-flotante",
+    "section": "15.17.3; ejemplo 15.17.3-2",
+    "main": "RestoFlotante",
+    "args": [],
+    "stdout": "1.5\n1.5\n-1.5\n-1.5\n"
+  },
+  {
+    "path": "15-expresiones/15-26-02-02-guardar-valor-izquierdo/GuardarValorIzquierdo.java",
+    "unit": "15-expresiones/15-26-02-02-guardar-valor-izquierdo",
+    "section": "15.26.2; ejemplo 15.26.2-2",
+    "main": "GuardarValorIzquierdo",
+    "args": [],
+    "stdout": "14\n14\n"
+  },
+  {
+    "path": "15-expresiones/15-29-01-expresiones-constantes/ConstantesCompilacion.java",
+    "unit": "15-expresiones/15-29-01-expresiones-constantes",
+    "section": "15.29; ejemplo 15.29-1",
+    "main": "ConstantesCompilacion",
+    "args": [],
+    "stdout": "6\ntrue\n"
+  },
+  {
+    "path": "17-hilos-y-bloqueos/17-04-01-reordenamiento-carrera/ReordenamientoCarrera.java",
+    "unit": "17-hilos-y-bloqueos/17-04-01-reordenamiento-carrera",
+    "section": "17.4; ejemplo 17.4-1",
+    "main": "ReordenamientoCarrera",
+    "args": [],
+    "stdout": "\n",
+    "allowed_stdout": [
+      "0 0\n",
+      "0 1\n",
+      "2 0\n",
+      "2 1\n"
+    ]
+  },
+  {
+    "path": "17-hilos-y-bloqueos/17-04-05-01-happens-before/ConsistenciaHappensBefore.java",
+    "unit": "17-hilos-y-bloqueos/17-04-05-01-happens-before",
+    "section": "17.4.5; ejemplo 17.4.5-1",
+    "main": "ConsistenciaHappensBefore",
+    "args": [],
+    "stdout": "\n",
+    "allowed_stdout": [
+      "0 0\n",
+      "0 1\n",
+      "2 0\n",
+      "2 1\n"
+    ]
+  },
+  {
+    "path": "17-hilos-y-bloqueos/17-04-08-01-causalidad/Causalidad.java",
+    "unit": "17-hilos-y-bloqueos/17-04-08-01-causalidad",
+    "section": "17.4.8; ejemplo 17.4.8-1",
+    "main": "Causalidad",
+    "args": [],
+    "stdout": "0 0\n"
+  },
+  {
+    "path": "17-hilos-y-bloqueos/17-05-01-publicacion-final/DatoPublicado.java",
+    "unit": "17-hilos-y-bloqueos/17-05-01-publicacion-final",
+    "section": "17.5; ejemplo 17.5-1",
+    "main": "PublicacionFinal",
+    "args": [],
+    "stdout": "\n",
+    "allowed_stdout": [
+      "sin referencia\n",
+      "7 0\n",
+      "7 9\n"
+    ]
+  },
+  {
+    "path": "17-hilos-y-bloqueos/17-06-01-componentes-independientes/ComponentesIndependientes.java",
+    "unit": "17-hilos-y-bloqueos/17-06-01-componentes-independientes",
+    "section": "17.6; ejemplo 17.6-1",
+    "main": "ComponentesIndependientes",
+    "args": [],
+    "stdout": "[16, 16, 16, 16]\n"
+  },
+  {
+    "path": "04-tipos-valores-variables/04-08-02-miembros-raw-heredados/BaseNumeros.java",
+    "unit": "04-tipos-valores-variables/04-08-02-miembros-raw-heredados",
+    "section": "4.8; ejemplo 4.8-2",
+    "main": "MiembrosRaw",
+    "args": [],
+    "stdout": "[3, 4.5]\n[]\n[uno]\n"
+  },
+  {
+    "path": "05-conversiones-y-contextos/05-00-01-conversion-compilacion-ejecucion/ConversionTiempo.java",
+    "unit": "05-conversiones-y-contextos/05-00-01-conversion-compilacion-ejecucion",
+    "section": "5.0; ejemplo 5.0-1",
+    "main": "ConversionTiempo",
+    "args": [],
+    "stdout": "true\n-12\n7\ncast inválido\n"
+  },
+  {
+    "path": "05-conversiones-y-contextos/05-05-01-cast-clases-interfaces/PuntoPlano.java",
+    "unit": "05-conversiones-y-contextos/05-05-01-cast-clases-interfaces",
+    "section": "5.5; ejemplo 5.5-1",
+    "main": "CastReferencias",
+    "args": [],
+    "stdout": "5\ncast inválido\n"
+  },
+  {
+    "path": "05-conversiones-y-contextos/05-05-02-cast-arreglos/ElementoBase.java",
+    "unit": "05-conversiones-y-contextos/05-05-02-cast-arreglos",
+    "section": "5.5; ejemplo 5.5-2",
+    "main": "CastArreglos",
+    "args": [],
+    "stdout": "12\n2\ncast inválido\n"
+  },
+  {
+    "path": "06-nombres/06-05-02-01-reclasificacion-nombres/biblioteca/Sonido.java",
+    "unit": "06-nombres/06-05-02-01-reclasificacion-nombres",
+    "section": "6.5.2; ejemplo 6.5.2-1",
+    "main": "cliente.Reclasificar",
+    "args": [],
+    "stdout": "4\n"
+  },
+  {
+    "path": "06-nombres/06-05-05-01-01-parametro-tipo/ReferenciaTipo.java",
+    "unit": "06-nombres/06-05-05-01-01-parametro-tipo",
+    "section": "6.5.5.1; ejemplo 6.5.5.1-1",
+    "main": "ReferenciaTipo",
+    "args": [],
+    "stdout": "luz\n8\n"
+  },
+  {
+    "path": "06-nombres/06-05-05-02-01-nombre-tipo-calificado/tipos/Exterior.java",
+    "unit": "06-nombres/06-05-05-02-01-nombre-tipo-calificado",
+    "section": "6.5.5.2; ejemplo 6.5.5.2-1",
+    "main": "TiposCalificados",
+    "args": [],
+    "stdout": "Interior\n"
+  },
+  {
+    "path": "06-nombres/06-05-06-02-02-calificar-campo-estatico/CalificarCampo.java",
+    "unit": "06-nombres/06-05-06-02-02-calificar-campo-estatico",
+    "section": "6.5.6.2; ejemplo 6.5.6.2-2",
+    "main": "CalificarCampo",
+    "args": [],
+    "stdout": "7\n"
+  },
+  {
+    "path": "06-nombres/06-05-07-01-01-metodo-nombre-simple/NombreMetodo.java",
+    "unit": "06-nombres/06-05-07-01-01-metodo-nombre-simple",
+    "section": "6.5.7.1; ejemplo 6.5.7.1-1",
+    "main": "NombreMetodo",
+    "args": [],
+    "stdout": "5\nexterior\n"
+  },
+  {
+    "path": "06-nombres/06-07-01-nombres-completos/paquete/Exterior.java",
+    "unit": "06-nombres/06-07-01-nombres-completos",
+    "section": "6.7; ejemplo 6.7-1",
+    "main": "NombresCompletos",
+    "args": [],
+    "stdout": "paquete.Exterior\npaquete.Exterior.Interior\n"
+  },
+  {
+    "path": "06-nombres/06-07-02-nombre-canonico-heredado/BaseNombre.java",
+    "unit": "06-nombres/06-07-02-nombre-canonico-heredado",
+    "section": "6.7; ejemplo 6.7-2",
+    "main": "NombreCanonico",
+    "args": [],
+    "stdout": "true\nBaseNombre.Interna\n"
+  },
+  {
+    "path": "08-clases/08-01-02-02-clases-genericas-anidadas/CajaExterior.java",
+    "unit": "08-clases/08-01-02-02-clases-genericas-anidadas",
+    "section": "8.1.2; ejemplo 8.1.2-2",
+    "main": "GenericasAnidadas",
+    "args": [],
+    "stdout": "texto 8\n"
+  },
+  {
+    "path": "08-clases/08-03-01-campos-heredados-ambiguos/CampoBase.java",
+    "unit": "08-clases/08-03-01-campos-heredados-ambiguos",
+    "section": "8.3; ejemplo 8.3-1",
+    "main": "",
+    "args": [],
+    "stdout": "\n",
+    "reject": "reference to numero is ambiguous"
+  },
+  {
+    "path": "08-clases/08-03-02-heredar-mismo-campo/RaizCampo.java",
+    "unit": "08-clases/08-03-02-heredar-mismo-campo",
+    "section": "8.3; ejemplo 8.3-2",
+    "main": "ReherenciaCampo",
+    "args": [],
+    "stdout": "9\n"
+  },
+  {
+    "path": "08-clases/08-03-01-03-01-persistencia-transient/DatosPersistentes.java",
+    "unit": "08-clases/08-03-01-03-01-persistencia-transient",
+    "section": "8.3.1.3; ejemplo 8.3.1.3-1",
+    "main": "PersistenciaTransient",
+    "args": [],
+    "stdout": "8\n0\n"
+  },
+  {
+    "path": "08-clases/08-03-01-04-01-campos-volatile/CamposVolatile.java",
+    "unit": "08-clases/08-03-01-04-01-campos-volatile",
+    "section": "8.3.1.4; ejemplo 8.3.1.4-1",
+    "main": "CamposVolatile",
+    "args": [],
+    "stdout": "100 100\n"
+  },
+  {
+    "path": "08-clases/08-04-02-01-firmas-equivalentes/FirmasEquivalentes.java",
+    "unit": "08-clases/08-04-02-01-firmas-equivalentes",
+    "section": "8.4.2; ejemplo 8.4.2-1",
+    "main": "FirmasEquivalentes",
+    "args": [],
+    "stdout": "\n",
+    "reject": "name clash"
+  },
+  {
+    "path": "08-clases/08-04-03-01-01-abstracto-refinado/BaseAbstracta.java",
+    "unit": "08-clases/08-04-03-01-01-abstracto-refinado",
+    "section": "8.4.3.1; ejemplo 8.4.3.1-1",
+    "main": "AbstractoRefinado",
+    "args": [],
+    "stdout": "5\n"
+  },
+  {
+    "path": "08-clases/08-04-03-01-02-abstracto-sobrescribe-concreto/BaseConcreta.java",
+    "unit": "08-clases/08-04-03-01-02-abstracto-sobrescribe-concreto",
+    "section": "8.4.3.1; ejemplo 8.4.3.1-2",
+    "main": "AbstractoConcreto",
+    "args": [],
+    "stdout": "nuevo\n"
+  },
+  {
+    "path": "08-clases/08-04-03-06-01-monitor-metodos/MonitorMetodos.java",
+    "unit": "08-clases/08-04-03-06-01-monitor-metodos",
+    "section": "8.4.3.6; ejemplo 8.4.3.6-1",
+    "main": "MonitorMetodos",
+    "args": [],
+    "stdout": "true\ntrue\n"
+  },
+  {
+    "path": "08-clases/08-04-03-06-02-metodo-sincronizado/CuentaSincronizada.java",
+    "unit": "08-clases/08-04-03-06-02-metodo-sincronizado",
+    "section": "8.4.3.6; ejemplo 8.4.3.6-2",
+    "main": "CuentaSincronizada",
+    "args": [],
+    "stdout": "2000\n"
+  },
+  {
+    "path": "08-clases/08-04-06-01-tipo-excepcion-generica/ExcepcionGenerica.java",
+    "unit": "08-clases/08-04-06-01-tipo-excepcion-generica",
+    "section": "8.4.6; ejemplo 8.4.6-1",
+    "main": "ExcepcionGenerica",
+    "args": [],
+    "stdout": "lectura\n"
+  },
+  {
+    "path": "08-clases/08-08-07-01-02-super-calificado/Contenedor.java",
+    "unit": "08-clases/08-08-07-01-02-super-calificado",
+    "section": "8.8.7.1; ejemplo 8.8.7.1-2",
+    "main": "SuperCalificado",
+    "args": [],
+    "stdout": "5\n"
+  },
+  {
+    "path": "08-clases/08-08-09-02-constructor-no-accesible/base/Exterior.java",
+    "unit": "08-clases/08-08-09-02-constructor-no-accesible",
+    "section": "8.8.9; ejemplo 8.8.9-2",
+    "main": "",
+    "args": [],
+    "stdout": "\n",
+    "reject": "has protected access"
+  },
+  {
+    "path": "09-interfaces/09-06-01-03-anotacion-elemento/Identificador.java",
+    "unit": "09-interfaces/09-06-01-03-anotacion-elemento",
+    "section": "9.6.1; ejemplo 9.6.1-3",
+    "main": "ElementoAnotacion",
+    "args": [],
+    "stdout": "prueba\n"
+  },
+  {
+    "path": "09-interfaces/09-06-03-01-contenedor-mal-formado/Repetible.java",
+    "unit": "09-interfaces/09-06-03-01-contenedor-mal-formado",
+    "section": "9.6.3; ejemplo 9.6.3-1",
+    "main": "",
+    "args": [],
+    "stdout": "\n",
+    "reject": "must declare an element named 'value'"
+  },
+  {
+    "path": "09-interfaces/09-06-03-02-restriccion-repeticion/MarcaTipo.java",
+    "unit": "09-interfaces/09-06-03-02-restriccion-repeticion",
+    "section": "9.6.3; ejemplo 9.6.3-2",
+    "main": "",
+    "args": [],
+    "stdout": "\n",
+    "reject": "container"
+  },
+  {
+    "path": "09-interfaces/09-06-03-03-contenedor-repetible/Marca.java",
+    "unit": "09-interfaces/09-06-03-03-contenedor-repetible",
+    "section": "9.6.3; ejemplo 9.6.3-3",
+    "main": "ContenedorRepetible",
+    "args": [],
+    "stdout": "válido\n"
+  },
+  {
+    "path": "09-interfaces/09-07-01-01-anotacion-normal/Revision.java",
+    "unit": "09-interfaces/09-07-01-01-anotacion-normal",
+    "section": "9.7.1; ejemplo 9.7.1-1",
+    "main": "AnotacionNormal",
+    "args": [],
+    "stdout": "5\nprueba\nequipo\n"
+  },
+  {
+    "path": "09-interfaces/09-07-02-01-anotacion-marcadora/Preliminar.java",
+    "unit": "09-interfaces/09-07-02-01-anotacion-marcadora",
+    "section": "9.7.2; ejemplo 9.7.2-1",
+    "main": "AnotacionMarca",
+    "args": [],
+    "stdout": "true\n"
+  },
+  {
+    "path": "09-interfaces/09-08-02-interfaces-funcionales-erasure/PrimeraFuncion.java",
+    "unit": "09-interfaces/09-08-02-interfaces-funcionales-erasure",
+    "section": "9.8; ejemplo 9.8-2",
+    "main": "FuncionalHeredada",
+    "args": [],
+    "stdout": "3\n"
+  },
+  {
+    "path": "09-interfaces/09-09-01-throws-tipo-funcion/OperacionIO.java",
+    "unit": "09-interfaces/09-09-01-throws-tipo-funcion",
+    "section": "9.9; ejemplo 9.9-1",
+    "main": "TipoFuncion",
+    "args": [],
+    "stdout": "fin\n"
+  },
+  {
+    "path": "09-interfaces/09-09-02-tipo-funcion-generico/FuncionA.java",
+    "unit": "09-interfaces/09-09-02-tipo-funcion-generico",
+    "section": "9.9; ejemplo 9.9-2",
+    "main": "FuncionGenerica",
+    "args": [],
+    "stdout": "genérico\n"
+  },
+  {
+    "path": "12-ejecucion/12-05-01-crear-instancia/PuntoInicial.java",
+    "unit": "12-ejecucion/12-05-01-crear-instancia",
+    "section": "12.5; ejemplo 12.5-1",
+    "main": "CrearInstancia",
+    "args": [],
+    "stdout": "2 3 8\n"
+  },
+  {
+    "path": "13-compatibilidad-binaria/13-04-04-01-eliminar-superclase/Raiz.java",
+    "unit": "13-compatibilidad-binaria/13-04-04-01-eliminar-superclase",
+    "section": "13.4.4; ejemplo 13.4.4-1",
+    "main": "Cliente",
+    "args": [],
+    "stdout": "",
+    "stages": [
+      {
+        "sources": [
+          "Raiz.java",
+          "v1/Servicio.java",
+          "Cliente.java"
+        ],
+        "stdout": "7\n"
+      },
+      {
+        "sources": [
+          "v2/Servicio.java"
+        ],
+        "stdout": "",
+        "exception": "VerifyError"
+      }
+    ]
+  },
+  {
+    "path": "13-compatibilidad-binaria/13-04-06-01-eliminar-sobrescritura/Raiz.java",
+    "unit": "13-compatibilidad-binaria/13-04-06-01-eliminar-sobrescritura",
+    "section": "13.4.6; ejemplo 13.4.6-1",
+    "main": "Cliente",
+    "args": [],
+    "stdout": "",
+    "stages": [
+      {
+        "sources": [
+          "Raiz.java",
+          "v1/Servicio.java",
+          "Cliente.java"
+        ],
+        "stdout": "servicio\n"
+      },
+      {
+        "sources": [
+          "v2/Servicio.java"
+        ],
+        "stdout": "raíz\n"
+      }
+    ]
+  },
+  {
+    "path": "13-compatibilidad-binaria/13-04-06-02-insertar-sobrescritura/Raiz.java",
+    "unit": "13-compatibilidad-binaria/13-04-06-02-insertar-sobrescritura",
+    "section": "13.4.6; ejemplo 13.4.6-2",
+    "main": "Cliente",
+    "args": [],
+    "stdout": "",
+    "stages": [
+      {
+        "sources": [
+          "Raiz.java",
+          "v1/Servicio.java",
+          "Cliente.java"
+        ],
+        "stdout": "raíz\n"
+      },
+      {
+        "sources": [
+          "v2/Servicio.java"
+        ],
+        "stdout": "servicio\n"
+      }
+    ]
+  },
+  {
+    "path": "13-compatibilidad-binaria/13-04-07-01-ampliar-acceso/v1/Servicio.java",
+    "unit": "13-compatibilidad-binaria/13-04-07-01-ampliar-acceso",
+    "section": "13.4.7; ejemplo 13.4.7-1",
+    "main": "Cliente",
+    "args": [],
+    "stdout": "",
+    "stages": [
+      {
+        "sources": [
+          "v1/Servicio.java",
+          "Cliente.java"
+        ],
+        "stdout": "cliente\n"
+      },
+      {
+        "sources": [
+          "v2/Servicio.java"
+        ],
+        "stdout": "cliente\n"
+      }
+    ]
+  },
+  {
+    "path": "13-compatibilidad-binaria/13-04-08-01-agregar-campo/Raiz.java",
+    "unit": "13-compatibilidad-binaria/13-04-08-01-agregar-campo",
+    "section": "13.4.8; ejemplo 13.4.8-1",
+    "main": "Cliente",
+    "args": [],
+    "stdout": "",
+    "stages": [
+      {
+        "sources": [
+          "Raiz.java",
+          "v1/Servicio.java",
+          "Cliente.java"
+        ],
+        "stdout": "original\n"
+      },
+      {
+        "sources": [
+          "v2/Servicio.java"
+        ],
+        "stdout": "original\n"
+      }
+    ]
+  },
+  {
+    "path": "13-compatibilidad-binaria/13-04-09-01-campo-se-vuelve-final/v1/Servicio.java",
+    "unit": "13-compatibilidad-binaria/13-04-09-01-campo-se-vuelve-final",
+    "section": "13.4.9; ejemplo 13.4.9-1",
+    "main": "Cliente",
+    "args": [],
+    "stdout": "",
+    "stages": [
+      {
+        "sources": [
+          "v1/Servicio.java",
+          "Cliente.java"
+        ],
+        "stdout": "A\n"
+      },
+      {
+        "sources": [
+          "v2/Servicio.java"
+        ],
+        "stdout": "",
+        "exception": "IllegalAccessError"
+      }
+    ]
+  },
+  {
+    "path": "13-compatibilidad-binaria/13-04-16-01-metodo-se-vuelve-abstracto/v1/Servicio.java",
+    "unit": "13-compatibilidad-binaria/13-04-16-01-metodo-se-vuelve-abstracto",
+    "section": "13.4.16; ejemplo 13.4.16-1",
+    "main": "Cliente",
+    "args": [],
+    "stdout": "",
+    "stages": [
+      {
+        "sources": [
+          "v1/Servicio.java",
+          "Cliente.java"
+        ],
+        "stdout": "inicio\nbase\n"
+      },
+      {
+        "sources": [
+          "v2/Servicio.java"
+        ],
+        "stdout": "inicio\n",
+        "exception": "AbstractMethodError"
+      }
+    ]
+  },
+  {
+    "path": "13-compatibilidad-binaria/13-04-17-01-metodo-se-vuelve-final/v1/Servicio.java",
+    "unit": "13-compatibilidad-binaria/13-04-17-01-metodo-se-vuelve-final",
+    "section": "13.4.17; ejemplo 13.4.17-1",
+    "main": "Cliente",
+    "args": [],
+    "stdout": "",
+    "stages": [
+      {
+        "sources": [
+          "v1/Servicio.java",
+          "Cliente.java"
+        ],
+        "stdout": "base\n"
+      },
+      {
+        "sources": [
+          "v2/Servicio.java"
+        ],
+        "stdout": "",
+        "exception": "IncompatibleClassChangeError"
+      }
+    ]
+  },
+  {
+    "path": "13-compatibilidad-binaria/13-05-04-01-eliminar-metodo-interfaz/v1/Servicio.java",
+    "unit": "13-compatibilidad-binaria/13-05-04-01-eliminar-metodo-interfaz",
+    "section": "13.5.4; ejemplo 13.5.4-1",
+    "main": "Cliente",
+    "args": [],
+    "stdout": "",
+    "stages": [
+      {
+        "sources": [
+          "v1/Servicio.java",
+          "Cliente.java"
+        ],
+        "stdout": "hola\n"
+      },
+      {
+        "sources": [
+          "v2/Servicio.java"
+        ],
+        "stdout": "",
+        "exception": "NoSuchMethodError"
+      }
+    ]
+  },
+  {
+    "path": "13-compatibilidad-binaria/13-05-07-01-conflicto-nuevo-default/Original.java",
+    "unit": "13-compatibilidad-binaria/13-05-07-01-conflicto-nuevo-default",
+    "section": "13.5.7; ejemplo 13.5.7-1",
+    "main": "Cliente",
+    "args": [],
+    "stdout": "",
+    "stages": [
+      {
+        "sources": [
+          "Original.java",
+          "v1/Servicio.java",
+          "Cliente.java"
+        ],
+        "stdout": "original\n"
+      },
+      {
+        "sources": [
+          "v2/Servicio.java"
+        ],
+        "stdout": "",
+        "exception": "IncompatibleClassChangeError"
+      }
+    ]
+  },
+  {
+    "path": "14-bloques-sentencias-patrones/14-22-01-constante-incrustada/v1/Servicio.java",
+    "unit": "14-bloques-sentencias-patrones/14-22-01-constante-incrustada",
+    "section": "14.22; ejemplo 14.22-1",
+    "main": "Cliente",
+    "args": [],
+    "stdout": "",
+    "stages": [
+      {
+        "sources": [
+          "v1/Servicio.java",
+          "Cliente.java"
+        ],
+        "stdout": "depuración\n"
+      },
+      {
+        "sources": [
+          "v2/Servicio.java"
+        ],
+        "stdout": "depuración\n"
+      }
+    ]
+  },
+  {
+    "path": "15-expresiones/15-12-02-03-sobrecarga-en-binario/v1/Servicio.java",
+    "unit": "15-expresiones/15-12-02-03-sobrecarga-en-binario",
+    "section": "15.12.2; ejemplo 15.12.2-3",
+    "main": "Cliente",
+    "args": [],
+    "stdout": "",
+    "stages": [
+      {
+        "sources": [
+          "v1/Servicio.java",
+          "Cliente.java"
+        ],
+        "stdout": "Object\n"
+      },
+      {
+        "sources": [
+          "v2/Servicio.java"
+        ],
+        "stdout": "Object\n"
+      },
+      {
+        "sources": [
+          "Cliente.java"
+        ],
+        "stdout": "String\n"
+      }
+    ]
+  },
+  {
+    "path": "14-bloques-sentencias-patrones/14-03-01-clase-local-ciclica/LocalCiclica.java",
+    "unit": "14-bloques-sentencias-patrones/14-03-01-clase-local-ciclica",
+    "section": "14.3; ejemplo 14.3-1",
+    "main": "LocalCiclica",
+    "args": [],
+    "stdout": "",
+    "reject": "cyclic inheritance"
+  },
+  {
+    "path": "14-bloques-sentencias-patrones/14-15-01-break-etiquetado/QuitarAristasBreak.java",
+    "unit": "14-bloques-sentencias-patrones/14-15-01-break-etiquetado",
+    "section": "14.15; ejemplo 14.15-1",
+    "main": "QuitarAristasBreak",
+    "args": [],
+    "stdout": "[[2], [2], [1]]\ntrue\n"
+  },
+  {
+    "path": "14-bloques-sentencias-patrones/14-16-01-continue-etiquetado/QuitarAristasContinue.java",
+    "unit": "14-bloques-sentencias-patrones/14-16-01-continue-etiquetado",
+    "section": "14.16; ejemplo 14.16-1",
+    "main": "QuitarAristasContinue",
+    "args": [],
+    "stdout": "[[2], [2], [1]]\ntrue\n"
+  },
+  {
+    "path": "15-expresiones/15-08-03-01-this-identidad/VectorIdentidad.java",
+    "unit": "15-expresiones/15-08-03-01-this-identidad",
+    "section": "15.8.3; ejemplo 15.8.3-1",
+    "main": "VectorIdentidad",
+    "args": [],
+    "stdout": "true\ntrue\nfalse\n"
+  },
+  {
+    "path": "15-expresiones/15-11-01-01-seleccion-campo-estatica/Base.java",
+    "unit": "15-expresiones/15-11-01-01-seleccion-campo-estatica",
+    "section": "15.11.1; ejemplo 15.11.1-1",
+    "main": "SeleccionCampo",
+    "args": [],
+    "stdout": "7\n3\n3\n"
+  },
+  {
+    "path": "15-expresiones/15-11-02-01-super-campos/NivelI.java",
+    "unit": "15-expresiones/15-11-02-01-super-campos",
+    "section": "15.11.2; ejemplo 15.11.2-1",
+    "main": "SuperCampos",
+    "args": [],
+    "stdout": "3\n2\n2\n1\n0\n"
+  },
+  {
+    "path": "15-expresiones/15-12-02-01-acceso-y-aplicabilidad/Doble.java",
+    "unit": "15-expresiones/15-12-02-01-acceso-y-aplicabilidad",
+    "section": "15.12.2; ejemplo 15.12.2-1",
+    "main": "Aplicabilidad",
+    "args": [],
+    "stdout": "",
+    "reject": "has private access"
+  },
+  {
+    "path": "15-expresiones/15-12-02-02-retorno-no-selecciona/Figura.java",
+    "unit": "15-expresiones/15-12-02-02-retorno-no-selecciona",
+    "section": "15.12.2; ejemplo 15.12.2-2",
+    "main": "RetornoNoSelecciona",
+    "args": [],
+    "stdout": "",
+    "reject": "int cannot be converted to String"
+  },
+  {
+    "path": "15-expresiones/15-12-04-01-01-receptor-static-null/ReceptorStatic.java",
+    "unit": "15-expresiones/15-12-04-01-01-receptor-static-null",
+    "section": "15.12.4.1; ejemplo 15.12.4.1-1",
+    "main": "ReceptorStatic",
+    "args": [],
+    "stdout": "receptor\nmétodo\n"
+  },
+  {
+    "path": "15-expresiones/15-12-04-01-02-receptor-antes-argumento/ReceptorPrimero.java",
+    "unit": "15-expresiones/15-12-04-01-02-receptor-antes-argumento",
+    "section": "15.12.4.1; ejemplo 15.12.4.1-2",
+    "main": "ReceptorPrimero",
+    "args": [],
+    "stdout": "false\nmar\n"
+  },
+  {
+    "path": "15-expresiones/15-12-04-04-01-despacho-polimorfico/Posicion.java",
+    "unit": "15-expresiones/15-12-04-04-01-despacho-polimorfico",
+    "section": "15.12.4.4; ejemplo 15.12.4.4-1",
+    "main": "DespachoDinamico",
+    "args": [],
+    "stdout": "color\nposición\n0 0\n"
+  },
+  {
+    "path": "15-expresiones/15-12-04-04-02-super-metodos/Nivel1.java",
+    "unit": "15-expresiones/15-12-04-04-02-super-metodos",
+    "section": "15.12.4.4; ejemplo 15.12.4.4-2",
+    "main": "SuperMetodos",
+    "args": [],
+    "stdout": "3\n2\n3\n3\n"
+  },
+  {
+    "path": "15-expresiones/15-12-04-05-01-metodo-puente/Identidad.java",
+    "unit": "15-expresiones/15-12-04-05-01-metodo-puente",
+    "section": "15.12.4.5; ejemplo 15.12.4.5-1",
+    "main": "MetodoPuente",
+    "args": [],
+    "stdout": "",
+    "exception": "ClassCastException"
+  },
+  {
+    "path": "15-expresiones/15-18-01-02-concatenar-condicionales/ContarObjetos.java",
+    "unit": "15-expresiones/15-18-01-02-concatenar-condicionales",
+    "section": "15.18.1; ejemplo 15.18.1-2",
+    "main": "ContarObjetos",
+    "args": [],
+    "stdout": "3 cajas de papel\n2 cajas de papel\n1 caja de papel\nNo quedan cajas\n"
+  },
+  {
+    "path": "15-expresiones/15-20-02-01-instanceof-incompatible/Estrella.java",
+    "unit": "15-expresiones/15-20-02-01-instanceof-incompatible",
+    "section": "15.20.2; ejemplo 15.20.2-1",
+    "main": "ComparacionInvalida",
+    "args": [],
+    "stdout": "",
+    "reject": "incompatible types"
+  },
+  {
+    "path": "15-expresiones/15-26-01-01-asignacion-simple-arreglo/OrdenAsignacionSimple.java",
+    "unit": "15-expresiones/15-26-01-01-asignacion-simple-arreglo",
+    "section": "15.26.1; ejemplo 15.26.1-1",
+    "main": "OrdenAsignacionSimple",
+    "args": [],
+    "stdout": "índice\nderecha\nnull\níndice\nderecha\nrango\n"
+  },
+  {
+    "path": "15-expresiones/15-26-02-01-asignacion-compuesta-arreglo/OrdenAsignacionCompuesta.java",
+    "unit": "15-expresiones/15-26-02-01-asignacion-compuesta-arreglo",
+    "section": "15.26.2; ejemplo 15.26.2-1",
+    "main": "OrdenAsignacionCompuesta",
+    "args": [],
+    "stdout": "índice\nnull\níndice\nrango\n"
+  },
+  {
+    "path": "17-hilos-y-bloqueos/17-05-02-inmutabilidad-string/PublicacionCadena.java",
+    "unit": "17-hilos-y-bloqueos/17-05-02-inmutabilidad-string",
+    "section": "17.5; ejemplo 17.5-2",
+    "main": "PublicacionCadena",
+    "args": [],
+    "stdout": "",
+    "allowed_stdout": [
+      "sin referencia\n",
+      "luz\n"
+    ]
+  },
+  {
+    "path": "17-hilos-y-bloqueos/17-05-03-01-modificar-final-reflexion/FinalReflexion.java",
+    "unit": "17-hilos-y-bloqueos/17-05-03-01-modificar-final-reflexion",
+    "section": "17.5.3; ejemplo 17.5.3-1",
+    "main": "FinalReflexion",
+    "args": [],
+    "stdout": "",
+    "allowed_stdout": [
+      "-1\n",
+      "0\n",
+      "1\n"
+    ]
+  },
+  {
+    "path": "04-tipos-valores-variables/04-11-01-usos-de-tipos/UsoTipos.java",
+    "unit": "04-tipos-valores-variables/04-11-01-usos-de-tipos",
+    "section": "4.11; ejemplo 4.11-1",
+    "main": "UsoTipos",
+    "args": [],
+    "stdout": "4.0\n[3, 4]\nsol\n"
+  },
+  {
+    "path": "06-nombres/06-01-01-nombres-paquetes/org/example/diccionario/Palabra.java",
+    "unit": "06-nombres/06-01-01-nombres-paquetes",
+    "section": "6.1; ejemplo 6.1-1",
+    "main": "org.example.diccionario.Palabra",
+    "args": [],
+    "stdout": "org.example.diccionario\n"
+  },
+  {
+    "path": "06-nombres/06-01-02-nombres-modulos/org.example.diccionario/module-info.java",
+    "unit": "06-nombres/06-01-02-nombres-modulos",
+    "section": "6.1; ejemplo 6.1-2",
+    "main": "",
+    "args": [],
+    "stdout": "org.example.diccionario\n",
+    "module": "org.example.diccionario/org.example.diccionario.Palabra"
+  },
+  {
+    "path": "06-nombres/06-01-03-nombres-descriptivos/EntradaTexto.java",
+    "unit": "06-nombres/06-01-03-nombres-descriptivos",
+    "section": "6.1; ejemplo 6.1-3",
+    "main": "NombresDescriptivos",
+    "args": [],
+    "stdout": "texto\n"
+  },
+  {
+    "path": "06-nombres/06-01-04-nombres-variables-tipo/Contenedor.java",
+    "unit": "06-nombres/06-01-04-nombres-variables-tipo",
+    "section": "6.1; ejemplo 6.1-4",
+    "main": "NombresGenericos",
+    "args": [],
+    "stdout": "texto\nclave 7\n"
+  },
+  {
+    "path": "06-nombres/06-05-06-02-01-expresion-calificada-invalida/Punto.java",
+    "unit": "06-nombres/06-05-06-02-01-expresion-calificada-invalida",
+    "section": "6.5.6.2; ejemplo 6.5.6.2-1",
+    "main": "ExpresionCalificada",
+    "args": [],
+    "stdout": "",
+    "reject": "int cannot be dereferenced"
+  },
+  {
+    "path": "06-nombres/06-06-01-control-acceso/puntos/Punto.java",
+    "unit": "06-nombres/06-06-01-control-acceso",
+    "section": "6.6; ejemplo 6.6-1",
+    "main": "usuario.Mover",
+    "args": [],
+    "stdout": "4\n"
+  },
+  {
+    "path": "06-nombres/06-06-02-miembros-publicos/puntos/Punto.java",
+    "unit": "06-nombres/06-06-02-miembros-publicos",
+    "section": "6.6; ejemplo 6.6-2",
+    "main": "usuario.Contar",
+    "args": [],
+    "stdout": "1\n"
+  },
+  {
+    "path": "06-nombres/06-06-03-clase-no-publica/puntos/Punto.java",
+    "unit": "06-nombres/06-06-03-clase-no-publica",
+    "section": "6.6; ejemplo 6.6-3",
+    "main": "",
+    "args": [],
+    "stdout": "",
+    "reject": "is not public"
+  },
+  {
+    "path": "06-nombres/06-06-04-miembro-paquete/base/Punto.java",
+    "unit": "06-nombres/06-06-04-miembro-paquete",
+    "section": "6.6; ejemplo 6.6-4",
+    "main": "",
+    "args": [],
+    "stdout": "",
+    "reject": "cannot be accessed from outside package"
+  },
+  {
+    "path": "06-nombres/06-06-02-01-protected-receptor/base/Punto.java",
+    "unit": "06-nombres/06-06-02-01-protected-receptor",
+    "section": "6.6.2; ejemplo 6.6.2-1",
+    "main": "",
+    "args": [],
+    "stdout": "",
+    "reject": "has protected access"
+  },
+  {
+    "path": "07-paquetes-y-modulos/07-04-02-01-paquete-sin-nombre/PrimerPrograma.java",
+    "unit": "07-paquetes-y-modulos/07-04-02-01-paquete-sin-nombre",
+    "section": "7.4.2; ejemplo 7.4.2-1",
+    "main": "PrimerPrograma",
+    "args": [],
+    "stdout": "Primer programa\ntrue\n"
+  },
+  {
+    "path": "07-paquetes-y-modulos/07-05-01-04-tipo-y-paquete-mismo-nombre/Vector/Objeto.java",
+    "unit": "07-paquetes-y-modulos/07-05-01-04-tipo-y-paquete-mismo-nombre",
+    "section": "7.5.1; ejemplo 7.5.1-4",
+    "main": "cliente.ImportarCoincidente",
+    "args": [],
+    "stdout": "java.util.Vector\nVector.Objeto\n"
+  },
+  {
+    "path": "07-paquetes-y-modulos/07-06-02-alcance-tipos-superiores/puntos/Punto.java",
+    "unit": "07-paquetes-y-modulos/07-06-02-alcance-tipos-superiores",
+    "section": "7.6; ejemplo 7.6-2",
+    "main": "puntos.Prueba",
+    "args": [],
+    "stdout": "true\n"
+  },
+  {
+    "path": "07-paquetes-y-modulos/07-06-03-nombres-calificados/Punto.java",
+    "unit": "07-paquetes-y-modulos/07-06-03-nombres-calificados",
+    "section": "7.6; ejemplo 7.6-3",
+    "main": "NombreCompleto",
+    "args": [],
+    "stdout": "Punto\nvista.Punto\n"
+  },
+  {
+    "path": "07-paquetes-y-modulos/07-01-01-01-requires-transitive/demo.a/module-info.java",
+    "unit": "07-paquetes-y-modulos/07-01-01-01-requires-transitive",
+    "section": "7.1.1; ejemplo 7.1.1-1",
+    "main": "",
+    "args": [],
+    "stdout": "9\n",
+    "module": "demo.a/cliente.Main"
+  },
+  {
+    "path": "08-clases/08-01-05-02-superinterfaces/Movible.java",
+    "unit": "08-clases/08-01-05-02-superinterfaces",
+    "section": "8.1.5; ejemplo 8.1.5-2",
+    "main": "Superinterfaces",
+    "args": [],
+    "stdout": "3 5 mate\n"
+  },
+  {
+    "path": "08-clases/08-02-01-constructor-y-metodo-privados/Punto.java",
+    "unit": "08-clases/08-02-01-constructor-y-metodo-privados",
+    "section": "8.2; ejemplo 8.2-1",
+    "main": "",
+    "args": [],
+    "stdout": "",
+    "reject": "constructor Punto"
+  },
+  {
+    "path": "08-clases/08-02-02-herencia-paquete/puntos/Punto.java",
+    "unit": "08-clases/08-02-02-herencia-paquete",
+    "section": "8.2; ejemplo 8.2-2",
+    "main": "",
+    "args": [],
+    "stdout": "",
+    "reject": "is not public"
+  },
+  {
+    "path": "08-clases/08-02-03-herencia-public-protected/base/Punto.java",
+    "unit": "08-clases/08-02-03-herencia-public-protected",
+    "section": "8.2; ejemplo 8.2-3",
+    "main": "otro.PuntoExtendido",
+    "args": [],
+    "stdout": "4 2 2\n"
+  },
+  {
+    "path": "08-clases/08-02-04-herencia-private/Punto.java",
+    "unit": "08-clases/08-02-04-herencia-private",
+    "section": "8.2; ejemplo 8.2-4",
+    "main": "",
+    "args": [],
+    "stdout": "",
+    "reject": "has private access"
+  },
+  {
+    "path": "08-clases/08-02-05-clase-no-publica-polimorfismo/puntos/Punto.java",
+    "unit": "08-clases/08-02-05-clase-no-publica-polimorfismo",
+    "section": "8.2; ejemplo 8.2-5",
+    "main": "cliente.Invocar",
+    "args": [],
+    "stdout": "especial\n"
+  },
+  {
+    "path": "08-clases/08-04-08-01-heredar-dos-metodos-abstractos/MedidaA.java",
+    "unit": "08-clases/08-04-08-01-heredar-dos-metodos-abstractos",
+    "section": "8.4.8; ejemplo 8.4.8-1",
+    "main": "HerenciaMetodos",
+    "args": [],
+    "stdout": "5\n"
+  },
+  {
+    "path": "08-clases/08-04-08-01-02-sobrescribir-buffer/Buffer.java",
+    "unit": "08-clases/08-04-08-01-02-sobrescribir-buffer",
+    "section": "8.4.8.1; ejemplo 8.4.8.1-2",
+    "main": "BufferPorLinea",
+    "args": [],
+    "stdout": "uno\nintermedio\ndos\n"
+  },
+  {
+    "path": "08-clases/08-04-08-03-02-retorno-unchecked/Ordenador.java",
+    "unit": "08-clases/08-04-08-03-02-retorno-unchecked",
+    "section": "8.4.8.3; ejemplo 8.4.8.3-2",
+    "main": "RetornoRaw",
+    "args": [],
+    "stdout": "[a, b]\n"
+  },
+  {
+    "path": "08-clases/08-04-08-04-01-metodos-equivalentes/Generica.java",
+    "unit": "08-clases/08-04-08-04-01-metodos-equivalentes",
+    "section": "8.4.8.4; ejemplo 8.4.8.4-1",
+    "main": "",
+    "args": [],
+    "stdout": "",
+    "reject": "same signature"
+  },
+  {
+    "path": "08-clases/08-04-09-02-sobrecarga-sobrescritura-ocultacion/Punto.java",
+    "unit": "08-clases/08-04-09-02-sobrecarga-sobrescritura-ocultacion",
+    "section": "8.4.9; ejemplo 8.4.9-2",
+    "main": "PuntoReal",
+    "args": [],
+    "stdout": "2.5 3.5\n0 0\n"
+  },
+  {
+    "path": "08-clases/08-09-03-04-baraja-dos-enums/Carta.java",
+    "unit": "08-clases/08-09-03-04-baraja-dos-enums",
+    "section": "8.9.3; ejemplo 8.9.3-4",
+    "main": "Baraja",
+    "args": [],
+    "stdout": "52\nDOS TREBOL\nAS PICA\n"
+  },
+  {
+    "path": "09-interfaces/09-08-03-interfaz-funcional-generica/Base.java",
+    "unit": "09-interfaces/09-08-03-interfaz-funcional-generica",
+    "section": "9.8; ejemplo 9.8-3",
+    "main": "FuncionParametrizada",
+    "args": [],
+    "stdout": "Integer\n"
+  },
+  {
+    "path": "13-compatibilidad-binaria/13-04-04-02-superclase-en-multicatch/ErrorA.java",
+    "unit": "13-compatibilidad-binaria/13-04-04-02-superclase-en-multicatch",
+    "section": "13.4.4; ejemplo 13.4.4-2",
+    "main": "Cliente",
+    "args": [],
+    "stdout": "",
+    "stages": [
+      {
+        "sources": [
+          "ErrorA.java",
+          "v1/ErrorB.java",
+          "Cliente.java"
+        ],
+        "stdout": "capturado\n"
+      },
+      {
+        "sources": [
+          "v2/ErrorB.java"
+        ],
+        "stdout": "capturado\n"
+      },
+      {
+        "sources": [
+          "Cliente.java"
+        ],
+        "reject": "Alternatives in a multi-catch statement cannot be related"
+      }
+    ]
+  },
+  {
+    "path": "15-expresiones/15-09-04-01-memoria-antes-argumento/Nodo.java",
+    "unit": "15-expresiones/15-09-04-01-memoria-antes-argumento",
+    "section": "15.9.4; ejemplo 15.9.4-1",
+    "main": "MemoriaObjeto",
+    "args": [],
+    "stdout": "heap limitado\nfalse\n",
+    "jvm_args": [
+      "-Xmx16m",
+      "-Xint"
+    ]
+  },
+  {
+    "path": "15-expresiones/15-10-02-03-memoria-despues-dimension/MemoriaArreglo.java",
+    "unit": "15-expresiones/15-10-02-03-memoria-despues-dimension",
+    "section": "15.10.2; ejemplo 15.10.2-3",
+    "main": "MemoriaArreglo",
+    "args": [],
+    "stdout": "true\n",
+    "jvm_args": [
+      "-Xmx16m"
+    ]
+  },
+  {
+    "path": "03-estructura-lexica/03-08-suplemento-identificadores/Identificadores.java",
+    "unit": "03-estructura-lexica/03-08-suplemento-identificadores",
+    "section": "3.8; suplemento",
+    "main": "Identificadores",
+    "args": [],
+    "stdout": "8\n3 5\n"
+  },
+  {
+    "path": "04-tipos-valores-variables/04-06-suplemento-borrado-de-tipos/BorradoTipos.java",
+    "unit": "04-tipos-valores-variables/04-06-suplemento-borrado-de-tipos",
+    "section": "4.6; suplemento",
+    "main": "BorradoTipos",
+    "args": [],
+    "stdout": "true\n"
+  },
+  {
+    "path": "04-tipos-valores-variables/04-07-suplemento-tipos-reificables/TiposReificables.java",
+    "unit": "04-tipos-valores-variables/04-07-suplemento-tipos-reificables",
+    "section": "4.7; suplemento",
+    "main": "TiposReificables",
+    "args": [],
+    "stdout": "2\n"
+  },
+  {
+    "path": "04-tipos-valores-variables/04-10-03-suplemento-subtipado-arreglos/SubtiposArreglo.java",
+    "unit": "04-tipos-valores-variables/04-10-03-suplemento-subtipado-arreglos",
+    "section": "4.10.3; suplemento",
+    "main": "SubtiposArreglo",
+    "args": [],
+    "stdout": "sol\nfalse\ntrue\n"
+  },
+  {
+    "path": "07-paquetes-y-modulos/07-07-03-suplemento-servicio-modular/demo.api/module-info.java",
+    "unit": "07-paquetes-y-modulos/07-07-03-suplemento-servicio-modular",
+    "section": "7.7.3; suplemento",
+    "main": "",
+    "args": [],
+    "stdout": "hola\n",
+    "module": "demo.cliente/cliente.Consumidor"
+  },
+  {
+    "path": "08-clases/08-01-01-02-suplemento-clase-sellada/FiguraSellada.java",
+    "unit": "08-clases/08-01-01-02-suplemento-clase-sellada",
+    "section": "8.1.1.2; suplemento",
+    "main": "ClasesSelladas",
+    "args": [],
+    "stdout": "true\nfalse\nfalse\n"
+  },
+  {
+    "path": "08-clases/08-01-06-suplemento-permits-error/RaizSellada.java",
+    "unit": "08-clases/08-01-06-suplemento-permits-error",
+    "section": "8.1.6; suplemento",
+    "main": "",
+    "args": [],
+    "stdout": "",
+    "reject": "not allowed to extend sealed class"
+  },
+  {
+    "path": "08-clases/08-01-01-04-suplemento-clase-anidada-estatica/AnidadaEstatica.java",
+    "unit": "08-clases/08-01-01-04-suplemento-clase-anidada-estatica",
+    "section": "8.1.1.4; suplemento",
+    "main": "AnidadaEstatica",
+    "args": [],
+    "stdout": "3 6\n"
+  },
+  {
+    "path": "08-clases/08-06-suplemento-inicializador-instancia/InicializadorInstancia.java",
+    "unit": "08-clases/08-06-suplemento-inicializador-instancia",
+    "section": "8.6; suplemento",
+    "main": "InicializadorInstancia",
+    "args": [],
+    "stdout": "bloque 6\nconstructor 6\nbloque 6\nconstructor 6\n"
+  },
+  {
+    "path": "08-clases/08-07-suplemento-inicializador-estatico/InicializadorEstatico.java",
+    "unit": "08-clases/08-07-suplemento-inicializador-estatico",
+    "section": "8.7; suplemento",
+    "main": "InicializadorEstatico",
+    "args": [],
+    "stdout": "static 6\n6\n"
+  },
+  {
+    "path": "08-clases/08-10-01-suplemento-componentes-record/Persona.java",
+    "unit": "08-clases/08-10-01-suplemento-componentes-record",
+    "section": "8.10.1; suplemento",
+    "main": "ComponentesRecord",
+    "args": [],
+    "stdout": "Ana\n21\n"
+  },
+  {
+    "path": "08-clases/08-10-03-suplemento-igualdad-record/Coordenada.java",
+    "unit": "08-clases/08-10-03-suplemento-igualdad-record",
+    "section": "8.10.3; suplemento",
+    "main": "IgualdadRecord",
+    "args": [],
+    "stdout": "false\ntrue\ntrue\nCoordenada[x=2, y=3]\n"
+  },
+  {
+    "path": "08-clases/08-10-03-suplemento-record-mutabilidad-superficial/Grupo.java",
+    "unit": "08-clases/08-10-03-suplemento-record-mutabilidad-superficial",
+    "section": "8.10.3; suplemento",
+    "main": "RecordSuperficial",
+    "args": [],
+    "stdout": "[Ana, Luis]\n"
+  },
+  {
+    "path": "08-clases/08-10-04-01-suplemento-constructor-canonico-record/Intervalo.java",
+    "unit": "08-clases/08-10-04-01-suplemento-constructor-canonico-record",
+    "section": "8.10.4.1; suplemento",
+    "main": "ConstructorCanonico",
+    "args": [],
+    "stdout": "5\norden\n"
+  },
+  {
+    "path": "08-clases/08-10-04-02-suplemento-constructor-compacto-record/Nombre.java",
+    "unit": "08-clases/08-10-04-02-suplemento-constructor-compacto-record",
+    "section": "8.10.4.2; suplemento",
+    "main": "ConstructorCompacto",
+    "args": [],
+    "stdout": "[Ana]\nvacío\n"
+  },
+  {
+    "path": "08-clases/08-10-02-suplemento-campo-instancia-record-error/RecordInvalido.java",
+    "unit": "08-clases/08-10-02-suplemento-campo-instancia-record-error",
+    "section": "8.10.2; suplemento",
+    "main": "",
+    "args": [],
+    "stdout": "",
+    "reject": "field declaration must be static"
+  },
+  {
+    "path": "09-interfaces/09-01-01-04-suplemento-interfaz-sellada/Resultado.java",
+    "unit": "09-interfaces/09-01-01-04-suplemento-interfaz-sellada",
+    "section": "9.1.1.4; suplemento",
+    "main": "InterfazSellada",
+    "args": [],
+    "stdout": "valor 4\nerror\n"
+  },
+  {
+    "path": "09-interfaces/09-04-03-suplemento-metodo-default-interfaz/Saludo.java",
+    "unit": "09-interfaces/09-04-03-suplemento-metodo-default-interfaz",
+    "section": "9.4.3; suplemento",
+    "main": "MetodoDefault",
+    "args": [],
+    "stdout": "hola\nes\n"
+  },
+  {
+    "path": "14-bloques-sentencias-patrones/14-10-suplemento-assert/Aserciones.java",
+    "unit": "14-bloques-sentencias-patrones/14-10-suplemento-assert",
+    "section": "14.10; suplemento",
+    "main": "Aserciones",
+    "args": [],
+    "stdout": "3\n",
+    "jvm_args": [
+      "-ea"
+    ]
+  },
+  {
+    "path": "14-bloques-sentencias-patrones/14-20-03-01-suplemento-try-with-resources/RecursosAutomaticos.java",
+    "unit": "14-bloques-sentencias-patrones/14-20-03-01-suplemento-try-with-resources",
+    "section": "14.20.3.1; suplemento",
+    "main": "RecursosAutomaticos",
+    "args": [],
+    "stdout": "abre A\nabre B\ntrabajo\ncierra B\ncierra A\n"
+  },
+  {
+    "path": "14-bloques-sentencias-patrones/14-20-03-01-suplemento-excepciones-suprimidas/ExcepcionSuprimida.java",
+    "unit": "14-bloques-sentencias-patrones/14-20-03-01-suplemento-excepciones-suprimidas",
+    "section": "14.20.3.1; suplemento",
+    "main": "ExcepcionSuprimida",
+    "args": [],
+    "stdout": "cuerpo\ncierre\n"
+  },
+  {
+    "path": "14-bloques-sentencias-patrones/14-30-01-suplemento-patron-tipo/PatronTipo.java",
+    "unit": "14-bloques-sentencias-patrones/14-30-01-suplemento-patron-tipo",
+    "section": "14.30.1; suplemento",
+    "main": "PatronTipo",
+    "args": [],
+    "stdout": "JAVA\n"
+  },
+  {
+    "path": "14-bloques-sentencias-patrones/14-30-01-suplemento-patron-record-anidado/Punto.java",
+    "unit": "14-bloques-sentencias-patrones/14-30-01-suplemento-patron-record-anidado",
+    "section": "14.30.1; suplemento",
+    "main": "PatronRecord",
+    "args": [],
+    "stdout": "3 4\n"
+  },
+  {
+    "path": "14-bloques-sentencias-patrones/14-11-01-suplemento-switch-patrones-guardas/SwitchGuardas.java",
+    "unit": "14-bloques-sentencias-patrones/14-11-01-suplemento-switch-patrones-guardas",
+    "section": "14.11.1; suplemento",
+    "main": "SwitchGuardas",
+    "args": [],
+    "stdout": "nulo\nvacío\ntexto Java\nentero 5\n"
+  },
+  {
+    "path": "14-bloques-sentencias-patrones/14-11-01-suplemento-switch-patron-dominado/PatronDominado.java",
+    "unit": "14-bloques-sentencias-patrones/14-11-01-suplemento-switch-patron-dominado",
+    "section": "14.11.1; suplemento",
+    "main": "PatronDominado",
+    "args": [],
+    "stdout": "",
+    "reject": "dominated by a preceding case label"
+  },
+  {
+    "path": "15-expresiones/15-13-suplemento-referencias-metodo/ReferenciasMetodo.java",
+    "unit": "15-expresiones/15-13-suplemento-referencias-metodo",
+    "section": "15.13; suplemento",
+    "main": "ReferenciasMetodo",
+    "args": [],
+    "stdout": "longitud 4\n7\n"
+  },
+  {
+    "path": "15-expresiones/15-13-suplemento-referencia-constructor/Medida.java",
+    "unit": "15-expresiones/15-13-suplemento-referencia-constructor",
+    "section": "15.13; suplemento",
+    "main": "ReferenciasConstructor",
+    "args": [],
+    "stdout": "8\n3\n"
+  },
+  {
+    "path": "15-expresiones/15-25-suplemento-operador-condicional/OperadorCondicional.java",
+    "unit": "15-expresiones/15-25-suplemento-operador-condicional",
+    "section": "15.25; suplemento",
+    "main": "OperadorCondicional",
+    "args": [],
+    "stdout": "impar\n1 1\n"
+  },
+  {
+    "path": "15-expresiones/15-27-01-suplemento-parametros-lambda/ParametrosLambda.java",
+    "unit": "15-expresiones/15-27-01-suplemento-parametros-lambda",
+    "section": "15.27.1; suplemento",
+    "main": "ParametrosLambda",
+    "args": [],
+    "stdout": "4\n7\n10\n"
+  },
+  {
+    "path": "15-expresiones/15-27-02-suplemento-cuerpo-lambda/CuerpoLambda.java",
+    "unit": "15-expresiones/15-27-02-suplemento-cuerpo-lambda",
+    "section": "15.27.2; suplemento",
+    "main": "CuerpoLambda",
+    "args": [],
+    "stdout": "12\n-1\n"
+  },
+  {
+    "path": "15-expresiones/15-27-02-suplemento-captura-efectivamente-final/CapturaLambda.java",
+    "unit": "15-expresiones/15-27-02-suplemento-captura-efectivamente-final",
+    "section": "15.27.2; suplemento",
+    "main": "CapturaLambda",
+    "args": [],
+    "stdout": "12\n"
+  },
+  {
+    "path": "15-expresiones/15-27-02-suplemento-captura-lambda-error/CapturaLambdaInvalida.java",
+    "unit": "15-expresiones/15-27-02-suplemento-captura-lambda-error",
+    "section": "15.27.2; suplemento",
+    "main": "CapturaLambdaInvalida",
+    "args": [],
+    "stdout": "",
+    "reject": "local variables referenced from a lambda expression must be final or effectively final"
+  },
+  {
+    "path": "15-expresiones/15-27-03-suplemento-tipo-objetivo-lambda/TipoObjetivoLambda.java",
+    "unit": "15-expresiones/15-27-03-suplemento-tipo-objetivo-lambda",
+    "section": "15.27.3; suplemento",
+    "main": "TipoObjetivoLambda",
+    "args": [],
+    "stdout": "7\nhola\n"
+  },
+  {
+    "path": "15-expresiones/15-27-04-suplemento-lambda-ejecucion-diferida/EjecucionLambda.java",
+    "unit": "15-expresiones/15-27-04-suplemento-lambda-ejecucion-diferida",
+    "section": "15.27.4; suplemento",
+    "main": "EjecucionLambda",
+    "args": [],
+    "stdout": "creada\ncuerpo\ncuerpo\n"
+  },
+  {
+    "path": "03-estructura-lexica/03-10-06-02-variante-comillas-delimitador/ComillasBloque.java",
+    "unit": "03-estructura-lexica/03-10-06-02-variante-comillas-delimitador",
+    "section": "3.10.6; ejemplo 3.10.6-2",
+    "main": "ComillasBloque",
+    "args": [],
+    "stdout": "Ella dijo: \"hola\"\ntrue\n"
+  },
+  {
+    "path": "03-estructura-lexica/03-10-06-02-variante-comillas-error/ComillasInvalidas.java",
+    "unit": "03-estructura-lexica/03-10-06-02-variante-comillas-error",
+    "section": "3.10.6; ejemplo 3.10.6-2",
+    "main": "ComillasInvalidas",
+    "args": [],
+    "stdout": "",
+    "reject": "unclosed string literal"
+  },
+  {
+    "path": "06-nombres/06-05-06-02-02-variante-tipo-generico-static/CampoGenerico.java",
+    "unit": "06-nombres/06-05-06-02-02-variante-tipo-generico-static",
+    "section": "6.5.6.2; ejemplo 6.5.6.2-2",
+    "main": "CampoGenerico",
+    "args": [],
+    "stdout": "5 5\n"
+  },
+  {
+    "path": "06-nombres/06-05-06-02-02-variante-parametrizacion-static-error/CampoParametrizado.java",
+    "unit": "06-nombres/06-05-06-02-02-variante-parametrizacion-static-error",
+    "section": "6.5.6.2; ejemplo 6.5.6.2-2",
+    "main": "CampoParametrizado",
+    "args": [],
+    "stdout": "",
+    "reject": "not a statement"
+  },
+  {
+    "path": "06-nombres/06-05-07-01-01-variante-busqueda-metodo-exterior/BusquedaExterior.java",
+    "unit": "06-nombres/06-05-07-01-01-variante-busqueda-metodo-exterior",
+    "section": "6.5.7.1; ejemplo 6.5.7.1-1",
+    "main": "BusquedaExterior",
+    "args": [],
+    "stdout": "3\ninterior\n"
+  },
+  {
+    "path": "06-nombres/06-05-07-01-01-variante-busqueda-metodo-error/BusquedaNoRetrocede.java",
+    "unit": "06-nombres/06-05-07-01-01-variante-busqueda-metodo-error",
+    "section": "6.5.7.1; ejemplo 6.5.7.1-1",
+    "main": "BusquedaNoRetrocede",
+    "args": [],
+    "stdout": "",
+    "reject": "int cannot be converted to String"
+  },
+  {
+    "path": "08-clases/08-03-01-04-01-variante-volatile-lecturas-separadas/LecturasVolatile.java",
+    "unit": "08-clases/08-03-01-04-01-variante-volatile-lecturas-separadas",
+    "section": "8.3.1.4; ejemplo 8.3.1.4-1",
+    "main": "LecturasVolatile",
+    "args": [],
+    "stdout": "0 1\n1 1\n"
+  },
+  {
+    "path": "08-clases/08-03-01-04-01-variante-lectura-sincronizada/LecturaSincronizada.java",
+    "unit": "08-clases/08-03-01-04-01-variante-lectura-sincronizada",
+    "section": "8.3.1.4; ejemplo 8.3.1.4-1",
+    "main": "LecturaSincronizada",
+    "args": [],
+    "stdout": "true\n1000 1000\n"
+  },
+  {
+    "path": "09-interfaces/09-08-01-variante-metodo-object/FuncionalConEquals.java",
+    "unit": "09-interfaces/09-08-01-variante-metodo-object",
+    "section": "9.8; ejemplo 9.8-1",
+    "main": "FuncionalConEquals",
+    "args": [],
+    "stdout": "true\n"
+  },
+  {
+    "path": "09-interfaces/09-08-01-variante-solo-object-error/SoloEquals.java",
+    "unit": "09-interfaces/09-08-01-variante-solo-object-error",
+    "section": "9.8; ejemplo 9.8-1",
+    "main": "SoloEquals",
+    "args": [],
+    "stdout": "",
+    "reject": "no abstract method found"
+  },
+  {
+    "path": "09-interfaces/09-08-01-variante-clone-no-publico-error/ClonarYMedir.java",
+    "unit": "09-interfaces/09-08-01-variante-clone-no-publico-error",
+    "section": "9.8; ejemplo 9.8-1",
+    "main": "ClonarYMedir",
+    "args": [],
+    "stdout": "",
+    "reject": "multiple non-overriding abstract methods"
+  },
+  {
+    "path": "09-interfaces/09-08-02-variante-borrado-conflicto/BorradoInterfaz.java",
+    "unit": "09-interfaces/09-08-02-variante-borrado-conflicto",
+    "section": "9.8; ejemplo 9.8-2",
+    "main": "BorradoInterfaz",
+    "args": [],
+    "stdout": "",
+    "reject": "name clash"
+  },
+  {
+    "path": "09-interfaces/09-08-02-variante-retorno-incompatible/RetornosInterfaz.java",
+    "unit": "09-interfaces/09-08-02-variante-retorno-incompatible",
+    "section": "9.8; ejemplo 9.8-2",
+    "main": "RetornosInterfaz",
+    "args": [],
+    "stdout": "",
+    "reject": "unrelated return types"
+  },
+  {
+    "path": "09-interfaces/09-08-02-variante-parametrizacion-unifica/ContratosUnificados.java",
+    "unit": "09-interfaces/09-08-02-variante-parametrizacion-unifica",
+    "section": "9.8; ejemplo 9.8-2",
+    "main": "ContratosUnificados",
+    "args": [],
+    "stdout": "6\n"
+  },
+  {
+    "path": "09-interfaces/09-08-03-variante-retornos-genericos-error/RetornosGenericos.java",
+    "unit": "09-interfaces/09-08-03-variante-retornos-genericos-error",
+    "section": "9.8; ejemplo 9.8-3",
+    "main": "RetornosGenericos",
+    "args": [],
+    "stdout": "",
+    "reject": "not compatible"
+  },
+  {
+    "path": "11-excepciones/11-02-03-01-variante-captura-subtipo/CapturaSubtipo.java",
+    "unit": "11-excepciones/11-02-03-01-variante-captura-subtipo",
+    "section": "11.2.3; ejemplo 11.2.3-1",
+    "main": "CapturaSubtipo",
+    "args": [],
+    "stdout": "superclase primero\nsubclase archivo\n"
+  },
+  {
+    "path": "14-bloques-sentencias-patrones/14-04-01-variante-var-multiples/VarMultiples.java",
+    "unit": "14-bloques-sentencias-patrones/14-04-01-variante-var-multiples",
+    "section": "14.4; ejemplo 14.4-1",
+    "main": "VarMultiples",
+    "args": [],
+    "stdout": "",
+    "reject": "'var' is not allowed in a compound declaration"
+  },
+  {
+    "path": "14-bloques-sentencias-patrones/14-04-01-variante-var-arreglo/VarArreglo.java",
+    "unit": "14-bloques-sentencias-patrones/14-04-01-variante-var-arreglo",
+    "section": "14.4; ejemplo 14.4-1",
+    "main": "VarArreglo",
+    "args": [],
+    "stdout": "",
+    "reject": "'var' is not allowed as an element type of an array"
+  },
+  {
+    "path": "14-bloques-sentencias-patrones/14-04-01-variante-var-inicializador-arreglo/VarLiteralArreglo.java",
+    "unit": "14-bloques-sentencias-patrones/14-04-01-variante-var-inicializador-arreglo",
+    "section": "14.4; ejemplo 14.4-1",
+    "main": "VarLiteralArreglo",
+    "args": [],
+    "stdout": "",
+    "reject": "array initializer needs an explicit target-type"
+  },
+  {
+    "path": "14-bloques-sentencias-patrones/14-04-01-variante-var-autorreferencia/VarAutorreferencia.java",
+    "unit": "14-bloques-sentencias-patrones/14-04-01-variante-var-autorreferencia",
+    "section": "14.4; ejemplo 14.4-1",
+    "main": "VarAutorreferencia",
+    "args": [],
+    "stdout": "",
+    "reject": "cannot use 'var' on self-referencing variable"
+  },
+  {
+    "path": "15-expresiones/15-12-02-01-variante-aplicabilidad-ampliacion/AplicabilidadValida.java",
+    "unit": "15-expresiones/15-12-02-01-variante-aplicabilidad-ampliacion",
+    "section": "15.12.2; ejemplo 15.12.2-1",
+    "main": "AplicabilidadValida",
+    "args": [],
+    "stdout": "2\n6\n"
+  },
+  {
+    "path": "15-expresiones/15-12-02-01-variante-invocacion-byte-error/ArgumentoByte.java",
+    "unit": "15-expresiones/15-12-02-01-variante-invocacion-byte-error",
+    "section": "15.12.2; ejemplo 15.12.2-1",
+    "main": "ArgumentoByte",
+    "args": [],
+    "stdout": "",
+    "reject": "possible lossy conversion from int to byte"
+  },
+  {
+    "path": "16-asignacion-definida/16-03-variante-final-rutas-independientes/FinalNoDemostrado.java",
+    "unit": "16-asignacion-definida/16-03-variante-final-rutas-independientes",
+    "section": "16; ejemplo 16-3",
+    "main": "FinalNoDemostrado",
+    "args": [],
+    "stdout": "",
+    "reject": "variable n might already have been assigned"
+  },
+  {
+    "path": "05-conversiones-y-contextos/05-01-10-suplemento-captura-comodin/CapturaComodin.java",
+    "unit": "05-conversiones-y-contextos/05-01-10-suplemento-captura-comodin",
+    "section": "5.1.10; suplemento",
+    "main": "CapturaComodin",
+    "args": [],
+    "stdout": "[luna, sol]\n"
+  },
+  {
+    "path": "06-nombres/06-03-02-02-suplemento-alcance-patron-negado/AlcancePatron.java",
+    "unit": "06-nombres/06-03-02-02-suplemento-alcance-patron-negado",
+    "section": "6.3.2.2; suplemento",
+    "main": "AlcancePatron",
+    "args": [],
+    "stdout": "4\n"
+  },
+  {
+    "path": "17-hilos-y-bloqueos/17-02-01-suplemento-espera-monitor/EsperaMonitor.java",
+    "unit": "17-hilos-y-bloqueos/17-02-01-suplemento-espera-monitor",
+    "section": "17.2.1; suplemento",
+    "main": "EsperaMonitor",
+    "args": [],
+    "stdout": "listo\n"
+  },
+  {
+    "path": "17-hilos-y-bloqueos/17-02-02-suplemento-notificar-sin-monitor/NotificarSinMonitor.java",
+    "unit": "17-hilos-y-bloqueos/17-02-02-suplemento-notificar-sin-monitor",
+    "section": "17.2.2; suplemento",
+    "main": "NotificarSinMonitor",
+    "args": [],
+    "stdout": "monitor no adquirido\n"
+  },
+  {
+    "path": "17-hilos-y-bloqueos/17-02-03-suplemento-interrupcion-estado/EstadoInterrupcion.java",
+    "unit": "17-hilos-y-bloqueos/17-02-03-suplemento-interrupcion-estado",
+    "section": "17.2.3; suplemento",
+    "main": "EstadoInterrupcion",
+    "args": [],
+    "stdout": "true\ntrue\nfalse\n"
+  },
+  {
+    "path": "18-inferencia-de-tipos/18-05-01-suplemento-inferencia-argumentos/InferenciaArgumentos.java",
+    "unit": "18-inferencia-de-tipos/18-05-01-suplemento-inferencia-argumentos",
+    "section": "18.5.1; suplemento",
+    "main": "InferenciaArgumentos",
+    "args": [],
+    "stdout": "7\n2.5\n"
+  },
+  {
+    "path": "18-inferencia-de-tipos/18-05-02-suplemento-inferencia-tipo-objetivo/InferenciaObjetivo.java",
+    "unit": "18-inferencia-de-tipos/18-05-02-suplemento-inferencia-tipo-objetivo",
+    "section": "18.5.2; suplemento",
+    "main": "InferenciaObjetivo",
+    "args": [],
+    "stdout": "4\n"
+  }
+]

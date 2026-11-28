@@ -1,0 +1,3151 @@
+[
+  {
+    "path": "06-matematicas-computacionales/01-logica-proposicional/TablaVerdad.java",
+    "sources": [
+      "06-matematicas-computacionales/01-logica-proposicional/TablaVerdad.java"
+    ],
+    "main": "TablaVerdad",
+    "mode": "T",
+    "stdout": "false false -> false false false\nfalse true -> false true true\ntrue false -> false true true\ntrue true -> true true false\n"
+  },
+  {
+    "path": "06-matematicas-computacionales/01-logica-proposicional/Implicacion.java",
+    "sources": [
+      "06-matematicas-computacionales/01-logica-proposicional/Implicacion.java"
+    ],
+    "main": "Implicacion",
+    "mode": "T",
+    "stdout": "false => false: true\nfalse => true: true\ntrue => false: false\ntrue => true: true\n"
+  },
+  {
+    "path": "06-matematicas-computacionales/02-conjuntos/OperacionesConjuntos.java",
+    "sources": [
+      "06-matematicas-computacionales/02-conjuntos/OperacionesConjuntos.java"
+    ],
+    "main": "OperacionesConjuntos",
+    "mode": "R",
+    "stdout": "Union: 0 1 2 3 4\nInterseccion: 1\nA menos B: 0 3\n"
+  },
+  {
+    "path": "06-matematicas-computacionales/03-combinatoria/Permutaciones.java",
+    "sources": [
+      "06-matematicas-computacionales/03-combinatoria/Permutaciones.java"
+    ],
+    "main": "Permutaciones",
+    "mode": "R",
+    "stdout": "120\n"
+  },
+  {
+    "path": "06-matematicas-computacionales/03-combinatoria/Combinaciones.java",
+    "sources": [
+      "06-matematicas-computacionales/03-combinatoria/Combinaciones.java"
+    ],
+    "main": "Combinaciones",
+    "mode": "R",
+    "stdout": "10\n"
+  },
+  {
+    "path": "06-matematicas-computacionales/04-matrices/SumaMatrices.java",
+    "sources": [
+      "06-matematicas-computacionales/04-matrices/SumaMatrices.java"
+    ],
+    "main": "SumaMatrices",
+    "mode": "R",
+    "stdout": "6 8 \n10 12 \n"
+  },
+  {
+    "path": "06-matematicas-computacionales/04-matrices/ProductoMatrices.java",
+    "sources": [
+      "06-matematicas-computacionales/04-matrices/ProductoMatrices.java"
+    ],
+    "main": "ProductoMatrices",
+    "mode": "R",
+    "stdout": "4 5 \n10 11 \n"
+  },
+  {
+    "path": "06-matematicas-computacionales/04-matrices/Transpuesta.java",
+    "sources": [
+      "06-matematicas-computacionales/04-matrices/Transpuesta.java"
+    ],
+    "main": "Transpuesta",
+    "mode": "R",
+    "stdout": "1 4\n2 5\n3 6\n"
+  },
+  {
+    "path": "06-matematicas-computacionales/05-vectores/ProductoEscalar.java",
+    "sources": [
+      "06-matematicas-computacionales/05-vectores/ProductoEscalar.java"
+    ],
+    "main": "ProductoEscalar",
+    "mode": "R",
+    "stdout": "32\n"
+  },
+  {
+    "path": "06-matematicas-computacionales/05-vectores/NormaVector.java",
+    "sources": [
+      "06-matematicas-computacionales/05-vectores/NormaVector.java"
+    ],
+    "main": "NormaVector",
+    "mode": "R",
+    "stdout": "5.0\n"
+  },
+  {
+    "path": "06-matematicas-computacionales/05-vectores/DistanciaEuclidiana.java",
+    "sources": [
+      "06-matematicas-computacionales/05-vectores/DistanciaEuclidiana.java"
+    ],
+    "main": "DistanciaEuclidiana",
+    "mode": "R",
+    "stdout": "5.0\n"
+  },
+  {
+    "path": "06-matematicas-computacionales/06-probabilidad/ProbabilidadFrecuencia.java",
+    "sources": [
+      "06-matematicas-computacionales/06-probabilidad/ProbabilidadFrecuencia.java"
+    ],
+    "main": "ProbabilidadFrecuencia",
+    "mode": "T",
+    "stdout": "Frecuencia: 0.1623\n"
+  },
+  {
+    "path": "06-matematicas-computacionales/06-probabilidad/MonteCarlo.java",
+    "sources": [
+      "06-matematicas-computacionales/06-probabilidad/MonteCarlo.java"
+    ],
+    "main": "MonteCarlo",
+    "mode": "T",
+    "stdout": "Pi aproximado: 3.1254\n"
+  },
+  {
+    "path": "06-matematicas-computacionales/07-estadistica/MediaVarianza.java",
+    "sources": [
+      "06-matematicas-computacionales/07-estadistica/MediaVarianza.java"
+    ],
+    "main": "MediaVarianza",
+    "mode": "R",
+    "stdout": "Media: 5.0\nVarianza: 5.0\n"
+  },
+  {
+    "path": "06-matematicas-computacionales/07-estadistica/Mediana.java",
+    "sources": [
+      "06-matematicas-computacionales/07-estadistica/Mediana.java"
+    ],
+    "main": "Mediana",
+    "mode": "R",
+    "stdout": "6.0\n"
+  },
+  {
+    "path": "06-matematicas-computacionales/08-precision-numerica/ErrorRedondeo.java",
+    "sources": [
+      "06-matematicas-computacionales/08-precision-numerica/ErrorRedondeo.java"
+    ],
+    "main": "ErrorRedondeo",
+    "mode": "R",
+    "stdout": "0.30000000000000004\nfalse\ntrue\n"
+  },
+  {
+    "path": "06-matematicas-computacionales/08-precision-numerica/BigDecimalExacto.java",
+    "sources": [
+      "06-matematicas-computacionales/08-precision-numerica/BigDecimalExacto.java"
+    ],
+    "main": "BigDecimalExacto",
+    "mode": "R",
+    "stdout": "0.30\n"
+  },
+  {
+    "path": "06-matematicas-computacionales/09-metodos-numericos/Biseccion.java",
+    "sources": [
+      "06-matematicas-computacionales/09-metodos-numericos/Biseccion.java"
+    ],
+    "main": "Biseccion",
+    "mode": "R",
+    "stdout": "1.414214\n"
+  },
+  {
+    "path": "06-matematicas-computacionales/09-metodos-numericos/NewtonRaphson.java",
+    "sources": [
+      "06-matematicas-computacionales/09-metodos-numericos/NewtonRaphson.java"
+    ],
+    "main": "NewtonRaphson",
+    "mode": "R",
+    "stdout": "1.414214\n"
+  },
+  {
+    "path": "06-matematicas-computacionales/09-metodos-numericos/IntegracionTrapecios.java",
+    "sources": [
+      "06-matematicas-computacionales/09-metodos-numericos/IntegracionTrapecios.java"
+    ],
+    "main": "IntegracionTrapecios",
+    "mode": "R",
+    "stdout": "0.333350\n"
+  },
+  {
+    "path": "07-representacion-de-datos-y-memoria/01-bases-numericas/ConversionBases.java",
+    "sources": [
+      "07-representacion-de-datos-y-memoria/01-bases-numericas/ConversionBases.java"
+    ],
+    "main": "ConversionBases",
+    "mode": "R",
+    "stdout": "101010\n2a\n42\n"
+  },
+  {
+    "path": "07-representacion-de-datos-y-memoria/01-bases-numericas/ConversionManual.java",
+    "sources": [
+      "07-representacion-de-datos-y-memoria/01-bases-numericas/ConversionManual.java"
+    ],
+    "main": "ConversionManual",
+    "mode": "R",
+    "stdout": "101010\n"
+  },
+  {
+    "path": "07-representacion-de-datos-y-memoria/02-enteros-sin-signo/EnteroSinSigno.java",
+    "sources": [
+      "07-representacion-de-datos-y-memoria/02-enteros-sin-signo/EnteroSinSigno.java"
+    ],
+    "main": "EnteroSinSigno",
+    "mode": "R",
+    "stdout": "-1\n255\n4294967295\n"
+  },
+  {
+    "path": "07-representacion-de-datos-y-memoria/03-complemento-a-dos/ComplementoDos.java",
+    "sources": [
+      "07-representacion-de-datos-y-memoria/03-complemento-a-dos/ComplementoDos.java"
+    ],
+    "main": "ComplementoDos",
+    "mode": "R",
+    "stdout": "11111011\n-5\n"
+  },
+  {
+    "path": "07-representacion-de-datos-y-memoria/03-complemento-a-dos/DesbordamientoEntero.java",
+    "sources": [
+      "07-representacion-de-datos-y-memoria/03-complemento-a-dos/DesbordamientoEntero.java"
+    ],
+    "main": "DesbordamientoEntero",
+    "mode": "R",
+    "stdout": "-2147483648\nDesbordamiento detectado\n"
+  },
+  {
+    "path": "07-representacion-de-datos-y-memoria/04-punto-flotante/BitsFloat.java",
+    "sources": [
+      "07-representacion-de-datos-y-memoria/04-punto-flotante/BitsFloat.java"
+    ],
+    "main": "BitsFloat",
+    "mode": "R",
+    "stdout": "Signo: 1\nExponente: 129\nFraccion: 5242880\ntrue\n"
+  },
+  {
+    "path": "07-representacion-de-datos-y-memoria/04-punto-flotante/BitsDouble.java",
+    "sources": [
+      "07-representacion-de-datos-y-memoria/04-punto-flotante/BitsDouble.java"
+    ],
+    "main": "BitsDouble",
+    "mode": "R",
+    "stdout": "0\n1023\n2251799813685248\ntrue\n"
+  },
+  {
+    "path": "07-representacion-de-datos-y-memoria/05-orden-bytes/LittleBigEndian.java",
+    "sources": [
+      "07-representacion-de-datos-y-memoria/05-orden-bytes/LittleBigEndian.java"
+    ],
+    "main": "LittleBigEndian",
+    "mode": "R",
+    "stdout": "12345678\n78563412\n"
+  },
+  {
+    "path": "07-representacion-de-datos-y-memoria/05-orden-bytes/OrdenNativo.java",
+    "sources": [
+      "07-representacion-de-datos-y-memoria/05-orden-bytes/OrdenNativo.java"
+    ],
+    "main": "OrdenNativo",
+    "mode": "R",
+    "stdout": "LITTLE_ENDIAN\n",
+    "allowed_stdout": [
+      "LITTLE_ENDIAN\n",
+      "BIG_ENDIAN\n"
+    ]
+  },
+  {
+    "path": "07-representacion-de-datos-y-memoria/06-operaciones-bits/OperacionesBits.java",
+    "sources": [
+      "07-representacion-de-datos-y-memoria/06-operaciones-bits/OperacionesBits.java"
+    ],
+    "main": "OperacionesBits",
+    "mode": "R",
+    "stdout": "8\n14\n6\n3\n"
+  },
+  {
+    "path": "07-representacion-de-datos-y-memoria/06-operaciones-bits/Desplazamientos.java",
+    "sources": [
+      "07-representacion-de-datos-y-memoria/06-operaciones-bits/Desplazamientos.java"
+    ],
+    "main": "Desplazamientos",
+    "mode": "R",
+    "stdout": "-4\n2147483644\n12\n"
+  },
+  {
+    "path": "07-representacion-de-datos-y-memoria/07-mascaras/ActivarDesactivarBits.java",
+    "sources": [
+      "07-representacion-de-datos-y-memoria/07-mascaras/ActivarDesactivarBits.java"
+    ],
+    "main": "ActivarDesactivarBits",
+    "mode": "R",
+    "stdout": "8\n0\n8\n"
+  },
+  {
+    "path": "07-representacion-de-datos-y-memoria/07-mascaras/ExtraerCampoBits.java",
+    "sources": [
+      "07-representacion-de-datos-y-memoria/07-mascaras/ExtraerCampoBits.java"
+    ],
+    "main": "ExtraerCampoBits",
+    "mode": "R",
+    "stdout": "5\n"
+  },
+  {
+    "path": "07-representacion-de-datos-y-memoria/07-mascaras/EmpaquetarCampos.java",
+    "sources": [
+      "07-representacion-de-datos-y-memoria/07-mascaras/EmpaquetarCampos.java"
+    ],
+    "main": "EmpaquetarCampos",
+    "mode": "R",
+    "stdout": "96\n9\n6\n"
+  },
+  {
+    "path": "07-representacion-de-datos-y-memoria/08-codificacion-texto/AsciiUnicode.java",
+    "sources": [
+      "07-representacion-de-datos-y-memoria/08-codificacion-texto/AsciiUnicode.java"
+    ],
+    "main": "AsciiUnicode",
+    "mode": "R",
+    "stdout": "65\n241\nfalse\n"
+  },
+  {
+    "path": "07-representacion-de-datos-y-memoria/08-codificacion-texto/Utf8Bytes.java",
+    "sources": [
+      "07-representacion-de-datos-y-memoria/08-codificacion-texto/Utf8Bytes.java"
+    ],
+    "main": "Utf8Bytes",
+    "mode": "R",
+    "stdout": "41\nc3\nb1\nAñ\n"
+  },
+  {
+    "path": "07-representacion-de-datos-y-memoria/08-codificacion-texto/PuntosCodigo.java",
+    "sources": [
+      "07-representacion-de-datos-y-memoria/08-codificacion-texto/PuntosCodigo.java"
+    ],
+    "main": "PuntosCodigo",
+    "mode": "R",
+    "stdout": "3\n2\n41\n1f600\n"
+  },
+  {
+    "path": "07-representacion-de-datos-y-memoria/15-referencias-java/PasoPorValor.java",
+    "sources": [
+      "07-representacion-de-datos-y-memoria/15-referencias-java/PasoPorValor.java"
+    ],
+    "main": "PasoPorValor",
+    "mode": "R",
+    "stdout": "3\n9\n"
+  },
+  {
+    "path": "07-representacion-de-datos-y-memoria/15-referencias-java/AliasReferencias.java",
+    "sources": [
+      "07-representacion-de-datos-y-memoria/15-referencias-java/AliasReferencias.java"
+    ],
+    "main": "AliasReferencias",
+    "mode": "R",
+    "stdout": "8\ntrue\n"
+  },
+  {
+    "path": "07-representacion-de-datos-y-memoria/15-referencias-java/IntercambioValores.java",
+    "sources": [
+      "07-representacion-de-datos-y-memoria/15-referencias-java/IntercambioValores.java"
+    ],
+    "main": "IntercambioValores",
+    "mode": "R",
+    "stdout": "2 7\n7 2\n"
+  },
+  {
+    "path": "07-representacion-de-datos-y-memoria/18-datos-compuestos/MainRegistroBinario.java",
+    "sources": [
+      "07-representacion-de-datos-y-memoria/18-datos-compuestos/RegistroBinario.java",
+      "07-representacion-de-datos-y-memoria/18-datos-compuestos/MainRegistroBinario.java"
+    ],
+    "main": "MainRegistroBinario",
+    "mode": "R",
+    "stdout": "0000002a0007\n42 7\n"
+  },
+  {
+    "path": "07-representacion-de-datos-y-memoria/19-stack-heap/PilaLlamadas.java",
+    "sources": [
+      "07-representacion-de-datos-y-memoria/19-stack-heap/PilaLlamadas.java"
+    ],
+    "main": "PilaLlamadas",
+    "mode": "R",
+    "stdout": "entra 3\nentra 2\nentra 1\nsale 1\nsale 2\nsale 3\n"
+  },
+  {
+    "path": "07-representacion-de-datos-y-memoria/19-stack-heap/ObjetosHeap.java",
+    "sources": [
+      "07-representacion-de-datos-y-memoria/19-stack-heap/ObjetosHeap.java"
+    ],
+    "main": "ObjetosHeap",
+    "mode": "R",
+    "stdout": "false\ntrue\n"
+  },
+  {
+    "path": "07-representacion-de-datos-y-memoria/19-stack-heap/VidaReferencias.java",
+    "sources": [
+      "07-representacion-de-datos-y-memoria/19-stack-heap/VidaReferencias.java"
+    ],
+    "main": "VidaReferencias",
+    "mode": "R",
+    "stdout": "12\ntrue\n"
+  },
+  {
+    "path": "07-representacion-de-datos-y-memoria/20-memoria-dinamica/ReservaLiberacionSimulada.java",
+    "sources": [
+      "07-representacion-de-datos-y-memoria/20-memoria-dinamica/ReservaLiberacionSimulada.java"
+    ],
+    "main": "ReservaLiberacionSimulada",
+    "mode": "T",
+    "stdout": "[0, 1, 1, 1, 0, 0]\n[0, 0, 0, 0, 0, 0]\n"
+  },
+  {
+    "path": "07-representacion-de-datos-y-memoria/21-asignacion-bloques/MainAsignacion.java",
+    "sources": [
+      "07-representacion-de-datos-y-memoria/21-asignacion-bloques/Bloque.java",
+      "07-representacion-de-datos-y-memoria/21-asignacion-bloques/FirstFit.java",
+      "07-representacion-de-datos-y-memoria/21-asignacion-bloques/BestFit.java",
+      "07-representacion-de-datos-y-memoria/21-asignacion-bloques/WorstFit.java",
+      "07-representacion-de-datos-y-memoria/21-asignacion-bloques/MainAsignacion.java"
+    ],
+    "main": "MainAsignacion",
+    "mode": "T",
+    "stdout": "First Fit: 0\nBest Fit: 3\nWorst Fit: 6\n"
+  },
+  {
+    "path": "07-representacion-de-datos-y-memoria/22-fragmentacion/FragmentacionInterna.java",
+    "sources": [
+      "07-representacion-de-datos-y-memoria/22-fragmentacion/FragmentacionInterna.java"
+    ],
+    "main": "FragmentacionInterna",
+    "mode": "T",
+    "stdout": "6\n"
+  },
+  {
+    "path": "07-representacion-de-datos-y-memoria/22-fragmentacion/FragmentacionExterna.java",
+    "sources": [
+      "07-representacion-de-datos-y-memoria/22-fragmentacion/FragmentacionExterna.java"
+    ],
+    "main": "FragmentacionExterna",
+    "mode": "T",
+    "stdout": "9\nfalse\n"
+  },
+  {
+    "path": "07-representacion-de-datos-y-memoria/22-fragmentacion/Coalescencia.java",
+    "sources": [
+      "07-representacion-de-datos-y-memoria/22-fragmentacion/Coalescencia.java"
+    ],
+    "main": "Coalescencia",
+    "mode": "T",
+    "stdout": "2 7\n"
+  },
+  {
+    "path": "07-representacion-de-datos-y-memoria/23-memoria-virtual/MainTraduccion.java",
+    "sources": [
+      "07-representacion-de-datos-y-memoria/23-memoria-virtual/DireccionVirtual.java",
+      "07-representacion-de-datos-y-memoria/23-memoria-virtual/TablaPaginas.java",
+      "07-representacion-de-datos-y-memoria/23-memoria-virtual/MainTraduccion.java"
+    ],
+    "main": "MainTraduccion",
+    "mode": "T",
+    "stdout": "Pagina: 2\nDesplazamiento: 3\nFisica: 43\nFallo de pagina\n"
+  },
+  {
+    "path": "07-representacion-de-datos-y-memoria/24-reemplazo-paginas/MainReemplazo.java",
+    "sources": [
+      "07-representacion-de-datos-y-memoria/24-reemplazo-paginas/FIFO.java",
+      "07-representacion-de-datos-y-memoria/24-reemplazo-paginas/LRU.java",
+      "07-representacion-de-datos-y-memoria/24-reemplazo-paginas/OPT.java",
+      "07-representacion-de-datos-y-memoria/24-reemplazo-paginas/MainReemplazo.java"
+    ],
+    "main": "MainReemplazo",
+    "mode": "T",
+    "stdout": "FIFO: 10\nLRU: 9\nOPT: 7\n"
+  },
+  {
+    "path": "07-representacion-de-datos-y-memoria/25-errores-memoria/FugaPorRetencion.java",
+    "sources": [
+      "07-representacion-de-datos-y-memoria/25-errores-memoria/FugaPorRetencion.java"
+    ],
+    "main": "FugaPorRetencion",
+    "mode": "R",
+    "stdout": "3\n0\n"
+  },
+  {
+    "path": "07-representacion-de-datos-y-memoria/26-recoleccion-basura/MainMarcarBarrer.java",
+    "sources": [
+      "07-representacion-de-datos-y-memoria/26-recoleccion-basura/Alcanzabilidad.java",
+      "07-representacion-de-datos-y-memoria/26-recoleccion-basura/MainMarcarBarrer.java"
+    ],
+    "main": "MainMarcarBarrer",
+    "mode": "T",
+    "stdout": "0 vivo\n1 vivo\n2 vivo\n3 recuperable\n"
+  },
+  {
+    "path": "08-sistemas-de-archivos-y-entrada-salida/01-rutas/RutasAbsolutasRelativas.java",
+    "sources": [
+      "08-sistemas-de-archivos-y-entrada-salida/01-rutas/RutasAbsolutasRelativas.java"
+    ],
+    "main": "RutasAbsolutasRelativas",
+    "mode": "R",
+    "stdout": "Relativa: true\nAbsoluta: true\nPadre: datos\nRaiz presente: true\n"
+  },
+  {
+    "path": "08-sistemas-de-archivos-y-entrada-salida/01-rutas/NormalizarRuta.java",
+    "sources": [
+      "08-sistemas-de-archivos-y-entrada-salida/01-rutas/NormalizarRuta.java"
+    ],
+    "main": "NormalizarRuta",
+    "mode": "R",
+    "stdout": "true\n"
+  },
+  {
+    "path": "08-sistemas-de-archivos-y-entrada-salida/01-rutas/ResolverRuta.java",
+    "sources": [
+      "08-sistemas-de-archivos-y-entrada-salida/01-rutas/ResolverRuta.java"
+    ],
+    "main": "ResolverRuta",
+    "mode": "R",
+    "stdout": "ventas.txt\nventas.txt\n"
+  },
+  {
+    "path": "08-sistemas-de-archivos-y-entrada-salida/02-directorios/CrearListarDirectorio.java",
+    "sources": [
+      "08-sistemas-de-archivos-y-entrada-salida/02-directorios/CrearListarDirectorio.java"
+    ],
+    "main": "CrearListarDirectorio",
+    "mode": "R",
+    "stdout": "a.txt\nb.txt\n"
+  },
+  {
+    "path": "08-sistemas-de-archivos-y-entrada-salida/02-directorios/RecorrerArbol.java",
+    "sources": [
+      "08-sistemas-de-archivos-y-entrada-salida/02-directorios/RecorrerArbol.java"
+    ],
+    "main": "RecorrerArbol",
+    "mode": "R",
+    "stdout": "a.txt\nProfundidad: 3\n"
+  },
+  {
+    "path": "08-sistemas-de-archivos-y-entrada-salida/03-comodines/BuscarConGlob.java",
+    "sources": [
+      "08-sistemas-de-archivos-y-entrada-salida/03-comodines/BuscarConGlob.java"
+    ],
+    "main": "BuscarConGlob",
+    "mode": "R",
+    "stdout": "a.txt\nc.txt\n"
+  },
+  {
+    "path": "08-sistemas-de-archivos-y-entrada-salida/04-operaciones-archivos/CopiarArchivo.java",
+    "sources": [
+      "08-sistemas-de-archivos-y-entrada-salida/04-operaciones-archivos/CopiarArchivo.java"
+    ],
+    "main": "CopiarArchivo",
+    "mode": "R",
+    "stdout": "venta\notra\n"
+  },
+  {
+    "path": "08-sistemas-de-archivos-y-entrada-salida/04-operaciones-archivos/MoverArchivo.java",
+    "sources": [
+      "08-sistemas-de-archivos-y-entrada-salida/04-operaciones-archivos/MoverArchivo.java"
+    ],
+    "main": "MoverArchivo",
+    "mode": "R",
+    "stdout": "Origen existe: false\nDestino: listo\n"
+  },
+  {
+    "path": "08-sistemas-de-archivos-y-entrada-salida/04-operaciones-archivos/EliminarArchivo.java",
+    "sources": [
+      "08-sistemas-de-archivos-y-entrada-salida/04-operaciones-archivos/EliminarArchivo.java"
+    ],
+    "main": "EliminarArchivo",
+    "mode": "R",
+    "stdout": "true\nfalse\n"
+  },
+  {
+    "path": "08-sistemas-de-archivos-y-entrada-salida/05-metadatos/AtributosArchivo.java",
+    "sources": [
+      "08-sistemas-de-archivos-y-entrada-salida/05-metadatos/AtributosArchivo.java"
+    ],
+    "main": "AtributosArchivo",
+    "mode": "R",
+    "stdout": "Regular: true\nBytes: 3\n"
+  },
+  {
+    "path": "08-sistemas-de-archivos-y-entrada-salida/05-metadatos/TiemposArchivo.java",
+    "sources": [
+      "08-sistemas-de-archivos-y-entrada-salida/05-metadatos/TiemposArchivo.java"
+    ],
+    "main": "TiemposArchivo",
+    "mode": "R",
+    "stdout": "2020-01-01T00:00:00Z\n"
+  },
+  {
+    "path": "08-sistemas-de-archivos-y-entrada-salida/06-enlaces/EnlaceDuro.java",
+    "sources": [
+      "08-sistemas-de-archivos-y-entrada-salida/06-enlaces/EnlaceDuro.java"
+    ],
+    "main": "EnlaceDuro",
+    "mode": "P",
+    "stdout": "true\ndos\n",
+    "allowed_stdout": [
+      "true\ndos\n",
+      "Enlace no disponible\n"
+    ]
+  },
+  {
+    "path": "08-sistemas-de-archivos-y-entrada-salida/06-enlaces/EnlaceSimbolico.java",
+    "sources": [
+      "08-sistemas-de-archivos-y-entrada-salida/06-enlaces/EnlaceSimbolico.java"
+    ],
+    "main": "EnlaceSimbolico",
+    "mode": "P",
+    "stdout": "true\nDestino existe: false\nEnlace existe: true\n",
+    "allowed_stdout": [
+      "true\nDestino existe: false\nEnlace existe: true\n",
+      "Enlace no disponible\n"
+    ]
+  },
+  {
+    "path": "08-sistemas-de-archivos-y-entrada-salida/07-permisos/MascarasOctales.java",
+    "sources": [
+      "08-sistemas-de-archivos-y-entrada-salida/07-permisos/MascarasOctales.java"
+    ],
+    "main": "MascarasOctales",
+    "mode": "M",
+    "stdout": "rw-\nr--\n---\n"
+  },
+  {
+    "path": "08-sistemas-de-archivos-y-entrada-salida/07-permisos/PermisosPosix.java",
+    "sources": [
+      "08-sistemas-de-archivos-y-entrada-salida/07-permisos/PermisosPosix.java"
+    ],
+    "main": "PermisosPosix",
+    "mode": "M",
+    "stdout": "rw-------\n",
+    "allowed_stdout": [
+      "rw-------\n",
+      "POSIX no disponible\n"
+    ]
+  },
+  {
+    "path": "08-sistemas-de-archivos-y-entrada-salida/07-permisos/PropietarioArchivo.java",
+    "sources": [
+      "08-sistemas-de-archivos-y-entrada-salida/07-permisos/PropietarioArchivo.java"
+    ],
+    "main": "PropietarioArchivo",
+    "mode": "M",
+    "stdout": "Propietario consultado: true\n",
+    "allowed_stdout": [
+      "Propietario consultado: true\n",
+      "Propietario no disponible\n"
+    ]
+  },
+  {
+    "path": "08-sistemas-de-archivos-y-entrada-salida/08-archivos-temporales/DirectorioTemporal.java",
+    "sources": [
+      "08-sistemas-de-archivos-y-entrada-salida/08-archivos-temporales/DirectorioTemporal.java"
+    ],
+    "main": "DirectorioTemporal",
+    "mode": "R",
+    "stdout": "true\ntemporal\n"
+  },
+  {
+    "path": "08-sistemas-de-archivos-y-entrada-salida/09-flujos-estandar/EntradaSalidaError.java",
+    "sources": [
+      "08-sistemas-de-archivos-y-entrada-salida/09-flujos-estandar/EntradaSalidaError.java"
+    ],
+    "main": "EntradaSalidaError",
+    "mode": "R",
+    "stdout": "Entrada: 7\n",
+    "stdin": "7\n",
+    "stderr": "Diagnostico\n"
+  },
+  {
+    "path": "08-sistemas-de-archivos-y-entrada-salida/10-flujos-bytes/LecturaBytes.java",
+    "sources": [
+      "08-sistemas-de-archivos-y-entrada-salida/10-flujos-bytes/LecturaBytes.java"
+    ],
+    "main": "LecturaBytes",
+    "mode": "R",
+    "stdout": "1\n255\n"
+  },
+  {
+    "path": "08-sistemas-de-archivos-y-entrada-salida/10-flujos-bytes/EscrituraBytes.java",
+    "sources": [
+      "08-sistemas-de-archivos-y-entrada-salida/10-flujos-bytes/EscrituraBytes.java"
+    ],
+    "main": "EscrituraBytes",
+    "mode": "R",
+    "stdout": "Bytes: 3\n"
+  },
+  {
+    "path": "08-sistemas-de-archivos-y-entrada-salida/10-flujos-bytes/LecturaParcial.java",
+    "sources": [
+      "08-sistemas-de-archivos-y-entrada-salida/10-flujos-bytes/LecturaParcial.java"
+    ],
+    "main": "LecturaParcial",
+    "mode": "R",
+    "stdout": "Suma: 15\n"
+  },
+  {
+    "path": "08-sistemas-de-archivos-y-entrada-salida/11-flujos-texto/LecturaTexto.java",
+    "sources": [
+      "08-sistemas-de-archivos-y-entrada-salida/11-flujos-texto/LecturaTexto.java"
+    ],
+    "main": "LecturaTexto",
+    "mode": "R",
+    "stdout": "pan\nleche\n"
+  },
+  {
+    "path": "08-sistemas-de-archivos-y-entrada-salida/11-flujos-texto/EscrituraTexto.java",
+    "sources": [
+      "08-sistemas-de-archivos-y-entrada-salida/11-flujos-texto/EscrituraTexto.java"
+    ],
+    "main": "EscrituraTexto",
+    "mode": "R",
+    "stdout": "café\n"
+  },
+  {
+    "path": "08-sistemas-de-archivos-y-entrada-salida/11-flujos-texto/CharsetExplicito.java",
+    "sources": [
+      "08-sistemas-de-archivos-y-entrada-salida/11-flujos-texto/CharsetExplicito.java"
+    ],
+    "main": "CharsetExplicito",
+    "mode": "R",
+    "stdout": "UTF-8: 5\nLatin-1: 4\ncafé\n"
+  },
+  {
+    "path": "08-sistemas-de-archivos-y-entrada-salida/12-buffering/FlujoConBuffer.java",
+    "sources": [
+      "08-sistemas-de-archivos-y-entrada-salida/12-buffering/FlujoConBuffer.java"
+    ],
+    "main": "FlujoConBuffer",
+    "mode": "R",
+    "stdout": "1\n2\n3\n"
+  },
+  {
+    "path": "08-sistemas-de-archivos-y-entrada-salida/12-buffering/VaciadoBuffer.java",
+    "sources": [
+      "08-sistemas-de-archivos-y-entrada-salida/12-buffering/VaciadoBuffer.java"
+    ],
+    "main": "VaciadoBuffer",
+    "mode": "R",
+    "stdout": "Antes: 0\nDespues: 3\n"
+  },
+  {
+    "path": "08-sistemas-de-archivos-y-entrada-salida/13-modos-apertura/ModosApertura.java",
+    "sources": [
+      "08-sistemas-de-archivos-y-entrada-salida/13-modos-apertura/ModosApertura.java"
+    ],
+    "main": "ModosApertura",
+    "mode": "R",
+    "stdout": "Ya existe\nnuevo\n"
+  },
+  {
+    "path": "08-sistemas-de-archivos-y-entrada-salida/13-modos-apertura/AnexarArchivo.java",
+    "sources": [
+      "08-sistemas-de-archivos-y-entrada-salida/13-modos-apertura/AnexarArchivo.java"
+    ],
+    "main": "AnexarArchivo",
+    "mode": "R",
+    "stdout": "pan\nleche\n"
+  },
+  {
+    "path": "08-sistemas-de-archivos-y-entrada-salida/14-acceso-aleatorio/AccesoAleatorio.java",
+    "sources": [
+      "08-sistemas-de-archivos-y-entrada-salida/14-acceso-aleatorio/AccesoAleatorio.java"
+    ],
+    "main": "AccesoAleatorio",
+    "mode": "R",
+    "stdout": "10\n99\n30\n"
+  },
+  {
+    "path": "08-sistemas-de-archivos-y-entrada-salida/14-acceso-aleatorio/PosicionCanal.java",
+    "sources": [
+      "08-sistemas-de-archivos-y-entrada-salida/14-acceso-aleatorio/PosicionCanal.java"
+    ],
+    "main": "PosicionCanal",
+    "mode": "R",
+    "stdout": "20\nPosicion: 2\n"
+  },
+  {
+    "path": "08-sistemas-de-archivos-y-entrada-salida/15-buffers-nio/EstadoByteBuffer.java",
+    "sources": [
+      "08-sistemas-de-archivos-y-entrada-salida/15-buffers-nio/EstadoByteBuffer.java"
+    ],
+    "main": "EstadoByteBuffer",
+    "mode": "R",
+    "stdout": "2/4/4\n0/2/4\n10\n"
+  },
+  {
+    "path": "08-sistemas-de-archivos-y-entrada-salida/15-buffers-nio/FlipClearCompact.java",
+    "sources": [
+      "08-sistemas-de-archivos-y-entrada-salida/15-buffers-nio/FlipClearCompact.java"
+    ],
+    "main": "FlipClearCompact",
+    "mode": "R",
+    "stdout": "1\n2\n3\n4\n0/4\n"
+  },
+  {
+    "path": "08-sistemas-de-archivos-y-entrada-salida/16-lectura-binaria/MainLecturaRegistro.java",
+    "sources": [
+      "08-sistemas-de-archivos-y-entrada-salida/16-lectura-binaria/RegistroBinario.java",
+      "08-sistemas-de-archivos-y-entrada-salida/16-lectura-binaria/MainLecturaRegistro.java"
+    ],
+    "main": "MainLecturaRegistro",
+    "mode": "R",
+    "stdout": "17: 3\nBytes: 8\n"
+  },
+  {
+    "path": "08-sistemas-de-archivos-y-entrada-salida/17-mapear-archivo/ArchivoMapeado.java",
+    "sources": [
+      "08-sistemas-de-archivos-y-entrada-salida/17-mapear-archivo/ArchivoMapeado.java"
+    ],
+    "main": "ArchivoMapeado",
+    "mode": "R",
+    "stdout": "20\n"
+  },
+  {
+    "path": "08-sistemas-de-archivos-y-entrada-salida/18-bloqueos-archivo/ClienteBloqueo.java",
+    "sources": [
+      "08-sistemas-de-archivos-y-entrada-salida/18-bloqueos-archivo/BloqueoArchivo.java",
+      "08-sistemas-de-archivos-y-entrada-salida/18-bloqueos-archivo/ClienteBloqueo.java"
+    ],
+    "main": "ClienteBloqueo",
+    "mode": "P",
+    "stdout": "Bloqueo: true\nSuperposicion detectada\n",
+    "allowed_stdout": [
+      "Bloqueo: true\nSuperposicion detectada\n",
+      "Bloqueo no disponible\n"
+    ]
+  },
+  {
+    "path": "08-sistemas-de-archivos-y-entrada-salida/19-monitoreo-directorios/VigilarDirectorio.java",
+    "sources": [
+      "08-sistemas-de-archivos-y-entrada-salida/19-monitoreo-directorios/VigilarDirectorio.java"
+    ],
+    "main": "VigilarDirectorio",
+    "mode": "R",
+    "stdout": "Creacion observada: true\n",
+    "allowed_stdout": [
+      "Creacion observada: true\n",
+      "Creacion observada: false\n"
+    ]
+  },
+  {
+    "path": "08-sistemas-de-archivos-y-entrada-salida/20-compresion/GzipTexto.java",
+    "sources": [
+      "08-sistemas-de-archivos-y-entrada-salida/20-compresion/GzipTexto.java"
+    ],
+    "main": "GzipTexto",
+    "mode": "R",
+    "stdout": "pan pan pan pan\n"
+  },
+  {
+    "path": "08-sistemas-de-archivos-y-entrada-salida/20-compresion/ZipArchivos.java",
+    "sources": [
+      "08-sistemas-de-archivos-y-entrada-salida/20-compresion/ZipArchivos.java"
+    ],
+    "main": "ZipArchivos",
+    "mode": "R",
+    "stdout": "pan\n"
+  },
+  {
+    "path": "09-sistemas-operativos-y-procesos/01-capas-sistema/EntornoSistema.java",
+    "sources": [
+      "09-sistemas-operativos-y-procesos/01-capas-sistema/EntornoSistema.java"
+    ],
+    "main": "EntornoSistema",
+    "mode": "R",
+    "stdout": "SO identificado: true\nArquitectura identificada: true\nJava 21 o superior: true\n"
+  },
+  {
+    "path": "09-sistemas-operativos-y-procesos/02-argumentos-consola/OpcionesCortas.java",
+    "sources": [
+      "09-sistemas-operativos-y-procesos/02-argumentos-consola/OpcionesCortas.java"
+    ],
+    "main": "OpcionesCortas",
+    "mode": "R",
+    "stdout": "Detallado: true\nCantidad: 3\n",
+    "args": [
+      "-v",
+      "-n",
+      "3"
+    ]
+  },
+  {
+    "path": "09-sistemas-operativos-y-procesos/02-argumentos-consola/OpcionesLargas.java",
+    "sources": [
+      "09-sistemas-operativos-y-procesos/02-argumentos-consola/OpcionesLargas.java"
+    ],
+    "main": "OpcionesLargas",
+    "mode": "R",
+    "stdout": "Archivo: ventas.txt\nResumen: true\n",
+    "args": [
+      "--archivo=ventas.txt",
+      "--resumen"
+    ]
+  },
+  {
+    "path": "09-sistemas-operativos-y-procesos/03-entorno/VariablesEntorno.java",
+    "sources": [
+      "09-sistemas-operativos-y-procesos/03-entorno/VariablesEntorno.java"
+    ],
+    "main": "VariablesEntorno",
+    "mode": "R",
+    "stdout": "Variable disponible: false\n",
+    "allowed_stdout": [
+      "Variable disponible: false\n",
+      "Variable disponible: true\n"
+    ]
+  },
+  {
+    "path": "09-sistemas-operativos-y-procesos/03-entorno/DirectorioTrabajo.java",
+    "sources": [
+      "09-sistemas-operativos-y-procesos/03-entorno/DirectorioTrabajo.java"
+    ],
+    "main": "DirectorioTrabajo",
+    "mode": "R",
+    "stdout": "Mismo padre: true\n"
+  },
+  {
+    "path": "09-sistemas-operativos-y-procesos/04-identidad-proceso/ProcesoActual.java",
+    "sources": [
+      "09-sistemas-operativos-y-procesos/04-identidad-proceso/ProcesoActual.java"
+    ],
+    "main": "ProcesoActual",
+    "mode": "R",
+    "stdout": "PID valido: true\nVivo: true\n"
+  },
+  {
+    "path": "09-sistemas-operativos-y-procesos/04-identidad-proceso/ProcesoPadre.java",
+    "sources": [
+      "09-sistemas-operativos-y-procesos/04-identidad-proceso/ProcesoPadre.java"
+    ],
+    "main": "ProcesoPadre",
+    "mode": "R",
+    "stdout": "Padre distinto: true\n",
+    "allowed_stdout": [
+      "Padre distinto: true\n",
+      "Padre no disponible\n"
+    ]
+  },
+  {
+    "path": "09-sistemas-operativos-y-procesos/05-crear-proceso/Padre.java",
+    "sources": [
+      "09-sistemas-operativos-y-procesos/05-crear-proceso/Hijo.java",
+      "09-sistemas-operativos-y-procesos/05-crear-proceso/Padre.java"
+    ],
+    "main": "Padre",
+    "mode": "R",
+    "stdout": "Hola desde el hijo\nHijo finalizado\n"
+  },
+  {
+    "path": "09-sistemas-operativos-y-procesos/06-aislamiento-procesos/Padre.java",
+    "sources": [
+      "09-sistemas-operativos-y-procesos/06-aislamiento-procesos/Hijo.java",
+      "09-sistemas-operativos-y-procesos/06-aislamiento-procesos/Padre.java"
+    ],
+    "main": "Padre",
+    "mode": "R",
+    "stdout": "Hijo: 15\nPadre: 10\n"
+  },
+  {
+    "path": "09-sistemas-operativos-y-procesos/07-esperar-proceso/Padre.java",
+    "sources": [
+      "09-sistemas-operativos-y-procesos/07-esperar-proceso/Hijo.java",
+      "09-sistemas-operativos-y-procesos/07-esperar-proceso/Padre.java"
+    ],
+    "main": "Padre",
+    "mode": "R",
+    "stdout": "Codigo: 7\n"
+  },
+  {
+    "path": "09-sistemas-operativos-y-procesos/08-varios-hijos/Padre.java",
+    "sources": [
+      "09-sistemas-operativos-y-procesos/08-varios-hijos/Hijo.java",
+      "09-sistemas-operativos-y-procesos/08-varios-hijos/Padre.java"
+    ],
+    "main": "Padre",
+    "mode": "R",
+    "stdout": "1 -> 1\n2 -> 4\n3 -> 9\n"
+  },
+  {
+    "path": "09-sistemas-operativos-y-procesos/11-estados-procesos/EstadosProceso.java",
+    "sources": [
+      "09-sistemas-operativos-y-procesos/11-estados-procesos/EstadosProceso.java"
+    ],
+    "main": "EstadosProceso",
+    "mode": "T",
+    "stdout": "LISTO\nEJECUCION\nBLOQUEADO\nLISTO\nEJECUCION\nTERMINADO\n"
+  },
+  {
+    "path": "09-sistemas-operativos-y-procesos/11-estados-procesos/CambioContexto.java",
+    "sources": [
+      "09-sistemas-operativos-y-procesos/11-estados-procesos/CambioContexto.java"
+    ],
+    "main": "CambioContexto",
+    "mode": "T",
+    "stdout": "P0: 1\nP1: 1\nP0: 2\nP1: 2\n"
+  },
+  {
+    "path": "09-sistemas-operativos-y-procesos/13-redireccion/Padre.java",
+    "sources": [
+      "09-sistemas-operativos-y-procesos/13-redireccion/Hijo.java",
+      "09-sistemas-operativos-y-procesos/13-redireccion/Padre.java"
+    ],
+    "main": "Padre",
+    "mode": "R",
+    "stdout": "16\nProcesado\n"
+  },
+  {
+    "path": "09-sistemas-operativos-y-procesos/14-pipeline/MainPipeline.java",
+    "sources": [
+      "09-sistemas-operativos-y-procesos/14-pipeline/Generador.java",
+      "09-sistemas-operativos-y-procesos/14-pipeline/Filtro.java",
+      "09-sistemas-operativos-y-procesos/14-pipeline/Consumidor.java",
+      "09-sistemas-operativos-y-procesos/14-pipeline/MainPipeline.java"
+    ],
+    "main": "MainPipeline",
+    "mode": "R",
+    "stdout": "Suma: 6\n"
+  },
+  {
+    "path": "09-sistemas-operativos-y-procesos/15-comunicacion-pipes/Padre.java",
+    "sources": [
+      "09-sistemas-operativos-y-procesos/15-comunicacion-pipes/Hijo.java",
+      "09-sistemas-operativos-y-procesos/15-comunicacion-pipes/Padre.java"
+    ],
+    "main": "Padre",
+    "mode": "R",
+    "stdout": "Respuesta: 15\n"
+  },
+  {
+    "path": "09-sistemas-operativos-y-procesos/16-timeout-proceso/Padre.java",
+    "sources": [
+      "09-sistemas-operativos-y-procesos/16-timeout-proceso/Hijo.java",
+      "09-sistemas-operativos-y-procesos/16-timeout-proceso/Padre.java"
+    ],
+    "main": "Padre",
+    "mode": "R",
+    "stdout": "Tiempo agotado\nHijo vivo: false\n"
+  },
+  {
+    "path": "09-sistemas-operativos-y-procesos/17-notificacion-eventos/Temporizador.java",
+    "sources": [
+      "09-sistemas-operativos-y-procesos/17-notificacion-eventos/Temporizador.java"
+    ],
+    "main": "Temporizador",
+    "mode": "R",
+    "stdout": "Evento recibido\n"
+  },
+  {
+    "path": "09-sistemas-operativos-y-procesos/17-notificacion-eventos/CancelacionCooperativa.java",
+    "sources": [
+      "09-sistemas-operativos-y-procesos/17-notificacion-eventos/CancelacionCooperativa.java"
+    ],
+    "main": "CancelacionCooperativa",
+    "mode": "R",
+    "stdout": "Cancelacion recibida\nVivo: false\n"
+  },
+  {
+    "path": "09-sistemas-operativos-y-procesos/19-terminacion-jvm/Padre.java",
+    "sources": [
+      "09-sistemas-operativos-y-procesos/19-terminacion-jvm/HijoConShutdownHook.java",
+      "09-sistemas-operativos-y-procesos/19-terminacion-jvm/Padre.java"
+    ],
+    "main": "Padre",
+    "mode": "R",
+    "stdout": "Trabajo completo\nLiberar recursos\n"
+  },
+  {
+    "path": "09-sistemas-operativos-y-procesos/20-servicio-segundo-plano/MainServicio.java",
+    "sources": [
+      "09-sistemas-operativos-y-procesos/20-servicio-segundo-plano/ServicioTemporal.java",
+      "09-sistemas-operativos-y-procesos/20-servicio-segundo-plano/MainServicio.java"
+    ],
+    "main": "MainServicio",
+    "mode": "R",
+    "stdout": "Servicio activo\nServicio cerrado\n"
+  },
+  {
+    "path": "09-sistemas-operativos-y-procesos/21-planificacion-fcfs/MainFCFS.java",
+    "sources": [
+      "09-sistemas-operativos-y-procesos/21-planificacion-fcfs/ProcesoSimulado.java",
+      "09-sistemas-operativos-y-procesos/21-planificacion-fcfs/FCFS.java",
+      "09-sistemas-operativos-y-procesos/21-planificacion-fcfs/MainFCFS.java"
+    ],
+    "main": "MainFCFS",
+    "mode": "T",
+    "stdout": "A espera=0 retorno=4\nB espera=3 retorno=5\nC espera=0 retorno=1\n"
+  },
+  {
+    "path": "09-sistemas-operativos-y-procesos/22-planificacion-sjf-srtf/MainPlanificacion.java",
+    "sources": [
+      "09-sistemas-operativos-y-procesos/22-planificacion-sjf-srtf/ProcesoSimulado.java",
+      "09-sistemas-operativos-y-procesos/22-planificacion-sjf-srtf/SJF.java",
+      "09-sistemas-operativos-y-procesos/22-planificacion-sjf-srtf/SRTF.java",
+      "09-sistemas-operativos-y-procesos/22-planificacion-sjf-srtf/MainPlanificacion.java"
+    ],
+    "main": "MainPlanificacion",
+    "mode": "T",
+    "stdout": "SJF: AAAACBB\nSRTF: ABBCAAA\n"
+  },
+  {
+    "path": "09-sistemas-operativos-y-procesos/23-planificacion-round-robin/MainRoundRobin.java",
+    "sources": [
+      "09-sistemas-operativos-y-procesos/23-planificacion-round-robin/ProcesoSimulado.java",
+      "09-sistemas-operativos-y-procesos/23-planificacion-round-robin/RoundRobin.java",
+      "09-sistemas-operativos-y-procesos/23-planificacion-round-robin/MainRoundRobin.java"
+    ],
+    "main": "MainRoundRobin",
+    "mode": "T",
+    "stdout": "AABBCAABA\n"
+  },
+  {
+    "path": "09-sistemas-operativos-y-procesos/24-planificacion-prioridades/MainPrioridades.java",
+    "sources": [
+      "09-sistemas-operativos-y-procesos/24-planificacion-prioridades/ProcesoSimulado.java",
+      "09-sistemas-operativos-y-procesos/24-planificacion-prioridades/Prioridades.java",
+      "09-sistemas-operativos-y-procesos/24-planificacion-prioridades/Aging.java",
+      "09-sistemas-operativos-y-procesos/24-planificacion-prioridades/MainPrioridades.java"
+    ],
+    "main": "MainPrioridades",
+    "mode": "T",
+    "stdout": "Fija: ACB\nAging: ABC\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/01-hilos/CrearHilo.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/01-hilos/CrearHilo.java"
+    ],
+    "main": "CrearHilo",
+    "mode": "R",
+    "stdout": "Trabajo del hilo\nMain termina\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/01-hilos/RunnableBasico.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/01-hilos/RunnableBasico.java"
+    ],
+    "main": "RunnableBasico",
+    "mode": "R",
+    "stdout": "Tarea ejecutada\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/01-hilos/JoinHilos.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/01-hilos/JoinHilos.java"
+    ],
+    "main": "JoinHilos",
+    "mode": "R",
+    "stdout": "13\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/02-estados-hilo/EstadosHilo.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/02-estados-hilo/EstadosHilo.java"
+    ],
+    "main": "EstadosHilo",
+    "mode": "R",
+    "stdout": "NEW\nWAITING\nTERMINATED\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/03-estado-compartido/VariablesCompartidas.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/03-estado-compartido/VariablesCompartidas.java"
+    ],
+    "main": "VariablesCompartidas",
+    "mode": "R",
+    "stdout": "15\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/03-estado-compartido/EstadoLocal.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/03-estado-compartido/EstadoLocal.java"
+    ],
+    "main": "EstadoLocal",
+    "mode": "R",
+    "stdout": "4 16\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/03-estado-compartido/ThreadLocalDemo.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/03-estado-compartido/ThreadLocalDemo.java"
+    ],
+    "main": "ThreadLocalDemo",
+    "mode": "R",
+    "stdout": "trabajador\nmain\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/04-intercalaciones/IntercalacionIncremento.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/04-intercalaciones/IntercalacionIncremento.java"
+    ],
+    "main": "IntercalacionIncremento",
+    "mode": "M",
+    "stdout": "Esperado: 2\nObservado: 1\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/04-intercalaciones/CarreraControlada.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/04-intercalaciones/CarreraControlada.java"
+    ],
+    "main": "CarreraControlada",
+    "mode": "M",
+    "stdout": "Contador: 1\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/05-seccion-critica/ContadorInseguro.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/05-seccion-critica/ContadorInseguro.java"
+    ],
+    "main": "ContadorInseguro",
+    "mode": "R",
+    "stdout": "Contador: 1\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/05-seccion-critica/ContadorSincronizado.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/05-seccion-critica/ContadorSincronizado.java"
+    ],
+    "main": "ContadorSincronizado",
+    "mode": "R",
+    "stdout": "Contador: 2000\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/06-visibilidad/PublicacionSegura.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/06-visibilidad/PublicacionSegura.java"
+    ],
+    "main": "PublicacionSegura",
+    "mode": "R",
+    "stdout": "Dato: 42\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/07-atomicos/AtomicIntegerDemo.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/07-atomicos/AtomicIntegerDemo.java"
+    ],
+    "main": "AtomicIntegerDemo",
+    "mode": "R",
+    "stdout": "2000\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/07-atomicos/CompareAndSet.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/07-atomicos/CompareAndSet.java"
+    ],
+    "main": "CompareAndSet",
+    "mode": "R",
+    "stdout": "true\nfalse\n15\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/09-locks/ReentrantLockDemo.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/09-locks/ReentrantLockDemo.java"
+    ],
+    "main": "ReentrantLockDemo",
+    "mode": "R",
+    "stdout": "1000\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/09-locks/TryLockTimeout.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/09-locks/TryLockTimeout.java"
+    ],
+    "main": "TryLockTimeout",
+    "mode": "R",
+    "stdout": "Obtenido: false\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/09-locks/ConditionDemo.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/09-locks/ConditionDemo.java"
+    ],
+    "main": "ConditionDemo",
+    "mode": "R",
+    "stdout": "Listo: true\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/10-semaforos/SemaforoBinario.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/10-semaforos/SemaforoBinario.java"
+    ],
+    "main": "SemaforoBinario",
+    "mode": "R",
+    "stdout": "1000\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/10-semaforos/SemaforoContador.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/10-semaforos/SemaforoContador.java"
+    ],
+    "main": "SemaforoContador",
+    "mode": "R",
+    "stdout": "Disponible: 0\nTercero: false\nDisponible: 2\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/10-semaforos/OperacionesPV.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/10-semaforos/OperacionesPV.java"
+    ],
+    "main": "OperacionesPV",
+    "mode": "R",
+    "stdout": "Evento recibido\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/11-funciones-seguras/FuncionNoSegura.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/11-funciones-seguras/FuncionNoSegura.java"
+    ],
+    "main": "FuncionNoSegura",
+    "mode": "R",
+    "stdout": "25 25\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/11-funciones-seguras/FuncionThreadSafe.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/11-funciones-seguras/FuncionThreadSafe.java"
+    ],
+    "main": "FuncionThreadSafe",
+    "mode": "R",
+    "stdout": "4 25\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/11-funciones-seguras/FuncionReentrante.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/11-funciones-seguras/FuncionReentrante.java"
+    ],
+    "main": "FuncionReentrante",
+    "mode": "R",
+    "stdout": "4 25\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/12-productor-consumidor-01/MainProductorConsumidor.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/12-productor-consumidor-01/BufferCircular.java",
+      "10-concurrencia-y-paralelismo/12-productor-consumidor-01/Productor.java",
+      "10-concurrencia-y-paralelismo/12-productor-consumidor-01/Consumidor.java",
+      "10-concurrencia-y-paralelismo/12-productor-consumidor-01/MainProductorConsumidor.java"
+    ],
+    "main": "MainProductorConsumidor",
+    "mode": "R",
+    "stdout": "Suma: 10\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/13-productor-consumidor-02/MainBlockingQueue.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/13-productor-consumidor-02/Productor.java",
+      "10-concurrencia-y-paralelismo/13-productor-consumidor-02/Consumidor.java",
+      "10-concurrencia-y-paralelismo/13-productor-consumidor-02/MainBlockingQueue.java"
+    ],
+    "main": "MainBlockingQueue",
+    "mode": "R",
+    "stdout": "Suma: 10\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/14-lectores-escritores-01/MainPrioridadLectores.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/14-lectores-escritores-01/RecursoCompartido.java",
+      "10-concurrencia-y-paralelismo/14-lectores-escritores-01/Lector.java",
+      "10-concurrencia-y-paralelismo/14-lectores-escritores-01/Escritor.java",
+      "10-concurrencia-y-paralelismo/14-lectores-escritores-01/MainPrioridadLectores.java"
+    ],
+    "main": "MainPrioridadLectores",
+    "mode": "R",
+    "stdout": "Valor final: 2\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/15-lectores-escritores-02/MainPrioridadEscritores.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/15-lectores-escritores-02/RecursoCompartido.java",
+      "10-concurrencia-y-paralelismo/15-lectores-escritores-02/Lector.java",
+      "10-concurrencia-y-paralelismo/15-lectores-escritores-02/Escritor.java",
+      "10-concurrencia-y-paralelismo/15-lectores-escritores-02/MainPrioridadEscritores.java"
+    ],
+    "main": "MainPrioridadEscritores",
+    "mode": "R",
+    "stdout": "Valor final: 2\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/16-lectores-escritores-03/MainLectoresEscritoresEquitativo.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/16-lectores-escritores-03/RecursoCompartido.java",
+      "10-concurrencia-y-paralelismo/16-lectores-escritores-03/MainLectoresEscritoresEquitativo.java"
+    ],
+    "main": "MainLectoresEscritoresEquitativo",
+    "mode": "R",
+    "stdout": "Valor final: 2\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/17-filosofos-comensales/MainFilosofos.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/17-filosofos-comensales/Mesa.java",
+      "10-concurrencia-y-paralelismo/17-filosofos-comensales/Filosofo.java",
+      "10-concurrencia-y-paralelismo/17-filosofos-comensales/MainFilosofos.java"
+    ],
+    "main": "MainFilosofos",
+    "mode": "R",
+    "stdout": "Comidas: 5\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/18-barbero-dormilon/MainBarberia.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/18-barbero-dormilon/Barberia.java",
+      "10-concurrencia-y-paralelismo/18-barbero-dormilon/Barbero.java",
+      "10-concurrencia-y-paralelismo/18-barbero-dormilon/Cliente.java",
+      "10-concurrencia-y-paralelismo/18-barbero-dormilon/MainBarberia.java"
+    ],
+    "main": "MainBarberia",
+    "mode": "R",
+    "stdout": "Cliente 1: true\nCliente 2: true\nCliente 3: false\nAtendidos: 2\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/19-fumadores-cigarrillos/MainFumadores.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/19-fumadores-cigarrillos/MesaIngredientes.java",
+      "10-concurrencia-y-paralelismo/19-fumadores-cigarrillos/Agente.java",
+      "10-concurrencia-y-paralelismo/19-fumadores-cigarrillos/Fumador.java",
+      "10-concurrencia-y-paralelismo/19-fumadores-cigarrillos/MainFumadores.java"
+    ],
+    "main": "MainFumadores",
+    "mode": "R",
+    "stdout": "Turnos completados: 3\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/20-peterson/MainPeterson.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/20-peterson/PetersonSimulado.java",
+      "10-concurrencia-y-paralelismo/20-peterson/MainPeterson.java"
+    ],
+    "main": "MainPeterson",
+    "mode": "T",
+    "stdout": "Exclusion mutua en el modelo: true\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/21-panaderia-lamport/MainPanaderia.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/21-panaderia-lamport/PanaderiaSimulada.java",
+      "10-concurrencia-y-paralelismo/21-panaderia-lamport/MainPanaderia.java"
+    ],
+    "main": "MainPanaderia",
+    "mode": "T",
+    "stdout": "Entra: 0\nEntra: 1\nEntra: 2\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/22-progress-graphs/MainGrafoProgreso.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/22-progress-graphs/Intercalacion.java",
+      "10-concurrencia-y-paralelismo/22-progress-graphs/GrafoProgreso.java",
+      "10-concurrencia-y-paralelismo/22-progress-graphs/MainGrafoProgreso.java"
+    ],
+    "main": "MainGrafoProgreso",
+    "mode": "T",
+    "stdout": "Seguras: 2\nInseguras: 4\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/23-deadlock-modelo/MainDeadlock.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/23-deadlock-modelo/EstadoBloqueos.java",
+      "10-concurrencia-y-paralelismo/23-deadlock-modelo/MainDeadlock.java"
+    ],
+    "main": "MainDeadlock",
+    "mode": "T",
+    "stdout": "Ciclo: true\nCiclo: false\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/24-deadlock-prevencion/OrdenGlobalLocks.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/24-deadlock-prevencion/OrdenGlobalLocks.java"
+    ],
+    "main": "OrdenGlobalLocks",
+    "mode": "R",
+    "stdout": "Completados: 2\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/24-deadlock-prevencion/RecuperacionTryLock.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/24-deadlock-prevencion/RecuperacionTryLock.java"
+    ],
+    "main": "RecuperacionTryLock",
+    "mode": "R",
+    "stdout": "Operacion: false\nPrimer recurso libre: true\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/25-banquero/MainBanquero.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/25-banquero/Banquero.java",
+      "10-concurrencia-y-paralelismo/25-banquero/MainBanquero.java"
+    ],
+    "main": "MainBanquero",
+    "mode": "T",
+    "stdout": "Seguro: true\nSeguro: false\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/26-inanicion-equidad/ModeloInanicion.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/26-inanicion-equidad/ModeloInanicion.java"
+    ],
+    "main": "ModeloInanicion",
+    "mode": "M",
+    "stdout": "Atiende alta\nAtiende alta\nAtiende alta\nAtiende alta\nAtiende alta\nEspera baja: 5\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/26-inanicion-equidad/SemaforoEquitativo.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/26-inanicion-equidad/SemaforoEquitativo.java"
+    ],
+    "main": "SemaforoEquitativo",
+    "mode": "M",
+    "stdout": "Equitativo: true\nAtendidos: 3\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/27-coordinacion/CountDownLatchDemo.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/27-coordinacion/CountDownLatchDemo.java"
+    ],
+    "main": "CountDownLatchDemo",
+    "mode": "R",
+    "stdout": "10\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/27-coordinacion/CyclicBarrierDemo.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/27-coordinacion/CyclicBarrierDemo.java"
+    ],
+    "main": "CyclicBarrierDemo",
+    "mode": "R",
+    "stdout": "Fases: 2\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/27-coordinacion/PhaserDemo.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/27-coordinacion/PhaserDemo.java"
+    ],
+    "main": "PhaserDemo",
+    "mode": "R",
+    "stdout": "Fase: 1\nRegistrados: 1\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/28-pools/PoolFijo.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/28-pools/PoolFijo.java"
+    ],
+    "main": "PoolFijo",
+    "mode": "R",
+    "stdout": "13\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/28-pools/PoolColaAcotada.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/28-pools/PoolColaAcotada.java"
+    ],
+    "main": "PoolColaAcotada",
+    "mode": "R",
+    "stdout": "Tarea rechazada\n7\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/28-pools/MainPrethreading.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/28-pools/MainPrethreading.java"
+    ],
+    "main": "MainPrethreading",
+    "mode": "R",
+    "stdout": "Precreados: 2\nSolicitud A\nSolicitud B\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/29-tareas-asincronas/CallableFuture.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/29-tareas-asincronas/CallableFuture.java"
+    ],
+    "main": "CallableFuture",
+    "mode": "R",
+    "stdout": "42\nIllegalArgumentException\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/29-tareas-asincronas/CompletableFutureDemo.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/29-tareas-asincronas/CompletableFutureDemo.java"
+    ],
+    "main": "CompletableFutureDemo",
+    "mode": "R",
+    "stdout": "10\n0\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/29-tareas-asincronas/CancelarTarea.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/29-tareas-asincronas/CancelarTarea.java"
+    ],
+    "main": "CancelarTarea",
+    "mode": "R",
+    "stdout": "Cancelada: true\nTermino: true\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/30-paralelismo/SumaSecuencialParalela.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/30-paralelismo/SumaSecuencialParalela.java"
+    ],
+    "main": "SumaSecuencialParalela",
+    "mode": "R",
+    "stdout": "Secuencial: 21\nParalelo: 21\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/30-paralelismo/ForkJoinSuma.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/30-paralelismo/ForkJoinSuma.java"
+    ],
+    "main": "ForkJoinSuma",
+    "mode": "R",
+    "stdout": "21\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/31-hilos-virtuales/CompararHilosBloqueantes.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/31-hilos-virtuales/CompararHilosBloqueantes.java"
+    ],
+    "main": "CompararHilosBloqueantes",
+    "mode": "R",
+    "stdout": "Plataforma: 10\nVirtual: 10\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/32-colecciones-concurrentes/ConcurrentHashMapDemo.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/32-colecciones-concurrentes/ConcurrentHashMapDemo.java"
+    ],
+    "main": "ConcurrentHashMapDemo",
+    "mode": "R",
+    "stdout": "1000\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/32-colecciones-concurrentes/ConcurrentLinkedQueueDemo.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/32-colecciones-concurrentes/ConcurrentLinkedQueueDemo.java"
+    ],
+    "main": "ConcurrentLinkedQueueDemo",
+    "mode": "R",
+    "stdout": "Suma: 10\nVacia: true\n"
+  },
+  {
+    "path": "11-redes-y-protocolos-de-comunicacion/01-modelo-cliente-servidor/MainClienteServidor.java",
+    "sources": [
+      "11-redes-y-protocolos-de-comunicacion/01-modelo-cliente-servidor/Servidor.java",
+      "11-redes-y-protocolos-de-comunicacion/01-modelo-cliente-servidor/Cliente.java",
+      "11-redes-y-protocolos-de-comunicacion/01-modelo-cliente-servidor/MainClienteServidor.java"
+    ],
+    "main": "MainClienteServidor",
+    "mode": "T",
+    "stdout": "Disponible\nNo encontrado\n"
+  },
+  {
+    "path": "11-redes-y-protocolos-de-comunicacion/02-interfaces-red/InterfacesLocales.java",
+    "sources": [
+      "11-redes-y-protocolos-de-comunicacion/02-interfaces-red/InterfacesLocales.java"
+    ],
+    "main": "InterfacesLocales",
+    "mode": "R",
+    "stdout": "Loopback: true\nInterfaz encontrada: true\n",
+    "allowed_stdout": [
+      "Loopback: true\nInterfaz encontrada: true\n",
+      "Loopback: true\nInterfaz encontrada: false\n"
+    ]
+  },
+  {
+    "path": "11-redes-y-protocolos-de-comunicacion/02-interfaces-red/Loopback.java",
+    "sources": [
+      "11-redes-y-protocolos-de-comunicacion/02-interfaces-red/Loopback.java"
+    ],
+    "main": "Loopback",
+    "mode": "R",
+    "stdout": "Es local: true\nFormato IP valido: true\n"
+  },
+  {
+    "path": "11-redes-y-protocolos-de-comunicacion/03-direccionamiento-ip/IPv4Bytes.java",
+    "sources": [
+      "11-redes-y-protocolos-de-comunicacion/03-direccionamiento-ip/IPv4Bytes.java"
+    ],
+    "main": "IPv4Bytes",
+    "mode": "R",
+    "stdout": "Bits: 32\n192.0.2.17\n"
+  },
+  {
+    "path": "11-redes-y-protocolos-de-comunicacion/03-direccionamiento-ip/IPv6Bytes.java",
+    "sources": [
+      "11-redes-y-protocolos-de-comunicacion/03-direccionamiento-ip/IPv6Bytes.java"
+    ],
+    "main": "IPv6Bytes",
+    "mode": "R",
+    "stdout": "Bits: 128\nPrefijo: 2001:0db8\nUltimo octeto: 1\n"
+  },
+  {
+    "path": "11-redes-y-protocolos-de-comunicacion/04-subredes/MascaraCIDR.java",
+    "sources": [
+      "11-redes-y-protocolos-de-comunicacion/04-subredes/MascaraCIDR.java"
+    ],
+    "main": "MascaraCIDR",
+    "mode": "T",
+    "stdout": "/0: 0.0.0.0\n/24: 255.255.255.0\n/26: 255.255.255.192\n/32: 255.255.255.255\n"
+  },
+  {
+    "path": "11-redes-y-protocolos-de-comunicacion/04-subredes/PerteneceSubred.java",
+    "sources": [
+      "11-redes-y-protocolos-de-comunicacion/04-subredes/PerteneceSubred.java"
+    ],
+    "main": "PerteneceSubred",
+    "mode": "T",
+    "stdout": "192.0.2.70: true\n192.0.2.130: false\n"
+  },
+  {
+    "path": "11-redes-y-protocolos-de-comunicacion/04-subredes/RedYBroadcast.java",
+    "sources": [
+      "11-redes-y-protocolos-de-comunicacion/04-subredes/RedYBroadcast.java"
+    ],
+    "main": "RedYBroadcast",
+    "mode": "T",
+    "stdout": "Red: 192.0.2.64\nBroadcast: 192.0.2.127\n"
+  },
+  {
+    "path": "11-redes-y-protocolos-de-comunicacion/05-mac-y-tramas/DireccionMAC.java",
+    "sources": [
+      "11-redes-y-protocolos-de-comunicacion/05-mac-y-tramas/DireccionMAC.java"
+    ],
+    "main": "DireccionMAC",
+    "mode": "T",
+    "stdout": "02:00:00:00:00:11\nGrupo: false\n"
+  },
+  {
+    "path": "11-redes-y-protocolos-de-comunicacion/05-mac-y-tramas/TramaEthernet.java",
+    "sources": [
+      "11-redes-y-protocolos-de-comunicacion/05-mac-y-tramas/TramaEthernet.java"
+    ],
+    "main": "TramaEthernet",
+    "mode": "T",
+    "stdout": "Cabecera: 14\nEtherType: 0800\nCarga: 3\n"
+  },
+  {
+    "path": "11-redes-y-protocolos-de-comunicacion/06-conmutacion/MainSwitch.java",
+    "sources": [
+      "11-redes-y-protocolos-de-comunicacion/06-conmutacion/SwitchSimulado.java",
+      "11-redes-y-protocolos-de-comunicacion/06-conmutacion/MainSwitch.java"
+    ],
+    "main": "MainSwitch",
+    "mode": "T",
+    "stdout": "[2, 3]\n[1]\n[2]\n"
+  },
+  {
+    "path": "11-redes-y-protocolos-de-comunicacion/07-enrutamiento/MainPrefijoMasLargo.java",
+    "sources": [
+      "11-redes-y-protocolos-de-comunicacion/07-enrutamiento/Ruta.java",
+      "11-redes-y-protocolos-de-comunicacion/07-enrutamiento/TablaRutas.java",
+      "11-redes-y-protocolos-de-comunicacion/07-enrutamiento/MainPrefijoMasLargo.java"
+    ],
+    "main": "MainPrefijoMasLargo",
+    "mode": "T",
+    "stdout": "/26 -> R2\n/24 -> R1\n/0 -> R0\n"
+  },
+  {
+    "path": "11-redes-y-protocolos-de-comunicacion/08-orden-red/NetworkByteOrder.java",
+    "sources": [
+      "11-redes-y-protocolos-de-comunicacion/08-orden-red/NetworkByteOrder.java"
+    ],
+    "main": "NetworkByteOrder",
+    "mode": "R",
+    "stdout": "01 02 03 04 \n"
+  },
+  {
+    "path": "11-redes-y-protocolos-de-comunicacion/09-puertos/PuertoLocal.java",
+    "sources": [
+      "11-redes-y-protocolos-de-comunicacion/09-puertos/PuertoLocal.java"
+    ],
+    "main": "PuertoLocal",
+    "mode": "R",
+    "stdout": "Asignado: true\nLoopback: true\n"
+  },
+  {
+    "path": "11-redes-y-protocolos-de-comunicacion/09-puertos/DireccionSocket.java",
+    "sources": [
+      "11-redes-y-protocolos-de-comunicacion/09-puertos/DireccionSocket.java"
+    ],
+    "main": "DireccionSocket",
+    "mode": "R",
+    "stdout": "Puerto: 8080\nLoopback: true\n"
+  },
+  {
+    "path": "11-redes-y-protocolos-de-comunicacion/10-dns/ResolverLocalhost.java",
+    "sources": [
+      "11-redes-y-protocolos-de-comunicacion/10-dns/ResolverLocalhost.java"
+    ],
+    "main": "ResolverLocalhost",
+    "mode": "M",
+    "stdout": "Resuelto: true\n"
+  },
+  {
+    "path": "11-redes-y-protocolos-de-comunicacion/10-dns/CacheDNSSimulada.java",
+    "sources": [
+      "11-redes-y-protocolos-de-comunicacion/10-dns/CacheDNSSimulada.java"
+    ],
+    "main": "CacheDNSSimulada",
+    "mode": "M",
+    "stdout": "10: Cache\n14: Cache\n15: Expirado\n"
+  },
+  {
+    "path": "11-redes-y-protocolos-de-comunicacion/11-tcp-echo/MainEcho.java",
+    "sources": [
+      "11-redes-y-protocolos-de-comunicacion/11-tcp-echo/Servidor.java",
+      "11-redes-y-protocolos-de-comunicacion/11-tcp-echo/Cliente.java",
+      "11-redes-y-protocolos-de-comunicacion/11-tcp-echo/MainEcho.java"
+    ],
+    "main": "MainEcho",
+    "mode": "R",
+    "stdout": "Hola TCP\n"
+  },
+  {
+    "path": "11-redes-y-protocolos-de-comunicacion/12-tcp-framing/MainFraming.java",
+    "sources": [
+      "11-redes-y-protocolos-de-comunicacion/12-tcp-framing/CodificadorTrama.java",
+      "11-redes-y-protocolos-de-comunicacion/12-tcp-framing/Servidor.java",
+      "11-redes-y-protocolos-de-comunicacion/12-tcp-framing/Cliente.java",
+      "11-redes-y-protocolos-de-comunicacion/12-tcp-framing/MainFraming.java"
+    ],
+    "main": "MainFraming",
+    "mode": "R",
+    "stdout": "OK pan\nOK leche\n"
+  },
+  {
+    "path": "11-redes-y-protocolos-de-comunicacion/13-tcp-lectura-parcial/MainLecturaParcial.java",
+    "sources": [
+      "11-redes-y-protocolos-de-comunicacion/13-tcp-lectura-parcial/Servidor.java",
+      "11-redes-y-protocolos-de-comunicacion/13-tcp-lectura-parcial/Cliente.java",
+      "11-redes-y-protocolos-de-comunicacion/13-tcp-lectura-parcial/MainLecturaParcial.java"
+    ],
+    "main": "MainLecturaParcial",
+    "mode": "R",
+    "stdout": "Truncado: 3\n"
+  },
+  {
+    "path": "11-redes-y-protocolos-de-comunicacion/14-udp/MainDatagrama.java",
+    "sources": [
+      "11-redes-y-protocolos-de-comunicacion/14-udp/Receptor.java",
+      "11-redes-y-protocolos-de-comunicacion/14-udp/Emisor.java",
+      "11-redes-y-protocolos-de-comunicacion/14-udp/MainDatagrama.java"
+    ],
+    "main": "MainDatagrama",
+    "mode": "R",
+    "stdout": "Hola UDP\n"
+  },
+  {
+    "path": "11-redes-y-protocolos-de-comunicacion/15-udp-fiabilidad-modelo/MainStopAndWait.java",
+    "sources": [
+      "11-redes-y-protocolos-de-comunicacion/15-udp-fiabilidad-modelo/CanalSimulado.java",
+      "11-redes-y-protocolos-de-comunicacion/15-udp-fiabilidad-modelo/StopAndWait.java",
+      "11-redes-y-protocolos-de-comunicacion/15-udp-fiabilidad-modelo/MainStopAndWait.java"
+    ],
+    "main": "MainStopAndWait",
+    "mode": "T",
+    "stdout": "Intentos: 2\nEntregas: 1\n"
+  },
+  {
+    "path": "11-redes-y-protocolos-de-comunicacion/16-ventana-deslizante/MainVentana.java",
+    "sources": [
+      "11-redes-y-protocolos-de-comunicacion/16-ventana-deslizante/VentanaDeslizante.java",
+      "11-redes-y-protocolos-de-comunicacion/16-ventana-deslizante/MainVentana.java"
+    ],
+    "main": "MainVentana",
+    "mode": "T",
+    "stdout": "0\n1\nLlena: true\n2\n"
+  },
+  {
+    "path": "11-redes-y-protocolos-de-comunicacion/17-congestion-y-tasa/MainTokenBucket.java",
+    "sources": [
+      "11-redes-y-protocolos-de-comunicacion/17-congestion-y-tasa/TokenBucket.java",
+      "11-redes-y-protocolos-de-comunicacion/17-congestion-y-tasa/MainTokenBucket.java"
+    ],
+    "main": "MainTokenBucket",
+    "mode": "T",
+    "stdout": "0: true\n0: true\n0: false\n1: true\n"
+  },
+  {
+    "path": "11-redes-y-protocolos-de-comunicacion/18-servidor-multicliente/MainMultiCliente.java",
+    "sources": [
+      "11-redes-y-protocolos-de-comunicacion/18-servidor-multicliente/Servidor.java",
+      "11-redes-y-protocolos-de-comunicacion/18-servidor-multicliente/Cliente.java",
+      "11-redes-y-protocolos-de-comunicacion/18-servidor-multicliente/MainMultiCliente.java"
+    ],
+    "main": "MainMultiCliente",
+    "mode": "R",
+    "stdout": "OK pan\nOK leche\nOK arroz\n"
+  },
+  {
+    "path": "11-redes-y-protocolos-de-comunicacion/19-servidor-pool/MainServidorPool.java",
+    "sources": [
+      "11-redes-y-protocolos-de-comunicacion/19-servidor-pool/Servidor.java",
+      "11-redes-y-protocolos-de-comunicacion/19-servidor-pool/Cliente.java",
+      "11-redes-y-protocolos-de-comunicacion/19-servidor-pool/MainServidorPool.java"
+    ],
+    "main": "MainServidorPool",
+    "mode": "R",
+    "stdout": "OK pan\nOK leche\nOK arroz\n"
+  },
+  {
+    "path": "11-redes-y-protocolos-de-comunicacion/20-servidor-virtual/MainServidorVirtual.java",
+    "sources": [
+      "11-redes-y-protocolos-de-comunicacion/20-servidor-virtual/Servidor.java",
+      "11-redes-y-protocolos-de-comunicacion/20-servidor-virtual/Cliente.java",
+      "11-redes-y-protocolos-de-comunicacion/20-servidor-virtual/MainServidorVirtual.java"
+    ],
+    "main": "MainServidorVirtual",
+    "mode": "R",
+    "stdout": "OK pan\nOK leche\nOK arroz\n"
+  },
+  {
+    "path": "11-redes-y-protocolos-de-comunicacion/21-sockets-nio/MainSelector.java",
+    "sources": [
+      "11-redes-y-protocolos-de-comunicacion/21-sockets-nio/ServidorSelector.java",
+      "11-redes-y-protocolos-de-comunicacion/21-sockets-nio/Cliente.java",
+      "11-redes-y-protocolos-de-comunicacion/21-sockets-nio/MainSelector.java"
+    ],
+    "main": "MainSelector",
+    "mode": "R",
+    "stdout": "HOLA\n"
+  },
+  {
+    "path": "11-redes-y-protocolos-de-comunicacion/22-http/MainHttp.java",
+    "sources": [
+      "11-redes-y-protocolos-de-comunicacion/22-http/ServidorHttp.java",
+      "11-redes-y-protocolos-de-comunicacion/22-http/ClienteHttp.java",
+      "11-redes-y-protocolos-de-comunicacion/22-http/MainHttp.java"
+    ],
+    "main": "MainHttp",
+    "mode": "R",
+    "stdout": "Estado: 200\nTipo: text/plain; charset=utf-8\nPan: 12\n"
+  },
+  {
+    "path": "11-redes-y-protocolos-de-comunicacion/23-protocolos-aplicacion/MainProtocolo.java",
+    "sources": [
+      "11-redes-y-protocolos-de-comunicacion/23-protocolos-aplicacion/Solicitud.java",
+      "11-redes-y-protocolos-de-comunicacion/23-protocolos-aplicacion/Respuesta.java",
+      "11-redes-y-protocolos-de-comunicacion/23-protocolos-aplicacion/ProtocoloTexto.java",
+      "11-redes-y-protocolos-de-comunicacion/23-protocolos-aplicacion/MainProtocolo.java"
+    ],
+    "main": "MainProtocolo",
+    "mode": "T",
+    "stdout": "200 12\n404 No encontrado\n400 Sintaxis invalida\n"
+  },
+  {
+    "path": "11-redes-y-protocolos-de-comunicacion/24-timeouts/MainTimeout.java",
+    "sources": [
+      "11-redes-y-protocolos-de-comunicacion/24-timeouts/ServidorLento.java",
+      "11-redes-y-protocolos-de-comunicacion/24-timeouts/ClienteTimeout.java",
+      "11-redes-y-protocolos-de-comunicacion/24-timeouts/MainTimeout.java"
+    ],
+    "main": "MainTimeout",
+    "mode": "R",
+    "stdout": "Timeout de lectura\nConexion cerrada\n"
+  },
+  {
+    "path": "12-persistencia-y-gestion-de-datos/01-registros/MainRegistros.java",
+    "sources": [
+      "12-persistencia-y-gestion-de-datos/01-registros/Registro.java",
+      "12-persistencia-y-gestion-de-datos/01-registros/ArchivoRegistros.java",
+      "12-persistencia-y-gestion-de-datos/01-registros/MainRegistros.java"
+    ],
+    "main": "MainRegistros",
+    "mode": "R",
+    "stdout": "Bytes: 16\nID: 102, cantidad: 7\n"
+  },
+  {
+    "path": "12-persistencia-y-gestion-de-datos/02-formatos-texto/MainCsv.java",
+    "sources": [
+      "12-persistencia-y-gestion-de-datos/02-formatos-texto/CsvSimple.java",
+      "12-persistencia-y-gestion-de-datos/02-formatos-texto/MainCsv.java"
+    ],
+    "main": "MainCsv",
+    "mode": "R",
+    "stdout": "pan: 12\nleche: 7\nFila rechazada\n"
+  },
+  {
+    "path": "12-persistencia-y-gestion-de-datos/02-formatos-texto/PropertiesDemo.java",
+    "sources": [
+      "12-persistencia-y-gestion-de-datos/02-formatos-texto/PropertiesDemo.java"
+    ],
+    "main": "PropertiesDemo",
+    "mode": "R",
+    "stdout": "Norte\n20\n"
+  },
+  {
+    "path": "12-persistencia-y-gestion-de-datos/03-indexacion/MainIndice.java",
+    "sources": [
+      "12-persistencia-y-gestion-de-datos/03-indexacion/IndiceArchivo.java",
+      "12-persistencia-y-gestion-de-datos/03-indexacion/MainIndice.java"
+    ],
+    "main": "MainIndice",
+    "mode": "R",
+    "stdout": "102: 7\n999 existe: false\n"
+  },
+  {
+    "path": "12-persistencia-y-gestion-de-datos/04-consultas/FiltrarRegistros.java",
+    "sources": [
+      "12-persistencia-y-gestion-de-datos/04-consultas/FiltrarRegistros.java"
+    ],
+    "main": "FiltrarRegistros",
+    "mode": "T",
+    "stdout": "pan: 12\narroz: 7\n"
+  },
+  {
+    "path": "12-persistencia-y-gestion-de-datos/04-consultas/ProyectarCampos.java",
+    "sources": [
+      "12-persistencia-y-gestion-de-datos/04-consultas/ProyectarCampos.java"
+    ],
+    "main": "ProyectarCampos",
+    "mode": "T",
+    "stdout": "pan\nleche\n"
+  },
+  {
+    "path": "12-persistencia-y-gestion-de-datos/04-consultas/AgruparRegistros.java",
+    "sources": [
+      "12-persistencia-y-gestion-de-datos/04-consultas/AgruparRegistros.java"
+    ],
+    "main": "AgruparRegistros",
+    "mode": "T",
+    "stdout": "pan: 7\nleche: 2\n"
+  },
+  {
+    "path": "12-persistencia-y-gestion-de-datos/05-join/MainJoin.java",
+    "sources": [
+      "12-persistencia-y-gestion-de-datos/05-join/NestedLoopJoin.java",
+      "12-persistencia-y-gestion-de-datos/05-join/HashJoin.java",
+      "12-persistencia-y-gestion-de-datos/05-join/MainJoin.java"
+    ],
+    "main": "MainJoin",
+    "mode": "T",
+    "stdout": "pan -> venta A\npan -> venta B\nleche -> venta C\nIguales: true\n"
+  },
+  {
+    "path": "12-persistencia-y-gestion-de-datos/06-transacciones/MainTransaccion.java",
+    "sources": [
+      "12-persistencia-y-gestion-de-datos/06-transacciones/Cuenta.java",
+      "12-persistencia-y-gestion-de-datos/06-transacciones/TransaccionSimulada.java",
+      "12-persistencia-y-gestion-de-datos/06-transacciones/MainTransaccion.java"
+    ],
+    "main": "MainTransaccion",
+    "mode": "T",
+    "stdout": "700 800\nRollback\n700 800\n"
+  },
+  {
+    "path": "12-persistencia-y-gestion-de-datos/07-aislamiento/LecturaSuciaSimulada.java",
+    "sources": [
+      "12-persistencia-y-gestion-de-datos/07-aislamiento/LecturaSuciaSimulada.java"
+    ],
+    "main": "LecturaSuciaSimulada",
+    "mode": "T",
+    "stdout": "T2 lee: 70\nConfirmado: 100\nLectura sucia: true\n"
+  },
+  {
+    "path": "12-persistencia-y-gestion-de-datos/07-aislamiento/LecturaNoRepetible.java",
+    "sources": [
+      "12-persistencia-y-gestion-de-datos/07-aislamiento/LecturaNoRepetible.java"
+    ],
+    "main": "LecturaNoRepetible",
+    "mode": "T",
+    "stdout": "Primera: 100\nSegunda: 80\n"
+  },
+  {
+    "path": "12-persistencia-y-gestion-de-datos/07-aislamiento/PerdidaActualizacion.java",
+    "sources": [
+      "12-persistencia-y-gestion-de-datos/07-aislamiento/PerdidaActualizacion.java"
+    ],
+    "main": "PerdidaActualizacion",
+    "mode": "T",
+    "stdout": "Esperado: 15\nObservado: 13\n"
+  },
+  {
+    "path": "12-persistencia-y-gestion-de-datos/08-write-ahead-log/MainRecuperacion.java",
+    "sources": [
+      "12-persistencia-y-gestion-de-datos/08-write-ahead-log/EntradaLog.java",
+      "12-persistencia-y-gestion-de-datos/08-write-ahead-log/AlmacenSimulado.java",
+      "12-persistencia-y-gestion-de-datos/08-write-ahead-log/MainRecuperacion.java"
+    ],
+    "main": "MainRecuperacion",
+    "mode": "T",
+    "stdout": "Pan: 15\nLeche: 8\n"
+  },
+  {
+    "path": "12-persistencia-y-gestion-de-datos/09-jdbc-api/MainConsultaSimulada.java",
+    "sources": [
+      "12-persistencia-y-gestion-de-datos/09-jdbc-api/ContratoJdbc.java",
+      "12-persistencia-y-gestion-de-datos/09-jdbc-api/MainConsultaSimulada.java"
+    ],
+    "main": "MainConsultaSimulada",
+    "mode": "T",
+    "stdout": "pan: 12\nNo encontrado\n"
+  },
+  {
+    "path": "13-criptografia-y-seguridad/01-integridad/HashSHA256.java",
+    "sources": [
+      "13-criptografia-y-seguridad/01-integridad/HashSHA256.java"
+    ],
+    "main": "HashSHA256",
+    "mode": "R",
+    "stdout": "Bytes: 32\nba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad\n"
+  },
+  {
+    "path": "13-criptografia-y-seguridad/01-integridad/VerificarArchivo.java",
+    "sources": [
+      "13-criptografia-y-seguridad/01-integridad/VerificarArchivo.java"
+    ],
+    "main": "VerificarArchivo",
+    "mode": "R",
+    "stdout": "Integro: true\nIntegro: false\n"
+  },
+  {
+    "path": "13-criptografia-y-seguridad/02-checksum/ChecksumSuma.java",
+    "sources": [
+      "13-criptografia-y-seguridad/02-checksum/ChecksumSuma.java"
+    ],
+    "main": "ChecksumSuma",
+    "mode": "R",
+    "stdout": "A: 6\nB: 6\nColision: true\n"
+  },
+  {
+    "path": "13-criptografia-y-seguridad/03-autenticacion-mensajes/HmacSHA256.java",
+    "sources": [
+      "13-criptografia-y-seguridad/03-autenticacion-mensajes/HmacSHA256.java"
+    ],
+    "main": "HmacSHA256",
+    "mode": "R",
+    "stdout": "Bytes: 32\nRepetible con misma clave: true\n"
+  },
+  {
+    "path": "13-criptografia-y-seguridad/03-autenticacion-mensajes/VerificarHmac.java",
+    "sources": [
+      "13-criptografia-y-seguridad/03-autenticacion-mensajes/VerificarHmac.java"
+    ],
+    "main": "VerificarHmac",
+    "mode": "R",
+    "stdout": "Original: true\nModificado: false\n"
+  },
+  {
+    "path": "13-criptografia-y-seguridad/04-aleatoriedad/SecureRandomDemo.java",
+    "sources": [
+      "13-criptografia-y-seguridad/04-aleatoriedad/SecureRandomDemo.java"
+    ],
+    "main": "SecureRandomDemo",
+    "mode": "R",
+    "stdout": "Nonce: 12 bytes\nSal: 16 bytes\n"
+  },
+  {
+    "path": "13-criptografia-y-seguridad/05-contrasenas/PBKDF2Demo.java",
+    "sources": [
+      "13-criptografia-y-seguridad/05-contrasenas/PBKDF2Demo.java"
+    ],
+    "main": "PBKDF2Demo",
+    "mode": "R",
+    "stdout": "Correcta: true\nIncorrecta: false\n"
+  },
+  {
+    "path": "13-criptografia-y-seguridad/06-cifrado-simetrico/AesGcmDemo.java",
+    "sources": [
+      "13-criptografia-y-seguridad/06-cifrado-simetrico/AesGcmDemo.java"
+    ],
+    "main": "AesGcmDemo",
+    "mode": "R",
+    "stdout": "pan:12\nEtiqueta invalida\n"
+  },
+  {
+    "path": "13-criptografia-y-seguridad/07-claves-publicas/ParClaves.java",
+    "sources": [
+      "13-criptografia-y-seguridad/07-claves-publicas/ParClaves.java"
+    ],
+    "main": "ParClaves",
+    "mode": "R",
+    "stdout": "Publica: X.509\nPrivada: PKCS#8\n"
+  },
+  {
+    "path": "13-criptografia-y-seguridad/07-claves-publicas/FirmaDigital.java",
+    "sources": [
+      "13-criptografia-y-seguridad/07-claves-publicas/FirmaDigital.java"
+    ],
+    "main": "FirmaDigital",
+    "mode": "R",
+    "stdout": "Original: true\nAlterado: false\n"
+  },
+  {
+    "path": "13-criptografia-y-seguridad/08-intercambio-claves/AcuerdoX25519.java",
+    "sources": [
+      "13-criptografia-y-seguridad/08-intercambio-claves/AcuerdoX25519.java"
+    ],
+    "main": "AcuerdoX25519",
+    "mode": "R",
+    "stdout": "Coinciden: true\nBytes: 32\n"
+  },
+  {
+    "path": "13-criptografia-y-seguridad/09-certificados/MainCertificado.java",
+    "sources": [
+      "13-criptografia-y-seguridad/09-certificados/LeerCertificado.java",
+      "13-criptografia-y-seguridad/09-certificados/MainCertificado.java"
+    ],
+    "main": "MainCertificado",
+    "mode": "R",
+    "stdout": "Tipo: X.509\nSujeto: CN=CodeTrace Demo\nAutofirma valida\n"
+  },
+  {
+    "path": "13-criptografia-y-seguridad/10-validacion-entradas/ValidarLongitud.java",
+    "sources": [
+      "13-criptografia-y-seguridad/10-validacion-entradas/ValidarLongitud.java"
+    ],
+    "main": "ValidarLongitud",
+    "mode": "R",
+    "stdout": "0: true\n32: true\n-1: false\n1025: false\n"
+  },
+  {
+    "path": "13-criptografia-y-seguridad/10-validacion-entradas/ValidarRuta.java",
+    "sources": [
+      "13-criptografia-y-seguridad/10-validacion-entradas/ValidarRuta.java"
+    ],
+    "main": "ValidarRuta",
+    "mode": "R",
+    "stdout": "ventas.txt: true\n../afuera.txt: false\n"
+  },
+  {
+    "path": "13-criptografia-y-seguridad/11-control-acceso/MainControlAcceso.java",
+    "sources": [
+      "13-criptografia-y-seguridad/11-control-acceso/PermisosRoles.java",
+      "13-criptografia-y-seguridad/11-control-acceso/MainControlAcceso.java"
+    ],
+    "main": "MainControlAcceso",
+    "mode": "T",
+    "stdout": "Cajero vende: true\nCajero elimina: false\nAdmin elimina: true\nDesconocido lee: false\n"
+  },
+  {
+    "path": "14-comunicacion-con-dispositivos/03-transmision-serial/TramaSerial.java",
+    "sources": [
+      "14-comunicacion-con-dispositivos/03-transmision-serial/TramaSerial.java"
+    ],
+    "main": "TramaSerial",
+    "mode": "T",
+    "stdout": "01100101001\nBits: 11\n"
+  },
+  {
+    "path": "14-comunicacion-con-dispositivos/04-paridad/ParidadPar.java",
+    "sources": [
+      "14-comunicacion-con-dispositivos/04-paridad/ParidadPar.java"
+    ],
+    "main": "ParidadPar",
+    "mode": "T",
+    "stdout": "Paridad: 1\nOriginal: true\nUn cambio: false\nDos cambios: true\n"
+  },
+  {
+    "path": "14-comunicacion-con-dispositivos/04-paridad/ParidadImpar.java",
+    "sources": [
+      "14-comunicacion-con-dispositivos/04-paridad/ParidadImpar.java"
+    ],
+    "main": "ParidadImpar",
+    "mode": "T",
+    "stdout": "Paridad: 1\nOriginal: true\nAlterado: false\n"
+  },
+  {
+    "path": "14-comunicacion-con-dispositivos/05-crc-y-hamming/CRCModelo.java",
+    "sources": [
+      "14-comunicacion-con-dispositivos/05-crc-y-hamming/CRCModelo.java"
+    ],
+    "main": "CRCModelo",
+    "mode": "T",
+    "stdout": "CRC: 1\nValido: true\nAlterado: false\nCRC32 conocido: cbf43926\n"
+  },
+  {
+    "path": "14-comunicacion-con-dispositivos/05-crc-y-hamming/MainHamming.java",
+    "sources": [
+      "14-comunicacion-con-dispositivos/05-crc-y-hamming/Hamming74.java",
+      "14-comunicacion-con-dispositivos/05-crc-y-hamming/MainHamming.java"
+    ],
+    "main": "MainHamming",
+    "mode": "T",
+    "stdout": "Sindrome original: 0\nPosicion alterada: 5\nDato recuperado: 11\n"
+  },
+  {
+    "path": "14-comunicacion-con-dispositivos/06-canal-serial/MainSerial.java",
+    "sources": [
+      "14-comunicacion-con-dispositivos/06-canal-serial/CanalBytesSimulado.java",
+      "14-comunicacion-con-dispositivos/06-canal-serial/Emisor.java",
+      "14-comunicacion-con-dispositivos/06-canal-serial/Receptor.java",
+      "14-comunicacion-con-dispositivos/06-canal-serial/MainSerial.java"
+    ],
+    "main": "MainSerial",
+    "mode": "T",
+    "stdout": "TEMP25\nOK\n"
+  },
+  {
+    "path": "14-comunicacion-con-dispositivos/08-mensajes-medicion-y-control/MedicionSimulada.java",
+    "sources": [
+      "14-comunicacion-con-dispositivos/08-mensajes-medicion-y-control/MedicionSimulada.java"
+    ],
+    "main": "MedicionSimulada",
+    "mode": "T",
+    "stdout": "Temperatura: 25\n"
+  },
+  {
+    "path": "14-comunicacion-con-dispositivos/08-mensajes-medicion-y-control/ControlPorUmbral.java",
+    "sources": [
+      "14-comunicacion-con-dispositivos/08-mensajes-medicion-y-control/ControlPorUmbral.java"
+    ],
+    "main": "ControlPorUmbral",
+    "mode": "T",
+    "stdout": "24: APAGAR\n30: ENCENDER\n28: ENCENDER\n"
+  },
+  {
+    "path": "14-comunicacion-con-dispositivos/11-telemetria/MainTelemetria.java",
+    "sources": [
+      "14-comunicacion-con-dispositivos/11-telemetria/TramaMedicion.java",
+      "14-comunicacion-con-dispositivos/11-telemetria/Codificador.java",
+      "14-comunicacion-con-dispositivos/11-telemetria/Decodificador.java",
+      "14-comunicacion-con-dispositivos/11-telemetria/MainTelemetria.java"
+    ],
+    "main": "MainTelemetria",
+    "mode": "T",
+    "stdout": "3: 25\nChecksum invalido\n"
+  },
+  {
+    "path": "15-graficos-y-multimedia/01-pixeles/ColorRGB.java",
+    "sources": [
+      "15-graficos-y-multimedia/01-pixeles/ColorRGB.java"
+    ],
+    "main": "ColorRGB",
+    "mode": "R",
+    "stdout": "A: 255\nR: 12\nG: 34\nB: 56\n"
+  },
+  {
+    "path": "15-graficos-y-multimedia/01-pixeles/ImagenPixeles.java",
+    "sources": [
+      "15-graficos-y-multimedia/01-pixeles/ImagenPixeles.java"
+    ],
+    "main": "ImagenPixeles",
+    "mode": "R",
+    "stdout": "Dimensiones: 3x2\nPixel: ff123456\n"
+  },
+  {
+    "path": "15-graficos-y-multimedia/02-archivos-imagen/LeerEscribirPNG.java",
+    "sources": [
+      "15-graficos-y-multimedia/02-archivos-imagen/LeerEscribirPNG.java"
+    ],
+    "main": "LeerEscribirPNG",
+    "mode": "R",
+    "stdout": "Dimensiones: 2x2\nPixel igual: true\n"
+  },
+  {
+    "path": "15-graficos-y-multimedia/03-transformaciones/Traslacion.java",
+    "sources": [
+      "15-graficos-y-multimedia/03-transformaciones/Traslacion.java"
+    ],
+    "main": "Traslacion",
+    "mode": "T",
+    "stdout": "5 2\n"
+  },
+  {
+    "path": "15-graficos-y-multimedia/03-transformaciones/Rotacion2D.java",
+    "sources": [
+      "15-graficos-y-multimedia/03-transformaciones/Rotacion2D.java"
+    ],
+    "main": "Rotacion2D",
+    "mode": "T",
+    "stdout": "-1 2\n"
+  },
+  {
+    "path": "15-graficos-y-multimedia/03-transformaciones/Escalado.java",
+    "sources": [
+      "15-graficos-y-multimedia/03-transformaciones/Escalado.java"
+    ],
+    "main": "Escalado",
+    "mode": "T",
+    "stdout": "8 6\n"
+  },
+  {
+    "path": "15-graficos-y-multimedia/04-procesamiento-imagen/EscalaGrises.java",
+    "sources": [
+      "15-graficos-y-multimedia/04-procesamiento-imagen/EscalaGrises.java"
+    ],
+    "main": "EscalaGrises",
+    "mode": "R",
+    "stdout": "ff3c3c3c\n"
+  },
+  {
+    "path": "15-graficos-y-multimedia/04-procesamiento-imagen/Umbral.java",
+    "sources": [
+      "15-graficos-y-multimedia/04-procesamiento-imagen/Umbral.java"
+    ],
+    "main": "Umbral",
+    "mode": "R",
+    "stdout": "0\n255\n255\n"
+  },
+  {
+    "path": "15-graficos-y-multimedia/04-procesamiento-imagen/Convolucion.java",
+    "sources": [
+      "15-graficos-y-multimedia/04-procesamiento-imagen/Convolucion.java"
+    ],
+    "main": "Convolucion",
+    "mode": "R",
+    "stdout": "Centro original: 90\nFiltrado: 10\n"
+  },
+  {
+    "path": "15-graficos-y-multimedia/05-rasterizacion/MainRaster.java",
+    "sources": [
+      "15-graficos-y-multimedia/05-rasterizacion/LineaBresenham.java",
+      "15-graficos-y-multimedia/05-rasterizacion/MainRaster.java"
+    ],
+    "main": "MainRaster",
+    "mode": "T",
+    "stdout": "[0,0, 1,1, 2,1, 3,2, 4,2]\n[2,2, 2,1, 2,0]\n"
+  },
+  {
+    "path": "15-graficos-y-multimedia/06-graficos-2d/MainGrafico.java",
+    "sources": [
+      "15-graficos-y-multimedia/06-graficos-2d/DibujarFormas.java",
+      "15-graficos-y-multimedia/06-graficos-2d/MainGrafico.java"
+    ],
+    "main": "MainGrafico",
+    "mode": "R",
+    "stdout": "Fondo: ffffff\nCentro: ff0000\n"
+  },
+  {
+    "path": "15-graficos-y-multimedia/07-audio-digital/MuestreoSeno.java",
+    "sources": [
+      "15-graficos-y-multimedia/07-audio-digital/MuestreoSeno.java"
+    ],
+    "main": "MuestreoSeno",
+    "mode": "R",
+    "stdout": "0\n1\n0\n-1\n"
+  },
+  {
+    "path": "15-graficos-y-multimedia/07-audio-digital/CuantizacionPCM.java",
+    "sources": [
+      "15-graficos-y-multimedia/07-audio-digital/CuantizacionPCM.java"
+    ],
+    "main": "CuantizacionPCM",
+    "mode": "R",
+    "stdout": "-32767\n-16383\n0\n16384\n32767\n32767\n"
+  },
+  {
+    "path": "15-graficos-y-multimedia/07-audio-digital/EscribirWav.java",
+    "sources": [
+      "15-graficos-y-multimedia/07-audio-digital/EscribirWav.java"
+    ],
+    "main": "EscribirWav",
+    "mode": "R",
+    "stdout": "Muestras: 80\nTasa: 8000\nCanales: 1\n"
+  },
+  {
+    "path": "16-interpretes-y-procesamiento-de-lenguajes/01-cadena-compilacion/FuenteEjemplo.java",
+    "sources": [
+      "16-interpretes-y-procesamiento-de-lenguajes/01-cadena-compilacion/FuenteEjemplo.java"
+    ],
+    "main": "FuenteEjemplo",
+    "mode": "R",
+    "stdout": "12\n"
+  },
+  {
+    "path": "16-interpretes-y-procesamiento-de-lenguajes/02-bytecode/Operacion.java",
+    "sources": [
+      "16-interpretes-y-procesamiento-de-lenguajes/02-bytecode/Operacion.java"
+    ],
+    "main": "Operacion",
+    "mode": "R",
+    "stdout": "8\n"
+  },
+  {
+    "path": "16-interpretes-y-procesamiento-de-lenguajes/05-biblioteca-jar/app/Cliente.java",
+    "sources": [
+      "16-interpretes-y-procesamiento-de-lenguajes/05-biblioteca-jar/lib/Operaciones.java",
+      "16-interpretes-y-procesamiento-de-lenguajes/05-biblioteca-jar/app/Cliente.java"
+    ],
+    "main": "app.Cliente",
+    "mode": "R",
+    "stdout": "12\n",
+    "jar": {
+      "library": [
+        "16-interpretes-y-procesamiento-de-lenguajes/05-biblioteca-jar/lib/Operaciones.java"
+      ],
+      "client": [
+        "16-interpretes-y-procesamiento-de-lenguajes/05-biblioteca-jar/app/Cliente.java"
+      ]
+    }
+  },
+  {
+    "path": "16-interpretes-y-procesamiento-de-lenguajes/07-carga-clases/MainCargaClase.java",
+    "sources": [
+      "16-interpretes-y-procesamiento-de-lenguajes/07-carga-clases/ClaseEjemplo.java",
+      "16-interpretes-y-procesamiento-de-lenguajes/07-carga-clases/MainCargaClase.java"
+    ],
+    "main": "MainCargaClase",
+    "mode": "R",
+    "stdout": "Cargada: ClaseEjemplo\nInicializada\nFin\n"
+  },
+  {
+    "path": "16-interpretes-y-procesamiento-de-lenguajes/10-lexer/MainLexer.java",
+    "sources": [
+      "16-interpretes-y-procesamiento-de-lenguajes/10-lexer/Token.java",
+      "16-interpretes-y-procesamiento-de-lenguajes/10-lexer/Lexer.java",
+      "16-interpretes-y-procesamiento-de-lenguajes/10-lexer/MainLexer.java"
+    ],
+    "main": "MainLexer",
+    "mode": "T",
+    "stdout": "ID:pan@0\n+:+@4\nNUM:12@6\nEOF:@8\nCaracter invalido en 2\n"
+  },
+  {
+    "path": "16-interpretes-y-procesamiento-de-lenguajes/11-parser-descenso-recursivo/MainParser.java",
+    "sources": [
+      "16-interpretes-y-procesamiento-de-lenguajes/11-parser-descenso-recursivo/Token.java",
+      "16-interpretes-y-procesamiento-de-lenguajes/11-parser-descenso-recursivo/Lexer.java",
+      "16-interpretes-y-procesamiento-de-lenguajes/11-parser-descenso-recursivo/Nodo.java",
+      "16-interpretes-y-procesamiento-de-lenguajes/11-parser-descenso-recursivo/Parser.java",
+      "16-interpretes-y-procesamiento-de-lenguajes/11-parser-descenso-recursivo/MainParser.java"
+    ],
+    "main": "MainParser",
+    "mode": "T",
+    "stdout": "(+ 2 (* 3 4))\n(* (+ 2 3) 4)\n(- (- 9 3) 2)\nSintaxis invalida\n"
+  },
+  {
+    "path": "16-interpretes-y-procesamiento-de-lenguajes/12-shunting-yard/MainPostfija.java",
+    "sources": [
+      "16-interpretes-y-procesamiento-de-lenguajes/12-shunting-yard/ShuntingYard.java",
+      "16-interpretes-y-procesamiento-de-lenguajes/12-shunting-yard/MainPostfija.java"
+    ],
+    "main": "MainPostfija",
+    "mode": "T",
+    "stdout": "2 3 4 * +\n2 3 + 4 *\n"
+  },
+  {
+    "path": "16-interpretes-y-procesamiento-de-lenguajes/13-evaluacion-ast/MainEvaluador.java",
+    "sources": [
+      "16-interpretes-y-procesamiento-de-lenguajes/13-evaluacion-ast/Expresion.java",
+      "16-interpretes-y-procesamiento-de-lenguajes/13-evaluacion-ast/Evaluador.java",
+      "16-interpretes-y-procesamiento-de-lenguajes/13-evaluacion-ast/MainEvaluador.java"
+    ],
+    "main": "MainEvaluador",
+    "mode": "T",
+    "stdout": "14\nDivision invalida\n"
+  },
+  {
+    "path": "16-interpretes-y-procesamiento-de-lenguajes/14-maquina-estados-comandos/ReconocerComando.java",
+    "sources": [
+      "16-interpretes-y-procesamiento-de-lenguajes/14-maquina-estados-comandos/ReconocerComando.java"
+    ],
+    "main": "ReconocerComando",
+    "mode": "R",
+    "stdout": "ABRIR: true\nGUARDAR pan: true\nCERRAR: true\nBORRAR todo: false\n"
+  },
+  {
+    "path": "16-interpretes-y-procesamiento-de-lenguajes/14-maquina-estados-comandos/MaquinaEstados.java",
+    "sources": [
+      "16-interpretes-y-procesamiento-de-lenguajes/14-maquina-estados-comandos/MaquinaEstados.java"
+    ],
+    "main": "MaquinaEstados",
+    "mode": "R",
+    "stdout": "GUARDAR: ERROR\nABRIR: OK\nGUARDAR: OK\nCERRAR: OK\nCERRAR: ERROR\n"
+  },
+  {
+    "path": "17-sistemas-distribuidos/01-mensajeria/MainMensajeria.java",
+    "sources": [
+      "17-sistemas-distribuidos/01-mensajeria/Mensaje.java",
+      "17-sistemas-distribuidos/01-mensajeria/Buzon.java",
+      "17-sistemas-distribuidos/01-mensajeria/MainMensajeria.java"
+    ],
+    "main": "MainMensajeria",
+    "mode": "T",
+    "stdout": "Pendientes: 2\npedido\nconfirmacion\nVacio: true\n"
+  },
+  {
+    "path": "17-sistemas-distribuidos/02-relojes-logicos/MainLamport.java",
+    "sources": [
+      "17-sistemas-distribuidos/02-relojes-logicos/RelojLamport.java",
+      "17-sistemas-distribuidos/02-relojes-logicos/MainLamport.java"
+    ],
+    "main": "MainLamport",
+    "mode": "T",
+    "stdout": "A local: 1\nA envia: 2\nB recibe: 3\nB local: 4\n"
+  },
+  {
+    "path": "17-sistemas-distribuidos/03-relojes-vectoriales/MainCausalidad.java",
+    "sources": [
+      "17-sistemas-distribuidos/03-relojes-vectoriales/RelojVectorial.java",
+      "17-sistemas-distribuidos/03-relojes-vectoriales/MainCausalidad.java"
+    ],
+    "main": "MainCausalidad",
+    "mode": "T",
+    "stdout": "A: [1, 0]\nB: [0, 1]\nConcurrentes: true\nB recibe: [1, 2]\nA precede: true\n"
+  },
+  {
+    "path": "17-sistemas-distribuidos/04-reintentos/MainReintento.java",
+    "sources": [
+      "17-sistemas-distribuidos/04-reintentos/CanalSimulado.java",
+      "17-sistemas-distribuidos/04-reintentos/ReintentoAcotado.java",
+      "17-sistemas-distribuidos/04-reintentos/MainReintento.java"
+    ],
+    "main": "MainReintento",
+    "mode": "T",
+    "stdout": "Intento 1 en t=0\nIntento 2 en t=3\nIntento 3 en t=7\nExito: true\nIntento 1 en t=0\nIntento 2 en t=3\nExito: false\n"
+  },
+  {
+    "path": "17-sistemas-distribuidos/05-idempotencia/MainDuplicados.java",
+    "sources": [
+      "17-sistemas-distribuidos/05-idempotencia/Peticion.java",
+      "17-sistemas-distribuidos/05-idempotencia/ServidorIdempotente.java",
+      "17-sistemas-distribuidos/05-idempotencia/MainDuplicados.java"
+    ],
+    "main": "MainDuplicados",
+    "mode": "T",
+    "stdout": "3\n3\n5\nTotal: 5\nID conflictivo\n"
+  },
+  {
+    "path": "17-sistemas-distribuidos/06-heartbeat/MainHeartbeat.java",
+    "sources": [
+      "17-sistemas-distribuidos/06-heartbeat/Nodo.java",
+      "17-sistemas-distribuidos/06-heartbeat/DetectorFallos.java",
+      "17-sistemas-distribuidos/06-heartbeat/MainHeartbeat.java"
+    ],
+    "main": "MainHeartbeat",
+    "mode": "T",
+    "stdout": "t=4: false\nt=5: true\nt=6: false\n"
+  },
+  {
+    "path": "17-sistemas-distribuidos/07-eleccion-lider/MainEleccion.java",
+    "sources": [
+      "17-sistemas-distribuidos/07-eleccion-lider/EleccionAnillo.java",
+      "17-sistemas-distribuidos/07-eleccion-lider/MainEleccion.java"
+    ],
+    "main": "MainEleccion",
+    "mode": "T",
+    "stdout": "Visita 2: candidato 7\nVisita 9: candidato 9\nVisita 4: candidato 9\nLider: 9\n"
+  },
+  {
+    "path": "17-sistemas-distribuidos/08-replicacion/MainReplicacion.java",
+    "sources": [
+      "17-sistemas-distribuidos/08-replicacion/Replica.java",
+      "17-sistemas-distribuidos/08-replicacion/MainReplicacion.java"
+    ],
+    "main": "MainReplicacion",
+    "mode": "T",
+    "stdout": "Primaria: 20\nSecundaria antes: 10\nSecundaria despues: 20\n"
+  },
+  {
+    "path": "17-sistemas-distribuidos/09-consistencia/LecturaEventual.java",
+    "sources": [
+      "17-sistemas-distribuidos/09-consistencia/LecturaEventual.java"
+    ],
+    "main": "LecturaEventual",
+    "mode": "T",
+    "stdout": "Lectura remota: 10\nConvergencia: true\n"
+  },
+  {
+    "path": "17-sistemas-distribuidos/09-consistencia/QuorumSimulado.java",
+    "sources": [
+      "17-sistemas-distribuidos/09-consistencia/QuorumSimulado.java"
+    ],
+    "main": "QuorumSimulado",
+    "mode": "T",
+    "stdout": "Interseccion: true\nValor: 20\n"
+  },
+  {
+    "path": "17-sistemas-distribuidos/10-exclusion-distribuida/MainTokenAnillo.java",
+    "sources": [
+      "17-sistemas-distribuidos/10-exclusion-distribuida/TokenAnillo.java",
+      "17-sistemas-distribuidos/10-exclusion-distribuida/MainTokenAnillo.java"
+    ],
+    "main": "MainTokenAnillo",
+    "mode": "T",
+    "stdout": "Nodo 1 antes: false\nNodo 0: true\nNodo 1: true\nNodo 2: true\n"
+  },
+  {
+    "path": "18-pruebas-depuracion-y-rendimiento/01-contratos/PrePostcondiciones.java",
+    "sources": [
+      "18-pruebas-depuracion-y-rendimiento/01-contratos/PrePostcondiciones.java"
+    ],
+    "main": "PrePostcondiciones",
+    "mode": "R",
+    "stdout": "Precio: 750\nEntrada rechazada\n"
+  },
+  {
+    "path": "18-pruebas-depuracion-y-rendimiento/01-contratos/Invariantes.java",
+    "sources": [
+      "18-pruebas-depuracion-y-rendimiento/01-contratos/Invariantes.java"
+    ],
+    "main": "Invariantes",
+    "mode": "R",
+    "stdout": "Retiro rechazado\nStock: 5\n"
+  },
+  {
+    "path": "18-pruebas-depuracion-y-rendimiento/02-pruebas-unitarias/PruebaCalculadora.java",
+    "sources": [
+      "18-pruebas-depuracion-y-rendimiento/02-pruebas-unitarias/Calculadora.java",
+      "18-pruebas-depuracion-y-rendimiento/02-pruebas-unitarias/PruebaCalculadora.java"
+    ],
+    "main": "PruebaCalculadora",
+    "mode": "R",
+    "stdout": "Division por cero comprobada\nPruebas: 3 OK\n"
+  },
+  {
+    "path": "18-pruebas-depuracion-y-rendimiento/03-pruebas-limites/PruebaCasosLimite.java",
+    "sources": [
+      "18-pruebas-depuracion-y-rendimiento/03-pruebas-limites/PruebaCasosLimite.java"
+    ],
+    "main": "PruebaCasosLimite",
+    "mode": "R",
+    "stdout": "Limites: 4 OK\n"
+  },
+  {
+    "path": "18-pruebas-depuracion-y-rendimiento/04-pruebas-propiedades/PruebaPropiedades.java",
+    "sources": [
+      "18-pruebas-depuracion-y-rendimiento/04-pruebas-propiedades/PruebaPropiedades.java"
+    ],
+    "main": "PruebaPropiedades",
+    "mode": "R",
+    "stdout": "Propiedades: 100 casos OK\n"
+  },
+  {
+    "path": "18-pruebas-depuracion-y-rendimiento/05-pruebas-concurrencia/PruebaContador.java",
+    "sources": [
+      "18-pruebas-depuracion-y-rendimiento/05-pruebas-concurrencia/PruebaContador.java"
+    ],
+    "main": "PruebaContador",
+    "mode": "R",
+    "stdout": "Contador: 2000 OK\n"
+  },
+  {
+    "path": "18-pruebas-depuracion-y-rendimiento/05-pruebas-concurrencia/PruebaTimeout.java",
+    "sources": [
+      "18-pruebas-depuracion-y-rendimiento/05-pruebas-concurrencia/PruebaTimeout.java"
+    ],
+    "main": "PruebaTimeout",
+    "mode": "R",
+    "stdout": "Timeout detectado\nPool terminado\n"
+  },
+  {
+    "path": "18-pruebas-depuracion-y-rendimiento/06-trazas/TrazaExcepcion.java",
+    "sources": [
+      "18-pruebas-depuracion-y-rendimiento/06-trazas/TrazaExcepcion.java"
+    ],
+    "main": "TrazaExcepcion",
+    "mode": "R",
+    "stdout": "IllegalStateException\nvalidar\nprocesar\nmain\n"
+  },
+  {
+    "path": "18-pruebas-depuracion-y-rendimiento/06-trazas/CausasExcepcion.java",
+    "sources": [
+      "18-pruebas-depuracion-y-rendimiento/06-trazas/CausasExcepcion.java"
+    ],
+    "main": "CausasExcepcion",
+    "mode": "R",
+    "stdout": "No se pudo cargar\nNumberFormatException\n"
+  },
+  {
+    "path": "18-pruebas-depuracion-y-rendimiento/07-depuracion-jdb/ProgramaDepurable.java",
+    "sources": [
+      "18-pruebas-depuracion-y-rendimiento/07-depuracion-jdb/ProgramaDepurable.java"
+    ],
+    "main": "ProgramaDepurable",
+    "mode": "R",
+    "stdout": "600\n"
+  },
+  {
+    "path": "18-pruebas-depuracion-y-rendimiento/08-registro-eventos/RegistroJul.java",
+    "sources": [
+      "18-pruebas-depuracion-y-rendimiento/08-registro-eventos/RegistroJul.java"
+    ],
+    "main": "RegistroJul",
+    "mode": "R",
+    "stdout": "INFO: Pedido recibido\nWARNING: Stock bajo\n"
+  },
+  {
+    "path": "18-pruebas-depuracion-y-rendimiento/09-medicion-tiempo/MedirNanoTime.java",
+    "sources": [
+      "18-pruebas-depuracion-y-rendimiento/09-medicion-tiempo/MedirNanoTime.java"
+    ],
+    "main": "MedirNanoTime",
+    "mode": "R",
+    "stdout": "Resultado: 5505500\nIntervalo no negativo: true\n"
+  },
+  {
+    "path": "18-pruebas-depuracion-y-rendimiento/09-medicion-tiempo/CompararComplejidad.java",
+    "sources": [
+      "18-pruebas-depuracion-y-rendimiento/09-medicion-tiempo/CompararComplejidad.java"
+    ],
+    "main": "CompararComplejidad",
+    "mode": "R",
+    "stdout": "10: 10 vs 100\n20: 20 vs 400\n"
+  },
+  {
+    "path": "18-pruebas-depuracion-y-rendimiento/10-memoria-jvm/ConsultarHeap.java",
+    "sources": [
+      "18-pruebas-depuracion-y-rendimiento/10-memoria-jvm/ConsultarHeap.java"
+    ],
+    "main": "ConsultarHeap",
+    "mode": "R",
+    "stdout": "Usado no negativo: true\nComprometido cubre uso: true\n"
+  },
+  {
+    "path": "18-pruebas-depuracion-y-rendimiento/10-memoria-jvm/MainRetencion.java",
+    "sources": [
+      "18-pruebas-depuracion-y-rendimiento/10-memoria-jvm/MainRetencion.java"
+    ],
+    "main": "MainRetencion",
+    "mode": "R",
+    "stdout": "Referencias: 4\nReferencias: 0\n"
+  },
+  {
+    "path": "18-pruebas-depuracion-y-rendimiento/11-diagnostico-hilos/ConsultarHilos.java",
+    "sources": [
+      "18-pruebas-depuracion-y-rendimiento/11-diagnostico-hilos/ConsultarHilos.java"
+    ],
+    "main": "ConsultarHilos",
+    "mode": "M",
+    "stdout": "Hilo encontrado: true\nNombre coincide: true\nSin deadlock detectado: true\n"
+  },
+  {
+    "path": "18-pruebas-depuracion-y-rendimiento/11-diagnostico-hilos/DetectarDeadlockSimulado.java",
+    "sources": [
+      "18-pruebas-depuracion-y-rendimiento/11-diagnostico-hilos/DetectarDeadlockSimulado.java"
+    ],
+    "main": "DetectarDeadlockSimulado",
+    "mode": "M",
+    "stdout": "Caso A: true\nCaso B: false\n"
+  },
+  {
+    "path": "18-pruebas-depuracion-y-rendimiento/12-flight-recorder/GrabarJfr.java",
+    "sources": [
+      "18-pruebas-depuracion-y-rendimiento/12-flight-recorder/GrabarJfr.java"
+    ],
+    "main": "GrabarJfr",
+    "mode": "R",
+    "stdout": "Grabacion creada: true\n"
+  },
+  {
+    "path": "18-pruebas-depuracion-y-rendimiento/12-flight-recorder/LeerEventosJfr.java",
+    "sources": [
+      "18-pruebas-depuracion-y-rendimiento/12-flight-recorder/LeerEventosJfr.java"
+    ],
+    "main": "LeerEventosJfr",
+    "mode": "R",
+    "stdout": "Cantidad: 12\nEventos propios: 1\n"
+  },
+  {
+    "path": "18-pruebas-depuracion-y-rendimiento/13-herramientas-jdk/MainDiagnostico.java",
+    "sources": [
+      "18-pruebas-depuracion-y-rendimiento/13-herramientas-jdk/ProcesoInspeccionable.java",
+      "18-pruebas-depuracion-y-rendimiento/13-herramientas-jdk/MainDiagnostico.java"
+    ],
+    "main": "MainDiagnostico",
+    "mode": "P",
+    "stdout": "jcmd: OK\njstack: OK\n",
+    "allowed_stdout": [
+      "jcmd: OK\njstack: OK\n",
+      "jcmd: OK\njstack: No disponible\n",
+      "jcmd: No disponible\njstack: OK\n",
+      "jcmd: No disponible\njstack: No disponible\n"
+    ]
+  },
+  {
+    "path": "18-pruebas-depuracion-y-rendimiento/14-empaquetado/Aplicacion.java",
+    "sources": [
+      "18-pruebas-depuracion-y-rendimiento/14-empaquetado/Aplicacion.java"
+    ],
+    "main": "Aplicacion",
+    "mode": "R",
+    "stdout": "Aplicacion empaquetada\n",
+    "executable_jar": true
+  },
+  {
+    "path": "19-inteligencia-artificial-fundamental/01-comparacion-de-patrones/CompararMatrices.java",
+    "sources": [
+      "19-inteligencia-artificial-fundamental/01-comparacion-de-patrones/CompararMatrices.java"
+    ],
+    "main": "CompararMatrices",
+    "mode": "R",
+    "stdout": "Identicas: 0\nDiferencias: 2\n"
+  },
+  {
+    "path": "19-inteligencia-artificial-fundamental/02-reconocimiento-de-digitos/ReconocerDigito.java",
+    "sources": [
+      "19-inteligencia-artificial-fundamental/02-reconocimiento-de-digitos/ReconocerDigito.java"
+    ],
+    "main": "ReconocerDigito",
+    "mode": "R",
+    "stdout": "Exacto: 2\nCon ruido: 2\nVacio: -1\n"
+  },
+  {
+    "path": "19-inteligencia-artificial-fundamental/03-distancias/DistanciaManhattan.java",
+    "sources": [
+      "19-inteligencia-artificial-fundamental/03-distancias/DistanciaManhattan.java"
+    ],
+    "main": "DistanciaManhattan",
+    "mode": "R",
+    "stdout": "Distancia: 7\nIguales: 0\n"
+  },
+  {
+    "path": "19-inteligencia-artificial-fundamental/04-clasificacion-knn/ClasificadorKNN.java",
+    "sources": [
+      "19-inteligencia-artificial-fundamental/04-clasificacion-knn/ClasificadorKNN.java"
+    ],
+    "main": "ClasificadorKNN",
+    "mode": "R",
+    "stdout": "Cerca de origen: 0\nLejos de origen: 1\n"
+  },
+  {
+    "path": "19-inteligencia-artificial-fundamental/05-perceptron/Perceptron.java",
+    "sources": [
+      "19-inteligencia-artificial-fundamental/05-perceptron/Perceptron.java"
+    ],
+    "main": "Perceptron",
+    "mode": "R",
+    "stdout": "0001\n0111\n"
+  },
+  {
+    "path": "19-inteligencia-artificial-fundamental/06-red-neuronal-elemental/RedNeuronalElemental.java",
+    "sources": [
+      "19-inteligencia-artificial-fundamental/06-red-neuronal-elemental/RedNeuronalElemental.java"
+    ],
+    "main": "RedNeuronalElemental",
+    "mode": "R",
+    "stdout": "Error disminuye: true\nError menor a 0.02: true\n0001\n"
+  },
+  {
+    "path": "19-inteligencia-artificial-fundamental/07-agrupamiento-kmeans/KMeans.java",
+    "sources": [
+      "19-inteligencia-artificial-fundamental/07-agrupamiento-kmeans/KMeans.java"
+    ],
+    "main": "KMeans",
+    "mode": "R",
+    "stdout": "Centros: [2.0, 10.0]\n"
+  },
+  {
+    "path": "19-inteligencia-artificial-fundamental/08-busqueda-heuristica/BusquedaAEstrella.java",
+    "sources": [
+      "19-inteligencia-artificial-fundamental/08-busqueda-heuristica/BusquedaAEstrella.java"
+    ],
+    "main": "BusquedaAEstrella",
+    "mode": "R",
+    "stdout": "Coste: 6\nOptimo conocido: true\n"
+  },
+  {
+    "path": "19-inteligencia-artificial-fundamental/09-algoritmos-geneticos/SeleccionMutacion.java",
+    "sources": [
+      "19-inteligencia-artificial-fundamental/09-algoritmos-geneticos/SeleccionMutacion.java"
+    ],
+    "main": "SeleccionMutacion",
+    "mode": "R",
+    "stdout": "No empeora: true\nAptitud valida: true\n"
+  },
+  {
+    "path": "19-inteligencia-artificial-fundamental/10-regresion-lineal/RegresionLineal.java",
+    "sources": [
+      "19-inteligencia-artificial-fundamental/10-regresion-lineal/RegresionLineal.java"
+    ],
+    "main": "RegresionLineal",
+    "mode": "R",
+    "stdout": "Pendiente: 2.0\nIntercepto: 1.0\nPrediccion x=5: 11.0\nECM: 0.0\n"
+  },
+  {
+    "path": "19-inteligencia-artificial-fundamental/11-evaluacion-modelos/MatrizConfusion.java",
+    "sources": [
+      "19-inteligencia-artificial-fundamental/11-evaluacion-modelos/MatrizConfusion.java"
+    ],
+    "main": "MatrizConfusion",
+    "mode": "R",
+    "stdout": "VN: 2\nFP: 1\nFN: 1\nVP: 2\n"
+  },
+  {
+    "path": "19-inteligencia-artificial-fundamental/11-evaluacion-modelos/MetricasClasificacion.java",
+    "sources": [
+      "19-inteligencia-artificial-fundamental/11-evaluacion-modelos/MetricasClasificacion.java"
+    ],
+    "main": "MetricasClasificacion",
+    "mode": "R",
+    "stdout": "Exactitud: 0.70\nPrecision: 0.75\nExhaustividad: 0.60\nSin positivos predichos: indefinida\n"
+  },
+  {
+    "path": "19-inteligencia-artificial-fundamental/12-minimax/Minimax.java",
+    "sources": [
+      "19-inteligencia-artificial-fundamental/12-minimax/Minimax.java"
+    ],
+    "main": "Minimax",
+    "mode": "R",
+    "stdout": "Quitar 1: 1\nQuitar 2: -1\nValor inicial: 1\n"
+  },
+  {
+    "path": "20-arquitectura-de-software/01-en-capas-verduleria/Main.java",
+    "sources": [
+      "20-arquitectura-de-software/01-en-capas-verduleria/dominio/Verdura.java",
+      "20-arquitectura-de-software/01-en-capas-verduleria/persistencia/InventarioEnMemoria.java",
+      "20-arquitectura-de-software/01-en-capas-verduleria/servicio/ServicioVentas.java",
+      "20-arquitectura-de-software/01-en-capas-verduleria/presentacion/ConsolaVentas.java",
+      "20-arquitectura-de-software/01-en-capas-verduleria/Main.java"
+    ],
+    "main": "Main",
+    "mode": "R",
+    "stdout": "Venta: tomate x2\nStock: 3\nVenta rechazada\nStock: 3\n"
+  },
+  {
+    "path": "20-arquitectura-de-software/02-mvc-biblioteca/Main.java",
+    "sources": [
+      "20-arquitectura-de-software/02-mvc-biblioteca/modelo/Libro.java",
+      "20-arquitectura-de-software/02-mvc-biblioteca/modelo/Biblioteca.java",
+      "20-arquitectura-de-software/02-mvc-biblioteca/vista/VistaBiblioteca.java",
+      "20-arquitectura-de-software/02-mvc-biblioteca/controlador/ControladorPrestamos.java",
+      "20-arquitectura-de-software/02-mvc-biblioteca/Main.java"
+    ],
+    "main": "Main",
+    "mode": "R",
+    "stdout": "El principito: prestado\nOperacion rechazada\nEl principito: disponible\n"
+  },
+  {
+    "path": "20-arquitectura-de-software/03-mvp-panaderia/Main.java",
+    "sources": [
+      "20-arquitectura-de-software/03-mvp-panaderia/modelo/PedidoPan.java",
+      "20-arquitectura-de-software/03-mvp-panaderia/vista/VistaPedidos.java",
+      "20-arquitectura-de-software/03-mvp-panaderia/vista/ConsolaPedidos.java",
+      "20-arquitectura-de-software/03-mvp-panaderia/presentador/PresentadorPedidos.java",
+      "20-arquitectura-de-software/03-mvp-panaderia/Main.java"
+    ],
+    "main": "Main",
+    "mode": "R",
+    "stdout": "Total: 100 centavos\nPedido rechazado\n"
+  },
+  {
+    "path": "20-arquitectura-de-software/04-mvvm-heladeria/Main.java",
+    "sources": [
+      "20-arquitectura-de-software/04-mvvm-heladeria/modelo/Helado.java",
+      "20-arquitectura-de-software/04-mvvm-heladeria/viewmodel/HeladoViewModel.java",
+      "20-arquitectura-de-software/04-mvvm-heladeria/vista/VistaHeladeria.java",
+      "20-arquitectura-de-software/04-mvvm-heladeria/Main.java"
+    ],
+    "main": "Main",
+    "mode": "R",
+    "stdout": "vainilla: 200 centavos\nchocolate: 450 centavos\nSeleccion rechazada\n"
+  },
+  {
+    "path": "20-arquitectura-de-software/05-hexagonal-centro-ecuestre/Main.java",
+    "sources": [
+      "20-arquitectura-de-software/05-hexagonal-centro-ecuestre/dominio/Caballo.java",
+      "20-arquitectura-de-software/05-hexagonal-centro-ecuestre/dominio/Reserva.java",
+      "20-arquitectura-de-software/05-hexagonal-centro-ecuestre/aplicacion/puertos/ServicioReservas.java",
+      "20-arquitectura-de-software/05-hexagonal-centro-ecuestre/aplicacion/puertos/RepositorioCaballos.java",
+      "20-arquitectura-de-software/05-hexagonal-centro-ecuestre/aplicacion/ReservarCaballo.java",
+      "20-arquitectura-de-software/05-hexagonal-centro-ecuestre/infraestructura/entrada/ConsolaReservas.java",
+      "20-arquitectura-de-software/05-hexagonal-centro-ecuestre/infraestructura/salida/RepositorioEnMemoria.java",
+      "20-arquitectura-de-software/05-hexagonal-centro-ecuestre/Main.java"
+    ],
+    "main": "Main",
+    "mode": "R",
+    "stdout": "Reserva: Luna para Ana\nReserva rechazada\n"
+  },
+  {
+    "path": "20-arquitectura-de-software/06-clean-peluqueria-canina/Main.java",
+    "sources": [
+      "20-arquitectura-de-software/06-clean-peluqueria-canina/entidades/Cita.java",
+      "20-arquitectura-de-software/06-clean-peluqueria-canina/casosdeuso/EntradaCita.java",
+      "20-arquitectura-de-software/06-clean-peluqueria-canina/casosdeuso/SalidaCita.java",
+      "20-arquitectura-de-software/06-clean-peluqueria-canina/casosdeuso/RepositorioCitas.java",
+      "20-arquitectura-de-software/06-clean-peluqueria-canina/casosdeuso/AgendarCita.java",
+      "20-arquitectura-de-software/06-clean-peluqueria-canina/adaptadores/ControladorCitas.java",
+      "20-arquitectura-de-software/06-clean-peluqueria-canina/adaptadores/PresentadorCitas.java",
+      "20-arquitectura-de-software/06-clean-peluqueria-canina/infraestructura/CitasEnMemoria.java",
+      "20-arquitectura-de-software/06-clean-peluqueria-canina/Main.java"
+    ],
+    "main": "Main",
+    "mode": "R",
+    "stdout": "Cita: Toby a las 10\nRechazada: Hora ocupada\nRechazada: Hora invalida\n"
+  },
+  {
+    "path": "20-arquitectura-de-software/07-onion-cabanas/Main.java",
+    "sources": [
+      "20-arquitectura-de-software/07-onion-cabanas/dominio/Cabana.java",
+      "20-arquitectura-de-software/07-onion-cabanas/dominio/RepositorioCabanas.java",
+      "20-arquitectura-de-software/07-onion-cabanas/aplicacion/ReservarCabana.java",
+      "20-arquitectura-de-software/07-onion-cabanas/infraestructura/CabanasEnMemoria.java",
+      "20-arquitectura-de-software/07-onion-cabanas/presentacion/ConsolaCabanas.java",
+      "20-arquitectura-de-software/07-onion-cabanas/Main.java"
+    ],
+    "main": "Main",
+    "mode": "R",
+    "stdout": "Reservada: Mirador\nReserva rechazada\n"
+  },
+  {
+    "path": "20-arquitectura-de-software/08-eventos-restaurante/Main.java",
+    "sources": [
+      "20-arquitectura-de-software/08-eventos-restaurante/dominio/Pedido.java",
+      "20-arquitectura-de-software/08-eventos-restaurante/eventos/PedidoListo.java",
+      "20-arquitectura-de-software/08-eventos-restaurante/eventos/BusEventos.java",
+      "20-arquitectura-de-software/08-eventos-restaurante/cocina/Cocina.java",
+      "20-arquitectura-de-software/08-eventos-restaurante/mostrador/AvisadorPedidos.java",
+      "20-arquitectura-de-software/08-eventos-restaurante/Main.java"
+    ],
+    "main": "Main",
+    "mode": "R",
+    "stdout": "Mostrador: pedido 7 listo\nPedido ya terminado\n"
+  },
+  {
+    "path": "20-arquitectura-de-software/09-monolito-modular-supermercado/Main.java",
+    "sources": [
+      "20-arquitectura-de-software/09-monolito-modular-supermercado/inventario/Existencias.java",
+      "20-arquitectura-de-software/09-monolito-modular-supermercado/inventario/Inventario.java",
+      "20-arquitectura-de-software/09-monolito-modular-supermercado/ventas/Ventas.java",
+      "20-arquitectura-de-software/09-monolito-modular-supermercado/compras/Compras.java",
+      "20-arquitectura-de-software/09-monolito-modular-supermercado/Main.java"
+    ],
+    "main": "Main",
+    "mode": "R",
+    "stdout": "Compra: 10\nVenta: 4\nVenta rechazada\nStock: 6\n"
+  },
+  {
+    "path": "20-arquitectura-de-software/10-microservicios-bicicletas/Main.java",
+    "sources": [
+      "20-arquitectura-de-software/10-microservicios-bicicletas/disponibilidad/ServicioDisponibilidad.java",
+      "20-arquitectura-de-software/10-microservicios-bicicletas/reservas/ServicioReservas.java",
+      "20-arquitectura-de-software/10-microservicios-bicicletas/cliente/ClienteAlquiler.java",
+      "20-arquitectura-de-software/10-microservicios-bicicletas/Main.java"
+    ],
+    "main": "Main",
+    "mode": "R",
+    "stdout": "Disponibles: 1\nReserva: R1\nDisponibles: 0\nReserva rechazada\n"
+  },
+  {
+    "path": "20-arquitectura-de-software/11-comparacion-verduleria/02-hexagonal/Main.java",
+    "sources": [
+      "20-arquitectura-de-software/11-comparacion-verduleria/02-hexagonal/dominio/Verdura.java",
+      "20-arquitectura-de-software/11-comparacion-verduleria/02-hexagonal/aplicacion/puertos/Venta.java",
+      "20-arquitectura-de-software/11-comparacion-verduleria/02-hexagonal/aplicacion/puertos/Inventario.java",
+      "20-arquitectura-de-software/11-comparacion-verduleria/02-hexagonal/aplicacion/VenderVerdura.java",
+      "20-arquitectura-de-software/11-comparacion-verduleria/02-hexagonal/infraestructura/ConsolaVentas.java",
+      "20-arquitectura-de-software/11-comparacion-verduleria/02-hexagonal/infraestructura/InventarioEnMemoria.java",
+      "20-arquitectura-de-software/11-comparacion-verduleria/02-hexagonal/Main.java"
+    ],
+    "main": "Main",
+    "mode": "R",
+    "stdout": "Venta: tomate x2\nStock: 3\nVenta rechazada\nStock: 3\n"
+  },
+  {
+    "path": "20-arquitectura-de-software/11-comparacion-verduleria/03-clean/Main.java",
+    "sources": [
+      "20-arquitectura-de-software/11-comparacion-verduleria/03-clean/entidades/Verdura.java",
+      "20-arquitectura-de-software/11-comparacion-verduleria/03-clean/casosdeuso/EntradaVenta.java",
+      "20-arquitectura-de-software/11-comparacion-verduleria/03-clean/casosdeuso/SalidaVenta.java",
+      "20-arquitectura-de-software/11-comparacion-verduleria/03-clean/casosdeuso/Inventario.java",
+      "20-arquitectura-de-software/11-comparacion-verduleria/03-clean/casosdeuso/VenderVerdura.java",
+      "20-arquitectura-de-software/11-comparacion-verduleria/03-clean/adaptadores/ControladorVentas.java",
+      "20-arquitectura-de-software/11-comparacion-verduleria/03-clean/adaptadores/PresentadorVentas.java",
+      "20-arquitectura-de-software/11-comparacion-verduleria/03-clean/infraestructura/InventarioEnMemoria.java",
+      "20-arquitectura-de-software/11-comparacion-verduleria/03-clean/Main.java"
+    ],
+    "main": "Main",
+    "mode": "R",
+    "stdout": "Venta: tomate x2\nStock: 3\nVenta rechazada\nStock: 3\n"
+  }
+]

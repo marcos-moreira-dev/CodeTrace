@@ -1,0 +1,33 @@
+// Tema:
+// Los literales de cadena iguales comparten una referencia aunque se declaren en diferentes
+// paquetes. == compara referencias, mientras que intern() recupera la referencia canónica de
+// una cadena calculada.
+// Compilar: javac --release 21 -encoding UTF-8 -d . saludos/IdentidadCadenas.java saludos/Local.java externo/Externo.java
+// Ejecutar: java saludos.IdentidadCadenas
+// Comandos desde la carpeta de la unidad.
+
+package saludos;
+
+public class IdentidadCadenas {
+    public static void main(String[] args) {
+        String palabra = "luna";
+        String fragmento = "na";
+        String calculada = "lu" + fragmento;
+
+        // Los literales se comparten incluso entre paquetes.
+        System.out.println(palabra == "luna");
+        System.out.println(palabra == Local.PALABRA);
+        System.out.println(palabra == externo.Externo.PALABRA);
+        System.out.println(palabra == ("lu" + "na"));
+        System.out.println(palabra == calculada);
+        System.out.println(palabra == calculada.intern());
+    }
+}
+
+// Salida esperada:
+// true
+// true
+// true
+// true
+// false
+// true

@@ -1,0 +1,56 @@
+// Tema:
+// Servicio temporal: un proceso atiende una petición y termina con una orden explícita. No instala un daemon ni modifica servicios del sistema.
+// Modalidad: ejecución real mediante API estándar de Java.
+// Compilar: javac --release 21 -encoding UTF-8 ServicioTemporal.java MainServicio.java
+// Ejecutar: java MainServicio
+
+import java.nio.file.Path;
+import java.nio.charset.StandardCharsets;
+import java.util.concurrent.TimeUnit;
+
+
+public class MainServicio {
+    // Usar el ejecutable de la JVM actual evita depender de PATH o de un shell.
+    static ProcessBuilder comando(String clase, String... args) {
+        String ejecutable = Path.of(System.getProperty("java.home"), "bin",
+                System.getProperty("os.name").startsWith("Windows") ? "java.exe" : "java").toString();
+        java.util.ArrayList<String> comando = new java.util.ArrayList<>();
+        comando.add(ejecutable);
+        comando.add("-Dfile.encoding=UTF-8");
+        comando.add("-cp");
+        comando.add(System.getProperty("java.class.path"));
+        comando.add(clase);
+        for (String arg : args) comando.add(arg);
+        return new ProcessBuilder(comando);
+    }
+
+    static void esperar(Process proceso) throws Exception {
+        if (!proceso.waitFor(8, TimeUnit.SECONDS)) {
+            proceso.destroyForcibly();
+            proceso.waitFor(2, TimeUnit.SECONDS);
+            throw new IllegalStateException("Tiempo agotado");
+        }
+    }
+
+    static String salida(Process proceso) throws Exception {
+        esperar(proceso); // Salidas de estos hijos son pequeñas y acotadas.
+        if (proceso.exitValue() != 0) throw new IllegalStateException("Fallo del hijo");
+        return new String(proceso.getInputStream().readAllBytes(), StandardCharsets.UTF_8);
+    }
+
+    public static void main(String[] args) throws Exception {
+        Process servicio = comando("ServicioTemporal").start();
+        try {
+            try (var peticion = servicio.getOutputStream()) {
+                peticion.write("estado\nsalir\n".getBytes(StandardCharsets.UTF_8));
+            }
+            System.out.print(salida(servicio));
+        } finally {
+            if (servicio.isAlive()) servicio.destroyForcibly();
+        }
+    }
+}
+
+// Salida esperada:
+// Servicio activo
+// Servicio cerrado

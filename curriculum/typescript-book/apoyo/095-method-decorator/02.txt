@@ -1,0 +1,3 @@
+LOG: Entering method 'sayHello'.
+Hello!
+LOG: Exiting method 'sayHello'.

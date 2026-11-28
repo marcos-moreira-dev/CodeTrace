@@ -1,0 +1,526 @@
+area	unidad	modalidad	archivo	objetivo	estado
+06-matematicas-computacionales	01-logica-proposicional	T	TablaVerdad.java	Tablas de verdad, conectores e implicación.	verificado_ci
+06-matematicas-computacionales	01-logica-proposicional	T	Implicacion.java	Tablas de verdad, conectores e implicación.	verificado_ci
+06-matematicas-computacionales	02-conjuntos	R	OperacionesConjuntos.java	Unión, intersección, diferencia y pertenencia.	verificado_ci
+06-matematicas-computacionales	03-combinatoria	R	Permutaciones.java	Conteo sin generar todas las posibilidades innecesariamente.	verificado_ci
+06-matematicas-computacionales	03-combinatoria	R	Combinaciones.java	Conteo sin generar todas las posibilidades innecesariamente.	verificado_ci
+06-matematicas-computacionales	04-matrices	R	SumaMatrices.java	Operaciones y dimensiones compatibles.	verificado_ci
+06-matematicas-computacionales	04-matrices	R	ProductoMatrices.java	Operaciones y dimensiones compatibles.	verificado_ci
+06-matematicas-computacionales	04-matrices	R	Transpuesta.java	Operaciones y dimensiones compatibles.	verificado_ci
+06-matematicas-computacionales	05-vectores	R	ProductoEscalar.java	Representación geométrica y magnitud.	verificado_ci
+06-matematicas-computacionales	05-vectores	R	NormaVector.java	Representación geométrica y magnitud.	verificado_ci
+06-matematicas-computacionales	05-vectores	R	DistanciaEuclidiana.java	Representación geométrica y magnitud.	verificado_ci
+06-matematicas-computacionales	06-probabilidad	T	ProbabilidadFrecuencia.java	Frecuencias y simulación reproducible con semilla.	verificado_ci
+06-matematicas-computacionales	06-probabilidad	T	MonteCarlo.java	Frecuencias y simulación reproducible con semilla.	verificado_ci
+06-matematicas-computacionales	07-estadistica	R	MediaVarianza.java	Medidas descriptivas y dispersión.	verificado_ci
+06-matematicas-computacionales	07-estadistica	R	Mediana.java	Medidas descriptivas y dispersión.	verificado_ci
+06-matematicas-computacionales	08-precision-numerica	R	ErrorRedondeo.java	Error de representación y aritmética decimal explícita.	verificado_ci
+06-matematicas-computacionales	08-precision-numerica	R	BigDecimalExacto.java	Error de representación y aritmética decimal explícita.	verificado_ci
+06-matematicas-computacionales	09-metodos-numericos	R	Biseccion.java	Aproximación, convergencia y tolerancia.	verificado_ci
+06-matematicas-computacionales	09-metodos-numericos	R	NewtonRaphson.java	Aproximación, convergencia y tolerancia.	verificado_ci
+06-matematicas-computacionales	09-metodos-numericos	R	IntegracionTrapecios.java	Aproximación, convergencia y tolerancia.	verificado_ci
+07-representacion-de-datos-y-memoria	01-bases-numericas	R	ConversionBases.java	Binario, decimal y hexadecimal; descomposición posicional.	verificado_ci
+07-representacion-de-datos-y-memoria	01-bases-numericas	R	ConversionManual.java	Binario, decimal y hexadecimal; descomposición posicional.	verificado_ci
+07-representacion-de-datos-y-memoria	02-enteros-sin-signo	R	EnteroSinSigno.java	Interpretación sin signo usando las operaciones de Integer y Byte.	verificado_ci
+07-representacion-de-datos-y-memoria	03-complemento-a-dos	R	ComplementoDos.java	Representación de negativos, límites y overflow.	verificado_ci
+07-representacion-de-datos-y-memoria	03-complemento-a-dos	R	DesbordamientoEntero.java	Representación de negativos, límites y overflow.	verificado_ci
+07-representacion-de-datos-y-memoria	04-punto-flotante	R	BitsFloat.java	Signo, exponente, mantisa y valores especiales.	verificado_ci
+07-representacion-de-datos-y-memoria	04-punto-flotante	R	BitsDouble.java	Signo, exponente, mantisa y valores especiales.	verificado_ci
+07-representacion-de-datos-y-memoria	05-orden-bytes	R	LittleBigEndian.java	ByteBuffer, orden explícito y orden de la plataforma.	verificado_ci
+07-representacion-de-datos-y-memoria	05-orden-bytes	R	OrdenNativo.java	ByteBuffer, orden explícito y orden de la plataforma.	verificado_ci
+07-representacion-de-datos-y-memoria	06-operaciones-bits	R	OperacionesBits.java	AND, OR, XOR, NOT, desplazamiento aritmético y lógico.	verificado_ci
+07-representacion-de-datos-y-memoria	06-operaciones-bits	R	Desplazamientos.java	AND, OR, XOR, NOT, desplazamiento aritmético y lógico.	verificado_ci
+07-representacion-de-datos-y-memoria	07-mascaras	R	ActivarDesactivarBits.java	Manipulación y codificación de campos sin recorrer cada bit.	verificado_ci
+07-representacion-de-datos-y-memoria	07-mascaras	R	ExtraerCampoBits.java	Manipulación y codificación de campos sin recorrer cada bit.	verificado_ci
+07-representacion-de-datos-y-memoria	07-mascaras	R	EmpaquetarCampos.java	Manipulación y codificación de campos sin recorrer cada bit.	verificado_ci
+07-representacion-de-datos-y-memoria	08-codificacion-texto	R	AsciiUnicode.java	Diferencia entre bytes, unidades UTF-16 y puntos de código.	verificado_ci
+07-representacion-de-datos-y-memoria	08-codificacion-texto	R	Utf8Bytes.java	Diferencia entre bytes, unidades UTF-16 y puntos de código.	verificado_ci
+07-representacion-de-datos-y-memoria	08-codificacion-texto	R	PuntosCodigo.java	Diferencia entre bytes, unidades UTF-16 y puntos de código.	verificado_ci
+07-representacion-de-datos-y-memoria	15-referencias-java	R	PasoPorValor.java	Java siempre pasa argumentos por valor; referencias copiadas, no punteros C.	verificado_ci
+07-representacion-de-datos-y-memoria	15-referencias-java	R	AliasReferencias.java	Java siempre pasa argumentos por valor; referencias copiadas, no punteros C.	verificado_ci
+07-representacion-de-datos-y-memoria	15-referencias-java	R	IntercambioValores.java	Java siempre pasa argumentos por valor; referencias copiadas, no punteros C.	verificado_ci
+07-representacion-de-datos-y-memoria	18-datos-compuestos	R	RegistroBinario.java	Empaquetar campos y comparar composición con struct; layout explícito.	verificado_ci
+07-representacion-de-datos-y-memoria	18-datos-compuestos	R	MainRegistroBinario.java	Empaquetar campos y comparar composición con struct; layout explícito.	verificado_ci
+07-representacion-de-datos-y-memoria	19-stack-heap	R	PilaLlamadas.java	Llamadas y referencias observables; sin prometer ubicación física ni tamaño de objetos.	verificado_ci
+07-representacion-de-datos-y-memoria	19-stack-heap	R	ObjetosHeap.java	Llamadas y referencias observables; sin prometer ubicación física ni tamaño de objetos.	verificado_ci
+07-representacion-de-datos-y-memoria	19-stack-heap	R	VidaReferencias.java	Llamadas y referencias observables; sin prometer ubicación física ni tamaño de objetos.	verificado_ci
+07-representacion-de-datos-y-memoria	20-memoria-dinamica	T	ReservaLiberacionSimulada.java	Modelo de reserva y liberación de bloques; el arreglo dinámico ya existe en 02.	verificado_ci
+07-representacion-de-datos-y-memoria	21-asignacion-bloques	T	Bloque.java	Políticas de asignación con lista de bloques libres.	verificado_ci
+07-representacion-de-datos-y-memoria	21-asignacion-bloques	T	FirstFit.java	Políticas de asignación con lista de bloques libres.	verificado_ci
+07-representacion-de-datos-y-memoria	21-asignacion-bloques	T	BestFit.java	Políticas de asignación con lista de bloques libres.	verificado_ci
+07-representacion-de-datos-y-memoria	21-asignacion-bloques	T	WorstFit.java	Políticas de asignación con lista de bloques libres.	verificado_ci
+07-representacion-de-datos-y-memoria	21-asignacion-bloques	T	MainAsignacion.java	Políticas de asignación con lista de bloques libres.	verificado_ci
+07-representacion-de-datos-y-memoria	22-fragmentacion	T	FragmentacionInterna.java	Espacio desperdiciado, bloques contiguos y fusión.	verificado_ci
+07-representacion-de-datos-y-memoria	22-fragmentacion	T	FragmentacionExterna.java	Espacio desperdiciado, bloques contiguos y fusión.	verificado_ci
+07-representacion-de-datos-y-memoria	22-fragmentacion	T	Coalescencia.java	Espacio desperdiciado, bloques contiguos y fusión.	verificado_ci
+07-representacion-de-datos-y-memoria	23-memoria-virtual	T	DireccionVirtual.java	Páginas, marcos y traducción de direcciones.	verificado_ci
+07-representacion-de-datos-y-memoria	23-memoria-virtual	T	TablaPaginas.java	Páginas, marcos y traducción de direcciones.	verificado_ci
+07-representacion-de-datos-y-memoria	23-memoria-virtual	T	MainTraduccion.java	Páginas, marcos y traducción de direcciones.	verificado_ci
+07-representacion-de-datos-y-memoria	24-reemplazo-paginas	T	FIFO.java	Comparación de fallos de página sobre una secuencia fija.	verificado_ci
+07-representacion-de-datos-y-memoria	24-reemplazo-paginas	T	LRU.java	Comparación de fallos de página sobre una secuencia fija.	verificado_ci
+07-representacion-de-datos-y-memoria	24-reemplazo-paginas	T	OPT.java	Comparación de fallos de página sobre una secuencia fija.	verificado_ci
+07-representacion-de-datos-y-memoria	24-reemplazo-paginas	T	MainReemplazo.java	Comparación de fallos de página sobre una secuencia fija.	verificado_ci
+07-representacion-de-datos-y-memoria	25-errores-memoria	R	FugaPorRetencion.java	Retención accidental de referencias sin provocar agotamiento real de memoria; índice inválido y referencia nula ya se estudian en 00.	verificado_ci
+07-representacion-de-datos-y-memoria	26-recoleccion-basura	T	Alcanzabilidad.java	Grafo de referencias, raíces y simulación mark-and-sweep; no forzar el GC real.	verificado_ci
+07-representacion-de-datos-y-memoria	26-recoleccion-basura	T	MainMarcarBarrer.java	Grafo de referencias, raíces y simulación mark-and-sweep; no forzar el GC real.	verificado_ci
+08-sistemas-de-archivos-y-entrada-salida	01-rutas	R	RutasAbsolutasRelativas.java	Path, raíz, padre, directorio de trabajo y resolución.	verificado_ci
+08-sistemas-de-archivos-y-entrada-salida	01-rutas	R	NormalizarRuta.java	Path, raíz, padre, directorio de trabajo y resolución.	verificado_ci
+08-sistemas-de-archivos-y-entrada-salida	01-rutas	R	ResolverRuta.java	Path, raíz, padre, directorio de trabajo y resolución.	verificado_ci
+08-sistemas-de-archivos-y-entrada-salida	02-directorios	R	CrearListarDirectorio.java	Crear, listar y recorrer árboles temporales.	verificado_ci
+08-sistemas-de-archivos-y-entrada-salida	02-directorios	R	RecorrerArbol.java	Crear, listar y recorrer árboles temporales.	verificado_ci
+08-sistemas-de-archivos-y-entrada-salida	03-comodines	R	BuscarConGlob.java	PathMatcher y patrones glob; no expansión automática del shell.	verificado_ci
+08-sistemas-de-archivos-y-entrada-salida	04-operaciones-archivos	R	CopiarArchivo.java	Operaciones sobre un directorio temporal propio.	verificado_ci
+08-sistemas-de-archivos-y-entrada-salida	04-operaciones-archivos	R	MoverArchivo.java	Operaciones sobre un directorio temporal propio.	verificado_ci
+08-sistemas-de-archivos-y-entrada-salida	04-operaciones-archivos	R	EliminarArchivo.java	Operaciones sobre un directorio temporal propio.	verificado_ci
+08-sistemas-de-archivos-y-entrada-salida	05-metadatos	R	AtributosArchivo.java	BasicFileAttributes, tamaño y tiempos del sistema.	verificado_ci
+08-sistemas-de-archivos-y-entrada-salida	05-metadatos	R	TiemposArchivo.java	BasicFileAttributes, tamaño y tiempos del sistema.	verificado_ci
+08-sistemas-de-archivos-y-entrada-salida	06-enlaces	P	EnlaceDuro.java	Distinguir alias de archivo y referencia simbólica; detectar soporte/permisos.	verificado_ci
+08-sistemas-de-archivos-y-entrada-salida	06-enlaces	P	EnlaceSimbolico.java	Distinguir alias de archivo y referencia simbólica; detectar soporte/permisos.	verificado_ci
+08-sistemas-de-archivos-y-entrada-salida	07-permisos	M	MascarasOctales.java	Modelar rwx y consultar/cambiar permisos de archivos propios si el FS lo permite.	verificado_ci
+08-sistemas-de-archivos-y-entrada-salida	07-permisos	M	PermisosPosix.java	Modelar rwx y consultar/cambiar permisos de archivos propios si el FS lo permite.	verificado_ci
+08-sistemas-de-archivos-y-entrada-salida	07-permisos	M	PropietarioArchivo.java	Modelar rwx y consultar/cambiar permisos de archivos propios si el FS lo permite.	verificado_ci
+08-sistemas-de-archivos-y-entrada-salida	08-archivos-temporales	R	DirectorioTemporal.java	Crear, usar y eliminar un directorio temporal; archivo temporal simple ya está en 01/archivos-y-nio.	verificado_ci
+08-sistemas-de-archivos-y-entrada-salida	09-flujos-estandar	R	EntradaSalidaError.java	System.in/out/err; entrada fija para pruebas.	verificado_ci
+08-sistemas-de-archivos-y-entrada-salida	10-flujos-bytes	R	LecturaBytes.java	Abrir, leer, escribir y cerrar; respetar el número de bytes devueltos.	verificado_ci
+08-sistemas-de-archivos-y-entrada-salida	10-flujos-bytes	R	EscrituraBytes.java	Abrir, leer, escribir y cerrar; respetar el número de bytes devueltos.	verificado_ci
+08-sistemas-de-archivos-y-entrada-salida	10-flujos-bytes	R	LecturaParcial.java	Abrir, leer, escribir y cerrar; respetar el número de bytes devueltos.	verificado_ci
+08-sistemas-de-archivos-y-entrada-salida	11-flujos-texto	R	LecturaTexto.java	Reader/Writer y codificación explícita.	verificado_ci
+08-sistemas-de-archivos-y-entrada-salida	11-flujos-texto	R	EscrituraTexto.java	Reader/Writer y codificación explícita.	verificado_ci
+08-sistemas-de-archivos-y-entrada-salida	11-flujos-texto	R	CharsetExplicito.java	Reader/Writer y codificación explícita.	verificado_ci
+08-sistemas-de-archivos-y-entrada-salida	12-buffering	R	FlujoConBuffer.java	BufferedInputStream/OutputStream y flush; no asumir persistencia física.	verificado_ci
+08-sistemas-de-archivos-y-entrada-salida	12-buffering	R	VaciadoBuffer.java	BufferedInputStream/OutputStream y flush; no asumir persistencia física.	verificado_ci
+08-sistemas-de-archivos-y-entrada-salida	13-modos-apertura	R	ModosApertura.java	StandardOpenOption, truncar, crear y anexar.	verificado_ci
+08-sistemas-de-archivos-y-entrada-salida	13-modos-apertura	R	AnexarArchivo.java	StandardOpenOption, truncar, crear y anexar.	verificado_ci
+08-sistemas-de-archivos-y-entrada-salida	14-acceso-aleatorio	R	AccesoAleatorio.java	RandomAccessFile/FileChannel y offset de archivo.	verificado_ci
+08-sistemas-de-archivos-y-entrada-salida	14-acceso-aleatorio	R	PosicionCanal.java	RandomAccessFile/FileChannel y offset de archivo.	verificado_ci
+08-sistemas-de-archivos-y-entrada-salida	15-buffers-nio	R	EstadoByteBuffer.java	Posición, límite, capacidad y transferencia parcial.	verificado_ci
+08-sistemas-de-archivos-y-entrada-salida	15-buffers-nio	R	FlipClearCompact.java	Posición, límite, capacidad y transferencia parcial.	verificado_ci
+08-sistemas-de-archivos-y-entrada-salida	16-lectura-binaria	R	RegistroBinario.java	DataInputStream/DataOutputStream con formato pequeño y documentado.	verificado_ci
+08-sistemas-de-archivos-y-entrada-salida	16-lectura-binaria	R	MainLecturaRegistro.java	DataInputStream/DataOutputStream con formato pequeño y documentado.	verificado_ci
+08-sistemas-de-archivos-y-entrada-salida	17-mapear-archivo	R	ArchivoMapeado.java	FileChannel.map; no prometer liberación inmediata del mapeo.	verificado_ci
+08-sistemas-de-archivos-y-entrada-salida	18-bloqueos-archivo	P	BloqueoArchivo.java	FileLock y límites dependientes del sistema; solo archivos propios.	verificado_ci
+08-sistemas-de-archivos-y-entrada-salida	18-bloqueos-archivo	P	ClienteBloqueo.java	FileLock y límites dependientes del sistema; solo archivos propios.	verificado_ci
+08-sistemas-de-archivos-y-entrada-salida	19-monitoreo-directorios	R	VigilarDirectorio.java	WatchService con eventos no garantizados individualmente y espera acotada.	verificado_ci
+08-sistemas-de-archivos-y-entrada-salida	20-compresion	R	GzipTexto.java	Comprimir y descomprimir datos locales; validar rutas al extraer.	verificado_ci
+08-sistemas-de-archivos-y-entrada-salida	20-compresion	R	ZipArchivos.java	Comprimir y descomprimir datos locales; validar rutas al extraer.	verificado_ci
+09-sistemas-operativos-y-procesos	01-capas-sistema	R	EntornoSistema.java	Hardware, kernel, JVM y aplicaciones; propiedades os.name/os.arch.	verificado_ci
+09-sistemas-operativos-y-procesos	02-argumentos-consola	R	OpcionesCortas.java	Interpretar opciones y argumentos explícitamente; main(args) ya está en 00/01.	verificado_ci
+09-sistemas-operativos-y-procesos	02-argumentos-consola	R	OpcionesLargas.java	Interpretar opciones y argumentos explícitamente; main(args) ya está en 00/01.	verificado_ci
+09-sistemas-operativos-y-procesos	03-entorno	R	VariablesEntorno.java	Variables seleccionadas y directorio de trabajo; no volcar secretos del entorno.	verificado_ci
+09-sistemas-operativos-y-procesos	03-entorno	R	DirectorioTrabajo.java	Variables seleccionadas y directorio de trabajo; no volcar secretos del entorno.	verificado_ci
+09-sistemas-operativos-y-procesos	04-identidad-proceso	R	ProcesoActual.java	PID, ProcessHandle y padre opcional.	verificado_ci
+09-sistemas-operativos-y-procesos	04-identidad-proceso	R	ProcesoPadre.java	PID, ProcessHandle y padre opcional.	verificado_ci
+09-sistemas-operativos-y-procesos	05-crear-proceso	R	Padre.java	Iniciar una JVM hija mediante ProcessBuilder, sin shell ni fork.	verificado_ci
+09-sistemas-operativos-y-procesos	05-crear-proceso	R	Hijo.java	Iniciar una JVM hija mediante ProcessBuilder, sin shell ni fork.	verificado_ci
+09-sistemas-operativos-y-procesos	06-aislamiento-procesos	R	Padre.java	Variables independientes y comunicación explícita; comparar con hilos.	verificado_ci
+09-sistemas-operativos-y-procesos	06-aislamiento-procesos	R	Hijo.java	Variables independientes y comunicación explícita; comparar con hilos.	verificado_ci
+09-sistemas-operativos-y-procesos	07-esperar-proceso	R	Padre.java	waitFor, onExit y código de salida.	verificado_ci
+09-sistemas-operativos-y-procesos	07-esperar-proceso	R	Hijo.java	waitFor, onExit y código de salida.	verificado_ci
+09-sistemas-operativos-y-procesos	08-varios-hijos	R	Padre.java	Crear un número acotado de hijos y recoger sus resultados.	verificado_ci
+09-sistemas-operativos-y-procesos	08-varios-hijos	R	Hijo.java	Crear un número acotado de hijos y recoger sus resultados.	verificado_ci
+09-sistemas-operativos-y-procesos	11-estados-procesos	T	EstadosProceso.java	Modelo de estados y alternancia de ejecución; no afirmar acceso a registros reales.	verificado_ci
+09-sistemas-operativos-y-procesos	11-estados-procesos	T	CambioContexto.java	Modelo de estados y alternancia de ejecución; no afirmar acceso a registros reales.	verificado_ci
+09-sistemas-operativos-y-procesos	13-redireccion	R	Padre.java	Redirigir stdin, stdout y stderr con archivos temporales.	verificado_ci
+09-sistemas-operativos-y-procesos	13-redireccion	R	Hijo.java	Redirigir stdin, stdout y stderr con archivos temporales.	verificado_ci
+09-sistemas-operativos-y-procesos	14-pipeline	R	Generador.java	ProcessBuilder.startPipeline y streams entre procesos Java.	verificado_ci
+09-sistemas-operativos-y-procesos	14-pipeline	R	Filtro.java	ProcessBuilder.startPipeline y streams entre procesos Java.	verificado_ci
+09-sistemas-operativos-y-procesos	14-pipeline	R	Consumidor.java	ProcessBuilder.startPipeline y streams entre procesos Java.	verificado_ci
+09-sistemas-operativos-y-procesos	14-pipeline	R	MainPipeline.java	ProcessBuilder.startPipeline y streams entre procesos Java.	verificado_ci
+09-sistemas-operativos-y-procesos	15-comunicacion-pipes	R	Padre.java	Intercambio de mensajes a través de streams, cerrar los extremos.	verificado_ci
+09-sistemas-operativos-y-procesos	15-comunicacion-pipes	R	Hijo.java	Intercambio de mensajes a través de streams, cerrar los extremos.	verificado_ci
+09-sistemas-operativos-y-procesos	16-timeout-proceso	R	Padre.java	waitFor con timeout; terminar exclusivamente el hijo creado.	verificado_ci
+09-sistemas-operativos-y-procesos	16-timeout-proceso	R	Hijo.java	waitFor con timeout; terminar exclusivamente el hijo creado.	verificado_ci
+09-sistemas-operativos-y-procesos	17-notificacion-eventos	R	Temporizador.java	ScheduledExecutorService e interrupción de hilos; no equivalen a señales UNIX.	verificado_ci
+09-sistemas-operativos-y-procesos	17-notificacion-eventos	R	CancelacionCooperativa.java	ScheduledExecutorService e interrupción de hilos; no equivalen a señales UNIX.	verificado_ci
+09-sistemas-operativos-y-procesos	19-terminacion-jvm	R	Padre.java	Shutdown hook en una JVM hija y límites de terminación abrupta.	verificado_ci
+09-sistemas-operativos-y-procesos	19-terminacion-jvm	R	HijoConShutdownHook.java	Shutdown hook en una JVM hija y límites de terminación abrupta.	verificado_ci
+09-sistemas-operativos-y-procesos	20-servicio-segundo-plano	R	ServicioTemporal.java	Proceso hijo de duración limitada, arranque, consulta y cierre por el padre; no instalar daemon ni servicio persistente.	verificado_ci
+09-sistemas-operativos-y-procesos	20-servicio-segundo-plano	R	MainServicio.java	Proceso hijo de duración limitada, arranque, consulta y cierre por el padre; no instalar daemon ni servicio persistente.	verificado_ci
+09-sistemas-operativos-y-procesos	21-planificacion-fcfs	T	ProcesoSimulado.java	Orden de llegada, espera y retorno.	verificado_ci
+09-sistemas-operativos-y-procesos	21-planificacion-fcfs	T	FCFS.java	Orden de llegada, espera y retorno.	verificado_ci
+09-sistemas-operativos-y-procesos	21-planificacion-fcfs	T	MainFCFS.java	Orden de llegada, espera y retorno.	verificado_ci
+09-sistemas-operativos-y-procesos	22-planificacion-sjf-srtf	T	ProcesoSimulado.java	Trabajo más corto y expulsión.	verificado_ci
+09-sistemas-operativos-y-procesos	22-planificacion-sjf-srtf	T	SJF.java	Trabajo más corto y expulsión.	verificado_ci
+09-sistemas-operativos-y-procesos	22-planificacion-sjf-srtf	T	SRTF.java	Trabajo más corto y expulsión.	verificado_ci
+09-sistemas-operativos-y-procesos	22-planificacion-sjf-srtf	T	MainPlanificacion.java	Trabajo más corto y expulsión.	verificado_ci
+09-sistemas-operativos-y-procesos	23-planificacion-round-robin	T	ProcesoSimulado.java	Quantum y cola de listos.	verificado_ci
+09-sistemas-operativos-y-procesos	23-planificacion-round-robin	T	RoundRobin.java	Quantum y cola de listos.	verificado_ci
+09-sistemas-operativos-y-procesos	23-planificacion-round-robin	T	MainRoundRobin.java	Quantum y cola de listos.	verificado_ci
+09-sistemas-operativos-y-procesos	24-planificacion-prioridades	T	ProcesoSimulado.java	Prioridad, inanición y envejecimiento.	verificado_ci
+09-sistemas-operativos-y-procesos	24-planificacion-prioridades	T	Prioridades.java	Prioridad, inanición y envejecimiento.	verificado_ci
+09-sistemas-operativos-y-procesos	24-planificacion-prioridades	T	Aging.java	Prioridad, inanición y envejecimiento.	verificado_ci
+09-sistemas-operativos-y-procesos	24-planificacion-prioridades	T	MainPrioridades.java	Prioridad, inanición y envejecimiento.	verificado_ci
+10-concurrencia-y-paralelismo	01-hilos	R	CrearHilo.java	Crear, iniciar y esperar hilos.	verificado_ci
+10-concurrencia-y-paralelismo	01-hilos	R	RunnableBasico.java	Crear, iniciar y esperar hilos.	verificado_ci
+10-concurrencia-y-paralelismo	01-hilos	R	JoinHilos.java	Crear, iniciar y esperar hilos.	verificado_ci
+10-concurrencia-y-paralelismo	02-estados-hilo	R	EstadosHilo.java	Observar estados de Thread con coordinación acotada; interrupción básica ya se enseña en EstadoInterrupcion.java.	verificado_ci
+10-concurrencia-y-paralelismo	03-estado-compartido	R	VariablesCompartidas.java	Datos compartidos y estado local por hilo.	verificado_ci
+10-concurrencia-y-paralelismo	03-estado-compartido	R	EstadoLocal.java	Datos compartidos y estado local por hilo.	verificado_ci
+10-concurrencia-y-paralelismo	03-estado-compartido	R	ThreadLocalDemo.java	Datos compartidos y estado local por hilo.	verificado_ci
+10-concurrencia-y-paralelismo	04-intercalaciones	M	IntercalacionIncremento.java	Leer-modificar-escribir y pérdida de actualización reproducible.	verificado_ci
+10-concurrencia-y-paralelismo	04-intercalaciones	M	CarreraControlada.java	Leer-modificar-escribir y pérdida de actualización reproducible.	verificado_ci
+10-concurrencia-y-paralelismo	05-seccion-critica	R	ContadorInseguro.java	Exclusión mutua en un contador compartido.	verificado_ci
+10-concurrencia-y-paralelismo	05-seccion-critica	R	ContadorSincronizado.java	Exclusión mutua en un contador compartido.	verificado_ci
+10-concurrencia-y-paralelismo	06-visibilidad	R	PublicacionSegura.java	Aplicar visibilidad a publicación segura y comparar con bloqueo; volatile básico y lecturas separadas ya existen en 00.	verificado_ci
+10-concurrencia-y-paralelismo	07-atomicos	R	AtomicIntegerDemo.java	Operaciones atómicas y CAS.	verificado_ci
+10-concurrencia-y-paralelismo	07-atomicos	R	CompareAndSet.java	Operaciones atómicas y CAS.	verificado_ci
+10-concurrencia-y-paralelismo	09-locks	R	ReentrantLockDemo.java	Bloqueo explícito, espera acotada y condiciones.	verificado_ci
+10-concurrencia-y-paralelismo	09-locks	R	TryLockTimeout.java	Bloqueo explícito, espera acotada y condiciones.	verificado_ci
+10-concurrencia-y-paralelismo	09-locks	R	ConditionDemo.java	Bloqueo explícito, espera acotada y condiciones.	verificado_ci
+10-concurrencia-y-paralelismo	10-semaforos	R	SemaforoBinario.java	P/V como acquire/release; permisos y finally.	verificado_ci
+10-concurrencia-y-paralelismo	10-semaforos	R	SemaforoContador.java	P/V como acquire/release; permisos y finally.	verificado_ci
+10-concurrencia-y-paralelismo	10-semaforos	R	OperacionesPV.java	P/V como acquire/release; permisos y finally.	verificado_ci
+10-concurrencia-y-paralelismo	11-funciones-seguras	R	FuncionNoSegura.java	Estado compartido, copias defensivas y reentrancia.	verificado_ci
+10-concurrencia-y-paralelismo	11-funciones-seguras	R	FuncionThreadSafe.java	Estado compartido, copias defensivas y reentrancia.	verificado_ci
+10-concurrencia-y-paralelismo	11-funciones-seguras	R	FuncionReentrante.java	Estado compartido, copias defensivas y reentrancia.	verificado_ci
+10-concurrencia-y-paralelismo	12-productor-consumidor-01	R	BufferCircular.java	Buffer finito, tres semáforos: slots, items y mutex; terminación explícita.	verificado_ci
+10-concurrencia-y-paralelismo	12-productor-consumidor-01	R	Productor.java	Buffer finito, tres semáforos: slots, items y mutex; terminación explícita.	verificado_ci
+10-concurrencia-y-paralelismo	12-productor-consumidor-01	R	Consumidor.java	Buffer finito, tres semáforos: slots, items y mutex; terminación explícita.	verificado_ci
+10-concurrencia-y-paralelismo	12-productor-consumidor-01	R	MainProductorConsumidor.java	Buffer finito, tres semáforos: slots, items y mutex; terminación explícita.	verificado_ci
+10-concurrencia-y-paralelismo	13-productor-consumidor-02	R	Productor.java	Solución estándar con ArrayBlockingQueue y cierre definido.	verificado_ci
+10-concurrencia-y-paralelismo	13-productor-consumidor-02	R	Consumidor.java	Solución estándar con ArrayBlockingQueue y cierre definido.	verificado_ci
+10-concurrencia-y-paralelismo	13-productor-consumidor-02	R	MainBlockingQueue.java	Solución estándar con ArrayBlockingQueue y cierre definido.	verificado_ci
+10-concurrencia-y-paralelismo	14-lectores-escritores-01	R	RecursoCompartido.java	Dos semáforos y contador; explicar inanición del escritor.	verificado_ci
+10-concurrencia-y-paralelismo	14-lectores-escritores-01	R	Lector.java	Dos semáforos y contador; explicar inanición del escritor.	verificado_ci
+10-concurrencia-y-paralelismo	14-lectores-escritores-01	R	Escritor.java	Dos semáforos y contador; explicar inanición del escritor.	verificado_ci
+10-concurrencia-y-paralelismo	14-lectores-escritores-01	R	MainPrioridadLectores.java	Dos semáforos y contador; explicar inanición del escritor.	verificado_ci
+10-concurrencia-y-paralelismo	15-lectores-escritores-02	R	RecursoCompartido.java	Restringir entrada de lectores nuevos si esperan escritores; no prometer equidad absoluta.	verificado_ci
+10-concurrencia-y-paralelismo	15-lectores-escritores-02	R	Lector.java	Restringir entrada de lectores nuevos si esperan escritores; no prometer equidad absoluta.	verificado_ci
+10-concurrencia-y-paralelismo	15-lectores-escritores-02	R	Escritor.java	Restringir entrada de lectores nuevos si esperan escritores; no prometer equidad absoluta.	verificado_ci
+10-concurrencia-y-paralelismo	15-lectores-escritores-02	R	MainPrioridadEscritores.java	Restringir entrada de lectores nuevos si esperan escritores; no prometer equidad absoluta.	verificado_ci
+10-concurrencia-y-paralelismo	16-lectores-escritores-03	R	RecursoCompartido.java	ReentrantReadWriteLock(true); política aproximadamente por llegada, no FIFO absoluta.	verificado_ci
+10-concurrencia-y-paralelismo	16-lectores-escritores-03	R	MainLectoresEscritoresEquitativo.java	ReentrantReadWriteLock(true); política aproximadamente por llegada, no FIFO absoluta.	verificado_ci
+10-concurrencia-y-paralelismo	17-filosofos-comensales	R	Mesa.java	Recursos compartidos, orden total o árbitro y finalización acotada.	verificado_ci
+10-concurrencia-y-paralelismo	17-filosofos-comensales	R	Filosofo.java	Recursos compartidos, orden total o árbitro y finalización acotada.	verificado_ci
+10-concurrencia-y-paralelismo	17-filosofos-comensales	R	MainFilosofos.java	Recursos compartidos, orden total o árbitro y finalización acotada.	verificado_ci
+10-concurrencia-y-paralelismo	18-barbero-dormilon	R	Barberia.java	Cola limitada, espera y señalización; cierre de servicio.	verificado_ci
+10-concurrencia-y-paralelismo	18-barbero-dormilon	R	Barbero.java	Cola limitada, espera y señalización; cierre de servicio.	verificado_ci
+10-concurrencia-y-paralelismo	18-barbero-dormilon	R	Cliente.java	Cola limitada, espera y señalización; cierre de servicio.	verificado_ci
+10-concurrencia-y-paralelismo	18-barbero-dormilon	R	MainBarberia.java	Cola limitada, espera y señalización; cierre de servicio.	verificado_ci
+10-concurrencia-y-paralelismo	19-fumadores-cigarrillos	R	MesaIngredientes.java	Sincronización condicional y semáforos; problema clásico abstracto.	verificado_ci
+10-concurrencia-y-paralelismo	19-fumadores-cigarrillos	R	Agente.java	Sincronización condicional y semáforos; problema clásico abstracto.	verificado_ci
+10-concurrencia-y-paralelismo	19-fumadores-cigarrillos	R	Fumador.java	Sincronización condicional y semáforos; problema clásico abstracto.	verificado_ci
+10-concurrencia-y-paralelismo	19-fumadores-cigarrillos	R	MainFumadores.java	Sincronización condicional y semáforos; problema clásico abstracto.	verificado_ci
+10-concurrencia-y-paralelismo	20-peterson	T	PetersonSimulado.java	Exclusión mutua de dos participantes bajo memoria secuencialmente consistente; no usar campos plain como implementación correcta Java.	verificado_ci
+10-concurrencia-y-paralelismo	20-peterson	T	MainPeterson.java	Exclusión mutua de dos participantes bajo memoria secuencialmente consistente; no usar campos plain como implementación correcta Java.	verificado_ci
+10-concurrencia-y-paralelismo	21-panaderia-lamport	T	PanaderiaSimulada.java	Tickets y orden lexicográfico con supuestos de memoria explícitos.	verificado_ci
+10-concurrencia-y-paralelismo	21-panaderia-lamport	T	MainPanaderia.java	Tickets y orden lexicográfico con supuestos de memoria explícitos.	verificado_ci
+10-concurrencia-y-paralelismo	22-progress-graphs	T	Intercalacion.java	Enumerar trayectorias, zonas inseguras y estados alcanzables para un modelo discreto.	verificado_ci
+10-concurrencia-y-paralelismo	22-progress-graphs	T	GrafoProgreso.java	Enumerar trayectorias, zonas inseguras y estados alcanzables para un modelo discreto.	verificado_ci
+10-concurrencia-y-paralelismo	22-progress-graphs	T	MainGrafoProgreso.java	Enumerar trayectorias, zonas inseguras y estados alcanzables para un modelo discreto.	verificado_ci
+10-concurrencia-y-paralelismo	23-deadlock-modelo	T	EstadoBloqueos.java	Espera circular sin colgar la JVM.	verificado_ci
+10-concurrencia-y-paralelismo	23-deadlock-modelo	T	MainDeadlock.java	Espera circular sin colgar la JVM.	verificado_ci
+10-concurrencia-y-paralelismo	24-deadlock-prevencion	R	OrdenGlobalLocks.java	Orden único de adquisición y recuperación mediante timeout.	verificado_ci
+10-concurrencia-y-paralelismo	24-deadlock-prevencion	R	RecuperacionTryLock.java	Orden único de adquisición y recuperación mediante timeout.	verificado_ci
+10-concurrencia-y-paralelismo	25-banquero	T	Banquero.java	Estado seguro, recursos disponibles, asignación y necesidad.	verificado_ci
+10-concurrencia-y-paralelismo	25-banquero	T	MainBanquero.java	Estado seguro, recursos disponibles, asignación y necesidad.	verificado_ci
+10-concurrencia-y-paralelismo	26-inanicion-equidad	M	ModeloInanicion.java	Distinguir posibilidad de inanición de una política equitativa aproximada.	verificado_ci
+10-concurrencia-y-paralelismo	26-inanicion-equidad	M	SemaforoEquitativo.java	Distinguir posibilidad de inanición de una política equitativa aproximada.	verificado_ci
+10-concurrencia-y-paralelismo	27-coordinacion	R	CountDownLatchDemo.java	Coordinación de fases y llegada de tareas.	verificado_ci
+10-concurrencia-y-paralelismo	27-coordinacion	R	CyclicBarrierDemo.java	Coordinación de fases y llegada de tareas.	verificado_ci
+10-concurrencia-y-paralelismo	27-coordinacion	R	PhaserDemo.java	Coordinación de fases y llegada de tareas.	verificado_ci
+10-concurrencia-y-paralelismo	28-pools	R	PoolFijo.java	ExecutorService, ThreadPoolExecutor, cola y política de rechazo.	verificado_ci
+10-concurrencia-y-paralelismo	28-pools	R	PoolColaAcotada.java	ExecutorService, ThreadPoolExecutor, cola y política de rechazo.	verificado_ci
+10-concurrencia-y-paralelismo	28-pools	R	MainPrethreading.java	ExecutorService, ThreadPoolExecutor, cola y política de rechazo.	verificado_ci
+10-concurrencia-y-paralelismo	29-tareas-asincronas	R	CallableFuture.java	Resultados, composición, excepciones y cancelación.	verificado_ci
+10-concurrencia-y-paralelismo	29-tareas-asincronas	R	CompletableFutureDemo.java	Resultados, composición, excepciones y cancelación.	verificado_ci
+10-concurrencia-y-paralelismo	29-tareas-asincronas	R	CancelarTarea.java	Resultados, composición, excepciones y cancelación.	verificado_ci
+10-concurrencia-y-paralelismo	30-paralelismo	R	SumaSecuencialParalela.java	Dividir y combinar; comparación correcta de resultados.	verificado_ci
+10-concurrencia-y-paralelismo	30-paralelismo	R	ForkJoinSuma.java	Dividir y combinar; comparación correcta de resultados.	verificado_ci
+10-concurrencia-y-paralelismo	31-hilos-virtuales	R	CompararHilosBloqueantes.java	Comparar resultado de un lote acotado de tareas bloqueantes con hilos de plataforma y virtuales; sin prometer aceleración ni repetir ConcurrenciaVirtual.java.	verificado_ci
+10-concurrencia-y-paralelismo	32-colecciones-concurrentes	R	ConcurrentHashMapDemo.java	Operaciones thread-safe y acciones compuestas.	verificado_ci
+10-concurrencia-y-paralelismo	32-colecciones-concurrentes	R	ConcurrentLinkedQueueDemo.java	Operaciones thread-safe y acciones compuestas.	verificado_ci
+11-redes-y-protocolos-de-comunicacion	01-modelo-cliente-servidor	T	Cliente.java	Roles, petición, procesamiento y respuesta sin red todavía.	verificado_ci
+11-redes-y-protocolos-de-comunicacion	01-modelo-cliente-servidor	T	Servidor.java	Roles, petición, procesamiento y respuesta sin red todavía.	verificado_ci
+11-redes-y-protocolos-de-comunicacion	01-modelo-cliente-servidor	T	MainClienteServidor.java	Roles, petición, procesamiento y respuesta sin red todavía.	verificado_ci
+11-redes-y-protocolos-de-comunicacion	02-interfaces-red	R	InterfacesLocales.java	NetworkInterface e InetAddress; solo direcciones necesarias, no escaneo.	verificado_ci
+11-redes-y-protocolos-de-comunicacion	02-interfaces-red	R	Loopback.java	NetworkInterface e InetAddress; solo direcciones necesarias, no escaneo.	verificado_ci
+11-redes-y-protocolos-de-comunicacion	03-direccionamiento-ip	R	IPv4Bytes.java	Representación de 32 y 128 bits.	verificado_ci
+11-redes-y-protocolos-de-comunicacion	03-direccionamiento-ip	R	IPv6Bytes.java	Representación de 32 y 128 bits.	verificado_ci
+11-redes-y-protocolos-de-comunicacion	04-subredes	T	MascaraCIDR.java	Operaciones con prefijos IPv4; no configuración real.	verificado_ci
+11-redes-y-protocolos-de-comunicacion	04-subredes	T	PerteneceSubred.java	Operaciones con prefijos IPv4; no configuración real.	verificado_ci
+11-redes-y-protocolos-de-comunicacion	04-subredes	T	RedYBroadcast.java	Operaciones con prefijos IPv4; no configuración real.	verificado_ci
+11-redes-y-protocolos-de-comunicacion	05-mac-y-tramas	T	DireccionMAC.java	Dirección MAC, trama abstracta y campos; sin sockets crudos.	verificado_ci
+11-redes-y-protocolos-de-comunicacion	05-mac-y-tramas	T	TramaEthernet.java	Dirección MAC, trama abstracta y campos; sin sockets crudos.	verificado_ci
+11-redes-y-protocolos-de-comunicacion	06-conmutacion	T	SwitchSimulado.java	Aprendizaje de MAC y reenvío simulado.	verificado_ci
+11-redes-y-protocolos-de-comunicacion	06-conmutacion	T	MainSwitch.java	Aprendizaje de MAC y reenvío simulado.	verificado_ci
+11-redes-y-protocolos-de-comunicacion	07-enrutamiento	T	Ruta.java	Selección de prefijo más largo sobre rutas ficticias.	verificado_ci
+11-redes-y-protocolos-de-comunicacion	07-enrutamiento	T	TablaRutas.java	Selección de prefijo más largo sobre rutas ficticias.	verificado_ci
+11-redes-y-protocolos-de-comunicacion	07-enrutamiento	T	MainPrefijoMasLargo.java	Selección de prefijo más largo sobre rutas ficticias.	verificado_ci
+11-redes-y-protocolos-de-comunicacion	08-orden-red	R	NetworkByteOrder.java	Big-endian para campos multibyte de protocolos.	verificado_ci
+11-redes-y-protocolos-de-comunicacion	09-puertos	R	PuertoLocal.java	Dirección y puerto local, puerto efímero asignado por el SO.	verificado_ci
+11-redes-y-protocolos-de-comunicacion	09-puertos	R	DireccionSocket.java	Dirección y puerto local, puerto efímero asignado por el SO.	verificado_ci
+11-redes-y-protocolos-de-comunicacion	10-dns	M	ResolverLocalhost.java	Resolución mediante InetAddress y modelo de caché/TTL sin depender de Internet.	verificado_ci
+11-redes-y-protocolos-de-comunicacion	10-dns	M	CacheDNSSimulada.java	Resolución mediante InetAddress y modelo de caché/TTL sin depender de Internet.	verificado_ci
+11-redes-y-protocolos-de-comunicacion	11-tcp-echo	R	Servidor.java	Bind, accept, connect, streams, EOF y cierre en loopback.	verificado_ci
+11-redes-y-protocolos-de-comunicacion	11-tcp-echo	R	Cliente.java	Bind, accept, connect, streams, EOF y cierre en loopback.	verificado_ci
+11-redes-y-protocolos-de-comunicacion	11-tcp-echo	R	MainEcho.java	Bind, accept, connect, streams, EOF y cierre en loopback.	verificado_ci
+11-redes-y-protocolos-de-comunicacion	12-tcp-framing	R	CodificadorTrama.java	Longitud de mensaje; TCP es flujo de bytes, no conserva límites de mensajes.	verificado_ci
+11-redes-y-protocolos-de-comunicacion	12-tcp-framing	R	Servidor.java	Longitud de mensaje; TCP es flujo de bytes, no conserva límites de mensajes.	verificado_ci
+11-redes-y-protocolos-de-comunicacion	12-tcp-framing	R	Cliente.java	Longitud de mensaje; TCP es flujo de bytes, no conserva límites de mensajes.	verificado_ci
+11-redes-y-protocolos-de-comunicacion	12-tcp-framing	R	MainFraming.java	Longitud de mensaje; TCP es flujo de bytes, no conserva límites de mensajes.	verificado_ci
+11-redes-y-protocolos-de-comunicacion	13-tcp-lectura-parcial	R	Servidor.java	Procesar bytes acumulados y detectar truncamiento; no asumir tamaño de cada read.	verificado_ci
+11-redes-y-protocolos-de-comunicacion	13-tcp-lectura-parcial	R	Cliente.java	Procesar bytes acumulados y detectar truncamiento; no asumir tamaño de cada read.	verificado_ci
+11-redes-y-protocolos-de-comunicacion	13-tcp-lectura-parcial	R	MainLecturaParcial.java	Procesar bytes acumulados y detectar truncamiento; no asumir tamaño de cada read.	verificado_ci
+11-redes-y-protocolos-de-comunicacion	14-udp	R	Receptor.java	DatagramSocket, límites de datagrama y timeout.	verificado_ci
+11-redes-y-protocolos-de-comunicacion	14-udp	R	Emisor.java	DatagramSocket, límites de datagrama y timeout.	verificado_ci
+11-redes-y-protocolos-de-comunicacion	14-udp	R	MainDatagrama.java	DatagramSocket, límites de datagrama y timeout.	verificado_ci
+11-redes-y-protocolos-de-comunicacion	15-udp-fiabilidad-modelo	T	CanalSimulado.java	ACK, pérdida y retransmisión con secuencia fija.	verificado_ci
+11-redes-y-protocolos-de-comunicacion	15-udp-fiabilidad-modelo	T	StopAndWait.java	ACK, pérdida y retransmisión con secuencia fija.	verificado_ci
+11-redes-y-protocolos-de-comunicacion	15-udp-fiabilidad-modelo	T	MainStopAndWait.java	ACK, pérdida y retransmisión con secuencia fija.	verificado_ci
+11-redes-y-protocolos-de-comunicacion	16-ventana-deslizante	T	VentanaDeslizante.java	Flujo, números de secuencia y confirmaciones; modelo no TCP completo.	verificado_ci
+11-redes-y-protocolos-de-comunicacion	16-ventana-deslizante	T	MainVentana.java	Flujo, números de secuencia y confirmaciones; modelo no TCP completo.	verificado_ci
+11-redes-y-protocolos-de-comunicacion	17-congestion-y-tasa	T	TokenBucket.java	Limitar tasa con reloj simulado; no confundir con control de congestión TCP.	verificado_ci
+11-redes-y-protocolos-de-comunicacion	17-congestion-y-tasa	T	MainTokenBucket.java	Limitar tasa con reloj simulado; no confundir con control de congestión TCP.	verificado_ci
+11-redes-y-protocolos-de-comunicacion	18-servidor-multicliente	R	Servidor.java	Un hilo por cliente con número limitado de conexiones.	verificado_ci
+11-redes-y-protocolos-de-comunicacion	18-servidor-multicliente	R	Cliente.java	Un hilo por cliente con número limitado de conexiones.	verificado_ci
+11-redes-y-protocolos-de-comunicacion	18-servidor-multicliente	R	MainMultiCliente.java	Un hilo por cliente con número limitado de conexiones.	verificado_ci
+11-redes-y-protocolos-de-comunicacion	19-servidor-pool	R	Servidor.java	Pool precreado y cola acotada; relacionar con productor-consumidor.	verificado_ci
+11-redes-y-protocolos-de-comunicacion	19-servidor-pool	R	Cliente.java	Pool precreado y cola acotada; relacionar con productor-consumidor.	verificado_ci
+11-redes-y-protocolos-de-comunicacion	19-servidor-pool	R	MainServidorPool.java	Pool precreado y cola acotada; relacionar con productor-consumidor.	verificado_ci
+11-redes-y-protocolos-de-comunicacion	20-servidor-virtual	R	Servidor.java	Hilo virtual por conexión, límite de recursos y cierre.	verificado_ci
+11-redes-y-protocolos-de-comunicacion	20-servidor-virtual	R	Cliente.java	Hilo virtual por conexión, límite de recursos y cierre.	verificado_ci
+11-redes-y-protocolos-de-comunicacion	20-servidor-virtual	R	MainServidorVirtual.java	Hilo virtual por conexión, límite de recursos y cierre.	verificado_ci
+11-redes-y-protocolos-de-comunicacion	21-sockets-nio	R	ServidorSelector.java	Canales no bloqueantes, selector y lecturas/escrituras parciales.	verificado_ci
+11-redes-y-protocolos-de-comunicacion	21-sockets-nio	R	Cliente.java	Canales no bloqueantes, selector y lecturas/escrituras parciales.	verificado_ci
+11-redes-y-protocolos-de-comunicacion	21-sockets-nio	R	MainSelector.java	Canales no bloqueantes, selector y lecturas/escrituras parciales.	verificado_ci
+11-redes-y-protocolos-de-comunicacion	22-http	R	ServidorHttp.java	HttpServer del JDK y HttpClient en loopback; método, estado, cabeceras y cuerpo.	verificado_ci
+11-redes-y-protocolos-de-comunicacion	22-http	R	ClienteHttp.java	HttpServer del JDK y HttpClient en loopback; método, estado, cabeceras y cuerpo.	verificado_ci
+11-redes-y-protocolos-de-comunicacion	22-http	R	MainHttp.java	HttpServer del JDK y HttpClient en loopback; método, estado, cabeceras y cuerpo.	verificado_ci
+11-redes-y-protocolos-de-comunicacion	23-protocolos-aplicacion	T	Solicitud.java	Gramática de mensajes, validación, errores y límites.	verificado_ci
+11-redes-y-protocolos-de-comunicacion	23-protocolos-aplicacion	T	Respuesta.java	Gramática de mensajes, validación, errores y límites.	verificado_ci
+11-redes-y-protocolos-de-comunicacion	23-protocolos-aplicacion	T	ProtocoloTexto.java	Gramática de mensajes, validación, errores y límites.	verificado_ci
+11-redes-y-protocolos-de-comunicacion	23-protocolos-aplicacion	T	MainProtocolo.java	Gramática de mensajes, validación, errores y límites.	verificado_ci
+11-redes-y-protocolos-de-comunicacion	24-timeouts	R	ServidorLento.java	Timeout de conexión/lectura y cierre ante fallo.	implementado_pendiente_ci
+11-redes-y-protocolos-de-comunicacion	24-timeouts	R	ClienteTimeout.java	Timeout de conexión/lectura y cierre ante fallo.	implementado_pendiente_ci
+11-redes-y-protocolos-de-comunicacion	24-timeouts	R	MainTimeout.java	Timeout de conexión/lectura y cierre ante fallo.	implementado_pendiente_ci
+12-persistencia-y-gestion-de-datos	01-registros	R	Registro.java	Persistencia de registros de longitud fija con archivos.	verificado_ci
+12-persistencia-y-gestion-de-datos	01-registros	R	ArchivoRegistros.java	Persistencia de registros de longitud fija con archivos.	verificado_ci
+12-persistencia-y-gestion-de-datos	01-registros	R	MainRegistros.java	Persistencia de registros de longitud fija con archivos.	verificado_ci
+12-persistencia-y-gestion-de-datos	02-formatos-texto	R	CsvSimple.java	Formato explícito y delimitadores; CSV de subconjunto documentado.	verificado_ci
+12-persistencia-y-gestion-de-datos	02-formatos-texto	R	MainCsv.java	Formato explícito y delimitadores; CSV de subconjunto documentado.	verificado_ci
+12-persistencia-y-gestion-de-datos	02-formatos-texto	R	PropertiesDemo.java	Formato explícito y delimitadores; CSV de subconjunto documentado.	verificado_ci
+12-persistencia-y-gestion-de-datos	03-indexacion	R	IndiceArchivo.java	Índice clave a offset y búsqueda sin escanear todo el archivo.	verificado_ci
+12-persistencia-y-gestion-de-datos	03-indexacion	R	MainIndice.java	Índice clave a offset y búsqueda sin escanear todo el archivo.	verificado_ci
+12-persistencia-y-gestion-de-datos	04-consultas	T	FiltrarRegistros.java	Selección, proyección, agrupamiento sobre datos en memoria.	verificado_ci
+12-persistencia-y-gestion-de-datos	04-consultas	T	ProyectarCampos.java	Selección, proyección, agrupamiento sobre datos en memoria.	verificado_ci
+12-persistencia-y-gestion-de-datos	04-consultas	T	AgruparRegistros.java	Selección, proyección, agrupamiento sobre datos en memoria.	verificado_ci
+12-persistencia-y-gestion-de-datos	05-join	T	NestedLoopJoin.java	Equivalencia de resultados y costes de unión relacional.	verificado_ci
+12-persistencia-y-gestion-de-datos	05-join	T	HashJoin.java	Equivalencia de resultados y costes de unión relacional.	verificado_ci
+12-persistencia-y-gestion-de-datos	05-join	T	MainJoin.java	Equivalencia de resultados y costes de unión relacional.	verificado_ci
+12-persistencia-y-gestion-de-datos	06-transacciones	T	Cuenta.java	Atomicidad, commit y rollback en modelo didáctico; no motor ACID real.	verificado_ci
+12-persistencia-y-gestion-de-datos	06-transacciones	T	TransaccionSimulada.java	Atomicidad, commit y rollback en modelo didáctico; no motor ACID real.	verificado_ci
+12-persistencia-y-gestion-de-datos	06-transacciones	T	MainTransaccion.java	Atomicidad, commit y rollback en modelo didáctico; no motor ACID real.	verificado_ci
+12-persistencia-y-gestion-de-datos	07-aislamiento	T	LecturaSuciaSimulada.java	Anomalías de transacciones mediante intercalaciones controladas.	verificado_ci
+12-persistencia-y-gestion-de-datos	07-aislamiento	T	LecturaNoRepetible.java	Anomalías de transacciones mediante intercalaciones controladas.	verificado_ci
+12-persistencia-y-gestion-de-datos	07-aislamiento	T	PerdidaActualizacion.java	Anomalías de transacciones mediante intercalaciones controladas.	verificado_ci
+12-persistencia-y-gestion-de-datos	08-write-ahead-log	T	EntradaLog.java	Escritura previa y recuperación simulada.	implementado_pendiente_ci
+12-persistencia-y-gestion-de-datos	08-write-ahead-log	T	AlmacenSimulado.java	Escritura previa y recuperación simulada.	implementado_pendiente_ci
+12-persistencia-y-gestion-de-datos	08-write-ahead-log	T	MainRecuperacion.java	Escritura previa y recuperación simulada.	implementado_pendiente_ci
+12-persistencia-y-gestion-de-datos	09-jdbc-api	T	ContratoJdbc.java	Connection, PreparedStatement y ResultSet como contrato conceptual; no conexión real sin driver, usar dobles explícitos sin fingir una BD.	verificado_ci
+12-persistencia-y-gestion-de-datos	09-jdbc-api	T	MainConsultaSimulada.java	Connection, PreparedStatement y ResultSet como contrato conceptual; no conexión real sin driver, usar dobles explícitos sin fingir una BD.	verificado_ci
+13-criptografia-y-seguridad	01-integridad	R	HashSHA256.java	Huella criptográfica e integridad; hash no equivale a autenticación.	verificado_ci
+13-criptografia-y-seguridad	01-integridad	R	VerificarArchivo.java	Huella criptográfica e integridad; hash no equivale a autenticación.	verificado_ci
+13-criptografia-y-seguridad	02-checksum	R	ChecksumSuma.java	Checksum elemental y sus colisiones; CRC se estudia en 14. No es una función criptográfica.	verificado_ci
+13-criptografia-y-seguridad	03-autenticacion-mensajes	R	HmacSHA256.java	Autenticidad e integridad con clave compartida.	verificado_ci
+13-criptografia-y-seguridad	03-autenticacion-mensajes	R	VerificarHmac.java	Autenticidad e integridad con clave compartida.	verificado_ci
+13-criptografia-y-seguridad	04-aleatoriedad	R	SecureRandomDemo.java	Aleatoriedad criptográfica; no exigir valores exactos de salida.	verificado_ci
+13-criptografia-y-seguridad	05-contrasenas	R	PBKDF2Demo.java	Sal aleatoria y derivación; parámetros de práctica, no receta de producción.	verificado_ci
+13-criptografia-y-seguridad	06-cifrado-simetrico	R	AesGcmDemo.java	Cifrado autenticado, nonce único y verificación de etiqueta.	verificado_ci
+13-criptografia-y-seguridad	07-claves-publicas	R	ParClaves.java	Generación de claves y firma/verificación, no usar claves reales.	verificado_ci
+13-criptografia-y-seguridad	07-claves-publicas	R	FirmaDigital.java	Generación de claves y firma/verificación, no usar claves reales.	verificado_ci
+13-criptografia-y-seguridad	08-intercambio-claves	R	AcuerdoX25519.java	Acuerdo de secreto; no constituye autenticación por sí solo.	verificado_ci
+13-criptografia-y-seguridad	09-certificados	R	LeerCertificado.java	Interpretar certificado de prueba empaquetado o generado localmente; no confiar solo por leerlo.	verificado_ci
+13-criptografia-y-seguridad	09-certificados	R	MainCertificado.java	Interpretar certificado de prueba empaquetado o generado localmente; no confiar solo por leerlo.	verificado_ci
+13-criptografia-y-seguridad	10-validacion-entradas	R	ValidarLongitud.java	Límites de mensajes y confinamiento de rutas en temporales.	verificado_ci
+13-criptografia-y-seguridad	10-validacion-entradas	R	ValidarRuta.java	Límites de mensajes y confinamiento de rutas en temporales.	verificado_ci
+13-criptografia-y-seguridad	11-control-acceso	T	PermisosRoles.java	Autorización por roles simulada; distinta de sincronización lectores-escritores.	verificado_ci
+13-criptografia-y-seguridad	11-control-acceso	T	MainControlAcceso.java	Autorización por roles simulada; distinta de sincronización lectores-escritores.	verificado_ci
+14-comunicacion-con-dispositivos	03-transmision-serial	T	TramaSerial.java	Modelar trama serial con inicio, datos, paridad y parada como secuencia de bits, sin implementar controlador físico.	verificado_ci
+14-comunicacion-con-dispositivos	04-paridad	T	ParidadPar.java	Detectar cambios de paridad y límites de detección.	verificado_ci
+14-comunicacion-con-dispositivos	04-paridad	T	ParidadImpar.java	Detectar cambios de paridad y límites de detección.	verificado_ci
+14-comunicacion-con-dispositivos	05-crc-y-hamming	T	CRCModelo.java	Implementar CRC elemental y Hamming(7,4) para detectar/corregir errores; comparar con CRC32 del JDK solo como comprobación.	verificado_ci
+14-comunicacion-con-dispositivos	05-crc-y-hamming	T	Hamming74.java	Implementar CRC elemental y Hamming(7,4) para detectar/corregir errores; comparar con CRC32 del JDK solo como comprobación.	verificado_ci
+14-comunicacion-con-dispositivos	05-crc-y-hamming	T	MainHamming.java	Implementar CRC elemental y Hamming(7,4) para detectar/corregir errores; comparar con CRC32 del JDK solo como comprobación.	verificado_ci
+14-comunicacion-con-dispositivos	06-canal-serial	T	CanalBytesSimulado.java	Flujo de bytes, delimitadores y recepción fragmentada.	verificado_ci
+14-comunicacion-con-dispositivos	06-canal-serial	T	Emisor.java	Flujo de bytes, delimitadores y recepción fragmentada.	verificado_ci
+14-comunicacion-con-dispositivos	06-canal-serial	T	Receptor.java	Flujo de bytes, delimitadores y recepción fragmentada.	verificado_ci
+14-comunicacion-con-dispositivos	06-canal-serial	T	MainSerial.java	Flujo de bytes, delimitadores y recepción fragmentada.	verificado_ci
+14-comunicacion-con-dispositivos	08-mensajes-medicion-y-control	T	MedicionSimulada.java	Procesar una medición recibida y producir un comando textual; sin sensor, GPIO ni hardware.	verificado_ci
+14-comunicacion-con-dispositivos	08-mensajes-medicion-y-control	T	ControlPorUmbral.java	Procesar una medición recibida y producir un comando textual; sin sensor, GPIO ni hardware.	verificado_ci
+14-comunicacion-con-dispositivos	11-telemetria	T	TramaMedicion.java	Campos binarios, checksum, límites y reensamblaje.	verificado_ci
+14-comunicacion-con-dispositivos	11-telemetria	T	Codificador.java	Campos binarios, checksum, límites y reensamblaje.	verificado_ci
+14-comunicacion-con-dispositivos	11-telemetria	T	Decodificador.java	Campos binarios, checksum, límites y reensamblaje.	verificado_ci
+14-comunicacion-con-dispositivos	11-telemetria	T	MainTelemetria.java	Campos binarios, checksum, límites y reensamblaje.	verificado_ci
+14-comunicacion-con-dispositivos	12-interoperabilidad-nativa	D	README.md	Explicar límites de la API Java 21 para puertos seriales y JNI/FFM; no integrar drivers, C ni API preview obligatoria.	verificado_ci
+15-graficos-y-multimedia	01-pixeles	R	ColorRGB.java	Componentes RGB/ARGB y coordenadas con BufferedImage.	verificado_ci
+15-graficos-y-multimedia	01-pixeles	R	ImagenPixeles.java	Componentes RGB/ARGB y coordenadas con BufferedImage.	verificado_ci
+15-graficos-y-multimedia	02-archivos-imagen	R	LeerEscribirPNG.java	ImageIO y archivos temporales, sin imágenes externas.	verificado_ci
+15-graficos-y-multimedia	03-transformaciones	T	Traslacion.java	Transformaciones geométricas y matrices.	verificado_ci
+15-graficos-y-multimedia	03-transformaciones	T	Rotacion2D.java	Transformaciones geométricas y matrices.	verificado_ci
+15-graficos-y-multimedia	03-transformaciones	T	Escalado.java	Transformaciones geométricas y matrices.	verificado_ci
+15-graficos-y-multimedia	04-procesamiento-imagen	R	EscalaGrises.java	Filtros de píxeles sobre imágenes generadas.	verificado_ci
+15-graficos-y-multimedia	04-procesamiento-imagen	R	Umbral.java	Filtros de píxeles sobre imágenes generadas.	verificado_ci
+15-graficos-y-multimedia	04-procesamiento-imagen	R	Convolucion.java	Filtros de píxeles sobre imágenes generadas.	verificado_ci
+15-graficos-y-multimedia	05-rasterizacion	T	LineaBresenham.java	Aproximación de líneas en cuadrícula.	verificado_ci
+15-graficos-y-multimedia	05-rasterizacion	T	MainRaster.java	Aproximación de líneas en cuadrícula.	verificado_ci
+15-graficos-y-multimedia	06-graficos-2d	R	DibujarFormas.java	Graphics2D sobre BufferedImage, sin ventana ni servidor gráfico.	verificado_ci
+15-graficos-y-multimedia	06-graficos-2d	R	MainGrafico.java	Graphics2D sobre BufferedImage, sin ventana ni servidor gráfico.	verificado_ci
+15-graficos-y-multimedia	07-audio-digital	R	MuestreoSeno.java	Muestreo, amplitud y generación de archivo WAV sin reproducir audio.	verificado_ci
+15-graficos-y-multimedia	07-audio-digital	R	CuantizacionPCM.java	Muestreo, amplitud y generación de archivo WAV sin reproducir audio.	verificado_ci
+15-graficos-y-multimedia	07-audio-digital	R	EscribirWav.java	Muestreo, amplitud y generación de archivo WAV sin reproducir audio.	verificado_ci
+16-interpretes-y-procesamiento-de-lenguajes	01-cadena-compilacion	R	FuenteEjemplo.java	Compilar una clase mínima con javac y distinguir fuente y clase; comandos en comentarios, sin escribir un gestor de compilación.	verificado_ci
+16-interpretes-y-procesamiento-de-lenguajes	02-bytecode	R	Operacion.java	Inspeccionar bytecode con javap -c; no simular CPU.	verificado_ci
+16-interpretes-y-procesamiento-de-lenguajes	05-biblioteca-jar	R	lib/Operaciones.java	Compilar biblioteca mínima y consumir un JAR con jar y classpath; sin Maven.	verificado_ci
+16-interpretes-y-procesamiento-de-lenguajes	05-biblioteca-jar	R	app/Cliente.java	Compilar biblioteca mínima y consumir un JAR con jar y classpath; sin Maven.	verificado_ci
+16-interpretes-y-procesamiento-de-lenguajes	07-carga-clases	R	ClaseEjemplo.java	Observar carga e inicialización de una clase local con Class.forName; no crear sistema de plugins.	verificado_ci
+16-interpretes-y-procesamiento-de-lenguajes	07-carga-clases	R	MainCargaClase.java	Observar carga e inicialización de una clase local con Class.forName; no crear sistema de plugins.	verificado_ci
+16-interpretes-y-procesamiento-de-lenguajes	10-lexer	T	Token.java	Reconocer números, operadores e identificadores con una gramática mínima.	verificado_ci
+16-interpretes-y-procesamiento-de-lenguajes	10-lexer	T	Lexer.java	Reconocer números, operadores e identificadores con una gramática mínima.	verificado_ci
+16-interpretes-y-procesamiento-de-lenguajes	10-lexer	T	MainLexer.java	Reconocer números, operadores e identificadores con una gramática mínima.	verificado_ci
+16-interpretes-y-procesamiento-de-lenguajes	11-parser-descenso-recursivo	T	Token.java	Precedencia, asociación y árbol sintáctico; lexer mínimo local, sin dependencias cruzadas.	verificado_ci
+16-interpretes-y-procesamiento-de-lenguajes	11-parser-descenso-recursivo	T	Lexer.java	Precedencia, asociación y árbol sintáctico; lexer mínimo local, sin dependencias cruzadas.	verificado_ci
+16-interpretes-y-procesamiento-de-lenguajes	11-parser-descenso-recursivo	T	Nodo.java	Precedencia, asociación y árbol sintáctico; lexer mínimo local, sin dependencias cruzadas.	verificado_ci
+16-interpretes-y-procesamiento-de-lenguajes	11-parser-descenso-recursivo	T	Parser.java	Precedencia, asociación y árbol sintáctico; lexer mínimo local, sin dependencias cruzadas.	verificado_ci
+16-interpretes-y-procesamiento-de-lenguajes	11-parser-descenso-recursivo	T	MainParser.java	Precedencia, asociación y árbol sintáctico; lexer mínimo local, sin dependencias cruzadas.	verificado_ci
+16-interpretes-y-procesamiento-de-lenguajes	12-shunting-yard	T	ShuntingYard.java	Convertir infija a postfija utilizando una pila.	verificado_ci
+16-interpretes-y-procesamiento-de-lenguajes	12-shunting-yard	T	MainPostfija.java	Convertir infija a postfija utilizando una pila.	verificado_ci
+16-interpretes-y-procesamiento-de-lenguajes	13-evaluacion-ast	T	Expresion.java	Evaluar un árbol de expresión pequeño.	verificado_ci
+16-interpretes-y-procesamiento-de-lenguajes	13-evaluacion-ast	T	Evaluador.java	Evaluar un árbol de expresión pequeño.	verificado_ci
+16-interpretes-y-procesamiento-de-lenguajes	13-evaluacion-ast	T	MainEvaluador.java	Evaluar un árbol de expresión pequeño.	verificado_ci
+16-interpretes-y-procesamiento-de-lenguajes	14-maquina-estados-comandos	R	ReconocerComando.java	Reconocer comandos sencillos y distinguir estados, entradas válidas e inválidas; no construir máquina virtual.	verificado_ci
+16-interpretes-y-procesamiento-de-lenguajes	14-maquina-estados-comandos	R	MaquinaEstados.java	Reconocer comandos sencillos y distinguir estados, entradas válidas e inválidas; no construir máquina virtual.	verificado_ci
+17-sistemas-distribuidos	01-mensajeria	T	Mensaje.java	Comunicación asíncrona y orden de entrega simulado.	verificado_ci
+17-sistemas-distribuidos	01-mensajeria	T	Buzon.java	Comunicación asíncrona y orden de entrega simulado.	verificado_ci
+17-sistemas-distribuidos	01-mensajeria	T	MainMensajeria.java	Comunicación asíncrona y orden de entrega simulado.	verificado_ci
+17-sistemas-distribuidos	02-relojes-logicos	T	RelojLamport.java	Orden causal parcial y marcas de tiempo lógicas.	verificado_ci
+17-sistemas-distribuidos	02-relojes-logicos	T	MainLamport.java	Orden causal parcial y marcas de tiempo lógicas.	verificado_ci
+17-sistemas-distribuidos	03-relojes-vectoriales	T	RelojVectorial.java	Distinguir precedencia causal de concurrencia.	verificado_ci
+17-sistemas-distribuidos	03-relojes-vectoriales	T	MainCausalidad.java	Distinguir precedencia causal de concurrencia.	verificado_ci
+17-sistemas-distribuidos	04-reintentos	T	CanalSimulado.java	Timeout, fallos transitorios y backoff en reloj simulado.	verificado_ci
+17-sistemas-distribuidos	04-reintentos	T	ReintentoAcotado.java	Timeout, fallos transitorios y backoff en reloj simulado.	verificado_ci
+17-sistemas-distribuidos	04-reintentos	T	MainReintento.java	Timeout, fallos transitorios y backoff en reloj simulado.	verificado_ci
+17-sistemas-distribuidos	05-idempotencia	T	Peticion.java	Deduplicar mensajes con identificadores estables.	verificado_ci
+17-sistemas-distribuidos	05-idempotencia	T	ServidorIdempotente.java	Deduplicar mensajes con identificadores estables.	verificado_ci
+17-sistemas-distribuidos	05-idempotencia	T	MainDuplicados.java	Deduplicar mensajes con identificadores estables.	verificado_ci
+17-sistemas-distribuidos	06-heartbeat	T	Nodo.java	Sospechas de fallo bajo tiempo simulado; no certeza absoluta.	verificado_ci
+17-sistemas-distribuidos	06-heartbeat	T	DetectorFallos.java	Sospechas de fallo bajo tiempo simulado; no certeza absoluta.	verificado_ci
+17-sistemas-distribuidos	06-heartbeat	T	MainHeartbeat.java	Sospechas de fallo bajo tiempo simulado; no certeza absoluta.	verificado_ci
+17-sistemas-distribuidos	07-eleccion-lider	T	EleccionAnillo.java	Elección bajo supuestos explícitos, participantes fijos y entrega fiable.	verificado_ci
+17-sistemas-distribuidos	07-eleccion-lider	T	MainEleccion.java	Elección bajo supuestos explícitos, participantes fijos y entrega fiable.	verificado_ci
+17-sistemas-distribuidos	08-replicacion	T	Replica.java	Copia primaria/secundaria y retraso controlado.	verificado_ci
+17-sistemas-distribuidos	08-replicacion	T	MainReplicacion.java	Copia primaria/secundaria y retraso controlado.	verificado_ci
+17-sistemas-distribuidos	09-consistencia	T	LecturaEventual.java	Visibilidad de escrituras, quórums bajo supuestos; no consenso completo.	verificado_ci
+17-sistemas-distribuidos	09-consistencia	T	QuorumSimulado.java	Visibilidad de escrituras, quórums bajo supuestos; no consenso completo.	verificado_ci
+17-sistemas-distribuidos	10-exclusion-distribuida	T	TokenAnillo.java	Acceso exclusivo mediante token bajo entrega fiable y sin pérdidas.	verificado_ci
+17-sistemas-distribuidos	10-exclusion-distribuida	T	MainTokenAnillo.java	Acceso exclusivo mediante token bajo entrega fiable y sin pérdidas.	verificado_ci
+18-pruebas-depuracion-y-rendimiento	01-contratos	R	PrePostcondiciones.java	Validación de entradas, resultados e invariantes.	verificado_ci
+18-pruebas-depuracion-y-rendimiento	01-contratos	R	Invariantes.java	Validación de entradas, resultados e invariantes.	verificado_ci
+18-pruebas-depuracion-y-rendimiento	02-pruebas-unitarias	R	Calculadora.java	Pruebas sin JUnit, AssertionError explícito y código de salida.	verificado_ci
+18-pruebas-depuracion-y-rendimiento	02-pruebas-unitarias	R	PruebaCalculadora.java	Pruebas sin JUnit, AssertionError explícito y código de salida.	verificado_ci
+18-pruebas-depuracion-y-rendimiento	03-pruebas-limites	R	PruebaCasosLimite.java	Vacío, mínimos, máximos, valores inválidos.	verificado_ci
+18-pruebas-depuracion-y-rendimiento	04-pruebas-propiedades	R	PruebaPropiedades.java	Generar casos con semilla fija y comprobar invariantes.	verificado_ci
+18-pruebas-depuracion-y-rendimiento	05-pruebas-concurrencia	R	PruebaContador.java	Coordinación determinista, límite de espera y propagación de fallos.	verificado_ci
+18-pruebas-depuracion-y-rendimiento	05-pruebas-concurrencia	R	PruebaTimeout.java	Coordinación determinista, límite de espera y propagación de fallos.	verificado_ci
+18-pruebas-depuracion-y-rendimiento	06-trazas	R	TrazaExcepcion.java	Stack trace, causas y localización del fallo.	verificado_ci
+18-pruebas-depuracion-y-rendimiento	06-trazas	R	CausasExcepcion.java	Stack trace, causas y localización del fallo.	verificado_ci
+18-pruebas-depuracion-y-rendimiento	07-depuracion-jdb	R	ProgramaDepurable.java	javac -g y jdb: breakpoints, step, next, variables y backtrace; comandos comentados.	verificado_ci
+18-pruebas-depuracion-y-rendimiento	08-registro-eventos	R	RegistroJul.java	java.util.logging y niveles, sin framework.	verificado_ci
+18-pruebas-depuracion-y-rendimiento	09-medicion-tiempo	R	MedirNanoTime.java	Tiempo transcurrido, calentamiento y límites de microbenchmarks.	verificado_ci
+18-pruebas-depuracion-y-rendimiento	09-medicion-tiempo	R	CompararComplejidad.java	Tiempo transcurrido, calentamiento y límites de microbenchmarks.	verificado_ci
+18-pruebas-depuracion-y-rendimiento	10-memoria-jvm	R	ConsultarHeap.java	MemoryMXBean y referencias retenidas; no inferir direcciones reales.	verificado_ci
+18-pruebas-depuracion-y-rendimiento	10-memoria-jvm	R	MainRetencion.java	MemoryMXBean y referencias retenidas; no inferir direcciones reales.	verificado_ci
+18-pruebas-depuracion-y-rendimiento	11-diagnostico-hilos	M	ConsultarHilos.java	ThreadMXBean y modelo de detección; no dejar hilos bloqueados.	verificado_ci
+18-pruebas-depuracion-y-rendimiento	11-diagnostico-hilos	M	DetectarDeadlockSimulado.java	ThreadMXBean y modelo de detección; no dejar hilos bloqueados.	verificado_ci
+18-pruebas-depuracion-y-rendimiento	12-flight-recorder	R	GrabarJfr.java	Grabación acotada y análisis de eventos con JDK Flight Recorder.	verificado_ci
+18-pruebas-depuracion-y-rendimiento	12-flight-recorder	R	LeerEventosJfr.java	Grabación acotada y análisis de eventos con JDK Flight Recorder.	verificado_ci
+18-pruebas-depuracion-y-rendimiento	13-herramientas-jdk	P	ProcesoInspeccionable.java	jcmd/jstack solo sobre una JVM hija propia; disponibilidad y permisos.	verificado_ci
+18-pruebas-depuracion-y-rendimiento	13-herramientas-jdk	P	MainDiagnostico.java	jcmd/jstack solo sobre una JVM hija propia; disponibilidad y permisos.	verificado_ci
+18-pruebas-depuracion-y-rendimiento	14-empaquetado	R	Aplicacion.java	jar, java -jar y comandos de jpackage explicados; instalador no obligatorio para practicar.	verificado_ci
+19-inteligencia-artificial-fundamental	01-comparacion-de-patrones	R	CompararMatrices.java	Comparar dos matrices binarias 5x5 mediante diferencias de píxeles; devolver distancia exacta.	verificado_ci
+19-inteligencia-artificial-fundamental	02-reconocimiento-de-digitos	R	ReconocerDigito.java	Clasificar una matriz pequeña por plantillas 0–9; probar coincidencia y ruido acotado; no confundir con OCR general.	verificado_ci
+19-inteligencia-artificial-fundamental	03-distancias	R	DistanciaManhattan.java	Calcular distancia Manhattan con bucle; Euclidiana ya en 06/05. Comparar con un caso conocido.	verificado_ci
+19-inteligencia-artificial-fundamental	04-clasificacion-knn	R	ClasificadorKNN.java	Medir distancias, seleccionar k vecinos y votar con desempate explícito; datos pequeños.	verificado_ci
+19-inteligencia-artificial-fundamental	05-perceptron	R	Perceptron.java	Aprender una frontera lineal con pesos, umbral y actualización explícita; AND/OR como datos binarios, no electrónica.	verificado_ci
+19-inteligencia-artificial-fundamental	06-red-neuronal-elemental	R	RedNeuronalElemental.java	Propagación y ajuste de pesos con dos capas pequeñas; operaciones explícitas; verificar descenso de error y límites.	verificado_ci
+19-inteligencia-artificial-fundamental	07-agrupamiento-kmeans	R	KMeans.java	Asignar puntos a centroides y recalcular medias; semilla fija y límite de iteraciones.	verificado_ci
+19-inteligencia-artificial-fundamental	08-busqueda-heuristica	R	BusquedaAEstrella.java	A* en cuadrícula pequeña; explicar heurística admisible y comparar con coste óptimo, sin reimplementar Dijkstra como ejercicio independiente.	verificado_ci
+19-inteligencia-artificial-fundamental	09-algoritmos-geneticos	R	SeleccionMutacion.java	Selección, cruce y mutación sobre cadenas binarias; semilla fija, generaciones acotadas.	verificado_ci
+19-inteligencia-artificial-fundamental	10-regresion-lineal	R	RegresionLineal.java	Ajustar pendiente e intercepto con error cuadrático y bucles; distinguir predicción y clasificación.	verificado_ci
+19-inteligencia-artificial-fundamental	11-evaluacion-modelos	R	MatrizConfusion.java	Separar datos de evaluación y entrenamiento; exactitud, precisión y exhaustividad, divisiones por cero.	verificado_ci
+19-inteligencia-artificial-fundamental	11-evaluacion-modelos	R	MetricasClasificacion.java	Separar datos de evaluación y entrenamiento; exactitud, precisión y exhaustividad, divisiones por cero.	verificado_ci
+19-inteligencia-artificial-fundamental	12-minimax	R	Minimax.java	Árbol de decisiones pequeño de un juego sencillo; alternar máximo y mínimo.	verificado_ci
+20-arquitectura-de-software	01-en-capas-verduleria	R	dominio/Verdura.java	Tienda de verduras: vender dos unidades, descontar inventario, rechazar venta sin existencias. Dependencia presentación → servicio → persistencia; dominio sencillo.	implementado_pendiente_ci
+20-arquitectura-de-software	01-en-capas-verduleria	R	persistencia/InventarioEnMemoria.java	Tienda de verduras: vender dos unidades, descontar inventario, rechazar venta sin existencias. Dependencia presentación → servicio → persistencia; dominio sencillo.	implementado_pendiente_ci
+20-arquitectura-de-software	01-en-capas-verduleria	R	servicio/ServicioVentas.java	Tienda de verduras: vender dos unidades, descontar inventario, rechazar venta sin existencias. Dependencia presentación → servicio → persistencia; dominio sencillo.	implementado_pendiente_ci
+20-arquitectura-de-software	01-en-capas-verduleria	R	presentacion/ConsolaVentas.java	Tienda de verduras: vender dos unidades, descontar inventario, rechazar venta sin existencias. Dependencia presentación → servicio → persistencia; dominio sencillo.	implementado_pendiente_ci
+20-arquitectura-de-software	01-en-capas-verduleria	R	Main.java	Tienda de verduras: vender dos unidades, descontar inventario, rechazar venta sin existencias. Dependencia presentación → servicio → persistencia; dominio sencillo.	implementado_pendiente_ci
+20-arquitectura-de-software	02-mvc-biblioteca	R	modelo/Libro.java	Biblioteca: prestar y devolver un libro. Vista muestra estado, controlador traduce acciones, modelo impone disponibilidad.	implementado_pendiente_ci
+20-arquitectura-de-software	02-mvc-biblioteca	R	modelo/Biblioteca.java	Biblioteca: prestar y devolver un libro. Vista muestra estado, controlador traduce acciones, modelo impone disponibilidad.	implementado_pendiente_ci
+20-arquitectura-de-software	02-mvc-biblioteca	R	vista/VistaBiblioteca.java	Biblioteca: prestar y devolver un libro. Vista muestra estado, controlador traduce acciones, modelo impone disponibilidad.	implementado_pendiente_ci
+20-arquitectura-de-software	02-mvc-biblioteca	R	controlador/ControladorPrestamos.java	Biblioteca: prestar y devolver un libro. Vista muestra estado, controlador traduce acciones, modelo impone disponibilidad.	implementado_pendiente_ci
+20-arquitectura-de-software	02-mvc-biblioteca	R	Main.java	Biblioteca: prestar y devolver un libro. Vista muestra estado, controlador traduce acciones, modelo impone disponibilidad.	implementado_pendiente_ci
+20-arquitectura-de-software	03-mvp-panaderia	R	modelo/PedidoPan.java	Panadería: registrar pedido y mostrar total; presentador controla una vista pasiva mediante contrato.	implementado_pendiente_ci
+20-arquitectura-de-software	03-mvp-panaderia	R	vista/VistaPedidos.java	Panadería: registrar pedido y mostrar total; presentador controla una vista pasiva mediante contrato.	implementado_pendiente_ci
+20-arquitectura-de-software	03-mvp-panaderia	R	vista/ConsolaPedidos.java	Panadería: registrar pedido y mostrar total; presentador controla una vista pasiva mediante contrato.	implementado_pendiente_ci
+20-arquitectura-de-software	03-mvp-panaderia	R	presentador/PresentadorPedidos.java	Panadería: registrar pedido y mostrar total; presentador controla una vista pasiva mediante contrato.	implementado_pendiente_ci
+20-arquitectura-de-software	03-mvp-panaderia	R	Main.java	Panadería: registrar pedido y mostrar total; presentador controla una vista pasiva mediante contrato.	implementado_pendiente_ci
+20-arquitectura-de-software	04-mvvm-heladeria	R	modelo/Helado.java	Heladería: elegir sabor/cantidad y observar el total. PropertyChangeSupport o listener explícito para estado observable; sin JavaFX.	implementado_pendiente_ci
+20-arquitectura-de-software	04-mvvm-heladeria	R	viewmodel/HeladoViewModel.java	Heladería: elegir sabor/cantidad y observar el total. PropertyChangeSupport o listener explícito para estado observable; sin JavaFX.	implementado_pendiente_ci
+20-arquitectura-de-software	04-mvvm-heladeria	R	vista/VistaHeladeria.java	Heladería: elegir sabor/cantidad y observar el total. PropertyChangeSupport o listener explícito para estado observable; sin JavaFX.	implementado_pendiente_ci
+20-arquitectura-de-software	04-mvvm-heladeria	R	Main.java	Heladería: elegir sabor/cantidad y observar el total. PropertyChangeSupport o listener explícito para estado observable; sin JavaFX.	implementado_pendiente_ci
+20-arquitectura-de-software	05-hexagonal-centro-ecuestre	R	dominio/Caballo.java	Centro ecuestre: reservar caballo disponible y rechazar segunda reserva. Puertos de entrada/salida propios de aplicación, adaptadores implementan contratos; dominio independiente.	implementado_pendiente_ci
+20-arquitectura-de-software	05-hexagonal-centro-ecuestre	R	dominio/Reserva.java	Centro ecuestre: reservar caballo disponible y rechazar segunda reserva. Puertos de entrada/salida propios de aplicación, adaptadores implementan contratos; dominio independiente.	implementado_pendiente_ci
+20-arquitectura-de-software	05-hexagonal-centro-ecuestre	R	aplicacion/puertos/ServicioReservas.java	Centro ecuestre: reservar caballo disponible y rechazar segunda reserva. Puertos de entrada/salida propios de aplicación, adaptadores implementan contratos; dominio independiente.	implementado_pendiente_ci
+20-arquitectura-de-software	05-hexagonal-centro-ecuestre	R	aplicacion/puertos/RepositorioCaballos.java	Centro ecuestre: reservar caballo disponible y rechazar segunda reserva. Puertos de entrada/salida propios de aplicación, adaptadores implementan contratos; dominio independiente.	implementado_pendiente_ci
+20-arquitectura-de-software	05-hexagonal-centro-ecuestre	R	aplicacion/ReservarCaballo.java	Centro ecuestre: reservar caballo disponible y rechazar segunda reserva. Puertos de entrada/salida propios de aplicación, adaptadores implementan contratos; dominio independiente.	implementado_pendiente_ci
+20-arquitectura-de-software	05-hexagonal-centro-ecuestre	R	infraestructura/entrada/ConsolaReservas.java	Centro ecuestre: reservar caballo disponible y rechazar segunda reserva. Puertos de entrada/salida propios de aplicación, adaptadores implementan contratos; dominio independiente.	implementado_pendiente_ci
+20-arquitectura-de-software	05-hexagonal-centro-ecuestre	R	infraestructura/salida/RepositorioEnMemoria.java	Centro ecuestre: reservar caballo disponible y rechazar segunda reserva. Puertos de entrada/salida propios de aplicación, adaptadores implementan contratos; dominio independiente.	implementado_pendiente_ci
+20-arquitectura-de-software	05-hexagonal-centro-ecuestre	R	Main.java	Centro ecuestre: reservar caballo disponible y rechazar segunda reserva. Puertos de entrada/salida propios de aplicación, adaptadores implementan contratos; dominio independiente.	implementado_pendiente_ci
+20-arquitectura-de-software	06-clean-peluqueria-canina	R	entidades/Cita.java	Peluquería canina: reservar hora libre y rechazar ocupada; reglas de dependencias hacia dentro, límites de entrada/salida y presentación separada.	implementado_pendiente_ci
+20-arquitectura-de-software	06-clean-peluqueria-canina	R	casosdeuso/AgendarCita.java	Peluquería canina: reservar hora libre y rechazar ocupada; reglas de dependencias hacia dentro, límites de entrada/salida y presentación separada.	implementado_pendiente_ci
+20-arquitectura-de-software	06-clean-peluqueria-canina	R	casosdeuso/EntradaCita.java	Peluquería canina: reservar hora libre y rechazar ocupada; reglas de dependencias hacia dentro, límites de entrada/salida y presentación separada.	implementado_pendiente_ci
+20-arquitectura-de-software	06-clean-peluqueria-canina	R	casosdeuso/SalidaCita.java	Peluquería canina: reservar hora libre y rechazar ocupada; reglas de dependencias hacia dentro, límites de entrada/salida y presentación separada.	implementado_pendiente_ci
+20-arquitectura-de-software	06-clean-peluqueria-canina	R	casosdeuso/RepositorioCitas.java	Peluquería canina: reservar hora libre y rechazar ocupada; reglas de dependencias hacia dentro, límites de entrada/salida y presentación separada.	implementado_pendiente_ci
+20-arquitectura-de-software	06-clean-peluqueria-canina	R	adaptadores/ControladorCitas.java	Peluquería canina: reservar hora libre y rechazar ocupada; reglas de dependencias hacia dentro, límites de entrada/salida y presentación separada.	implementado_pendiente_ci
+20-arquitectura-de-software	06-clean-peluqueria-canina	R	adaptadores/PresentadorCitas.java	Peluquería canina: reservar hora libre y rechazar ocupada; reglas de dependencias hacia dentro, límites de entrada/salida y presentación separada.	implementado_pendiente_ci
+20-arquitectura-de-software	06-clean-peluqueria-canina	R	infraestructura/CitasEnMemoria.java	Peluquería canina: reservar hora libre y rechazar ocupada; reglas de dependencias hacia dentro, límites de entrada/salida y presentación separada.	implementado_pendiente_ci
+20-arquitectura-de-software	06-clean-peluqueria-canina	R	Main.java	Peluquería canina: reservar hora libre y rechazar ocupada; reglas de dependencias hacia dentro, límites de entrada/salida y presentación separada.	implementado_pendiente_ci
+20-arquitectura-de-software	07-onion-cabanas	R	dominio/Cabana.java	Cabañas turísticas: reservar cabaña libre. Contrato de repositorio interior, servicio de aplicación y capas externas con dependencias hacia dominio.	implementado_pendiente_ci
+20-arquitectura-de-software	07-onion-cabanas	R	dominio/RepositorioCabanas.java	Cabañas turísticas: reservar cabaña libre. Contrato de repositorio interior, servicio de aplicación y capas externas con dependencias hacia dominio.	implementado_pendiente_ci
+20-arquitectura-de-software	07-onion-cabanas	R	aplicacion/ReservarCabana.java	Cabañas turísticas: reservar cabaña libre. Contrato de repositorio interior, servicio de aplicación y capas externas con dependencias hacia dominio.	implementado_pendiente_ci
+20-arquitectura-de-software	07-onion-cabanas	R	infraestructura/CabanasEnMemoria.java	Cabañas turísticas: reservar cabaña libre. Contrato de repositorio interior, servicio de aplicación y capas externas con dependencias hacia dominio.	implementado_pendiente_ci
+20-arquitectura-de-software	07-onion-cabanas	R	presentacion/ConsolaCabanas.java	Cabañas turísticas: reservar cabaña libre. Contrato de repositorio interior, servicio de aplicación y capas externas con dependencias hacia dominio.	implementado_pendiente_ci
+20-arquitectura-de-software	07-onion-cabanas	R	Main.java	Cabañas turísticas: reservar cabaña libre. Contrato de repositorio interior, servicio de aplicación y capas externas con dependencias hacia dominio.	implementado_pendiente_ci
+20-arquitectura-de-software	08-eventos-restaurante	R	dominio/Pedido.java	Restaurante: cocina marca pedido listo; mostrador recibe evento sin dependencia directa de cocina. Publicación síncrona en memoria, no broker real.	implementado_pendiente_ci
+20-arquitectura-de-software	08-eventos-restaurante	R	eventos/PedidoListo.java	Restaurante: cocina marca pedido listo; mostrador recibe evento sin dependencia directa de cocina. Publicación síncrona en memoria, no broker real.	implementado_pendiente_ci
+20-arquitectura-de-software	08-eventos-restaurante	R	eventos/BusEventos.java	Restaurante: cocina marca pedido listo; mostrador recibe evento sin dependencia directa de cocina. Publicación síncrona en memoria, no broker real.	implementado_pendiente_ci
+20-arquitectura-de-software	08-eventos-restaurante	R	cocina/Cocina.java	Restaurante: cocina marca pedido listo; mostrador recibe evento sin dependencia directa de cocina. Publicación síncrona en memoria, no broker real.	implementado_pendiente_ci
+20-arquitectura-de-software	08-eventos-restaurante	R	mostrador/AvisadorPedidos.java	Restaurante: cocina marca pedido listo; mostrador recibe evento sin dependencia directa de cocina. Publicación síncrona en memoria, no broker real.	implementado_pendiente_ci
+20-arquitectura-de-software	08-eventos-restaurante	R	Main.java	Restaurante: cocina marca pedido listo; mostrador recibe evento sin dependencia directa de cocina. Publicación síncrona en memoria, no broker real.	implementado_pendiente_ci
+20-arquitectura-de-software	09-monolito-modular-supermercado	R	inventario/Inventario.java	Supermercado: comprar stock y vender; un único proceso, módulos con API pública mínima. Sin dependencias cíclicas ni acceso directo a internals.	implementado_pendiente_ci
+20-arquitectura-de-software	09-monolito-modular-supermercado	R	inventario/Existencias.java	Supermercado: comprar stock y vender; un único proceso, módulos con API pública mínima. Sin dependencias cíclicas ni acceso directo a internals.	implementado_pendiente_ci
+20-arquitectura-de-software	09-monolito-modular-supermercado	R	ventas/Ventas.java	Supermercado: comprar stock y vender; un único proceso, módulos con API pública mínima. Sin dependencias cíclicas ni acceso directo a internals.	implementado_pendiente_ci
+20-arquitectura-de-software	09-monolito-modular-supermercado	R	compras/Compras.java	Supermercado: comprar stock y vender; un único proceso, módulos con API pública mínima. Sin dependencias cíclicas ni acceso directo a internals.	implementado_pendiente_ci
+20-arquitectura-de-software	09-monolito-modular-supermercado	R	Main.java	Supermercado: comprar stock y vender; un único proceso, módulos con API pública mínima. Sin dependencias cíclicas ni acceso directo a internals.	implementado_pendiente_ci
+20-arquitectura-de-software	10-microservicios-bicicletas	R	disponibilidad/ServicioDisponibilidad.java	Alquiler de bicicletas: dos JVM hijas con HTTP loopback, puertos efímeros, reserva y disponibilidad. Estado privado por servicio y contrato HTTP explícito; detener hijos. No pretender garantías distribuidas de producción.	implementado_pendiente_ci
+20-arquitectura-de-software	10-microservicios-bicicletas	R	reservas/ServicioReservas.java	Alquiler de bicicletas: dos JVM hijas con HTTP loopback, puertos efímeros, reserva y disponibilidad. Estado privado por servicio y contrato HTTP explícito; detener hijos. No pretender garantías distribuidas de producción.	implementado_pendiente_ci
+20-arquitectura-de-software	10-microservicios-bicicletas	R	cliente/ClienteAlquiler.java	Alquiler de bicicletas: dos JVM hijas con HTTP loopback, puertos efímeros, reserva y disponibilidad. Estado privado por servicio y contrato HTTP explícito; detener hijos. No pretender garantías distribuidas de producción.	implementado_pendiente_ci
+20-arquitectura-de-software	10-microservicios-bicicletas	R	Main.java	Alquiler de bicicletas: dos JVM hijas con HTTP loopback, puertos efímeros, reserva y disponibilidad. Estado privado por servicio y contrato HTTP explícito; detener hijos. No pretender garantías distribuidas de producción.	implementado_pendiente_ci
+20-arquitectura-de-software	11-comparacion-verduleria/01-en-capas	D	README.md	Misma venta de verduras en capas. Reutilizar el ejemplo 20/01 como referencia documental en lugar de copiar fuentes.	implementado_pendiente_ci
+20-arquitectura-de-software	11-comparacion-verduleria/02-hexagonal	R	dominio/Verdura.java	Misma venta y salida que 20/01; cambiar dependencias hacia puertos y adaptadores.	implementado_pendiente_ci
+20-arquitectura-de-software	11-comparacion-verduleria/02-hexagonal	R	aplicacion/VenderVerdura.java	Misma venta y salida que 20/01; cambiar dependencias hacia puertos y adaptadores.	implementado_pendiente_ci
+20-arquitectura-de-software	11-comparacion-verduleria/02-hexagonal	R	aplicacion/puertos/Venta.java	Misma venta y salida que 20/01; cambiar dependencias hacia puertos y adaptadores.	implementado_pendiente_ci
+20-arquitectura-de-software	11-comparacion-verduleria/02-hexagonal	R	aplicacion/puertos/Inventario.java	Misma venta y salida que 20/01; cambiar dependencias hacia puertos y adaptadores.	implementado_pendiente_ci
+20-arquitectura-de-software	11-comparacion-verduleria/02-hexagonal	R	infraestructura/ConsolaVentas.java	Misma venta y salida que 20/01; cambiar dependencias hacia puertos y adaptadores.	implementado_pendiente_ci
+20-arquitectura-de-software	11-comparacion-verduleria/02-hexagonal	R	infraestructura/InventarioEnMemoria.java	Misma venta y salida que 20/01; cambiar dependencias hacia puertos y adaptadores.	implementado_pendiente_ci
+20-arquitectura-de-software	11-comparacion-verduleria/02-hexagonal	R	Main.java	Misma venta y salida que 20/01; cambiar dependencias hacia puertos y adaptadores.	implementado_pendiente_ci
+20-arquitectura-de-software	11-comparacion-verduleria/03-clean	R	entidades/Verdura.java	Misma venta y salida que 20/01; separar límites y respetar regla de dependencia interna.	implementado_pendiente_ci
+20-arquitectura-de-software	11-comparacion-verduleria/03-clean	R	casosdeuso/VenderVerdura.java	Misma venta y salida que 20/01; separar límites y respetar regla de dependencia interna.	implementado_pendiente_ci
+20-arquitectura-de-software	11-comparacion-verduleria/03-clean	R	casosdeuso/EntradaVenta.java	Misma venta y salida que 20/01; separar límites y respetar regla de dependencia interna.	implementado_pendiente_ci
+20-arquitectura-de-software	11-comparacion-verduleria/03-clean	R	casosdeuso/SalidaVenta.java	Misma venta y salida que 20/01; separar límites y respetar regla de dependencia interna.	implementado_pendiente_ci
+20-arquitectura-de-software	11-comparacion-verduleria/03-clean	R	casosdeuso/Inventario.java	Misma venta y salida que 20/01; separar límites y respetar regla de dependencia interna.	implementado_pendiente_ci
+20-arquitectura-de-software	11-comparacion-verduleria/03-clean	R	adaptadores/ControladorVentas.java	Misma venta y salida que 20/01; separar límites y respetar regla de dependencia interna.	implementado_pendiente_ci
+20-arquitectura-de-software	11-comparacion-verduleria/03-clean	R	adaptadores/PresentadorVentas.java	Misma venta y salida que 20/01; separar límites y respetar regla de dependencia interna.	implementado_pendiente_ci
+20-arquitectura-de-software	11-comparacion-verduleria/03-clean	R	infraestructura/InventarioEnMemoria.java	Misma venta y salida que 20/01; separar límites y respetar regla de dependencia interna.	implementado_pendiente_ci
+20-arquitectura-de-software	11-comparacion-verduleria/03-clean	R	Main.java	Misma venta y salida que 20/01; separar límites y respetar regla de dependencia interna.	implementado_pendiente_ci

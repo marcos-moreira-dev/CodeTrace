@@ -131,8 +131,8 @@ def command(path:Path, root:Path, client:Path|None) -> tuple[list[str],bool]:
         if match: clazz=match.group(1)+'.'+clazz
         return ([r'$out=Join-Path $env:TEMP "ct-practica-java"',
             r'New-Item -ItemType Directory -Force -Path $out | Out-Null',
-            r'javac --release 21 -encoding UTF-8 -d $out (Get-ChildItem -Recurse -Filter *.java).FullName',
-            'java -cp $out '+clazz] if executable else [r'$out=Join-Path $env:TEMP "ct-practica-java"',r'New-Item -ItemType Directory -Force -Path $out | Out-Null',r'javac --release 21 -encoding UTF-8 -d $out (Get-ChildItem -Recurse -Filter *.java).FullName']),executable
+            r"javac --release 21 -encoding UTF-8 -d $out (Get-ChildItem -Recurse -Filter *.java -File | Where-Object { $_.FullName -notmatch '[\\/]00-fundamentos-especificacion-oficial[\\/]' }).FullName",
+            'java -cp $out '+clazz] if executable else [r'$out=Join-Path $env:TEMP "ct-practica-java"',r'New-Item -ItemType Directory -Force -Path $out | Out-Null',r"javac --release 21 -encoding UTF-8 -d $out (Get-ChildItem -Recurse -Filter *.java -File | Where-Object { $_.FullName -notmatch '[\\/]00-fundamentos-especificacion-oficial[\\/]' }).FullName"]),executable
     if lang=='kotlin':
         # Incluir la implementación del cliente, pero no múltiples `main` en un mismo JAR.
         related=sorted(target.parent.glob('*.kt'))
@@ -234,9 +234,17 @@ def valid_complete_guide(src: str, path: Path) -> bool:
         return False
     if GENERIC.search(footer):
         return False
-    if path.suffix == '.java' and ('javac --release 21' not in footer
-                                   or 'java -cp $out' not in footer):
-        return False
+    if path.suffix == '.java':
+        if 'javac --release 21' not in footer:
+            return False
+        if 'java -cp $out' not in footer:
+            # A reusable class without an entry point has a compile-only guide.
+            # Do not require an impossible launch, and do not accept a missing
+            # launch command for an executable class.
+            if entrypoint(path, stripped) or (
+                'Nota: archivo reutilizable sin entrada; el comando solo verifica la compilación o sintaxis.' not in footer
+            ):
+                return False
     return True
 
 
@@ -249,6 +257,12 @@ def main():
     args=ap.parse_args();root=args.root.resolve()
     if not root.is_dir(): raise SystemExit(f'No existe carpeta de biblioteca: {root}')
     sources={p:p.read_text(encoding='utf-8') for p in root.rglob('*') if p.is_file() and p.suffix in EXT}
+    # La JLS tiene un contrato propio de comandos, salidas y errores.
+    # verificar-jls21.py valida todas sus fuentes de forma independiente.
+    sources={p:s for p,s in sources.items()
+             if not (p.relative_to(root).parts[0] == 'java21' and
+                     p.relative_to(root).parts[1].split('-')[0] in
+                     {'00', *[f'{n:02}' for n in range(6, 21)]})}
     expected=sum(1 for p,s in sources.items() if MARKERS.search(strip_generated(s,p)))
     cache={}
     if args.outcomes:
@@ -268,7 +282,9 @@ def main():
         if state=='pendiente': incomplete.append(str(p.relative_to(root)))
     print(f'CodeTrace: archivos={len(sources)}; bloques originales={expected}; cambios={len(changes)}; estados={dict(stats)}')
     if incomplete: print('Salidas pendientes de verificar:\n'+'\n'.join(incomplete[:120]))
-    if args.check and changes: raise SystemExit(f'FALTAN {len(changes)} archivos con guia de consola.')
+    if args.check and changes:
+        raise SystemExit(f'FALTAN {len(changes)} archivos con guia de consola:\n' +
+                         '\n'.join(str(p.relative_to(root)) for p in changes[:120]))
     # Deliberadamente no se considera éxito una salida textual genérica: se informa.
     if args.check and incomplete: raise SystemExit(f'Salidas concretas pendientes: {len(incomplete)}')
 

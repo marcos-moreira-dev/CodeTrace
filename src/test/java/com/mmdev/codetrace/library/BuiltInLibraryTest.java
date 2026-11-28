@@ -46,11 +46,29 @@ class BuiltInLibraryTest {
                 List.of("--release", "21", "-encoding", "UTF-8",
                         "-d", compiled.toString()));
         for (String path : library.entries(pack)) {
-            arguments.add(source.resolve(path).toString());
+            if (path.matches("0[1-5]-.*")) {
+                arguments.add(source.resolve(path).toString());
+            }
         }
         assertEquals(0, compiler.run(null, null, null,
                 arguments.toArray(String[]::new)),
-                "Java 21 reference examples must compile together");
+                "Existing Java 21 reference examples must compile together");
+    }
+
+    @Test
+    void javaCatalogRenamesOnlyTheExistingFundamentalsAndKeepsOldCache() throws Exception {
+        Path cache = temp.resolve("practice-library");
+        Path previous = cache.resolve("v15/java21/01-fundamentos");
+        Files.createDirectories(previous);
+        Path prior = previous.resolve("prior.java");
+        Files.writeString(prior, "prior session reference");
+        var library = new BuiltInLibrary(cache.resolve(BuiltInLibrary.CATALOG_VERSION));
+        var javaPack = library.packs().getFirst();
+        assertEquals(28, library.entries(javaPack).stream()
+                .filter(p -> p.startsWith("01-fundamentos-en-accion/")).count());
+        assertFalse(library.entries(javaPack).stream().anyMatch(p -> p.startsWith("01-fundamentos/")));
+        assertTrue(Files.isDirectory(library.open(javaPack).resolve("01-fundamentos-en-accion")));
+        assertEquals("prior session reference", Files.readString(prior));
     }
 
     @Test
@@ -94,6 +112,22 @@ class BuiltInLibraryTest {
             Path root = library.open(pack);
             for (String relative : library.entries(pack)) {
                 String text = Files.readString(root.resolve(relative));
+                if (pack.id().equals("java21") && relative.equals("20-arquitectura-de-software/11-comparacion-verduleria/01-en-capas/README.md")) {
+                    assertTrue(text.startsWith("# Comparación — verdulería en capas"), relative);
+                    continue;
+                }
+                if (pack.id().equals("java21") && relative.equals("14-comunicacion-con-dispositivos/12-interoperabilidad-nativa/README.md")) {
+                    assertTrue(text.startsWith("# Interoperabilidad nativa"), relative);
+                    continue;
+                }
+                if (pack.id().equals("java21")
+                        && (relative.startsWith("00-fundamentos-especificacion-oficial/")
+                        || relative.matches("(0[6-9]|1[0-9]|20)-.*"))) {
+                    assertTrue(text.startsWith("// Tema:\n"), relative);
+                    assertTrue(text.contains("Compilar:") && text.contains("Salida esperada:"), relative);
+                    assertFalse(text.contains("Referencia: Java SE 21") || text.contains("Tema JLS:"), relative);
+                    continue;
+                }
                 String firstLines = text.lines().limit(10)
                         .collect(Collectors.joining("\n")).toLowerCase(java.util.Locale.ROOT);
                 assertTrue(firstLines.contains("codetrace"), pack.id() + "/" + relative);
@@ -110,8 +144,8 @@ class BuiltInLibraryTest {
     @Test
     void allFourCurriculumPurposesAndDocumentedJavaClientsArePresent() throws Exception {
         var library = new BuiltInLibrary(temp.resolve("curriculum"));
-        assertEquals("v15", BuiltInLibrary.CATALOG_VERSION);
-        assertEquals(1037, library.packs().stream().mapToInt(library::size).sum());
+        assertEquals("v39", BuiltInLibrary.CATALOG_VERSION);
+        assertEquals(2122, library.packs().stream().mapToInt(library::size).sum());
         for (var pack : library.packs()) {
             var entries = library.entries(pack);
             assertTrue(entries.stream().allMatch(x -> x.split("/").length >= 3
@@ -124,13 +158,13 @@ class BuiltInLibraryTest {
                     ).get(pack.id()))),
                     "Every reference is in an exercise directory except the documented integrator: "
                             + pack.id());
-            assertTrue(entries.stream().anyMatch(x -> x.startsWith("01-fundamentos/")), pack.id());
+            assertTrue(entries.stream().anyMatch(x -> x.startsWith(pack.id().equals("java21") ? "01-fundamentos-en-accion/" : "01-fundamentos/")), pack.id());
             assertTrue(entries.stream().anyMatch(x -> x.startsWith("03-algoritmos/")), pack.id());
             assertTrue(entries.stream().noneMatch(x -> x.contains("07-proyectos/")
                     || x.contains("laboratorios/") || x.contains("/complejidad/")), pack.id());
         }
         var javaPack = library.packs().stream().filter(x -> x.id().equals("java21")).findFirst().orElseThrow();
-        assertTrue(library.entries(javaPack).contains("01-fundamentos/comparadores/ComparadoresEncadenados.java"));
+        assertTrue(library.entries(javaPack).contains("01-fundamentos-en-accion/comparadores/ComparadoresEncadenados.java"));
         assertTrue(library.entries(javaPack).contains("03-algoritmos/programacion-dinamica/cambio-monedas/MainMonedas.java"));
         assertTrue(library.entries(javaPack).contains("04-patrones-diseno/strategy-tarifas/MainTarifas.java"));
         for (var expected : java.util.Map.of("python", 33L, "csharp", 18L, "cpp", 35L, "typescript", 33L).entrySet()) {
@@ -164,8 +198,8 @@ class BuiltInLibraryTest {
         assertTrue(library.entries(javaPack).contains("03-algoritmos/grafos/recorridos/caminos-sin-peso/MainCaminosSinPeso.java"));
         assertTrue(library.entries(javaPack).contains("04-patrones-diseno/factory/basico/MainFactoryBasica.java"));
         assertTrue(library.entries(javaPack).contains("04-patrones-diseno/observer/basico/MainObservadorBasico.java"));
-        assertTrue(library.entries(javaPack).contains("01-fundamentos/excepciones/checked-personalizada/MainExcepcionChecked.java"));
-        assertTrue(library.entries(javaPack).contains("01-fundamentos/excepciones/unchecked-dominio/MainExcepcionUnchecked.java"));
+        assertTrue(library.entries(javaPack).contains("01-fundamentos-en-accion/excepciones/checked-personalizada/MainExcepcionChecked.java"));
+        assertTrue(library.entries(javaPack).contains("01-fundamentos-en-accion/excepciones/unchecked-dominio/MainExcepcionUnchecked.java"));
         assertTrue(library.entries(javaPack).contains("02-estructuras-datos/cola-circular/MainColaCircular.java"));
         assertTrue(library.entries(javaPack).contains("04-patrones-diseno/strategy/basico/MainStrategy.java"));
 
@@ -245,7 +279,7 @@ class BuiltInLibraryTest {
                 "03-algoritmos/euclides/euclides.asm"));
         assertTrue(library.entries(all.get("java21")).contains(
                 "03-algoritmos/dijkstra/Dijkstra.java"));
-        assertEquals(1037, library.packs().stream().mapToInt(library::size).sum());
+        assertEquals(2122, library.packs().stream().mapToInt(library::size).sum());
     }
 
 }

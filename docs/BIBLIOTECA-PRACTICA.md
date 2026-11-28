@@ -1,10 +1,10 @@
-# Biblioteca de práctica CodeTrace — catálogo v8
+# Biblioteca de práctica CodeTrace — catálogo v39
 
-**813 archivos de referencia en 14 paquetes**, incorporados en la aplicación. Un ejercicio con varios archivos cuenta varias entradas; no confundir cantidad de archivos con cantidad de ejercicios.
+**2.122 archivos de referencia en 14 paquetes**, incorporados en la aplicación. Un ejercicio con varios archivos cuenta varias entradas; no confundir cantidad de archivos con cantidad de ejercicios.
 
 ## Organización curricular
 
-- `01-fundamentos/`: sintaxis, tipos, control de flujo, funciones y especialidades del lenguaje.
+- `00-fundamentos-especificacion-oficial/` y `01-fundamentos-en-accion/` (Java 21): fundamentos y ejemplos independientes; `01-fundamentos/` en los demás lenguajes.
 - `02-estructuras-datos/`: pilas, colas, listas, heaps, tablas, grafos y su implementación.
 - `03-algoritmos/`: búsqueda, ordenamiento, recursión, grafos, backtracking, voraces y programación dinámica. **Complejidad temporal y espacial integrada**, sin carpeta separada.
 - `04-patrones-diseno/`: contratos, Strategy, Observer, Factory y otros patrones donde tengan sentido; organización idiomática en C/C++ y lenguajes funcionales.
@@ -19,7 +19,7 @@ Los comentarios iniciales de cada archivo registran versión/estándar y comando
 
 ### Casos relevantes
 
-- Java: `01-fundamentos/comparadores/`, `01-fundamentos/streams/`, `03-algoritmos/programacion-dinamica/`, `02-estructuras-datos/heaps/`, `04-patrones-diseno/strategy-tarifas/`.
+- Java: `01-fundamentos-en-accion/comparadores/`, `01-fundamentos-en-accion/streams/`, `03-algoritmos/programacion-dinamica/`, `02-estructuras-datos/heaps/`, `04-patrones-diseno/strategy-tarifas/`.
 - Python: generadores, decoradores, cola circular, monedas y Strategy.
 - C: punteros, callbacks, pila opaca con `.h/.c`, enlace estático/compartido, búsqueda binaria.
 - C++: RAII, STL, iteradores, cola de prioridad y Strategy multiarchivo.
@@ -35,7 +35,7 @@ Los ejemplos se cargan como **recursos internos**, sin conexión ni compiladores
 
 Fuentes de orientación: los repositorios personales Estructuras-de-Datos-y-Algoritmos, Patrones-de-dise-o-Java y PrincipiosSOLID, además del libro facilitado *De las matemáticas a la computadora*. Las implementaciones integradas deben validarse contra sus comandos y contratos; una fuente original con complejidad anotada no se considera automáticamente correcta.
 
-**Estado:** desarrollo en rama `feature/practice-curriculum-20261120`. Publicación/merge sujetos a aceptación manual y condiciones de `CIERRE-V0.3.md`.
+**Estado:** Java integral 06–20 implementado, en revisión en `feature/java21-jls-fundamentos` (PR #7). 523 fuentes y dos documentos nuevos, 320 clientes verificables mediante `scripts/verificar-java-integral.py`. El catálogo contiene también el contenido histórico de los demás lenguajes. Las ampliaciones siguientes de esta página son históricas. Publicación y merge pendientes de CI y aceptación manual.
 
 ## Ampliación de cobertura (347 fuentes)
 
@@ -100,3 +100,20 @@ Se unifica `02-estructuras-datos/linked-list/simple/` para dejar juntas las vari
 - En Java: **Bubble Sort optimizado**, **Insertion Sort**, **Merge Sort**, **HeapSort**, **QuickSort** (comparativa compartiendo una misma entrada); **Binary Insertion Sort** (menos comparaciones, pero movimientos cuadraticos) y **Lower/Upper Bound** (posiciones de insercion y rangos repetidos). Son temas distintos. Se incluyen casos vacios y repetidos y algunas pruebas adversas.
 - Se replican los escenarios en Python, TypeScript, Kotlin, C#, C++, Ruby y JavaScript con idiomatismos de lenguaje. El libro `De las matematicas a la computadora` sustenta los cinco sorts y la distincion entre complejidad, estabilidad e in-place; el repo AlgoKit aporta Upper/Lower Bound y cuatro sorts.
 - No confundir `813 archivos` con `813 ejercicios` ni el exito de una prueba funcional con una medicion valida de complejidad temporal.
+
+## Fundamentos de Java 21
+
+La carpeta `java21/01-fundamentos-en-accion/` conserva los 28 archivos originales. La nueva `java21/00-fundamentos-especificacion-oficial/` contiene adaptaciones de la JLS 21, con unidades independientes, casos de rechazo intencional y compilaciones sucesivas. No compilar todo `java21/` de una vez: para ejemplos anteriores, excluir la nueva carpeta; para JLS, seguir los comandos por unidad o usar `python3 scripts/verificar-jls21.py`. Las cachés de versiones previas se conservan; queda pendiente comprobar la reapertura de sesiones reales de la versión anterior.
+
+### Compilación de ejemplos Java anteriores
+
+Desde la carpeta `java21` en PowerShell, excluir los nuevos ejemplos independientes al compilar los ejemplos históricos:
+
+```powershell
+$fuentes = Get-ChildItem -Recurse -Filter *.java -File | Where-Object { $_.FullName -notmatch '[\\/]00-fundamentos-especificacion-oficial[\\/]' }
+$out = Join-Path $env:TEMP 'ct-java21'
+New-Item -ItemType Directory -Force $out | Out-Null
+javac --release 21 -encoding UTF-8 -d $out $fuentes.FullName
+```
+
+Las unidades nuevas se compilan desde su carpeta siguiendo sus propios comandos. No mezclar las variantes incompatibles ni los casos de rechazo intencional. La caché v18 conserva las anteriores.
