@@ -1,6 +1,6 @@
 // CodeTrace | Referencia: Java 21 LTS / JDK 21
 // Compilar en COPIA desde la raíz java21 (PowerShell):
-// javac --release 21 -encoding UTF-8 -d "$env:TEMP\ct-curso-java" (Get-ChildItem -Recurse -Filter *.java).FullName
+// javac --release 21 -encoding UTF-8 -d "$env:TEMP\ct-curso-java" (Get-ChildItem -Recurse -Filter *.java -File | Where-Object { $_.FullName -notmatch '[\\/]00-fundamentos-especificacion-oficial[\\/]' }).FullName
 // Ejecutar: java -cp "$env:TEMP\ct-curso-java" MainExcepcionUnchecked
 
 /**
@@ -42,7 +42,7 @@ public final class MainExcepcionUnchecked {
  * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
  *   $out=Join-Path $env:TEMP "ct-practica-java"
  *   New-Item -ItemType Directory -Force -Path $out | Out-Null
- *   javac --release 21 -encoding UTF-8 -d $out (Get-ChildItem -Recurse -Filter *.java).FullName
+ *   javac --release 21 -encoding UTF-8 -d $out (Get-ChildItem -Recurse -Filter *.java -File | Where-Object { $_.FullName -notmatch '[\\/]00-fundamentos-especificacion-oficial[\\/]' }).FullName
  *   java -cp $out MainExcepcionUnchecked
  * Salida esperada:
  *   Rechazo controlado: Producto A-001: solicitado 10, disponible 3
