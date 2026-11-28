@@ -1,6 +1,5 @@
-// CodeTrace | Referencia: Java 21 LTS / JDK 21
-// Compilar desde copia (PowerShell): New-Item -ItemType Directory -Force "$env:TEMP\ct-java21" | Out-Null; javac --release 21 -encoding UTF-8 -d "$env:TEMP\ct-java21" (Get-ChildItem -Recurse -Filter *.java | ForEach-Object FullName)
-// Ejecutar: usar desde el cliente de esta misma carpeta
+// Compilar (desde esta carpeta): javac -encoding UTF-8 -d . GrafoGenerico.java MainGrafoGenerico.java Vertice.java
+// Ejecutar: java codetrace.practica.grafosgenericos.MainGrafoGenerico
 
 package codetrace.practica.grafosgenericos;
 
@@ -56,15 +55,13 @@ public final class GrafoGenerico<T> {
 
 /*
  * CodeTrace | EJEMPLO DE CONSOLA (practica)
- * 
- * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
- *   $out=Join-Path $env:TEMP "ct-practica-java"
- *   New-Item -ItemType Directory -Force -Path $out | Out-Null
- *   javac --release 21 -encoding UTF-8 -d $out (Get-ChildItem -Recurse -Filter *.java).FullName
- *   java -cp $out codetrace.practica.grafosgenericos.MainGrafoGenerico
+ * Desde esta carpeta:
+ *   javac -encoding UTF-8 -d . GrafoGenerico.java MainGrafoGenerico.java Vertice.java
+ *   java codetrace.practica.grafosgenericos.MainGrafoGenerico
  * Nota: GrafoGenerico.java es un componente; la salida corresponde al cliente MainGrafoGenerico.java.
  * Salida esperada:
  *   Vértices: 3
  *   Latencias desde GYE: {UIO [Servidor[region=Quito, ip=10.0.0.2]]=12.0, CUE [Servidor[region=Cuenca, ip=10.0.0.3]]=18.0}
+ 
  * CodeTrace | FIN EJEMPLO DE CONSOLA
  */

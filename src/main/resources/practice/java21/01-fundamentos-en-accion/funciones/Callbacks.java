@@ -1,6 +1,5 @@
-// CodeTrace | Referencia: Java 21 LTS / JDK 21
-// Compilar: javac --release 21 -encoding UTF-8 -d "$env:TEMP\ct-java21" (Get-ChildItem -Recurse -Filter *.java -File | Where-Object { $_.FullName -notmatch '[\\/]00-fundamentos-especificacion-oficial[\\/]' }).FullName
-// Ejecutar: java -cp "$env:TEMP\ct-java21" Callbacks
+// Compilar (desde esta carpeta): javac -encoding UTF-8 Callbacks.java Excepciones.java Lambdas.java Receptor.java ReferenciasYCallbacks.java
+// Ejecutar: java Callbacks
 public final class Callbacks {
     private Callbacks() {}
 
@@ -22,14 +21,12 @@ public final class Callbacks {
 
 /*
  * CodeTrace | EJEMPLO DE CONSOLA (practica)
- * 
- * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
- *   $out=Join-Path $env:TEMP "ct-practica-java"
- *   New-Item -ItemType Directory -Force -Path $out | Out-Null
- *   javac --release 21 -encoding UTF-8 -d $out (Get-ChildItem -Recurse -Filter *.java -File | Where-Object { $_.FullName -notmatch '[\\/]00-fundamentos-especificacion-oficial[\\/]' }).FullName
- *   java -cp $out Callbacks
+ * Desde esta carpeta:
+ *   javac -encoding UTF-8 Callbacks.java Excepciones.java Lambdas.java Receptor.java ReferenciasYCallbacks.java
+ *   java Callbacks
  * Salida esperada:
  *   Hola
  *   Lista
+ 
  * CodeTrace | FIN EJEMPLO DE CONSOLA
  */

@@ -1,6 +1,5 @@
-// CodeTrace | Referencia: Java 21 LTS / JDK 21
-// Compilar en PowerShell (copia del paquete): New-Item -ItemType Directory -Force "$env:TEMP\ct-java21" | Out-Null; javac --release 21 -encoding UTF-8 -d "$env:TEMP\ct-java21" (Get-ChildItem -Recurse -Filter *.java | ForEach-Object FullName)
-// Ejecutar: java -cp "$env:TEMP\ct-java21" codetrace.practica.grafostipos.MainTiposGrafo
+// Compilar (desde esta carpeta): javac -encoding UTF-8 -d . Grafo.java MainTiposGrafo.java Orientacion.java
+// Ejecutar: java codetrace.practica.grafostipos.MainTiposGrafo
 
 package codetrace.practica.grafostipos;
 
@@ -63,17 +62,15 @@ public final class MainTiposGrafo {
 
 /*
  * CodeTrace | EJEMPLO DE CONSOLA (practica)
- * 
- * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
- *   $out=Join-Path $env:TEMP "ct-practica-java"
- *   New-Item -ItemType Directory -Force -Path $out | Out-Null
- *   javac --release 21 -encoding UTF-8 -d $out (Get-ChildItem -Recurse -Filter *.java).FullName
- *   java -cp $out codetrace.practica.grafostipos.MainTiposGrafo
+ * Desde esta carpeta:
+ *   javac -encoding UTF-8 -d . Grafo.java MainTiposGrafo.java Orientacion.java
+ *   java codetrace.practica.grafostipos.MainTiposGrafo
  * Salida esperada:
  *   Dirigido acíclico (DAG): true
  *   Después de introducir un ciclo: false
  *   Árbol=true, bipartito=true, componentes=1
  *   Tras agregar un vértice aislado, componentes=2
  *   Triángulo completo=true, bipartito=false
+ 
  * CodeTrace | FIN EJEMPLO DE CONSOLA
  */

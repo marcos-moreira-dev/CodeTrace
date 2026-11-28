@@ -1,7 +1,5 @@
-// CodeTrace | Referencia: Java 21 LTS / JDK 21
-// Compilar en COPIA desde la raíz java21 (PowerShell):
-// javac --release 21 -encoding UTF-8 -d "$env:TEMP\ct-curso-java" (Get-ChildItem -Recurse -Filter *.java -File | Where-Object { $_.FullName -notmatch '[\\/]00-fundamentos-especificacion-oficial[\\/]' }).FullName
-// Ejecutar: usar desde la clase cliente Main... del mismo ejemplo
+// Compilar (desde esta carpeta): javac -encoding UTF-8 MainRecursosYSuppressed.java RecursoDemostrativo.java
+// Ejecutar: java MainRecursosYSuppressed
 
 /**
  * Recurso simulado que implementa AutoCloseable.
@@ -27,17 +25,15 @@ public final class RecursoDemostrativo implements AutoCloseable {
 
 /*
  * CodeTrace | EJEMPLO DE CONSOLA (practica)
- * 
- * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
- *   $out=Join-Path $env:TEMP "ct-practica-java"
- *   New-Item -ItemType Directory -Force -Path $out | Out-Null
- *   javac --release 21 -encoding UTF-8 -d $out (Get-ChildItem -Recurse -Filter *.java -File | Where-Object { $_.FullName -notmatch '[\\/]00-fundamentos-especificacion-oficial[\\/]' }).FullName
- *   java -cp $out MainRecursosYSuppressed
+ * Desde esta carpeta:
+ *   javac -encoding UTF-8 MainRecursosYSuppressed.java RecursoDemostrativo.java
+ *   java MainRecursosYSuppressed
  * Nota: RecursoDemostrativo.java es un componente; la salida corresponde al cliente MainRecursosYSuppressed.java.
  * Salida esperada:
  *   Abrir: demostración
  *   Cerrar: demostración
  *   Principal: Error del proceso demostración
  *   Suprimidas: 1
+ 
  * CodeTrace | FIN EJEMPLO DE CONSOLA
  */

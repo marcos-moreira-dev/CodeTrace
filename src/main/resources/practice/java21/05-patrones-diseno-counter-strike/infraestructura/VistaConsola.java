@@ -1,6 +1,5 @@
-// CodeTrace | Referencia: Java 21 LTS / JDK 21
-// Compilar: javac --release 21 -encoding UTF-8 -d $out (Get-ChildItem -Recurse -Filter *.java).FullName
-// Ejecutar: java -cp $out codetrace.practica.counterstrike.MainCounterStrike
+// Compilar (desde la raíz de 05-patrones-diseno-counter-strike): javac -encoding UTF-8 -d . MainCounterStrike.java abstract-factory/*.java adapter/*.java builder/*.java chain-of-responsibility/*.java command/*.java composite/*.java decorator/*.java facade/*.java factory/*.java factory-method/*.java infraestructura/*.java observer/*.java strategy/*.java strategy-puntuacion/*.java template-method/*.java
+// Ejecutar: java codetrace.practica.counterstrike.MainCounterStrike
 // Dominio: Counter-Strike; narración de una partida ficticia de rescate.
 // Glosario: HUD = indicadores de pantalla; CT/T = equipos; PV = puntos de vida.
 // Patrón de organización: MVC. Esta VISTA imprime texto sin alterar la partida.
@@ -76,16 +75,14 @@ public final class VistaConsola {
 
 /*
  * CodeTrace | EJEMPLO DE CONSOLA (practica)
- * Ejemplo en consola (PowerShell; desde la carpeta java21):
- *   $out=Join-Path $env:TEMP "ct-practica-java"
- *   New-Item -ItemType Directory -Force -Path $out | Out-Null
- *   javac --release 21 -encoding UTF-8 -d $out (Get-ChildItem -Recurse -Filter *.java).FullName
- *   java -cp $out codetrace.practica.counterstrike.MainCounterStrike
- * Esta clase imprime los datos; no cambia qué equipo gana la simulación.
+ * Desde la raíz de 05-patrones-diseno-counter-strike:
+ *   javac -encoding UTF-8 -d . MainCounterStrike.java abstract-factory/*.java adapter/*.java builder/*.java chain-of-responsibility/*.java command/*.java composite/*.java decorator/*.java facade/*.java factory/*.java factory-method/*.java infraestructura/*.java observer/*.java strategy/*.java strategy-puntuacion/*.java template-method/*.java
+ *   java codetrace.practica.counterstrike.MainCounterStrike
  * Salida esperada:
  *   === COUNTER-STRIKE | PARTIDA DIDÁCTICA ===
  *   Semilla: 42 (misma semilla = misma secuencia)
  *   === FIN DE LA PARTIDA ===
  *   Resultado: Gana CT
+ 
  * CodeTrace | FIN EJEMPLO DE CONSOLA
  */

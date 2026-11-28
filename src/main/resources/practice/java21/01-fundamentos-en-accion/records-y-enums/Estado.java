@@ -1,6 +1,6 @@
-// CodeTrace | Referencia: Java 21 LTS / JDK 21
+// Compilar (desde esta carpeta): javac -encoding UTF-8 Estado.java Pedido.java RecordsYEnums.java
+// Ejecutar: java RecordsYEnums
 // Componente didáctico reutilizable: este archivo no tiene main.
-// Compilar: en una copia desde java21: javac --release 21 -encoding UTF-8 -d "$env:TEMP\\ct-java21" (Get-ChildItem -Recurse -Filter *.java -File | Where-Object { $_.FullName -notmatch '[\\/]00-fundamentos-especificacion-oficial[\\/]' }).FullName
 
 /** Conjunto cerrado de estados posibles de un pedido. */
 public enum Estado {
@@ -18,15 +18,13 @@ public enum Estado {
 
 /*
  * CodeTrace | EJEMPLO DE CONSOLA (practica)
- *
- * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
- *   $out=Join-Path $env:TEMP "ct-practica-java"
- *   New-Item -ItemType Directory -Force -Path $out | Out-Null
- *   javac --release 21 -encoding UTF-8 -d $out (Get-ChildItem -Recurse -Filter *.java -File | Where-Object { $_.FullName -notmatch '[\\/]00-fundamentos-especificacion-oficial[\\/]' }).FullName
- *   java -cp $out RecordsYEnums
+ * Desde esta carpeta:
+ *   javac -encoding UTF-8 Estado.java Pedido.java RecordsYEnums.java
+ *   java RecordsYEnums
  * Nota: Estado.java es un componente; la salida corresponde al cliente RecordsYEnums.java.
  * Salida esperada:
  *   Pedido[codigo=P-001, total=12.5, estado=RECIBIDO]
  *   Pedido[codigo=P-002, total=20.0, estado=ENTREGADO]
+ 
  * CodeTrace | FIN EJEMPLO DE CONSOLA
  */

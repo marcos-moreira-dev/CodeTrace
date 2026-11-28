@@ -1,6 +1,5 @@
-// CodeTrace | Referencia: Java 21 LTS / JDK 21
-// Compilar desde copia del paquete, PowerShell: New-Item -ItemType Directory -Force "$env:TEMP\ct-java21" | Out-Null; javac --release 21 -encoding UTF-8 -d "$env:TEMP\ct-java21" (Get-ChildItem -Recurse -Filter *.java | ForEach-Object FullName)
-// Ejecutar: Compilar como parte del ejercicio; sin main propio
+// Compilar (desde esta carpeta): javac -encoding UTF-8 -d . MainHash.java TablaHash.java
+// Ejecutar: java codetrace.practica.hash.MainHash
 
 package codetrace.practica.hash;
 
@@ -65,17 +64,15 @@ public final class TablaHash {
 
 /*
  * CodeTrace | EJEMPLO DE CONSOLA (practica)
- * 
- * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
- *   $out=Join-Path $env:TEMP "ct-practica-java"
- *   New-Item -ItemType Directory -Force -Path $out | Out-Null
- *   javac --release 21 -encoding UTF-8 -d $out (Get-ChildItem -Recurse -Filter *.java).FullName
- *   java -cp $out codetrace.practica.hash.MainHash
+ * Desde esta carpeta:
+ *   javac -encoding UTF-8 -d . MainHash.java TablaHash.java
+ *   java codetrace.practica.hash.MainHash
  * Nota: TablaHash.java es un componente; la salida corresponde al cliente MainHash.java.
  * Salida esperada:
  *   FB=15
  *   Ea=20
  *   Ausente=null
  *   Claves distintas=2
+ 
  * CodeTrace | FIN EJEMPLO DE CONSOLA
  */

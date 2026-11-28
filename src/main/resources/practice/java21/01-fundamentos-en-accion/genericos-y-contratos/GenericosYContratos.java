@@ -1,6 +1,5 @@
-// CodeTrace | Referencia: Java 21 LTS / JDK 21
-// Compilar desde copia del paquete, PowerShell: New-Item -ItemType Directory -Force "$env:TEMP\ct-java21" | Out-Null; javac --release 21 -encoding UTF-8 -d "$env:TEMP\ct-java21" (Get-ChildItem -Recurse -Filter *.java -File | Where-Object { $_.FullName -notmatch '[\\/]00-fundamentos-especificacion-oficial[\\/]' } | ForEach-Object FullName)
-// Ejecutar: java -cp "$env:TEMP\ct-java21" GenericosYContratos
+// Compilar (desde esta carpeta): javac -encoding UTF-8 GenericosYContratos.java
+// Ejecutar: java GenericosYContratos
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,13 +33,11 @@ public class GenericosYContratos {
 
 /*
  * CodeTrace | EJEMPLO DE CONSOLA (practica)
- * 
- * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
- *   $out=Join-Path $env:TEMP "ct-practica-java"
- *   New-Item -ItemType Directory -Force -Path $out | Out-Null
- *   javac --release 21 -encoding UTF-8 -d $out (Get-ChildItem -Recurse -Filter *.java -File | Where-Object { $_.FullName -notmatch '[\\/]00-fundamentos-especificacion-oficial[\\/]' }).FullName
- *   java -cp $out GenericosYContratos
+ * Desde esta carpeta:
+ *   javac -encoding UTF-8 GenericosYContratos.java
+ *   java GenericosYContratos
  * Salida esperada:
  *   Total: 10.0
+ 
  * CodeTrace | FIN EJEMPLO DE CONSOLA
  */

@@ -1,6 +1,5 @@
-// CodeTrace | Referencia: Java 21 LTS / JDK 21
-// Compilar en COPIA desde java21: javac --release 21 -encoding UTF-8 -d "$env:TEMP\ct-practice" (Get-ChildItem -Recurse -Filter *.java).FullName
-// Ejecutar: java -cp "$env:TEMP\ct-practice" codetrace.practica.estructuras.hashabierto.MainHashAbierto
+// Compilar (desde esta carpeta): javac -encoding UTF-8 -d . HashAbierto.java MainHashAbierto.java
+// Ejecutar: java codetrace.practica.estructuras.hashabierto.MainHashAbierto
 
 package codetrace.practica.estructuras.hashabierto;
 
@@ -31,13 +30,11 @@ public final class MainHashAbierto {
 
 /*
  * CodeTrace | EJEMPLO DE CONSOLA (practica)
- * 
- * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
- *   $out=Join-Path $env:TEMP "ct-practica-java"
- *   New-Item -ItemType Directory -Force -Path $out | Out-Null
- *   javac --release 21 -encoding UTF-8 -d $out (Get-ChildItem -Recurse -Filter *.java).FullName
- *   java -cp $out codetrace.practica.estructuras.hashabierto.MainHashAbierto
+ * Desde esta carpeta:
+ *   javac -encoding UTF-8 -d . HashAbierto.java MainHashAbierto.java
+ *   java codetrace.practica.estructuras.hashabierto.MainHashAbierto
  * Salida esperada:
  *   Tabla llena controlada
+ 
  * CodeTrace | FIN EJEMPLO DE CONSOLA
  */

@@ -1,6 +1,5 @@
-// CodeTrace | Referencia: Java 21 LTS / JDK 21
-// Compilar desde copia del paquete (PowerShell): New-Item -ItemType Directory -Force "$env:TEMP\ct-java21" | Out-Null; javac --release 21 -encoding UTF-8 -d "$env:TEMP\ct-java21" (Get-ChildItem -Recurse -Filter *.java | ForEach-Object FullName)
-// Ejecutar: java -cp "$env:TEMP\ct-java21" codetrace.practica.actividades.SeleccionActividades
+// Compilar (desde esta carpeta): javac -encoding UTF-8 -d . SeleccionActividades.java
+// Ejecutar: java codetrace.practica.actividades.SeleccionActividades
 
 package codetrace.practica.actividades;
 
@@ -51,13 +50,11 @@ public final class SeleccionActividades {
 
 /*
  * CodeTrace | EJEMPLO DE CONSOLA (practica)
- * 
- * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
- *   $out=Join-Path $env:TEMP "ct-practica-java"
- *   New-Item -ItemType Directory -Force -Path $out | Out-Null
- *   javac --release 21 -encoding UTF-8 -d $out (Get-ChildItem -Recurse -Filter *.java).FullName
- *   java -cp $out codetrace.practica.actividades.SeleccionActividades
+ * Desde esta carpeta:
+ *   javac -encoding UTF-8 -d . SeleccionActividades.java
+ *   java codetrace.practica.actividades.SeleccionActividades
  * Salida esperada:
  *   [Intervalo[inicio=1, fin=4], Intervalo[inicio=5, fin=7], Intervalo[inicio=8, fin=9]]
+ 
  * CodeTrace | FIN EJEMPLO DE CONSOLA
  */

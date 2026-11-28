@@ -1,6 +1,5 @@
-// CodeTrace | Referencia: Java 21 LTS / JDK 21
-// Compilar en COPIA desde java21: javac --release 21 -encoding UTF-8 -d "$env:TEMP\ct-practice" (Get-ChildItem -Recurse -Filter *.java).FullName
-// Ejecutar: desde el cliente Main... de la misma carpeta
+// Compilar (desde esta carpeta): javac -encoding UTF-8 -d . ListaDoble.java MainListaDoble.java
+// Ejecutar: java codetrace.practica.estructuras.listadoble.MainListaDoble
 
 package codetrace.practica.estructuras.listadoble;
 
@@ -62,15 +61,13 @@ public final class ListaDoble<T> {
 
 /*
  * CodeTrace | EJEMPLO DE CONSOLA (practica)
- * 
- * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
- *   $out=Join-Path $env:TEMP "ct-practica-java"
- *   New-Item -ItemType Directory -Force -Path $out | Out-Null
- *   javac --release 21 -encoding UTF-8 -d $out (Get-ChildItem -Recurse -Filter *.java).FullName
- *   java -cp $out codetrace.practica.estructuras.listadoble.MainListaDoble
+ * Desde esta carpeta:
+ *   javac -encoding UTF-8 -d . ListaDoble.java MainListaDoble.java
+ *   java codetrace.practica.estructuras.listadoble.MainListaDoble
  * Nota: ListaDoble.java es un componente; la salida corresponde al cliente MainListaDoble.java.
  * Salida esperada:
  *   Adelante: [Z, A]
  *   Atrás: [A, Z]
+ 
  * CodeTrace | FIN EJEMPLO DE CONSOLA
  */

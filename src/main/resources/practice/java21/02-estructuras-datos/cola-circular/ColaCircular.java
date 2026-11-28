@@ -1,7 +1,5 @@
-// CodeTrace | Referencia: Java 21 LTS / JDK 21
-// Compilar: javac --release 21 -encoding UTF-8 -d "$env:TEMP\ct-java21" (Get-ChildItem -Recurse -Filter *.java).FullName
-// Ejecutar: ejecutar desde el cliente que utiliza este componente
-// Sin main: es una clase o interfaz para compilar y reutilizar.
+// Compilar (desde esta carpeta): javac -encoding UTF-8 ColaCircular.java MainColaCircular.java
+// Ejecutar: java MainColaCircular
 
 public final class ColaCircular {
     private final int[] datos;
@@ -36,14 +34,12 @@ public final class ColaCircular {
 
 /*
  * CodeTrace | EJEMPLO DE CONSOLA (practica)
- * 
- * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
- *   $out=Join-Path $env:TEMP "ct-practica-java"
- *   New-Item -ItemType Directory -Force -Path $out | Out-Null
- *   javac --release 21 -encoding UTF-8 -d $out (Get-ChildItem -Recurse -Filter *.java).FullName
- *   java -cp $out MainColaCircular
+ * Desde esta carpeta:
+ *   javac -encoding UTF-8 ColaCircular.java MainColaCircular.java
+ *   java MainColaCircular
  * Nota: ColaCircular.java es un componente; la salida corresponde al cliente MainColaCircular.java.
  * Salida esperada:
  *   FIFO y wrap-around verificados
+ 
  * CodeTrace | FIN EJEMPLO DE CONSOLA
  */

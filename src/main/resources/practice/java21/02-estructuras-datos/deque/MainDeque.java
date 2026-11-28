@@ -1,6 +1,5 @@
-// CodeTrace | Referencia: Java 21 LTS / JDK 21
-// Compilar en COPIA desde java21: javac --release 21 -encoding UTF-8 -d "$env:TEMP\ct-practice" (Get-ChildItem -Recurse -Filter *.java).FullName
-// Ejecutar: java -cp "$env:TEMP\ct-practice" codetrace.practica.estructuras.deque.MainDeque
+// Compilar (desde esta carpeta): javac -encoding UTF-8 -d . DequeEnlazado.java MainDeque.java
+// Ejecutar: java codetrace.practica.estructuras.deque.MainDeque
 
 package codetrace.practica.estructuras.deque;
 
@@ -31,13 +30,11 @@ public final class MainDeque {
 
 /*
  * CodeTrace | EJEMPLO DE CONSOLA (practica)
- * 
- * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
- *   $out=Join-Path $env:TEMP "ct-practica-java"
- *   New-Item -ItemType Directory -Force -Path $out | Out-Null
- *   javac --release 21 -encoding UTF-8 -d $out (Get-ChildItem -Recurse -Filter *.java).FullName
- *   java -cp $out codetrace.practica.estructuras.deque.MainDeque
+ * Desde esta carpeta:
+ *   javac -encoding UTF-8 -d . DequeEnlazado.java MainDeque.java
+ *   java codetrace.practica.estructuras.deque.MainDeque
  * Salida esperada:
  *   Operaciones en ambos extremos OK
+ 
  * CodeTrace | FIN EJEMPLO DE CONSOLA
  */

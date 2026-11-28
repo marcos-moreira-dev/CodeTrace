@@ -1,6 +1,5 @@
-// CodeTrace | Referencia: Java 21 LTS / JDK 21
-// Compilar: javac --release 21 -encoding UTF-8 -d "$env:TEMP\ct-java21" (Get-ChildItem -Recurse -Filter *.java).FullName
-// Ejecutar: ejecutar desde el cliente que utiliza este componente
+// Compilar (desde esta carpeta): javac -encoding UTF-8 -d . MainColaPrioridad.java MinHeapDidactico.java
+// Ejecutar: java codetrace.practica.heaps.MainColaPrioridad
 package codetrace.practica.heaps;
 
 import java.util.ArrayList;
@@ -57,12 +56,9 @@ public final class MinHeapDidactico {
 
 /*
  * CodeTrace | EJEMPLO DE CONSOLA (practica)
- * 
- * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
- *   $out=Join-Path $env:TEMP "ct-practica-java"
- *   New-Item -ItemType Directory -Force -Path $out | Out-Null
- *   javac --release 21 -encoding UTF-8 -d $out (Get-ChildItem -Recurse -Filter *.java).FullName
- *   java -cp $out codetrace.practica.heaps.MainColaPrioridad
+ * Desde esta carpeta:
+ *   javac -encoding UTF-8 -d . MainColaPrioridad.java MinHeapDidactico.java
+ *   java codetrace.practica.heaps.MainColaPrioridad
  * Nota: MinHeapDidactico.java es un componente; la salida corresponde al cliente MainColaPrioridad.java.
  * Salida esperada:
  *   1
@@ -70,5 +66,6 @@ public final class MinHeapDidactico {
  *   5
  *   7
  *   9
+ 
  * CodeTrace | FIN EJEMPLO DE CONSOLA
  */

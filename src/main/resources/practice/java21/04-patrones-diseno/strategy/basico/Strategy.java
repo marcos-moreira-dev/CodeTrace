@@ -1,10 +1,9 @@
-// CodeTrace | Referencia: Java 21 LTS / JDK 21
+// Compilar (desde esta carpeta): javac -encoding UTF-8 Descuento.java MainStrategy.java Strategy.java
+// Ejecutar: java MainStrategy
 // Universo compartido: Arena Táctica, juego competitivo ficticio por equipos.
 // Dominio: Reglas de descuento en la inscripción del torneo.
 // Patrón strategy: Intercambiar la política de cálculo sin alterar el cliente.
 // Glosario: Torneo: competición de varias partidas entre equipos.
-// Compilar en copia: javac --release 21 -encoding UTF-8 Strategy.java MainStrategy.java
-// Ejecutar: java MainStrategy
 
 /**
  * Contexto del patrón Strategy: delega una regla de negocio.
@@ -21,15 +20,13 @@ public final class Strategy {
 
 /*
  * CodeTrace | EJEMPLO DE CONSOLA (practica)
- * 
- * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
- *   $out=Join-Path $env:TEMP "ct-practica-java"
- *   New-Item -ItemType Directory -Force -Path $out | Out-Null
- *   javac --release 21 -encoding UTF-8 -d $out (Get-ChildItem -Recurse -Filter *.java).FullName
- *   java -cp $out MainStrategy
+ * Desde esta carpeta:
+ *   javac -encoding UTF-8 Descuento.java MainStrategy.java Strategy.java
+ *   java MainStrategy
  * Nota: Strategy.java es un componente; la salida corresponde al cliente MainStrategy.java.
  * Salida esperada:
  *   Normal: 100.0
  *   Fidelidad: 90.0
+ 
  * CodeTrace | FIN EJEMPLO DE CONSOLA
  */

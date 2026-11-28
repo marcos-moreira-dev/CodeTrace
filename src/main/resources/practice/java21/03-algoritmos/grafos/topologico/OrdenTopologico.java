@@ -1,6 +1,5 @@
-// CodeTrace | Referencia: Java 21 LTS / JDK 21
-// Compilar desde copia en PowerShell: New-Item -ItemType Directory -Force "$env:TEMP\ct-java21" | Out-Null; javac --release 21 -encoding UTF-8 -d "$env:TEMP\ct-java21" (Get-ChildItem -Recurse -Filter *.java | ForEach-Object FullName)
-// Ejecutar: invocar desde el Main del mismo ejercicio
+// Compilar (desde esta carpeta): javac -encoding UTF-8 -d . MainTopologico.java OrdenTopologico.java
+// Ejecutar: java codetrace.practica.grafostopologico.MainTopologico
 
 package codetrace.practica.grafostopologico;
 
@@ -64,15 +63,13 @@ public final class OrdenTopologico {
 
 /*
  * CodeTrace | EJEMPLO DE CONSOLA (practica)
- * 
- * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
- *   $out=Join-Path $env:TEMP "ct-practica-java"
- *   New-Item -ItemType Directory -Force -Path $out | Out-Null
- *   javac --release 21 -encoding UTF-8 -d $out (Get-ChildItem -Recurse -Filter *.java).FullName
- *   java -cp $out codetrace.practica.grafostopologico.MainTopologico
+ * Desde esta carpeta:
+ *   javac -encoding UTF-8 -d . MainTopologico.java OrdenTopologico.java
+ *   java codetrace.practica.grafostopologico.MainTopologico
  * Nota: OrdenTopologico.java es un componente; la salida corresponde al cliente MainTopologico.java.
  * Salida esperada:
  *   Orden permitido: [Fuentes, Compilar, Pruebas, Empaquetar, Desplegar]
  *   Ciclo detectado correctamente
+ 
  * CodeTrace | FIN EJEMPLO DE CONSOLA
  */

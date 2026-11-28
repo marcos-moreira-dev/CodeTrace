@@ -1,6 +1,5 @@
-// CodeTrace | Referencia: Java 21 LTS / JDK 21
-// Compilar desde copia del paquete, PowerShell: New-Item -ItemType Directory -Force "$env:TEMP\ct-java21" | Out-Null; javac --release 21 -encoding UTF-8 -d "$env:TEMP\ct-java21" (Get-ChildItem -Recurse -Filter *.java | ForEach-Object FullName)
-// Ejecutar: java -cp "$env:TEMP\ct-java21" codetrace.practica.bst.MainArbol
+// Compilar (desde esta carpeta): javac -encoding UTF-8 -d . ArbolBusqueda.java MainArbol.java
+// Ejecutar: java codetrace.practica.bst.MainArbol
 
 package codetrace.practica.bst;
 
@@ -34,15 +33,13 @@ public final class MainArbol {
 
 /*
  * CodeTrace | EJEMPLO DE CONSOLA (practica)
- * 
- * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
- *   $out=Join-Path $env:TEMP "ct-practica-java"
- *   New-Item -ItemType Directory -Force -Path $out | Out-Null
- *   javac --release 21 -encoding UTF-8 -d $out (Get-ChildItem -Recurse -Filter *.java).FullName
- *   java -cp $out codetrace.practica.bst.MainArbol
+ * Desde esta carpeta:
+ *   javac -encoding UTF-8 -d . ArbolBusqueda.java MainArbol.java
+ *   java codetrace.practica.bst.MainArbol
  * Salida esperada:
  *   [1, 3, 4, 6, 7, 8, 10, 14]
  *   Existe 6: true
  *   Existe 2: false
+ 
  * CodeTrace | FIN EJEMPLO DE CONSOLA
  */

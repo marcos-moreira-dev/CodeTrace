@@ -1,6 +1,5 @@
-// CodeTrace | Referencia: Java 21 LTS / JDK 21
-// Compilar desde copia en PowerShell: New-Item -ItemType Directory -Force "$env:TEMP\ct-java21" | Out-Null; javac --release 21 -encoding UTF-8 -d "$env:TEMP\ct-java21" (Get-ChildItem -Recurse -Filter *.java | ForEach-Object FullName)
-// Ejecutar: invocar desde el Main del mismo ejercicio
+// Compilar (desde esta carpeta): javac -encoding UTF-8 -d . ExpansionMinima.java MainExpansionMinima.java UnionFind.java
+// Ejecutar: java codetrace.practica.grafosmst.MainExpansionMinima
 
 package codetrace.practica.grafosmst;
 
@@ -88,16 +87,14 @@ public final class ExpansionMinima {
 
 /*
  * CodeTrace | EJEMPLO DE CONSOLA (practica)
- * 
- * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
- *   $out=Join-Path $env:TEMP "ct-practica-java"
- *   New-Item -ItemType Directory -Force -Path $out | Out-Null
- *   javac --release 21 -encoding UTF-8 -d $out (Get-ChildItem -Recurse -Filter *.java).FullName
- *   java -cp $out codetrace.practica.grafosmst.MainExpansionMinima
+ * Desde esta carpeta:
+ *   javac -encoding UTF-8 -d . ExpansionMinima.java MainExpansionMinima.java UnionFind.java
+ *   java codetrace.practica.grafosmst.MainExpansionMinima
  * Nota: ExpansionMinima.java es un componente; la salida corresponde al cliente MainExpansionMinima.java.
  * Salida esperada:
  *   Prim:    [Arista[a=0, b=2, peso=1], Arista[a=2, b=1, peso=2], Arista[a=1, b=3, peso=4], Arista[a=3, b=4, peso=1]] = 8
  *   Kruskal: [Arista[a=0, b=2, peso=1], Arista[a=3, b=4, peso=1], Arista[a=1, b=2, peso=2], Arista[a=1, b=3, peso=4]] = 8
  *   Seis vértices, dos componentes: 2
+ 
  * CodeTrace | FIN EJEMPLO DE CONSOLA
  */

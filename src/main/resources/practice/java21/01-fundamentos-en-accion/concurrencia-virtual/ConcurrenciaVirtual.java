@@ -1,6 +1,5 @@
-// CodeTrace | Referencia: Java 21 LTS / JDK 21
-// Compilar desde copia del paquete, PowerShell: New-Item -ItemType Directory -Force "$env:TEMP\ct-java21" | Out-Null; javac --release 21 -encoding UTF-8 -d "$env:TEMP\ct-java21" (Get-ChildItem -Recurse -Filter *.java -File | Where-Object { $_.FullName -notmatch '[\\/]00-fundamentos-especificacion-oficial[\\/]' } | ForEach-Object FullName)
-// Ejecutar: java -cp "$env:TEMP\ct-java21" ConcurrenciaVirtual
+// Compilar (desde esta carpeta): javac -encoding UTF-8 ConcurrenciaVirtual.java
+// Ejecutar: java ConcurrenciaVirtual
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -30,14 +29,12 @@ public class ConcurrenciaVirtual {
 
 /*
  * CodeTrace | EJEMPLO DE CONSOLA (practica)
- * 
- * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
- *   $out=Join-Path $env:TEMP "ct-practica-java"
- *   New-Item -ItemType Directory -Force -Path $out | Out-Null
- *   javac --release 21 -encoding UTF-8 -d $out (Get-ChildItem -Recurse -Filter *.java -File | Where-Object { $_.FullName -notmatch '[\\/]00-fundamentos-especificacion-oficial[\\/]' }).FullName
- *   java -cp $out ConcurrenciaVirtual
+ * Desde esta carpeta:
+ *   javac -encoding UTF-8 ConcurrenciaVirtual.java
+ *   java ConcurrenciaVirtual
  * Salida esperada:
  *   42
  *   tarea finalizada
+ 
  * CodeTrace | FIN EJEMPLO DE CONSOLA
  */

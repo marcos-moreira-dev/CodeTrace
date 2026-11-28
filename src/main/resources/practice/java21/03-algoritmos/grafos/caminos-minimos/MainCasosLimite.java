@@ -1,6 +1,5 @@
-// CodeTrace | Referencia: Java 21 LTS / JDK 21
-// Compilar (PowerShell): New-Item -ItemType Directory -Force "$env:TEMP\ct-java21" | Out-Null; javac --release 21 -encoding UTF-8 -d "$env:TEMP\ct-java21" (Get-ChildItem -Recurse -Filter *.java | ForEach-Object FullName)
-// Ejecutar: java -cp "$env:TEMP\ct-java21" codetrace.practica.grafoscaminos.MainCasosLimite
+// Compilar (desde esta carpeta): javac -encoding UTF-8 -d . CaminosMinimos.java GrafoPesado.java MainCaminosMinimos.java MainCasosLimite.java
+// Ejecutar: java codetrace.practica.grafoscaminos.MainCasosLimite
 
 package codetrace.practica.grafoscaminos;
 
@@ -58,15 +57,13 @@ public final class MainCasosLimite {
 
 /*
  * CodeTrace | EJEMPLO DE CONSOLA (practica)
- * 
- * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
- *   $out=Join-Path $env:TEMP "ct-practica-java"
- *   New-Item -ItemType Directory -Force -Path $out | Out-Null
- *   javac --release 21 -encoding UTF-8 -d $out (Get-ChildItem -Recurse -Filter *.java).FullName
- *   java -cp $out codetrace.practica.grafoscaminos.MainCasosLimite
+ * Desde esta carpeta:
+ *   javac -encoding UTF-8 -d . CaminosMinimos.java GrafoPesado.java MainCaminosMinimos.java MainCasosLimite.java
+ *   java codetrace.practica.grafoscaminos.MainCasosLimite
  * Salida esperada:
  *   Destino inaccesible: infinito y sin ruta
  *   Bellman-Ford detectó ciclo negativo
  *   Floyd-Warshall detectó ciclo negativo
+ 
  * CodeTrace | FIN EJEMPLO DE CONSOLA
  */

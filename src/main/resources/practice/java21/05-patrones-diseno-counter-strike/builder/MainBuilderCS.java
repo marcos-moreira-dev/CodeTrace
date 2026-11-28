@@ -1,6 +1,5 @@
-// CodeTrace | Referencia: Java 21 LTS / JDK 21
-// Compilar: javac --release 21 -encoding UTF-8 -d $out (Get-ChildItem -Recurse -Filter *.java).FullName
-// Ejecutar: java -cp $out codetrace.practica.counterstrike.builder.MainBuilderCS
+// Compilar (desde esta carpeta): javac -encoding UTF-8 -d . ConfiguracionSala.java ConfiguradorSala.java MainBuilderCS.java
+// Ejecutar: java codetrace.practica.counterstrike.builder.MainBuilderCS
 // Dominio: Counter-Strike — el anfitrión configura una sala privada de Counter-Strike por pasos.
 // Patrón: Builder; ejercicio independiente, no oficial.
 // Glosario: Sala = partida personalizada; mapa = escenario virtual; rehén = personaje virtual que puede ser objetivo de rescate.
@@ -24,13 +23,12 @@ public final class MainBuilderCS {
 
 /*
  * CodeTrace | EJEMPLO DE CONSOLA (practica)
- * Ejemplo en consola (PowerShell; desde la carpeta java21):
- *   $out=Join-Path $env:TEMP "ct-practica-java"
- *   New-Item -ItemType Directory -Force -Path $out | Out-Null
- *   javac --release 21 -encoding UTF-8 -d $out (Get-ChildItem -Recurse -Filter *.java).FullName
- *   java -cp $out codetrace.practica.counterstrike.builder.MainBuilderCS
+ * Desde esta carpeta:
+ *   javac -encoding UTF-8 -d . ConfiguracionSala.java ConfiguradorSala.java MainBuilderCS.java
+ *   java codetrace.practica.counterstrike.builder.MainBuilderCS
  * Nota: MainBuilderCS.java se estudia junto al cliente MainBuilderCS.java.
  * Salida esperada:
  *   Sala: cs_office, rondas=12, rehenes=true
+ 
  * CodeTrace | FIN EJEMPLO DE CONSOLA
  */

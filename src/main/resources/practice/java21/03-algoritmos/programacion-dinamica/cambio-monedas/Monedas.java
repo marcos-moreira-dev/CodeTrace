@@ -1,6 +1,5 @@
-// CodeTrace | Referencia: Java 21 LTS / JDK 21
-// Compilar: javac --release 21 -encoding UTF-8 -d "$env:TEMP\ct-java21" (Get-ChildItem -Recurse -Filter *.java).FullName
-// Ejecutar: ejecutar desde el cliente que utiliza este componente
+// Compilar (desde esta carpeta): javac -encoding UTF-8 -d . MainMonedas.java Monedas.java
+// Ejecutar: java codetrace.practica.monedas.MainMonedas
 package codetrace.practica.monedas;
 
 import java.util.Arrays;
@@ -56,15 +55,13 @@ public final class Monedas {
 
 /*
  * CodeTrace | EJEMPLO DE CONSOLA (practica)
- * 
- * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
- *   $out=Join-Path $env:TEMP "ct-practica-java"
- *   New-Item -ItemType Directory -Force -Path $out | Out-Null
- *   javac --release 21 -encoding UTF-8 -d $out (Get-ChildItem -Recurse -Filter *.java).FullName
- *   java -cp $out codetrace.practica.monedas.MainMonedas
+ * Desde esta carpeta:
+ *   javac -encoding UTF-8 -d . MainMonedas.java Monedas.java
+ *   java codetrace.practica.monedas.MainMonedas
  * Nota: Monedas.java es un componente; la salida corresponde al cliente MainMonedas.java.
  * Salida esperada:
  *   Voraz: 3
  *   Óptimo DP: 2
+ 
  * CodeTrace | FIN EJEMPLO DE CONSOLA
  */
