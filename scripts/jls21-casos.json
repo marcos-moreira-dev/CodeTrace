@@ -184,5 +184,365 @@
     "args": [],
     "stdout": "\n",
     "reject": "possible lossy conversion from int to byte"
+  },
+  {
+    "path": "03-estructura-lexica/03-10-06-02-escapes-en-bloques/EscapeBloque.java",
+    "unit": "03-estructura-lexica/03-10-06-02-escapes-en-bloques",
+    "section": "3.10.6; ejemplo 3.10.6-2",
+    "main": "EscapeBloque",
+    "args": [],
+    "stdout": "norte_|sureste|\n"
+  },
+  {
+    "path": "04-tipos-valores-variables/04-03-01-01-creacion-objetos/CreacionObjetos.java",
+    "unit": "04-tipos-valores-variables/04-03-01-01-creacion-objetos",
+    "section": "4.3.1; ejemplo 4.3.1-1",
+    "main": "CreacionObjetos",
+    "args": [],
+    "stdout": "[0]\n[1]\n[2] [4]\nab\n"
+  },
+  {
+    "path": "04-tipos-valores-variables/04-04-01-miembros-variable-tipo/MiembrosTipo.java",
+    "unit": "04-tipos-valores-variables/04-04-01-miembros-variable-tipo",
+    "section": "4.4; ejemplo 4.4-1",
+    "main": "MiembrosTipo",
+    "args": [],
+    "stdout": "7\ndato\n"
+  },
+  {
+    "path": "04-tipos-valores-variables/04-05-01-01-comodin-sin-limite/ComodinLibre.java",
+    "unit": "04-tipos-valores-variables/04-05-01-01-comodin-sin-limite",
+    "section": "4.5.1; ejemplo 4.5.1-1",
+    "main": "ComodinLibre",
+    "args": [],
+    "stdout": "3\n4\nsol\nmar\n"
+  },
+  {
+    "path": "04-tipos-valores-variables/04-05-01-02-comodin-acotado/ComodinAcotado.java",
+    "unit": "04-tipos-valores-variables/04-05-01-02-comodin-acotado",
+    "section": "4.5.1; ejemplo 4.5.1-2",
+    "main": "ComodinAcotado",
+    "args": [],
+    "stdout": "5.0\n4.0\n"
+  },
+  {
+    "path": "04-tipos-valores-variables/04-08-01-tipo-raw/TipoRaw.java",
+    "unit": "04-tipos-valores-variables/04-08-01-tipo-raw",
+    "section": "4.8; ejemplo 4.8-1",
+    "main": "TipoRaw",
+    "args": [],
+    "stdout": "",
+    "exception": "ClassCastException"
+  },
+  {
+    "path": "04-tipos-valores-variables/04-12-06-01-tipo-y-clase/TipoYClase.java",
+    "unit": "04-tipos-valores-variables/04-12-06-01-tipo-y-clase",
+    "section": "4.12.6; ejemplo 4.12.6-1",
+    "main": "TipoYClase",
+    "args": [],
+    "stdout": "Integer\nDouble\n"
+  },
+  {
+    "path": "05-conversiones-y-contextos/05-00-02-contextos-conversion/ContextosConversion.java",
+    "unit": "05-conversiones-y-contextos/05-00-02-contextos-conversion",
+    "section": "5.0; ejemplo 5.0-2",
+    "main": "ContextosConversion",
+    "args": [],
+    "stdout": "7\n7.0\n49.0\n7.0\n"
+  },
+  {
+    "path": "05-conversiones-y-contextos/05-01-03-01-infinitos-a-enteros/InfinitosEnteros.java",
+    "unit": "05-conversiones-y-contextos/05-01-03-01-infinitos-a-enteros",
+    "section": "5.1.3; ejemplo 5.1.3-1",
+    "main": "InfinitosEnteros",
+    "args": [],
+    "stdout": "-9223372036854775808 9223372036854775807\n-2147483648 2147483647\n0 -1\n0 65535\n0 -1\n"
+  },
+  {
+    "path": "05-conversiones-y-contextos/05-02-01-asignacion-primitivos/AsignacionPrimitivos.java",
+    "unit": "05-conversiones-y-contextos/05-02-01-asignacion-primitivos",
+    "section": "5.2; ejemplo 5.2-1",
+    "main": "AsignacionPrimitivos",
+    "args": [],
+    "stdout": "20.0\n-126\n"
+  },
+  {
+    "path": "05-conversiones-y-contextos/05-02-02-asignacion-referencias/AsignacionReferencias.java",
+    "unit": "05-conversiones-y-contextos/05-02-02-asignacion-referencias",
+    "section": "5.2; ejemplo 5.2-2",
+    "main": "AsignacionReferencias",
+    "args": [],
+    "stdout": "true\n4\n"
+  },
+  {
+    "path": "05-conversiones-y-contextos/05-02-03-asignacion-arreglos/AsignacionArreglos.java",
+    "unit": "05-conversiones-y-contextos/05-02-03-asignacion-arreglos",
+    "section": "5.2; ejemplo 5.2-3",
+    "main": "AsignacionArreglos",
+    "args": [],
+    "stdout": "uno\ntrue\n"
+  },
+  {
+    "path": "05-conversiones-y-contextos/05-05-03-cast-incompatible/CastIncompatible.java",
+    "unit": "05-conversiones-y-contextos/05-05-03-cast-incompatible",
+    "section": "5.5; ejemplo 5.5-3",
+    "main": "CastIncompatible",
+    "args": [],
+    "stdout": "",
+    "exception": "ClassCastException"
+  },
+  {
+    "path": "05-conversiones-y-contextos/05-06-01-promocion-unaria/PromocionUnaria.java",
+    "unit": "05-conversiones-y-contextos/05-06-01-promocion-unaria",
+    "section": "5.6; ejemplo 5.6-1",
+    "main": "PromocionUnaria",
+    "args": [],
+    "stdout": "-3\n-4\n12\n"
+  },
+  {
+    "path": "05-conversiones-y-contextos/05-06-02-promocion-binaria/PromocionBinaria.java",
+    "unit": "05-conversiones-y-contextos/05-06-02-promocion-binaria",
+    "section": "5.6; ejemplo 5.6-2",
+    "main": "PromocionBinaria",
+    "args": [],
+    "stdout": "7\n2.5\n0.75\n"
+  },
+  {
+    "path": "06-nombres/06-03-01-alcance-clases/AlcanceClases.java",
+    "unit": "06-nombres/06-03-01-alcance-clases",
+    "section": "6.3; ejemplo 6.3-1",
+    "main": "AlcanceClases",
+    "args": [],
+    "stdout": "true\n"
+  },
+  {
+    "path": "06-nombres/06-03-02-variable-no-inicializada/AlcanceLocalInvalido.java",
+    "unit": "06-nombres/06-03-02-variable-no-inicializada",
+    "section": "6.3; ejemplo 6.3-2",
+    "main": "AlcanceLocalInvalido",
+    "args": [],
+    "stdout": "\n",
+    "reject": "variable valor might not have been initialized"
+  },
+  {
+    "path": "06-nombres/06-04-01-sombreado-local-invalido/SombreadoInvalido.java",
+    "unit": "06-nombres/06-04-01-sombreado-local-invalido",
+    "section": "6.4; ejemplo 6.4-1",
+    "main": "SombreadoInvalido",
+    "args": [],
+    "stdout": "\n",
+    "reject": "variable indice is already defined"
+  },
+  {
+    "path": "06-nombres/06-04-01-01-sombreado-campo/SombreadoCampo.java",
+    "unit": "06-nombres/06-04-01-01-sombreado-campo",
+    "section": "6.4.1; ejemplo 6.4.1-1",
+    "main": "SombreadoCampo",
+    "args": [],
+    "stdout": "9\n2\n"
+  },
+  {
+    "path": "07-paquetes-y-modulos/07-05-01-01-importacion-simple/app/ImportacionSimple.java",
+    "unit": "07-paquetes-y-modulos/07-05-01-01-importacion-simple",
+    "section": "7.5.1; ejemplo 7.5.1-1",
+    "main": "app.ImportacionSimple",
+    "args": [],
+    "stdout": "hola\n"
+  },
+  {
+    "path": "08-clases/08-01-01-01-01-clase-abstracta/ClaseAbstracta.java",
+    "unit": "08-clases/08-01-01-01-01-clase-abstracta",
+    "section": "8.1.1.1; ejemplo 8.1.1.1-1",
+    "main": "ClaseAbstracta",
+    "args": [],
+    "stdout": "16\n"
+  },
+  {
+    "path": "08-clases/08-03-01-01-01-campos-static/CamposCompartidos.java",
+    "unit": "08-clases/08-03-01-01-01-campos-static",
+    "section": "8.3.1.1; ejemplo 8.3.1.1-1",
+    "main": "CamposCompartidos",
+    "args": [],
+    "stdout": "2\n1 1\n"
+  },
+  {
+    "path": "08-clases/08-04-09-01-sobrecarga/SobrecargaMetodos.java",
+    "unit": "08-clases/08-04-09-01-sobrecarga",
+    "section": "8.4.9; ejemplo 8.4.9-1",
+    "main": "SobrecargaMetodos",
+    "args": [],
+    "stdout": "int 4\ndouble 4.5\n"
+  },
+  {
+    "path": "08-clases/08-09-03-01-recorrer-enum/RecorrerEnum.java",
+    "unit": "08-clases/08-09-03-01-recorrer-enum",
+    "section": "8.9.3; ejemplo 8.9.3-1",
+    "main": "RecorrerEnum",
+    "args": [],
+    "stdout": "INICIO\nPROCESO\nFIN\n"
+  },
+  {
+    "path": "09-interfaces/09-08-01-interfaz-funcional/InterfazFuncional.java",
+    "unit": "09-interfaces/09-08-01-interfaz-funcional",
+    "section": "9.8; ejemplo 9.8-1",
+    "main": "InterfazFuncional",
+    "args": [],
+    "stdout": "10\n"
+  },
+  {
+    "path": "10-arreglos/10-02-02-declaradores-arreglos/DeclaradoresArreglos.java",
+    "unit": "10-arreglos/10-02-02-declaradores-arreglos",
+    "section": "10.2; ejemplo 10.2-2",
+    "main": "DeclaradoresArreglos",
+    "args": [],
+    "stdout": "3\n4\n5\n"
+  },
+  {
+    "path": "10-arreglos/10-04-01-acceso-arreglo/AccesoArreglo.java",
+    "unit": "10-arreglos/10-04-01-acceso-arreglo",
+    "section": "10.4; ejemplo 10.4-1",
+    "main": "AccesoArreglo",
+    "args": [],
+    "stdout": "8\n",
+    "exception": "ArrayIndexOutOfBoundsException"
+  },
+  {
+    "path": "10-arreglos/10-05-01-almacenamiento-incompatible/AlmacenamientoArreglo.java",
+    "unit": "10-arreglos/10-05-01-almacenamiento-incompatible",
+    "section": "10.5; ejemplo 10.5-1",
+    "main": "AlmacenamientoArreglo",
+    "args": [],
+    "stdout": "4\n",
+    "exception": "ArrayStoreException"
+  },
+  {
+    "path": "10-arreglos/10-06-01-inicializador-arreglo/InicializadorArreglo.java",
+    "unit": "10-arreglos/10-06-01-inicializador-arreglo",
+    "section": "10.6; ejemplo 10.6-1",
+    "main": "InicializadorArreglo",
+    "args": [],
+    "stdout": "7\n11\n13\n"
+  },
+  {
+    "path": "10-arreglos/10-07-01-clonar-arreglo/ClonarArreglo.java",
+    "unit": "10-arreglos/10-07-01-clonar-arreglo",
+    "section": "10.7; ejemplo 10.7-1",
+    "main": "ClonarArreglo",
+    "args": [],
+    "stdout": "false\n1 9\n"
+  },
+  {
+    "path": "10-arreglos/10-07-02-subarreglos-compartidos/ClonarMatriz.java",
+    "unit": "10-arreglos/10-07-02-subarreglos-compartidos",
+    "section": "10.7; ejemplo 10.7-2",
+    "main": "ClonarMatriz",
+    "args": [],
+    "stdout": "false\ntrue\n9\n"
+  },
+  {
+    "path": "10-arreglos/10-08-02-clases-arreglos/ClaseArreglos.java",
+    "unit": "10-arreglos/10-08-02-clases-arreglos",
+    "section": "10.8; ejemplo 10.8-2",
+    "main": "ClaseArreglos",
+    "args": [],
+    "stdout": "true\nint\n"
+  },
+  {
+    "path": "11-excepciones/11-02-03-01-catch-checked/CapturaCheckedInvalida.java",
+    "unit": "11-excepciones/11-02-03-01-catch-checked",
+    "section": "11.2.3; ejemplo 11.2.3-1",
+    "main": "CapturaCheckedInvalida",
+    "args": [],
+    "stdout": "\n",
+    "reject": "exception IOException is never thrown"
+  },
+  {
+    "path": "11-excepciones/11-03-01-lanzar-capturar/LanzarCapturar.java",
+    "unit": "11-excepciones/11-03-01-lanzar-capturar",
+    "section": "11.3; ejemplo 11.3-1",
+    "main": "LanzarCapturar",
+    "args": [],
+    "stdout": "capturada\ncontinúa\n"
+  },
+  {
+    "path": "12-ejecucion/12-04-01-01-orden-inicializacion/OrdenInicializacion.java",
+    "unit": "12-ejecucion/12-04-01-01-orden-inicializacion",
+    "section": "12.4.1; ejemplo 12.4.1-1",
+    "main": "OrdenInicializacion",
+    "args": [],
+    "stdout": "padre\nhija\n"
+  },
+  {
+    "path": "14-bloques-sentencias-patrones/14-11-03-01-switch-caida/SwitchCaida.java",
+    "unit": "14-bloques-sentencias-patrones/14-11-03-01-switch-caida",
+    "section": "14.11.3; ejemplo 14.11.3-1",
+    "main": "SwitchCaida",
+    "args": [],
+    "stdout": "uno\ndos\n"
+  },
+  {
+    "path": "14-bloques-sentencias-patrones/14-14-01-for-mejorado/ForMejorado.java",
+    "unit": "14-bloques-sentencias-patrones/14-14-01-for-mejorado",
+    "section": "14.14; ejemplo 14.14-1",
+    "main": "ForMejorado",
+    "args": [],
+    "stdout": "12\n"
+  },
+  {
+    "path": "14-bloques-sentencias-patrones/14-21-01-yield/YieldSwitch.java",
+    "unit": "14-bloques-sentencias-patrones/14-21-01-yield",
+    "section": "14.21; ejemplo 14.21-1",
+    "main": "YieldSwitch",
+    "args": [],
+    "stdout": "21\n"
+  },
+  {
+    "path": "15-expresiones/15-07-01-01-orden-izquierda/OrdenIzquierda.java",
+    "unit": "15-expresiones/15-07-01-01-orden-izquierda",
+    "section": "15.7.1; ejemplo 15.7.1-1",
+    "main": "OrdenIzquierda",
+    "args": [],
+    "stdout": "11\n8\n"
+  },
+  {
+    "path": "15-expresiones/15-17-03-01-resto-entero/RestoEntero.java",
+    "unit": "15-expresiones/15-17-03-01-resto-entero",
+    "section": "15.17.3; ejemplo 15.17.3-1",
+    "main": "RestoEntero",
+    "args": [],
+    "stdout": "1\n-1\n1\n-1\n"
+  },
+  {
+    "path": "15-expresiones/15-18-01-01-concatenacion/Concatenacion.java",
+    "unit": "15-expresiones/15-18-01-01-concatenacion",
+    "section": "15.18.1; ejemplo 15.18.1-1",
+    "main": "Concatenacion",
+    "args": [],
+    "stdout": "5x\nx23\n"
+  },
+  {
+    "path": "16-asignacion-definida/16-01-asignacion-definida/AsignacionDefinida.java",
+    "unit": "16-asignacion-definida/16-01-asignacion-definida",
+    "section": "16; ejemplo 16-1",
+    "main": "AsignacionDefinida",
+    "args": [],
+    "stdout": "6\n"
+  },
+  {
+    "path": "16-asignacion-definida/16-02-asignacion-no-garantizada/AsignacionNoGarantizada.java",
+    "unit": "16-asignacion-definida/16-02-asignacion-no-garantizada",
+    "section": "16; ejemplo 16-2",
+    "main": "AsignacionNoGarantizada",
+    "args": [],
+    "stdout": "\n",
+    "reject": "variable valor might not have been initialized"
+  },
+  {
+    "path": "16-asignacion-definida/16-03-final-ramas/FinalRamas.java",
+    "unit": "16-asignacion-definida/16-03-final-ramas",
+    "section": "16; ejemplo 16-3",
+    "main": "FinalRamas",
+    "args": [],
+    "stdout": "3\n7\n"
   }
 ]
