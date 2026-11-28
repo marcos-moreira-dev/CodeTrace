@@ -307,3 +307,7 @@ Los 464 archivos Java de esta biblioteca tienen una explicación directa del con
 Se contrastaron los 233 títulos numerados con el inventario y se releyeron casos seleccionados del PDF. Se incorporan variantes que faltaban en la primera adaptación: comillas de bloques de texto, acceso a miembros static genéricos, búsqueda de métodos por nombre simple, lecturas volatile, interfaces funcionales, excepciones checked, restricciones de var, aplicabilidad y asignación final. La prueba de volatile fuerza una intercalación mediante barreras para mostrar la diferencia entre valores leídos y estado final; no pretende probar un reordenamiento por sí sola.
 
 23 archivos adicionales, 303 unidades y 544 fuentes nuevas. La revisión comparativa aún no certifica cada fragmento no numerado ni cada variante del PDF. Pendiente CI.
+
+## Cierre de estructura
+
+El commit `6e7c452d` superó la validación curricular de las 303 unidades. La auditoría Java de la aplicación detectó cuatro unidades con más de un tipo superior por archivo. Se separan los nueve tipos auxiliares, conservando los contratos y las pruebas negativas/positivas. El catálogo pasa a 553 fuentes nuevas y 1590 entradas totales. Se mantiene la regla de un tipo superior por archivo. Pendiente validar el nuevo commit.
