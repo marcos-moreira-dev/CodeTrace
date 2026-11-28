@@ -64,6 +64,8 @@ jobs:
           java-version: '21'
           mvn-toolchain-vendor: temurin
           cache: maven
+      - name: Verify actual Java library tree, scoped graphs and saved sessions
+        run: mvn --batch-mode --no-transfer-progress -Dtest=JavaIntegralIntegrationTest test
       - name: Execute Windows diagnostic batch file
         shell: pwsh
         run: |

@@ -8,7 +8,7 @@ Plan completo: `JAVA-INTEGRAL-PLAN.md`. Inventario por fuente: `JAVA-INTEGRAL-IN
 
 ## Avance
 
-Implementación completa: 523 fuentes Java y 2 documentos en las 15 áreas; 320 clientes ejecutables. Las 450 fuentes de las áreas 06–19 aprobaron el verificador acumulativo en e217f617. Área 20 pendiente de validación en el head actual.
+Implementación completa: 523 fuentes Java y 2 documentos en las 15 áreas; 320 clientes ejecutables. Las 450 fuentes de las áreas 06–19 aprobaron el verificador acumulativo en e217f617. Área 20 aprobó la validación en Linux de v37; las comprobaciones reforzadas de v38 están pendientes.
 
 - 06: 9 unidades, 20 clientes implementados; CI aprobada en 32ad8838.
 - 07: 18 unidades, 44 fuentes implementadas (33 clientes ejecutables); modelos explícitos para memoria y reemplazo de páginas. CI aprobada en 32ad8838.
@@ -29,6 +29,12 @@ Implementación completa: 523 fuentes Java y 2 documentos en las 15 áreas; 320 
 - Catálogo v38: 2122 entradas.
 
 ## Auditoría de cierre
+
+- Comprobación Git de 00–05: las seis huellas de árbol coinciden exactamente con c6362835, sin cambios en fuentes congeladas.
+- Verificación de v37 en Linux: 320 casos (job 140868882812, commit 1e802d0) aprobados, incluyendo 12 microproyectos de arquitectura.
+- Comparación de blobs Git: 523 fuentes nuevas, ninguna duplicada byte a byte. No demuestra ausencia de redundancia conceptual.
+- Integración automatizada: `JavaIntegralIntegrationTest` materializa las 1329 entradas del paquete Java, comprueba el índice completo, grafos de microproyectos seleccionados, aislamiento de paquetes homónimos, persistencia y restauración de sesiones nuevas y previas. Pendiente de CI.
+- El grafo global tiene límites intencionales (1200 fuentes, 180 nodos); seleccionar una unidad permite analizar sus dependencias sin confundir proyectos homónimos. El índice del árbol no aplica ese límite. La interfaz gráfica completa no se ha probado manualmente.
 
 - Cobertura del inventario: 525 rutas, 523 fuentes, 2 documentos, 214 unidades y 320 clientes.
 - Verificador reforzado: análisis de dependencias de clases compiladas con jdeps; los imports siguen auditándose por separado.
