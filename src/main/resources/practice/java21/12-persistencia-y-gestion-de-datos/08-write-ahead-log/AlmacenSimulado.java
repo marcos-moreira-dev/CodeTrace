@@ -1,5 +1,5 @@
 // Tema:
-// Modelo redo-only con checkpoint y log en memoria: cada cambio se registra antes de publicarse, y un marcador commit confirma la transacción. Tras una caída simulada se parte del checkpoint y se rehacen solo cambios confirmados. No demuestra fsync, durabilidad física ni recuperación general de un motor.
+// Modelo redo-only con checkpoint y log en memoria: cada cambio se registra antes de publicarse, y un marcador commit confirma la transacción. Tras una caída simulada se parte del checkpoint y se rehacen solo cambios confirmados. Se supone un identificador nuevo por transacción, sin escrituras concurrentes conflictivas. No demuestra fsync, durabilidad física ni recuperación general de un motor.
 // Modalidad: modelo teórico; no es un motor de bases de datos.
 // Compilar: javac --release 21 -encoding UTF-8 EntradaLog.java AlmacenSimulado.java MainRecuperacion.java
 // Ejecutar: java MainRecuperacion
@@ -16,11 +16,17 @@ public class AlmacenSimulado {
         datos = new HashMap<>(inicial);
     }
     public void registrar(int tx, String clave, int valor) {
+        if (confirmada(tx)) throw new IllegalStateException("Transaccion cerrada");
         log.add(EntradaLog.cambio(tx, clave, valor));
     }
     public void commit(int tx) {
+        if (confirmada(tx)) throw new IllegalStateException("Transaccion cerrada");
         log.add(EntradaLog.confirmar(tx));
         recuperar();
+    }
+    private boolean confirmada(int tx) {
+        for (EntradaLog e : log) if (e.commit() && e.transaccion() == tx) return true;
+        return false;
     }
     public void recuperar() {
         Set<Integer> confirmadas = new HashSet<>();

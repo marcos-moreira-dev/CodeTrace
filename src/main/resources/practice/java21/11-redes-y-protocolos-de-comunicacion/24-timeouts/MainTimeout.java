@@ -11,7 +11,7 @@ public class MainTimeout {
         ExecutorService pool = Executors.newSingleThreadExecutor();
         try (ServidorLento servidor = new ServidorLento()) {
             Future<?> trabajo = pool.submit(() -> { servidor.atender(); return null; });
-            ClienteTimeout.consultar(servidor.puerto());
+            ClienteTimeout.consultar(servidor);
             servidor.close();
             trabajo.get(6, TimeUnit.SECONDS);
             System.out.println("Conexion cerrada");

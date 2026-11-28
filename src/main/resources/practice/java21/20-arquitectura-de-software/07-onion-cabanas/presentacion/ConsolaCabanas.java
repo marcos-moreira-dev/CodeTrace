@@ -14,7 +14,7 @@ public class ConsolaCabanas {
     public ConsolaCabanas(ReservarCabana servicio) { this.servicio = servicio; }
     public void reservar(String nombre) {
         try {
-            System.out.println("Reservada: " + servicio.ejecutar(nombre).nombre());
+            System.out.println("Reservada: " + servicio.ejecutar(nombre));
         } catch (IllegalArgumentException | IllegalStateException e) {
             System.out.println("Reserva rechazada");
         }

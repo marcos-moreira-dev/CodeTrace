@@ -291,9 +291,9 @@ area	unidad	modalidad	archivo	objetivo	estado
 11-redes-y-protocolos-de-comunicacion	23-protocolos-aplicacion	T	Respuesta.java	Gramática de mensajes, validación, errores y límites.	verificado_ci
 11-redes-y-protocolos-de-comunicacion	23-protocolos-aplicacion	T	ProtocoloTexto.java	Gramática de mensajes, validación, errores y límites.	verificado_ci
 11-redes-y-protocolos-de-comunicacion	23-protocolos-aplicacion	T	MainProtocolo.java	Gramática de mensajes, validación, errores y límites.	verificado_ci
-11-redes-y-protocolos-de-comunicacion	24-timeouts	R	ServidorLento.java	Timeout de conexión/lectura y cierre ante fallo.	verificado_ci
-11-redes-y-protocolos-de-comunicacion	24-timeouts	R	ClienteTimeout.java	Timeout de conexión/lectura y cierre ante fallo.	verificado_ci
-11-redes-y-protocolos-de-comunicacion	24-timeouts	R	MainTimeout.java	Timeout de conexión/lectura y cierre ante fallo.	verificado_ci
+11-redes-y-protocolos-de-comunicacion	24-timeouts	R	ServidorLento.java	Timeout de conexión/lectura y cierre ante fallo.	implementado_pendiente_ci
+11-redes-y-protocolos-de-comunicacion	24-timeouts	R	ClienteTimeout.java	Timeout de conexión/lectura y cierre ante fallo.	implementado_pendiente_ci
+11-redes-y-protocolos-de-comunicacion	24-timeouts	R	MainTimeout.java	Timeout de conexión/lectura y cierre ante fallo.	implementado_pendiente_ci
 12-persistencia-y-gestion-de-datos	01-registros	R	Registro.java	Persistencia de registros de longitud fija con archivos.	verificado_ci
 12-persistencia-y-gestion-de-datos	01-registros	R	ArchivoRegistros.java	Persistencia de registros de longitud fija con archivos.	verificado_ci
 12-persistencia-y-gestion-de-datos	01-registros	R	MainRegistros.java	Persistencia de registros de longitud fija con archivos.	verificado_ci
@@ -314,9 +314,9 @@ area	unidad	modalidad	archivo	objetivo	estado
 12-persistencia-y-gestion-de-datos	07-aislamiento	T	LecturaSuciaSimulada.java	Anomalías de transacciones mediante intercalaciones controladas.	verificado_ci
 12-persistencia-y-gestion-de-datos	07-aislamiento	T	LecturaNoRepetible.java	Anomalías de transacciones mediante intercalaciones controladas.	verificado_ci
 12-persistencia-y-gestion-de-datos	07-aislamiento	T	PerdidaActualizacion.java	Anomalías de transacciones mediante intercalaciones controladas.	verificado_ci
-12-persistencia-y-gestion-de-datos	08-write-ahead-log	T	EntradaLog.java	Escritura previa y recuperación simulada.	verificado_ci
-12-persistencia-y-gestion-de-datos	08-write-ahead-log	T	AlmacenSimulado.java	Escritura previa y recuperación simulada.	verificado_ci
-12-persistencia-y-gestion-de-datos	08-write-ahead-log	T	MainRecuperacion.java	Escritura previa y recuperación simulada.	verificado_ci
+12-persistencia-y-gestion-de-datos	08-write-ahead-log	T	EntradaLog.java	Escritura previa y recuperación simulada.	implementado_pendiente_ci
+12-persistencia-y-gestion-de-datos	08-write-ahead-log	T	AlmacenSimulado.java	Escritura previa y recuperación simulada.	implementado_pendiente_ci
+12-persistencia-y-gestion-de-datos	08-write-ahead-log	T	MainRecuperacion.java	Escritura previa y recuperación simulada.	implementado_pendiente_ci
 12-persistencia-y-gestion-de-datos	09-jdbc-api	T	ContratoJdbc.java	Connection, PreparedStatement y ResultSet como contrato conceptual; no conexión real sin driver, usar dobles explícitos sin fingir una BD.	verificado_ci
 12-persistencia-y-gestion-de-datos	09-jdbc-api	T	MainConsultaSimulada.java	Connection, PreparedStatement y ResultSet como contrato conceptual; no conexión real sin driver, usar dobles explícitos sin fingir una BD.	verificado_ci
 13-criptografia-y-seguridad	01-integridad	R	HashSHA256.java	Huella criptográfica e integridad; hash no equivale a autenticación.	verificado_ci

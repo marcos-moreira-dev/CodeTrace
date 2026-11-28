@@ -1,6 +1,6 @@
 # CodeTrace — Java integral: plan curricular consolidado
 
-**Estado:** implementación de 06–20 completa (523 fuentes Java, 2 documentos, 320 clientes), validada en Linux v37; pendiente de matriz reforzada v38 e integración final. Consultar `JAVA-INTEGRAL-ESTADO.md` y el inventario para el estado vivo. Fundamentos 00–05 congelados; PR #7 sigue siendo borrador.
+**Estado:** implementación de 06–20 completa (523 fuentes Java, 2 documentos, 320 clientes), validada en Linux v37; pendiente de matriz reforzada v39 e integración final. Consultar `JAVA-INTEGRAL-ESTADO.md` y el inventario para el estado vivo. Fundamentos 00–05 congelados; PR #7 sigue siendo borrador.
 
 15 áreas nuevas (06–20), 214 unidades de planificación (2 documentales), 523 rutas Java y 2 rutas documentales previstas. Son un inventario de alcance, no una cuota de código. Unidades con varios clientes independientes se prueban por separado; no compilar todo Java integral en un único comando. Se conservan los números del borrador donde es posible; los saltos reflejan descartes deliberados.
 

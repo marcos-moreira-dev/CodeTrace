@@ -26,9 +26,11 @@ Implementación completa: 523 fuentes Java y 2 documentos en las 15 áreas; 320 
 - 19: 12 unidades, 13 fuentes; patrones, dígitos, KNN, perceptrón, red neuronal, K-means, A*, genéticos, regresión, evaluación y minimax. Verificación Java integral aprobada en e217f617; no implica release publicada.
 - 20: 13 unidades (12 microproyectos ejecutables y 1 documental), 73 fuentes Java y 1 README; diez arquitecturas y comparación de una misma venta en capas, hexagonal y clean. Implementación completa; pendiente CI y auditoría final.
 - Verificador separado: scripts/verificar-java-integral.py, manifiesto scripts/java-integral-casos.json. Compila solo las fuentes declaradas por cliente y compara salida; verifica cobertura de archivos. Los scripts históricos excluyen nuevas áreas de la compilación conjunta.
-- Catálogo v38: 2122 entradas.
+- Catálogo v39: 2122 entradas.
 
 ## Auditoría de cierre
+
+- La comprobación jdeps de v38 detectó una dependencia implícita de presentación a dominio en Onion (job 140869527775). Se corrigió el servicio para retornar únicamente el nombre reservado; no se amplía la regla de dependencias. Se sincronizó la aceptación TCP antes de probar SO_TIMEOUT y se explicitó la restricción de transacciones del WAL didáctico. v39 pendiente de nueva CI.
 
 - Comprobación Git de 00–05: las seis huellas de árbol coinciden exactamente con c6362835, sin cambios en fuentes congeladas.
 - Verificación de v37 en Linux: 320 casos (job 140868882812, commit 1e802d0) aprobados, incluyendo 12 microproyectos de arquitectura.

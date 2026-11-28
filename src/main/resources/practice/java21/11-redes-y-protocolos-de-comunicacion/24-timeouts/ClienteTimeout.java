@@ -10,9 +10,11 @@ import java.nio.charset.StandardCharsets;
 import java.util.concurrent.*;
 
 public class ClienteTimeout {
-    public static void consultar(int puerto) throws IOException {
+    public static void consultar(ServidorLento servidor) throws IOException, InterruptedException {
         try (Socket socket = new Socket()) {
-            socket.connect(new InetSocketAddress(InetAddress.getLoopbackAddress(), puerto), 3000);
+            socket.connect(new InetSocketAddress(InetAddress.getLoopbackAddress(), servidor.puerto()), 3000);
+            // La lectura comienza cuando el servidor ya aceptó la conexión.
+            servidor.esperarAceptacion();
             socket.setSoTimeout(200);
             try {
                 int dato = socket.getInputStream().read();

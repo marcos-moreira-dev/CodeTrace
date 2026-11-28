@@ -12,10 +12,15 @@ import java.util.concurrent.*;
 public class ServidorLento implements AutoCloseable {
     private final ServerSocket escucha = new ServerSocket(0, 1, InetAddress.getLoopbackAddress());
     private final CountDownLatch cerrar = new CountDownLatch(1);
+    private final CountDownLatch aceptada = new CountDownLatch(1);
     public ServidorLento() throws IOException { escucha.setSoTimeout(3000); }
     public int puerto() { return escucha.getLocalPort(); }
+    public void esperarAceptacion() throws InterruptedException, IOException {
+        if (!aceptada.await(3, TimeUnit.SECONDS)) throw new IOException("Conexion no aceptada");
+    }
     public void atender() throws Exception {
         try (Socket cliente = escucha.accept()) {
+            aceptada.countDown(); // Coordina el inicio de la lectura con la aceptación.
             if (!cerrar.await(5, TimeUnit.SECONDS)) throw new IOException("Plazo del servidor");
         }
     }

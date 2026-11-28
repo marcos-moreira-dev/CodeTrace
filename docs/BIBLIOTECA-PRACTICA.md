@@ -1,4 +1,4 @@
-# Biblioteca de práctica CodeTrace — catálogo v38
+# Biblioteca de práctica CodeTrace — catálogo v39
 
 **2.122 archivos de referencia en 14 paquetes**, incorporados en la aplicación. Un ejercicio con varios archivos cuenta varias entradas; no confundir cantidad de archivos con cantidad de ejercicios.
 

@@ -108,7 +108,7 @@ class JavaIntegralIntegrationTest {
 
     @Test
     void previousVersionReferencesRemainAvailableAfterOpeningNewCatalog() throws Exception {
-        Path previous = temp.resolve("practice-library/v37/java21");
+        Path previous = temp.resolve("practice-library/v38/java21");
         Path oldFile = previous.resolve(LEGACY);
         Files.createDirectories(oldFile.getParent());
         Files.writeString(oldFile, "// archived reference\nclass ComparadoresEncadenados {}\n");

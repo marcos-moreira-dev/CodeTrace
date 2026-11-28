@@ -14,12 +14,13 @@ public class ReservarCabana {
     private final RepositorioCabanas repositorio;
     public ReservarCabana(RepositorioCabanas repositorio) { this.repositorio = repositorio; }
 
-    public Cabana ejecutar(String nombre) {
+    public String ejecutar(String nombre) {
         Cabana cabana = repositorio.buscar(nombre)
             .orElseThrow(() -> new IllegalArgumentException("Cabana desconocida"));
         Cabana reservada = cabana.reservar();
         repositorio.guardar(reservada);
-        return reservada;
+        // El servicio devuelve un dato de salida, no la entidad de dominio.
+        return reservada.nombre();
     }
 }
 
