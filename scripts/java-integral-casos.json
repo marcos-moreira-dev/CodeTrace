@@ -3058,5 +3058,90 @@
     "main": "Main",
     "mode": "R",
     "stdout": "Cita: Toby a las 10\nRechazada: Hora ocupada\nRechazada: Hora invalida\n"
+  },
+  {
+    "path": "20-arquitectura-de-software/07-onion-cabanas/Main.java",
+    "sources": [
+      "20-arquitectura-de-software/07-onion-cabanas/dominio/Cabana.java",
+      "20-arquitectura-de-software/07-onion-cabanas/dominio/RepositorioCabanas.java",
+      "20-arquitectura-de-software/07-onion-cabanas/aplicacion/ReservarCabana.java",
+      "20-arquitectura-de-software/07-onion-cabanas/infraestructura/CabanasEnMemoria.java",
+      "20-arquitectura-de-software/07-onion-cabanas/presentacion/ConsolaCabanas.java",
+      "20-arquitectura-de-software/07-onion-cabanas/Main.java"
+    ],
+    "main": "Main",
+    "mode": "R",
+    "stdout": "Reservada: Mirador\nReserva rechazada\n"
+  },
+  {
+    "path": "20-arquitectura-de-software/08-eventos-restaurante/Main.java",
+    "sources": [
+      "20-arquitectura-de-software/08-eventos-restaurante/dominio/Pedido.java",
+      "20-arquitectura-de-software/08-eventos-restaurante/eventos/PedidoListo.java",
+      "20-arquitectura-de-software/08-eventos-restaurante/eventos/BusEventos.java",
+      "20-arquitectura-de-software/08-eventos-restaurante/cocina/Cocina.java",
+      "20-arquitectura-de-software/08-eventos-restaurante/mostrador/AvisadorPedidos.java",
+      "20-arquitectura-de-software/08-eventos-restaurante/Main.java"
+    ],
+    "main": "Main",
+    "mode": "R",
+    "stdout": "Mostrador: pedido 7 listo\nPedido ya terminado\n"
+  },
+  {
+    "path": "20-arquitectura-de-software/09-monolito-modular-supermercado/Main.java",
+    "sources": [
+      "20-arquitectura-de-software/09-monolito-modular-supermercado/inventario/Existencias.java",
+      "20-arquitectura-de-software/09-monolito-modular-supermercado/inventario/Inventario.java",
+      "20-arquitectura-de-software/09-monolito-modular-supermercado/ventas/Ventas.java",
+      "20-arquitectura-de-software/09-monolito-modular-supermercado/compras/Compras.java",
+      "20-arquitectura-de-software/09-monolito-modular-supermercado/Main.java"
+    ],
+    "main": "Main",
+    "mode": "R",
+    "stdout": "Compra: 10\nVenta: 4\nVenta rechazada\nStock: 6\n"
+  },
+  {
+    "path": "20-arquitectura-de-software/10-microservicios-bicicletas/Main.java",
+    "sources": [
+      "20-arquitectura-de-software/10-microservicios-bicicletas/disponibilidad/ServicioDisponibilidad.java",
+      "20-arquitectura-de-software/10-microservicios-bicicletas/reservas/ServicioReservas.java",
+      "20-arquitectura-de-software/10-microservicios-bicicletas/cliente/ClienteAlquiler.java",
+      "20-arquitectura-de-software/10-microservicios-bicicletas/Main.java"
+    ],
+    "main": "Main",
+    "mode": "R",
+    "stdout": "Disponibles: 1\nReserva: R1\nDisponibles: 0\nReserva rechazada\n"
+  },
+  {
+    "path": "20-arquitectura-de-software/11-comparacion-verduleria/02-hexagonal/Main.java",
+    "sources": [
+      "20-arquitectura-de-software/11-comparacion-verduleria/02-hexagonal/dominio/Verdura.java",
+      "20-arquitectura-de-software/11-comparacion-verduleria/02-hexagonal/aplicacion/puertos/Venta.java",
+      "20-arquitectura-de-software/11-comparacion-verduleria/02-hexagonal/aplicacion/puertos/Inventario.java",
+      "20-arquitectura-de-software/11-comparacion-verduleria/02-hexagonal/aplicacion/VenderVerdura.java",
+      "20-arquitectura-de-software/11-comparacion-verduleria/02-hexagonal/infraestructura/ConsolaVentas.java",
+      "20-arquitectura-de-software/11-comparacion-verduleria/02-hexagonal/infraestructura/InventarioEnMemoria.java",
+      "20-arquitectura-de-software/11-comparacion-verduleria/02-hexagonal/Main.java"
+    ],
+    "main": "Main",
+    "mode": "R",
+    "stdout": "Venta: tomate x2\nStock: 3\nVenta rechazada\nStock: 3\n"
+  },
+  {
+    "path": "20-arquitectura-de-software/11-comparacion-verduleria/03-clean/Main.java",
+    "sources": [
+      "20-arquitectura-de-software/11-comparacion-verduleria/03-clean/entidades/Verdura.java",
+      "20-arquitectura-de-software/11-comparacion-verduleria/03-clean/casosdeuso/EntradaVenta.java",
+      "20-arquitectura-de-software/11-comparacion-verduleria/03-clean/casosdeuso/SalidaVenta.java",
+      "20-arquitectura-de-software/11-comparacion-verduleria/03-clean/casosdeuso/Inventario.java",
+      "20-arquitectura-de-software/11-comparacion-verduleria/03-clean/casosdeuso/VenderVerdura.java",
+      "20-arquitectura-de-software/11-comparacion-verduleria/03-clean/adaptadores/ControladorVentas.java",
+      "20-arquitectura-de-software/11-comparacion-verduleria/03-clean/adaptadores/PresentadorVentas.java",
+      "20-arquitectura-de-software/11-comparacion-verduleria/03-clean/infraestructura/InventarioEnMemoria.java",
+      "20-arquitectura-de-software/11-comparacion-verduleria/03-clean/Main.java"
+    ],
+    "main": "Main",
+    "mode": "R",
+    "stdout": "Venta: tomate x2\nStock: 3\nVenta rechazada\nStock: 3\n"
   }
 ]

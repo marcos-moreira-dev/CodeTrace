@@ -65,6 +65,59 @@ def verify(case):
             case["path"], run.returncode, run.stdout, run.stderr, case["stdout"])
     return case["path"]
 
+# Check architecture boundaries using local package imports. Each unit is
+# compiled independently; standard-library imports are outside this graph.
+import re
+from collections import defaultdict
+
+architecture = root / "20-arquitectura-de-software"
+rules = {
+    "01-en-capas-verduleria": {"dominio": set(), "persistencia": {"dominio"}, "servicio": {"dominio", "persistencia"}, "presentacion": {"servicio", "dominio"}},
+    "02-mvc-biblioteca": {"modelo": set(), "vista": {"modelo"}, "controlador": {"modelo", "vista"}},
+    "03-mvp-panaderia": {"modelo": set(), "vista": set(), "presentador": {"modelo", "vista"}},
+    "04-mvvm-heladeria": {"modelo": set(), "viewmodel": {"modelo"}, "vista": {"viewmodel"}},
+    "05-hexagonal-centro-ecuestre": {"dominio": set(), "aplicacion": {"dominio", "aplicacion.puertos"}, "aplicacion.puertos": {"dominio"}, "infraestructura.entrada": {"aplicacion.puertos", "dominio"}, "infraestructura.salida": {"aplicacion.puertos", "dominio"}},
+    "06-clean-peluqueria-canina": {"entidades": set(), "casosdeuso": {"entidades"}, "adaptadores": {"casosdeuso"}, "infraestructura": {"casosdeuso", "entidades"}},
+    "07-onion-cabanas": {"dominio": set(), "aplicacion": {"dominio"}, "infraestructura": {"dominio"}, "presentacion": {"aplicacion"}},
+    "08-eventos-restaurante": {"dominio": set(), "eventos": set(), "cocina": {"dominio", "eventos"}, "mostrador": {"eventos"}},
+    "09-monolito-modular-supermercado": {"inventario": set(), "compras": {"inventario"}, "ventas": {"inventario"}},
+    "10-microservicios-bicicletas": {"disponibilidad": set(), "reservas": set(), "cliente": set()},
+    "11-comparacion-verduleria/02-hexagonal": {"dominio": set(), "aplicacion": {"dominio", "aplicacion.puertos"}, "aplicacion.puertos": {"dominio"}, "infraestructura": {"aplicacion.puertos", "dominio"}},
+    "11-comparacion-verduleria/03-clean": {"entidades": set(), "casosdeuso": {"entidades"}, "adaptadores": {"casosdeuso"}, "infraestructura": {"casosdeuso", "entidades"}},
+}
+for folder, allowed in rules.items():
+    base = architecture / folder
+    graph = defaultdict(set)
+    for source in base.rglob("*.java"):
+        package = ".".join(source.relative_to(base).parts[:-1])
+        content = source.read_text(encoding="utf-8")
+        if not package:
+            assert source.name == "Main.java", source
+            continue  # composition root is allowed to wire all layers
+        assert package in allowed, source
+        assert re.search(r"^package " + re.escape(package) + r";", content, re.M), source
+        for imp in re.findall(r"^import\s+(?:static\s+)?([\w.]+)\s*;", content, re.M):
+            target = imp.rsplit(".", 1)[0]
+            if target == package or imp.startswith(("java.", "javax.", "com.sun.net.httpserver.")):
+                continue
+            assert target in allowed[package], (source, imp)
+            graph[package].add(target)
+    def visit(node, stack):
+        assert node not in stack, (folder, node, stack)
+        for target in graph[node]:
+            visit(target, stack | {node})
+    for node in list(graph):
+        visit(node, set())
+
+comparison_paths = [
+    "20-arquitectura-de-software/01-en-capas-verduleria/Main.java",
+    "20-arquitectura-de-software/11-comparacion-verduleria/02-hexagonal/Main.java",
+    "20-arquitectura-de-software/11-comparacion-verduleria/03-clean/Main.java",
+]
+outputs = {case["stdout"] for case in cases if case["path"] in comparison_paths}
+assert len(outputs) == 1 and sum(case["path"] in comparison_paths for case in cases) == 3
+print("Arquitecturas: limites de imports y escenario comparable comprobados")
+
 failures = []
 with ThreadPoolExecutor(max_workers=4) as pool:
     futures = {pool.submit(verify, c): c["path"] for c in cases}

@@ -2,7 +2,7 @@
 # UTF-8 BOM required for the legacy Windows PowerShell 5.1 parser.
 <#
 .SYNOPSIS
-  Audita la biblioteca offline de CodeTrace v36 (2084 referencias / 14 lenguajes).
+  Audita la biblioteca offline de CodeTrace v37 (2122 referencias / 14 lenguajes).
 .DESCRIPTION
   Revisa el catálogo, archivos existentes, carpetas de ejercicio, versiones
   y comandos de compilación. Por defecto NO compila ni modifica referencias.
@@ -58,7 +58,9 @@ foreach ($linea in (Get-Content -LiteralPath $catalogo -Encoding UTF8)) {
         throw "Archivo inexistente: $destino"
     }
     $cabecera = (Get-Content -LiteralPath $destino -Encoding UTF8 -TotalCount 12) -join [Environment]::NewLine
-    if ($paquete -eq 'java21' -and $ruta -eq '14-comunicacion-con-dispositivos/12-interoperabilidad-nativa/README.md') {
+    if ($paquete -eq 'java21' -and $ruta -eq '20-arquitectura-de-software/11-comparacion-verduleria/01-en-capas/README.md') {
+        if ($cabecera -notmatch '^# Comparación — verdulería en capas') { throw "Unidad documental inválida: $identificador" }
+    } elseif ($paquete -eq 'java21' -and $ruta -eq '14-comunicacion-con-dispositivos/12-interoperabilidad-nativa/README.md') {
         if ($cabecera -notmatch '^# Interoperabilidad nativa') { throw "Unidad documental inválida: $identificador" }
     } elseif ($paquete -eq 'java21' -and ($ruta.StartsWith('00-fundamentos-especificacion-oficial/') -or $ruta -match '^(0[6-9]|1[0-9]|20)-')) {
         $contenido = Get-Content -LiteralPath $destino -Encoding UTF8 -Raw
@@ -80,10 +82,10 @@ foreach ($linea in (Get-Content -LiteralPath $catalogo -Encoding UTF8)) {
 }
 
 $idiomas = @($referencias.Lenguaje | Sort-Object -Unique)
-if ($referencias.Count -ne 2084 -or $idiomas.Count -ne 14) {
+if ($referencias.Count -ne 2122 -or $idiomas.Count -ne 14) {
     throw "Catálogo inconsistente: $($referencias.Count) archivos, $($idiomas.Count) lenguajes"
 }
-Write-Host "CodeTrace v36 — catálogo íntegro: $($referencias.Count) archivos / $($idiomas.Count) lenguajes"
+Write-Host "CodeTrace v37 — catálogo íntegro: $($referencias.Count) archivos / $($idiomas.Count) lenguajes"
 foreach ($grupo in ($referencias | Group-Object Lenguaje | Sort-Object Name)) {
     $unidades = @($grupo.Group.Unidad | Sort-Object -Unique).Count
     Write-Host ("  {0,-16} {1,3} archivos  {2,3} carpetas con código" -f
