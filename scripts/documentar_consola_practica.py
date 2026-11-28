@@ -131,8 +131,8 @@ def command(path:Path, root:Path, client:Path|None) -> tuple[list[str],bool]:
         if match: clazz=match.group(1)+'.'+clazz
         return ([r'$out=Join-Path $env:TEMP "ct-practica-java"',
             r'New-Item -ItemType Directory -Force -Path $out | Out-Null',
-            r'javac --release 21 -encoding UTF-8 -d $out (Get-ChildItem -Recurse -Filter *.java).FullName',
-            'java -cp $out '+clazz] if executable else [r'$out=Join-Path $env:TEMP "ct-practica-java"',r'New-Item -ItemType Directory -Force -Path $out | Out-Null',r'javac --release 21 -encoding UTF-8 -d $out (Get-ChildItem -Recurse -Filter *.java).FullName']),executable
+            r"javac --release 21 -encoding UTF-8 -d $out (Get-ChildItem -Recurse -Filter *.java -File | Where-Object { $_.FullName -notmatch '[\\/]00-fundamentos-especificacion-oficial[\\/]' }).FullName",
+            'java -cp $out '+clazz] if executable else [r'$out=Join-Path $env:TEMP "ct-practica-java"',r'New-Item -ItemType Directory -Force -Path $out | Out-Null',r"javac --release 21 -encoding UTF-8 -d $out (Get-ChildItem -Recurse -Filter *.java -File | Where-Object { $_.FullName -notmatch '[\\/]00-fundamentos-especificacion-oficial[\\/]' }).FullName"]),executable
     if lang=='kotlin':
         # Incluir la implementación del cliente, pero no múltiples `main` en un mismo JAR.
         related=sorted(target.parent.glob('*.kt'))

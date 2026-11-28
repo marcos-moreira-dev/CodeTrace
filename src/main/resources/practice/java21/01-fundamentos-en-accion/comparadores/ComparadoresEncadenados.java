@@ -1,5 +1,5 @@
 // CodeTrace | Referencia: Java 21 LTS / JDK 21
-// Compilar: javac --release 21 -encoding UTF-8 -d "$env:TEMP\ct-java21" (Get-ChildItem -Recurse -Filter *.java).FullName
+// Compilar: javac --release 21 -encoding UTF-8 -d "$env:TEMP\ct-java21" (Get-ChildItem -Recurse -Filter *.java -File | Where-Object { $_.FullName -notmatch '[\\/]00-fundamentos-especificacion-oficial[\\/]' }).FullName
 // Ejecutar: java -cp "$env:TEMP\ct-java21" ComparadoresEncadenados
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -41,7 +41,7 @@ public class ComparadoresEncadenados {
  * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
  *   $out=Join-Path $env:TEMP "ct-practica-java"
  *   New-Item -ItemType Directory -Force -Path $out | Out-Null
- *   javac --release 21 -encoding UTF-8 -d $out (Get-ChildItem -Recurse -Filter *.java).FullName
+ *   javac --release 21 -encoding UTF-8 -d $out (Get-ChildItem -Recurse -Filter *.java -File | Where-Object { $_.FullName -notmatch '[\\/]00-fundamentos-especificacion-oficial[\\/]' }).FullName
  *   java -cp $out ComparadoresEncadenados
  * Salida esperada:
  *   Producto[codigo=B, nombre=Resistencia, precio=0.1]

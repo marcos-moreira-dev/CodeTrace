@@ -1,6 +1,6 @@
 // CodeTrace | Referencia: Java 21 LTS / JDK 21
 // Compilar en COPIA desde la raíz java21 (PowerShell):
-// javac --release 21 -encoding UTF-8 -d "$env:TEMP\ct-curso-java" (Get-ChildItem -Recurse -Filter *.java).FullName
+// javac --release 21 -encoding UTF-8 -d "$env:TEMP\ct-curso-java" (Get-ChildItem -Recurse -Filter *.java -File | Where-Object { $_.FullName -notmatch '[\\/]00-fundamentos-especificacion-oficial[\\/]' }).FullName
 // Ejecutar: usar desde la clase cliente Main... del mismo ejemplo
 
 /** Modelo que protege el invariante: el saldo nunca es negativo. */
@@ -26,7 +26,7 @@ public final class Cuenta {
  * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
  *   $out=Join-Path $env:TEMP "ct-practica-java"
  *   New-Item -ItemType Directory -Force -Path $out | Out-Null
- *   javac --release 21 -encoding UTF-8 -d $out (Get-ChildItem -Recurse -Filter *.java).FullName
+ *   javac --release 21 -encoding UTF-8 -d $out (Get-ChildItem -Recurse -Filter *.java -File | Where-Object { $_.FullName -notmatch '[\\/]00-fundamentos-especificacion-oficial[\\/]' }).FullName
  *   java -cp $out MainExcepcionChecked
  * Nota: Cuenta.java es un componente; la salida corresponde al cliente MainExcepcionChecked.java.
  * Salida esperada:

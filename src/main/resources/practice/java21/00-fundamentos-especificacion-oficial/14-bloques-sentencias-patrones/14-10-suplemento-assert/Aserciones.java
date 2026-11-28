@@ -2,7 +2,7 @@
 // assert comprueba una condición de depuración cuando las aserciones están habilitadas. No
 // sustituye la validación de argumentos que debe ejecutarse siempre.
 // Compilar: javac --release 21 -encoding UTF-8 -d . Aserciones.java
-// Ejecutar: java Aserciones
+// Ejecutar: java -ea Aserciones
 // Comandos desde la carpeta de la unidad.
 
 public class Aserciones {
