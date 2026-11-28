@@ -63,46 +63,46 @@ area	unidad	modalidad	archivo	objetivo	estado
 07-representacion-de-datos-y-memoria	25-errores-memoria	R	FugaPorRetencion.java	Retención accidental de referencias sin provocar agotamiento real de memoria; índice inválido y referencia nula ya se estudian en 00.	implementado_pendiente_ci
 07-representacion-de-datos-y-memoria	26-recoleccion-basura	T	Alcanzabilidad.java	Grafo de referencias, raíces y simulación mark-and-sweep; no forzar el GC real.	implementado_pendiente_ci
 07-representacion-de-datos-y-memoria	26-recoleccion-basura	T	MainMarcarBarrer.java	Grafo de referencias, raíces y simulación mark-and-sweep; no forzar el GC real.	implementado_pendiente_ci
-08-sistemas-de-archivos-y-entrada-salida	01-rutas	R	RutasAbsolutasRelativas.java	Path, raíz, padre, directorio de trabajo y resolución.	planificado
-08-sistemas-de-archivos-y-entrada-salida	01-rutas	R	NormalizarRuta.java	Path, raíz, padre, directorio de trabajo y resolución.	planificado
-08-sistemas-de-archivos-y-entrada-salida	01-rutas	R	ResolverRuta.java	Path, raíz, padre, directorio de trabajo y resolución.	planificado
-08-sistemas-de-archivos-y-entrada-salida	02-directorios	R	CrearListarDirectorio.java	Crear, listar y recorrer árboles temporales.	planificado
-08-sistemas-de-archivos-y-entrada-salida	02-directorios	R	RecorrerArbol.java	Crear, listar y recorrer árboles temporales.	planificado
-08-sistemas-de-archivos-y-entrada-salida	03-comodines	R	BuscarConGlob.java	PathMatcher y patrones glob; no expansión automática del shell.	planificado
-08-sistemas-de-archivos-y-entrada-salida	04-operaciones-archivos	R	CopiarArchivo.java	Operaciones sobre un directorio temporal propio.	planificado
-08-sistemas-de-archivos-y-entrada-salida	04-operaciones-archivos	R	MoverArchivo.java	Operaciones sobre un directorio temporal propio.	planificado
-08-sistemas-de-archivos-y-entrada-salida	04-operaciones-archivos	R	EliminarArchivo.java	Operaciones sobre un directorio temporal propio.	planificado
-08-sistemas-de-archivos-y-entrada-salida	05-metadatos	R	AtributosArchivo.java	BasicFileAttributes, tamaño y tiempos del sistema.	planificado
-08-sistemas-de-archivos-y-entrada-salida	05-metadatos	R	TiemposArchivo.java	BasicFileAttributes, tamaño y tiempos del sistema.	planificado
-08-sistemas-de-archivos-y-entrada-salida	06-enlaces	P	EnlaceDuro.java	Distinguir alias de archivo y referencia simbólica; detectar soporte/permisos.	planificado
-08-sistemas-de-archivos-y-entrada-salida	06-enlaces	P	EnlaceSimbolico.java	Distinguir alias de archivo y referencia simbólica; detectar soporte/permisos.	planificado
-08-sistemas-de-archivos-y-entrada-salida	07-permisos	M	MascarasOctales.java	Modelar rwx y consultar/cambiar permisos de archivos propios si el FS lo permite.	planificado
-08-sistemas-de-archivos-y-entrada-salida	07-permisos	M	PermisosPosix.java	Modelar rwx y consultar/cambiar permisos de archivos propios si el FS lo permite.	planificado
-08-sistemas-de-archivos-y-entrada-salida	07-permisos	M	PropietarioArchivo.java	Modelar rwx y consultar/cambiar permisos de archivos propios si el FS lo permite.	planificado
-08-sistemas-de-archivos-y-entrada-salida	08-archivos-temporales	R	DirectorioTemporal.java	Crear, usar y eliminar un directorio temporal; archivo temporal simple ya está en 01/archivos-y-nio.	planificado
-08-sistemas-de-archivos-y-entrada-salida	09-flujos-estandar	R	EntradaSalidaError.java	System.in/out/err; entrada fija para pruebas.	planificado
-08-sistemas-de-archivos-y-entrada-salida	10-flujos-bytes	R	LecturaBytes.java	Abrir, leer, escribir y cerrar; respetar el número de bytes devueltos.	planificado
-08-sistemas-de-archivos-y-entrada-salida	10-flujos-bytes	R	EscrituraBytes.java	Abrir, leer, escribir y cerrar; respetar el número de bytes devueltos.	planificado
-08-sistemas-de-archivos-y-entrada-salida	10-flujos-bytes	R	LecturaParcial.java	Abrir, leer, escribir y cerrar; respetar el número de bytes devueltos.	planificado
-08-sistemas-de-archivos-y-entrada-salida	11-flujos-texto	R	LecturaTexto.java	Reader/Writer y codificación explícita.	planificado
-08-sistemas-de-archivos-y-entrada-salida	11-flujos-texto	R	EscrituraTexto.java	Reader/Writer y codificación explícita.	planificado
-08-sistemas-de-archivos-y-entrada-salida	11-flujos-texto	R	CharsetExplicito.java	Reader/Writer y codificación explícita.	planificado
-08-sistemas-de-archivos-y-entrada-salida	12-buffering	R	FlujoConBuffer.java	BufferedInputStream/OutputStream y flush; no asumir persistencia física.	planificado
-08-sistemas-de-archivos-y-entrada-salida	12-buffering	R	VaciadoBuffer.java	BufferedInputStream/OutputStream y flush; no asumir persistencia física.	planificado
-08-sistemas-de-archivos-y-entrada-salida	13-modos-apertura	R	ModosApertura.java	StandardOpenOption, truncar, crear y anexar.	planificado
-08-sistemas-de-archivos-y-entrada-salida	13-modos-apertura	R	AnexarArchivo.java	StandardOpenOption, truncar, crear y anexar.	planificado
-08-sistemas-de-archivos-y-entrada-salida	14-acceso-aleatorio	R	AccesoAleatorio.java	RandomAccessFile/FileChannel y offset de archivo.	planificado
-08-sistemas-de-archivos-y-entrada-salida	14-acceso-aleatorio	R	PosicionCanal.java	RandomAccessFile/FileChannel y offset de archivo.	planificado
-08-sistemas-de-archivos-y-entrada-salida	15-buffers-nio	R	EstadoByteBuffer.java	Posición, límite, capacidad y transferencia parcial.	planificado
-08-sistemas-de-archivos-y-entrada-salida	15-buffers-nio	R	FlipClearCompact.java	Posición, límite, capacidad y transferencia parcial.	planificado
-08-sistemas-de-archivos-y-entrada-salida	16-lectura-binaria	R	RegistroBinario.java	DataInputStream/DataOutputStream con formato pequeño y documentado.	planificado
-08-sistemas-de-archivos-y-entrada-salida	16-lectura-binaria	R	MainLecturaRegistro.java	DataInputStream/DataOutputStream con formato pequeño y documentado.	planificado
-08-sistemas-de-archivos-y-entrada-salida	17-mapear-archivo	R	ArchivoMapeado.java	FileChannel.map; no prometer liberación inmediata del mapeo.	planificado
-08-sistemas-de-archivos-y-entrada-salida	18-bloqueos-archivo	P	BloqueoArchivo.java	FileLock y límites dependientes del sistema; solo archivos propios.	planificado
-08-sistemas-de-archivos-y-entrada-salida	18-bloqueos-archivo	P	ClienteBloqueo.java	FileLock y límites dependientes del sistema; solo archivos propios.	planificado
-08-sistemas-de-archivos-y-entrada-salida	19-monitoreo-directorios	R	VigilarDirectorio.java	WatchService con eventos no garantizados individualmente y espera acotada.	planificado
-08-sistemas-de-archivos-y-entrada-salida	20-compresion	R	GzipTexto.java	Comprimir y descomprimir datos locales; validar rutas al extraer.	planificado
-08-sistemas-de-archivos-y-entrada-salida	20-compresion	R	ZipArchivos.java	Comprimir y descomprimir datos locales; validar rutas al extraer.	planificado
+08-sistemas-de-archivos-y-entrada-salida	01-rutas	R	RutasAbsolutasRelativas.java	Path, raíz, padre, directorio de trabajo y resolución.	implementado_pendiente_ci
+08-sistemas-de-archivos-y-entrada-salida	01-rutas	R	NormalizarRuta.java	Path, raíz, padre, directorio de trabajo y resolución.	implementado_pendiente_ci
+08-sistemas-de-archivos-y-entrada-salida	01-rutas	R	ResolverRuta.java	Path, raíz, padre, directorio de trabajo y resolución.	implementado_pendiente_ci
+08-sistemas-de-archivos-y-entrada-salida	02-directorios	R	CrearListarDirectorio.java	Crear, listar y recorrer árboles temporales.	implementado_pendiente_ci
+08-sistemas-de-archivos-y-entrada-salida	02-directorios	R	RecorrerArbol.java	Crear, listar y recorrer árboles temporales.	implementado_pendiente_ci
+08-sistemas-de-archivos-y-entrada-salida	03-comodines	R	BuscarConGlob.java	PathMatcher y patrones glob; no expansión automática del shell.	implementado_pendiente_ci
+08-sistemas-de-archivos-y-entrada-salida	04-operaciones-archivos	R	CopiarArchivo.java	Operaciones sobre un directorio temporal propio.	implementado_pendiente_ci
+08-sistemas-de-archivos-y-entrada-salida	04-operaciones-archivos	R	MoverArchivo.java	Operaciones sobre un directorio temporal propio.	implementado_pendiente_ci
+08-sistemas-de-archivos-y-entrada-salida	04-operaciones-archivos	R	EliminarArchivo.java	Operaciones sobre un directorio temporal propio.	implementado_pendiente_ci
+08-sistemas-de-archivos-y-entrada-salida	05-metadatos	R	AtributosArchivo.java	BasicFileAttributes, tamaño y tiempos del sistema.	implementado_pendiente_ci
+08-sistemas-de-archivos-y-entrada-salida	05-metadatos	R	TiemposArchivo.java	BasicFileAttributes, tamaño y tiempos del sistema.	implementado_pendiente_ci
+08-sistemas-de-archivos-y-entrada-salida	06-enlaces	P	EnlaceDuro.java	Distinguir alias de archivo y referencia simbólica; detectar soporte/permisos.	implementado_pendiente_ci
+08-sistemas-de-archivos-y-entrada-salida	06-enlaces	P	EnlaceSimbolico.java	Distinguir alias de archivo y referencia simbólica; detectar soporte/permisos.	implementado_pendiente_ci
+08-sistemas-de-archivos-y-entrada-salida	07-permisos	M	MascarasOctales.java	Modelar rwx y consultar/cambiar permisos de archivos propios si el FS lo permite.	implementado_pendiente_ci
+08-sistemas-de-archivos-y-entrada-salida	07-permisos	M	PermisosPosix.java	Modelar rwx y consultar/cambiar permisos de archivos propios si el FS lo permite.	implementado_pendiente_ci
+08-sistemas-de-archivos-y-entrada-salida	07-permisos	M	PropietarioArchivo.java	Modelar rwx y consultar/cambiar permisos de archivos propios si el FS lo permite.	implementado_pendiente_ci
+08-sistemas-de-archivos-y-entrada-salida	08-archivos-temporales	R	DirectorioTemporal.java	Crear, usar y eliminar un directorio temporal; archivo temporal simple ya está en 01/archivos-y-nio.	implementado_pendiente_ci
+08-sistemas-de-archivos-y-entrada-salida	09-flujos-estandar	R	EntradaSalidaError.java	System.in/out/err; entrada fija para pruebas.	implementado_pendiente_ci
+08-sistemas-de-archivos-y-entrada-salida	10-flujos-bytes	R	LecturaBytes.java	Abrir, leer, escribir y cerrar; respetar el número de bytes devueltos.	implementado_pendiente_ci
+08-sistemas-de-archivos-y-entrada-salida	10-flujos-bytes	R	EscrituraBytes.java	Abrir, leer, escribir y cerrar; respetar el número de bytes devueltos.	implementado_pendiente_ci
+08-sistemas-de-archivos-y-entrada-salida	10-flujos-bytes	R	LecturaParcial.java	Abrir, leer, escribir y cerrar; respetar el número de bytes devueltos.	implementado_pendiente_ci
+08-sistemas-de-archivos-y-entrada-salida	11-flujos-texto	R	LecturaTexto.java	Reader/Writer y codificación explícita.	implementado_pendiente_ci
+08-sistemas-de-archivos-y-entrada-salida	11-flujos-texto	R	EscrituraTexto.java	Reader/Writer y codificación explícita.	implementado_pendiente_ci
+08-sistemas-de-archivos-y-entrada-salida	11-flujos-texto	R	CharsetExplicito.java	Reader/Writer y codificación explícita.	implementado_pendiente_ci
+08-sistemas-de-archivos-y-entrada-salida	12-buffering	R	FlujoConBuffer.java	BufferedInputStream/OutputStream y flush; no asumir persistencia física.	implementado_pendiente_ci
+08-sistemas-de-archivos-y-entrada-salida	12-buffering	R	VaciadoBuffer.java	BufferedInputStream/OutputStream y flush; no asumir persistencia física.	implementado_pendiente_ci
+08-sistemas-de-archivos-y-entrada-salida	13-modos-apertura	R	ModosApertura.java	StandardOpenOption, truncar, crear y anexar.	implementado_pendiente_ci
+08-sistemas-de-archivos-y-entrada-salida	13-modos-apertura	R	AnexarArchivo.java	StandardOpenOption, truncar, crear y anexar.	implementado_pendiente_ci
+08-sistemas-de-archivos-y-entrada-salida	14-acceso-aleatorio	R	AccesoAleatorio.java	RandomAccessFile/FileChannel y offset de archivo.	implementado_pendiente_ci
+08-sistemas-de-archivos-y-entrada-salida	14-acceso-aleatorio	R	PosicionCanal.java	RandomAccessFile/FileChannel y offset de archivo.	implementado_pendiente_ci
+08-sistemas-de-archivos-y-entrada-salida	15-buffers-nio	R	EstadoByteBuffer.java	Posición, límite, capacidad y transferencia parcial.	implementado_pendiente_ci
+08-sistemas-de-archivos-y-entrada-salida	15-buffers-nio	R	FlipClearCompact.java	Posición, límite, capacidad y transferencia parcial.	implementado_pendiente_ci
+08-sistemas-de-archivos-y-entrada-salida	16-lectura-binaria	R	RegistroBinario.java	DataInputStream/DataOutputStream con formato pequeño y documentado.	implementado_pendiente_ci
+08-sistemas-de-archivos-y-entrada-salida	16-lectura-binaria	R	MainLecturaRegistro.java	DataInputStream/DataOutputStream con formato pequeño y documentado.	implementado_pendiente_ci
+08-sistemas-de-archivos-y-entrada-salida	17-mapear-archivo	R	ArchivoMapeado.java	FileChannel.map; no prometer liberación inmediata del mapeo.	implementado_pendiente_ci
+08-sistemas-de-archivos-y-entrada-salida	18-bloqueos-archivo	P	BloqueoArchivo.java	FileLock y límites dependientes del sistema; solo archivos propios.	implementado_pendiente_ci
+08-sistemas-de-archivos-y-entrada-salida	18-bloqueos-archivo	P	ClienteBloqueo.java	FileLock y límites dependientes del sistema; solo archivos propios.	implementado_pendiente_ci
+08-sistemas-de-archivos-y-entrada-salida	19-monitoreo-directorios	R	VigilarDirectorio.java	WatchService con eventos no garantizados individualmente y espera acotada.	implementado_pendiente_ci
+08-sistemas-de-archivos-y-entrada-salida	20-compresion	R	GzipTexto.java	Comprimir y descomprimir datos locales; validar rutas al extraer.	implementado_pendiente_ci
+08-sistemas-de-archivos-y-entrada-salida	20-compresion	R	ZipArchivos.java	Comprimir y descomprimir datos locales; validar rutas al extraer.	implementado_pendiente_ci
 09-sistemas-operativos-y-procesos	01-capas-sistema	R	EntornoSistema.java	Hardware, kernel, JVM y aplicaciones; propiedades os.name/os.arch.	planificado
 09-sistemas-operativos-y-procesos	02-argumentos-consola	R	OpcionesCortas.java	Interpretar opciones y argumentos explícitamente; main(args) ya está en 00/01.	planificado
 09-sistemas-operativos-y-procesos	02-argumentos-consola	R	OpcionesLargas.java	Interpretar opciones y argumentos explícitamente; main(args) ya está en 00/01.	planificado

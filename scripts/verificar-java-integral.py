@@ -26,9 +26,9 @@ def verify(case):
                         *map(str, sources)], timeout=30, capture_output=True, text=True, encoding="utf-8")
         assert compilation.returncode == 0, (case["path"], compilation.stderr)
         run = subprocess.run(["java", "-Dfile.encoding=UTF-8", "-cp", tmp, case["main"],
-                              *case.get("args", [])], cwd=tmp, timeout=20,
+                              *case.get("args", [])], cwd=tmp, timeout=20, input=case.get("stdin", ""),
                              capture_output=True, text=True, encoding="utf-8")
-        assert run.returncode == 0 and not run.stderr and run.stdout in case.get("allowed_stdout", [case["stdout"]]), (
+        assert run.returncode == 0 and run.stderr == case.get("stderr", "") and run.stdout in case.get("allowed_stdout", [case["stdout"]]), (
             case["path"], run.returncode, run.stdout, run.stderr, case["stdout"])
     return case["path"]
 

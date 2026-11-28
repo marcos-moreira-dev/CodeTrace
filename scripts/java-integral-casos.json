@@ -490,5 +490,375 @@
     "main": "MainMarcarBarrer",
     "mode": "T",
     "stdout": "0 vivo\n1 vivo\n2 vivo\n3 recuperable\n"
+  },
+  {
+    "path": "08-sistemas-de-archivos-y-entrada-salida/01-rutas/RutasAbsolutasRelativas.java",
+    "sources": [
+      "08-sistemas-de-archivos-y-entrada-salida/01-rutas/RutasAbsolutasRelativas.java"
+    ],
+    "main": "RutasAbsolutasRelativas",
+    "mode": "R",
+    "stdout": "Relativa: true\nAbsoluta: true\nPadre: datos\nRaiz presente: true\n"
+  },
+  {
+    "path": "08-sistemas-de-archivos-y-entrada-salida/01-rutas/NormalizarRuta.java",
+    "sources": [
+      "08-sistemas-de-archivos-y-entrada-salida/01-rutas/NormalizarRuta.java"
+    ],
+    "main": "NormalizarRuta",
+    "mode": "R",
+    "stdout": "true\n"
+  },
+  {
+    "path": "08-sistemas-de-archivos-y-entrada-salida/01-rutas/ResolverRuta.java",
+    "sources": [
+      "08-sistemas-de-archivos-y-entrada-salida/01-rutas/ResolverRuta.java"
+    ],
+    "main": "ResolverRuta",
+    "mode": "R",
+    "stdout": "ventas.txt\nventas.txt\n"
+  },
+  {
+    "path": "08-sistemas-de-archivos-y-entrada-salida/02-directorios/CrearListarDirectorio.java",
+    "sources": [
+      "08-sistemas-de-archivos-y-entrada-salida/02-directorios/CrearListarDirectorio.java"
+    ],
+    "main": "CrearListarDirectorio",
+    "mode": "R",
+    "stdout": "a.txt\nb.txt\n"
+  },
+  {
+    "path": "08-sistemas-de-archivos-y-entrada-salida/02-directorios/RecorrerArbol.java",
+    "sources": [
+      "08-sistemas-de-archivos-y-entrada-salida/02-directorios/RecorrerArbol.java"
+    ],
+    "main": "RecorrerArbol",
+    "mode": "R",
+    "stdout": "a.txt\nProfundidad: 3\n"
+  },
+  {
+    "path": "08-sistemas-de-archivos-y-entrada-salida/03-comodines/BuscarConGlob.java",
+    "sources": [
+      "08-sistemas-de-archivos-y-entrada-salida/03-comodines/BuscarConGlob.java"
+    ],
+    "main": "BuscarConGlob",
+    "mode": "R",
+    "stdout": "a.txt\nc.txt\n"
+  },
+  {
+    "path": "08-sistemas-de-archivos-y-entrada-salida/04-operaciones-archivos/CopiarArchivo.java",
+    "sources": [
+      "08-sistemas-de-archivos-y-entrada-salida/04-operaciones-archivos/CopiarArchivo.java"
+    ],
+    "main": "CopiarArchivo",
+    "mode": "R",
+    "stdout": "venta\notra\n"
+  },
+  {
+    "path": "08-sistemas-de-archivos-y-entrada-salida/04-operaciones-archivos/MoverArchivo.java",
+    "sources": [
+      "08-sistemas-de-archivos-y-entrada-salida/04-operaciones-archivos/MoverArchivo.java"
+    ],
+    "main": "MoverArchivo",
+    "mode": "R",
+    "stdout": "Origen existe: false\nDestino: listo\n"
+  },
+  {
+    "path": "08-sistemas-de-archivos-y-entrada-salida/04-operaciones-archivos/EliminarArchivo.java",
+    "sources": [
+      "08-sistemas-de-archivos-y-entrada-salida/04-operaciones-archivos/EliminarArchivo.java"
+    ],
+    "main": "EliminarArchivo",
+    "mode": "R",
+    "stdout": "true\nfalse\n"
+  },
+  {
+    "path": "08-sistemas-de-archivos-y-entrada-salida/05-metadatos/AtributosArchivo.java",
+    "sources": [
+      "08-sistemas-de-archivos-y-entrada-salida/05-metadatos/AtributosArchivo.java"
+    ],
+    "main": "AtributosArchivo",
+    "mode": "R",
+    "stdout": "Regular: true\nBytes: 3\n"
+  },
+  {
+    "path": "08-sistemas-de-archivos-y-entrada-salida/05-metadatos/TiemposArchivo.java",
+    "sources": [
+      "08-sistemas-de-archivos-y-entrada-salida/05-metadatos/TiemposArchivo.java"
+    ],
+    "main": "TiemposArchivo",
+    "mode": "R",
+    "stdout": "2020-01-01T00:00:00Z\n"
+  },
+  {
+    "path": "08-sistemas-de-archivos-y-entrada-salida/06-enlaces/EnlaceDuro.java",
+    "sources": [
+      "08-sistemas-de-archivos-y-entrada-salida/06-enlaces/EnlaceDuro.java"
+    ],
+    "main": "EnlaceDuro",
+    "mode": "P",
+    "stdout": "true\ndos\n",
+    "allowed_stdout": [
+      "true\ndos\n",
+      "Enlace no disponible\n"
+    ]
+  },
+  {
+    "path": "08-sistemas-de-archivos-y-entrada-salida/06-enlaces/EnlaceSimbolico.java",
+    "sources": [
+      "08-sistemas-de-archivos-y-entrada-salida/06-enlaces/EnlaceSimbolico.java"
+    ],
+    "main": "EnlaceSimbolico",
+    "mode": "P",
+    "stdout": "true\nDestino existe: false\nEnlace existe: true\n",
+    "allowed_stdout": [
+      "true\nDestino existe: false\nEnlace existe: true\n",
+      "Enlace no disponible\n"
+    ]
+  },
+  {
+    "path": "08-sistemas-de-archivos-y-entrada-salida/07-permisos/MascarasOctales.java",
+    "sources": [
+      "08-sistemas-de-archivos-y-entrada-salida/07-permisos/MascarasOctales.java"
+    ],
+    "main": "MascarasOctales",
+    "mode": "M",
+    "stdout": "rw-\nr--\n---\n"
+  },
+  {
+    "path": "08-sistemas-de-archivos-y-entrada-salida/07-permisos/PermisosPosix.java",
+    "sources": [
+      "08-sistemas-de-archivos-y-entrada-salida/07-permisos/PermisosPosix.java"
+    ],
+    "main": "PermisosPosix",
+    "mode": "M",
+    "stdout": "rw-------\n",
+    "allowed_stdout": [
+      "rw-------\n",
+      "POSIX no disponible\n"
+    ]
+  },
+  {
+    "path": "08-sistemas-de-archivos-y-entrada-salida/07-permisos/PropietarioArchivo.java",
+    "sources": [
+      "08-sistemas-de-archivos-y-entrada-salida/07-permisos/PropietarioArchivo.java"
+    ],
+    "main": "PropietarioArchivo",
+    "mode": "M",
+    "stdout": "Propietario consultado: true\n",
+    "allowed_stdout": [
+      "Propietario consultado: true\n",
+      "Propietario no disponible\n"
+    ]
+  },
+  {
+    "path": "08-sistemas-de-archivos-y-entrada-salida/08-archivos-temporales/DirectorioTemporal.java",
+    "sources": [
+      "08-sistemas-de-archivos-y-entrada-salida/08-archivos-temporales/DirectorioTemporal.java"
+    ],
+    "main": "DirectorioTemporal",
+    "mode": "R",
+    "stdout": "true\ntemporal\n"
+  },
+  {
+    "path": "08-sistemas-de-archivos-y-entrada-salida/09-flujos-estandar/EntradaSalidaError.java",
+    "sources": [
+      "08-sistemas-de-archivos-y-entrada-salida/09-flujos-estandar/EntradaSalidaError.java"
+    ],
+    "main": "EntradaSalidaError",
+    "mode": "R",
+    "stdout": "Entrada: 7\n",
+    "stdin": "7\n",
+    "stderr": "Diagnostico\n"
+  },
+  {
+    "path": "08-sistemas-de-archivos-y-entrada-salida/10-flujos-bytes/LecturaBytes.java",
+    "sources": [
+      "08-sistemas-de-archivos-y-entrada-salida/10-flujos-bytes/LecturaBytes.java"
+    ],
+    "main": "LecturaBytes",
+    "mode": "R",
+    "stdout": "1\n255\n"
+  },
+  {
+    "path": "08-sistemas-de-archivos-y-entrada-salida/10-flujos-bytes/EscrituraBytes.java",
+    "sources": [
+      "08-sistemas-de-archivos-y-entrada-salida/10-flujos-bytes/EscrituraBytes.java"
+    ],
+    "main": "EscrituraBytes",
+    "mode": "R",
+    "stdout": "Bytes: 3\n"
+  },
+  {
+    "path": "08-sistemas-de-archivos-y-entrada-salida/10-flujos-bytes/LecturaParcial.java",
+    "sources": [
+      "08-sistemas-de-archivos-y-entrada-salida/10-flujos-bytes/LecturaParcial.java"
+    ],
+    "main": "LecturaParcial",
+    "mode": "R",
+    "stdout": "Suma: 15\n"
+  },
+  {
+    "path": "08-sistemas-de-archivos-y-entrada-salida/11-flujos-texto/LecturaTexto.java",
+    "sources": [
+      "08-sistemas-de-archivos-y-entrada-salida/11-flujos-texto/LecturaTexto.java"
+    ],
+    "main": "LecturaTexto",
+    "mode": "R",
+    "stdout": "pan\nleche\n"
+  },
+  {
+    "path": "08-sistemas-de-archivos-y-entrada-salida/11-flujos-texto/EscrituraTexto.java",
+    "sources": [
+      "08-sistemas-de-archivos-y-entrada-salida/11-flujos-texto/EscrituraTexto.java"
+    ],
+    "main": "EscrituraTexto",
+    "mode": "R",
+    "stdout": "café\n"
+  },
+  {
+    "path": "08-sistemas-de-archivos-y-entrada-salida/11-flujos-texto/CharsetExplicito.java",
+    "sources": [
+      "08-sistemas-de-archivos-y-entrada-salida/11-flujos-texto/CharsetExplicito.java"
+    ],
+    "main": "CharsetExplicito",
+    "mode": "R",
+    "stdout": "UTF-8: 5\nLatin-1: 4\ncafé\n"
+  },
+  {
+    "path": "08-sistemas-de-archivos-y-entrada-salida/12-buffering/FlujoConBuffer.java",
+    "sources": [
+      "08-sistemas-de-archivos-y-entrada-salida/12-buffering/FlujoConBuffer.java"
+    ],
+    "main": "FlujoConBuffer",
+    "mode": "R",
+    "stdout": "1\n2\n3\n"
+  },
+  {
+    "path": "08-sistemas-de-archivos-y-entrada-salida/12-buffering/VaciadoBuffer.java",
+    "sources": [
+      "08-sistemas-de-archivos-y-entrada-salida/12-buffering/VaciadoBuffer.java"
+    ],
+    "main": "VaciadoBuffer",
+    "mode": "R",
+    "stdout": "Antes: 0\nDespues: 3\n"
+  },
+  {
+    "path": "08-sistemas-de-archivos-y-entrada-salida/13-modos-apertura/ModosApertura.java",
+    "sources": [
+      "08-sistemas-de-archivos-y-entrada-salida/13-modos-apertura/ModosApertura.java"
+    ],
+    "main": "ModosApertura",
+    "mode": "R",
+    "stdout": "Ya existe\nnuevo\n"
+  },
+  {
+    "path": "08-sistemas-de-archivos-y-entrada-salida/13-modos-apertura/AnexarArchivo.java",
+    "sources": [
+      "08-sistemas-de-archivos-y-entrada-salida/13-modos-apertura/AnexarArchivo.java"
+    ],
+    "main": "AnexarArchivo",
+    "mode": "R",
+    "stdout": "pan\nleche\n"
+  },
+  {
+    "path": "08-sistemas-de-archivos-y-entrada-salida/14-acceso-aleatorio/AccesoAleatorio.java",
+    "sources": [
+      "08-sistemas-de-archivos-y-entrada-salida/14-acceso-aleatorio/AccesoAleatorio.java"
+    ],
+    "main": "AccesoAleatorio",
+    "mode": "R",
+    "stdout": "10\n99\n30\n"
+  },
+  {
+    "path": "08-sistemas-de-archivos-y-entrada-salida/14-acceso-aleatorio/PosicionCanal.java",
+    "sources": [
+      "08-sistemas-de-archivos-y-entrada-salida/14-acceso-aleatorio/PosicionCanal.java"
+    ],
+    "main": "PosicionCanal",
+    "mode": "R",
+    "stdout": "20\nPosicion: 2\n"
+  },
+  {
+    "path": "08-sistemas-de-archivos-y-entrada-salida/15-buffers-nio/EstadoByteBuffer.java",
+    "sources": [
+      "08-sistemas-de-archivos-y-entrada-salida/15-buffers-nio/EstadoByteBuffer.java"
+    ],
+    "main": "EstadoByteBuffer",
+    "mode": "R",
+    "stdout": "2/4/4\n0/2/4\n10\n"
+  },
+  {
+    "path": "08-sistemas-de-archivos-y-entrada-salida/15-buffers-nio/FlipClearCompact.java",
+    "sources": [
+      "08-sistemas-de-archivos-y-entrada-salida/15-buffers-nio/FlipClearCompact.java"
+    ],
+    "main": "FlipClearCompact",
+    "mode": "R",
+    "stdout": "1\n2\n3\n4\n0/4\n"
+  },
+  {
+    "path": "08-sistemas-de-archivos-y-entrada-salida/16-lectura-binaria/MainLecturaRegistro.java",
+    "sources": [
+      "08-sistemas-de-archivos-y-entrada-salida/16-lectura-binaria/RegistroBinario.java",
+      "08-sistemas-de-archivos-y-entrada-salida/16-lectura-binaria/MainLecturaRegistro.java"
+    ],
+    "main": "MainLecturaRegistro",
+    "mode": "R",
+    "stdout": "17: 3\nBytes: 8\n"
+  },
+  {
+    "path": "08-sistemas-de-archivos-y-entrada-salida/17-mapear-archivo/ArchivoMapeado.java",
+    "sources": [
+      "08-sistemas-de-archivos-y-entrada-salida/17-mapear-archivo/ArchivoMapeado.java"
+    ],
+    "main": "ArchivoMapeado",
+    "mode": "R",
+    "stdout": "20\n"
+  },
+  {
+    "path": "08-sistemas-de-archivos-y-entrada-salida/18-bloqueos-archivo/ClienteBloqueo.java",
+    "sources": [
+      "08-sistemas-de-archivos-y-entrada-salida/18-bloqueos-archivo/BloqueoArchivo.java",
+      "08-sistemas-de-archivos-y-entrada-salida/18-bloqueos-archivo/ClienteBloqueo.java"
+    ],
+    "main": "ClienteBloqueo",
+    "mode": "P",
+    "stdout": "Bloqueo: true\nSuperposicion detectada\n",
+    "allowed_stdout": [
+      "Bloqueo: true\nSuperposicion detectada\n",
+      "Bloqueo no disponible\n"
+    ]
+  },
+  {
+    "path": "08-sistemas-de-archivos-y-entrada-salida/19-monitoreo-directorios/VigilarDirectorio.java",
+    "sources": [
+      "08-sistemas-de-archivos-y-entrada-salida/19-monitoreo-directorios/VigilarDirectorio.java"
+    ],
+    "main": "VigilarDirectorio",
+    "mode": "R",
+    "stdout": "Creacion observada: true\n",
+    "allowed_stdout": [
+      "Creacion observada: true\n",
+      "Creacion observada: false\n"
+    ]
+  },
+  {
+    "path": "08-sistemas-de-archivos-y-entrada-salida/20-compresion/GzipTexto.java",
+    "sources": [
+      "08-sistemas-de-archivos-y-entrada-salida/20-compresion/GzipTexto.java"
+    ],
+    "main": "GzipTexto",
+    "mode": "R",
+    "stdout": "pan pan pan pan\n"
+  },
+  {
+    "path": "08-sistemas-de-archivos-y-entrada-salida/20-compresion/ZipArchivos.java",
+    "sources": [
+      "08-sistemas-de-archivos-y-entrada-salida/20-compresion/ZipArchivos.java"
+    ],
+    "main": "ZipArchivos",
+    "mode": "R",
+    "stdout": "pan\n"
   }
 ]
