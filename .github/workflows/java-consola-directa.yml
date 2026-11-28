@@ -1,0 +1,29 @@
+name: Verify Java direct console
+on:
+  push:
+    branches: [feature/consola-directa-java21]
+  pull_request:
+    paths:
+      - 'src/main/resources/practice/java21/**'
+      - 'scripts/verificar-consola-java21.py'
+      - 'scripts/java-consola-rutas.json'
+  workflow_dispatch:
+jobs:
+  verify:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python scripts/verificar-consola-java21.py

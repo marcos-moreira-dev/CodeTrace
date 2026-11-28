@@ -1,4 +1,4 @@
-# Biblioteca de práctica CodeTrace — catálogo v40
+# Biblioteca de práctica CodeTrace — catálogo v41
 
 **2.122 archivos de referencia en 14 paquetes**, incorporados en la aplicación. Un ejercicio con varios archivos cuenta varias entradas; no confundir cantidad de archivos con cantidad de ejercicios.
 
@@ -120,4 +120,8 @@ Las unidades nuevas se compilan desde su carpeta siguiendo sus propios comandos.
 
 ## Fundamentos de TypeScript 7
 
-El catálogo v40 incluye las 334 rutas del nuevo bloque (459 archivos en TypeScript; 2456 en los 14 paquetes). Se preservan los 125 archivos TypeScript anteriores y las 1329 entradas Java. Los 296 casos se verifican independientemente con TypeScript 7.0.2 y Node 24; no deben compilarse junto a los ejercicios legacy de TypeScript 5.9. Incluye negativos deliberados, declaraciones, configuraciones y ejemplos para navegador. Los TSV son documentación consultable; los .cts se reconocen como TypeScript. La atribución está en el propio bloque. Comandos de consola directos, sin automatización obligatoria.
+El catálogo v41 incluye las 334 rutas del nuevo bloque (459 archivos en TypeScript; 2456 en los 14 paquetes). Se preservan los 125 archivos TypeScript anteriores y las 1329 entradas Java. Los 296 casos se verifican independientemente con TypeScript 7.0.2 y Node 24; no deben compilarse junto a los ejercicios legacy de TypeScript 5.9. Incluye negativos deliberados, declaraciones, configuraciones y ejemplos para navegador. Los TSV son documentación consultable; los .cts se reconocen como TypeScript. La atribución está en el propio bloque. Comandos de consola directos, sin automatización obligatoria.
+
+## Consola directa en Java 21
+
+El catálogo v41 incorpora una revisión exclusivamente editorial de 244 fuentes de las áreas 01–05. Los comandos se escriben desde la carpeta del ejercicio, sin PowerShell ni compilación recursiva global. Se mantienen las salidas y la lógica; un verificador compara los tokens con la base congelada y compila cada comando distinto. Se conserva el catálogo v40 anterior para sesiones existentes. Las comprobaciones de esta nueva revisión están pendientes.

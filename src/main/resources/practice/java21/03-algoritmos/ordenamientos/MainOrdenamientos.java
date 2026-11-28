@@ -1,6 +1,7 @@
-// CodeTrace | Referencia: Java 21 LTS / JDK 21
-// Compilar desde COPIA: javac --release 21 -encoding UTF-8 -d "$env:TEMP\\ct-java21" (Get-ChildItem -Recurse -Filter *.java).FullName
-// Ejecutar: java -cp "$env:TEMP\\ct-java21" codetrace.practica.ordenamientos.MainOrdenamientos
+// CodeTrace | Referencia: Java 21 / JDK 21
+// Desde esta carpeta.
+// Compilar: javac -encoding UTF-8 -d . MainOrdenamientos.java Ordenadores.java
+// Ejecutar: java codetrace.practica.ordenamientos.MainOrdenamientos
 
 package codetrace.practica.ordenamientos;
 import java.util.Arrays;
@@ -57,17 +58,15 @@ public final class MainOrdenamientos {
 
 /*
  * CodeTrace | EJEMPLO DE CONSOLA (practica)
- * 
- * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
- *   $out=Join-Path $env:TEMP "ct-practica-java"
- *   New-Item -ItemType Directory -Force -Path $out | Out-Null
- *   javac --release 21 -encoding UTF-8 -d $out (Get-ChildItem -Recurse -Filter *.java).FullName
- *   java -cp $out codetrace.practica.ordenamientos.MainOrdenamientos
+ * Desde esta carpeta:
+ *   javac -encoding UTF-8 -d . MainOrdenamientos.java Ordenadores.java
+ *   java codetrace.practica.ordenamientos.MainOrdenamientos
  * Salida esperada:
  *   Insercion: [1, 2, 3, 5, 7, 8, 9]
  *   Burbuja: [1, 2, 3, 5, 7, 8, 9]
  *   Mezcla: [1, 2, 3, 5, 7, 8, 9]
  *   HeapSort: [1, 2, 3, 5, 7, 8, 9]
  *   QuickSort: [1, 2, 3, 5, 7, 8, 9]
+ 
  * CodeTrace | FIN EJEMPLO DE CONSOLA
  */

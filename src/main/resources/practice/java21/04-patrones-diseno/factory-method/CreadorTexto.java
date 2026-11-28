@@ -1,10 +1,11 @@
-// CodeTrace | Referencia: Java 21 LTS / JDK 21
+// CodeTrace | Referencia: Java 21 / JDK 21
+// Desde esta carpeta.
+// Compilar: javac -encoding UTF-8 -d . CreadorExportadores.java CreadorTexto.java Exportador.java ExportadorTexto.java MainFactoryMethod.java
+// Ejecutar: java codetrace.factorymethod.MainFactoryMethod
 // Universo compartido: Arena Táctica, juego competitivo ficticio por equipos.
 // Dominio: Reportes de un torneo competitivo ficticio.
 // Patrón factory-method: Delegar la creación del tipo de exportador a un subtipo.
 // Glosario: Reporte: resumen de resultados de rondas.
-// Compilar: javac --release 21 -encoding UTF-8 -d "$env:TEMP\ct-java21" (Get-ChildItem -Recurse -Filter *.java).FullName
-// Ejecutar: ejecutar desde el cliente que utiliza este componente
 package codetrace.factorymethod;
 public final class CreadorTexto extends CreadorExportadores {
     @Override protected Exportador crear() {
@@ -14,14 +15,12 @@ public final class CreadorTexto extends CreadorExportadores {
 
 /*
  * CodeTrace | EJEMPLO DE CONSOLA (practica)
- * 
- * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
- *   $out=Join-Path $env:TEMP "ct-practica-java"
- *   New-Item -ItemType Directory -Force -Path $out | Out-Null
- *   javac --release 21 -encoding UTF-8 -d $out (Get-ChildItem -Recurse -Filter *.java).FullName
- *   java -cp $out codetrace.factorymethod.MainFactoryMethod
+ * Desde esta carpeta:
+ *   javac -encoding UTF-8 -d . CreadorExportadores.java CreadorTexto.java Exportador.java ExportadorTexto.java MainFactoryMethod.java
+ *   java codetrace.factorymethod.MainFactoryMethod
  * Nota: CreadorTexto.java es un componente; la salida corresponde al cliente MainFactoryMethod.java.
  * Salida esperada:
  *   TEXTO: Factura 001
+ 
  * CodeTrace | FIN EJEMPLO DE CONSOLA
  */

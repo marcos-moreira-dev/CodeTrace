@@ -1,6 +1,7 @@
-// CodeTrace | Referencia: Java 21 LTS / JDK 21
-// Compilar en COPIA desde java21: javac --release 21 -encoding UTF-8 -d "$env:TEMP\ct-practice" (Get-ChildItem -Recurse -Filter *.java).FullName
-// Ejecutar: desde el cliente Main... de la misma carpeta
+// CodeTrace | Referencia: Java 21 / JDK 21
+// Desde esta carpeta.
+// Compilar: javac -encoding UTF-8 -d . ArbolAVL.java MainArbolAVL.java
+// Ejecutar: java codetrace.practica.estructuras.avl.MainArbolAVL
 
 package codetrace.practica.estructuras.avl;
 
@@ -72,14 +73,12 @@ public final class ArbolAVL {
 
 /*
  * CodeTrace | EJEMPLO DE CONSOLA (practica)
- * 
- * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
- *   $out=Join-Path $env:TEMP "ct-practica-java"
- *   New-Item -ItemType Directory -Force -Path $out | Out-Null
- *   javac --release 21 -encoding UTF-8 -d $out (Get-ChildItem -Recurse -Filter *.java).FullName
- *   java -cp $out codetrace.practica.estructuras.avl.MainArbolAVL
+ * Desde esta carpeta:
+ *   javac -encoding UTF-8 -d . ArbolAVL.java MainArbolAVL.java
+ *   java codetrace.practica.estructuras.avl.MainArbolAVL
  * Nota: ArbolAVL.java es un componente; la salida corresponde al cliente MainArbolAVL.java.
  * Salida esperada:
  *   Altura del AVL: 4
+ 
  * CodeTrace | FIN EJEMPLO DE CONSOLA
  */

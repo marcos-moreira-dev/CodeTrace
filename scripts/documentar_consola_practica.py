@@ -228,6 +228,11 @@ def valid_complete_guide(src: str, path: Path) -> bool:
         'Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):',
         'Ejemplo en consola (PowerShell; desde la carpeta java21):',
     )
+    if path.suffix == '.java' and 'Desde esta carpeta:' in footer or path.suffix == '.java' and 'Desde la raíz' in footer:
+        return ('javac ' in footer and 'Salida esperada:' in footer
+                and not GENERIC.search(footer)
+                and not any(x in footer for x in ('PowerShell', '$env:', 'Get-ChildItem', '$out'))
+                and ('java ' in footer or not entrypoint(path, stripped)))
     if not any(location in footer for location in locations):
         return False
     if 'Salida esperada:' not in footer:
@@ -272,6 +277,9 @@ def main():
         elif isinstance(observations,dict): cache=observations
     stats=Counter();changes=[];incomplete=[]
     for p,src in sources.items():
+        if p.suffix == '.java' and 'Compilar: javac ' in src and 'PowerShell' not in src and valid_complete_guide(src,p):
+            stats['guia_directa']+=1
+            continue
         new,state=render(p,src,root,sources,cache)
         stats[state]+=1
         if new!=src:

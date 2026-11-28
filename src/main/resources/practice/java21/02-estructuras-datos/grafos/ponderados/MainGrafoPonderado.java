@@ -1,6 +1,7 @@
-// CodeTrace | Referencia: Java 21 LTS / JDK 21
-// Compilar en COPIA desde java21: javac --release 21 -encoding UTF-8 -d "$env:TEMP\ct-practice" (Get-ChildItem -Recurse -Filter *.java).FullName
-// Ejecutar: java -cp "$env:TEMP\ct-practice" codetrace.practica.estructuras.grafoponderado.MainGrafoPonderado
+// CodeTrace | Referencia: Java 21 / JDK 21
+// Desde esta carpeta.
+// Compilar: javac -encoding UTF-8 -d . GrafoPonderado.java MainGrafoPonderado.java
+// Ejecutar: java codetrace.practica.estructuras.grafoponderado.MainGrafoPonderado
 
 package codetrace.practica.estructuras.grafoponderado;
 
@@ -30,13 +31,11 @@ public final class MainGrafoPonderado {
 
 /*
  * CodeTrace | EJEMPLO DE CONSOLA (practica)
- * 
- * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
- *   $out=Join-Path $env:TEMP "ct-practica-java"
- *   New-Item -ItemType Directory -Force -Path $out | Out-Null
- *   javac --release 21 -encoding UTF-8 -d $out (Get-ChildItem -Recurse -Filter *.java).FullName
- *   java -cp $out codetrace.practica.estructuras.grafoponderado.MainGrafoPonderado
+ * Desde esta carpeta:
+ *   javac -encoding UTF-8 -d . GrafoPonderado.java MainGrafoPonderado.java
+ *   java codetrace.practica.estructuras.grafoponderado.MainGrafoPonderado
  * Salida esperada:
  *   Aristas de origen: [Arista[destino=1, peso=4.5], Arista[destino=2, peso=7.0]]
+ 
  * CodeTrace | FIN EJEMPLO DE CONSOLA
  */

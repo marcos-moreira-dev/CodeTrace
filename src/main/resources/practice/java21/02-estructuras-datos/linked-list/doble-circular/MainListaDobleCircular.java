@@ -1,6 +1,7 @@
-// CodeTrace | Referencia: Java 21 LTS / JDK 21
-// Compilar en COPIA desde java21: javac --release 21 -encoding UTF-8 -d "$env:TEMP\ct-practice" (Get-ChildItem -Recurse -Filter *.java).FullName
-// Ejecutar: java -cp "$env:TEMP\ct-practice" codetrace.practica.estructuras.listadoblecircular.MainListaDobleCircular
+// CodeTrace | Referencia: Java 21 / JDK 21
+// Desde esta carpeta.
+// Compilar: javac -encoding UTF-8 -d . ListaDobleCircular.java MainListaDobleCircular.java
+// Ejecutar: java codetrace.practica.estructuras.listadoblecircular.MainListaDobleCircular
 
 package codetrace.practica.estructuras.listadoblecircular;
 
@@ -32,13 +33,11 @@ public final class MainListaDobleCircular {
 
 /*
  * CodeTrace | EJEMPLO DE CONSOLA (practica)
- * 
- * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
- *   $out=Join-Path $env:TEMP "ct-practica-java"
- *   New-Item -ItemType Directory -Force -Path $out | Out-Null
- *   javac --release 21 -encoding UTF-8 -d $out (Get-ChildItem -Recurse -Filter *.java).FullName
- *   java -cp $out codetrace.practica.estructuras.listadoblecircular.MainListaDobleCircular
+ * Desde esta carpeta:
+ *   javac -encoding UTF-8 -d . ListaDobleCircular.java MainListaDobleCircular.java
+ *   java codetrace.practica.estructuras.listadoblecircular.MainListaDobleCircular
  * Salida esperada:
  *   [2, 3, 5] / [5, 3, 2]
+ 
  * CodeTrace | FIN EJEMPLO DE CONSOLA
  */

@@ -1,6 +1,7 @@
-// CodeTrace | Referencia: Java 21 LTS / JDK 21
-// Compilar: javac --release 21 -encoding UTF-8 -d $out (Get-ChildItem -Recurse -Filter *.java).FullName
-// Ejecutar: java -cp $out codetrace.practica.counterstrike.MainCounterStrike
+// CodeTrace | Referencia: Java 21 / JDK 21
+// Desde la raíz de 05-patrones-diseno-counter-strike.
+// Compilar: javac -encoding UTF-8 -d . MainCounterStrike.java abstract-factory/*.java adapter/*.java builder/*.java chain-of-responsibility/*.java command/*.java composite/*.java decorator/*.java facade/*.java factory/*.java factory-method/*.java infraestructura/*.java observer/*.java strategy/*.java strategy-puntuacion/*.java template-method/*.java
+// Ejecutar: java codetrace.practica.counterstrike.MainCounterStrike
 // Dominio: Counter-Strike, simulador narrativo de 3 rondas automáticas.
 // Glosario: CT = antiterroristas; T = terroristas; PV = vida del jugador.
 // Patrón de organización: infraestructura MVC, no un nuevo patrón GoF.
@@ -32,13 +33,11 @@ public record ObjetoVirtual(String nombre, String categoria,
 
 /*
  * CodeTrace | EJEMPLO DE CONSOLA (practica)
- * Ejemplo en consola (PowerShell; desde la carpeta java21):
- *   $out=Join-Path $env:TEMP "ct-practica-java"
- *   New-Item -ItemType Directory -Force -Path $out | Out-Null
- *   javac --release 21 -encoding UTF-8 -d $out (Get-ChildItem -Recurse -Filter *.java).FullName
- *   java -cp $out codetrace.practica.counterstrike.MainCounterStrike
- * MP9 es solo una etiqueta del inventario ficticio con coste y capacidad ilustrativos.
+ * Desde la raíz de 05-patrones-diseno-counter-strike:
+ *   javac -encoding UTF-8 -d . MainCounterStrike.java abstract-factory/*.java adapter/*.java builder/*.java chain-of-responsibility/*.java command/*.java composite/*.java decorator/*.java facade/*.java factory/*.java factory-method/*.java infraestructura/*.java observer/*.java strategy/*.java strategy-puntuacion/*.java template-method/*.java
+ *   java codetrace.practica.counterstrike.MainCounterStrike
  * Salida esperada:
  *   [TIENDA] Astra añadió MP9 | créditos=950 | capacidad ilustrativa=30
+ 
  * CodeTrace | FIN EJEMPLO DE CONSOLA
  */

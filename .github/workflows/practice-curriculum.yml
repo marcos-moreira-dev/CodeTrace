@@ -1,12 +1,14 @@
 name: Verify practice curriculum
 on:
   push:
-    branches: [main, 'feature/practice-curriculum-20261120']
+    branches: [main, 'feature/practice-curriculum-20261120', 'feature/consola-directa-java21']
   pull_request:
     paths:
       - 'src/main/resources/practice/**'
       - 'scripts/verificar-biblioteca.sh'
       - 'scripts/verificar-jls21.py'
+      - 'scripts/verificar-consola-java21.py'
+      - 'scripts/java-consola-rutas.json'
       - 'scripts/jls21-casos.json'
       - 'scripts/java-integral-casos.json'
       - 'scripts/verificar-java-integral.py'
@@ -57,7 +59,7 @@ jobs:
       - name: Preserve frozen Java 00–05
         shell: bash
         run: |
-          git diff --exit-code c6362835720b02cab83493940f55127cdb9b66e6 HEAD -- 'src/main/resources/practice/java21/0[0-5]-*'
+          python3 scripts/verificar-consola-java21.py --solo-preservacion
       - uses: actions/setup-java@v4
         with:
           distribution: temurin

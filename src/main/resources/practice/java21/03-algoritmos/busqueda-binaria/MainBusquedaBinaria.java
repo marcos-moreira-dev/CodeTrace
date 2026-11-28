@@ -1,7 +1,7 @@
-// CodeTrace | Referencia: Java 21 LTS / JDK 21
-// Compilar en COPIA desde la raíz java21 (PowerShell):
-// javac --release 21 -encoding UTF-8 -d "$env:TEMP\ct-curso-java" (Get-ChildItem -Recurse -Filter *.java).FullName
-// Ejecutar: java -cp "$env:TEMP\ct-curso-java" MainBusquedaBinaria
+// CodeTrace | Referencia: Java 21 / JDK 21
+// Desde esta carpeta.
+// Compilar: javac -encoding UTF-8 BusquedaBinaria.java MainBusquedaBinaria.java
+// Ejecutar: java MainBusquedaBinaria
 
 import java.util.Arrays;
 
@@ -36,13 +36,11 @@ public final class MainBusquedaBinaria {
 
 /*
  * CodeTrace | EJEMPLO DE CONSOLA (practica)
- * 
- * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
- *   $out=Join-Path $env:TEMP "ct-practica-java"
- *   New-Item -ItemType Directory -Force -Path $out | Out-Null
- *   javac --release 21 -encoding UTF-8 -d $out (Get-ChildItem -Recurse -Filter *.java).FullName
- *   java -cp $out MainBusquedaBinaria
+ * Desde esta carpeta:
+ *   javac -encoding UTF-8 BusquedaBinaria.java MainBusquedaBinaria.java
+ *   java MainBusquedaBinaria
  * Salida esperada:
  *   Índice: 4; inexistente: -1
+ 
  * CodeTrace | FIN EJEMPLO DE CONSOLA
  */

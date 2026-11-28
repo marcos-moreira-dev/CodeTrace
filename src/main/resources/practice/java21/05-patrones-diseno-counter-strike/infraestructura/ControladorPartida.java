@@ -1,6 +1,7 @@
-// CodeTrace | Referencia: Java 21 LTS / JDK 21
-// Compilar: javac --release 21 -encoding UTF-8 -d $out (Get-ChildItem -Recurse -Filter *.java).FullName
-// Ejecutar: java -cp $out codetrace.practica.counterstrike.MainCounterStrike
+// CodeTrace | Referencia: Java 21 / JDK 21
+// Desde la raíz de 05-patrones-diseno-counter-strike.
+// Compilar: javac -encoding UTF-8 -d . MainCounterStrike.java abstract-factory/*.java adapter/*.java builder/*.java chain-of-responsibility/*.java command/*.java composite/*.java decorator/*.java facade/*.java factory/*.java factory-method/*.java infraestructura/*.java observer/*.java strategy/*.java strategy-puntuacion/*.java template-method/*.java
+// Ejecutar: java codetrace.practica.counterstrike.MainCounterStrike
 // Dominio: Counter-Strike; simulación automática del mapa cs_office.
 // Glosario: CT/T = bandos; MP9 = objeto virtual; HUD = información de pantalla.
 // Arquitectura: CONTROLADOR MVC. Coordina varios patrones de diseño existentes.
@@ -258,16 +259,14 @@ public final class ControladorPartida {
 
 /*
  * CodeTrace | EJEMPLO DE CONSOLA (practica)
- * Ejemplo en consola (PowerShell; desde la carpeta java21):
- *   $out=Join-Path $env:TEMP "ct-practica-java"
- *   New-Item -ItemType Directory -Force -Path $out | Out-Null
- *   javac --release 21 -encoding UTF-8 -d $out (Get-ChildItem -Recurse -Filter *.java).FullName
- *   java -cp $out codetrace.practica.counterstrike.MainCounterStrike
- * Con Random(42), los sorteos 30, 63 y 48 determinan rescate, fracaso y rescate.
+ * Desde la raíz de 05-patrones-diseno-counter-strike:
+ *   javac -encoding UTF-8 -d . MainCounterStrike.java abstract-factory/*.java adapter/*.java builder/*.java chain-of-responsibility/*.java command/*.java composite/*.java decorator/*.java facade/*.java factory/*.java factory-method/*.java infraestructura/*.java observer/*.java strategy/*.java strategy-puntuacion/*.java template-method/*.java
+ *   java codetrace.practica.counterstrike.MainCounterStrike
  * Salida esperada:
  *   [AZAR] tirada=30 | desenlace=rescate
  *   [AZAR] tirada=63 | desenlace=sin rescate
  *   [AZAR] tirada=48 | desenlace=rescate
  *   Resultado: Gana CT
+ 
  * CodeTrace | FIN EJEMPLO DE CONSOLA
  */

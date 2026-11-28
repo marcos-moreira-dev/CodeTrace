@@ -1,6 +1,7 @@
-// CodeTrace | Referencia: Java 21 LTS / JDK 21
-// Compilar en PowerShell (copia del paquete): New-Item -ItemType Directory -Force "$env:TEMP\ct-java21" | Out-Null; javac --release 21 -encoding UTF-8 -d "$env:TEMP\ct-java21" (Get-ChildItem -Recurse -Filter *.java | ForEach-Object FullName)
-// Ejecutar: java -cp "$env:TEMP\ct-java21" codetrace.practica.grafoscaminos.MainCaminosMinimos
+// CodeTrace | Referencia: Java 21 / JDK 21
+// Desde esta carpeta.
+// Compilar: javac -encoding UTF-8 -d . CaminosMinimos.java GrafoPesado.java MainCaminosMinimos.java MainCasosLimite.java
+// Ejecutar: java codetrace.practica.grafoscaminos.MainCaminosMinimos
 
 package codetrace.practica.grafoscaminos;
 
@@ -73,12 +74,9 @@ public final class MainCaminosMinimos {
 
 /*
  * CodeTrace | EJEMPLO DE CONSOLA (practica)
- * 
- * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
- *   $out=Join-Path $env:TEMP "ct-practica-java"
- *   New-Item -ItemType Directory -Force -Path $out | Out-Null
- *   javac --release 21 -encoding UTF-8 -d $out (Get-ChildItem -Recurse -Filter *.java).FullName
- *   java -cp $out codetrace.practica.grafoscaminos.MainCaminosMinimos
+ * Desde esta carpeta:
+ *   javac -encoding UTF-8 -d . CaminosMinimos.java GrafoPesado.java MainCaminosMinimos.java MainCasosLimite.java
+ *   java codetrace.practica.grafoscaminos.MainCaminosMinimos
  * Salida esperada:
  *   Ruta A-E: [0, 2, 1, 3, 4]
  *   Dijkstra: 7.0
@@ -86,5 +84,6 @@ public final class MainCaminosMinimos {
  *   Floyd-Warshall: 7.0
  *   Bellman-Ford con arista negativa: 2.0
  *   Dijkstra rechaza pesos negativos correctamente
+ 
  * CodeTrace | FIN EJEMPLO DE CONSOLA
  */

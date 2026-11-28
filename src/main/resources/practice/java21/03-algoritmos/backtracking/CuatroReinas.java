@@ -1,6 +1,7 @@
-// CodeTrace | Referencia: Java 21 LTS / JDK 21
-// Compilar desde copia del paquete (PowerShell): New-Item -ItemType Directory -Force "$env:TEMP\ct-java21" | Out-Null; javac --release 21 -encoding UTF-8 -d "$env:TEMP\ct-java21" (Get-ChildItem -Recurse -Filter *.java | ForEach-Object FullName)
-// Ejecutar: java -cp "$env:TEMP\ct-java21" codetrace.practica.reinas.CuatroReinas
+// CodeTrace | Referencia: Java 21 / JDK 21
+// Desde esta carpeta.
+// Compilar: javac -encoding UTF-8 -d . CuatroReinas.java
+// Ejecutar: java codetrace.practica.reinas.CuatroReinas
 
 package codetrace.practica.reinas;
 
@@ -58,13 +59,11 @@ public final class CuatroReinas {
 
 /*
  * CodeTrace | EJEMPLO DE CONSOLA (practica)
- * 
- * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
- *   $out=Join-Path $env:TEMP "ct-practica-java"
- *   New-Item -ItemType Directory -Force -Path $out | Out-Null
- *   javac --release 21 -encoding UTF-8 -d $out (Get-ChildItem -Recurse -Filter *.java).FullName
- *   java -cp $out codetrace.practica.reinas.CuatroReinas
+ * Desde esta carpeta:
+ *   javac -encoding UTF-8 -d . CuatroReinas.java
+ *   java codetrace.practica.reinas.CuatroReinas
  * Salida esperada:
  *   4 reinas: [[1, 3, 0, 2], [2, 0, 3, 1]]
+ 
  * CodeTrace | FIN EJEMPLO DE CONSOLA
  */

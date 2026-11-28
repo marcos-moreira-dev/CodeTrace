@@ -1,7 +1,7 @@
-// CodeTrace | Referencia: Java 21 LTS / JDK 21
-// Compilar: javac --release 21 -encoding UTF-8 -d "$env:TEMP\ct-java21" (Get-ChildItem -Recurse -Filter *.java).FullName
-// Ejecutar: ejecutar desde el cliente que utiliza este componente
-// Sin main: es una clase o interfaz para compilar y reutilizar.
+// CodeTrace | Referencia: Java 21 / JDK 21
+// Desde esta carpeta.
+// Compilar: javac -encoding UTF-8 BusquedaBinaria.java MainBusquedaBinaria.java
+// Ejecutar: java MainBusquedaBinaria
 
 public final class BusquedaBinaria {
     public static int buscar(int[] ordenados, int objetivo) {
@@ -19,14 +19,12 @@ public final class BusquedaBinaria {
 
 /*
  * CodeTrace | EJEMPLO DE CONSOLA (practica)
- * 
- * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
- *   $out=Join-Path $env:TEMP "ct-practica-java"
- *   New-Item -ItemType Directory -Force -Path $out | Out-Null
- *   javac --release 21 -encoding UTF-8 -d $out (Get-ChildItem -Recurse -Filter *.java).FullName
- *   java -cp $out MainBusquedaBinaria
+ * Desde esta carpeta:
+ *   javac -encoding UTF-8 BusquedaBinaria.java MainBusquedaBinaria.java
+ *   java MainBusquedaBinaria
  * Nota: BusquedaBinaria.java es un componente; la salida corresponde al cliente MainBusquedaBinaria.java.
  * Salida esperada:
  *   Índice: 4; inexistente: -1
+ 
  * CodeTrace | FIN EJEMPLO DE CONSOLA
  */

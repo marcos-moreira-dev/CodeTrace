@@ -1,6 +1,7 @@
-// CodeTrace | Referencia: Java 21 LTS / JDK 21
-// Compilar desde COPIA de java21: javac --release 21 -encoding UTF-8 -d "$env:TEMP\ct-curso-java" (Get-ChildItem -Recurse -Filter *.java).FullName
-// Ejecutar: java -cp "$env:TEMP\ct-curso-java" codetrace.practica.algoritmos.limites.MainLimitesOrdenados
+// CodeTrace | Referencia: Java 21 / JDK 21
+// Desde esta carpeta.
+// Compilar: javac -encoding UTF-8 -d . LimitesOrdenados.java MainLimitesOrdenados.java
+// Ejecutar: java codetrace.practica.algoritmos.limites.MainLimitesOrdenados
 
 package codetrace.practica.algoritmos.limites;
 
@@ -35,15 +36,13 @@ public final class LimitesOrdenados{
 
 /*
  * CodeTrace | EJEMPLO DE CONSOLA (practica)
- * 
- * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
- *   $out=Join-Path $env:TEMP "ct-practica-java"
- *   New-Item -ItemType Directory -Force -Path $out | Out-Null
- *   javac --release 21 -encoding UTF-8 -d $out (Get-ChildItem -Recurse -Filter *.java).FullName
- *   java -cp $out codetrace.practica.algoritmos.limites.MainLimitesOrdenados
+ * Desde esta carpeta:
+ *   javac -encoding UTF-8 -d . LimitesOrdenados.java MainLimitesOrdenados.java
+ *   java codetrace.practica.algoritmos.limites.MainLimitesOrdenados
  * Nota: LimitesOrdenados.java es un componente; la salida corresponde al cliente MainLimitesOrdenados.java.
  * Salida esperada:
  *   Valor 3: [1, 4)
  *   Insertar 4 en indice: 4
+ 
  * CodeTrace | FIN EJEMPLO DE CONSOLA
  */

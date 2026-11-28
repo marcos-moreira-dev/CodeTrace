@@ -1,6 +1,7 @@
-// CodeTrace | Referencia: Java 21 LTS / JDK 21
-// Compilar desde COPIA de java21: javac --release 21 -encoding UTF-8 -d "$env:TEMP\ct-curso-java" (Get-ChildItem -Recurse -Filter *.java).FullName
-// Ejecutar: java -cp "$env:TEMP\ct-curso-java" codetrace.practica.algoritmos.insercionbinaria.MainInsercionBinaria
+// CodeTrace | Referencia: Java 21 / JDK 21
+// Desde esta carpeta.
+// Compilar: javac -encoding UTF-8 -d . InsercionBinaria.java MainInsercionBinaria.java
+// Ejecutar: java codetrace.practica.algoritmos.insercionbinaria.MainInsercionBinaria
 
 package codetrace.practica.algoritmos.insercionbinaria;
 
@@ -28,14 +29,12 @@ public final class InsercionBinaria{
 
 /*
  * CodeTrace | EJEMPLO DE CONSOLA (practica)
- * 
- * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
- *   $out=Join-Path $env:TEMP "ct-practica-java"
- *   New-Item -ItemType Directory -Force -Path $out | Out-Null
- *   javac --release 21 -encoding UTF-8 -d $out (Get-ChildItem -Recurse -Filter *.java).FullName
- *   java -cp $out codetrace.practica.algoritmos.insercionbinaria.MainInsercionBinaria
+ * Desde esta carpeta:
+ *   javac -encoding UTF-8 -d . InsercionBinaria.java MainInsercionBinaria.java
+ *   java codetrace.practica.algoritmos.insercionbinaria.MainInsercionBinaria
  * Nota: InsercionBinaria.java es un componente; la salida corresponde al cliente MainInsercionBinaria.java.
  * Salida esperada:
  *   Insercion binaria: [1, 2, 3, 3, 5]
+ 
  * CodeTrace | FIN EJEMPLO DE CONSOLA
  */

@@ -1,10 +1,11 @@
-// CodeTrace | Referencia: Java 21 LTS / JDK 21
+// CodeTrace | Referencia: Java 21 / JDK 21
+// Desde esta carpeta.
+// Compilar: javac -encoding UTF-8 Correo.java Factory.java MainFactoryBasica.java Mensaje.java
+// Ejecutar: java MainFactoryBasica
 // Universo compartido: Arena Táctica, juego competitivo ficticio por equipos.
 // Dominio: Comunicaciones del torneo: crear avisos para participantes.
 // Patrón factory: Una fábrica devuelve un mensaje sin exponer el tipo concreto.
 // Glosario: Torneo: competición entre varios equipos y partidas.
-// Compilar: New-Item -ItemType Directory -Force "$env:TEMP\ct-java21" | Out-Null; javac --release 21 -encoding UTF-8 -d "$env:TEMP\ct-java21" (Get-ChildItem -Recurse -Filter *.java | ForEach-Object FullName)
-// Ejecutar: java -cp "$env:TEMP\ct-java21" MainFactoryBasica
 
 /**
  * Cliente de una fábrica simple, distinto de Factory Method GoF.
@@ -35,13 +36,11 @@ public final class MainFactoryBasica {
 
 /*
  * CodeTrace | EJEMPLO DE CONSOLA (practica)
- * 
- * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
- *   $out=Join-Path $env:TEMP "ct-practica-java"
- *   New-Item -ItemType Directory -Force -Path $out | Out-Null
- *   javac --release 21 -encoding UTF-8 -d $out (Get-ChildItem -Recurse -Filter *.java).FullName
- *   java -cp $out MainFactoryBasica
+ * Desde esta carpeta:
+ *   javac -encoding UTF-8 Correo.java Factory.java MainFactoryBasica.java Mensaje.java
+ *   java MainFactoryBasica
  * Salida esperada:
  *   Correo a cliente@example.invalid
+ 
  * CodeTrace | FIN EJEMPLO DE CONSOLA
  */

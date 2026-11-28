@@ -1,6 +1,7 @@
-// CodeTrace | Referencia: Java 21 LTS / JDK 21
-// Compilar: New-Item -ItemType Directory -Force "$env:TEMP\ct-java21" | Out-Null; javac --release 21 -encoding UTF-8 -d "$env:TEMP\ct-java21" (Get-ChildItem -Recurse -Filter *.java | ForEach-Object FullName)
-// Ejecutar: java -cp "$env:TEMP\ct-java21" codetrace.practica.recorridos.MainCaminosSinPeso
+// CodeTrace | Referencia: Java 21 / JDK 21
+// Desde esta carpeta.
+// Compilar: javac -encoding UTF-8 -d . CaminosSinPeso.java MainCaminosSinPeso.java
+// Ejecutar: java codetrace.practica.recorridos.MainCaminosSinPeso
 
 package codetrace.practica.recorridos;
 
@@ -52,15 +53,13 @@ public final class MainCaminosSinPeso {
 
 /*
  * CodeTrace | EJEMPLO DE CONSOLA (practica)
- * 
- * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
- *   $out=Join-Path $env:TEMP "ct-practica-java"
- *   New-Item -ItemType Directory -Force -Path $out | Out-Null
- *   javac --release 21 -encoding UTF-8 -d $out (Get-ChildItem -Recurse -Filter *.java).FullName
- *   java -cp $out codetrace.practica.recorridos.MainCaminosSinPeso
+ * Desde esta carpeta:
+ *   javac -encoding UTF-8 -d . CaminosSinPeso.java MainCaminosSinPeso.java
+ *   java codetrace.practica.recorridos.MainCaminosSinPeso
  * Salida esperada:
  *   Saltos a E: 2
  *   Ruta a E: [A, C, E]
  *   Componentes: 2
+ 
  * CodeTrace | FIN EJEMPLO DE CONSOLA
  */

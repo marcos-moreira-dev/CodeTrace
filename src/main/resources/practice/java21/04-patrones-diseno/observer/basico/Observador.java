@@ -1,11 +1,11 @@
-// CodeTrace | Referencia: Java 21 LTS / JDK 21
+// CodeTrace | Referencia: Java 21 / JDK 21
+// Desde esta carpeta.
+// Compilar: javac -encoding UTF-8 Escucha.java MainObservadorBasico.java Observador.java
+// Ejecutar: java MainObservadorBasico
 // Universo compartido: Arena Táctica, juego competitivo ficticio por equipos.
 // Dominio: Marcador de ronda que notifica resultados a los espectadores.
 // Patrón observer: Varios observadores reciben cambios sin ser consultados continuamente.
 // Glosario: Ronda: segmento breve de una partida; marcador: registro de resultados.
-// Compilar: javac --release 21 -encoding UTF-8 -d "$env:TEMP\ct-java21" (Get-ChildItem -Recurse -Filter *.java).FullName
-// Ejecutar: ejecutar desde el cliente que utiliza este componente
-// Sin main: compilación de clase reutilizable.
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,14 +38,12 @@ public final class Observador {
 
 /*
  * CodeTrace | EJEMPLO DE CONSOLA (practica)
- * 
- * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
- *   $out=Join-Path $env:TEMP "ct-practica-java"
- *   New-Item -ItemType Directory -Force -Path $out | Out-Null
- *   javac --release 21 -encoding UTF-8 -d $out (Get-ChildItem -Recurse -Filter *.java).FullName
- *   java -cp $out MainObservadorBasico
+ * Desde esta carpeta:
+ *   javac -encoding UTF-8 Escucha.java MainObservadorBasico.java Observador.java
+ *   java MainObservadorBasico
  * Nota: Observador.java es un componente; la salida corresponde al cliente MainObservadorBasico.java.
  * Salida esperada:
  *   consola=42 log=42
+ 
  * CodeTrace | FIN EJEMPLO DE CONSOLA
  */

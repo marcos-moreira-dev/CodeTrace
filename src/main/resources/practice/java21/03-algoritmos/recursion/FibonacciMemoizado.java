@@ -1,6 +1,7 @@
-// CodeTrace | Referencia: Java 21 LTS / JDK 21
-// Compilar desde copia del paquete (PowerShell): New-Item -ItemType Directory -Force "$env:TEMP\ct-java21" | Out-Null; javac --release 21 -encoding UTF-8 -d "$env:TEMP\ct-java21" (Get-ChildItem -Recurse -Filter *.java | ForEach-Object FullName)
-// Ejecutar: java -cp "$env:TEMP\ct-java21" codetrace.practica.fibonacci.FibonacciMemoizado
+// CodeTrace | Referencia: Java 21 / JDK 21
+// Desde esta carpeta.
+// Compilar: javac -encoding UTF-8 -d . FibonacciMemoizado.java
+// Ejecutar: java codetrace.practica.fibonacci.FibonacciMemoizado
 
 package codetrace.practica.fibonacci;
 
@@ -38,13 +39,11 @@ public final class FibonacciMemoizado {
 
 /*
  * CodeTrace | EJEMPLO DE CONSOLA (practica)
- * 
- * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
- *   $out=Join-Path $env:TEMP "ct-practica-java"
- *   New-Item -ItemType Directory -Force -Path $out | Out-Null
- *   javac --release 21 -encoding UTF-8 -d $out (Get-ChildItem -Recurse -Filter *.java).FullName
- *   java -cp $out codetrace.practica.fibonacci.FibonacciMemoizado
+ * Desde esta carpeta:
+ *   javac -encoding UTF-8 -d . FibonacciMemoizado.java
+ *   java codetrace.practica.fibonacci.FibonacciMemoizado
  * Salida esperada:
  *   F(40) = 102334155
+ 
  * CodeTrace | FIN EJEMPLO DE CONSOLA
  */

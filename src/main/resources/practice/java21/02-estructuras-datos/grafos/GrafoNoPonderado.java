@@ -1,6 +1,7 @@
-// CodeTrace | Referencia: Java 21 LTS / JDK 21
-// Compilar desde copia del paquete, PowerShell: New-Item -ItemType Directory -Force "$env:TEMP\ct-java21" | Out-Null; javac --release 21 -encoding UTF-8 -d "$env:TEMP\ct-java21" (Get-ChildItem -Recurse -Filter *.java | ForEach-Object FullName)
-// Ejecutar: Compilar como parte del ejercicio; sin main propio
+// CodeTrace | Referencia: Java 21 / JDK 21
+// Desde esta carpeta.
+// Compilar: javac -encoding UTF-8 -d . GrafoNoPonderado.java MainGrafo.java
+// Ejecutar: java codetrace.practica.grafo.MainGrafo
 
 package codetrace.practica.grafo;
 
@@ -44,15 +45,13 @@ public final class GrafoNoPonderado {
 
 /*
  * CodeTrace | EJEMPLO DE CONSOLA (practica)
- * 
- * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
- *   $out=Join-Path $env:TEMP "ct-practica-java"
- *   New-Item -ItemType Directory -Force -Path $out | Out-Null
- *   javac --release 21 -encoding UTF-8 -d $out (Get-ChildItem -Recurse -Filter *.java).FullName
- *   java -cp $out codetrace.practica.grafo.MainGrafo
+ * Desde esta carpeta:
+ *   javac -encoding UTF-8 -d . GrafoNoPonderado.java MainGrafo.java
+ *   java codetrace.practica.grafo.MainGrafo
  * Nota: GrafoNoPonderado.java es un componente; la salida corresponde al cliente MainGrafo.java.
  * Salida esperada:
  *   Vecinos de A: [B, C]
  *   Vecinos de B: [D]
+ 
  * CodeTrace | FIN EJEMPLO DE CONSOLA
  */

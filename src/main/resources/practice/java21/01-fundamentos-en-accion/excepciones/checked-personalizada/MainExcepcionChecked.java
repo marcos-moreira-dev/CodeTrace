@@ -1,7 +1,7 @@
-// CodeTrace | Referencia: Java 21 LTS / JDK 21
-// Compilar en COPIA desde la raíz java21 (PowerShell):
-// javac --release 21 -encoding UTF-8 -d "$env:TEMP\ct-curso-java" (Get-ChildItem -Recurse -Filter *.java -File | Where-Object { $_.FullName -notmatch '[\\/]00-fundamentos-especificacion-oficial[\\/]' }).FullName
-// Ejecutar: java -cp "$env:TEMP\ct-curso-java" MainExcepcionChecked
+// CodeTrace | Referencia: Java 21 / JDK 21
+// Desde esta carpeta.
+// Compilar: javac -encoding UTF-8 Cuenta.java MainExcepcionChecked.java SaldoInsuficienteException.java
+// Ejecutar: java MainExcepcionChecked
 
 /**
  * Cliente y microlección: crear una excepción checked propia.
@@ -43,14 +43,12 @@ public final class MainExcepcionChecked {
 
 /*
  * CodeTrace | EJEMPLO DE CONSOLA (practica)
- * 
- * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
- *   $out=Join-Path $env:TEMP "ct-practica-java"
- *   New-Item -ItemType Directory -Force -Path $out | Out-Null
- *   javac --release 21 -encoding UTF-8 -d $out (Get-ChildItem -Recurse -Filter *.java -File | Where-Object { $_.FullName -notmatch '[\\/]00-fundamentos-especificacion-oficial[\\/]' }).FullName
- *   java -cp $out MainExcepcionChecked
+ * Desde esta carpeta:
+ *   javac -encoding UTF-8 Cuenta.java MainExcepcionChecked.java SaldoInsuficienteException.java
+ *   java MainExcepcionChecked
  * Salida esperada:
  *   No se retiraron 200; hay 70
  *   Saldo preservado: 70
+ 
  * CodeTrace | FIN EJEMPLO DE CONSOLA
  */
