@@ -2,7 +2,7 @@
 # UTF-8 BOM required for the legacy Windows PowerShell 5.1 parser.
 <#
 .SYNOPSIS
-  Audita la biblioteca offline de CodeTrace v15 (1597 referencias / 14 lenguajes).
+  Audita la biblioteca offline de CodeTrace v15 (1617 referencias / 14 lenguajes).
 .DESCRIPTION
   Revisa el catálogo, archivos existentes, carpetas de ejercicio, versiones
   y comandos de compilación. Por defecto NO compila ni modifica referencias.
@@ -46,7 +46,7 @@ foreach ($linea in (Get-Content -LiteralPath $catalogo -Encoding UTF8)) {
     }
     $integradorCS = ($integradores.ContainsKey($paquete) -and $ruta -eq $integradores[$paquete])
     if (($partes.Count -lt 3 -and -not $integradorCS) -or
-        $tipos -notcontains $partes[0]) {
+        ($tipos -notcontains $partes[0] -and -not ($paquete -eq 'java21' -and $partes[0] -match '^(0[6-9]|1[0-9]|20)-'))) {
         throw "Archivo fuera de su carpeta de unidad: $linea"
     }
     $identificador = $paquete + '/' + $ruta
@@ -58,7 +58,7 @@ foreach ($linea in (Get-Content -LiteralPath $catalogo -Encoding UTF8)) {
         throw "Archivo inexistente: $destino"
     }
     $cabecera = (Get-Content -LiteralPath $destino -Encoding UTF8 -TotalCount 12) -join [Environment]::NewLine
-    if ($paquete -eq 'java21' -and $ruta.StartsWith('00-fundamentos-especificacion-oficial/')) {
+    if ($paquete -eq 'java21' -and ($ruta.StartsWith('00-fundamentos-especificacion-oficial/') -or $ruta -match '^(0[6-9]|1[0-9]|20)-')) {
         $contenido = Get-Content -LiteralPath $destino -Encoding UTF8 -Raw
         if ($contenido -notmatch '^// Tema:' -or $contenido -notmatch 'Compilar:' -or
             $contenido -notmatch 'Salida esperada:' -or $contenido -match 'Referencia: Java SE 21|Tema JLS:') {
@@ -78,7 +78,7 @@ foreach ($linea in (Get-Content -LiteralPath $catalogo -Encoding UTF8)) {
 }
 
 $idiomas = @($referencias.Lenguaje | Sort-Object -Unique)
-if ($referencias.Count -ne 1597 -or $idiomas.Count -ne 14) {
+if ($referencias.Count -ne 1617 -or $idiomas.Count -ne 14) {
     throw "Catálogo inconsistente: $($referencias.Count) archivos, $($idiomas.Count) lenguajes"
 }
 Write-Host "CodeTrace v15 — catálogo íntegro: $($referencias.Count) archivos / $($idiomas.Count) lenguajes"
@@ -101,7 +101,7 @@ $temporal = Join-Path ([IO.Path]::GetTempPath()) ("codetrace-grafos-" + [Guid]::
 New-Item -ItemType Directory -Path $temporal -Force | Out-Null
 try {
     $fuentes = @(Get-ChildItem -LiteralPath (Join-Path $biblioteca 'java21') -Recurse -Filter '*.java' -File |
-        Where-Object { $_.FullName -notmatch '[\\/]00-fundamentos-especificacion-oficial[\\/]' } |
+        Where-Object { $_.FullName -notmatch '[\\/](?:00-fundamentos-especificacion-oficial|(?:0[6-9]|1[0-9]|20)-[^\\/]+)[\\/]' } |
         ForEach-Object { $_.FullName })
     & javac --release 21 -encoding UTF-8 -d $temporal $fuentes
     if ($LASTEXITCODE -ne 0) { throw 'Falló compilación Java 21' }

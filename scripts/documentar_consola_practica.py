@@ -260,7 +260,9 @@ def main():
     # La JLS tiene un contrato propio de comandos, salidas y errores.
     # verificar-jls21.py valida todas sus fuentes de forma independiente.
     sources={p:s for p,s in sources.items()
-             if p.relative_to(root).parts[:2] != ('java21', '00-fundamentos-especificacion-oficial')}
+             if not (p.relative_to(root).parts[0] == 'java21' and
+                     p.relative_to(root).parts[1].split('-')[0] in
+                     {'00', *[f'{n:02}' for n in range(6, 21)]})}
     expected=sum(1 for p,s in sources.items() if MARKERS.search(strip_generated(s,p)))
     cache={}
     if args.outcomes:

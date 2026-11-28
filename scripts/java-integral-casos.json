@@ -1,0 +1,182 @@
+[
+  {
+    "path": "06-matematicas-computacionales/01-logica-proposicional/TablaVerdad.java",
+    "sources": [
+      "06-matematicas-computacionales/01-logica-proposicional/TablaVerdad.java"
+    ],
+    "main": "TablaVerdad",
+    "mode": "T",
+    "stdout": "false false -> false false false\nfalse true -> false true true\ntrue false -> false true true\ntrue true -> true true false\n"
+  },
+  {
+    "path": "06-matematicas-computacionales/01-logica-proposicional/Implicacion.java",
+    "sources": [
+      "06-matematicas-computacionales/01-logica-proposicional/Implicacion.java"
+    ],
+    "main": "Implicacion",
+    "mode": "T",
+    "stdout": "false => false: true\nfalse => true: true\ntrue => false: false\ntrue => true: true\n"
+  },
+  {
+    "path": "06-matematicas-computacionales/02-conjuntos/OperacionesConjuntos.java",
+    "sources": [
+      "06-matematicas-computacionales/02-conjuntos/OperacionesConjuntos.java"
+    ],
+    "main": "OperacionesConjuntos",
+    "mode": "R",
+    "stdout": "Union: 0 1 2 3 4\nInterseccion: 1\nA menos B: 0 3\n"
+  },
+  {
+    "path": "06-matematicas-computacionales/03-combinatoria/Permutaciones.java",
+    "sources": [
+      "06-matematicas-computacionales/03-combinatoria/Permutaciones.java"
+    ],
+    "main": "Permutaciones",
+    "mode": "R",
+    "stdout": "120\n"
+  },
+  {
+    "path": "06-matematicas-computacionales/03-combinatoria/Combinaciones.java",
+    "sources": [
+      "06-matematicas-computacionales/03-combinatoria/Combinaciones.java"
+    ],
+    "main": "Combinaciones",
+    "mode": "R",
+    "stdout": "10\n"
+  },
+  {
+    "path": "06-matematicas-computacionales/04-matrices/SumaMatrices.java",
+    "sources": [
+      "06-matematicas-computacionales/04-matrices/SumaMatrices.java"
+    ],
+    "main": "SumaMatrices",
+    "mode": "R",
+    "stdout": "6 8 \n10 12 \n"
+  },
+  {
+    "path": "06-matematicas-computacionales/04-matrices/ProductoMatrices.java",
+    "sources": [
+      "06-matematicas-computacionales/04-matrices/ProductoMatrices.java"
+    ],
+    "main": "ProductoMatrices",
+    "mode": "R",
+    "stdout": "4 5 \n10 11 \n"
+  },
+  {
+    "path": "06-matematicas-computacionales/04-matrices/Transpuesta.java",
+    "sources": [
+      "06-matematicas-computacionales/04-matrices/Transpuesta.java"
+    ],
+    "main": "Transpuesta",
+    "mode": "R",
+    "stdout": "1 4\n2 5\n3 6\n"
+  },
+  {
+    "path": "06-matematicas-computacionales/05-vectores/ProductoEscalar.java",
+    "sources": [
+      "06-matematicas-computacionales/05-vectores/ProductoEscalar.java"
+    ],
+    "main": "ProductoEscalar",
+    "mode": "R",
+    "stdout": "32\n"
+  },
+  {
+    "path": "06-matematicas-computacionales/05-vectores/NormaVector.java",
+    "sources": [
+      "06-matematicas-computacionales/05-vectores/NormaVector.java"
+    ],
+    "main": "NormaVector",
+    "mode": "R",
+    "stdout": "5.0\n"
+  },
+  {
+    "path": "06-matematicas-computacionales/05-vectores/DistanciaEuclidiana.java",
+    "sources": [
+      "06-matematicas-computacionales/05-vectores/DistanciaEuclidiana.java"
+    ],
+    "main": "DistanciaEuclidiana",
+    "mode": "R",
+    "stdout": "5.0\n"
+  },
+  {
+    "path": "06-matematicas-computacionales/06-probabilidad/ProbabilidadFrecuencia.java",
+    "sources": [
+      "06-matematicas-computacionales/06-probabilidad/ProbabilidadFrecuencia.java"
+    ],
+    "main": "ProbabilidadFrecuencia",
+    "mode": "T",
+    "stdout": "true\n"
+  },
+  {
+    "path": "06-matematicas-computacionales/06-probabilidad/MonteCarlo.java",
+    "sources": [
+      "06-matematicas-computacionales/06-probabilidad/MonteCarlo.java"
+    ],
+    "main": "MonteCarlo",
+    "mode": "T",
+    "stdout": "true\n"
+  },
+  {
+    "path": "06-matematicas-computacionales/07-estadistica/MediaVarianza.java",
+    "sources": [
+      "06-matematicas-computacionales/07-estadistica/MediaVarianza.java"
+    ],
+    "main": "MediaVarianza",
+    "mode": "R",
+    "stdout": "Media: 5.0\nVarianza: 5.0\n"
+  },
+  {
+    "path": "06-matematicas-computacionales/07-estadistica/Mediana.java",
+    "sources": [
+      "06-matematicas-computacionales/07-estadistica/Mediana.java"
+    ],
+    "main": "Mediana",
+    "mode": "R",
+    "stdout": "6.0\n"
+  },
+  {
+    "path": "06-matematicas-computacionales/08-precision-numerica/ErrorRedondeo.java",
+    "sources": [
+      "06-matematicas-computacionales/08-precision-numerica/ErrorRedondeo.java"
+    ],
+    "main": "ErrorRedondeo",
+    "mode": "R",
+    "stdout": "0.30000000000000004\nfalse\ntrue\n"
+  },
+  {
+    "path": "06-matematicas-computacionales/08-precision-numerica/BigDecimalExacto.java",
+    "sources": [
+      "06-matematicas-computacionales/08-precision-numerica/BigDecimalExacto.java"
+    ],
+    "main": "BigDecimalExacto",
+    "mode": "R",
+    "stdout": "0.30\n"
+  },
+  {
+    "path": "06-matematicas-computacionales/09-metodos-numericos/Biseccion.java",
+    "sources": [
+      "06-matematicas-computacionales/09-metodos-numericos/Biseccion.java"
+    ],
+    "main": "Biseccion",
+    "mode": "R",
+    "stdout": "1.414214\n"
+  },
+  {
+    "path": "06-matematicas-computacionales/09-metodos-numericos/NewtonRaphson.java",
+    "sources": [
+      "06-matematicas-computacionales/09-metodos-numericos/NewtonRaphson.java"
+    ],
+    "main": "NewtonRaphson",
+    "mode": "R",
+    "stdout": "1.414214\n"
+  },
+  {
+    "path": "06-matematicas-computacionales/09-metodos-numericos/IntegracionTrapecios.java",
+    "sources": [
+      "06-matematicas-computacionales/09-metodos-numericos/IntegracionTrapecios.java"
+    ],
+    "main": "IntegracionTrapecios",
+    "mode": "R",
+    "stdout": "0.333334\n"
+  }
+]

@@ -46,7 +46,7 @@ class BuiltInLibraryTest {
                 List.of("--release", "21", "-encoding", "UTF-8",
                         "-d", compiled.toString()));
         for (String path : library.entries(pack)) {
-            if (!path.startsWith("00-fundamentos-especificacion-oficial/")) {
+            if (path.matches("0[1-5]-.*")) {
                 arguments.add(source.resolve(path).toString());
             }
         }
@@ -113,7 +113,8 @@ class BuiltInLibraryTest {
             for (String relative : library.entries(pack)) {
                 String text = Files.readString(root.resolve(relative));
                 if (pack.id().equals("java21")
-                        && relative.startsWith("00-fundamentos-especificacion-oficial/")) {
+                        && (relative.startsWith("00-fundamentos-especificacion-oficial/")
+                        || relative.matches("(0[6-9]|1[0-9]|20)-.*"))) {
                     assertTrue(text.startsWith("// Tema:\n"), relative);
                     assertTrue(text.contains("Compilar:") && text.contains("Salida esperada:"), relative);
                     assertFalse(text.contains("Referencia: Java SE 21") || text.contains("Tema JLS:"), relative);
@@ -135,8 +136,8 @@ class BuiltInLibraryTest {
     @Test
     void allFourCurriculumPurposesAndDocumentedJavaClientsArePresent() throws Exception {
         var library = new BuiltInLibrary(temp.resolve("curriculum"));
-        assertEquals("v19", BuiltInLibrary.CATALOG_VERSION);
-        assertEquals(1597, library.packs().stream().mapToInt(library::size).sum());
+        assertEquals("v20", BuiltInLibrary.CATALOG_VERSION);
+        assertEquals(1617, library.packs().stream().mapToInt(library::size).sum());
         for (var pack : library.packs()) {
             var entries = library.entries(pack);
             assertTrue(entries.stream().allMatch(x -> x.split("/").length >= 3
@@ -270,7 +271,7 @@ class BuiltInLibraryTest {
                 "03-algoritmos/euclides/euclides.asm"));
         assertTrue(library.entries(all.get("java21")).contains(
                 "03-algoritmos/dijkstra/Dijkstra.java"));
-        assertEquals(1597, library.packs().stream().mapToInt(library::size).sum());
+        assertEquals(1617, library.packs().stream().mapToInt(library::size).sum());
     }
 
 }
