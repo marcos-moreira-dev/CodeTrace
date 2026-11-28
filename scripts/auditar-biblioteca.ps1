@@ -2,7 +2,7 @@
 # UTF-8 BOM required for the legacy Windows PowerShell 5.1 parser.
 <#
 .SYNOPSIS
-  Audita la biblioteca offline de CodeTrace v15 (1590 referencias / 14 lenguajes).
+  Audita la biblioteca offline de CodeTrace v15 (1597 referencias / 14 lenguajes).
 .DESCRIPTION
   Revisa el catálogo, archivos existentes, carpetas de ejercicio, versiones
   y comandos de compilación. Por defecto NO compila ni modifica referencias.
@@ -78,7 +78,7 @@ foreach ($linea in (Get-Content -LiteralPath $catalogo -Encoding UTF8)) {
 }
 
 $idiomas = @($referencias.Lenguaje | Sort-Object -Unique)
-if ($referencias.Count -ne 1590 -or $idiomas.Count -ne 14) {
+if ($referencias.Count -ne 1597 -or $idiomas.Count -ne 14) {
     throw "Catálogo inconsistente: $($referencias.Count) archivos, $($idiomas.Count) lenguajes"
 }
 Write-Host "CodeTrace v15 — catálogo íntegro: $($referencias.Count) archivos / $($idiomas.Count) lenguajes"

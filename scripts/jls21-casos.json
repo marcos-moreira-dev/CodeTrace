@@ -2763,5 +2763,61 @@
     "args": [],
     "stdout": "",
     "reject": "variable n might already have been assigned"
+  },
+  {
+    "path": "05-conversiones-y-contextos/05-01-10-suplemento-captura-comodin/CapturaComodin.java",
+    "unit": "05-conversiones-y-contextos/05-01-10-suplemento-captura-comodin",
+    "section": "5.1.10; suplemento",
+    "main": "CapturaComodin",
+    "args": [],
+    "stdout": "[luna, sol]\n"
+  },
+  {
+    "path": "06-nombres/06-03-02-02-suplemento-alcance-patron-negado/AlcancePatron.java",
+    "unit": "06-nombres/06-03-02-02-suplemento-alcance-patron-negado",
+    "section": "6.3.2.2; suplemento",
+    "main": "AlcancePatron",
+    "args": [],
+    "stdout": "4\n"
+  },
+  {
+    "path": "17-hilos-y-bloqueos/17-02-01-suplemento-espera-monitor/EsperaMonitor.java",
+    "unit": "17-hilos-y-bloqueos/17-02-01-suplemento-espera-monitor",
+    "section": "17.2.1; suplemento",
+    "main": "EsperaMonitor",
+    "args": [],
+    "stdout": "listo\n"
+  },
+  {
+    "path": "17-hilos-y-bloqueos/17-02-02-suplemento-notificar-sin-monitor/NotificarSinMonitor.java",
+    "unit": "17-hilos-y-bloqueos/17-02-02-suplemento-notificar-sin-monitor",
+    "section": "17.2.2; suplemento",
+    "main": "NotificarSinMonitor",
+    "args": [],
+    "stdout": "monitor no adquirido\n"
+  },
+  {
+    "path": "17-hilos-y-bloqueos/17-02-03-suplemento-interrupcion-estado/EstadoInterrupcion.java",
+    "unit": "17-hilos-y-bloqueos/17-02-03-suplemento-interrupcion-estado",
+    "section": "17.2.3; suplemento",
+    "main": "EstadoInterrupcion",
+    "args": [],
+    "stdout": "true\ntrue\nfalse\n"
+  },
+  {
+    "path": "18-inferencia-de-tipos/18-05-01-suplemento-inferencia-argumentos/InferenciaArgumentos.java",
+    "unit": "18-inferencia-de-tipos/18-05-01-suplemento-inferencia-argumentos",
+    "section": "18.5.1; suplemento",
+    "main": "InferenciaArgumentos",
+    "args": [],
+    "stdout": "7\n2.5\n"
+  },
+  {
+    "path": "18-inferencia-de-tipos/18-05-02-suplemento-inferencia-tipo-objetivo/InferenciaObjetivo.java",
+    "unit": "18-inferencia-de-tipos/18-05-02-suplemento-inferencia-tipo-objetivo",
+    "section": "18.5.2; suplemento",
+    "main": "InferenciaObjetivo",
+    "args": [],
+    "stdout": "4\n"
   }
 ]

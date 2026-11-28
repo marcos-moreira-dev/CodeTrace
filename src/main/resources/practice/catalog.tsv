@@ -336,6 +336,7 @@ java21	00-fundamentos-especificacion-oficial/05-conversiones-y-contextos/05-01-0
 java21	00-fundamentos-especificacion-oficial/05-conversiones-y-contextos/05-01-03-reduccion-primitiva/ReduccionPrimitivaJls.java
 java21	00-fundamentos-especificacion-oficial/05-conversiones-y-contextos/05-01-07-boxing/Empaquetado.java
 java21	00-fundamentos-especificacion-oficial/05-conversiones-y-contextos/05-01-08-unboxing-null/DesempaquetadoNulo.java
+java21	00-fundamentos-especificacion-oficial/05-conversiones-y-contextos/05-01-10-suplemento-captura-comodin/CapturaComodin.java
 java21	00-fundamentos-especificacion-oficial/05-conversiones-y-contextos/05-02-01-asignacion-primitivos/AsignacionPrimitivos.java
 java21	00-fundamentos-especificacion-oficial/05-conversiones-y-contextos/05-02-02-asignacion-referencias/AsignacionReferencias.java
 java21	00-fundamentos-especificacion-oficial/05-conversiones-y-contextos/05-02-03-asignacion-arreglos/AsignacionArreglos.java
@@ -363,6 +364,7 @@ java21	00-fundamentos-especificacion-oficial/06-nombres/06-01-04-nombres-variabl
 java21	00-fundamentos-especificacion-oficial/06-nombres/06-03-01-alcance-clases/AlcanceClases.java
 java21	00-fundamentos-especificacion-oficial/06-nombres/06-03-01-alcance-clases/Cadena.java
 java21	00-fundamentos-especificacion-oficial/06-nombres/06-03-01-alcance-clases/Nodo.java
+java21	00-fundamentos-especificacion-oficial/06-nombres/06-03-02-02-suplemento-alcance-patron-negado/AlcancePatron.java
 java21	00-fundamentos-especificacion-oficial/06-nombres/06-03-02-variable-no-inicializada/AlcanceLocalInvalido.java
 java21	00-fundamentos-especificacion-oficial/06-nombres/06-04-01-01-sombreado-campo/SombreadoCampo.java
 java21	00-fundamentos-especificacion-oficial/06-nombres/06-04-01-02-tipo-local-sombrea-import/Date.java
@@ -830,6 +832,9 @@ java21	00-fundamentos-especificacion-oficial/16-asignacion-definida/16-01-asigna
 java21	00-fundamentos-especificacion-oficial/16-asignacion-definida/16-02-asignacion-no-garantizada/AsignacionNoGarantizada.java
 java21	00-fundamentos-especificacion-oficial/16-asignacion-definida/16-03-final-ramas/FinalRamas.java
 java21	00-fundamentos-especificacion-oficial/16-asignacion-definida/16-03-variante-final-rutas-independientes/FinalNoDemostrado.java
+java21	00-fundamentos-especificacion-oficial/17-hilos-y-bloqueos/17-02-01-suplemento-espera-monitor/EsperaMonitor.java
+java21	00-fundamentos-especificacion-oficial/17-hilos-y-bloqueos/17-02-02-suplemento-notificar-sin-monitor/NotificarSinMonitor.java
+java21	00-fundamentos-especificacion-oficial/17-hilos-y-bloqueos/17-02-03-suplemento-interrupcion-estado/EstadoInterrupcion.java
 java21	00-fundamentos-especificacion-oficial/17-hilos-y-bloqueos/17-04-01-reordenamiento-carrera/ReordenamientoCarrera.java
 java21	00-fundamentos-especificacion-oficial/17-hilos-y-bloqueos/17-04-05-01-happens-before/ConsistenciaHappensBefore.java
 java21	00-fundamentos-especificacion-oficial/17-hilos-y-bloqueos/17-04-08-01-causalidad/Causalidad.java
@@ -838,6 +843,8 @@ java21	00-fundamentos-especificacion-oficial/17-hilos-y-bloqueos/17-05-01-public
 java21	00-fundamentos-especificacion-oficial/17-hilos-y-bloqueos/17-05-02-inmutabilidad-string/PublicacionCadena.java
 java21	00-fundamentos-especificacion-oficial/17-hilos-y-bloqueos/17-05-03-01-modificar-final-reflexion/FinalReflexion.java
 java21	00-fundamentos-especificacion-oficial/17-hilos-y-bloqueos/17-06-01-componentes-independientes/ComponentesIndependientes.java
+java21	00-fundamentos-especificacion-oficial/18-inferencia-de-tipos/18-05-01-suplemento-inferencia-argumentos/InferenciaArgumentos.java
+java21	00-fundamentos-especificacion-oficial/18-inferencia-de-tipos/18-05-02-suplemento-inferencia-tipo-objetivo/InferenciaObjetivo.java
 java21	00-fundamentos-especificacion-oficial/18-inferencia-de-tipos/18-05-05-01-inferencia-patron-record/InferenciaRecord.java
 java21	00-fundamentos-especificacion-oficial/18-inferencia-de-tipos/18-05-05-01-inferencia-patron-record/Transformador.java
 java21	01-fundamentos-en-accion/archivos-y-nio/ArchivosYNio.java

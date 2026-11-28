@@ -311,3 +311,7 @@ Se contrastaron los 233 títulos numerados con el inventario y se releyeron caso
 ## Cierre de estructura
 
 El commit `6e7c452d` superó la validación curricular de las 303 unidades. La auditoría Java de la aplicación detectó cuatro unidades con más de un tipo superior por archivo. Se separan los nueve tipos auxiliares, conservando los contratos y las pruebas negativas/positivas. El catálogo pasa a 553 fuentes nuevas y 1590 entradas totales. Se mantiene la regla de un tipo superior por archivo. Pendiente validar el nuevo commit.
+
+## Últimas omisiones conceptuales identificadas
+
+Se añaden captura de comodines, alcance de variables de patrón, espera y notificación de monitores, estado de interrupción e inferencia genérica por argumentos y tipo objetivo. Son ejemplos independientes; los patrones de sincronización completos corresponden a la futura carpeta avanzada. Total: 310 unidades, 560 fuentes nuevas, 1597 entradas offline. La cobertura exhaustiva de los fragmentos no numerados no está certificada.

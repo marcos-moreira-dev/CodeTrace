@@ -15,7 +15,7 @@ import sys
 root=Path(sys.argv[1])
 items=[x.split("\t",1) for x in (root/"catalog.tsv").read_text(encoding="utf-8").splitlines()
        if x and not x.startswith("#")]
-assert len(items)==1590, len(items)
+assert len(items)==1597, len(items)
 assert len({p for p,_ in items})==14
 assert len(set(map(tuple,items)))==len(items)
 # The integrator intentionally lives in the 05 root; all pattern
@@ -410,4 +410,4 @@ for path in root.rglob("*"):
 print("OK: rutas de la biblioteca sin colisiones por mayusculas/minusculas")
 PY
 
-echo "OK: catálogo v15, 14 paquetes, 1590 fuentes documentadas y clientes seleccionados"
+echo "OK: catálogo v15, 14 paquetes, 1597 fuentes documentadas y clientes seleccionados"
