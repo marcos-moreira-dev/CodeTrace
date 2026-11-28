@@ -2,7 +2,7 @@
 # UTF-8 BOM required for the legacy Windows PowerShell 5.1 parser.
 <#
 .SYNOPSIS
-  Audita la biblioteca offline de CodeTrace v39 (2122 referencias / 14 lenguajes).
+  Audita la biblioteca offline de CodeTrace v40-java-cli (2122 referencias / 14 lenguajes).
 .DESCRIPTION
   Revisa el catálogo, archivos existentes, carpetas de ejercicio, versiones
   y comandos de compilación. Por defecto NO compila ni modifica referencias.
@@ -68,6 +68,11 @@ foreach ($linea in (Get-Content -LiteralPath $catalogo -Encoding UTF8)) {
             $contenido -notmatch 'Salida esperada:' -or $contenido -match 'Referencia: Java SE 21|Tema JLS:') {
             throw "Falta explicación o comando, o contiene referencia bibliográfica: $identificador"
         }
+    } elseif ($paquete -eq 'java21' -and $cabecera.StartsWith('// Compilar (desde')) {
+        $contenido = Get-Content -LiteralPath $destino -Encoding UTF8 -Raw
+        if ($contenido -notmatch 'javac ' -or $contenido -notmatch 'Salida esperada:' -or $contenido -match 'PowerShell|\$env:TEMP|Get-ChildItem') {
+            throw "Guía directa Java inválida: $identificador"
+        }
     } elseif ($cabecera -notmatch '(?i)codetrace' -or
         $cabecera -notmatch '(?i)(referencia|kotlin 2\.2)' -or
         $cabecera -notmatch '(?i)(compilar|comprobar|ejecutar|verificar|tipos/sintaxis)') {
@@ -85,7 +90,7 @@ $idiomas = @($referencias.Lenguaje | Sort-Object -Unique)
 if ($referencias.Count -ne 2122 -or $idiomas.Count -ne 14) {
     throw "Catálogo inconsistente: $($referencias.Count) archivos, $($idiomas.Count) lenguajes"
 }
-Write-Host "CodeTrace v39 — catálogo íntegro: $($referencias.Count) archivos / $($idiomas.Count) lenguajes"
+Write-Host "CodeTrace v40-java-cli — catálogo íntegro: $($referencias.Count) archivos / $($idiomas.Count) lenguajes"
 foreach ($grupo in ($referencias | Group-Object Lenguaje | Sort-Object Name)) {
     $unidades = @($grupo.Group.Unidad | Sort-Object -Unique).Count
     Write-Host ("  {0,-16} {1,3} archivos  {2,3} carpetas con código" -f

@@ -1,7 +1,7 @@
 name: Verify practice curriculum
 on:
   push:
-    branches: [main, 'feature/practice-curriculum-20261120']
+    branches: [main, 'feature/practice-curriculum-20261120', 'feature/java21-consola-directa']
   pull_request:
     paths:
       - 'src/main/resources/practice/**'
@@ -54,10 +54,11 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Preserve frozen Java 00–05
-        shell: bash
-        run: |
-          git diff --exit-code c6362835720b02cab83493940f55127cdb9b66e6 HEAD -- 'src/main/resources/practice/java21/0[0-5]-*'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Preserve Java 00–05 executable tokens
+        run: python scripts/verificar-java-consola-directa.py --baseline c6362835720b02cab83493940f55127cdb9b66e6
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
@@ -66,6 +67,7 @@ jobs:
         with:
           python-version: '3.12'
       - run: python3 scripts/verificar-java-integral.py
+      - run: python scripts/verificar-java-consola-directa.py --compile
   windows-scripts:
     runs-on: windows-latest
     steps:

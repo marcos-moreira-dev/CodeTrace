@@ -1,4 +1,4 @@
-# Biblioteca de práctica CodeTrace — catálogo v39
+# Biblioteca de práctica CodeTrace — catálogo v40-java-cli
 
 **2.122 archivos de referencia en 14 paquetes**, incorporados en la aplicación. Un ejercicio con varios archivos cuenta varias entradas; no confundir cantidad de archivos con cantidad de ejercicios.
 
@@ -117,3 +117,7 @@ javac --release 21 -encoding UTF-8 -d $out $fuentes.FullName
 ```
 
 Las unidades nuevas se compilan desde su carpeta siguiendo sus propios comandos. No mezclar las variantes incompatibles ni los casos de rechazo intencional. La caché v18 conserva las anteriores.
+
+## Revisión de consola Java
+
+244 fuentes de las áreas 01–05 utilizan comandos directos desde la carpeta del ejercicio, sin variables de shell. Las áreas 00 y 06–20 permanecen intactas. El verificador comprueba la equivalencia de tokens de las fuentes congeladas y compila los 84 grupos de comandos de forma aislada. Los scripts del repositorio son infraestructura de CI, no requisitos para estudiar. La revisión editorial se mantiene separada de la rama original y del catálogo TypeScript.

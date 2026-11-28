@@ -128,6 +128,11 @@ class BuiltInLibraryTest {
                     assertFalse(text.contains("Referencia: Java SE 21") || text.contains("Tema JLS:"), relative);
                     continue;
                 }
+                if (pack.id().equals("java21") && text.startsWith("// Compilar (desde")) {
+                    assertTrue(text.contains("javac ") && text.contains("Salida esperada:"), relative);
+                    assertFalse(text.contains("PowerShell") || text.contains("$env:TEMP") || text.contains("Get-ChildItem"), relative);
+                    continue;
+                }
                 String firstLines = text.lines().limit(10)
                         .collect(Collectors.joining("\n")).toLowerCase(java.util.Locale.ROOT);
                 assertTrue(firstLines.contains("codetrace"), pack.id() + "/" + relative);
@@ -144,7 +149,7 @@ class BuiltInLibraryTest {
     @Test
     void allFourCurriculumPurposesAndDocumentedJavaClientsArePresent() throws Exception {
         var library = new BuiltInLibrary(temp.resolve("curriculum"));
-        assertEquals("v39", BuiltInLibrary.CATALOG_VERSION);
+        assertEquals("v40-java-cli", BuiltInLibrary.CATALOG_VERSION);
         assertEquals(2122, library.packs().stream().mapToInt(library::size).sum());
         for (var pack : library.packs()) {
             var entries = library.entries(pack);

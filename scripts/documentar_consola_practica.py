@@ -271,6 +271,12 @@ def main():
         elif isinstance(observations,dict): cache=observations
     stats=Counter();changes=[];incomplete=[]
     for p,src in sources.items():
+        if p.relative_to(root).parts[0]=='java21' and src.startswith('// Compilar (desde'):
+            if not ('javac ' in src and 'Salida esperada:' in src and not any(x in src for x in ('PowerShell','$env:TEMP','Get-ChildItem'))):
+                changes.append(p)
+            else:
+                stats['guia_directa']+=1
+            continue
         new,state=render(p,src,root,sources,cache)
         stats[state]+=1
         if new!=src:
