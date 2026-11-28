@@ -1,4 +1,4 @@
-# CodeTrace | Biblioteca offline v31 | una entrada por archivo, no por ejercicio
+# CodeTrace | Biblioteca offline v32 | una entrada por archivo, no por ejercicio
 c	01-fundamentos/bits-y-mascaras/bits_y_mascaras.c
 c	01-fundamentos/callbacks-y-funciones/callbacks_y_funciones.c
 c	01-fundamentos/compilacion-y-enlazado/biblioteca-estatica-dinamica/compilar.sh
@@ -1461,6 +1461,27 @@ java21	15-graficos-y-multimedia/06-graficos-2d/MainGrafico.java
 java21	15-graficos-y-multimedia/07-audio-digital/CuantizacionPCM.java
 java21	15-graficos-y-multimedia/07-audio-digital/EscribirWav.java
 java21	15-graficos-y-multimedia/07-audio-digital/MuestreoSeno.java
+java21	16-interpretes-y-procesamiento-de-lenguajes/01-cadena-compilacion/FuenteEjemplo.java
+java21	16-interpretes-y-procesamiento-de-lenguajes/02-bytecode/Operacion.java
+java21	16-interpretes-y-procesamiento-de-lenguajes/05-biblioteca-jar/app/Cliente.java
+java21	16-interpretes-y-procesamiento-de-lenguajes/05-biblioteca-jar/lib/Operaciones.java
+java21	16-interpretes-y-procesamiento-de-lenguajes/07-carga-clases/ClaseEjemplo.java
+java21	16-interpretes-y-procesamiento-de-lenguajes/07-carga-clases/MainCargaClase.java
+java21	16-interpretes-y-procesamiento-de-lenguajes/10-lexer/Lexer.java
+java21	16-interpretes-y-procesamiento-de-lenguajes/10-lexer/MainLexer.java
+java21	16-interpretes-y-procesamiento-de-lenguajes/10-lexer/Token.java
+java21	16-interpretes-y-procesamiento-de-lenguajes/11-parser-descenso-recursivo/Lexer.java
+java21	16-interpretes-y-procesamiento-de-lenguajes/11-parser-descenso-recursivo/MainParser.java
+java21	16-interpretes-y-procesamiento-de-lenguajes/11-parser-descenso-recursivo/Nodo.java
+java21	16-interpretes-y-procesamiento-de-lenguajes/11-parser-descenso-recursivo/Parser.java
+java21	16-interpretes-y-procesamiento-de-lenguajes/11-parser-descenso-recursivo/Token.java
+java21	16-interpretes-y-procesamiento-de-lenguajes/12-shunting-yard/MainPostfija.java
+java21	16-interpretes-y-procesamiento-de-lenguajes/12-shunting-yard/ShuntingYard.java
+java21	16-interpretes-y-procesamiento-de-lenguajes/13-evaluacion-ast/Evaluador.java
+java21	16-interpretes-y-procesamiento-de-lenguajes/13-evaluacion-ast/Expresion.java
+java21	16-interpretes-y-procesamiento-de-lenguajes/13-evaluacion-ast/MainEvaluador.java
+java21	16-interpretes-y-procesamiento-de-lenguajes/14-maquina-estados-comandos/MaquinaEstados.java
+java21	16-interpretes-y-procesamiento-de-lenguajes/14-maquina-estados-comandos/ReconocerComando.java
 javascript	01-fundamentos/closures/closures.js
 javascript	01-fundamentos/event-loop/event_loop.js
 javascript	01-fundamentos/funciones/funciones.js

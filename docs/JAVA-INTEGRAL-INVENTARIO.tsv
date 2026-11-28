@@ -369,27 +369,27 @@ area	unidad	modalidad	archivo	objetivo	estado
 15-graficos-y-multimedia	07-audio-digital	R	MuestreoSeno.java	Muestreo, amplitud y generación de archivo WAV sin reproducir audio.	implementado_pendiente_ci
 15-graficos-y-multimedia	07-audio-digital	R	CuantizacionPCM.java	Muestreo, amplitud y generación de archivo WAV sin reproducir audio.	implementado_pendiente_ci
 15-graficos-y-multimedia	07-audio-digital	R	EscribirWav.java	Muestreo, amplitud y generación de archivo WAV sin reproducir audio.	implementado_pendiente_ci
-16-interpretes-y-procesamiento-de-lenguajes	01-cadena-compilacion	R	FuenteEjemplo.java	Compilar una clase mínima con javac y distinguir fuente y clase; comandos en comentarios, sin escribir un gestor de compilación.	planificado
-16-interpretes-y-procesamiento-de-lenguajes	02-bytecode	R	Operacion.java	Inspeccionar bytecode con javap -c; no simular CPU.	planificado
-16-interpretes-y-procesamiento-de-lenguajes	05-biblioteca-jar	R	lib/Operaciones.java	Compilar biblioteca mínima y consumir un JAR con jar y classpath; sin Maven.	planificado
-16-interpretes-y-procesamiento-de-lenguajes	05-biblioteca-jar	R	app/Cliente.java	Compilar biblioteca mínima y consumir un JAR con jar y classpath; sin Maven.	planificado
-16-interpretes-y-procesamiento-de-lenguajes	07-carga-clases	R	ClaseEjemplo.java	Observar carga e inicialización de una clase local con Class.forName; no crear sistema de plugins.	planificado
-16-interpretes-y-procesamiento-de-lenguajes	07-carga-clases	R	MainCargaClase.java	Observar carga e inicialización de una clase local con Class.forName; no crear sistema de plugins.	planificado
-16-interpretes-y-procesamiento-de-lenguajes	10-lexer	T	Token.java	Reconocer números, operadores e identificadores con una gramática mínima.	planificado
-16-interpretes-y-procesamiento-de-lenguajes	10-lexer	T	Lexer.java	Reconocer números, operadores e identificadores con una gramática mínima.	planificado
-16-interpretes-y-procesamiento-de-lenguajes	10-lexer	T	MainLexer.java	Reconocer números, operadores e identificadores con una gramática mínima.	planificado
-16-interpretes-y-procesamiento-de-lenguajes	11-parser-descenso-recursivo	T	Token.java	Precedencia, asociación y árbol sintáctico; lexer mínimo local, sin dependencias cruzadas.	planificado
-16-interpretes-y-procesamiento-de-lenguajes	11-parser-descenso-recursivo	T	Lexer.java	Precedencia, asociación y árbol sintáctico; lexer mínimo local, sin dependencias cruzadas.	planificado
-16-interpretes-y-procesamiento-de-lenguajes	11-parser-descenso-recursivo	T	Nodo.java	Precedencia, asociación y árbol sintáctico; lexer mínimo local, sin dependencias cruzadas.	planificado
-16-interpretes-y-procesamiento-de-lenguajes	11-parser-descenso-recursivo	T	Parser.java	Precedencia, asociación y árbol sintáctico; lexer mínimo local, sin dependencias cruzadas.	planificado
-16-interpretes-y-procesamiento-de-lenguajes	11-parser-descenso-recursivo	T	MainParser.java	Precedencia, asociación y árbol sintáctico; lexer mínimo local, sin dependencias cruzadas.	planificado
-16-interpretes-y-procesamiento-de-lenguajes	12-shunting-yard	T	ShuntingYard.java	Convertir infija a postfija utilizando una pila.	planificado
-16-interpretes-y-procesamiento-de-lenguajes	12-shunting-yard	T	MainPostfija.java	Convertir infija a postfija utilizando una pila.	planificado
-16-interpretes-y-procesamiento-de-lenguajes	13-evaluacion-ast	T	Expresion.java	Evaluar un árbol de expresión pequeño.	planificado
-16-interpretes-y-procesamiento-de-lenguajes	13-evaluacion-ast	T	Evaluador.java	Evaluar un árbol de expresión pequeño.	planificado
-16-interpretes-y-procesamiento-de-lenguajes	13-evaluacion-ast	T	MainEvaluador.java	Evaluar un árbol de expresión pequeño.	planificado
-16-interpretes-y-procesamiento-de-lenguajes	14-maquina-estados-comandos	R	ReconocerComando.java	Reconocer comandos sencillos y distinguir estados, entradas válidas e inválidas; no construir máquina virtual.	planificado
-16-interpretes-y-procesamiento-de-lenguajes	14-maquina-estados-comandos	R	MaquinaEstados.java	Reconocer comandos sencillos y distinguir estados, entradas válidas e inválidas; no construir máquina virtual.	planificado
+16-interpretes-y-procesamiento-de-lenguajes	01-cadena-compilacion	R	FuenteEjemplo.java	Compilar una clase mínima con javac y distinguir fuente y clase; comandos en comentarios, sin escribir un gestor de compilación.	implementado_pendiente_ci
+16-interpretes-y-procesamiento-de-lenguajes	02-bytecode	R	Operacion.java	Inspeccionar bytecode con javap -c; no simular CPU.	implementado_pendiente_ci
+16-interpretes-y-procesamiento-de-lenguajes	05-biblioteca-jar	R	lib/Operaciones.java	Compilar biblioteca mínima y consumir un JAR con jar y classpath; sin Maven.	implementado_pendiente_ci
+16-interpretes-y-procesamiento-de-lenguajes	05-biblioteca-jar	R	app/Cliente.java	Compilar biblioteca mínima y consumir un JAR con jar y classpath; sin Maven.	implementado_pendiente_ci
+16-interpretes-y-procesamiento-de-lenguajes	07-carga-clases	R	ClaseEjemplo.java	Observar carga e inicialización de una clase local con Class.forName; no crear sistema de plugins.	implementado_pendiente_ci
+16-interpretes-y-procesamiento-de-lenguajes	07-carga-clases	R	MainCargaClase.java	Observar carga e inicialización de una clase local con Class.forName; no crear sistema de plugins.	implementado_pendiente_ci
+16-interpretes-y-procesamiento-de-lenguajes	10-lexer	T	Token.java	Reconocer números, operadores e identificadores con una gramática mínima.	implementado_pendiente_ci
+16-interpretes-y-procesamiento-de-lenguajes	10-lexer	T	Lexer.java	Reconocer números, operadores e identificadores con una gramática mínima.	implementado_pendiente_ci
+16-interpretes-y-procesamiento-de-lenguajes	10-lexer	T	MainLexer.java	Reconocer números, operadores e identificadores con una gramática mínima.	implementado_pendiente_ci
+16-interpretes-y-procesamiento-de-lenguajes	11-parser-descenso-recursivo	T	Token.java	Precedencia, asociación y árbol sintáctico; lexer mínimo local, sin dependencias cruzadas.	implementado_pendiente_ci
+16-interpretes-y-procesamiento-de-lenguajes	11-parser-descenso-recursivo	T	Lexer.java	Precedencia, asociación y árbol sintáctico; lexer mínimo local, sin dependencias cruzadas.	implementado_pendiente_ci
+16-interpretes-y-procesamiento-de-lenguajes	11-parser-descenso-recursivo	T	Nodo.java	Precedencia, asociación y árbol sintáctico; lexer mínimo local, sin dependencias cruzadas.	implementado_pendiente_ci
+16-interpretes-y-procesamiento-de-lenguajes	11-parser-descenso-recursivo	T	Parser.java	Precedencia, asociación y árbol sintáctico; lexer mínimo local, sin dependencias cruzadas.	implementado_pendiente_ci
+16-interpretes-y-procesamiento-de-lenguajes	11-parser-descenso-recursivo	T	MainParser.java	Precedencia, asociación y árbol sintáctico; lexer mínimo local, sin dependencias cruzadas.	implementado_pendiente_ci
+16-interpretes-y-procesamiento-de-lenguajes	12-shunting-yard	T	ShuntingYard.java	Convertir infija a postfija utilizando una pila.	implementado_pendiente_ci
+16-interpretes-y-procesamiento-de-lenguajes	12-shunting-yard	T	MainPostfija.java	Convertir infija a postfija utilizando una pila.	implementado_pendiente_ci
+16-interpretes-y-procesamiento-de-lenguajes	13-evaluacion-ast	T	Expresion.java	Evaluar un árbol de expresión pequeño.	implementado_pendiente_ci
+16-interpretes-y-procesamiento-de-lenguajes	13-evaluacion-ast	T	Evaluador.java	Evaluar un árbol de expresión pequeño.	implementado_pendiente_ci
+16-interpretes-y-procesamiento-de-lenguajes	13-evaluacion-ast	T	MainEvaluador.java	Evaluar un árbol de expresión pequeño.	implementado_pendiente_ci
+16-interpretes-y-procesamiento-de-lenguajes	14-maquina-estados-comandos	R	ReconocerComando.java	Reconocer comandos sencillos y distinguir estados, entradas válidas e inválidas; no construir máquina virtual.	implementado_pendiente_ci
+16-interpretes-y-procesamiento-de-lenguajes	14-maquina-estados-comandos	R	MaquinaEstados.java	Reconocer comandos sencillos y distinguir estados, entradas válidas e inválidas; no construir máquina virtual.	implementado_pendiente_ci
 17-sistemas-distribuidos	01-mensajeria	T	Mensaje.java	Comunicación asíncrona y orden de entrega simulado.	planificado
 17-sistemas-distribuidos	01-mensajeria	T	Buzon.java	Comunicación asíncrona y orden de entrega simulado.	planificado
 17-sistemas-distribuidos	01-mensajeria	T	MainMensajeria.java	Comunicación asíncrona y orden de entrega simulado.	planificado

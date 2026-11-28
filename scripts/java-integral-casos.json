@@ -2438,5 +2438,114 @@
     "main": "EscribirWav",
     "mode": "R",
     "stdout": "Muestras: 80\nTasa: 8000\nCanales: 1\n"
+  },
+  {
+    "path": "16-interpretes-y-procesamiento-de-lenguajes/01-cadena-compilacion/FuenteEjemplo.java",
+    "sources": [
+      "16-interpretes-y-procesamiento-de-lenguajes/01-cadena-compilacion/FuenteEjemplo.java"
+    ],
+    "main": "FuenteEjemplo",
+    "mode": "R",
+    "stdout": "12\n"
+  },
+  {
+    "path": "16-interpretes-y-procesamiento-de-lenguajes/02-bytecode/Operacion.java",
+    "sources": [
+      "16-interpretes-y-procesamiento-de-lenguajes/02-bytecode/Operacion.java"
+    ],
+    "main": "Operacion",
+    "mode": "R",
+    "stdout": "8\n"
+  },
+  {
+    "path": "16-interpretes-y-procesamiento-de-lenguajes/05-biblioteca-jar/app/Cliente.java",
+    "sources": [
+      "16-interpretes-y-procesamiento-de-lenguajes/05-biblioteca-jar/lib/Operaciones.java",
+      "16-interpretes-y-procesamiento-de-lenguajes/05-biblioteca-jar/app/Cliente.java"
+    ],
+    "main": "app.Cliente",
+    "mode": "R",
+    "stdout": "12\n",
+    "jar": {
+      "library": [
+        "16-interpretes-y-procesamiento-de-lenguajes/05-biblioteca-jar/lib/Operaciones.java"
+      ],
+      "client": [
+        "16-interpretes-y-procesamiento-de-lenguajes/05-biblioteca-jar/app/Cliente.java"
+      ]
+    }
+  },
+  {
+    "path": "16-interpretes-y-procesamiento-de-lenguajes/07-carga-clases/MainCargaClase.java",
+    "sources": [
+      "16-interpretes-y-procesamiento-de-lenguajes/07-carga-clases/ClaseEjemplo.java",
+      "16-interpretes-y-procesamiento-de-lenguajes/07-carga-clases/MainCargaClase.java"
+    ],
+    "main": "MainCargaClase",
+    "mode": "R",
+    "stdout": "Cargada: ClaseEjemplo\nInicializada\nFin\n"
+  },
+  {
+    "path": "16-interpretes-y-procesamiento-de-lenguajes/10-lexer/MainLexer.java",
+    "sources": [
+      "16-interpretes-y-procesamiento-de-lenguajes/10-lexer/Token.java",
+      "16-interpretes-y-procesamiento-de-lenguajes/10-lexer/Lexer.java",
+      "16-interpretes-y-procesamiento-de-lenguajes/10-lexer/MainLexer.java"
+    ],
+    "main": "MainLexer",
+    "mode": "T",
+    "stdout": "ID:pan@0\n+:+@4\nNUM:12@6\nEOF:@8\nCaracter invalido en 2\n"
+  },
+  {
+    "path": "16-interpretes-y-procesamiento-de-lenguajes/11-parser-descenso-recursivo/MainParser.java",
+    "sources": [
+      "16-interpretes-y-procesamiento-de-lenguajes/11-parser-descenso-recursivo/Token.java",
+      "16-interpretes-y-procesamiento-de-lenguajes/11-parser-descenso-recursivo/Lexer.java",
+      "16-interpretes-y-procesamiento-de-lenguajes/11-parser-descenso-recursivo/Nodo.java",
+      "16-interpretes-y-procesamiento-de-lenguajes/11-parser-descenso-recursivo/Parser.java",
+      "16-interpretes-y-procesamiento-de-lenguajes/11-parser-descenso-recursivo/MainParser.java"
+    ],
+    "main": "MainParser",
+    "mode": "T",
+    "stdout": "(+ 2 (* 3 4))\n(* (+ 2 3) 4)\n(- (- 9 3) 2)\nSintaxis invalida\n"
+  },
+  {
+    "path": "16-interpretes-y-procesamiento-de-lenguajes/12-shunting-yard/MainPostfija.java",
+    "sources": [
+      "16-interpretes-y-procesamiento-de-lenguajes/12-shunting-yard/ShuntingYard.java",
+      "16-interpretes-y-procesamiento-de-lenguajes/12-shunting-yard/MainPostfija.java"
+    ],
+    "main": "MainPostfija",
+    "mode": "T",
+    "stdout": "2 3 4 * +\n2 3 + 4 *\n"
+  },
+  {
+    "path": "16-interpretes-y-procesamiento-de-lenguajes/13-evaluacion-ast/MainEvaluador.java",
+    "sources": [
+      "16-interpretes-y-procesamiento-de-lenguajes/13-evaluacion-ast/Expresion.java",
+      "16-interpretes-y-procesamiento-de-lenguajes/13-evaluacion-ast/Evaluador.java",
+      "16-interpretes-y-procesamiento-de-lenguajes/13-evaluacion-ast/MainEvaluador.java"
+    ],
+    "main": "MainEvaluador",
+    "mode": "T",
+    "stdout": "14\nDivision invalida\n"
+  },
+  {
+    "path": "16-interpretes-y-procesamiento-de-lenguajes/14-maquina-estados-comandos/ReconocerComando.java",
+    "sources": [
+      "16-interpretes-y-procesamiento-de-lenguajes/14-maquina-estados-comandos/ReconocerComando.java"
+    ],
+    "main": "ReconocerComando",
+    "mode": "R",
+    "stdout": "ABRIR: true\nGUARDAR pan: true\nCERRAR: true\nBORRAR todo: false\n"
+  },
+  {
+    "path": "16-interpretes-y-procesamiento-de-lenguajes/14-maquina-estados-comandos/MaquinaEstados.java",
+    "sources": [
+      "16-interpretes-y-procesamiento-de-lenguajes/14-maquina-estados-comandos/MaquinaEstados.java"
+    ],
+    "main": "MaquinaEstados",
+    "mode": "R",
+    "stdout": "GUARDAR: ERROR\nABRIR: OK\nGUARDAR: OK\nCERRAR: OK\nCERRAR: ERROR\n"
   }
 ]
