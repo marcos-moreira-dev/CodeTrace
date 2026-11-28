@@ -1,6 +1,6 @@
 // CodeTrace | Referencia: Java 21 LTS / JDK 21
 // Componente didáctico reutilizable: este archivo no tiene main.
-// Compilar: en una copia desde java21: javac --release 21 -encoding UTF-8 -d "$env:TEMP\\ct-java21" (Get-ChildItem -Recurse -Filter *.java).FullName
+// Compilar: en una copia desde java21: javac --release 21 -encoding UTF-8 -d "$env:TEMP\\ct-java21" (Get-ChildItem -Recurse -Filter *.java -File | Where-Object { $_.FullName -notmatch '[\\/]00-fundamentos-especificacion-oficial[\\/]' }).FullName
 
 /** Valor inmutable superficialmente; los componentes son String, double y Estado. */
 public record Pedido(String codigo, double total, Estado estado) {
@@ -25,7 +25,7 @@ public record Pedido(String codigo, double total, Estado estado) {
  * Ejemplo en consola (PowerShell; desde la carpeta del lenguaje):
  *   $out=Join-Path $env:TEMP "ct-practica-java"
  *   New-Item -ItemType Directory -Force -Path $out | Out-Null
- *   javac --release 21 -encoding UTF-8 -d $out (Get-ChildItem -Recurse -Filter *.java).FullName
+ *   javac --release 21 -encoding UTF-8 -d $out (Get-ChildItem -Recurse -Filter *.java -File | Where-Object { $_.FullName -notmatch '[\\/]00-fundamentos-especificacion-oficial[\\/]' }).FullName
  *   java -cp $out RecordsYEnums
  * Nota: Pedido.java es un componente; la salida corresponde al cliente RecordsYEnums.java.
  * Salida esperada:
