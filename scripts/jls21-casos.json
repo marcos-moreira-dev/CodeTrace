@@ -1990,5 +1990,300 @@
       "0\n",
       "1\n"
     ]
+  },
+  {
+    "path": "04-tipos-valores-variables/04-11-01-usos-de-tipos/UsoTipos.java",
+    "unit": "04-tipos-valores-variables/04-11-01-usos-de-tipos",
+    "section": "4.11; ejemplo 4.11-1",
+    "main": "UsoTipos",
+    "args": [],
+    "stdout": "4.0\n[3, 4]\nsol\n"
+  },
+  {
+    "path": "06-nombres/06-01-01-nombres-paquetes/org/example/diccionario/Palabra.java",
+    "unit": "06-nombres/06-01-01-nombres-paquetes",
+    "section": "6.1; ejemplo 6.1-1",
+    "main": "org.example.diccionario.Palabra",
+    "args": [],
+    "stdout": "org.example.diccionario\n"
+  },
+  {
+    "path": "06-nombres/06-01-02-nombres-modulos/org.example.diccionario/module-info.java",
+    "unit": "06-nombres/06-01-02-nombres-modulos",
+    "section": "6.1; ejemplo 6.1-2",
+    "main": "",
+    "args": [],
+    "stdout": "org.example.diccionario\n",
+    "module": "org.example.diccionario/org.example.diccionario.Palabra"
+  },
+  {
+    "path": "06-nombres/06-01-03-nombres-descriptivos/EntradaTexto.java",
+    "unit": "06-nombres/06-01-03-nombres-descriptivos",
+    "section": "6.1; ejemplo 6.1-3",
+    "main": "NombresDescriptivos",
+    "args": [],
+    "stdout": "texto\n"
+  },
+  {
+    "path": "06-nombres/06-01-04-nombres-variables-tipo/Contenedor.java",
+    "unit": "06-nombres/06-01-04-nombres-variables-tipo",
+    "section": "6.1; ejemplo 6.1-4",
+    "main": "NombresGenericos",
+    "args": [],
+    "stdout": "texto\nclave 7\n"
+  },
+  {
+    "path": "06-nombres/06-05-06-02-01-expresion-calificada-invalida/Punto.java",
+    "unit": "06-nombres/06-05-06-02-01-expresion-calificada-invalida",
+    "section": "6.5.6.2; ejemplo 6.5.6.2-1",
+    "main": "ExpresionCalificada",
+    "args": [],
+    "stdout": "",
+    "reject": "int cannot be dereferenced"
+  },
+  {
+    "path": "06-nombres/06-06-01-control-acceso/puntos/Punto.java",
+    "unit": "06-nombres/06-06-01-control-acceso",
+    "section": "6.6; ejemplo 6.6-1",
+    "main": "usuario.Mover",
+    "args": [],
+    "stdout": "4\n"
+  },
+  {
+    "path": "06-nombres/06-06-02-miembros-publicos/puntos/Punto.java",
+    "unit": "06-nombres/06-06-02-miembros-publicos",
+    "section": "6.6; ejemplo 6.6-2",
+    "main": "usuario.Contar",
+    "args": [],
+    "stdout": "1\n"
+  },
+  {
+    "path": "06-nombres/06-06-03-clase-no-publica/puntos/Punto.java",
+    "unit": "06-nombres/06-06-03-clase-no-publica",
+    "section": "6.6; ejemplo 6.6-3",
+    "main": "",
+    "args": [],
+    "stdout": "",
+    "reject": "is not public"
+  },
+  {
+    "path": "06-nombres/06-06-04-miembro-paquete/base/Punto.java",
+    "unit": "06-nombres/06-06-04-miembro-paquete",
+    "section": "6.6; ejemplo 6.6-4",
+    "main": "",
+    "args": [],
+    "stdout": "",
+    "reject": "cannot be accessed from outside package"
+  },
+  {
+    "path": "06-nombres/06-06-02-01-protected-receptor/base/Punto.java",
+    "unit": "06-nombres/06-06-02-01-protected-receptor",
+    "section": "6.6.2; ejemplo 6.6.2-1",
+    "main": "",
+    "args": [],
+    "stdout": "",
+    "reject": "has protected access"
+  },
+  {
+    "path": "07-paquetes-y-modulos/07-04-02-01-paquete-sin-nombre/PrimerPrograma.java",
+    "unit": "07-paquetes-y-modulos/07-04-02-01-paquete-sin-nombre",
+    "section": "7.4.2; ejemplo 7.4.2-1",
+    "main": "PrimerPrograma",
+    "args": [],
+    "stdout": "Primer programa\ntrue\n"
+  },
+  {
+    "path": "07-paquetes-y-modulos/07-05-01-04-tipo-y-paquete-mismo-nombre/Vector/Objeto.java",
+    "unit": "07-paquetes-y-modulos/07-05-01-04-tipo-y-paquete-mismo-nombre",
+    "section": "7.5.1; ejemplo 7.5.1-4",
+    "main": "cliente.ImportarCoincidente",
+    "args": [],
+    "stdout": "java.util.Vector\nVector.Objeto\n"
+  },
+  {
+    "path": "07-paquetes-y-modulos/07-06-02-alcance-tipos-superiores/puntos/Punto.java",
+    "unit": "07-paquetes-y-modulos/07-06-02-alcance-tipos-superiores",
+    "section": "7.6; ejemplo 7.6-2",
+    "main": "puntos.Prueba",
+    "args": [],
+    "stdout": "true\n"
+  },
+  {
+    "path": "07-paquetes-y-modulos/07-06-03-nombres-calificados/Punto.java",
+    "unit": "07-paquetes-y-modulos/07-06-03-nombres-calificados",
+    "section": "7.6; ejemplo 7.6-3",
+    "main": "NombreCompleto",
+    "args": [],
+    "stdout": "Punto\nvista.Punto\n"
+  },
+  {
+    "path": "07-paquetes-y-modulos/07-01-01-01-requires-transitive/demo.a/module-info.java",
+    "unit": "07-paquetes-y-modulos/07-01-01-01-requires-transitive",
+    "section": "7.1.1; ejemplo 7.1.1-1",
+    "main": "",
+    "args": [],
+    "stdout": "9\n",
+    "module": "demo.a/cliente.Main"
+  },
+  {
+    "path": "08-clases/08-01-05-02-superinterfaces/Movible.java",
+    "unit": "08-clases/08-01-05-02-superinterfaces",
+    "section": "8.1.5; ejemplo 8.1.5-2",
+    "main": "Superinterfaces",
+    "args": [],
+    "stdout": "3 5 mate\n"
+  },
+  {
+    "path": "08-clases/08-02-01-constructor-y-metodo-privados/Punto.java",
+    "unit": "08-clases/08-02-01-constructor-y-metodo-privados",
+    "section": "8.2; ejemplo 8.2-1",
+    "main": "",
+    "args": [],
+    "stdout": "",
+    "reject": "constructor Punto"
+  },
+  {
+    "path": "08-clases/08-02-02-herencia-paquete/puntos/Punto.java",
+    "unit": "08-clases/08-02-02-herencia-paquete",
+    "section": "8.2; ejemplo 8.2-2",
+    "main": "",
+    "args": [],
+    "stdout": "",
+    "reject": "is not public"
+  },
+  {
+    "path": "08-clases/08-02-03-herencia-public-protected/base/Punto.java",
+    "unit": "08-clases/08-02-03-herencia-public-protected",
+    "section": "8.2; ejemplo 8.2-3",
+    "main": "otro.PuntoExtendido",
+    "args": [],
+    "stdout": "4 2 2\n"
+  },
+  {
+    "path": "08-clases/08-02-04-herencia-private/Punto.java",
+    "unit": "08-clases/08-02-04-herencia-private",
+    "section": "8.2; ejemplo 8.2-4",
+    "main": "",
+    "args": [],
+    "stdout": "",
+    "reject": "has private access"
+  },
+  {
+    "path": "08-clases/08-02-05-clase-no-publica-polimorfismo/puntos/Punto.java",
+    "unit": "08-clases/08-02-05-clase-no-publica-polimorfismo",
+    "section": "8.2; ejemplo 8.2-5",
+    "main": "cliente.Invocar",
+    "args": [],
+    "stdout": "especial\n"
+  },
+  {
+    "path": "08-clases/08-04-08-01-heredar-dos-metodos-abstractos/MedidaA.java",
+    "unit": "08-clases/08-04-08-01-heredar-dos-metodos-abstractos",
+    "section": "8.4.8; ejemplo 8.4.8-1",
+    "main": "HerenciaMetodos",
+    "args": [],
+    "stdout": "5\n"
+  },
+  {
+    "path": "08-clases/08-04-08-01-02-sobrescribir-buffer/Buffer.java",
+    "unit": "08-clases/08-04-08-01-02-sobrescribir-buffer",
+    "section": "8.4.8.1; ejemplo 8.4.8.1-2",
+    "main": "BufferPorLinea",
+    "args": [],
+    "stdout": "uno\nintermedio\ndos\n"
+  },
+  {
+    "path": "08-clases/08-04-08-03-02-retorno-unchecked/Ordenador.java",
+    "unit": "08-clases/08-04-08-03-02-retorno-unchecked",
+    "section": "8.4.8.3; ejemplo 8.4.8.3-2",
+    "main": "RetornoRaw",
+    "args": [],
+    "stdout": "[a, b]\n"
+  },
+  {
+    "path": "08-clases/08-04-08-04-01-metodos-equivalentes/Generica.java",
+    "unit": "08-clases/08-04-08-04-01-metodos-equivalentes",
+    "section": "8.4.8.4; ejemplo 8.4.8.4-1",
+    "main": "",
+    "args": [],
+    "stdout": "",
+    "reject": "same signature"
+  },
+  {
+    "path": "08-clases/08-04-09-02-sobrecarga-sobrescritura-ocultacion/Punto.java",
+    "unit": "08-clases/08-04-09-02-sobrecarga-sobrescritura-ocultacion",
+    "section": "8.4.9; ejemplo 8.4.9-2",
+    "main": "PuntoReal",
+    "args": [],
+    "stdout": "2.5 3.5\n0 0\n"
+  },
+  {
+    "path": "08-clases/08-09-03-04-baraja-dos-enums/Carta.java",
+    "unit": "08-clases/08-09-03-04-baraja-dos-enums",
+    "section": "8.9.3; ejemplo 8.9.3-4",
+    "main": "Baraja",
+    "args": [],
+    "stdout": "52\nDOS TREBOL\nAS PICA\n"
+  },
+  {
+    "path": "09-interfaces/09-08-03-interfaz-funcional-generica/Base.java",
+    "unit": "09-interfaces/09-08-03-interfaz-funcional-generica",
+    "section": "9.8; ejemplo 9.8-3",
+    "main": "FuncionParametrizada",
+    "args": [],
+    "stdout": "Integer\n"
+  },
+  {
+    "path": "13-compatibilidad-binaria/13-04-04-02-superclase-en-multicatch/ErrorA.java",
+    "unit": "13-compatibilidad-binaria/13-04-04-02-superclase-en-multicatch",
+    "section": "13.4.4; ejemplo 13.4.4-2",
+    "main": "Cliente",
+    "args": [],
+    "stdout": "",
+    "stages": [
+      {
+        "sources": [
+          "ErrorA.java",
+          "v1/ErrorB.java",
+          "Cliente.java"
+        ],
+        "stdout": "capturado\n"
+      },
+      {
+        "sources": [
+          "v2/ErrorB.java"
+        ],
+        "stdout": "capturado\n"
+      },
+      {
+        "sources": [
+          "Cliente.java"
+        ],
+        "reject": "Alternatives in a multi-catch statement cannot be related"
+      }
+    ]
+  },
+  {
+    "path": "15-expresiones/15-09-04-01-memoria-antes-argumento/Nodo.java",
+    "unit": "15-expresiones/15-09-04-01-memoria-antes-argumento",
+    "section": "15.9.4; ejemplo 15.9.4-1",
+    "main": "MemoriaObjeto",
+    "args": [],
+    "stdout": "heap limitado\nfalse\n",
+    "jvm_args": [
+      "-Xmx16m",
+      "-Xint"
+    ]
+  },
+  {
+    "path": "15-expresiones/15-10-02-03-memoria-despues-dimension/MemoriaArreglo.java",
+    "unit": "15-expresiones/15-10-02-03-memoria-despues-dimension",
+    "section": "15.10.2; ejemplo 15.10.2-3",
+    "main": "MemoriaArreglo",
+    "args": [],
+    "stdout": "true\n",
+    "jvm_args": [
+      "-Xmx16m"
+    ]
   }
 ]

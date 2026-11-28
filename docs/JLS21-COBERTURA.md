@@ -2,7 +2,7 @@
 
 Ejemplos originales basados en la [JLS SE 21](https://docs.oracle.com/javase/specs/jls/se21/html/index.html). No constituyen una publicación oficial de Oracle.
 
-214 unidades, 378 fuentes. [Inventario de los 233 ejemplos numerados](JLS21-INVENTARIO.tsv): 201 identificadores con adaptación inicial; no equivale a cobertura semántica completa. Fragmentos sin numeración pendientes de inventario.
+246 unidades, 464 fuentes. [Inventario de los 233 ejemplos numerados](JLS21-INVENTARIO.tsv): 233 identificadores con adaptación inicial; no equivale a cobertura semántica completa. Fragmentos sin numeración pendientes de inventario.
 
 | Sección | Unidad | Estado |
 | --- | --- | --- |
@@ -220,5 +220,37 @@ Ejemplos originales basados en la [JLS SE 21](https://docs.oracle.com/javase/spe
 | 15.26.2; ejemplo 15.26.2-1 | 15-expresiones/15-26-02-01-asignacion-compuesta-arreglo/OrdenAsignacionCompuesta.java | Implementado; confirmar CI de la rama actual |
 | 17.5; ejemplo 17.5-2 | 17-hilos-y-bloqueos/17-05-02-inmutabilidad-string/PublicacionCadena.java | Implementado; confirmar CI de la rama actual |
 | 17.5.3; ejemplo 17.5.3-1 | 17-hilos-y-bloqueos/17-05-03-01-modificar-final-reflexion/FinalReflexion.java | Implementado; confirmar CI de la rama actual |
+| 4.11; ejemplo 4.11-1 | 04-tipos-valores-variables/04-11-01-usos-de-tipos/UsoTipos.java | Implementado; confirmar CI de la rama actual |
+| 6.1; ejemplo 6.1-1 | 06-nombres/06-01-01-nombres-paquetes/org/example/diccionario/Palabra.java | Implementado; confirmar CI de la rama actual |
+| 6.1; ejemplo 6.1-2 | 06-nombres/06-01-02-nombres-modulos/org.example.diccionario/module-info.java | Implementado; confirmar CI de la rama actual |
+| 6.1; ejemplo 6.1-3 | 06-nombres/06-01-03-nombres-descriptivos/EntradaTexto.java | Implementado; confirmar CI de la rama actual |
+| 6.1; ejemplo 6.1-4 | 06-nombres/06-01-04-nombres-variables-tipo/Contenedor.java | Implementado; confirmar CI de la rama actual |
+| 6.5.6.2; ejemplo 6.5.6.2-1 | 06-nombres/06-05-06-02-01-expresion-calificada-invalida/Punto.java | Implementado; confirmar CI de la rama actual |
+| 6.6; ejemplo 6.6-1 | 06-nombres/06-06-01-control-acceso/puntos/Punto.java | Implementado; confirmar CI de la rama actual |
+| 6.6; ejemplo 6.6-2 | 06-nombres/06-06-02-miembros-publicos/puntos/Punto.java | Implementado; confirmar CI de la rama actual |
+| 6.6; ejemplo 6.6-3 | 06-nombres/06-06-03-clase-no-publica/puntos/Punto.java | Implementado; confirmar CI de la rama actual |
+| 6.6; ejemplo 6.6-4 | 06-nombres/06-06-04-miembro-paquete/base/Punto.java | Implementado; confirmar CI de la rama actual |
+| 6.6.2; ejemplo 6.6.2-1 | 06-nombres/06-06-02-01-protected-receptor/base/Punto.java | Implementado; confirmar CI de la rama actual |
+| 7.4.2; ejemplo 7.4.2-1 | 07-paquetes-y-modulos/07-04-02-01-paquete-sin-nombre/PrimerPrograma.java | Implementado; confirmar CI de la rama actual |
+| 7.5.1; ejemplo 7.5.1-4 | 07-paquetes-y-modulos/07-05-01-04-tipo-y-paquete-mismo-nombre/Vector/Objeto.java | Implementado; confirmar CI de la rama actual |
+| 7.6; ejemplo 7.6-2 | 07-paquetes-y-modulos/07-06-02-alcance-tipos-superiores/puntos/Punto.java | Implementado; confirmar CI de la rama actual |
+| 7.6; ejemplo 7.6-3 | 07-paquetes-y-modulos/07-06-03-nombres-calificados/Punto.java | Implementado; confirmar CI de la rama actual |
+| 7.1.1; ejemplo 7.1.1-1 | 07-paquetes-y-modulos/07-01-01-01-requires-transitive/demo.a/module-info.java | Implementado; confirmar CI de la rama actual |
+| 8.1.5; ejemplo 8.1.5-2 | 08-clases/08-01-05-02-superinterfaces/Movible.java | Implementado; confirmar CI de la rama actual |
+| 8.2; ejemplo 8.2-1 | 08-clases/08-02-01-constructor-y-metodo-privados/Punto.java | Implementado; confirmar CI de la rama actual |
+| 8.2; ejemplo 8.2-2 | 08-clases/08-02-02-herencia-paquete/puntos/Punto.java | Implementado; confirmar CI de la rama actual |
+| 8.2; ejemplo 8.2-3 | 08-clases/08-02-03-herencia-public-protected/base/Punto.java | Implementado; confirmar CI de la rama actual |
+| 8.2; ejemplo 8.2-4 | 08-clases/08-02-04-herencia-private/Punto.java | Implementado; confirmar CI de la rama actual |
+| 8.2; ejemplo 8.2-5 | 08-clases/08-02-05-clase-no-publica-polimorfismo/puntos/Punto.java | Implementado; confirmar CI de la rama actual |
+| 8.4.8; ejemplo 8.4.8-1 | 08-clases/08-04-08-01-heredar-dos-metodos-abstractos/MedidaA.java | Implementado; confirmar CI de la rama actual |
+| 8.4.8.1; ejemplo 8.4.8.1-2 | 08-clases/08-04-08-01-02-sobrescribir-buffer/Buffer.java | Implementado; confirmar CI de la rama actual |
+| 8.4.8.3; ejemplo 8.4.8.3-2 | 08-clases/08-04-08-03-02-retorno-unchecked/Ordenador.java | Implementado; confirmar CI de la rama actual |
+| 8.4.8.4; ejemplo 8.4.8.4-1 | 08-clases/08-04-08-04-01-metodos-equivalentes/Generica.java | Implementado; confirmar CI de la rama actual |
+| 8.4.9; ejemplo 8.4.9-2 | 08-clases/08-04-09-02-sobrecarga-sobrescritura-ocultacion/Punto.java | Implementado; confirmar CI de la rama actual |
+| 8.9.3; ejemplo 8.9.3-4 | 08-clases/08-09-03-04-baraja-dos-enums/Carta.java | Implementado; confirmar CI de la rama actual |
+| 9.8; ejemplo 9.8-3 | 09-interfaces/09-08-03-interfaz-funcional-generica/Base.java | Implementado; confirmar CI de la rama actual |
+| 13.4.4; ejemplo 13.4.4-2 | 13-compatibilidad-binaria/13-04-04-02-superclase-en-multicatch/ErrorA.java | Implementado; confirmar CI de la rama actual |
+| 15.9.4; ejemplo 15.9.4-1 | 15-expresiones/15-09-04-01-memoria-antes-argumento/Nodo.java | Implementado; confirmar CI de la rama actual |
+| 15.10.2; ejemplo 15.10.2-3 | 15-expresiones/15-10-02-03-memoria-despues-dimension/MemoriaArreglo.java | Implementado; confirmar CI de la rama actual |
 
-Pendientes: revisión de fidelidad y casos secundarios, completar ejemplos numerados y fragmentos, migrar carpeta anterior y publicar. Las pruebas binarias compilan por etapas y verifican errores de enlace intencionales. No se incluye el PDF.
+Pendientes: revisión de fidelidad y casos secundarios, inventariar fragmentos no numerados, migrar carpeta anterior y publicar. Los casos de memoria ejecutan una JVM separada con heap de 16 MiB. Los módulos se compilan con module-source-path. No se incluye el PDF.

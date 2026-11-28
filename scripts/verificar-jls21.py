@@ -28,9 +28,14 @@ for case in cases:
             for stage in case["stages"]:
                 stage_sources = [unit / name for name in stage["sources"]]
                 seen.update(stage_sources)
-                subprocess.run(["javac", "--release", "21", "-encoding", "UTF-8",
+                comp = subprocess.run(["javac", "-J-Duser.language=en", "-J-Duser.country=US",
+                                "--release", "21", "-encoding", "UTF-8",
                                 "-cp", tmp, "-d", tmp, *map(str, stage_sources)],
-                               check=True, timeout=30)
+                                capture_output=True, text=True, encoding="utf-8", timeout=30)
+                if "reject" in stage:
+                    assert comp.returncode != 0 and stage["reject"].lower() in comp.stderr.lower(), (case["path"], comp.stderr)
+                    continue
+                assert comp.returncode == 0, (case["path"], comp.stderr)
                 run = subprocess.run(["java", "-Dfile.encoding=UTF-8", "-cp", tmp, case["main"]],
                                      capture_output=True, text=True, encoding="utf-8", timeout=20)
                 assert run.stdout == stage["stdout"], (case["path"], run.stderr, run.stdout)
@@ -40,6 +45,14 @@ for case in cases:
                     assert run.returncode == 0 and not run.stderr, (case["path"], run.stderr)
             assert seen == set(sources), case["path"]
             print("OK etapas binarias", case["section"], case["path"])
+            continue
+        if "module" in case:
+            subprocess.run(["javac", "--release", "21", "-encoding", "UTF-8", "--module-source-path", str(unit),
+                            "-d", tmp, *map(str, sources)], check=True, timeout=30)
+            run = subprocess.run(["java", "--module-path", tmp, "-m", case["module"]],
+                                 capture_output=True, text=True, encoding="utf-8", timeout=20)
+            assert run.returncode == 0 and run.stdout == case["stdout"] and not run.stderr, (case["path"], run.stderr, run.stdout)
+            print("OK módulo", case["section"], case["path"])
             continue
         compilation = subprocess.run(["javac", "-J-Duser.language=en", "-J-Duser.country=US",
                         "--release", "21", "-encoding", "UTF-8",
@@ -51,7 +64,7 @@ for case in cases:
             print("OK rechazo esperado", case["section"], case["path"])
             continue
         assert compilation.returncode == 0, (case["path"], compilation.stderr)
-        result = subprocess.run(["java", "-Dfile.encoding=UTF-8", "-cp", tmp,
+        result = subprocess.run(["java", "-Dfile.encoding=UTF-8", *case.get("jvm_args", []), "-cp", tmp,
                                  case["main"], *case["args"]], capture_output=True,
                                 text=True, encoding="utf-8", timeout=20)
         allowed = case.get("allowed_stdout", [case["stdout"]])
