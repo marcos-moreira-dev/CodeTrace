@@ -2310,5 +2310,133 @@
     "main": "MainTelemetria",
     "mode": "T",
     "stdout": "3: 25\nChecksum invalido\n"
+  },
+  {
+    "path": "15-graficos-y-multimedia/01-pixeles/ColorRGB.java",
+    "sources": [
+      "15-graficos-y-multimedia/01-pixeles/ColorRGB.java"
+    ],
+    "main": "ColorRGB",
+    "mode": "R",
+    "stdout": "A: 255\nR: 12\nG: 34\nB: 56\n"
+  },
+  {
+    "path": "15-graficos-y-multimedia/01-pixeles/ImagenPixeles.java",
+    "sources": [
+      "15-graficos-y-multimedia/01-pixeles/ImagenPixeles.java"
+    ],
+    "main": "ImagenPixeles",
+    "mode": "R",
+    "stdout": "Dimensiones: 3x2\nPixel: ff123456\n"
+  },
+  {
+    "path": "15-graficos-y-multimedia/02-archivos-imagen/LeerEscribirPNG.java",
+    "sources": [
+      "15-graficos-y-multimedia/02-archivos-imagen/LeerEscribirPNG.java"
+    ],
+    "main": "LeerEscribirPNG",
+    "mode": "R",
+    "stdout": "Dimensiones: 2x2\nPixel igual: true\n"
+  },
+  {
+    "path": "15-graficos-y-multimedia/03-transformaciones/Traslacion.java",
+    "sources": [
+      "15-graficos-y-multimedia/03-transformaciones/Traslacion.java"
+    ],
+    "main": "Traslacion",
+    "mode": "T",
+    "stdout": "5 2\n"
+  },
+  {
+    "path": "15-graficos-y-multimedia/03-transformaciones/Rotacion2D.java",
+    "sources": [
+      "15-graficos-y-multimedia/03-transformaciones/Rotacion2D.java"
+    ],
+    "main": "Rotacion2D",
+    "mode": "T",
+    "stdout": "-1 2\n"
+  },
+  {
+    "path": "15-graficos-y-multimedia/03-transformaciones/Escalado.java",
+    "sources": [
+      "15-graficos-y-multimedia/03-transformaciones/Escalado.java"
+    ],
+    "main": "Escalado",
+    "mode": "T",
+    "stdout": "8 6\n"
+  },
+  {
+    "path": "15-graficos-y-multimedia/04-procesamiento-imagen/EscalaGrises.java",
+    "sources": [
+      "15-graficos-y-multimedia/04-procesamiento-imagen/EscalaGrises.java"
+    ],
+    "main": "EscalaGrises",
+    "mode": "R",
+    "stdout": "ff3c3c3c\n"
+  },
+  {
+    "path": "15-graficos-y-multimedia/04-procesamiento-imagen/Umbral.java",
+    "sources": [
+      "15-graficos-y-multimedia/04-procesamiento-imagen/Umbral.java"
+    ],
+    "main": "Umbral",
+    "mode": "R",
+    "stdout": "0\n255\n255\n"
+  },
+  {
+    "path": "15-graficos-y-multimedia/04-procesamiento-imagen/Convolucion.java",
+    "sources": [
+      "15-graficos-y-multimedia/04-procesamiento-imagen/Convolucion.java"
+    ],
+    "main": "Convolucion",
+    "mode": "R",
+    "stdout": "Centro original: 90\nFiltrado: 10\n"
+  },
+  {
+    "path": "15-graficos-y-multimedia/05-rasterizacion/MainRaster.java",
+    "sources": [
+      "15-graficos-y-multimedia/05-rasterizacion/LineaBresenham.java",
+      "15-graficos-y-multimedia/05-rasterizacion/MainRaster.java"
+    ],
+    "main": "MainRaster",
+    "mode": "T",
+    "stdout": "[0,0, 1,1, 2,1, 3,2, 4,2]\n[2,2, 2,1, 2,0]\n"
+  },
+  {
+    "path": "15-graficos-y-multimedia/06-graficos-2d/MainGrafico.java",
+    "sources": [
+      "15-graficos-y-multimedia/06-graficos-2d/DibujarFormas.java",
+      "15-graficos-y-multimedia/06-graficos-2d/MainGrafico.java"
+    ],
+    "main": "MainGrafico",
+    "mode": "R",
+    "stdout": "Fondo: ffffff\nCentro: ff0000\n"
+  },
+  {
+    "path": "15-graficos-y-multimedia/07-audio-digital/MuestreoSeno.java",
+    "sources": [
+      "15-graficos-y-multimedia/07-audio-digital/MuestreoSeno.java"
+    ],
+    "main": "MuestreoSeno",
+    "mode": "R",
+    "stdout": "0\n1\n0\n-1\n"
+  },
+  {
+    "path": "15-graficos-y-multimedia/07-audio-digital/CuantizacionPCM.java",
+    "sources": [
+      "15-graficos-y-multimedia/07-audio-digital/CuantizacionPCM.java"
+    ],
+    "main": "CuantizacionPCM",
+    "mode": "R",
+    "stdout": "-32767\n-16383\n0\n16384\n32767\n32767\n"
+  },
+  {
+    "path": "15-graficos-y-multimedia/07-audio-digital/EscribirWav.java",
+    "sources": [
+      "15-graficos-y-multimedia/07-audio-digital/EscribirWav.java"
+    ],
+    "main": "EscribirWav",
+    "mode": "R",
+    "stdout": "Muestras: 80\nTasa: 8000\nCanales: 1\n"
   }
 ]
