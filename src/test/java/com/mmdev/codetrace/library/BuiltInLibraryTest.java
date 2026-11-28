@@ -28,6 +28,7 @@ class BuiltInLibraryTest {
                 Path file = root.resolve(relative);
                 assertTrue(Files.isRegularFile(file), relative);
                 assertFalse(Files.readString(file).isBlank(), relative);
+                if (pack.id().equals("typescript") && relative.equals("00-fundamentos-del-lenguaje/INVENTARIO.tsv")) continue;
                 assertNotEquals("Texto", LanguageRegistry.forFile(relative).name(),
                         "Unsupported syntax adapter for " + relative);
             }
@@ -128,6 +129,14 @@ class BuiltInLibraryTest {
                     assertFalse(text.contains("Referencia: Java SE 21") || text.contains("Tema JLS:"), relative);
                     continue;
                 }
+                if (pack.id().equals("typescript") && relative.startsWith("00-fundamentos-del-lenguaje/")) {
+                    assertFalse(text.isBlank(), relative);
+                    if (relative.matches(".*\\.(ts|tsx|cts|js)$")) {
+                        assertTrue(text.contains("Tema:"), relative);
+                        assertFalse(text.contains("$env:TEMP") || text.contains("PowerShell"), relative);
+                    }
+                    continue;
+                }
                 String firstLines = text.lines().limit(10)
                         .collect(Collectors.joining("\n")).toLowerCase(java.util.Locale.ROOT);
                 assertTrue(firstLines.contains("codetrace"), pack.id() + "/" + relative);
@@ -144,11 +153,12 @@ class BuiltInLibraryTest {
     @Test
     void allFourCurriculumPurposesAndDocumentedJavaClientsArePresent() throws Exception {
         var library = new BuiltInLibrary(temp.resolve("curriculum"));
-        assertEquals("v39", BuiltInLibrary.CATALOG_VERSION);
-        assertEquals(2122, library.packs().stream().mapToInt(library::size).sum());
+        assertEquals("v40", BuiltInLibrary.CATALOG_VERSION);
+        assertEquals(2456, library.packs().stream().mapToInt(library::size).sum());
         for (var pack : library.packs()) {
             var entries = library.entries(pack);
             assertTrue(entries.stream().allMatch(x -> x.split("/").length >= 3
+                    || (pack.id().equals("typescript") && x.matches("00-fundamentos-del-lenguaje/(README\\.md|ATRIBUCION\\.md|REFERENCIAS\\.md|CONFIGURACION\\.md|INVENTARIO\\.tsv)"))
                     || x.equals(java.util.Map.of(
                         "java21", "05-patrones-diseno-counter-strike/MainCounterStrike.java",
                         "python", "05-patrones-diseno-counter-strike/main.py",
@@ -279,7 +289,24 @@ class BuiltInLibraryTest {
                 "03-algoritmos/euclides/euclides.asm"));
         assertTrue(library.entries(all.get("java21")).contains(
                 "03-algoritmos/dijkstra/Dijkstra.java"));
-        assertEquals(2122, library.packs().stream().mapToInt(library::size).sum());
+        assertEquals(2456, library.packs().stream().mapToInt(library::size).sum());
     }
 
+    @Test
+    void typescriptSevenCurriculumIsExtractedWithItsSupportingFiles() throws Exception {
+        var library = new BuiltInLibrary(temp.resolve("typescript7"));
+        var pack = library.packs().stream().filter(p -> p.id().equals("typescript")).findFirst().orElseThrow();
+        assertEquals(459, library.size(pack));
+        var entries = library.entries(pack);
+        assertEquals(334, entries.stream().filter(p -> p.startsWith("00-fundamentos-del-lenguaje/")).count());
+        assertEquals(27, entries.stream().filter(p -> p.startsWith("00-fundamentos-del-lenguaje/") && p.split("/").length >= 3)
+                .map(p -> p.split("/")[1]).distinct().count());
+        var root = library.open(pack);
+        assertTrue(Files.isRegularFile(root.resolve("00-fundamentos-del-lenguaje/ATRIBUCION.md")));
+        assertTrue(Files.isRegularFile(root.resolve("00-fundamentos-del-lenguaje/INVENTARIO.tsv")));
+        var commonJs = entries.stream().filter(p -> p.endsWith(".cts")).findFirst().orElseThrow();
+        assertEquals("TypeScript", LanguageRegistry.forFile(commonJs).name());
+        assertTrue(com.mmdev.codetrace.reference.PracticeEligibility.supports(root.resolve(commonJs)));
+        assertFalse(com.mmdev.codetrace.reference.PracticeEligibility.supports(root.resolve("00-fundamentos-del-lenguaje/INVENTARIO.tsv")));
+    }
 }

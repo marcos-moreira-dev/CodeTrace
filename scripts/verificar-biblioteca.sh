@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# CodeTrace | Referencia: biblioteca de práctica v39 / verificador GNU/Linux-WSL
+# CodeTrace | Referencia: biblioteca de práctica v40 / verificador GNU/Linux-WSL
 # Ejecutar en COPIA: bash scripts/verificar-biblioteca.sh
 # Artefactos de compilación aislados en mktemp, sin tocar referencias.
 set -euo pipefail
@@ -15,12 +15,13 @@ import sys
 root=Path(sys.argv[1])
 items=[x.split("\t",1) for x in (root/"catalog.tsv").read_text(encoding="utf-8").splitlines()
        if x and not x.startswith("#")]
-assert len(items)==2122, len(items)
+assert len(items)==2456, len(items)
 assert len({p for p,_ in items})==14
 assert len(set(map(tuple,items)))==len(items)
 # The integrator intentionally lives in the 05 root; all pattern
 # components still require their own named exercise directory.
 assert all(len(path.split("/"))>=3 or
+           (pack=="typescript" and path in {"00-fundamentos-del-lenguaje/"+n for n in ("README.md","ATRIBUCION.md","REFERENCIAS.md","CONFIGURACION.md","INVENTARIO.tsv")}) or
            (pack, path) in {
                ("java21","05-patrones-diseno-counter-strike/MainCounterStrike.java"),
                ("python","05-patrones-diseno-counter-strike/main.py"),
@@ -44,6 +45,12 @@ for pack,path in items:
         assert text.startswith("// Tema:\n") and "Compilar:" in text and "Salida esperada:" in text, (pack,path)
         assert "Referencia: Java SE 21" not in text and "Tema JLS:" not in text, (pack,path)
         continue
+    if pack=="typescript" and path.startswith("00-fundamentos-del-lenguaje/"):
+        text=(root/pack/path).read_text(encoding="utf-8")
+        assert text.strip(), path
+        if Path(path).suffix in {".ts",".tsx",".cts",".js"}:
+            assert "Tema:" in text and "$env:TEMP" not in text and "PowerShell" not in text, path
+        continue
     lines=(root/pack/path).read_text(encoding="utf-8").splitlines()[:12]
     head="\n".join(lines).lower()
     assert "codetrace" in head, (pack,path)
@@ -51,7 +58,7 @@ for pack,path in items:
     assert any(word in head for word in ("compilar","comprobar","ejecutar","verificar","tipos/sintaxis")), (pack,path)
 # Documentar la salida de TODOS los clientes identificables (sin suponer que cada fuente es cliente).
 import re
-clientes=[x for x in root.rglob("*") if x.is_file() and
+clientes=[x for x in root.rglob("*") if x.is_file() and "00-fundamentos-del-lenguaje" not in x.parts and
     re.search(r"/(?:Main[A-Z][^/]*\.(?:java|kt|ts|cs)|main\.(?:py|rb|js|go|cpp|c))$",
               x.as_posix())]
 assert len(clientes)>=260, len(clientes)
@@ -249,7 +256,7 @@ for dir in \
 done
 
 
-echo "v39: Java 21 — pruebas de las nuevas familias y patrones"
+echo "v40: Java 21 — pruebas de las nuevas familias y patrones"
 for clase in \
   codetrace.practica.estructuras.listadoble.MainListaDoble \
   codetrace.practica.estructuras.listacircular.MainListaCircular \
@@ -270,7 +277,7 @@ for clase in \
   java -cp "$tmp/java" "$clase" >/dev/null
 done
 
-echo "v39: C++20 — miniproyectos completos por carpeta"
+echo "v40: C++20 — miniproyectos completos por carpeta"
 for unidad in \
   02-estructuras-datos/linked-list/simple \
   02-estructuras-datos/linked-list/doble \
@@ -290,11 +297,11 @@ for unidad in \
   04-patrones-diseno/command/deshacer \
   04-patrones-diseno/template-method/reportes; do
   ruta="$base/cpp/$unidad"
-  g++ -std=c++20 -Wall -Wextra -Werror "$ruta/"*.cpp -o "$tmp/cpp-v39"
-  "$tmp/cpp-v39" >/dev/null
+  g++ -std=c++20 -Wall -Wextra -Werror "$ruta/"*.cpp -o "$tmp/cpp-v40"
+  "$tmp/cpp-v40" >/dev/null
 done
 
-echo "v39: TypeScript 5.9 — transpilar y ejecutar el cliente de cada unidad"
+echo "v40: TypeScript 5.9 — transpilar y ejecutar el cliente de cada unidad"
 tsc --strict --target ES2022 --module commonjs --outDir "$tmp/ts" "$base/typescript/02-estructuras-datos/linked-list/simple/MainListaSimple.ts"
 node "$tmp/ts/MainListaSimple.js" >/dev/null
 tsc --strict --target ES2022 --module commonjs --outDir "$tmp/ts" "$base/typescript/02-estructuras-datos/linked-list/doble/MainListaDoble.ts"
@@ -330,7 +337,7 @@ node "$tmp/ts/MainCommand.js" >/dev/null
 tsc --strict --target ES2022 --module commonjs --outDir "$tmp/ts" "$base/typescript/04-patrones-diseno/template-method/reportes/MainTemplateMethod.ts"
 node "$tmp/ts/MainTemplateMethod.js" >/dev/null
 
-echo "v39: Python, Ruby y JavaScript — todos los nuevos clientes"
+echo "v40: Python, Ruby y JavaScript — todos los nuevos clientes"
 for unidad in \
   02-estructuras-datos/linked-list/simple \
   02-estructuras-datos/linked-list/doble \
@@ -357,7 +364,7 @@ for unidad in \
 done
 
 
-echo "v39: comparativa de cinco sorts, insercion binaria y limites ordenados"
+echo "v40: comparativa de cinco sorts, insercion binaria y limites ordenados"
 for clase in \
   codetrace.practica.ordenamientos.MainOrdenamientos \
   codetrace.practica.algoritmos.burbuja.MainBurbuja \
@@ -401,7 +408,7 @@ python3 -B "$base/python/04-patrones-diseno/chain-of-responsibility/reportes-par
 diff -u "$tmp/cadena-java.txt" "$tmp/cadena-python.txt"
 echo "OK: salidas Java/Python idénticas para la cadena de responsabilidad"
 
-echo "v39: comprobar documentación de consola en todas las fuentes"
+echo "v40: comprobar documentación de consola en todas las fuentes"
 python3 -B scripts/documentar_consola_practica.py --check \
   --root "$base" --outcomes scripts/salidas_practica.json
 python3 - "$base" <<'PY'
@@ -417,4 +424,4 @@ for path in root.rglob("*"):
 print("OK: rutas de la biblioteca sin colisiones por mayusculas/minusculas")
 PY
 
-echo "OK: catálogo v39, 14 paquetes, 2122 fuentes documentadas y clientes seleccionados"
+echo "OK: catálogo v40, 14 paquetes, 2456 fuentes documentadas y clientes seleccionados"

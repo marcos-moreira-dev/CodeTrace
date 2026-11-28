@@ -1,4 +1,4 @@
-# Biblioteca de práctica CodeTrace — catálogo v39
+# Biblioteca de práctica CodeTrace — catálogo v40
 
 **2.122 archivos de referencia en 14 paquetes**, incorporados en la aplicación. Un ejercicio con varios archivos cuenta varias entradas; no confundir cantidad de archivos con cantidad de ejercicios.
 
@@ -117,3 +117,7 @@ javac --release 21 -encoding UTF-8 -d $out $fuentes.FullName
 ```
 
 Las unidades nuevas se compilan desde su carpeta siguiendo sus propios comandos. No mezclar las variantes incompatibles ni los casos de rechazo intencional. La caché v18 conserva las anteriores.
+
+## Fundamentos de TypeScript 7
+
+El catálogo v40 incluye las 334 rutas del nuevo bloque (459 archivos en TypeScript; 2456 en los 14 paquetes). Se preservan los 125 archivos TypeScript anteriores y las 1329 entradas Java. Los 296 casos se verifican independientemente con TypeScript 7.0.2 y Node 24; no deben compilarse junto a los ejercicios legacy de TypeScript 5.9. Incluye negativos deliberados, declaraciones, configuraciones y ejemplos para navegador. Los TSV son documentación consultable; los .cts se reconocen como TypeScript. La atribución está en el propio bloque. Comandos de consola directos, sin automatización obligatoria.

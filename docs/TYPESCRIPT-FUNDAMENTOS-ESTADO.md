@@ -1,3 +1,3 @@
-# TypeScript 7 — estado de implementación
+# TypeScript 7 — estado
 
-Primer lote: áreas 01–03 completas en rutas (40 archivos), 5 documentos raíz. 26 adaptaciones y 14 complementos. Pruebas de cada ejercicio pendientes de CI; el catálogo offline sigue sin cambios. Se preserva la colección original y las demás ramas curriculares. Comandos directos desde cada carpeta, sin PowerShell. Los negativos se validan por diagnóstico y jamás se ejecutan.
+334/334 rutas, 27 categorías y 296/296 comprobaciones en Linux y Windows con TypeScript 7.0.2, commit a6a04c37cf580af5628e4c13dc1a80ff23e1d555, run [46157472895](https://github.com/marcos-moreira-dev/CodeTrace/actions/runs/46157472895). Los ejemplos del navegador se comprueban estáticamente; import defer se verifica en compilación, no en un navegador. Las 125 referencias previas se conservan. Catálogo v40 registrado en rama de trabajo; integración y publicación pendientes de las pruebas de esta revisión.

@@ -30,7 +30,7 @@ public final class FileTypeIcons {
             return font("di-python", "#3678A4");
         if (name.endsWith(".js") || name.endsWith(".jsx"))
             return font("di-javascript", "#C3A22B");
-        if (name.endsWith(".ts") || name.endsWith(".tsx"))
+        if (name.endsWith(".ts") || name.endsWith(".tsx") || name.endsWith(".cts") || name.endsWith(".mts"))
             return badge("TS", "#3178C6");
         if (name.endsWith(".c") || name.endsWith(".h")) return badge("C", "#647DA8");
         if (name.endsWith(".cpp") || name.endsWith(".cc")

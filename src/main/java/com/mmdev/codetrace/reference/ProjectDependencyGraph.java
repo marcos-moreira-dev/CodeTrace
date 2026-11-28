@@ -79,11 +79,11 @@ public final class ProjectDependencyGraph {
 
     private record ImportRef(String target, boolean dotted, String kind) {}
     private static final Set<String> CODE = Set.of("java", "kt", "kts", "py",
-            "js", "jsx", "ts", "tsx", "c", "cpp", "h", "hpp", "cc", "hh",
+            "js", "jsx", "ts", "tsx", "cts", "mts", "c", "cpp", "h", "hpp", "cc", "hh",
             "cs", "go", "rb", "ps1", "psm1", "sh", "bash", "cmd", "bat",
             "asm", "nasm", "pyw", "csx", "psd1", "zsh");
     private static final List<String> ENDINGS = List.of("", ".java", ".kt",
-            ".kts", ".py", ".ts", ".tsx", ".js", ".jsx", ".h", ".hpp",
+            ".kts", ".py", ".ts", ".tsx", ".cts", ".mts", ".js", ".jsx", ".h", ".hpp",
             ".c", ".cpp", ".cs", ".rb", ".sh", ".ps1", ".psm1", ".cmd",
             ".bat", "/__init__.py", "/index.ts", "/index.js");
     private static final int MAX_SOURCES = 1200;
@@ -282,7 +282,7 @@ public final class ProjectDependencyGraph {
                 grab(text, "(?m)^\\s*import\\s+([\\w.]+)", true, "import", refs);
                 grab(text, "(?m)^\\s*from\\s+([\\w.]+)\\s+import", true, "from", refs);
             }
-            case "js", "jsx", "ts", "tsx" -> {
+            case "js", "jsx", "ts", "tsx", "cts", "mts" -> {
                 grab(text, "\\bfrom\\s*['\"]([^'\"]+)['\"]", false, "import", refs);
                 grab(text, "\\bimport\\s*['\"]([^'\"]+)['\"]", false, "import", refs);
                 grab(text, "\\b(?:require|import)\\s*\\(\\s*['\"]([^'\"]+)['\"]",
@@ -358,6 +358,14 @@ public final class ProjectDependencyGraph {
         String relative = relative(root, target);
         for (String extension : ENDINGS) {
             if (index.known.contains(relative + extension)) return relative + extension;
+        }
+        // NodeNext imports may name the emitted file before JS exists.
+        if (Set.of("ts", "tsx", "cts", "mts").contains(ext(from))) {
+            String sourceExt = relative.endsWith(".cjs") ? ".cts" : relative.endsWith(".mjs") ? ".mts" : relative.endsWith(".js") ? ".ts" : "";
+            if (!sourceExt.isEmpty()) {
+                String source = relative.substring(0, relative.lastIndexOf('.')) + sourceExt;
+                if (index.known.contains(source)) return source;
+            }
         }
         // For #include "common.h" inside a project-wide include/ folder.
         if (!requested.contains("/")) return findUnique(index, requested);

@@ -3,6 +3,13 @@ import json, pathlib, shutil, subprocess, tempfile, re, sys, concurrent.futures
 root=pathlib.Path(__file__).resolve().parent.parent
 base=root/'src/main/resources/practice/typescript/00-fundamentos-del-lenguaje'
 cases=json.loads((root/'scripts/typescript-fundamentos-casos.json').read_text(encoding='utf-8'))
+assert len(cases)==296 and len({c['path'] for c in cases})==296
+import csv
+with (base/'INVENTARIO.tsv').open(encoding='utf-8',newline='') as fh:
+    rows=list(csv.DictReader(fh,delimiter='\t'))
+planned={r['ruta'] for r in rows}
+actual={p.relative_to(root).as_posix() for p in base.rglob('*') if p.is_file()}
+assert len(rows)==334 and len(planned)==334 and planned==actual,(planned-actual,actual-planned)
 tsc=shutil.which('tsc')
 assert tsc, 'tsc no disponible'
 def run(cmd,cwd):

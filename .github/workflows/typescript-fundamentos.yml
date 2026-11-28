@@ -7,6 +7,12 @@ on:
       - 'scripts/typescript-fundamentos-casos.json'
       - 'scripts/verificar-typescript-fundamentos.py'
       - '.github/workflows/typescript-fundamentos.yml'
+  pull_request:
+    paths:
+      - 'src/main/resources/practice/typescript/00-fundamentos-del-lenguaje/**'
+      - 'scripts/typescript-fundamentos-casos.json'
+      - 'scripts/verificar-typescript-fundamentos.py'
+      - '.github/workflows/typescript-fundamentos.yml'
   workflow_dispatch:
 jobs:
   verify:

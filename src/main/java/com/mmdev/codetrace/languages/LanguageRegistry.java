@@ -39,7 +39,7 @@ public final class LanguageRegistry {
                             + "internal|companion|constructor|init|by|this|super|"
                             + "null|true|false|break|continue|where|out|reified")),
             new RegexSupport("Python", List.of(".py", ".pyw"), pythonPattern()),
-            new RegexSupport("TypeScript", List.of(".ts", ".tsx"),
+            new RegexSupport("TypeScript", List.of(".ts", ".tsx", ".cts", ".mts"),
                     cStylePattern("interface|type|let|const|var|function|class|export|import|"
                             + "from|as|async|await|return|new|if|else|switch|case|default|"
                             + "for|of|in|while|do|try|catch|finally|throw|extends|implements|"
