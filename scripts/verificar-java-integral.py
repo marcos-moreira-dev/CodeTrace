@@ -49,13 +49,15 @@ def verify(case):
                      *map(str, sources)])
         command = ["java", "-Dfile.encoding=UTF-8", "-cp", classpath, case["main"]]
         if case.get("executable_jar"):
-            jar = Path(tmp).parent / (Path(tmp).name + ".jar")
-            # Store the artifact outside the class directory to avoid archiving itself.
-            try:
-                checked(["jar", "--create", "--file", str(jar), "--main-class", case["main"], "-C", tmp, "."])
-                checked(["java", "-Dfile.encoding=UTF-8", "-jar", str(jar)])
-            finally:
-                jar.unlink(missing_ok=True)
+            # Compile into a dedicated directory; package it and validate the
+            # actual executable JAR's stdout using the same assertions below.
+            classes = Path(tmp) / "classes"
+            classes.mkdir()
+            checked(["javac", "--release", "21", "-encoding", "UTF-8", "-d", str(classes),
+                     *map(str, sources)])
+            jar = Path(tmp) / "aplicacion.jar"
+            checked(["jar", "--create", "--file", str(jar), "--main-class", case["main"], "-C", str(classes), "."])
+            command = ["java", "-Dfile.encoding=UTF-8", "-jar", str(jar)]
         run = subprocess.run([*command,
                               *case.get("args", [])], cwd=tmp, timeout=20, input=case.get("stdin", ""),
                              capture_output=True, text=True, encoding="utf-8")

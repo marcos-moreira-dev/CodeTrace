@@ -1,4 +1,4 @@
-# CodeTrace | Biblioteca offline v34 | una entrada por archivo, no por ejercicio
+# CodeTrace | Biblioteca offline v35 | una entrada por archivo, no por ejercicio
 c	01-fundamentos/bits-y-mascaras/bits_y_mascaras.c
 c	01-fundamentos/callbacks-y-funciones/callbacks_y_funciones.c
 c	01-fundamentos/compilacion-y-enlazado/biblioteca-estatica-dinamica/compilar.sh
@@ -1529,6 +1529,19 @@ java21	18-pruebas-depuracion-y-rendimiento/12-flight-recorder/LeerEventosJfr.jav
 java21	18-pruebas-depuracion-y-rendimiento/13-herramientas-jdk/MainDiagnostico.java
 java21	18-pruebas-depuracion-y-rendimiento/13-herramientas-jdk/ProcesoInspeccionable.java
 java21	18-pruebas-depuracion-y-rendimiento/14-empaquetado/Aplicacion.java
+java21	19-inteligencia-artificial-fundamental/01-comparacion-de-patrones/CompararMatrices.java
+java21	19-inteligencia-artificial-fundamental/02-reconocimiento-de-digitos/ReconocerDigito.java
+java21	19-inteligencia-artificial-fundamental/03-distancias/DistanciaManhattan.java
+java21	19-inteligencia-artificial-fundamental/04-clasificacion-knn/ClasificadorKNN.java
+java21	19-inteligencia-artificial-fundamental/05-perceptron/Perceptron.java
+java21	19-inteligencia-artificial-fundamental/06-red-neuronal-elemental/RedNeuronalElemental.java
+java21	19-inteligencia-artificial-fundamental/07-agrupamiento-kmeans/KMeans.java
+java21	19-inteligencia-artificial-fundamental/08-busqueda-heuristica/BusquedaAEstrella.java
+java21	19-inteligencia-artificial-fundamental/09-algoritmos-geneticos/SeleccionMutacion.java
+java21	19-inteligencia-artificial-fundamental/10-regresion-lineal/RegresionLineal.java
+java21	19-inteligencia-artificial-fundamental/11-evaluacion-modelos/MatrizConfusion.java
+java21	19-inteligencia-artificial-fundamental/11-evaluacion-modelos/MetricasClasificacion.java
+java21	19-inteligencia-artificial-fundamental/12-minimax/Minimax.java
 javascript	01-fundamentos/closures/closures.js
 javascript	01-fundamentos/event-loop/event_loop.js
 javascript	01-fundamentos/funciones/funciones.js

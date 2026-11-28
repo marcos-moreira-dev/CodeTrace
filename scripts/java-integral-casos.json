@@ -2857,5 +2857,122 @@
     "mode": "R",
     "stdout": "Aplicacion empaquetada\n",
     "executable_jar": true
+  },
+  {
+    "path": "19-inteligencia-artificial-fundamental/01-comparacion-de-patrones/CompararMatrices.java",
+    "sources": [
+      "19-inteligencia-artificial-fundamental/01-comparacion-de-patrones/CompararMatrices.java"
+    ],
+    "main": "CompararMatrices",
+    "mode": "R",
+    "stdout": "Identicas: 0\nDiferencias: 2\n"
+  },
+  {
+    "path": "19-inteligencia-artificial-fundamental/02-reconocimiento-de-digitos/ReconocerDigito.java",
+    "sources": [
+      "19-inteligencia-artificial-fundamental/02-reconocimiento-de-digitos/ReconocerDigito.java"
+    ],
+    "main": "ReconocerDigito",
+    "mode": "R",
+    "stdout": "Exacto: 2\nCon ruido: 2\nVacio: -1\n"
+  },
+  {
+    "path": "19-inteligencia-artificial-fundamental/03-distancias/DistanciaManhattan.java",
+    "sources": [
+      "19-inteligencia-artificial-fundamental/03-distancias/DistanciaManhattan.java"
+    ],
+    "main": "DistanciaManhattan",
+    "mode": "R",
+    "stdout": "Distancia: 7\nIguales: 0\n"
+  },
+  {
+    "path": "19-inteligencia-artificial-fundamental/04-clasificacion-knn/ClasificadorKNN.java",
+    "sources": [
+      "19-inteligencia-artificial-fundamental/04-clasificacion-knn/ClasificadorKNN.java"
+    ],
+    "main": "ClasificadorKNN",
+    "mode": "R",
+    "stdout": "Cerca de origen: 0\nLejos de origen: 1\n"
+  },
+  {
+    "path": "19-inteligencia-artificial-fundamental/05-perceptron/Perceptron.java",
+    "sources": [
+      "19-inteligencia-artificial-fundamental/05-perceptron/Perceptron.java"
+    ],
+    "main": "Perceptron",
+    "mode": "R",
+    "stdout": "0001\n0111\n"
+  },
+  {
+    "path": "19-inteligencia-artificial-fundamental/06-red-neuronal-elemental/RedNeuronalElemental.java",
+    "sources": [
+      "19-inteligencia-artificial-fundamental/06-red-neuronal-elemental/RedNeuronalElemental.java"
+    ],
+    "main": "RedNeuronalElemental",
+    "mode": "R",
+    "stdout": "Error disminuye: true\nError menor a 0.02: true\n0001\n"
+  },
+  {
+    "path": "19-inteligencia-artificial-fundamental/07-agrupamiento-kmeans/KMeans.java",
+    "sources": [
+      "19-inteligencia-artificial-fundamental/07-agrupamiento-kmeans/KMeans.java"
+    ],
+    "main": "KMeans",
+    "mode": "R",
+    "stdout": "Centros: [2.0, 10.0]\n"
+  },
+  {
+    "path": "19-inteligencia-artificial-fundamental/08-busqueda-heuristica/BusquedaAEstrella.java",
+    "sources": [
+      "19-inteligencia-artificial-fundamental/08-busqueda-heuristica/BusquedaAEstrella.java"
+    ],
+    "main": "BusquedaAEstrella",
+    "mode": "R",
+    "stdout": "Coste: 6\nOptimo conocido: true\n"
+  },
+  {
+    "path": "19-inteligencia-artificial-fundamental/09-algoritmos-geneticos/SeleccionMutacion.java",
+    "sources": [
+      "19-inteligencia-artificial-fundamental/09-algoritmos-geneticos/SeleccionMutacion.java"
+    ],
+    "main": "SeleccionMutacion",
+    "mode": "R",
+    "stdout": "No empeora: true\nAptitud valida: true\n"
+  },
+  {
+    "path": "19-inteligencia-artificial-fundamental/10-regresion-lineal/RegresionLineal.java",
+    "sources": [
+      "19-inteligencia-artificial-fundamental/10-regresion-lineal/RegresionLineal.java"
+    ],
+    "main": "RegresionLineal",
+    "mode": "R",
+    "stdout": "Pendiente: 2.0\nIntercepto: 1.0\nPrediccion x=5: 11.0\nECM: 0.0\n"
+  },
+  {
+    "path": "19-inteligencia-artificial-fundamental/11-evaluacion-modelos/MatrizConfusion.java",
+    "sources": [
+      "19-inteligencia-artificial-fundamental/11-evaluacion-modelos/MatrizConfusion.java"
+    ],
+    "main": "MatrizConfusion",
+    "mode": "R",
+    "stdout": "VN: 2\nFP: 1\nFN: 1\nVP: 2\n"
+  },
+  {
+    "path": "19-inteligencia-artificial-fundamental/11-evaluacion-modelos/MetricasClasificacion.java",
+    "sources": [
+      "19-inteligencia-artificial-fundamental/11-evaluacion-modelos/MetricasClasificacion.java"
+    ],
+    "main": "MetricasClasificacion",
+    "mode": "R",
+    "stdout": "Exactitud: 0.70\nPrecision: 0.75\nExhaustividad: 0.60\nSin positivos predichos: indefinida\n"
+  },
+  {
+    "path": "19-inteligencia-artificial-fundamental/12-minimax/Minimax.java",
+    "sources": [
+      "19-inteligencia-artificial-fundamental/12-minimax/Minimax.java"
+    ],
+    "main": "Minimax",
+    "mode": "R",
+    "stdout": "Quitar 1: 1\nQuitar 2: -1\nValor inicial: 1\n"
   }
 ]
