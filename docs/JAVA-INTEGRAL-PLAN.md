@@ -1,6 +1,6 @@
 # CodeTrace — Java integral: plan curricular consolidado
 
-**Estado:** implementación iniciada; 06–07 incorporados (64 fuentes, 53 clientes) y pendientes de CI. Consultar `JAVA-INTEGRAL-ESTADO.md` y el inventario para el estado vivo. Fundamentos 00–05 congelados pedagógicamente; CI del commit `c6362835720b02cab83493940f55127cdb9b66e6` aprobada. PR #7 sigue siendo borrador, no es una publicación.
+**Estado:** implementación de 06–20 completa (523 fuentes Java, 2 documentos, 320 clientes), pendiente de validación del bloque 20 y auditoría final. Consultar `JAVA-INTEGRAL-ESTADO.md` y el inventario para el estado vivo. Fundamentos 00–05 congelados; PR #7 sigue siendo borrador.
 
 15 áreas nuevas (06–20), 214 unidades de planificación (2 documentales), 523 rutas Java y 2 rutas documentales previstas. Son un inventario de alcance, no una cuota de código. Unidades con varios clientes independientes se prueban por separado; no compilar todo Java integral en un único comando. Se conservan los números del borrador donde es posible; los saltos reflejan descartes deliberados.
 
@@ -1198,4 +1198,4 @@ La revisión se basa en el catálogo actual y en ejemplos concretos ya inspeccio
 9. TypeScript: terminar clasificación e integración de bloques originales importados, conservar atribución y sustituir solo fundamentos antiguos.
 10. Pruebas integrales y publicación de instalador definitivo; no confundir CI aprobada con release publicada.
 
-No se ha creado código avanzado. Las rutas son propuestas firmes de alcance, sujetas solo a ajustes para evitar redundancias o resolver fallos reales.
+Las rutas acordadas ya se implementaron; los ajustes posteriores deben estar justificados por validación, redundancia o revisión pedagógica.

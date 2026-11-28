@@ -1,4 +1,5 @@
 """Compile and run each declared independent Java integral exercise."""
+import csv
 import json
 import os
 import subprocess
@@ -15,6 +16,23 @@ actual = {p.relative_to(root).as_posix() for a in areas for p in a.rglob("*.java
 declared = {p for c in cases for p in c["sources"]}
 assert actual == declared, (actual - declared, declared - actual)
 assert len({c["path"] for c in cases}) == len(cases)
+
+# The agreed inventory is the source of coverage, including documentary units.
+with (repo / "docs/JAVA-INTEGRAL-INVENTARIO.tsv").open(encoding="utf-8", newline="") as f:
+    inventory = list(csv.DictReader(f, delimiter="\t"))
+planned = ["/".join((row["area"], row["unidad"], row["archivo"])) for row in inventory]
+assert len(planned) == len(set(planned)) == 525
+assert all(row["estado"] in {"implementado_pendiente_ci", "verificado_ci"} for row in inventory)
+planned_java = {path for row, path in zip(inventory, planned) if row["modalidad"] != "D"}
+planned_docs = set(planned) - planned_java
+assert len(planned_java) == 523 and len(planned_docs) == 2
+assert len({(row["area"], row["unidad"]) for row in inventory}) == 214
+assert actual == planned_java, (actual - planned_java, planned_java - actual)
+assert {p.relative_to(root).as_posix() for a in areas for p in a.rglob("*") if p.is_file()} == set(planned)
+catalog = set((root.parent / "catalog.tsv").read_text(encoding="utf-8").splitlines())
+assert all("java21\t" + path in catalog for path in planned)
+assert all((root / path).read_text(encoding="utf-8").strip() for path in planned_docs)
+print("Inventario completo: 523 fuentes, 2 documentos, 214 unidades")
 
 def verify(case):
     assert case["path"] in case["sources"], case
@@ -96,7 +114,7 @@ for folder, allowed in rules.items():
             continue  # composition root is allowed to wire all layers
         assert package in allowed, source
         assert re.search(r"^package " + re.escape(package) + r";", content, re.M), source
-        for imp in re.findall(r"^import\s+(?:static\s+)?([\w.]+)\s*;", content, re.M):
+        for imp in re.findall(r"^import\s+(?:static\s+)?([\w.]+(?:\*)?)\s*;", content, re.M):
             target = imp.rsplit(".", 1)[0]
             if target == package or imp.startswith(("java.", "javax.", "com.sun.net.httpserver.")):
                 continue
