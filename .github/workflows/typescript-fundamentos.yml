@@ -1,0 +1,41 @@
+name: Verify TypeScript fundamentals
+on:
+  push:
+    branches: [feature/typescript7-fundamentos]
+    paths:
+      - 'src/main/resources/practice/typescript/00-fundamentos-del-lenguaje/**'
+      - 'scripts/typescript-fundamentos-casos.json'
+      - 'scripts/verificar-typescript-fundamentos.py'
+      - '.github/workflows/typescript-fundamentos.yml'
+  workflow_dispatch:
+jobs:
+  verify:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: npm install --global typescript@7.0.2
+      - run: tsc --version
+      - run: python scripts/verificar-typescript-fundamentos.py
+      - name: Export sources for review
+        if: always() && runner.os == 'Linux'
+        uses: actions/upload-artifact@v4
+        with:
+          name: curriculum-review
+          path: |
+            curriculum/typescript-book
+            src/main/resources/practice/java21
+            src/main/resources/practice/typescript
+            scripts/typescript-fundamentos-casos.json
+            scripts/verificar-typescript-fundamentos.py
+            scripts/jls21-casos.json
+            scripts/java-integral-casos.json

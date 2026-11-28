@@ -1,0 +1,285 @@
+[
+  {
+    "path": "01-introduccion-y-compilacion/001-typescript-and-javascript/01.ts",
+    "mode": "N",
+    "codes": [
+      7006,
+      7006
+    ],
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "01-introduccion-y-compilacion/001-typescript-and-javascript/02.ts",
+    "mode": "R",
+    "stdout": "5\n",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "01-introduccion-y-compilacion/001-typescript-and-javascript/03.ts",
+    "mode": "N",
+    "codes": [
+      2339
+    ],
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "01-introduccion-y-compilacion/001-typescript-and-javascript/05.ts",
+    "mode": "R",
+    "stdout": "11 string\n",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "01-introduccion-y-compilacion/001-typescript-and-javascript/06.ts",
+    "mode": "N",
+    "codes": [
+      2365
+    ],
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "01-introduccion-y-compilacion/002-typescript-code-generation/01.ts",
+    "mode": "N",
+    "codes": [
+      2345
+    ],
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "01-introduccion-y-compilacion/002-typescript-code-generation/02.ts",
+    "mode": "R",
+    "stdout": "xy\n",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "01-introduccion-y-compilacion/002-typescript-code-generation/03.ts",
+    "mode": "N",
+    "codes": [
+      2693
+    ],
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "01-introduccion-y-compilacion/002-typescript-code-generation/04.ts",
+    "mode": "R",
+    "stdout": "bark\n",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "01-introduccion-y-compilacion/002-typescript-code-generation/05.ts",
+    "mode": "R",
+    "stdout": "bark\n",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "01-introduccion-y-compilacion/106-erased-structural-types/01.ts",
+    "mode": "R",
+    "stdout": "Origin\n",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "02-configuracion-del-compilador/001-configuracion-base/main.ts",
+    "mode": "R",
+    "stdout": "Configuracion: OK\n",
+    "project": true,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "02-configuracion-del-compilador/002-proyecto-y-resolucion/main.ts",
+    "mode": "R",
+    "stdout": "12\n",
+    "project": true,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "02-configuracion-del-compilador/003-opciones-estrictas/opciones.ts",
+    "mode": "N",
+    "codes": [
+      2375,
+      2322
+    ],
+    "project": true,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "02-configuracion-del-compilador/004-emision-y-target/emision.ts",
+    "mode": "R",
+    "stdout": "Invitado\n",
+    "project": true,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "03-tipos-primitivos-y-especiales/027-string/01.ts",
+    "mode": "R",
+    "stdout": "xy\n",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "03-tipos-primitivos-y-especiales/027-string/02.ts",
+    "mode": "R",
+    "stdout": "Hola Ana,\nbienvenida\n",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "03-tipos-primitivos-y-especiales/028-boolean/01.ts",
+    "mode": "R",
+    "stdout": "true\n",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "03-tipos-primitivos-y-especiales/029-number/01.ts",
+    "mode": "R",
+    "stdout": "10 40973 10 411\n",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "03-tipos-primitivos-y-especiales/030-bigint/01.ts",
+    "mode": "R",
+    "stdout": "18014398509481982\n",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "03-tipos-primitivos-y-especiales/031-symbol/01.ts",
+    "mode": "R",
+    "stdout": "123\n456\n",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "03-tipos-primitivos-y-especiales/073-any-type/01.ts",
+    "mode": "R",
+    "stdout": "true\n7\n",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "03-tipos-primitivos-y-especiales/074-unknown-type/01.ts",
+    "mode": "N",
+    "codes": [
+      2322,
+      2322
+    ],
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "03-tipos-primitivos-y-especiales/074-unknown-type/02.ts",
+    "mode": "R",
+    "stdout": "3\nundefined\n",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "03-tipos-primitivos-y-especiales/075-void-type/01.ts",
+    "mode": "R",
+    "stdout": "Hello!\n",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "03-tipos-primitivos-y-especiales/076-never-type/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "03-tipos-primitivos-y-especiales/076-never-type/02.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "03-tipos-primitivos-y-especiales/076-never-type/03.ts",
+    "mode": "R",
+    "stdout": "arriba\nabajo\n",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "03-tipos-primitivos-y-especiales/108-symbols/01.ts",
+    "mode": "R",
+    "stdout": "value 1\nvalue 2\n",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "03-tipos-primitivos-y-especiales/156-boxed-types/01.ts",
+    "mode": "R",
+    "stdout": "string\nobject\nA\n",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "03-tipos-primitivos-y-especiales/166-null-y-undefined/null_y_undefined.ts",
+    "mode": "R",
+    "stdout": "sin dato\nsin dato\nAna\n",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "03-tipos-primitivos-y-especiales/167-strict-null-checks/strict_null_checks.ts",
+    "mode": "N",
+    "codes": [
+      2322
+    ],
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "03-tipos-primitivos-y-especiales/168-object-y-primitivos/object_y_primitivos.ts",
+    "mode": "N",
+    "codes": [
+      2322
+    ],
+    "project": false,
+    "flags": [],
+    "sources": []
+  }
+]

@@ -1,0 +1,46 @@
+ruta	origen	modalidad	estado
+01-introduccion-y-compilacion/001-typescript-and-javascript/01.ts	curriculum/typescript-book/01-fundamentos/001-typescript-and-javascript/01.ts	N	implementado_pendiente_ci
+01-introduccion-y-compilacion/001-typescript-and-javascript/02.ts	curriculum/typescript-book/01-fundamentos/001-typescript-and-javascript/02.ts	R	implementado_pendiente_ci
+01-introduccion-y-compilacion/001-typescript-and-javascript/03.ts	curriculum/typescript-book/01-fundamentos/001-typescript-and-javascript/03.ts	N	implementado_pendiente_ci
+01-introduccion-y-compilacion/001-typescript-and-javascript/05.ts	curriculum/typescript-book/01-fundamentos/001-typescript-and-javascript/05.ts	R	implementado_pendiente_ci
+01-introduccion-y-compilacion/001-typescript-and-javascript/06.ts	curriculum/typescript-book/01-fundamentos/001-typescript-and-javascript/06.ts	N	implementado_pendiente_ci
+01-introduccion-y-compilacion/002-typescript-code-generation/01.ts	curriculum/typescript-book/01-fundamentos/002-typescript-code-generation/01.ts	N	implementado_pendiente_ci
+01-introduccion-y-compilacion/002-typescript-code-generation/02.ts	curriculum/typescript-book/01-fundamentos/002-typescript-code-generation/02.ts	R	implementado_pendiente_ci
+01-introduccion-y-compilacion/002-typescript-code-generation/03.ts	curriculum/typescript-book/01-fundamentos/002-typescript-code-generation/03.ts	N	implementado_pendiente_ci
+01-introduccion-y-compilacion/002-typescript-code-generation/04.ts	curriculum/typescript-book/01-fundamentos/002-typescript-code-generation/04.ts	R	implementado_pendiente_ci
+01-introduccion-y-compilacion/002-typescript-code-generation/05.ts	curriculum/typescript-book/01-fundamentos/002-typescript-code-generation/05.ts	R	implementado_pendiente_ci
+01-introduccion-y-compilacion/106-erased-structural-types/01.ts	curriculum/typescript-book/01-fundamentos/106-erased-structural-types/01.ts	R	implementado_pendiente_ci
+02-configuracion-del-compilador/001-configuracion-base/main.ts	Complemento propio	R	implementado_pendiente_ci
+02-configuracion-del-compilador/001-configuracion-base/package.json	Complemento propio	D/M	implementado_pendiente_ci
+02-configuracion-del-compilador/001-configuracion-base/tsconfig.json	Complemento propio	D/M	implementado_pendiente_ci
+02-configuracion-del-compilador/002-proyecto-y-resolucion/main.ts	Complemento propio	R	implementado_pendiente_ci
+02-configuracion-del-compilador/002-proyecto-y-resolucion/tsconfig.json	Complemento propio	D/M	implementado_pendiente_ci
+02-configuracion-del-compilador/002-proyecto-y-resolucion/util.ts	Complemento propio	D/M	implementado_pendiente_ci
+02-configuracion-del-compilador/003-opciones-estrictas/opciones.ts	Complemento propio	N	implementado_pendiente_ci
+02-configuracion-del-compilador/003-opciones-estrictas/tsconfig.json	Complemento propio	D/M	implementado_pendiente_ci
+02-configuracion-del-compilador/004-emision-y-target/emision.ts	Complemento propio	R	implementado_pendiente_ci
+02-configuracion-del-compilador/004-emision-y-target/tsconfig.json	Complemento propio	D/M	implementado_pendiente_ci
+02-configuracion-del-compilador/005-flujo-de-trabajo/README.md	Complemento propio	D/M	implementado_pendiente_ci
+03-tipos-primitivos-y-especiales/027-string/01.ts	curriculum/typescript-book/01-fundamentos/027-string/01.ts	R	implementado_pendiente_ci
+03-tipos-primitivos-y-especiales/027-string/02.ts	curriculum/typescript-book/01-fundamentos/027-string/02.ts	R	implementado_pendiente_ci
+03-tipos-primitivos-y-especiales/028-boolean/01.ts	curriculum/typescript-book/01-fundamentos/028-boolean/01.ts	R	implementado_pendiente_ci
+03-tipos-primitivos-y-especiales/029-number/01.ts	curriculum/typescript-book/01-fundamentos/029-number/01.ts	R	implementado_pendiente_ci
+03-tipos-primitivos-y-especiales/030-bigint/01.ts	curriculum/typescript-book/01-fundamentos/030-bigint/01.ts	R	implementado_pendiente_ci
+03-tipos-primitivos-y-especiales/031-symbol/01.ts	curriculum/typescript-book/01-fundamentos/031-symbol/01.ts	R	implementado_pendiente_ci
+03-tipos-primitivos-y-especiales/073-any-type/01.ts	curriculum/typescript-book/01-fundamentos/073-any-type/01.ts	R	implementado_pendiente_ci
+03-tipos-primitivos-y-especiales/074-unknown-type/01.ts	curriculum/typescript-book/01-fundamentos/074-unknown-type/01.ts	N	implementado_pendiente_ci
+03-tipos-primitivos-y-especiales/074-unknown-type/02.ts	curriculum/typescript-book/01-fundamentos/074-unknown-type/02.ts	R	implementado_pendiente_ci
+03-tipos-primitivos-y-especiales/075-void-type/01.ts	curriculum/typescript-book/01-fundamentos/075-void-type/01.ts	R	implementado_pendiente_ci
+03-tipos-primitivos-y-especiales/076-never-type/01.ts	curriculum/typescript-book/01-fundamentos/076-never-type/01.ts	T	implementado_pendiente_ci
+03-tipos-primitivos-y-especiales/076-never-type/02.ts	curriculum/typescript-book/01-fundamentos/076-never-type/02.ts	T	implementado_pendiente_ci
+03-tipos-primitivos-y-especiales/076-never-type/03.ts	curriculum/typescript-book/01-fundamentos/076-never-type/03.ts	R	implementado_pendiente_ci
+03-tipos-primitivos-y-especiales/108-symbols/01.ts	curriculum/typescript-book/01-fundamentos/108-symbols/01.ts	R	implementado_pendiente_ci
+03-tipos-primitivos-y-especiales/156-boxed-types/01.ts	curriculum/typescript-book/01-fundamentos/156-boxed-types/01.ts	R	implementado_pendiente_ci
+03-tipos-primitivos-y-especiales/166-null-y-undefined/null_y_undefined.ts	Complemento propio	R	implementado_pendiente_ci
+03-tipos-primitivos-y-especiales/167-strict-null-checks/strict_null_checks.ts	Complemento propio	N	implementado_pendiente_ci
+03-tipos-primitivos-y-especiales/168-object-y-primitivos/object_y_primitivos.ts	Complemento propio	N	implementado_pendiente_ci
+ATRIBUCION.md	Complemento propio	D/M	implementado_pendiente_ci
+CONFIGURACION.md	Complemento propio	D/M	implementado_pendiente_ci
+README.md	Complemento propio	D/M	implementado_pendiente_ci
+REFERENCIAS.md	Complemento propio	D/M	implementado_pendiente_ci
+INVENTARIO.tsv	Documentación propia	D	implementado_pendiente_ci
