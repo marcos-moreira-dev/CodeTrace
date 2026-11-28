@@ -12,13 +12,13 @@ ejemplo	adaptaciones	estado
 4.5.1-1	04-tipos-valores-variables/04-05-01-01-comodin-sin-limite/ComodinLibre.java	adaptacion_inicial
 4.5.1-2	04-tipos-valores-variables/04-05-01-02-comodin-acotado/ComodinAcotado.java	adaptacion_inicial
 4.8-1	04-tipos-valores-variables/04-08-01-tipo-raw/TipoRaw.java	adaptacion_inicial
-4.8-2		pendiente
+4.8-2	04-tipos-valores-variables/04-08-02-miembros-raw-heredados/BaseNumeros.java	adaptacion_inicial
 4.11-1		pendiente
 4.12.3-1	04-tipos-valores-variables/04-12-03-clases-de-variables/TiposVariables.java	adaptacion_inicial
 4.12.4-1	04-tipos-valores-variables/04-12-04-final/ReferenciaFinal.java	adaptacion_inicial
 4.12.5-1	04-tipos-valores-variables/04-12-05-valores-iniciales/ValoresIniciales.java	adaptacion_inicial
 4.12.6-1	04-tipos-valores-variables/04-12-06-01-tipo-y-clase/TipoYClase.java	adaptacion_inicial
-5.0-1		pendiente
+5.0-1	05-conversiones-y-contextos/05-00-01-conversion-compilacion-ejecucion/ConversionTiempo.java	adaptacion_inicial
 5.0-2	05-conversiones-y-contextos/05-00-02-contextos-conversion/ContextosConversion.java	adaptacion_inicial
 5.1.2-1	05-conversiones-y-contextos/05-01-02-ampliacion-primitiva/AmpliacionPrimitivaJls.java	adaptacion_inicial
 5.1.3-1	05-conversiones-y-contextos/05-01-03-01-infinitos-a-enteros/InfinitosEnteros.java	adaptacion_inicial
@@ -26,8 +26,8 @@ ejemplo	adaptaciones	estado
 5.2-1	05-conversiones-y-contextos/05-02-01-asignacion-primitivos/AsignacionPrimitivos.java	adaptacion_inicial
 5.2-2	05-conversiones-y-contextos/05-02-02-asignacion-referencias/AsignacionReferencias.java	adaptacion_inicial
 5.2-3	05-conversiones-y-contextos/05-02-03-asignacion-arreglos/AsignacionArreglos.java	adaptacion_inicial
-5.5-1		pendiente
-5.5-2		pendiente
+5.5-1	05-conversiones-y-contextos/05-05-01-cast-clases-interfaces/PuntoPlano.java	adaptacion_inicial
+5.5-2	05-conversiones-y-contextos/05-05-02-cast-arreglos/ElementoBase.java	adaptacion_inicial
 5.5-3	05-conversiones-y-contextos/05-05-03-cast-incompatible/CastIncompatible.java	adaptacion_inicial
 5.6-1	05-conversiones-y-contextos/05-06-01-promocion-unaria/PromocionUnaria.java	adaptacion_inicial
 5.6-2	05-conversiones-y-contextos/05-06-02-promocion-binaria/PromocionBinaria.java	adaptacion_inicial
@@ -40,23 +40,23 @@ ejemplo	adaptaciones	estado
 6.4-1	06-nombres/06-04-01-sombreado-local-invalido/SombreadoInvalido.java	adaptacion_inicial
 6.4.1-1	06-nombres/06-04-01-01-sombreado-campo/SombreadoCampo.java	adaptacion_inicial
 6.4.1-2	06-nombres/06-04-01-02-tipo-local-sombrea-import/Date.java	adaptacion_inicial
-6.5.2-1		pendiente
-6.5.5.1-1		pendiente
-6.5.5.2-1		pendiente
+6.5.2-1	06-nombres/06-05-02-01-reclasificacion-nombres/biblioteca/Sonido.java	adaptacion_inicial
+6.5.5.1-1	06-nombres/06-05-05-01-01-parametro-tipo/ReferenciaTipo.java	adaptacion_inicial
+6.5.5.2-1	06-nombres/06-05-05-02-01-nombre-tipo-calificado/tipos/Exterior.java	adaptacion_inicial
 6.5.6.1-1	06-nombres/06-05-06-01-01-asignar-constante/NombreConstante.java	adaptacion_inicial
 6.5.6.1-2	06-nombres/06-05-06-01-02-instancia-en-static/InstanciaInvalida.java	adaptacion_inicial
 6.5.6.1-3	06-nombres/06-05-06-01-03-captura-parametro/CapturaParametro.java	adaptacion_inicial
 6.5.6.2-1		pendiente
-6.5.6.2-2		pendiente
-6.5.7.1-1		pendiente
+6.5.6.2-2	06-nombres/06-05-06-02-02-calificar-campo-estatico/CalificarCampo.java	adaptacion_inicial
+6.5.7.1-1	06-nombres/06-05-07-01-01-metodo-nombre-simple/NombreMetodo.java	adaptacion_inicial
 6.6-1		pendiente
 6.6-2		pendiente
 6.6-3		pendiente
 6.6-4		pendiente
 6.6-5	06-nombres/06-06-05-miembro-privado/Privado.java	adaptacion_inicial
 6.6.2-1		pendiente
-6.7-1		pendiente
-6.7-2		pendiente
+6.7-1	06-nombres/06-07-01-nombres-completos/paquete/Exterior.java	adaptacion_inicial
+6.7-2	06-nombres/06-07-02-nombre-canonico-heredado/BaseNombre.java	adaptacion_inicial
 7.4.2-1		pendiente
 7.5.1-1	07-paquetes-y-modulos/07-05-01-01-importacion-simple/app/ImportacionSimple.java	adaptacion_inicial
 7.5.1-2	07-paquetes-y-modulos/07-05-01-02-import-duplicado/ArrayList.java	adaptacion_inicial
@@ -70,7 +70,7 @@ ejemplo	adaptaciones	estado
 8.1.1.1-1	08-clases/08-01-01-01-01-clase-abstracta/ClaseAbstracta.java	adaptacion_inicial
 8.1.1.1-2	08-clases/08-01-01-01-02-abstracta-incompatible/Actualizable.java	adaptacion_inicial
 8.1.2-1	08-clases/08-01-02-01-limites-reciprocos/Convertible.java	adaptacion_inicial
-8.1.2-2		pendiente
+8.1.2-2	08-clases/08-01-02-02-clases-genericas-anidadas/CajaExterior.java	adaptacion_inicial
 8.1.3-1	08-clases/08-01-03-01-miembros-estaticos-internos/InternaEstatica.java	adaptacion_inicial
 8.1.3-2	08-clases/08-01-03-02-contexto-estatico-invalido/ContextoEstaticoInvalido.java	adaptacion_inicial
 8.1.4-1	08-clases/08-01-04-01-herencia-final/RaizFinal.java	adaptacion_inicial
@@ -85,22 +85,22 @@ ejemplo	adaptaciones	estado
 8.2-3		pendiente
 8.2-4		pendiente
 8.2-5		pendiente
-8.3-1		pendiente
-8.3-2		pendiente
+8.3-1	08-clases/08-03-01-campos-heredados-ambiguos/CampoBase.java	adaptacion_inicial
+8.3-2	08-clases/08-03-02-heredar-mismo-campo/RaizCampo.java	adaptacion_inicial
 8.3.1.1-1	08-clases/08-03-01-01-01-campos-static/CamposCompartidos.java	adaptacion_inicial
 8.3.1.1-2	08-clases/08-03-01-01-02-ocultar-campo-estatico/BaseEstatica.java	adaptacion_inicial
 8.3.1.1-3	08-clases/08-03-01-01-03-ocultar-campo-instancia/BaseInstancia.java	adaptacion_inicial
-8.3.1.3-1		pendiente
-8.3.1.4-1		pendiente
+8.3.1.3-1	08-clases/08-03-01-03-01-persistencia-transient/DatosPersistentes.java	adaptacion_inicial
+8.3.1.4-1	08-clases/08-03-01-04-01-campos-volatile/CamposVolatile.java	adaptacion_inicial
 8.3.2-1	08-clases/08-03-02-01-inicializar-campos/Coordenada.java	adaptacion_inicial
 8.3.2-2	08-clases/08-03-02-02-referencia-estatica-posterior/ReferenciaPosterior.java	adaptacion_inicial
 8.3.3-1	08-clases/08-03-03-01-referencia-adelantada-invalida/CampoAdelantado.java	adaptacion_inicial
-8.4.2-1		pendiente
-8.4.3.1-1		pendiente
-8.4.3.1-2		pendiente
-8.4.3.6-1		pendiente
-8.4.3.6-2		pendiente
-8.4.6-1		pendiente
+8.4.2-1	08-clases/08-04-02-01-firmas-equivalentes/FirmasEquivalentes.java	adaptacion_inicial
+8.4.3.1-1	08-clases/08-04-03-01-01-abstracto-refinado/BaseAbstracta.java	adaptacion_inicial
+8.4.3.1-2	08-clases/08-04-03-01-02-abstracto-sobrescribe-concreto/BaseConcreta.java	adaptacion_inicial
+8.4.3.6-1	08-clases/08-04-03-06-01-monitor-metodos/MonitorMetodos.java	adaptacion_inicial
+8.4.3.6-2	08-clases/08-04-03-06-02-metodo-sincronizado/CuentaSincronizada.java	adaptacion_inicial
+8.4.6-1	08-clases/08-04-06-01-tipo-excepcion-generica/ExcepcionGenerica.java	adaptacion_inicial
 8.4.8-1		pendiente
 8.4.8.1-1	08-clases/08-04-08-01-01-sobrescritura/Desplazable.java	adaptacion_inicial
 8.4.8.1-2		pendiente
@@ -115,9 +115,9 @@ ejemplo	adaptaciones	estado
 8.8-1	08-clases/08-08-01-constructor/ConstructorSimple.java	adaptacion_inicial
 8.8.7-1	08-clases/08-08-07-01-this-y-super/Elemento.java	adaptacion_inicial
 8.8.7.1-1	08-clases/08-08-07-01-01-this-antes-super/ConstructorInvalido.java	adaptacion_inicial
-8.8.7.1-2		pendiente
+8.8.7.1-2	08-clases/08-08-07-01-02-super-calificado/Contenedor.java	adaptacion_inicial
 8.8.9-1	08-clases/08-08-09-01-constructor-implicito/RectanguloImplicit.java	adaptacion_inicial
-8.8.9-2		pendiente
+8.8.9-2	08-clases/08-08-09-02-constructor-no-accesible/base/Exterior.java	adaptacion_inicial
 8.8.10-1	08-clases/08-08-10-01-constructor-privado/SoloClase.java	adaptacion_inicial
 8.9.2-1	08-clases/08-09-02-01-enum-con-campos/Nivel.java	adaptacion_inicial
 8.9.2-2	08-clases/08-09-02-02-enum-referencia-invalida/EstadoInvalido.java	adaptacion_inicial
@@ -131,19 +131,19 @@ ejemplo	adaptaciones	estado
 9.4.2-1	09-interfaces/09-04-02-01-sobrecarga-interfaz/Movil.java	adaptacion_inicial
 9.6.1-1	09-interfaces/09-06-01-01-declarar-anotacion/Ficha.java	adaptacion_inicial
 9.6.1-2	09-interfaces/09-06-01-02-anotacion-marcadora/Experimental.java	adaptacion_inicial
-9.6.1-3		pendiente
+9.6.1-3	09-interfaces/09-06-01-03-anotacion-elemento/Identificador.java	adaptacion_inicial
 9.6.2-1	09-interfaces/09-06-02-01-anotacion-default/Tarea.java	adaptacion_inicial
-9.6.3-1		pendiente
-9.6.3-2		pendiente
-9.6.3-3		pendiente
-9.7.1-1		pendiente
-9.7.2-1		pendiente
+9.6.3-1	09-interfaces/09-06-03-01-contenedor-mal-formado/Repetible.java	adaptacion_inicial
+9.6.3-2	09-interfaces/09-06-03-02-restriccion-repeticion/MarcaTipo.java	adaptacion_inicial
+9.6.3-3	09-interfaces/09-06-03-03-contenedor-repetible/Marca.java	adaptacion_inicial
+9.7.1-1	09-interfaces/09-07-01-01-anotacion-normal/Revision.java	adaptacion_inicial
+9.7.2-1	09-interfaces/09-07-02-01-anotacion-marcadora/Preliminar.java	adaptacion_inicial
 9.7.3-1	09-interfaces/09-07-03-01-anotacion-value/Etiqueta.java	adaptacion_inicial
 9.8-1	09-interfaces/09-08-01-interfaz-funcional/InterfazFuncional.java	adaptacion_inicial
-9.8-2		pendiente
+9.8-2	09-interfaces/09-08-02-interfaces-funcionales-erasure/PrimeraFuncion.java	adaptacion_inicial
 9.8-3		pendiente
-9.9-1		pendiente
-9.9-2		pendiente
+9.9-1	09-interfaces/09-09-01-throws-tipo-funcion/OperacionIO.java	adaptacion_inicial
+9.9-2	09-interfaces/09-09-02-tipo-funcion-generico/FuncionA.java	adaptacion_inicial
 10.2-1	10-arreglos/10-02-01-declarar-arreglos/DeclararArreglos.java	adaptacion_inicial
 10.2-2	10-arreglos/10-02-02-declaradores-arreglos/DeclaradoresArreglos.java	adaptacion_inicial
 10.4-1	10-arreglos/10-04-01-acceso-arreglo/AccesoArreglo.java	adaptacion_inicial
@@ -158,7 +158,7 @@ ejemplo	adaptaciones	estado
 12.4.1-1	12-ejecucion/12-04-01-01-orden-inicializacion/OrdenInicializacion.java	adaptacion_inicial
 12.4.1-2	12-ejecucion/12-04-01-02-inicializar-clase-declarante/Declarante.java	adaptacion_inicial
 12.4.1-3	12-ejecucion/12-04-01-03-inicializacion-interfaces/AbuelaI.java	adaptacion_inicial
-12.5-1		pendiente
+12.5-1	12-ejecucion/12-05-01-crear-instancia/PuntoInicial.java	adaptacion_inicial
 12.5-2	12-ejecucion/12-05-02-despacho-en-constructor/ConstructorBase.java	adaptacion_inicial
 13.4.4-1		pendiente
 13.4.4-2		pendiente
