@@ -1870,5 +1870,83 @@
     "main": "MainTokenBucket",
     "mode": "T",
     "stdout": "0: true\n0: true\n0: false\n1: true\n"
+  },
+  {
+    "path": "11-redes-y-protocolos-de-comunicacion/18-servidor-multicliente/MainMultiCliente.java",
+    "sources": [
+      "11-redes-y-protocolos-de-comunicacion/18-servidor-multicliente/Servidor.java",
+      "11-redes-y-protocolos-de-comunicacion/18-servidor-multicliente/Cliente.java",
+      "11-redes-y-protocolos-de-comunicacion/18-servidor-multicliente/MainMultiCliente.java"
+    ],
+    "main": "MainMultiCliente",
+    "mode": "R",
+    "stdout": "OK pan\nOK leche\nOK arroz\n"
+  },
+  {
+    "path": "11-redes-y-protocolos-de-comunicacion/19-servidor-pool/MainServidorPool.java",
+    "sources": [
+      "11-redes-y-protocolos-de-comunicacion/19-servidor-pool/Servidor.java",
+      "11-redes-y-protocolos-de-comunicacion/19-servidor-pool/Cliente.java",
+      "11-redes-y-protocolos-de-comunicacion/19-servidor-pool/MainServidorPool.java"
+    ],
+    "main": "MainServidorPool",
+    "mode": "R",
+    "stdout": "OK pan\nOK leche\nOK arroz\n"
+  },
+  {
+    "path": "11-redes-y-protocolos-de-comunicacion/20-servidor-virtual/MainServidorVirtual.java",
+    "sources": [
+      "11-redes-y-protocolos-de-comunicacion/20-servidor-virtual/Servidor.java",
+      "11-redes-y-protocolos-de-comunicacion/20-servidor-virtual/Cliente.java",
+      "11-redes-y-protocolos-de-comunicacion/20-servidor-virtual/MainServidorVirtual.java"
+    ],
+    "main": "MainServidorVirtual",
+    "mode": "R",
+    "stdout": "OK pan\nOK leche\nOK arroz\n"
+  },
+  {
+    "path": "11-redes-y-protocolos-de-comunicacion/21-sockets-nio/MainSelector.java",
+    "sources": [
+      "11-redes-y-protocolos-de-comunicacion/21-sockets-nio/ServidorSelector.java",
+      "11-redes-y-protocolos-de-comunicacion/21-sockets-nio/Cliente.java",
+      "11-redes-y-protocolos-de-comunicacion/21-sockets-nio/MainSelector.java"
+    ],
+    "main": "MainSelector",
+    "mode": "R",
+    "stdout": "HOLA\n"
+  },
+  {
+    "path": "11-redes-y-protocolos-de-comunicacion/22-http/MainHttp.java",
+    "sources": [
+      "11-redes-y-protocolos-de-comunicacion/22-http/ServidorHttp.java",
+      "11-redes-y-protocolos-de-comunicacion/22-http/ClienteHttp.java",
+      "11-redes-y-protocolos-de-comunicacion/22-http/MainHttp.java"
+    ],
+    "main": "MainHttp",
+    "mode": "R",
+    "stdout": "Estado: 200\nTipo: text/plain; charset=utf-8\nPan: 12\n"
+  },
+  {
+    "path": "11-redes-y-protocolos-de-comunicacion/23-protocolos-aplicacion/MainProtocolo.java",
+    "sources": [
+      "11-redes-y-protocolos-de-comunicacion/23-protocolos-aplicacion/Solicitud.java",
+      "11-redes-y-protocolos-de-comunicacion/23-protocolos-aplicacion/Respuesta.java",
+      "11-redes-y-protocolos-de-comunicacion/23-protocolos-aplicacion/ProtocoloTexto.java",
+      "11-redes-y-protocolos-de-comunicacion/23-protocolos-aplicacion/MainProtocolo.java"
+    ],
+    "main": "MainProtocolo",
+    "mode": "T",
+    "stdout": "200 12\n404 No encontrado\n400 Sintaxis invalida\n"
+  },
+  {
+    "path": "11-redes-y-protocolos-de-comunicacion/24-timeouts/MainTimeout.java",
+    "sources": [
+      "11-redes-y-protocolos-de-comunicacion/24-timeouts/ServidorLento.java",
+      "11-redes-y-protocolos-de-comunicacion/24-timeouts/ClienteTimeout.java",
+      "11-redes-y-protocolos-de-comunicacion/24-timeouts/MainTimeout.java"
+    ],
+    "main": "MainTimeout",
+    "mode": "R",
+    "stdout": "Timeout de lectura\nConexion cerrada\n"
   }
 ]

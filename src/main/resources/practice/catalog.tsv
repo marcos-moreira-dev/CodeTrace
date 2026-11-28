@@ -1,4 +1,4 @@
-# CodeTrace | Biblioteca offline v26 | una entrada por archivo, no por ejercicio
+# CodeTrace | Biblioteca offline v27 | una entrada por archivo, no por ejercicio
 c	01-fundamentos/bits-y-mascaras/bits_y_mascaras.c
 c	01-fundamentos/callbacks-y-funciones/callbacks_y_funciones.c
 c	01-fundamentos/compilacion-y-enlazado/biblioteca-estatica-dinamica/compilar.sh
@@ -1364,6 +1364,28 @@ java21	11-redes-y-protocolos-de-comunicacion/16-ventana-deslizante/MainVentana.j
 java21	11-redes-y-protocolos-de-comunicacion/16-ventana-deslizante/VentanaDeslizante.java
 java21	11-redes-y-protocolos-de-comunicacion/17-congestion-y-tasa/MainTokenBucket.java
 java21	11-redes-y-protocolos-de-comunicacion/17-congestion-y-tasa/TokenBucket.java
+java21	11-redes-y-protocolos-de-comunicacion/18-servidor-multicliente/Cliente.java
+java21	11-redes-y-protocolos-de-comunicacion/18-servidor-multicliente/MainMultiCliente.java
+java21	11-redes-y-protocolos-de-comunicacion/18-servidor-multicliente/Servidor.java
+java21	11-redes-y-protocolos-de-comunicacion/19-servidor-pool/Cliente.java
+java21	11-redes-y-protocolos-de-comunicacion/19-servidor-pool/MainServidorPool.java
+java21	11-redes-y-protocolos-de-comunicacion/19-servidor-pool/Servidor.java
+java21	11-redes-y-protocolos-de-comunicacion/20-servidor-virtual/Cliente.java
+java21	11-redes-y-protocolos-de-comunicacion/20-servidor-virtual/MainServidorVirtual.java
+java21	11-redes-y-protocolos-de-comunicacion/20-servidor-virtual/Servidor.java
+java21	11-redes-y-protocolos-de-comunicacion/21-sockets-nio/Cliente.java
+java21	11-redes-y-protocolos-de-comunicacion/21-sockets-nio/MainSelector.java
+java21	11-redes-y-protocolos-de-comunicacion/21-sockets-nio/ServidorSelector.java
+java21	11-redes-y-protocolos-de-comunicacion/22-http/ClienteHttp.java
+java21	11-redes-y-protocolos-de-comunicacion/22-http/MainHttp.java
+java21	11-redes-y-protocolos-de-comunicacion/22-http/ServidorHttp.java
+java21	11-redes-y-protocolos-de-comunicacion/23-protocolos-aplicacion/MainProtocolo.java
+java21	11-redes-y-protocolos-de-comunicacion/23-protocolos-aplicacion/ProtocoloTexto.java
+java21	11-redes-y-protocolos-de-comunicacion/23-protocolos-aplicacion/Respuesta.java
+java21	11-redes-y-protocolos-de-comunicacion/23-protocolos-aplicacion/Solicitud.java
+java21	11-redes-y-protocolos-de-comunicacion/24-timeouts/ClienteTimeout.java
+java21	11-redes-y-protocolos-de-comunicacion/24-timeouts/MainTimeout.java
+java21	11-redes-y-protocolos-de-comunicacion/24-timeouts/ServidorLento.java
 javascript	01-fundamentos/closures/closures.js
 javascript	01-fundamentos/event-loop/event_loop.js
 javascript	01-fundamentos/funciones/funciones.js

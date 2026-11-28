@@ -272,28 +272,28 @@ area	unidad	modalidad	archivo	objetivo	estado
 11-redes-y-protocolos-de-comunicacion	16-ventana-deslizante	T	MainVentana.java	Flujo, números de secuencia y confirmaciones; modelo no TCP completo.	implementado_pendiente_ci
 11-redes-y-protocolos-de-comunicacion	17-congestion-y-tasa	T	TokenBucket.java	Limitar tasa con reloj simulado; no confundir con control de congestión TCP.	implementado_pendiente_ci
 11-redes-y-protocolos-de-comunicacion	17-congestion-y-tasa	T	MainTokenBucket.java	Limitar tasa con reloj simulado; no confundir con control de congestión TCP.	implementado_pendiente_ci
-11-redes-y-protocolos-de-comunicacion	18-servidor-multicliente	R	Servidor.java	Un hilo por cliente con número limitado de conexiones.	planificado
-11-redes-y-protocolos-de-comunicacion	18-servidor-multicliente	R	Cliente.java	Un hilo por cliente con número limitado de conexiones.	planificado
-11-redes-y-protocolos-de-comunicacion	18-servidor-multicliente	R	MainMultiCliente.java	Un hilo por cliente con número limitado de conexiones.	planificado
-11-redes-y-protocolos-de-comunicacion	19-servidor-pool	R	Servidor.java	Pool precreado y cola acotada; relacionar con productor-consumidor.	planificado
-11-redes-y-protocolos-de-comunicacion	19-servidor-pool	R	Cliente.java	Pool precreado y cola acotada; relacionar con productor-consumidor.	planificado
-11-redes-y-protocolos-de-comunicacion	19-servidor-pool	R	MainServidorPool.java	Pool precreado y cola acotada; relacionar con productor-consumidor.	planificado
-11-redes-y-protocolos-de-comunicacion	20-servidor-virtual	R	Servidor.java	Hilo virtual por conexión, límite de recursos y cierre.	planificado
-11-redes-y-protocolos-de-comunicacion	20-servidor-virtual	R	Cliente.java	Hilo virtual por conexión, límite de recursos y cierre.	planificado
-11-redes-y-protocolos-de-comunicacion	20-servidor-virtual	R	MainServidorVirtual.java	Hilo virtual por conexión, límite de recursos y cierre.	planificado
-11-redes-y-protocolos-de-comunicacion	21-sockets-nio	R	ServidorSelector.java	Canales no bloqueantes, selector y lecturas/escrituras parciales.	planificado
-11-redes-y-protocolos-de-comunicacion	21-sockets-nio	R	Cliente.java	Canales no bloqueantes, selector y lecturas/escrituras parciales.	planificado
-11-redes-y-protocolos-de-comunicacion	21-sockets-nio	R	MainSelector.java	Canales no bloqueantes, selector y lecturas/escrituras parciales.	planificado
-11-redes-y-protocolos-de-comunicacion	22-http	R	ServidorHttp.java	HttpServer del JDK y HttpClient en loopback; método, estado, cabeceras y cuerpo.	planificado
-11-redes-y-protocolos-de-comunicacion	22-http	R	ClienteHttp.java	HttpServer del JDK y HttpClient en loopback; método, estado, cabeceras y cuerpo.	planificado
-11-redes-y-protocolos-de-comunicacion	22-http	R	MainHttp.java	HttpServer del JDK y HttpClient en loopback; método, estado, cabeceras y cuerpo.	planificado
-11-redes-y-protocolos-de-comunicacion	23-protocolos-aplicacion	T	Solicitud.java	Gramática de mensajes, validación, errores y límites.	planificado
-11-redes-y-protocolos-de-comunicacion	23-protocolos-aplicacion	T	Respuesta.java	Gramática de mensajes, validación, errores y límites.	planificado
-11-redes-y-protocolos-de-comunicacion	23-protocolos-aplicacion	T	ProtocoloTexto.java	Gramática de mensajes, validación, errores y límites.	planificado
-11-redes-y-protocolos-de-comunicacion	23-protocolos-aplicacion	T	MainProtocolo.java	Gramática de mensajes, validación, errores y límites.	planificado
-11-redes-y-protocolos-de-comunicacion	24-timeouts	R	ServidorLento.java	Timeout de conexión/lectura y cierre ante fallo.	planificado
-11-redes-y-protocolos-de-comunicacion	24-timeouts	R	ClienteTimeout.java	Timeout de conexión/lectura y cierre ante fallo.	planificado
-11-redes-y-protocolos-de-comunicacion	24-timeouts	R	MainTimeout.java	Timeout de conexión/lectura y cierre ante fallo.	planificado
+11-redes-y-protocolos-de-comunicacion	18-servidor-multicliente	R	Servidor.java	Un hilo por cliente con número limitado de conexiones.	implementado_pendiente_ci
+11-redes-y-protocolos-de-comunicacion	18-servidor-multicliente	R	Cliente.java	Un hilo por cliente con número limitado de conexiones.	implementado_pendiente_ci
+11-redes-y-protocolos-de-comunicacion	18-servidor-multicliente	R	MainMultiCliente.java	Un hilo por cliente con número limitado de conexiones.	implementado_pendiente_ci
+11-redes-y-protocolos-de-comunicacion	19-servidor-pool	R	Servidor.java	Pool precreado y cola acotada; relacionar con productor-consumidor.	implementado_pendiente_ci
+11-redes-y-protocolos-de-comunicacion	19-servidor-pool	R	Cliente.java	Pool precreado y cola acotada; relacionar con productor-consumidor.	implementado_pendiente_ci
+11-redes-y-protocolos-de-comunicacion	19-servidor-pool	R	MainServidorPool.java	Pool precreado y cola acotada; relacionar con productor-consumidor.	implementado_pendiente_ci
+11-redes-y-protocolos-de-comunicacion	20-servidor-virtual	R	Servidor.java	Hilo virtual por conexión, límite de recursos y cierre.	implementado_pendiente_ci
+11-redes-y-protocolos-de-comunicacion	20-servidor-virtual	R	Cliente.java	Hilo virtual por conexión, límite de recursos y cierre.	implementado_pendiente_ci
+11-redes-y-protocolos-de-comunicacion	20-servidor-virtual	R	MainServidorVirtual.java	Hilo virtual por conexión, límite de recursos y cierre.	implementado_pendiente_ci
+11-redes-y-protocolos-de-comunicacion	21-sockets-nio	R	ServidorSelector.java	Canales no bloqueantes, selector y lecturas/escrituras parciales.	implementado_pendiente_ci
+11-redes-y-protocolos-de-comunicacion	21-sockets-nio	R	Cliente.java	Canales no bloqueantes, selector y lecturas/escrituras parciales.	implementado_pendiente_ci
+11-redes-y-protocolos-de-comunicacion	21-sockets-nio	R	MainSelector.java	Canales no bloqueantes, selector y lecturas/escrituras parciales.	implementado_pendiente_ci
+11-redes-y-protocolos-de-comunicacion	22-http	R	ServidorHttp.java	HttpServer del JDK y HttpClient en loopback; método, estado, cabeceras y cuerpo.	implementado_pendiente_ci
+11-redes-y-protocolos-de-comunicacion	22-http	R	ClienteHttp.java	HttpServer del JDK y HttpClient en loopback; método, estado, cabeceras y cuerpo.	implementado_pendiente_ci
+11-redes-y-protocolos-de-comunicacion	22-http	R	MainHttp.java	HttpServer del JDK y HttpClient en loopback; método, estado, cabeceras y cuerpo.	implementado_pendiente_ci
+11-redes-y-protocolos-de-comunicacion	23-protocolos-aplicacion	T	Solicitud.java	Gramática de mensajes, validación, errores y límites.	implementado_pendiente_ci
+11-redes-y-protocolos-de-comunicacion	23-protocolos-aplicacion	T	Respuesta.java	Gramática de mensajes, validación, errores y límites.	implementado_pendiente_ci
+11-redes-y-protocolos-de-comunicacion	23-protocolos-aplicacion	T	ProtocoloTexto.java	Gramática de mensajes, validación, errores y límites.	implementado_pendiente_ci
+11-redes-y-protocolos-de-comunicacion	23-protocolos-aplicacion	T	MainProtocolo.java	Gramática de mensajes, validación, errores y límites.	implementado_pendiente_ci
+11-redes-y-protocolos-de-comunicacion	24-timeouts	R	ServidorLento.java	Timeout de conexión/lectura y cierre ante fallo.	implementado_pendiente_ci
+11-redes-y-protocolos-de-comunicacion	24-timeouts	R	ClienteTimeout.java	Timeout de conexión/lectura y cierre ante fallo.	implementado_pendiente_ci
+11-redes-y-protocolos-de-comunicacion	24-timeouts	R	MainTimeout.java	Timeout de conexión/lectura y cierre ante fallo.	implementado_pendiente_ci
 12-persistencia-y-gestion-de-datos	01-registros	R	Registro.java	Persistencia de registros de longitud fija con archivos.	planificado
 12-persistencia-y-gestion-de-datos	01-registros	R	ArchivoRegistros.java	Persistencia de registros de longitud fija con archivos.	planificado
 12-persistencia-y-gestion-de-datos	01-registros	R	MainRegistros.java	Persistencia de registros de longitud fija con archivos.	planificado
