@@ -27,7 +27,7 @@ def verify(case):
         run = subprocess.run(["java", "-Dfile.encoding=UTF-8", "-cp", tmp, case["main"],
                               *case.get("args", [])], cwd=tmp, timeout=20,
                              capture_output=True, text=True, encoding="utf-8")
-        assert run.returncode == 0 and not run.stderr and run.stdout == case["stdout"], (
+        assert run.returncode == 0 and not run.stderr and run.stdout in case.get("allowed_stdout", [case["stdout"]]), (
             case["path"], run.returncode, run.stdout, run.stderr, case["stdout"])
     return case["path"]
 

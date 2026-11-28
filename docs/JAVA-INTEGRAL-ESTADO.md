@@ -7,8 +7,9 @@ Plan acordado: 06 matemáticas, 07 datos y memoria (sin hardware), 08 archivos/E
 ## Avance
 
 - 06: 9 unidades, 20 clientes implementados. Pruebas pendientes de CI.
-- 07–20: pendientes.
+- 07: 18 unidades, 44 fuentes implementadas (31 clientes ejecutables); modelos explícitos para memoria y reemplazo de páginas. Pruebas pendientes de CI.
+- 08–20: pendientes.
 - Verificador separado: scripts/verificar-java-integral.py, manifiesto scripts/java-integral-casos.json. Compila solo las fuentes declaradas por cliente y compara salida; verifica cobertura de archivos. Los scripts históricos excluyen nuevas áreas de la compilación conjunta.
-- Catálogo v20: 1617 entradas.
+- Catálogo v21: 1661 entradas.
 
 No se publica instalador ni se modifica C o TypeScript en este cambio.

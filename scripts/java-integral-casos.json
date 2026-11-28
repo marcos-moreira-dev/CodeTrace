@@ -178,5 +178,317 @@
     "main": "IntegracionTrapecios",
     "mode": "R",
     "stdout": "0.333334\n"
+  },
+  {
+    "path": "07-representacion-de-datos-y-memoria/01-bases-numericas/ConversionBases.java",
+    "sources": [
+      "07-representacion-de-datos-y-memoria/01-bases-numericas/ConversionBases.java"
+    ],
+    "main": "ConversionBases",
+    "mode": "R",
+    "stdout": "101010\n2a\n42\n"
+  },
+  {
+    "path": "07-representacion-de-datos-y-memoria/01-bases-numericas/ConversionManual.java",
+    "sources": [
+      "07-representacion-de-datos-y-memoria/01-bases-numericas/ConversionManual.java"
+    ],
+    "main": "ConversionManual",
+    "mode": "R",
+    "stdout": "101010\n"
+  },
+  {
+    "path": "07-representacion-de-datos-y-memoria/02-enteros-sin-signo/EnteroSinSigno.java",
+    "sources": [
+      "07-representacion-de-datos-y-memoria/02-enteros-sin-signo/EnteroSinSigno.java"
+    ],
+    "main": "EnteroSinSigno",
+    "mode": "R",
+    "stdout": "-1\n255\n4294967295\n"
+  },
+  {
+    "path": "07-representacion-de-datos-y-memoria/03-complemento-a-dos/ComplementoDos.java",
+    "sources": [
+      "07-representacion-de-datos-y-memoria/03-complemento-a-dos/ComplementoDos.java"
+    ],
+    "main": "ComplementoDos",
+    "mode": "R",
+    "stdout": "11111011\n-5\n"
+  },
+  {
+    "path": "07-representacion-de-datos-y-memoria/03-complemento-a-dos/DesbordamientoEntero.java",
+    "sources": [
+      "07-representacion-de-datos-y-memoria/03-complemento-a-dos/DesbordamientoEntero.java"
+    ],
+    "main": "DesbordamientoEntero",
+    "mode": "R",
+    "stdout": "-2147483648\nDesbordamiento detectado\n"
+  },
+  {
+    "path": "07-representacion-de-datos-y-memoria/04-punto-flotante/BitsFloat.java",
+    "sources": [
+      "07-representacion-de-datos-y-memoria/04-punto-flotante/BitsFloat.java"
+    ],
+    "main": "BitsFloat",
+    "mode": "R",
+    "stdout": "Signo: 1\nExponente: 129\nFraccion: 5242880\ntrue\n"
+  },
+  {
+    "path": "07-representacion-de-datos-y-memoria/04-punto-flotante/BitsDouble.java",
+    "sources": [
+      "07-representacion-de-datos-y-memoria/04-punto-flotante/BitsDouble.java"
+    ],
+    "main": "BitsDouble",
+    "mode": "R",
+    "stdout": "0\n1023\n2251799813685248\ntrue\n"
+  },
+  {
+    "path": "07-representacion-de-datos-y-memoria/05-orden-bytes/LittleBigEndian.java",
+    "sources": [
+      "07-representacion-de-datos-y-memoria/05-orden-bytes/LittleBigEndian.java"
+    ],
+    "main": "LittleBigEndian",
+    "mode": "R",
+    "stdout": "12345678\n78563412\n"
+  },
+  {
+    "path": "07-representacion-de-datos-y-memoria/05-orden-bytes/OrdenNativo.java",
+    "sources": [
+      "07-representacion-de-datos-y-memoria/05-orden-bytes/OrdenNativo.java"
+    ],
+    "main": "OrdenNativo",
+    "mode": "R",
+    "stdout": "LITTLE_ENDIAN\n",
+    "allowed_stdout": [
+      "LITTLE_ENDIAN\n",
+      "BIG_ENDIAN\n"
+    ]
+  },
+  {
+    "path": "07-representacion-de-datos-y-memoria/06-operaciones-bits/OperacionesBits.java",
+    "sources": [
+      "07-representacion-de-datos-y-memoria/06-operaciones-bits/OperacionesBits.java"
+    ],
+    "main": "OperacionesBits",
+    "mode": "R",
+    "stdout": "8\n14\n6\n3\n"
+  },
+  {
+    "path": "07-representacion-de-datos-y-memoria/06-operaciones-bits/Desplazamientos.java",
+    "sources": [
+      "07-representacion-de-datos-y-memoria/06-operaciones-bits/Desplazamientos.java"
+    ],
+    "main": "Desplazamientos",
+    "mode": "R",
+    "stdout": "-4\n2147483644\n12\n"
+  },
+  {
+    "path": "07-representacion-de-datos-y-memoria/07-mascaras/ActivarDesactivarBits.java",
+    "sources": [
+      "07-representacion-de-datos-y-memoria/07-mascaras/ActivarDesactivarBits.java"
+    ],
+    "main": "ActivarDesactivarBits",
+    "mode": "R",
+    "stdout": "8\n0\n8\n"
+  },
+  {
+    "path": "07-representacion-de-datos-y-memoria/07-mascaras/ExtraerCampoBits.java",
+    "sources": [
+      "07-representacion-de-datos-y-memoria/07-mascaras/ExtraerCampoBits.java"
+    ],
+    "main": "ExtraerCampoBits",
+    "mode": "R",
+    "stdout": "5\n"
+  },
+  {
+    "path": "07-representacion-de-datos-y-memoria/07-mascaras/EmpaquetarCampos.java",
+    "sources": [
+      "07-representacion-de-datos-y-memoria/07-mascaras/EmpaquetarCampos.java"
+    ],
+    "main": "EmpaquetarCampos",
+    "mode": "R",
+    "stdout": "96\n9\n6\n"
+  },
+  {
+    "path": "07-representacion-de-datos-y-memoria/08-codificacion-texto/AsciiUnicode.java",
+    "sources": [
+      "07-representacion-de-datos-y-memoria/08-codificacion-texto/AsciiUnicode.java"
+    ],
+    "main": "AsciiUnicode",
+    "mode": "R",
+    "stdout": "65\n241\nfalse\n"
+  },
+  {
+    "path": "07-representacion-de-datos-y-memoria/08-codificacion-texto/Utf8Bytes.java",
+    "sources": [
+      "07-representacion-de-datos-y-memoria/08-codificacion-texto/Utf8Bytes.java"
+    ],
+    "main": "Utf8Bytes",
+    "mode": "R",
+    "stdout": "41\nc3\nb1\nAñ\n"
+  },
+  {
+    "path": "07-representacion-de-datos-y-memoria/08-codificacion-texto/PuntosCodigo.java",
+    "sources": [
+      "07-representacion-de-datos-y-memoria/08-codificacion-texto/PuntosCodigo.java"
+    ],
+    "main": "PuntosCodigo",
+    "mode": "R",
+    "stdout": "3\n2\n41\n1f600\n"
+  },
+  {
+    "path": "07-representacion-de-datos-y-memoria/15-referencias-java/PasoPorValor.java",
+    "sources": [
+      "07-representacion-de-datos-y-memoria/15-referencias-java/PasoPorValor.java"
+    ],
+    "main": "PasoPorValor",
+    "mode": "R",
+    "stdout": "3\n9\n"
+  },
+  {
+    "path": "07-representacion-de-datos-y-memoria/15-referencias-java/AliasReferencias.java",
+    "sources": [
+      "07-representacion-de-datos-y-memoria/15-referencias-java/AliasReferencias.java"
+    ],
+    "main": "AliasReferencias",
+    "mode": "R",
+    "stdout": "8\ntrue\n"
+  },
+  {
+    "path": "07-representacion-de-datos-y-memoria/15-referencias-java/IntercambioValores.java",
+    "sources": [
+      "07-representacion-de-datos-y-memoria/15-referencias-java/IntercambioValores.java"
+    ],
+    "main": "IntercambioValores",
+    "mode": "R",
+    "stdout": "2 7\n7 2\n"
+  },
+  {
+    "path": "07-representacion-de-datos-y-memoria/18-datos-compuestos/MainRegistroBinario.java",
+    "sources": [
+      "07-representacion-de-datos-y-memoria/18-datos-compuestos/RegistroBinario.java",
+      "07-representacion-de-datos-y-memoria/18-datos-compuestos/MainRegistroBinario.java"
+    ],
+    "main": "MainRegistroBinario",
+    "mode": "R",
+    "stdout": "0000002a0007\n42 7\n"
+  },
+  {
+    "path": "07-representacion-de-datos-y-memoria/19-stack-heap/PilaLlamadas.java",
+    "sources": [
+      "07-representacion-de-datos-y-memoria/19-stack-heap/PilaLlamadas.java"
+    ],
+    "main": "PilaLlamadas",
+    "mode": "R",
+    "stdout": "entra 3\nentra 2\nentra 1\nsale 1\nsale 2\nsale 3\n"
+  },
+  {
+    "path": "07-representacion-de-datos-y-memoria/19-stack-heap/ObjetosHeap.java",
+    "sources": [
+      "07-representacion-de-datos-y-memoria/19-stack-heap/ObjetosHeap.java"
+    ],
+    "main": "ObjetosHeap",
+    "mode": "R",
+    "stdout": "false\ntrue\n"
+  },
+  {
+    "path": "07-representacion-de-datos-y-memoria/19-stack-heap/VidaReferencias.java",
+    "sources": [
+      "07-representacion-de-datos-y-memoria/19-stack-heap/VidaReferencias.java"
+    ],
+    "main": "VidaReferencias",
+    "mode": "R",
+    "stdout": "12\ntrue\n"
+  },
+  {
+    "path": "07-representacion-de-datos-y-memoria/20-memoria-dinamica/ReservaLiberacionSimulada.java",
+    "sources": [
+      "07-representacion-de-datos-y-memoria/20-memoria-dinamica/ReservaLiberacionSimulada.java"
+    ],
+    "main": "ReservaLiberacionSimulada",
+    "mode": "T",
+    "stdout": "[0, 1, 1, 1, 0, 0]\n[0, 0, 0, 0, 0, 0]\n"
+  },
+  {
+    "path": "07-representacion-de-datos-y-memoria/21-asignacion-bloques/MainAsignacion.java",
+    "sources": [
+      "07-representacion-de-datos-y-memoria/21-asignacion-bloques/Bloque.java",
+      "07-representacion-de-datos-y-memoria/21-asignacion-bloques/FirstFit.java",
+      "07-representacion-de-datos-y-memoria/21-asignacion-bloques/BestFit.java",
+      "07-representacion-de-datos-y-memoria/21-asignacion-bloques/WorstFit.java",
+      "07-representacion-de-datos-y-memoria/21-asignacion-bloques/MainAsignacion.java"
+    ],
+    "main": "MainAsignacion",
+    "mode": "T",
+    "stdout": "First Fit: 0\nBest Fit: 3\nWorst Fit: 6\n"
+  },
+  {
+    "path": "07-representacion-de-datos-y-memoria/22-fragmentacion/FragmentacionInterna.java",
+    "sources": [
+      "07-representacion-de-datos-y-memoria/22-fragmentacion/FragmentacionInterna.java"
+    ],
+    "main": "FragmentacionInterna",
+    "mode": "T",
+    "stdout": "6\n"
+  },
+  {
+    "path": "07-representacion-de-datos-y-memoria/22-fragmentacion/FragmentacionExterna.java",
+    "sources": [
+      "07-representacion-de-datos-y-memoria/22-fragmentacion/FragmentacionExterna.java"
+    ],
+    "main": "FragmentacionExterna",
+    "mode": "T",
+    "stdout": "9\nfalse\n"
+  },
+  {
+    "path": "07-representacion-de-datos-y-memoria/22-fragmentacion/Coalescencia.java",
+    "sources": [
+      "07-representacion-de-datos-y-memoria/22-fragmentacion/Coalescencia.java"
+    ],
+    "main": "Coalescencia",
+    "mode": "T",
+    "stdout": "2 7\n"
+  },
+  {
+    "path": "07-representacion-de-datos-y-memoria/23-memoria-virtual/MainTraduccion.java",
+    "sources": [
+      "07-representacion-de-datos-y-memoria/23-memoria-virtual/DireccionVirtual.java",
+      "07-representacion-de-datos-y-memoria/23-memoria-virtual/TablaPaginas.java",
+      "07-representacion-de-datos-y-memoria/23-memoria-virtual/MainTraduccion.java"
+    ],
+    "main": "MainTraduccion",
+    "mode": "T",
+    "stdout": "Pagina: 2\nDesplazamiento: 3\nFisica: 43\nFallo de pagina\n"
+  },
+  {
+    "path": "07-representacion-de-datos-y-memoria/24-reemplazo-paginas/MainReemplazo.java",
+    "sources": [
+      "07-representacion-de-datos-y-memoria/24-reemplazo-paginas/FIFO.java",
+      "07-representacion-de-datos-y-memoria/24-reemplazo-paginas/LRU.java",
+      "07-representacion-de-datos-y-memoria/24-reemplazo-paginas/OPT.java",
+      "07-representacion-de-datos-y-memoria/24-reemplazo-paginas/MainReemplazo.java"
+    ],
+    "main": "MainReemplazo",
+    "mode": "T",
+    "stdout": "FIFO: 10\nLRU: 9\nOPT: 7\n"
+  },
+  {
+    "path": "07-representacion-de-datos-y-memoria/25-errores-memoria/FugaPorRetencion.java",
+    "sources": [
+      "07-representacion-de-datos-y-memoria/25-errores-memoria/FugaPorRetencion.java"
+    ],
+    "main": "FugaPorRetencion",
+    "mode": "R",
+    "stdout": "3\n0\n"
+  },
+  {
+    "path": "07-representacion-de-datos-y-memoria/26-recoleccion-basura/MainMarcarBarrer.java",
+    "sources": [
+      "07-representacion-de-datos-y-memoria/26-recoleccion-basura/Alcanzabilidad.java",
+      "07-representacion-de-datos-y-memoria/26-recoleccion-basura/MainMarcarBarrer.java"
+    ],
+    "main": "MainMarcarBarrer",
+    "mode": "T",
+    "stdout": "0 vivo\n1 vivo\n2 vivo\n3 recuperable\n"
   }
 ]
