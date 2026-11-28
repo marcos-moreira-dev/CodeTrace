@@ -2,6 +2,11 @@
 // Referencia: Java SE 21, JLS §4.2.2; ejemplo 4.2.2-1
 // Compilar: javac --release 21 -encoding UTF-8 OperacionesEnterasJls.java
 // Ejecutar: java OperacionesEnterasJls
+// Tema JLS:
+// La multiplicación se evalúa según el tipo promovido de sus operandos. Si son int, el
+// resultado puede desbordarse antes de asignarlo a long. Convertir un operando a long antes
+// de multiplicar cambia el tipo de la operación. La división entera por cero provoca
+// ArithmeticException.
 // La multiplicación int puede desbordarse; long permite representar este producto. La división por cero entero lanza una excepción.
 
 public class OperacionesEnterasJls {
