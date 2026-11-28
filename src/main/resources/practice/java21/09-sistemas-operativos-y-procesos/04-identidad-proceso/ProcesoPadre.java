@@ -7,8 +7,9 @@
 public class ProcesoPadre {
     public static void main(String[] args) throws Exception {
         ProcessHandle actual = ProcessHandle.current();
-        if (actual.parent().isPresent()) {
-            System.out.println("Padre distinto: " + (actual.parent().get().pid() != actual.pid()));
+        var padre = actual.parent();
+        if (padre.isPresent()) {
+            System.out.println("Padre distinto: " + (padre.get().pid() != actual.pid()));
         } else {
             System.out.println("Padre no disponible");
         }

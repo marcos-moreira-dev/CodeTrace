@@ -39,11 +39,12 @@ public class Padre {
     }
 
     public static void main(String[] args) throws Exception {
-        int cantidad = 10;
+        // La clase Hijo también existe en esta JVM, con su propia variable estática.
+        Hijo.cantidad = 10;
         Process hijo = comando("Hijo").start();
         try {
             System.out.print(salida(hijo));
-            System.out.println("Padre: " + cantidad);
+            System.out.println("Padre: " + Hijo.cantidad);
         } finally {
             if (hijo.isAlive()) hijo.destroyForcibly();
         }

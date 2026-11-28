@@ -5,8 +5,8 @@
 // Ejecutar: java Padre
 
 public class Hijo {
+    static int cantidad = 10;
     public static void main(String[] args) throws Exception {
-        int cantidad = 10;
         cantidad += 5;
         System.out.println("Hijo: " + cantidad);
     }
