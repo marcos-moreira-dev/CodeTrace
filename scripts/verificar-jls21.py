@@ -76,4 +76,10 @@ for case in cases:
             assert result.returncode == 0 and not result.stderr, (case["path"], result.stderr)
         print("OK", case["section"], case["path"])
 assert covered == {p.relative_to(root).as_posix() for p in root.rglob("*.java")}
+inventory = (repo / "docs/JLS21-INVENTARIO.tsv").read_text(encoding="utf-8").splitlines()[1:]
+assert len(inventory) == 233
+assert all(row.split("\t")[1] and row.split("\t")[2] != "pendiente" for row in inventory)
+paths = {case["path"] for case in cases}
+assert all(path in paths for row in inventory for path in row.split("\t")[1].split(";"))
+
 print(f"JLS 21: {len(cases)} casos verificados")

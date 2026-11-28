@@ -260,3 +260,44 @@ La carpeta anterior se renombró a `01-fundamentos-en-accion/` conservando el mi
 ## Comentarios de estudio
 
 Los 464 archivos Java de esta biblioteca tienen una explicación directa del concepto de su unidad. Se eliminaron las cabeceras con referencias documentales; la correspondencia con la especificación se conserva únicamente en el inventario y manifiesto externos. Los comandos y las salidas esperadas se conservan. El verificador comprueba la presencia de la explicación y la ausencia de las antiguas cabeceras. La validación completa del último commit sigue pendiente.
+
+## Suplementos de conceptos no numerados
+
+280 unidades y 521 fuentes en el catálogo. Se añaden 34 unidades con reglas explicadas directamente en el código. El inventario formal de 233 identificadores se conserva y se valida automáticamente. La selección suplementaria no pretende enumerar literalmente cada fragmento de una especificación de 871 páginas.
+
+| Sección | Unidad | Estado |
+| --- | --- | --- |
+| 3.8; suplemento | 03-estructura-lexica/03-08-suplemento-identificadores/Identificadores.java | Implementado; pendiente CI |
+| 4.6; suplemento | 04-tipos-valores-variables/04-06-suplemento-borrado-de-tipos/BorradoTipos.java | Implementado; pendiente CI |
+| 4.7; suplemento | 04-tipos-valores-variables/04-07-suplemento-tipos-reificables/TiposReificables.java | Implementado; pendiente CI |
+| 4.10.3; suplemento | 04-tipos-valores-variables/04-10-03-suplemento-subtipado-arreglos/SubtiposArreglo.java | Implementado; pendiente CI |
+| 7.7.3; suplemento | 07-paquetes-y-modulos/07-07-03-suplemento-servicio-modular/demo.api/module-info.java | Implementado; pendiente CI |
+| 8.1.1.2; suplemento | 08-clases/08-01-01-02-suplemento-clase-sellada/FiguraSellada.java | Implementado; pendiente CI |
+| 8.1.6; suplemento | 08-clases/08-01-06-suplemento-permits-error/RaizSellada.java | Implementado; pendiente CI |
+| 8.1.1.4; suplemento | 08-clases/08-01-01-04-suplemento-clase-anidada-estatica/AnidadaEstatica.java | Implementado; pendiente CI |
+| 8.6; suplemento | 08-clases/08-06-suplemento-inicializador-instancia/InicializadorInstancia.java | Implementado; pendiente CI |
+| 8.7; suplemento | 08-clases/08-07-suplemento-inicializador-estatico/InicializadorEstatico.java | Implementado; pendiente CI |
+| 8.10.1; suplemento | 08-clases/08-10-01-suplemento-componentes-record/Persona.java | Implementado; pendiente CI |
+| 8.10.3; suplemento | 08-clases/08-10-03-suplemento-igualdad-record/Coordenada.java | Implementado; pendiente CI |
+| 8.10.3; suplemento | 08-clases/08-10-03-suplemento-record-mutabilidad-superficial/Grupo.java | Implementado; pendiente CI |
+| 8.10.4.1; suplemento | 08-clases/08-10-04-01-suplemento-constructor-canonico-record/Intervalo.java | Implementado; pendiente CI |
+| 8.10.4.2; suplemento | 08-clases/08-10-04-02-suplemento-constructor-compacto-record/Nombre.java | Implementado; pendiente CI |
+| 8.10.2; suplemento | 08-clases/08-10-02-suplemento-campo-instancia-record-error/RecordInvalido.java | Implementado; pendiente CI |
+| 9.1.1.4; suplemento | 09-interfaces/09-01-01-04-suplemento-interfaz-sellada/Resultado.java | Implementado; pendiente CI |
+| 9.4.3; suplemento | 09-interfaces/09-04-03-suplemento-metodo-default-interfaz/Saludo.java | Implementado; pendiente CI |
+| 14.10; suplemento | 14-bloques-sentencias-patrones/14-10-suplemento-assert/Aserciones.java | Implementado; pendiente CI |
+| 14.20.3.1; suplemento | 14-bloques-sentencias-patrones/14-20-03-01-suplemento-try-with-resources/RecursosAutomaticos.java | Implementado; pendiente CI |
+| 14.20.3.1; suplemento | 14-bloques-sentencias-patrones/14-20-03-01-suplemento-excepciones-suprimidas/ExcepcionSuprimida.java | Implementado; pendiente CI |
+| 14.30.1; suplemento | 14-bloques-sentencias-patrones/14-30-01-suplemento-patron-tipo/PatronTipo.java | Implementado; pendiente CI |
+| 14.30.1; suplemento | 14-bloques-sentencias-patrones/14-30-01-suplemento-patron-record-anidado/Punto.java | Implementado; pendiente CI |
+| 14.11.1; suplemento | 14-bloques-sentencias-patrones/14-11-01-suplemento-switch-patrones-guardas/SwitchGuardas.java | Implementado; pendiente CI |
+| 14.11.1; suplemento | 14-bloques-sentencias-patrones/14-11-01-suplemento-switch-patron-dominado/PatronDominado.java | Implementado; pendiente CI |
+| 15.13; suplemento | 15-expresiones/15-13-suplemento-referencias-metodo/ReferenciasMetodo.java | Implementado; pendiente CI |
+| 15.13; suplemento | 15-expresiones/15-13-suplemento-referencia-constructor/Medida.java | Implementado; pendiente CI |
+| 15.25; suplemento | 15-expresiones/15-25-suplemento-operador-condicional/OperadorCondicional.java | Implementado; pendiente CI |
+| 15.27.1; suplemento | 15-expresiones/15-27-01-suplemento-parametros-lambda/ParametrosLambda.java | Implementado; pendiente CI |
+| 15.27.2; suplemento | 15-expresiones/15-27-02-suplemento-cuerpo-lambda/CuerpoLambda.java | Implementado; pendiente CI |
+| 15.27.2; suplemento | 15-expresiones/15-27-02-suplemento-captura-efectivamente-final/CapturaLambda.java | Implementado; pendiente CI |
+| 15.27.2; suplemento | 15-expresiones/15-27-02-suplemento-captura-lambda-error/CapturaLambdaInvalida.java | Implementado; pendiente CI |
+| 15.27.3; suplemento | 15-expresiones/15-27-03-suplemento-tipo-objetivo-lambda/TipoObjetivoLambda.java | Implementado; pendiente CI |
+| 15.27.4; suplemento | 15-expresiones/15-27-04-suplemento-lambda-ejecucion-diferida/EjecucionLambda.java | Implementado; pendiente CI |

@@ -2285,5 +2285,285 @@
     "jvm_args": [
       "-Xmx16m"
     ]
+  },
+  {
+    "path": "03-estructura-lexica/03-08-suplemento-identificadores/Identificadores.java",
+    "unit": "03-estructura-lexica/03-08-suplemento-identificadores",
+    "section": "3.8; suplemento",
+    "main": "Identificadores",
+    "args": [],
+    "stdout": "8\n3 5\n"
+  },
+  {
+    "path": "04-tipos-valores-variables/04-06-suplemento-borrado-de-tipos/BorradoTipos.java",
+    "unit": "04-tipos-valores-variables/04-06-suplemento-borrado-de-tipos",
+    "section": "4.6; suplemento",
+    "main": "BorradoTipos",
+    "args": [],
+    "stdout": "true\n"
+  },
+  {
+    "path": "04-tipos-valores-variables/04-07-suplemento-tipos-reificables/TiposReificables.java",
+    "unit": "04-tipos-valores-variables/04-07-suplemento-tipos-reificables",
+    "section": "4.7; suplemento",
+    "main": "TiposReificables",
+    "args": [],
+    "stdout": "2\n"
+  },
+  {
+    "path": "04-tipos-valores-variables/04-10-03-suplemento-subtipado-arreglos/SubtiposArreglo.java",
+    "unit": "04-tipos-valores-variables/04-10-03-suplemento-subtipado-arreglos",
+    "section": "4.10.3; suplemento",
+    "main": "SubtiposArreglo",
+    "args": [],
+    "stdout": "sol\nfalse\ntrue\n"
+  },
+  {
+    "path": "07-paquetes-y-modulos/07-07-03-suplemento-servicio-modular/demo.api/module-info.java",
+    "unit": "07-paquetes-y-modulos/07-07-03-suplemento-servicio-modular",
+    "section": "7.7.3; suplemento",
+    "main": "",
+    "args": [],
+    "stdout": "hola\n",
+    "module": "demo.cliente/cliente.Consumidor"
+  },
+  {
+    "path": "08-clases/08-01-01-02-suplemento-clase-sellada/FiguraSellada.java",
+    "unit": "08-clases/08-01-01-02-suplemento-clase-sellada",
+    "section": "8.1.1.2; suplemento",
+    "main": "ClasesSelladas",
+    "args": [],
+    "stdout": "true\nfalse\nfalse\n"
+  },
+  {
+    "path": "08-clases/08-01-06-suplemento-permits-error/RaizSellada.java",
+    "unit": "08-clases/08-01-06-suplemento-permits-error",
+    "section": "8.1.6; suplemento",
+    "main": "",
+    "args": [],
+    "stdout": "",
+    "reject": "not allowed to extend sealed class"
+  },
+  {
+    "path": "08-clases/08-01-01-04-suplemento-clase-anidada-estatica/AnidadaEstatica.java",
+    "unit": "08-clases/08-01-01-04-suplemento-clase-anidada-estatica",
+    "section": "8.1.1.4; suplemento",
+    "main": "AnidadaEstatica",
+    "args": [],
+    "stdout": "3 6\n"
+  },
+  {
+    "path": "08-clases/08-06-suplemento-inicializador-instancia/InicializadorInstancia.java",
+    "unit": "08-clases/08-06-suplemento-inicializador-instancia",
+    "section": "8.6; suplemento",
+    "main": "InicializadorInstancia",
+    "args": [],
+    "stdout": "bloque 6\nconstructor 6\nbloque 6\nconstructor 6\n"
+  },
+  {
+    "path": "08-clases/08-07-suplemento-inicializador-estatico/InicializadorEstatico.java",
+    "unit": "08-clases/08-07-suplemento-inicializador-estatico",
+    "section": "8.7; suplemento",
+    "main": "InicializadorEstatico",
+    "args": [],
+    "stdout": "static 6\n6\n"
+  },
+  {
+    "path": "08-clases/08-10-01-suplemento-componentes-record/Persona.java",
+    "unit": "08-clases/08-10-01-suplemento-componentes-record",
+    "section": "8.10.1; suplemento",
+    "main": "ComponentesRecord",
+    "args": [],
+    "stdout": "Ana\n21\n"
+  },
+  {
+    "path": "08-clases/08-10-03-suplemento-igualdad-record/Coordenada.java",
+    "unit": "08-clases/08-10-03-suplemento-igualdad-record",
+    "section": "8.10.3; suplemento",
+    "main": "IgualdadRecord",
+    "args": [],
+    "stdout": "false\ntrue\ntrue\nCoordenada[x=2, y=3]\n"
+  },
+  {
+    "path": "08-clases/08-10-03-suplemento-record-mutabilidad-superficial/Grupo.java",
+    "unit": "08-clases/08-10-03-suplemento-record-mutabilidad-superficial",
+    "section": "8.10.3; suplemento",
+    "main": "RecordSuperficial",
+    "args": [],
+    "stdout": "[Ana, Luis]\n"
+  },
+  {
+    "path": "08-clases/08-10-04-01-suplemento-constructor-canonico-record/Intervalo.java",
+    "unit": "08-clases/08-10-04-01-suplemento-constructor-canonico-record",
+    "section": "8.10.4.1; suplemento",
+    "main": "ConstructorCanonico",
+    "args": [],
+    "stdout": "5\norden\n"
+  },
+  {
+    "path": "08-clases/08-10-04-02-suplemento-constructor-compacto-record/Nombre.java",
+    "unit": "08-clases/08-10-04-02-suplemento-constructor-compacto-record",
+    "section": "8.10.4.2; suplemento",
+    "main": "ConstructorCompacto",
+    "args": [],
+    "stdout": "[Ana]\nvacío\n"
+  },
+  {
+    "path": "08-clases/08-10-02-suplemento-campo-instancia-record-error/RecordInvalido.java",
+    "unit": "08-clases/08-10-02-suplemento-campo-instancia-record-error",
+    "section": "8.10.2; suplemento",
+    "main": "",
+    "args": [],
+    "stdout": "",
+    "reject": "field declaration must be static"
+  },
+  {
+    "path": "09-interfaces/09-01-01-04-suplemento-interfaz-sellada/Resultado.java",
+    "unit": "09-interfaces/09-01-01-04-suplemento-interfaz-sellada",
+    "section": "9.1.1.4; suplemento",
+    "main": "InterfazSellada",
+    "args": [],
+    "stdout": "valor 4\nerror\n"
+  },
+  {
+    "path": "09-interfaces/09-04-03-suplemento-metodo-default-interfaz/Saludo.java",
+    "unit": "09-interfaces/09-04-03-suplemento-metodo-default-interfaz",
+    "section": "9.4.3; suplemento",
+    "main": "MetodoDefault",
+    "args": [],
+    "stdout": "hola\nes\n"
+  },
+  {
+    "path": "14-bloques-sentencias-patrones/14-10-suplemento-assert/Aserciones.java",
+    "unit": "14-bloques-sentencias-patrones/14-10-suplemento-assert",
+    "section": "14.10; suplemento",
+    "main": "Aserciones",
+    "args": [],
+    "stdout": "3\n",
+    "jvm_args": [
+      "-ea"
+    ]
+  },
+  {
+    "path": "14-bloques-sentencias-patrones/14-20-03-01-suplemento-try-with-resources/RecursosAutomaticos.java",
+    "unit": "14-bloques-sentencias-patrones/14-20-03-01-suplemento-try-with-resources",
+    "section": "14.20.3.1; suplemento",
+    "main": "RecursosAutomaticos",
+    "args": [],
+    "stdout": "abre A\nabre B\ntrabajo\ncierra B\ncierra A\n"
+  },
+  {
+    "path": "14-bloques-sentencias-patrones/14-20-03-01-suplemento-excepciones-suprimidas/ExcepcionSuprimida.java",
+    "unit": "14-bloques-sentencias-patrones/14-20-03-01-suplemento-excepciones-suprimidas",
+    "section": "14.20.3.1; suplemento",
+    "main": "ExcepcionSuprimida",
+    "args": [],
+    "stdout": "cuerpo\ncierre\n"
+  },
+  {
+    "path": "14-bloques-sentencias-patrones/14-30-01-suplemento-patron-tipo/PatronTipo.java",
+    "unit": "14-bloques-sentencias-patrones/14-30-01-suplemento-patron-tipo",
+    "section": "14.30.1; suplemento",
+    "main": "PatronTipo",
+    "args": [],
+    "stdout": "JAVA\n"
+  },
+  {
+    "path": "14-bloques-sentencias-patrones/14-30-01-suplemento-patron-record-anidado/Punto.java",
+    "unit": "14-bloques-sentencias-patrones/14-30-01-suplemento-patron-record-anidado",
+    "section": "14.30.1; suplemento",
+    "main": "PatronRecord",
+    "args": [],
+    "stdout": "3 4\n"
+  },
+  {
+    "path": "14-bloques-sentencias-patrones/14-11-01-suplemento-switch-patrones-guardas/SwitchGuardas.java",
+    "unit": "14-bloques-sentencias-patrones/14-11-01-suplemento-switch-patrones-guardas",
+    "section": "14.11.1; suplemento",
+    "main": "SwitchGuardas",
+    "args": [],
+    "stdout": "nulo\nvacío\ntexto Java\nentero 5\n"
+  },
+  {
+    "path": "14-bloques-sentencias-patrones/14-11-01-suplemento-switch-patron-dominado/PatronDominado.java",
+    "unit": "14-bloques-sentencias-patrones/14-11-01-suplemento-switch-patron-dominado",
+    "section": "14.11.1; suplemento",
+    "main": "PatronDominado",
+    "args": [],
+    "stdout": "",
+    "reject": "dominated by a preceding case label"
+  },
+  {
+    "path": "15-expresiones/15-13-suplemento-referencias-metodo/ReferenciasMetodo.java",
+    "unit": "15-expresiones/15-13-suplemento-referencias-metodo",
+    "section": "15.13; suplemento",
+    "main": "ReferenciasMetodo",
+    "args": [],
+    "stdout": "longitud 4\n7\n"
+  },
+  {
+    "path": "15-expresiones/15-13-suplemento-referencia-constructor/Medida.java",
+    "unit": "15-expresiones/15-13-suplemento-referencia-constructor",
+    "section": "15.13; suplemento",
+    "main": "ReferenciasConstructor",
+    "args": [],
+    "stdout": "8\n3\n"
+  },
+  {
+    "path": "15-expresiones/15-25-suplemento-operador-condicional/OperadorCondicional.java",
+    "unit": "15-expresiones/15-25-suplemento-operador-condicional",
+    "section": "15.25; suplemento",
+    "main": "OperadorCondicional",
+    "args": [],
+    "stdout": "impar\n1 1\n"
+  },
+  {
+    "path": "15-expresiones/15-27-01-suplemento-parametros-lambda/ParametrosLambda.java",
+    "unit": "15-expresiones/15-27-01-suplemento-parametros-lambda",
+    "section": "15.27.1; suplemento",
+    "main": "ParametrosLambda",
+    "args": [],
+    "stdout": "4\n7\n10\n"
+  },
+  {
+    "path": "15-expresiones/15-27-02-suplemento-cuerpo-lambda/CuerpoLambda.java",
+    "unit": "15-expresiones/15-27-02-suplemento-cuerpo-lambda",
+    "section": "15.27.2; suplemento",
+    "main": "CuerpoLambda",
+    "args": [],
+    "stdout": "12\n-1\n"
+  },
+  {
+    "path": "15-expresiones/15-27-02-suplemento-captura-efectivamente-final/CapturaLambda.java",
+    "unit": "15-expresiones/15-27-02-suplemento-captura-efectivamente-final",
+    "section": "15.27.2; suplemento",
+    "main": "CapturaLambda",
+    "args": [],
+    "stdout": "12\n"
+  },
+  {
+    "path": "15-expresiones/15-27-02-suplemento-captura-lambda-error/CapturaLambdaInvalida.java",
+    "unit": "15-expresiones/15-27-02-suplemento-captura-lambda-error",
+    "section": "15.27.2; suplemento",
+    "main": "CapturaLambdaInvalida",
+    "args": [],
+    "stdout": "",
+    "reject": "local variables referenced from a lambda expression must be final or effectively final"
+  },
+  {
+    "path": "15-expresiones/15-27-03-suplemento-tipo-objetivo-lambda/TipoObjetivoLambda.java",
+    "unit": "15-expresiones/15-27-03-suplemento-tipo-objetivo-lambda",
+    "section": "15.27.3; suplemento",
+    "main": "TipoObjetivoLambda",
+    "args": [],
+    "stdout": "7\nhola\n"
+  },
+  {
+    "path": "15-expresiones/15-27-04-suplemento-lambda-ejecucion-diferida/EjecucionLambda.java",
+    "unit": "15-expresiones/15-27-04-suplemento-lambda-ejecucion-diferida",
+    "section": "15.27.4; suplemento",
+    "main": "EjecucionLambda",
+    "args": [],
+    "stdout": "creada\ncuerpo\ncuerpo\n"
   }
 ]

@@ -26,7 +26,7 @@ import java.util.Set;
 */
 public final class BuiltInLibrary {
     /** Versioned caches from previous catalogs remain untouched for prior sessions. */
-    public static final String CATALOG_VERSION = "v17";
+    public static final String CATALOG_VERSION = "v18";
 
     public record Pack(String id, String name, String extension) {
         public Pack {

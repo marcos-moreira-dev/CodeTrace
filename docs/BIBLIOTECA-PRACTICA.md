@@ -104,3 +104,16 @@ Se unifica `02-estructuras-datos/linked-list/simple/` para dejar juntas las vari
 ## Fundamentos de Java 21
 
 La carpeta `java21/01-fundamentos-en-accion/` conserva los 28 archivos originales. La nueva `java21/00-fundamentos-especificacion-oficial/` contiene adaptaciones de la JLS 21, con unidades independientes, casos de rechazo intencional y compilaciones sucesivas. No compilar todo `java21/` de una vez: para ejemplos anteriores, excluir la nueva carpeta; para JLS, seguir los comandos por unidad o usar `python3 scripts/verificar-jls21.py`. Las cachés de versiones previas se conservan; queda pendiente comprobar la reapertura de sesiones reales de la versión anterior.
+
+### Compilación de ejemplos Java anteriores
+
+Desde la carpeta `java21` en PowerShell, excluir los nuevos ejemplos independientes al compilar los ejemplos históricos:
+
+```powershell
+$fuentes = Get-ChildItem -Recurse -Filter *.java -File | Where-Object { $_.FullName -notmatch '[\\/]00-fundamentos-especificacion-oficial[\\/]' }
+$out = Join-Path $env:TEMP 'ct-java21'
+New-Item -ItemType Directory -Force $out | Out-Null
+javac --release 21 -encoding UTF-8 -d $out $fuentes.FullName
+```
+
+Las unidades nuevas se compilan desde su carpeta siguiendo sus propios comandos. No mezclar las variantes incompatibles ni los casos de rechazo intencional. La caché v18 conserva las anteriores.
