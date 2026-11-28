@@ -23,6 +23,20 @@ for case in cases:
             assert "Ejecutar:" in text, item
     covered.update(s.relative_to(root).as_posix() for s in sources)
     with tempfile.TemporaryDirectory() as tmp:
+        if "stages" in case:
+            seen = set()
+            for stage in case["stages"]:
+                stage_sources = [unit / name for name in stage["sources"]]
+                seen.update(stage_sources)
+                subprocess.run(["javac", "--release", "21", "-encoding", "UTF-8",
+                                "-cp", tmp, "-d", tmp, *map(str, stage_sources)],
+                               check=True, timeout=30)
+                run = subprocess.run(["java", "-Dfile.encoding=UTF-8", "-cp", tmp, case["main"]],
+                                     capture_output=True, text=True, encoding="utf-8", timeout=20)
+                assert run.returncode == 0 and run.stdout == stage["stdout"], (case["path"], run.stderr, run.stdout)
+            assert seen == set(sources), case["path"]
+            print("OK etapas binarias", case["section"], case["path"])
+            continue
         compilation = subprocess.run(["javac", "-J-Duser.language=en", "-J-Duser.country=US",
                         "--release", "21", "-encoding", "UTF-8",
                         "-d", tmp, *map(str, sources)], capture_output=True,

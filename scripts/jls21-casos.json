@@ -544,5 +544,393 @@
     "main": "FinalRamas",
     "args": [],
     "stdout": "3\n7\n"
+  },
+  {
+    "path": "08-clases/08-01-01-01-02-abstracta-incompatible/Actualizable.java",
+    "unit": "08-clases/08-01-01-01-02-abstracta-incompatible",
+    "section": "8.1.1.1; ejemplo 8.1.1.1-2",
+    "main": "",
+    "args": [],
+    "stdout": "\n",
+    "reject": "return type int is not compatible with void"
+  },
+  {
+    "path": "08-clases/08-01-02-01-limites-reciprocos/Convertible.java",
+    "unit": "08-clases/08-01-02-01-limites-reciprocos",
+    "section": "8.1.2; ejemplo 8.1.2-1",
+    "main": "LimitesReciprocos",
+    "args": [],
+    "stdout": "3\n300\n"
+  },
+  {
+    "path": "08-clases/08-01-03-01-miembros-estaticos-internos/InternaEstatica.java",
+    "unit": "08-clases/08-01-03-01-miembros-estaticos-internos",
+    "section": "8.1.3; ejemplo 8.1.3-1",
+    "main": "InternaEstatica",
+    "args": [],
+    "stdout": "inicializada\n8\n"
+  },
+  {
+    "path": "08-clases/08-01-03-02-contexto-estatico-invalido/ContextoEstaticoInvalido.java",
+    "unit": "08-clases/08-01-03-02-contexto-estatico-invalido",
+    "section": "8.1.3; ejemplo 8.1.3-2",
+    "main": "ContextoEstaticoInvalido",
+    "args": [],
+    "stdout": "\n",
+    "reject": "non-static variable valor cannot be referenced from a static context"
+  },
+  {
+    "path": "08-clases/08-01-04-01-herencia-final/RaizFinal.java",
+    "unit": "08-clases/08-01-04-01-herencia-final",
+    "section": "8.1.4; ejemplo 8.1.4-1",
+    "main": "",
+    "args": [],
+    "stdout": "\n",
+    "reject": "cannot inherit from final"
+  },
+  {
+    "path": "08-clases/08-01-04-02-jerarquia/Antepasado.java",
+    "unit": "08-clases/08-01-04-02-jerarquia",
+    "section": "8.1.4; ejemplo 8.1.4-2",
+    "main": "Jerarquia",
+    "args": [],
+    "stdout": "true\ntrue\ntrue\n"
+  },
+  {
+    "path": "08-clases/08-01-04-03-herencia-circular/CircularA.java",
+    "unit": "08-clases/08-01-04-03-herencia-circular",
+    "section": "8.1.4; ejemplo 8.1.4-3",
+    "main": "",
+    "args": [],
+    "stdout": "\n",
+    "reject": "cyclic inheritance"
+  },
+  {
+    "path": "08-clases/08-01-05-01-interfaz-duplicada/Duplicada.java",
+    "unit": "08-clases/08-01-05-01-interfaz-duplicada",
+    "section": "8.1.5; ejemplo 8.1.5-1",
+    "main": "Duplicada",
+    "args": [],
+    "stdout": "\n",
+    "reject": "repeated interface"
+  },
+  {
+    "path": "08-clases/08-01-05-03-parametros-incompatibles/Identificable.java",
+    "unit": "08-clases/08-01-05-03-parametros-incompatibles",
+    "section": "8.1.5; ejemplo 8.1.5-3",
+    "main": "",
+    "args": [],
+    "stdout": "\n",
+    "reject": "cannot be inherited with different arguments"
+  },
+  {
+    "path": "08-clases/08-01-05-04-metodos-obligatorios/Medible.java",
+    "unit": "08-clases/08-01-05-04-metodos-obligatorios",
+    "section": "8.1.5; ejemplo 8.1.5-4",
+    "main": "",
+    "args": [],
+    "stdout": "\n",
+    "reject": "does not override abstract method"
+  },
+  {
+    "path": "08-clases/08-03-01-01-02-ocultar-campo-estatico/BaseEstatica.java",
+    "unit": "08-clases/08-03-01-01-02-ocultar-campo-estatico",
+    "section": "8.3.1.1; ejemplo 8.3.1.1-2",
+    "main": "OcultarEstatico",
+    "args": [],
+    "stdout": "6.5 3\n"
+  },
+  {
+    "path": "08-clases/08-03-01-01-03-ocultar-campo-instancia/BaseInstancia.java",
+    "unit": "08-clases/08-03-01-01-03-ocultar-campo-instancia",
+    "section": "8.3.1.1; ejemplo 8.3.1.1-3",
+    "main": "OcultarInstancia",
+    "args": [],
+    "stdout": "6.5 3\n6.5 3\n"
+  },
+  {
+    "path": "08-clases/08-03-02-01-inicializar-campos/Coordenada.java",
+    "unit": "08-clases/08-03-02-01-inicializar-campos",
+    "section": "8.3.2; ejemplo 8.3.2-1",
+    "main": "InicializarCampos",
+    "args": [],
+    "stdout": "2 7\n"
+  },
+  {
+    "path": "08-clases/08-03-02-02-referencia-estatica-posterior/ReferenciaPosterior.java",
+    "unit": "08-clases/08-03-02-02-referencia-estatica-posterior",
+    "section": "8.3.2; ejemplo 8.3.2-2",
+    "main": "ReferenciaPosterior",
+    "args": [],
+    "stdout": "9.0\n4.0\n"
+  },
+  {
+    "path": "08-clases/08-03-03-01-referencia-adelantada-invalida/CampoAdelantado.java",
+    "unit": "08-clases/08-03-03-01-referencia-adelantada-invalida",
+    "section": "8.3.3; ejemplo 8.3.3-1",
+    "main": "CampoAdelantado",
+    "args": [],
+    "stdout": "\n",
+    "reject": "illegal forward reference"
+  },
+  {
+    "path": "08-clases/08-04-08-01-01-sobrescritura/Desplazable.java",
+    "unit": "08-clases/08-04-08-01-01-sobrescritura",
+    "section": "8.4.8.1; ejemplo 8.4.8.1-1",
+    "main": "SobrescrituraMovimiento",
+    "args": [],
+    "stdout": "3\n0\n"
+  },
+  {
+    "path": "08-clases/08-04-08-02-01-ocultacion-metodo-static/OrigenMetodo.java",
+    "unit": "08-clases/08-04-08-02-01-ocultacion-metodo-static",
+    "section": "8.4.8.2; ejemplo 8.4.8.2-1",
+    "main": "OcultacionMetodos",
+    "args": [],
+    "stdout": "origen\nderivado\n"
+  },
+  {
+    "path": "08-clases/08-04-08-03-01-retorno-covariante/Generador.java",
+    "unit": "08-clases/08-04-08-03-01-retorno-covariante",
+    "section": "8.4.8.3; ejemplo 8.4.8.3-1",
+    "main": "RetornoCovariante",
+    "args": [],
+    "stdout": "7\n"
+  },
+  {
+    "path": "08-clases/08-04-08-03-03-throws-incompatible/Trabajo.java",
+    "unit": "08-clases/08-04-08-03-03-throws-incompatible",
+    "section": "8.4.8.3; ejemplo 8.4.8.3-3",
+    "main": "",
+    "args": [],
+    "stdout": "\n",
+    "reject": "overridden method does not throw"
+  },
+  {
+    "path": "08-clases/08-04-08-03-04-borrado-conflicto/IdentidadGenerica.java",
+    "unit": "08-clases/08-04-08-03-04-borrado-conflicto",
+    "section": "8.4.8.3; ejemplo 8.4.8.3-4",
+    "main": "",
+    "args": [],
+    "stdout": "\n",
+    "reject": "name clash"
+  },
+  {
+    "path": "08-clases/08-08-01-constructor/ConstructorSimple.java",
+    "unit": "08-clases/08-08-01-constructor",
+    "section": "8.8; ejemplo 8.8-1",
+    "main": "ConstructorSimple",
+    "args": [],
+    "stdout": "3 5\n"
+  },
+  {
+    "path": "08-clases/08-08-07-01-this-y-super/Elemento.java",
+    "unit": "08-clases/08-08-07-01-this-y-super",
+    "section": "8.8.7; ejemplo 8.8.7-1",
+    "main": "ConstructoresEncadenados",
+    "args": [],
+    "stdout": "5 normal\n"
+  },
+  {
+    "path": "08-clases/08-08-07-01-01-this-antes-super/ConstructorInvalido.java",
+    "unit": "08-clases/08-08-07-01-01-this-antes-super",
+    "section": "8.8.7.1; ejemplo 8.8.7.1-1",
+    "main": "ConstructorInvalido",
+    "args": [],
+    "stdout": "\n",
+    "reject": "cannot reference valor before supertype constructor has been called"
+  },
+  {
+    "path": "08-clases/08-08-09-01-constructor-implicito/RectanguloImplicit.java",
+    "unit": "08-clases/08-08-09-01-constructor-implicito",
+    "section": "8.8.9; ejemplo 8.8.9-1",
+    "main": "ConstructorImplicito",
+    "args": [],
+    "stdout": "0\ntrue\n"
+  },
+  {
+    "path": "08-clases/08-08-10-01-constructor-privado/SoloClase.java",
+    "unit": "08-clases/08-08-10-01-constructor-privado",
+    "section": "8.8.10; ejemplo 8.8.10-1",
+    "main": "",
+    "args": [],
+    "stdout": "\n",
+    "reject": "has private access"
+  },
+  {
+    "path": "08-clases/08-09-02-01-enum-con-campos/Nivel.java",
+    "unit": "08-clases/08-09-02-01-enum-con-campos",
+    "section": "8.9.2; ejemplo 8.9.2-1",
+    "main": "EnumCampos",
+    "args": [],
+    "stdout": "BAJO 1\nMEDIO 5\nALTO 10\n"
+  },
+  {
+    "path": "08-clases/08-09-02-02-enum-referencia-invalida/EstadoInvalido.java",
+    "unit": "08-clases/08-09-02-02-enum-referencia-invalida",
+    "section": "8.9.2; ejemplo 8.9.2-2",
+    "main": "EstadoInvalido",
+    "args": [],
+    "stdout": "\n",
+    "reject": "illegal reference to static field from initializer"
+  },
+  {
+    "path": "08-clases/08-09-03-02-switch-enum/Semaforo.java",
+    "unit": "08-clases/08-09-03-02-switch-enum",
+    "section": "8.9.3; ejemplo 8.9.3-2",
+    "main": "SwitchEnum",
+    "args": [],
+    "stdout": "parar\nesperar\navanzar\n"
+  },
+  {
+    "path": "08-clases/08-09-03-03-enum-comportamiento/CalculoEnum.java",
+    "unit": "08-clases/08-09-03-03-enum-comportamiento",
+    "section": "8.9.3; ejemplo 8.9.3-3",
+    "main": "CalculoEnum",
+    "args": [],
+    "stdout": "8\n15\n"
+  },
+  {
+    "path": "09-interfaces/09-03-01-campos-ambiguos/TarifaA.java",
+    "unit": "09-interfaces/09-03-01-campos-ambiguos",
+    "section": "9.3; ejemplo 9.3-1",
+    "main": "",
+    "args": [],
+    "stdout": "\n",
+    "reject": "reference to COSTO is ambiguous"
+  },
+  {
+    "path": "09-interfaces/09-03-02-campo-heredado-dos-veces/Comun.java",
+    "unit": "09-interfaces/09-03-02-campo-heredado-dos-veces",
+    "section": "9.3; ejemplo 9.3-2",
+    "main": "CampoCompartido",
+    "args": [],
+    "stdout": "12\n"
+  },
+  {
+    "path": "09-interfaces/09-03-01-01-campo-adelantado-interfaz/CampoInterfazInvalido.java",
+    "unit": "09-interfaces/09-03-01-01-campo-adelantado-interfaz",
+    "section": "9.3.1; ejemplo 9.3.1-1",
+    "main": "CampoInterfazInvalido",
+    "args": [],
+    "stdout": "\n",
+    "reject": "illegal forward reference"
+  },
+  {
+    "path": "09-interfaces/09-04-02-01-sobrecarga-interfaz/Movil.java",
+    "unit": "09-interfaces/09-04-02-01-sobrecarga-interfaz",
+    "section": "9.4.2; ejemplo 9.4.2-1",
+    "main": "SobrecargaInterfaz",
+    "args": [],
+    "stdout": "int\nfloat\ndouble\n"
+  },
+  {
+    "path": "09-interfaces/09-06-01-01-declarar-anotacion/Ficha.java",
+    "unit": "09-interfaces/09-06-01-01-declarar-anotacion",
+    "section": "9.6.1; ejemplo 9.6.1-1",
+    "main": "AnotacionDeclarada",
+    "args": [],
+    "stdout": "Anotación declarada\n"
+  },
+  {
+    "path": "09-interfaces/09-06-01-02-anotacion-marcadora/Experimental.java",
+    "unit": "09-interfaces/09-06-01-02-anotacion-marcadora",
+    "section": "9.6.1; ejemplo 9.6.1-2",
+    "main": "Marcada",
+    "args": [],
+    "stdout": "experimental\n"
+  },
+  {
+    "path": "09-interfaces/09-06-02-01-anotacion-default/Tarea.java",
+    "unit": "09-interfaces/09-06-02-01-anotacion-default",
+    "section": "9.6.2; ejemplo 9.6.2-1",
+    "main": "AnotacionDefault",
+    "args": [],
+    "stdout": "pendiente\n"
+  },
+  {
+    "path": "09-interfaces/09-07-03-01-anotacion-value/Etiqueta.java",
+    "unit": "09-interfaces/09-07-03-01-anotacion-value",
+    "section": "9.7.3; ejemplo 9.7.3-1",
+    "main": "AnotacionValue",
+    "args": [],
+    "stdout": "value implícito\n"
+  },
+  {
+    "path": "10-arreglos/10-02-01-declarar-arreglos/DeclararArreglos.java",
+    "unit": "10-arreglos/10-02-01-declarar-arreglos",
+    "section": "10.2; ejemplo 10.2-1",
+    "main": "DeclararArreglos",
+    "args": [],
+    "stdout": "3\n4\nb\n"
+  },
+  {
+    "path": "10-arreglos/10-08-01-objeto-class-arreglo/ObjetoClassArreglo.java",
+    "unit": "10-arreglos/10-08-01-objeto-class-arreglo",
+    "section": "10.8; ejemplo 10.8-1",
+    "main": "ObjetoClassArreglo",
+    "args": [],
+    "stdout": "[I\njava.lang.Object\njava.lang.Cloneable\njava.io.Serializable\n"
+  },
+  {
+    "path": "12-ejecucion/12-04-01-02-inicializar-clase-declarante/Declarante.java",
+    "unit": "12-ejecucion/12-04-01-02-inicializar-clase-declarante",
+    "section": "12.4.1; ejemplo 12.4.1-2",
+    "main": "InicializarDeclarante",
+    "args": [],
+    "stdout": "43\n"
+  },
+  {
+    "path": "12-ejecucion/12-04-01-03-inicializacion-interfaces/AbuelaI.java",
+    "unit": "12-ejecucion/12-04-01-03-inicializacion-interfaces",
+    "section": "12.4.1; ejemplo 12.4.1-3",
+    "main": "InicializarInterfaces",
+    "args": [],
+    "stdout": "1\nB=3\nC=4\n3\n"
+  },
+  {
+    "path": "12-ejecucion/12-05-02-despacho-en-constructor/ConstructorBase.java",
+    "unit": "12-ejecucion/12-05-02-despacho-en-constructor",
+    "section": "12.5; ejemplo 12.5-2",
+    "main": "DespachoConstructor",
+    "args": [],
+    "stdout": "0\n8\n"
+  },
+  {
+    "path": "13-compatibilidad-binaria/13-04-23-01-agregar-sobrecarga/v1/SalidaBinaria.java",
+    "unit": "13-compatibilidad-binaria/13-04-23-01-agregar-sobrecarga",
+    "section": "13.4.23; ejemplo 13.4.23-1",
+    "main": "ClienteBinario",
+    "args": [],
+    "stdout": "long\nlong\nint\n",
+    "stages": [
+      {
+        "sources": [
+          "v1/SalidaBinaria.java",
+          "ClienteBinario.java"
+        ],
+        "stdout": "long\n"
+      },
+      {
+        "sources": [
+          "v2/SalidaBinaria.java"
+        ],
+        "stdout": "long\n"
+      },
+      {
+        "sources": [
+          "ClienteBinario.java"
+        ],
+        "stdout": "int\n"
+      }
+    ]
+  },
+  {
+    "path": "18-inferencia-de-tipos/18-05-05-01-inferencia-patron-record/Transformador.java",
+    "unit": "18-inferencia-de-tipos/18-05-05-01-inferencia-patron-record",
+    "section": "18.5.5; ejemplo 18.5.5-1",
+    "main": "InferenciaRecord",
+    "args": [],
+    "stdout": "false\ntrue\n"
   }
 ]
