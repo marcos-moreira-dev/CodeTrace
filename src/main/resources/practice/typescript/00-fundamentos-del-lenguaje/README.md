@@ -1,3 +1,5 @@
-# Fundamentos del lenguaje
+# Fundamentos del lenguaje TypeScript
 
-Cada ejercicio indica desde su carpeta el comando directo de compilación y, si corresponde, el de ejecución. Los negativos solo se comprueban: no ejecutarlos. Usar TypeScript 7.0.2 y Node 24. Las instrucciones no requieren PowerShell ni scripts de automatización. Este bloque está en desarrollo y todavía no se registra en el catálogo offline.
+27 categorías, 334 archivos del inventario. Desde la carpeta indicada en cada ejemplo, escribe los comandos `tsc` y `node` directamente. No hay que usar PowerShell, scripts ni rutas temporales. Los negativos se comprueban con `--noEmit`, no se ejecutan. Los ejemplos de tipos no requieren consola; los del navegador requieren su fixture HTML. Consulta CONFIGURACION.md e INVENTARIO.tsv para ver perfiles y estado de pruebas.
+
+Esta entrega local todavía no se incorpora al catálogo offline publicado.

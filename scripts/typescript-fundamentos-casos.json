@@ -281,5 +281,2100 @@
     "project": false,
     "flags": [],
     "sources": []
+  },
+  {
+    "path": "04-sistema-de-tipos/006-structural-typing/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "04-sistema-de-tipos/007-typescript-fundamental-comparison-rules/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "04-sistema-de-tipos/007-typescript-fundamental-comparison-rules/02.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "04-sistema-de-tipos/007-typescript-fundamental-comparison-rules/03.ts",
+    "mode": "N",
+    "project": false,
+    "flags": [],
+    "sources": [],
+    "codes": [
+      2322,
+      2322
+    ]
+  },
+  {
+    "path": "04-sistema-de-tipos/007-typescript-fundamental-comparison-rules/04.ts",
+    "mode": "N",
+    "project": false,
+    "flags": [],
+    "sources": [],
+    "codes": [
+      2322
+    ]
+  },
+  {
+    "path": "04-sistema-de-tipos/007-typescript-fundamental-comparison-rules/05.ts",
+    "mode": "R",
+    "project": false,
+    "flags": [],
+    "sources": [],
+    "stdout": "1x,2x,3x\n"
+  },
+  {
+    "path": "04-sistema-de-tipos/007-typescript-fundamental-comparison-rules/06.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "04-sistema-de-tipos/007-typescript-fundamental-comparison-rules/07.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "04-sistema-de-tipos/007-typescript-fundamental-comparison-rules/08.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "04-sistema-de-tipos/007-typescript-fundamental-comparison-rules/09.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "04-sistema-de-tipos/007-typescript-fundamental-comparison-rules/10.ts",
+    "mode": "N",
+    "project": false,
+    "flags": [],
+    "sources": [],
+    "codes": [
+      2394
+    ]
+  },
+  {
+    "path": "04-sistema-de-tipos/007-typescript-fundamental-comparison-rules/11.ts",
+    "mode": "R",
+    "project": false,
+    "flags": [],
+    "sources": [],
+    "stdout": "x\nY\nz\n"
+  },
+  {
+    "path": "04-sistema-de-tipos/007-typescript-fundamental-comparison-rules/12.ts",
+    "mode": "N",
+    "project": false,
+    "flags": [],
+    "sources": [],
+    "codes": [
+      2367
+    ]
+  },
+  {
+    "path": "04-sistema-de-tipos/007-typescript-fundamental-comparison-rules/13.ts",
+    "mode": "N",
+    "project": false,
+    "flags": [],
+    "sources": [],
+    "codes": [
+      2322
+    ]
+  },
+  {
+    "path": "04-sistema-de-tipos/007-typescript-fundamental-comparison-rules/14.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "04-sistema-de-tipos/007-typescript-fundamental-comparison-rules/15.ts",
+    "mode": "N",
+    "project": false,
+    "flags": [],
+    "sources": [],
+    "codes": [
+      2367
+    ]
+  },
+  {
+    "path": "04-sistema-de-tipos/007-typescript-fundamental-comparison-rules/16.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "04-sistema-de-tipos/007-typescript-fundamental-comparison-rules/17.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "04-sistema-de-tipos/007-typescript-fundamental-comparison-rules/18.ts",
+    "mode": "N",
+    "project": false,
+    "flags": [],
+    "sources": [],
+    "codes": [
+      2322,
+      2322,
+      2322
+    ]
+  },
+  {
+    "path": "04-sistema-de-tipos/008-types-as-sets/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "04-sistema-de-tipos/008-types-as-sets/02.ts",
+    "mode": "N",
+    "project": false,
+    "flags": [],
+    "sources": [],
+    "codes": [
+      2322
+    ]
+  },
+  {
+    "path": "04-sistema-de-tipos/008-types-as-sets/03.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "04-sistema-de-tipos/009-type-declaration/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "04-sistema-de-tipos/009-type-declaration/02.ts",
+    "mode": "N",
+    "project": false,
+    "flags": [],
+    "sources": [],
+    "codes": [
+      2353
+    ]
+  },
+  {
+    "path": "04-sistema-de-tipos/010-type-assertion/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "04-sistema-de-tipos/010-type-assertion/02.ts",
+    "mode": "P",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "04-sistema-de-tipos/010-type-assertion/03.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "04-sistema-de-tipos/033-type-annotations/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "04-sistema-de-tipos/033-type-annotations/02.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "04-sistema-de-tipos/033-type-annotations/03.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "04-sistema-de-tipos/033-type-annotations/04.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "04-sistema-de-tipos/033-type-annotations/05.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "05-inferencia-de-tipos/015-type-inference/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "05-inferencia-de-tipos/016-more-advanced-inferences/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "05-inferencia-de-tipos/016-more-advanced-inferences/02.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "05-inferencia-de-tipos/016-more-advanced-inferences/03.ts",
+    "mode": "P",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "05-inferencia-de-tipos/017-type-widening/01.ts",
+    "mode": "N",
+    "project": false,
+    "flags": [],
+    "sources": [],
+    "codes": [
+      2322
+    ]
+  },
+  {
+    "path": "05-inferencia-de-tipos/018-const/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "05-inferencia-de-tipos/020-const-assertion/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "05-inferencia-de-tipos/020-const-assertion/02.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "05-inferencia-de-tipos/020-const-assertion/03.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "05-inferencia-de-tipos/021-explicit-type-annotation/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "05-inferencia-de-tipos/021-explicit-type-annotation/02.ts",
+    "mode": "N",
+    "project": false,
+    "flags": [],
+    "sources": [],
+    "codes": [
+      2322
+    ]
+  },
+  {
+    "path": "05-inferencia-de-tipos/039-literal-inference/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "05-inferencia-de-tipos/039-literal-inference/02.ts",
+    "mode": "N",
+    "project": false,
+    "flags": [],
+    "sources": [],
+    "codes": [
+      2345
+    ]
+  },
+  {
+    "path": "05-inferencia-de-tipos/039-literal-inference/03.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "05-inferencia-de-tipos/039-literal-inference/04.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "05-inferencia-de-tipos/146-defaulted-declarations/01.ts",
+    "mode": "R",
+    "project": false,
+    "flags": [],
+    "sources": [],
+    "stdout": "Hello, Anonymous!\nHello, John!\n"
+  },
+  {
+    "path": "06-objetos-y-propiedades/012-property-checking-and-excess-property-checking/01.ts",
+    "mode": "N",
+    "project": false,
+    "flags": [],
+    "sources": [],
+    "codes": [
+      2353
+    ]
+  },
+  {
+    "path": "06-objetos-y-propiedades/013-weak-types/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "06-objetos-y-propiedades/013-weak-types/02.ts",
+    "mode": "N",
+    "project": false,
+    "flags": [],
+    "sources": [],
+    "codes": [
+      2353
+    ]
+  },
+  {
+    "path": "06-objetos-y-propiedades/013-weak-types/03.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "06-objetos-y-propiedades/013-weak-types/04.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "06-objetos-y-propiedades/014-strict-object-literal-checking-freshness/01.ts",
+    "mode": "N",
+    "project": false,
+    "flags": [],
+    "sources": [],
+    "codes": [
+      2353,
+      2353,
+      2353
+    ]
+  },
+  {
+    "path": "06-objetos-y-propiedades/034-optional-properties/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "06-objetos-y-propiedades/034-optional-properties/02.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "06-objetos-y-propiedades/035-readonly-properties/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "06-objetos-y-propiedades/036-index-signatures/01.ts",
+    "mode": "R",
+    "project": false,
+    "flags": [],
+    "sources": [],
+    "stdout": "x\nb\nb\n"
+  },
+  {
+    "path": "06-objetos-y-propiedades/057-object-types/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "06-objetos-y-propiedades/057-object-types/02.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "06-objetos-y-propiedades/057-object-types/03.ts",
+    "mode": "R",
+    "project": false,
+    "flags": [],
+    "sources": [],
+    "stdout": "6\n"
+  },
+  {
+    "path": "06-objetos-y-propiedades/159-template-string-pattern-index-signatures/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "07-arreglos-y-tuplas/032-array/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "07-arreglos-y-tuplas/032-array/02.ts",
+    "mode": "N",
+    "project": false,
+    "flags": [],
+    "sources": [],
+    "codes": [
+      2339
+    ]
+  },
+  {
+    "path": "07-arreglos-y-tuplas/032-array/03.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "07-arreglos-y-tuplas/058-tuple-type-anonymous/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "07-arreglos-y-tuplas/059-named-tuple-type-labeled/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "07-arreglos-y-tuplas/060-fixed-length-tuple/01.ts",
+    "mode": "N",
+    "project": false,
+    "flags": [],
+    "sources": [],
+    "codes": [
+      2339
+    ]
+  },
+  {
+    "path": "07-arreglos-y-tuplas/155-variadic-tuple-types/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "07-arreglos-y-tuplas/155-variadic-tuple-types/02.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "07-arreglos-y-tuplas/155-variadic-tuple-types/03.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "07-arreglos-y-tuplas/155-variadic-tuple-types/04.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "08-uniones-e-intersecciones/038-literal-types/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "08-uniones-e-intersecciones/038-literal-types/02.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "08-uniones-e-intersecciones/061-union-type/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "08-uniones-e-intersecciones/062-intersection-types/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "09-narrowing-y-control-de-flujo/022-conditions/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "09-narrowing-y-control-de-flujo/023-throwing-or-returning/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "09-narrowing-y-control-de-flujo/024-discriminated-union/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "09-narrowing-y-control-de-flujo/025-user-defined-type-guards/01.ts",
+    "mode": "R",
+    "project": false,
+    "flags": [],
+    "sources": [],
+    "stdout": "a,c,d,f\na,c,d,f\n"
+  },
+  {
+    "path": "09-narrowing-y-control-de-flujo/026-switch-true-narrowing/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "09-narrowing-y-control-de-flujo/046-typeof-type-guards/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "09-narrowing-y-control-de-flujo/047-truthiness-narrowing/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "09-narrowing-y-control-de-flujo/048-equality-narrowing/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "09-narrowing-y-control-de-flujo/049-in-operator-narrowing/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "09-narrowing-y-control-de-flujo/050-instanceof-narrowing/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "09-narrowing-y-control-de-flujo/051-assignments/01.ts",
+    "mode": "R",
+    "project": false,
+    "flags": [],
+    "sources": [],
+    "stdout": "HELLO\n42.00\n"
+  },
+  {
+    "path": "09-narrowing-y-control-de-flujo/052-control-flow-analysis/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "09-narrowing-y-control-de-flujo/052-control-flow-analysis/02.ts",
+    "mode": "N",
+    "project": false,
+    "flags": [],
+    "sources": [],
+    "codes": [
+      18046,
+      2339
+    ]
+  },
+  {
+    "path": "09-narrowing-y-control-de-flujo/053-type-predicates/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "09-narrowing-y-control-de-flujo/053-type-predicates/02.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "09-narrowing-y-control-de-flujo/054-discriminated-unions/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "09-narrowing-y-control-de-flujo/055-the-never-type/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "09-narrowing-y-control-de-flujo/056-exhaustiveness-checking/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "09-narrowing-y-control-de-flujo/154-assertion-functions/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "09-narrowing-y-control-de-flujo/154-assertion-functions/02.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "09-narrowing-y-control-de-flujo/154-assertion-functions/03.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "10-funciones/081-overloads/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "10-funciones/081-overloads/02.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "10-funciones/150-function-overloading/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "11-interfaces-y-alias-de-tipos/037-extending-types/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "11-interfaces-y-alias-de-tipos/037-extending-types/02.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "11-interfaces-y-alias-de-tipos/037-extending-types/03.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "11-interfaces-y-alias-de-tipos/037-extending-types/04.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "11-interfaces-y-alias-de-tipos/077-common-syntax/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "11-interfaces-y-alias-de-tipos/077-common-syntax/02.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "11-interfaces-y-alias-de-tipos/077-common-syntax/03.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "11-interfaces-y-alias-de-tipos/077-common-syntax/04.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "11-interfaces-y-alias-de-tipos/078-basic-types/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "11-interfaces-y-alias-de-tipos/079-objects-and-interfaces/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "11-interfaces-y-alias-de-tipos/080-union-and-intersection-types/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "11-interfaces-y-alias-de-tipos/082-merging-and-extension/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "11-interfaces-y-alias-de-tipos/082-merging-and-extension/02.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "11-interfaces-y-alias-de-tipos/083-differences-between-type-and-interface/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "11-interfaces-y-alias-de-tipos/083-differences-between-type-and-interface/02.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "11-interfaces-y-alias-de-tipos/083-differences-between-type-and-interface/03.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "11-interfaces-y-alias-de-tipos/083-differences-between-type-and-interface/04.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "11-interfaces-y-alias-de-tipos/083-differences-between-type-and-interface/05.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "12-enumeraciones/040-enums/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "12-enumeraciones/041-numeric-enums/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "12-enumeraciones/041-numeric-enums/02.ts",
+    "mode": "R",
+    "project": false,
+    "flags": [],
+    "sources": [],
+    "stdout": "11\n"
+  },
+  {
+    "path": "12-enumeraciones/042-string-enums/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "12-enumeraciones/043-constant-enums/01.ts",
+    "mode": "R",
+    "project": false,
+    "flags": [],
+    "sources": [],
+    "stdout": "EN\n"
+  },
+  {
+    "path": "12-enumeraciones/043-constant-enums/02.ts",
+    "mode": "R",
+    "project": false,
+    "flags": [],
+    "sources": [],
+    "stdout": "EN\n"
+  },
+  {
+    "path": "12-enumeraciones/044-reverse-mapping/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "12-enumeraciones/044-reverse-mapping/03.ts",
+    "mode": "N",
+    "project": false,
+    "flags": [],
+    "sources": [],
+    "codes": [
+      7015
+    ]
+  },
+  {
+    "path": "12-enumeraciones/045-computed-and-constant-members/01.ts",
+    "mode": "R",
+    "project": false,
+    "flags": [],
+    "sources": [],
+    "stdout": "6\n"
+  },
+  {
+    "path": "12-enumeraciones/045-computed-and-constant-members/02.ts",
+    "mode": "R",
+    "project": false,
+    "flags": [],
+    "sources": [],
+    "stdout": "3\n"
+  },
+  {
+    "path": "12-enumeraciones/045-computed-and-constant-members/03.ts",
+    "mode": "R",
+    "project": false,
+    "flags": [],
+    "sources": [],
+    "stdout": "42\n"
+  },
+  {
+    "path": "13-clases/084-class-common-syntax/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "13-clases/084-class-common-syntax/02.ts",
+    "mode": "R",
+    "project": false,
+    "flags": [],
+    "sources": [],
+    "stdout": "Hello, my name is John Doe and I am 25 years old.\n"
+  },
+  {
+    "path": "13-clases/085-constructor/01.ts",
+    "mode": "R",
+    "project": false,
+    "flags": [],
+    "sources": [],
+    "stdout": "Hello, my name is Simon and I'm 17 years old.\n"
+  },
+  {
+    "path": "13-clases/085-constructor/02.ts",
+    "mode": "R",
+    "project": false,
+    "flags": [],
+    "sources": [],
+    "stdout": "m f\n"
+  },
+  {
+    "path": "13-clases/085-constructor/03.ts",
+    "mode": "R",
+    "project": false,
+    "flags": [],
+    "sources": [],
+    "stdout": "Name: Unknown, Age: 0\nName: John, Age: 0\nName: Jane, Age: 25\n"
+  },
+  {
+    "path": "13-clases/086-private-and-protected-constructors/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "13-clases/087-get-and-set/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "13-clases/088-auto-accessors-in-classes/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "13-clases/088-auto-accessors-in-classes/02.ts",
+    "mode": "R",
+    "project": false,
+    "flags": [],
+    "sources": [],
+    "stdout": "Sol\n"
+  },
+  {
+    "path": "13-clases/089-this/01.ts",
+    "mode": "R",
+    "project": false,
+    "flags": [],
+    "sources": [],
+    "stdout": "Hello, my name is Alice.\n"
+  },
+  {
+    "path": "13-clases/090-parameter-properties/01.ts",
+    "mode": "R",
+    "project": false,
+    "flags": [],
+    "sources": [],
+    "stdout": "Hello, my name is Alice and I am 25 years old.\n"
+  },
+  {
+    "path": "13-clases/091-abstract-classes/01.ts",
+    "mode": "R",
+    "project": false,
+    "flags": [],
+    "sources": [],
+    "stdout": "Whiskers meows.\n"
+  },
+  {
+    "path": "13-clases/092-with-generics/01.ts",
+    "mode": "R",
+    "project": false,
+    "flags": [],
+    "sources": [],
+    "stdout": "42\nWorld\n"
+  },
+  {
+    "path": "13-clases/098-inheritance/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "13-clases/098-inheritance/02.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "13-clases/099-statics/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "13-clases/100-property-initialization/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "13-clases/100-property-initialization/02.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "13-clases/100-property-initialization/03.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "13-clases/101-method-overloading/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "13-clases/142-new-target-meta-property/01.ts",
+    "mode": "R",
+    "project": false,
+    "flags": [],
+    "sources": [],
+    "stdout": "Parent\nChild\n"
+  },
+  {
+    "path": "14-genericos/019-const-modifier-on-type-parameters/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "14-genericos/019-const-modifier-on-type-parameters/02.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "14-genericos/102-generic-type/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "14-genericos/103-generic-classes/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "14-genericos/104-generic-constraints/01.ts",
+    "mode": "N",
+    "project": false,
+    "flags": [],
+    "sources": [],
+    "codes": [
+      2345
+    ]
+  },
+  {
+    "path": "14-genericos/104-generic-constraints/02.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "14-genericos/105-generic-contextual-narrowing/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "15-manipulacion-de-tipos/063-type-indexing/01.ts",
+    "mode": "R",
+    "project": false,
+    "flags": [],
+    "sources": [],
+    "stdout": "a\n"
+  },
+  {
+    "path": "15-manipulacion-de-tipos/064-type-from-value/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "15-manipulacion-de-tipos/065-type-from-func-return/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "15-manipulacion-de-tipos/066-type-from-module/01.ts",
+    "mode": "R",
+    "project": false,
+    "flags": [
+      "--module",
+      "NodeNext",
+      "--moduleResolution",
+      "NodeNext"
+    ],
+    "sources": [
+      "calc.ts"
+    ],
+    "stdout": "3\n"
+  },
+  {
+    "path": "15-manipulacion-de-tipos/067-mapped-types/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "15-manipulacion-de-tipos/068-mapped-type-modifiers/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "15-manipulacion-de-tipos/110-creating-types-from-types/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "15-manipulacion-de-tipos/110-creating-types-from-types/02.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "15-manipulacion-de-tipos/110-creating-types-from-types/03.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "15-manipulacion-de-tipos/110-creating-types-from-types/04.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "15-manipulacion-de-tipos/111-indexed-access-types/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "15-manipulacion-de-tipos/111-indexed-access-types/02.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "16-tipos-condicionales-y-recursivos/069-conditional-types/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "16-tipos-condicionales-y-recursivos/070-distributive-conditional-types/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "16-tipos-condicionales-y-recursivos/071-infer-type-inference-in-conditional-types/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "16-tipos-condicionales-y-recursivos/151-recursive-types/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "16-tipos-condicionales-y-recursivos/152-recursive-conditional-types/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "16-tipos-condicionales-y-recursivos/152-recursive-conditional-types/02.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "16-tipos-condicionales-y-recursivos/152-recursive-conditional-types/03.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "17-tipos-utilitarios/112-awaited-t/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "17-tipos-utilitarios/113-partial-t/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "17-tipos-utilitarios/114-required-t/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "17-tipos-utilitarios/115-readonly-t/01.ts",
+    "mode": "N",
+    "project": false,
+    "flags": [],
+    "sources": [],
+    "codes": [
+      2540
+    ]
+  },
+  {
+    "path": "17-tipos-utilitarios/116-record-k-t/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "17-tipos-utilitarios/117-pick-t-k/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "17-tipos-utilitarios/118-omit-t-k/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "17-tipos-utilitarios/119-exclude-t-u/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "17-tipos-utilitarios/120-extract-t-u/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "17-tipos-utilitarios/121-nonnullable-t/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "17-tipos-utilitarios/122-parameters-t/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "17-tipos-utilitarios/123-constructorparameters-t/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "17-tipos-utilitarios/124-returntype-t/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "17-tipos-utilitarios/125-instancetype-t/01.ts",
+    "mode": "R",
+    "project": false,
+    "flags": [],
+    "sources": [],
+    "stdout": "Hello, my name is John!\n"
+  },
+  {
+    "path": "17-tipos-utilitarios/126-thisparametertype-t/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "17-tipos-utilitarios/127-omitthisparameter-t/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "17-tipos-utilitarios/128-thistype-t/01.ts",
+    "mode": "N",
+    "project": false,
+    "flags": [],
+    "sources": [],
+    "codes": [
+      2339
+    ]
+  },
+  {
+    "path": "17-tipos-utilitarios/129-uppercase-t/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "17-tipos-utilitarios/130-lowercase-t/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "17-tipos-utilitarios/131-capitalize-t/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "17-tipos-utilitarios/132-uncapitalize-t/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "17-tipos-utilitarios/133-noinfer-t/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "17-tipos-utilitarios/133-noinfer-t/02.ts",
+    "mode": "N",
+    "project": false,
+    "flags": [],
+    "sources": [],
+    "codes": [
+      2345
+    ]
+  },
+  {
+    "path": "18-tipos-template-literal/072-template-union-types/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "18-tipos-template-literal/149-template-literal-types/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "19-compatibilidad-y-varianza/157-covariance-and-contravariance-in-typescript/01.ts",
+    "mode": "N",
+    "project": false,
+    "flags": [],
+    "sources": [],
+    "codes": [
+      2322
+    ]
+  },
+  {
+    "path": "19-compatibilidad-y-varianza/157-covariance-and-contravariance-in-typescript/02.ts",
+    "mode": "N",
+    "project": false,
+    "flags": [],
+    "sources": [],
+    "codes": [
+      2322
+    ]
+  },
+  {
+    "path": "19-compatibilidad-y-varianza/157-covariance-and-contravariance-in-typescript/03.ts",
+    "mode": "R",
+    "project": false,
+    "flags": [],
+    "sources": [],
+    "stdout": "false\n"
+  },
+  {
+    "path": "19-compatibilidad-y-varianza/158-optional-variance-annotations-for-type-parameters/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "20-decoradores-y-mixins/093-class-decorators/01.ts",
+    "mode": "R",
+    "project": false,
+    "flags": [],
+    "sources": [],
+    "stdout": "Person\nAna\n"
+  },
+  {
+    "path": "20-decoradores-y-mixins/094-property-decorator/01.ts",
+    "mode": "R",
+    "project": false,
+    "flags": [],
+    "sources": [],
+    "stdout": "HELLO!\n"
+  },
+  {
+    "path": "20-decoradores-y-mixins/095-method-decorator/01.ts",
+    "mode": "R",
+    "project": false,
+    "flags": [],
+    "sources": [],
+    "stdout": "LOG: Entering method 'sayHello'.\nHello!\nLOG: Exiting method 'sayHello'.\n"
+  },
+  {
+    "path": "20-decoradores-y-mixins/096-getter-and-setter-decorators/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "20-decoradores-y-mixins/097-decorator-metadata/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [
+      "--lib",
+      "ES2022,DOM,ESNext.Decorators"
+    ],
+    "sources": []
+  },
+  {
+    "path": "20-decoradores-y-mixins/135-mixin-classes/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "21-modulos-y-namespaces/107-namespacing/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "21-modulos-y-namespaces/143-dynamic-import-expressions/01.ts",
+    "mode": "P",
+    "project": false,
+    "flags": [
+      "--module",
+      "ESNext",
+      "--moduleResolution",
+      "Bundler"
+    ],
+    "sources": [
+      "widget.ts"
+    ]
+  },
+  {
+    "path": "21-modulos-y-namespaces/161-type-only-imports-and-export/01.ts",
+    "mode": "R",
+    "project": false,
+    "flags": [
+      "--module",
+      "NodeNext",
+      "--moduleResolution",
+      "NodeNext"
+    ],
+    "sources": [
+      "house.ts"
+    ],
+    "stdout": "Calle 1\n"
+  },
+  {
+    "path": "21-modulos-y-namespaces/161-type-only-imports-and-export/02.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [
+      "--module",
+      "NodeNext",
+      "--moduleResolution",
+      "NodeNext"
+    ],
+    "sources": [
+      "mod.ts"
+    ]
+  },
+  {
+    "path": "21-modulos-y-namespaces/164-import-attributes/01.ts",
+    "mode": "R",
+    "project": false,
+    "flags": [
+      "--module",
+      "ESNext",
+      "--moduleResolution",
+      "Bundler",
+      "--resolveJsonModule"
+    ],
+    "sources": [],
+    "stdout": "demo\n"
+  },
+  {
+    "path": "21-modulos-y-namespaces/164-import-attributes/02.ts",
+    "mode": "R",
+    "project": false,
+    "flags": [
+      "--module",
+      "ESNext",
+      "--moduleResolution",
+      "Bundler",
+      "--resolveJsonModule"
+    ],
+    "sources": [],
+    "stdout": "demo\n"
+  },
+  {
+    "path": "22-declaraciones-ambientales/011-ambient-declarations/02.ts",
+    "mode": "R",
+    "project": false,
+    "flags": [],
+    "sources": [],
+    "stdout": "hola\n"
+  },
+  {
+    "path": "22-declaraciones-ambientales/109-triple-slash-directives/01.ts",
+    "mode": "R",
+    "project": false,
+    "flags": [],
+    "sources": [],
+    "stdout": "8080\n"
+  },
+  {
+    "path": "23-asincronia-y-errores/134-errors-and-exception-handling/01.ts",
+    "mode": "R",
+    "project": false,
+    "flags": [],
+    "sources": [],
+    "stdout": "intento\nfallo\nfin\n"
+  },
+  {
+    "path": "23-asincronia-y-errores/134-errors-and-exception-handling/02.ts",
+    "mode": "R",
+    "project": false,
+    "flags": [],
+    "sources": [],
+    "stdout": "TypeError\n"
+  },
+  {
+    "path": "23-asincronia-y-errores/134-errors-and-exception-handling/03.ts",
+    "mode": "R",
+    "project": false,
+    "flags": [],
+    "sources": [],
+    "stdout": "CustomError: fallo propio\n"
+  },
+  {
+    "path": "24-iteradores-y-generadores/136-iterators-and-generators/01.ts",
+    "mode": "R",
+    "project": false,
+    "flags": [],
+    "sources": [],
+    "stdout": "1\n2\n3\n"
+  },
+  {
+    "path": "24-iteradores-y-generadores/136-iterators-and-generators/02.ts",
+    "mode": "R",
+    "project": false,
+    "flags": [],
+    "sources": [],
+    "stdout": "1\n2\n3\n4\n5\n"
+  },
+  {
+    "path": "24-iteradores-y-generadores/141-the-for-await-of-statement/01.ts",
+    "mode": "R",
+    "project": false,
+    "flags": [],
+    "sources": [],
+    "stdout": "1\n2\n3\n"
+  },
+  {
+    "path": "25-operadores-y-caracteristicas-modernas/140-es7-exponentiation-operator/01.ts",
+    "mode": "R",
+    "project": false,
+    "flags": [],
+    "sources": [],
+    "stdout": "16\n"
+  },
+  {
+    "path": "25-operadores-y-caracteristicas-modernas/145-non-null-assertion-operator/01.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "25-operadores-y-caracteristicas-modernas/147-optional-chaining/01.ts",
+    "mode": "R",
+    "project": false,
+    "flags": [],
+    "sources": [],
+    "stdout": "undefined\n"
+  },
+  {
+    "path": "25-operadores-y-caracteristicas-modernas/148-nullish-coalescing-operator/01.ts",
+    "mode": "R",
+    "project": false,
+    "flags": [],
+    "sources": [],
+    "stdout": "foo\n1\n0\n"
+  },
+  {
+    "path": "25-operadores-y-caracteristicas-modernas/160-the-satisfies-operator/01.ts",
+    "mode": "N",
+    "project": false,
+    "flags": [],
+    "sources": [],
+    "codes": [
+      2339,
+      2339
+    ]
+  },
+  {
+    "path": "25-operadores-y-caracteristicas-modernas/162-using-declaration-and-explicit-resource-management/02.ts",
+    "mode": "R",
+    "project": false,
+    "flags": [
+      "--lib",
+      "ES2022,DOM,ESNext.Disposable"
+    ],
+    "sources": [],
+    "stdout": "1\n2\ndisposed\n3\n"
+  },
+  {
+    "path": "25-operadores-y-caracteristicas-modernas/162-using-declaration-and-explicit-resource-management/04.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [
+      "--lib",
+      "ES2022,DOM,ESNext.Disposable"
+    ],
+    "sources": []
+  },
+  {
+    "path": "25-operadores-y-caracteristicas-modernas/162-using-declaration-and-explicit-resource-management/05.ts",
+    "mode": "R",
+    "project": false,
+    "flags": [
+      "--lib",
+      "ES2022,DOM,ESNext.Disposable"
+    ],
+    "sources": [],
+    "stdout": "C\nB\nA\n"
+  },
+  {
+    "path": "25-operadores-y-caracteristicas-modernas/163-await-using-declaration/01.ts",
+    "mode": "R",
+    "project": false,
+    "flags": [
+      "--lib",
+      "ES2022,DOM,ESNext.Disposable"
+    ],
+    "sources": [],
+    "stdout": "trabajo\ncerrado\n"
+  },
+  {
+    "path": "25-operadores-y-caracteristicas-modernas/163-await-using-declaration/02.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [
+      "--lib",
+      "ES2022,DOM,ESNext.Disposable"
+    ],
+    "sources": []
+  },
+  {
+    "path": "25-operadores-y-caracteristicas-modernas/163-await-using-declaration/03.ts",
+    "mode": "R",
+    "project": false,
+    "flags": [
+      "--lib",
+      "ES2022,DOM,ESNext.Disposable"
+    ],
+    "sources": [],
+    "stdout": "Doing some work...\nConnection closed.\n"
+  },
+  {
+    "path": "25-operadores-y-caracteristicas-modernas/165-regular-expression-syntax-checking/01.ts",
+    "mode": "N",
+    "project": false,
+    "flags": [],
+    "sources": [],
+    "codes": [
+      1533
+    ]
+  },
+  {
+    "path": "26-interoperabilidad-con-javascript/137-tsdocs-jsdoc-reference/01.ts",
+    "mode": "R",
+    "project": false,
+    "flags": [],
+    "sources": [],
+    "stdout": "100\n"
+  },
+  {
+    "path": "06-objetos-y-propiedades/166-propiedades-exactas/propiedades_exactas.ts",
+    "mode": "N",
+    "project": false,
+    "flags": [
+      "--exactOptionalPropertyTypes"
+    ],
+    "sources": [],
+    "codes": [
+      2375
+    ]
+  },
+  {
+    "path": "07-arreglos-y-tuplas/166-tuplas-readonly/tuplas_readonly.ts",
+    "mode": "N",
+    "project": false,
+    "flags": [],
+    "sources": [],
+    "codes": [
+      2540
+    ]
+  },
+  {
+    "path": "10-funciones/166-firmas-de-llamada-y-construccion/firmas.ts",
+    "mode": "R",
+    "project": false,
+    "flags": [],
+    "sources": [],
+    "stdout": "6\n"
+  },
+  {
+    "path": "10-funciones/167-parametros/parametros.ts",
+    "mode": "R",
+    "project": false,
+    "flags": [],
+    "sources": [],
+    "stdout": "15 invitado\n"
+  },
+  {
+    "path": "10-funciones/168-callbacks-y-void/callbacks_void.ts",
+    "mode": "R",
+    "project": false,
+    "flags": [],
+    "sources": [],
+    "stdout": "3\n"
+  },
+  {
+    "path": "10-funciones/169-this-en-funciones/this_funciones.ts",
+    "mode": "R",
+    "project": false,
+    "flags": [],
+    "sources": [],
+    "stdout": "7\n"
+  },
+  {
+    "path": "12-enumeraciones/166-ambient-enum/consulta.ts",
+    "mode": "T",
+    "project": false,
+    "flags": [],
+    "sources": []
+  },
+  {
+    "path": "13-clases/166-modificadores-de-acceso/acceso.ts",
+    "mode": "N",
+    "project": false,
+    "flags": [],
+    "sources": [],
+    "codes": [
+      2341
+    ]
+  },
+  {
+    "path": "14-genericos/166-genericos-con-valores-por-defecto/genericos_default.ts",
+    "mode": "R",
+    "project": false,
+    "flags": [],
+    "sources": [],
+    "stdout": "hola 4\n"
+  },
+  {
+    "path": "15-manipulacion-de-tipos/166-keyof-y-typeof/keyof_typeof.ts",
+    "mode": "R",
+    "project": false,
+    "flags": [],
+    "sources": [],
+    "stdout": "Ana 20\n"
+  },
+  {
+    "path": "20-decoradores-y-mixins/166-decoradores-estandar/decorador.ts",
+    "mode": "R",
+    "project": false,
+    "flags": [],
+    "sources": [],
+    "stdout": "0\n"
+  },
+  {
+    "path": "20-decoradores-y-mixins/167-decoradores-legacy/legacy.ts",
+    "mode": "R",
+    "project": true,
+    "flags": [],
+    "sources": [],
+    "stdout": "decir\nhola\n"
+  },
+  {
+    "path": "21-modulos-y-namespaces/166-esm/main.ts",
+    "mode": "R",
+    "project": false,
+    "flags": [
+      "--module",
+      "NodeNext"
+    ],
+    "sources": [
+      "operaciones.ts"
+    ],
+    "stdout": "6 5\n"
+  },
+  {
+    "path": "21-modulos-y-namespaces/167-commonjs/main.cts",
+    "mode": "R",
+    "project": false,
+    "flags": [
+      "--module",
+      "NodeNext"
+    ],
+    "sources": [
+      "operaciones.cts"
+    ],
+    "stdout": "8\n"
+  },
+  {
+    "path": "21-modulos-y-namespaces/168-import-defer/main.ts",
+    "mode": "P",
+    "project": false,
+    "flags": [
+      "--module",
+      "ESNext",
+      "--moduleResolution",
+      "Bundler"
+    ],
+    "sources": [
+      "modulo.ts"
+    ]
+  },
+  {
+    "path": "22-declaraciones-ambientales/166-declaraciones-y-runtime/main.ts",
+    "mode": "R",
+    "project": false,
+    "flags": [
+      "--module",
+      "NodeNext"
+    ],
+    "sources": [
+      "biblioteca.d.ts"
+    ],
+    "stdout": "8\n"
+  },
+  {
+    "path": "23-asincronia-y-errores/166-promesas/promesas.ts",
+    "mode": "R",
+    "project": false,
+    "flags": [],
+    "sources": [],
+    "stdout": "fallo\n6\n"
+  },
+  {
+    "path": "23-asincronia-y-errores/167-async-await/async_await.ts",
+    "mode": "R",
+    "project": false,
+    "flags": [],
+    "sources": [],
+    "stdout": "7\nfallo\n"
+  },
+  {
+    "path": "23-asincronia-y-errores/168-promesas-combinadas/promesas_combinadas.ts",
+    "mode": "R",
+    "project": false,
+    "flags": [],
+    "sources": [],
+    "stdout": "1,2\nfulfilled,rejected\n1\n"
+  },
+  {
+    "path": "24-iteradores-y-generadores/166-iterable-personalizado/iterable.ts",
+    "mode": "R",
+    "project": false,
+    "flags": [],
+    "sources": [],
+    "stdout": "1,2,3\n"
+  },
+  {
+    "path": "24-iteradores-y-generadores/167-generador-asincrono/generador_async.ts",
+    "mode": "R",
+    "project": false,
+    "flags": [],
+    "sources": [],
+    "stdout": "1\n2\n"
+  },
+  {
+    "path": "25-operadores-y-caracteristicas-modernas/166-using-sin-dependencias/recursos.ts",
+    "mode": "R",
+    "project": false,
+    "flags": [
+      "--lib",
+      "ES2022,DOM,ESNext.Disposable"
+    ],
+    "sources": [],
+    "stdout": "trabajo\nB\nA\n"
+  },
+  {
+    "path": "26-interoperabilidad-con-javascript/166-jsdoc-y-checkjs/main.ts",
+    "mode": "R",
+    "project": true,
+    "flags": [],
+    "sources": [],
+    "stdout": "10\n",
+    "entry": "dist/main.js"
+  },
+  {
+    "path": "27-jsx-y-entornos-de-ejecucion/166-jsx-elemental/jsx.tsx",
+    "mode": "R",
+    "project": true,
+    "flags": [],
+    "sources": [],
+    "stdout": "<saludo>Hola</saludo>\n"
+  },
+  {
+    "path": "27-jsx-y-entornos-de-ejecucion/167-dom-elemental/main.ts",
+    "mode": "P",
+    "project": false,
+    "flags": [],
+    "sources": []
   }
 ]

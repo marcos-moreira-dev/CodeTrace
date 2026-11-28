@@ -1,0 +1,42 @@
+// Tema: getter and setter decorators.
+// Los decoradores de accesores permiten intervenir en las operaciones de lectura o escritura de una propiedad.
+// Desde la carpeta de este ejercicio:
+// Compilar: tsc --noEmit --strict --target ES2022 01.ts
+// Salida esperada: compila sin diagnósticos; ejercicio de comprobación estática.
+
+function range<This, Return extends number>(min: number, max: number) {
+    return function (
+        target: (this: This) => Return,
+        context: ClassGetterDecoratorContext<This, Return>
+    ) {
+        return function (this: This): Return {
+            const value = target.call(this);
+            if (value < min || value > max) {
+                throw 'Invalid';
+            }
+            Object.defineProperty(this, context.name, {
+                value,
+                enumerable: true,
+            });
+            return value;
+        };
+    };
+}
+
+class MyClass {
+    private _value = 0;
+
+    constructor(value: number) {
+        this._value = value;
+    }
+    @range(1, 100)
+    get getValue(): number {
+        return this._value;
+    }
+}
+
+const obj = new MyClass(10);
+console.log(obj.getValue); // Válido: 10
+
+const obj2 = new MyClass(999);
+console.log(obj2.getValue); // Throw: Invalid!
