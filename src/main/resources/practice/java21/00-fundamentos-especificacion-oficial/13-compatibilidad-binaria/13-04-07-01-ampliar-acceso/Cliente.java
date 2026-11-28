@@ -1,0 +1,18 @@
+// CodeTrace | Fundamentos - Especificación oficial
+// Referencia: Java SE 21, JLS §13.4.7; ejemplo 13.4.7-1
+// Compilar: seguir las etapas al final, desde la unidad.
+// Ejecutar: java -cp salida Cliente
+// Comandos desde la carpeta de la unidad.
+
+class Cliente extends Servicio {
+    protected void mostrar() { System.out.println("cliente"); }
+    public static void main(String[] args) { new Cliente().mostrar(); }
+}
+
+// Salida esperada:
+// Etapa 1: javac --release 21 -cp salida -d salida v1/Servicio.java Cliente.java
+// java -cp salida Cliente
+// Resultado: cliente
+// Etapa 2: javac --release 21 -cp salida -d salida v2/Servicio.java
+// java -cp salida Cliente
+// Resultado: cliente

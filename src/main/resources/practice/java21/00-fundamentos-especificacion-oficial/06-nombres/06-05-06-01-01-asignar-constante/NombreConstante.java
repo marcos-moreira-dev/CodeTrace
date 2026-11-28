@@ -16,4 +16,4 @@ public class NombreConstante {
 }
 
 // Salida esperada:
-// Error: cannot assign a value to final variable LIMITE
+// Error: final variable LIMITE

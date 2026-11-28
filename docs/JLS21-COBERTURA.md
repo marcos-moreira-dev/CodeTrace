@@ -2,7 +2,7 @@
 
 Ejemplos originales basados en la [JLS SE 21](https://docs.oracle.com/javase/specs/jls/se21/html/index.html). No constituyen una publicación oficial de Oracle.
 
-183 unidades, 302 fuentes. [Inventario de los 233 ejemplos numerados](JLS21-INVENTARIO.tsv): 170 identificadores con adaptación inicial; no equivale a cobertura semántica completa. Fragmentos sin numeración pendientes de inventario.
+214 unidades, 378 fuentes. [Inventario de los 233 ejemplos numerados](JLS21-INVENTARIO.tsv): 201 identificadores con adaptación inicial; no equivale a cobertura semántica completa. Fragmentos sin numeración pendientes de inventario.
 
 | Sección | Unidad | Estado |
 | --- | --- | --- |
@@ -189,5 +189,36 @@ Ejemplos originales basados en la [JLS SE 21](https://docs.oracle.com/javase/spe
 | 9.9; ejemplo 9.9-1 | 09-interfaces/09-09-01-throws-tipo-funcion/OperacionIO.java | Implementado; confirmar CI de la rama actual |
 | 9.9; ejemplo 9.9-2 | 09-interfaces/09-09-02-tipo-funcion-generico/FuncionA.java | Implementado; confirmar CI de la rama actual |
 | 12.5; ejemplo 12.5-1 | 12-ejecucion/12-05-01-crear-instancia/PuntoInicial.java | Implementado; confirmar CI de la rama actual |
+| 13.4.4; ejemplo 13.4.4-1 | 13-compatibilidad-binaria/13-04-04-01-eliminar-superclase/Raiz.java | Implementado; confirmar CI de la rama actual |
+| 13.4.6; ejemplo 13.4.6-1 | 13-compatibilidad-binaria/13-04-06-01-eliminar-sobrescritura/Raiz.java | Implementado; confirmar CI de la rama actual |
+| 13.4.6; ejemplo 13.4.6-2 | 13-compatibilidad-binaria/13-04-06-02-insertar-sobrescritura/Raiz.java | Implementado; confirmar CI de la rama actual |
+| 13.4.7; ejemplo 13.4.7-1 | 13-compatibilidad-binaria/13-04-07-01-ampliar-acceso/v1/Servicio.java | Implementado; confirmar CI de la rama actual |
+| 13.4.8; ejemplo 13.4.8-1 | 13-compatibilidad-binaria/13-04-08-01-agregar-campo/Raiz.java | Implementado; confirmar CI de la rama actual |
+| 13.4.9; ejemplo 13.4.9-1 | 13-compatibilidad-binaria/13-04-09-01-campo-se-vuelve-final/v1/Servicio.java | Implementado; confirmar CI de la rama actual |
+| 13.4.16; ejemplo 13.4.16-1 | 13-compatibilidad-binaria/13-04-16-01-metodo-se-vuelve-abstracto/v1/Servicio.java | Implementado; confirmar CI de la rama actual |
+| 13.4.17; ejemplo 13.4.17-1 | 13-compatibilidad-binaria/13-04-17-01-metodo-se-vuelve-final/v1/Servicio.java | Implementado; confirmar CI de la rama actual |
+| 13.5.4; ejemplo 13.5.4-1 | 13-compatibilidad-binaria/13-05-04-01-eliminar-metodo-interfaz/v1/Servicio.java | Implementado; confirmar CI de la rama actual |
+| 13.5.7; ejemplo 13.5.7-1 | 13-compatibilidad-binaria/13-05-07-01-conflicto-nuevo-default/Original.java | Implementado; confirmar CI de la rama actual |
+| 14.22; ejemplo 14.22-1 | 14-bloques-sentencias-patrones/14-22-01-constante-incrustada/v1/Servicio.java | Implementado; confirmar CI de la rama actual |
+| 15.12.2; ejemplo 15.12.2-3 | 15-expresiones/15-12-02-03-sobrecarga-en-binario/v1/Servicio.java | Implementado; confirmar CI de la rama actual |
+| 14.3; ejemplo 14.3-1 | 14-bloques-sentencias-patrones/14-03-01-clase-local-ciclica/LocalCiclica.java | Implementado; confirmar CI de la rama actual |
+| 14.15; ejemplo 14.15-1 | 14-bloques-sentencias-patrones/14-15-01-break-etiquetado/QuitarAristasBreak.java | Implementado; confirmar CI de la rama actual |
+| 14.16; ejemplo 14.16-1 | 14-bloques-sentencias-patrones/14-16-01-continue-etiquetado/QuitarAristasContinue.java | Implementado; confirmar CI de la rama actual |
+| 15.8.3; ejemplo 15.8.3-1 | 15-expresiones/15-08-03-01-this-identidad/VectorIdentidad.java | Implementado; confirmar CI de la rama actual |
+| 15.11.1; ejemplo 15.11.1-1 | 15-expresiones/15-11-01-01-seleccion-campo-estatica/Base.java | Implementado; confirmar CI de la rama actual |
+| 15.11.2; ejemplo 15.11.2-1 | 15-expresiones/15-11-02-01-super-campos/NivelI.java | Implementado; confirmar CI de la rama actual |
+| 15.12.2; ejemplo 15.12.2-1 | 15-expresiones/15-12-02-01-acceso-y-aplicabilidad/Doble.java | Implementado; confirmar CI de la rama actual |
+| 15.12.2; ejemplo 15.12.2-2 | 15-expresiones/15-12-02-02-retorno-no-selecciona/Figura.java | Implementado; confirmar CI de la rama actual |
+| 15.12.4.1; ejemplo 15.12.4.1-1 | 15-expresiones/15-12-04-01-01-receptor-static-null/ReceptorStatic.java | Implementado; confirmar CI de la rama actual |
+| 15.12.4.1; ejemplo 15.12.4.1-2 | 15-expresiones/15-12-04-01-02-receptor-antes-argumento/ReceptorPrimero.java | Implementado; confirmar CI de la rama actual |
+| 15.12.4.4; ejemplo 15.12.4.4-1 | 15-expresiones/15-12-04-04-01-despacho-polimorfico/Posicion.java | Implementado; confirmar CI de la rama actual |
+| 15.12.4.4; ejemplo 15.12.4.4-2 | 15-expresiones/15-12-04-04-02-super-metodos/Nivel1.java | Implementado; confirmar CI de la rama actual |
+| 15.12.4.5; ejemplo 15.12.4.5-1 | 15-expresiones/15-12-04-05-01-metodo-puente/Identidad.java | Implementado; confirmar CI de la rama actual |
+| 15.18.1; ejemplo 15.18.1-2 | 15-expresiones/15-18-01-02-concatenar-condicionales/ContarObjetos.java | Implementado; confirmar CI de la rama actual |
+| 15.20.2; ejemplo 15.20.2-1 | 15-expresiones/15-20-02-01-instanceof-incompatible/Estrella.java | Implementado; confirmar CI de la rama actual |
+| 15.26.1; ejemplo 15.26.1-1 | 15-expresiones/15-26-01-01-asignacion-simple-arreglo/OrdenAsignacionSimple.java | Implementado; confirmar CI de la rama actual |
+| 15.26.2; ejemplo 15.26.2-1 | 15-expresiones/15-26-02-01-asignacion-compuesta-arreglo/OrdenAsignacionCompuesta.java | Implementado; confirmar CI de la rama actual |
+| 17.5; ejemplo 17.5-2 | 17-hilos-y-bloqueos/17-05-02-inmutabilidad-string/PublicacionCadena.java | Implementado; confirmar CI de la rama actual |
+| 17.5.3; ejemplo 17.5.3-1 | 17-hilos-y-bloqueos/17-05-03-01-modificar-final-reflexion/FinalReflexion.java | Implementado; confirmar CI de la rama actual |
 
-Pendientes: revisión de fidelidad y casos secundarios, completar ejemplos numerados y fragmentos, migrar carpeta anterior y publicar. No se incluye el PDF.
+Pendientes: revisión de fidelidad y casos secundarios, completar ejemplos numerados y fragmentos, migrar carpeta anterior y publicar. Las pruebas binarias compilan por etapas y verifican errores de enlace intencionales. No se incluye el PDF.

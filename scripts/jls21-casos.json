@@ -956,7 +956,7 @@
     "main": "NombreConstante",
     "args": [],
     "stdout": "\n",
-    "reject": "cannot assign a value to final variable LIMITE"
+    "reject": "final variable LIMITE"
   },
   {
     "path": "06-nombres/06-05-06-01-02-instancia-en-static/InstanciaInvalida.java",
@@ -1531,5 +1531,464 @@
     "main": "CrearInstancia",
     "args": [],
     "stdout": "2 3 8\n"
+  },
+  {
+    "path": "13-compatibilidad-binaria/13-04-04-01-eliminar-superclase/Raiz.java",
+    "unit": "13-compatibilidad-binaria/13-04-04-01-eliminar-superclase",
+    "section": "13.4.4; ejemplo 13.4.4-1",
+    "main": "Cliente",
+    "args": [],
+    "stdout": "",
+    "stages": [
+      {
+        "sources": [
+          "Raiz.java",
+          "v1/Servicio.java",
+          "Cliente.java"
+        ],
+        "stdout": "7\n"
+      },
+      {
+        "sources": [
+          "v2/Servicio.java"
+        ],
+        "stdout": "",
+        "exception": "VerifyError"
+      }
+    ]
+  },
+  {
+    "path": "13-compatibilidad-binaria/13-04-06-01-eliminar-sobrescritura/Raiz.java",
+    "unit": "13-compatibilidad-binaria/13-04-06-01-eliminar-sobrescritura",
+    "section": "13.4.6; ejemplo 13.4.6-1",
+    "main": "Cliente",
+    "args": [],
+    "stdout": "",
+    "stages": [
+      {
+        "sources": [
+          "Raiz.java",
+          "v1/Servicio.java",
+          "Cliente.java"
+        ],
+        "stdout": "servicio\n"
+      },
+      {
+        "sources": [
+          "v2/Servicio.java"
+        ],
+        "stdout": "raíz\n"
+      }
+    ]
+  },
+  {
+    "path": "13-compatibilidad-binaria/13-04-06-02-insertar-sobrescritura/Raiz.java",
+    "unit": "13-compatibilidad-binaria/13-04-06-02-insertar-sobrescritura",
+    "section": "13.4.6; ejemplo 13.4.6-2",
+    "main": "Cliente",
+    "args": [],
+    "stdout": "",
+    "stages": [
+      {
+        "sources": [
+          "Raiz.java",
+          "v1/Servicio.java",
+          "Cliente.java"
+        ],
+        "stdout": "raíz\n"
+      },
+      {
+        "sources": [
+          "v2/Servicio.java"
+        ],
+        "stdout": "servicio\n"
+      }
+    ]
+  },
+  {
+    "path": "13-compatibilidad-binaria/13-04-07-01-ampliar-acceso/v1/Servicio.java",
+    "unit": "13-compatibilidad-binaria/13-04-07-01-ampliar-acceso",
+    "section": "13.4.7; ejemplo 13.4.7-1",
+    "main": "Cliente",
+    "args": [],
+    "stdout": "",
+    "stages": [
+      {
+        "sources": [
+          "v1/Servicio.java",
+          "Cliente.java"
+        ],
+        "stdout": "cliente\n"
+      },
+      {
+        "sources": [
+          "v2/Servicio.java"
+        ],
+        "stdout": "cliente\n"
+      }
+    ]
+  },
+  {
+    "path": "13-compatibilidad-binaria/13-04-08-01-agregar-campo/Raiz.java",
+    "unit": "13-compatibilidad-binaria/13-04-08-01-agregar-campo",
+    "section": "13.4.8; ejemplo 13.4.8-1",
+    "main": "Cliente",
+    "args": [],
+    "stdout": "",
+    "stages": [
+      {
+        "sources": [
+          "Raiz.java",
+          "v1/Servicio.java",
+          "Cliente.java"
+        ],
+        "stdout": "original\n"
+      },
+      {
+        "sources": [
+          "v2/Servicio.java"
+        ],
+        "stdout": "original\n"
+      }
+    ]
+  },
+  {
+    "path": "13-compatibilidad-binaria/13-04-09-01-campo-se-vuelve-final/v1/Servicio.java",
+    "unit": "13-compatibilidad-binaria/13-04-09-01-campo-se-vuelve-final",
+    "section": "13.4.9; ejemplo 13.4.9-1",
+    "main": "Cliente",
+    "args": [],
+    "stdout": "",
+    "stages": [
+      {
+        "sources": [
+          "v1/Servicio.java",
+          "Cliente.java"
+        ],
+        "stdout": "A\n"
+      },
+      {
+        "sources": [
+          "v2/Servicio.java"
+        ],
+        "stdout": "",
+        "exception": "IllegalAccessError"
+      }
+    ]
+  },
+  {
+    "path": "13-compatibilidad-binaria/13-04-16-01-metodo-se-vuelve-abstracto/v1/Servicio.java",
+    "unit": "13-compatibilidad-binaria/13-04-16-01-metodo-se-vuelve-abstracto",
+    "section": "13.4.16; ejemplo 13.4.16-1",
+    "main": "Cliente",
+    "args": [],
+    "stdout": "",
+    "stages": [
+      {
+        "sources": [
+          "v1/Servicio.java",
+          "Cliente.java"
+        ],
+        "stdout": "inicio\nbase\n"
+      },
+      {
+        "sources": [
+          "v2/Servicio.java"
+        ],
+        "stdout": "inicio\n",
+        "exception": "AbstractMethodError"
+      }
+    ]
+  },
+  {
+    "path": "13-compatibilidad-binaria/13-04-17-01-metodo-se-vuelve-final/v1/Servicio.java",
+    "unit": "13-compatibilidad-binaria/13-04-17-01-metodo-se-vuelve-final",
+    "section": "13.4.17; ejemplo 13.4.17-1",
+    "main": "Cliente",
+    "args": [],
+    "stdout": "",
+    "stages": [
+      {
+        "sources": [
+          "v1/Servicio.java",
+          "Cliente.java"
+        ],
+        "stdout": "base\n"
+      },
+      {
+        "sources": [
+          "v2/Servicio.java"
+        ],
+        "stdout": "",
+        "exception": "IncompatibleClassChangeError"
+      }
+    ]
+  },
+  {
+    "path": "13-compatibilidad-binaria/13-05-04-01-eliminar-metodo-interfaz/v1/Servicio.java",
+    "unit": "13-compatibilidad-binaria/13-05-04-01-eliminar-metodo-interfaz",
+    "section": "13.5.4; ejemplo 13.5.4-1",
+    "main": "Cliente",
+    "args": [],
+    "stdout": "",
+    "stages": [
+      {
+        "sources": [
+          "v1/Servicio.java",
+          "Cliente.java"
+        ],
+        "stdout": "hola\n"
+      },
+      {
+        "sources": [
+          "v2/Servicio.java"
+        ],
+        "stdout": "",
+        "exception": "NoSuchMethodError"
+      }
+    ]
+  },
+  {
+    "path": "13-compatibilidad-binaria/13-05-07-01-conflicto-nuevo-default/Original.java",
+    "unit": "13-compatibilidad-binaria/13-05-07-01-conflicto-nuevo-default",
+    "section": "13.5.7; ejemplo 13.5.7-1",
+    "main": "Cliente",
+    "args": [],
+    "stdout": "",
+    "stages": [
+      {
+        "sources": [
+          "Original.java",
+          "v1/Servicio.java",
+          "Cliente.java"
+        ],
+        "stdout": "original\n"
+      },
+      {
+        "sources": [
+          "v2/Servicio.java"
+        ],
+        "stdout": "",
+        "exception": "IncompatibleClassChangeError"
+      }
+    ]
+  },
+  {
+    "path": "14-bloques-sentencias-patrones/14-22-01-constante-incrustada/v1/Servicio.java",
+    "unit": "14-bloques-sentencias-patrones/14-22-01-constante-incrustada",
+    "section": "14.22; ejemplo 14.22-1",
+    "main": "Cliente",
+    "args": [],
+    "stdout": "",
+    "stages": [
+      {
+        "sources": [
+          "v1/Servicio.java",
+          "Cliente.java"
+        ],
+        "stdout": "depuración\n"
+      },
+      {
+        "sources": [
+          "v2/Servicio.java"
+        ],
+        "stdout": "depuración\n"
+      }
+    ]
+  },
+  {
+    "path": "15-expresiones/15-12-02-03-sobrecarga-en-binario/v1/Servicio.java",
+    "unit": "15-expresiones/15-12-02-03-sobrecarga-en-binario",
+    "section": "15.12.2; ejemplo 15.12.2-3",
+    "main": "Cliente",
+    "args": [],
+    "stdout": "",
+    "stages": [
+      {
+        "sources": [
+          "v1/Servicio.java",
+          "Cliente.java"
+        ],
+        "stdout": "Object\n"
+      },
+      {
+        "sources": [
+          "v2/Servicio.java"
+        ],
+        "stdout": "Object\n"
+      },
+      {
+        "sources": [
+          "Cliente.java"
+        ],
+        "stdout": "String\n"
+      }
+    ]
+  },
+  {
+    "path": "14-bloques-sentencias-patrones/14-03-01-clase-local-ciclica/LocalCiclica.java",
+    "unit": "14-bloques-sentencias-patrones/14-03-01-clase-local-ciclica",
+    "section": "14.3; ejemplo 14.3-1",
+    "main": "LocalCiclica",
+    "args": [],
+    "stdout": "",
+    "reject": "cyclic inheritance"
+  },
+  {
+    "path": "14-bloques-sentencias-patrones/14-15-01-break-etiquetado/QuitarAristasBreak.java",
+    "unit": "14-bloques-sentencias-patrones/14-15-01-break-etiquetado",
+    "section": "14.15; ejemplo 14.15-1",
+    "main": "QuitarAristasBreak",
+    "args": [],
+    "stdout": "[[2], [2], [1]]\ntrue\n"
+  },
+  {
+    "path": "14-bloques-sentencias-patrones/14-16-01-continue-etiquetado/QuitarAristasContinue.java",
+    "unit": "14-bloques-sentencias-patrones/14-16-01-continue-etiquetado",
+    "section": "14.16; ejemplo 14.16-1",
+    "main": "QuitarAristasContinue",
+    "args": [],
+    "stdout": "[[2], [2], [1]]\ntrue\n"
+  },
+  {
+    "path": "15-expresiones/15-08-03-01-this-identidad/VectorIdentidad.java",
+    "unit": "15-expresiones/15-08-03-01-this-identidad",
+    "section": "15.8.3; ejemplo 15.8.3-1",
+    "main": "VectorIdentidad",
+    "args": [],
+    "stdout": "true\ntrue\nfalse\n"
+  },
+  {
+    "path": "15-expresiones/15-11-01-01-seleccion-campo-estatica/Base.java",
+    "unit": "15-expresiones/15-11-01-01-seleccion-campo-estatica",
+    "section": "15.11.1; ejemplo 15.11.1-1",
+    "main": "SeleccionCampo",
+    "args": [],
+    "stdout": "7\n3\n3\n"
+  },
+  {
+    "path": "15-expresiones/15-11-02-01-super-campos/NivelI.java",
+    "unit": "15-expresiones/15-11-02-01-super-campos",
+    "section": "15.11.2; ejemplo 15.11.2-1",
+    "main": "SuperCampos",
+    "args": [],
+    "stdout": "3\n2\n2\n1\n0\n"
+  },
+  {
+    "path": "15-expresiones/15-12-02-01-acceso-y-aplicabilidad/Doble.java",
+    "unit": "15-expresiones/15-12-02-01-acceso-y-aplicabilidad",
+    "section": "15.12.2; ejemplo 15.12.2-1",
+    "main": "Aplicabilidad",
+    "args": [],
+    "stdout": "",
+    "reject": "has private access"
+  },
+  {
+    "path": "15-expresiones/15-12-02-02-retorno-no-selecciona/Figura.java",
+    "unit": "15-expresiones/15-12-02-02-retorno-no-selecciona",
+    "section": "15.12.2; ejemplo 15.12.2-2",
+    "main": "RetornoNoSelecciona",
+    "args": [],
+    "stdout": "",
+    "reject": "int cannot be converted to String"
+  },
+  {
+    "path": "15-expresiones/15-12-04-01-01-receptor-static-null/ReceptorStatic.java",
+    "unit": "15-expresiones/15-12-04-01-01-receptor-static-null",
+    "section": "15.12.4.1; ejemplo 15.12.4.1-1",
+    "main": "ReceptorStatic",
+    "args": [],
+    "stdout": "receptor\nmétodo\n"
+  },
+  {
+    "path": "15-expresiones/15-12-04-01-02-receptor-antes-argumento/ReceptorPrimero.java",
+    "unit": "15-expresiones/15-12-04-01-02-receptor-antes-argumento",
+    "section": "15.12.4.1; ejemplo 15.12.4.1-2",
+    "main": "ReceptorPrimero",
+    "args": [],
+    "stdout": "false\nmar\n"
+  },
+  {
+    "path": "15-expresiones/15-12-04-04-01-despacho-polimorfico/Posicion.java",
+    "unit": "15-expresiones/15-12-04-04-01-despacho-polimorfico",
+    "section": "15.12.4.4; ejemplo 15.12.4.4-1",
+    "main": "DespachoDinamico",
+    "args": [],
+    "stdout": "color\nposición\n0 0\n"
+  },
+  {
+    "path": "15-expresiones/15-12-04-04-02-super-metodos/Nivel1.java",
+    "unit": "15-expresiones/15-12-04-04-02-super-metodos",
+    "section": "15.12.4.4; ejemplo 15.12.4.4-2",
+    "main": "SuperMetodos",
+    "args": [],
+    "stdout": "3\n2\n3\n3\n"
+  },
+  {
+    "path": "15-expresiones/15-12-04-05-01-metodo-puente/Identidad.java",
+    "unit": "15-expresiones/15-12-04-05-01-metodo-puente",
+    "section": "15.12.4.5; ejemplo 15.12.4.5-1",
+    "main": "MetodoPuente",
+    "args": [],
+    "stdout": "",
+    "exception": "ClassCastException"
+  },
+  {
+    "path": "15-expresiones/15-18-01-02-concatenar-condicionales/ContarObjetos.java",
+    "unit": "15-expresiones/15-18-01-02-concatenar-condicionales",
+    "section": "15.18.1; ejemplo 15.18.1-2",
+    "main": "ContarObjetos",
+    "args": [],
+    "stdout": "3 cajas de papel\n2 cajas de papel\n1 caja de papel\nNo quedan cajas\n"
+  },
+  {
+    "path": "15-expresiones/15-20-02-01-instanceof-incompatible/Estrella.java",
+    "unit": "15-expresiones/15-20-02-01-instanceof-incompatible",
+    "section": "15.20.2; ejemplo 15.20.2-1",
+    "main": "ComparacionInvalida",
+    "args": [],
+    "stdout": "",
+    "reject": "incompatible types"
+  },
+  {
+    "path": "15-expresiones/15-26-01-01-asignacion-simple-arreglo/OrdenAsignacionSimple.java",
+    "unit": "15-expresiones/15-26-01-01-asignacion-simple-arreglo",
+    "section": "15.26.1; ejemplo 15.26.1-1",
+    "main": "OrdenAsignacionSimple",
+    "args": [],
+    "stdout": "índice\nderecha\nnull\níndice\nderecha\nrango\n"
+  },
+  {
+    "path": "15-expresiones/15-26-02-01-asignacion-compuesta-arreglo/OrdenAsignacionCompuesta.java",
+    "unit": "15-expresiones/15-26-02-01-asignacion-compuesta-arreglo",
+    "section": "15.26.2; ejemplo 15.26.2-1",
+    "main": "OrdenAsignacionCompuesta",
+    "args": [],
+    "stdout": "índice\nnull\níndice\nrango\n"
+  },
+  {
+    "path": "17-hilos-y-bloqueos/17-05-02-inmutabilidad-string/PublicacionCadena.java",
+    "unit": "17-hilos-y-bloqueos/17-05-02-inmutabilidad-string",
+    "section": "17.5; ejemplo 17.5-2",
+    "main": "PublicacionCadena",
+    "args": [],
+    "stdout": "",
+    "allowed_stdout": [
+      "sin referencia\n",
+      "luz\n"
+    ]
+  },
+  {
+    "path": "17-hilos-y-bloqueos/17-05-03-01-modificar-final-reflexion/FinalReflexion.java",
+    "unit": "17-hilos-y-bloqueos/17-05-03-01-modificar-final-reflexion",
+    "section": "17.5.3; ejemplo 17.5.3-1",
+    "main": "FinalReflexion",
+    "args": [],
+    "stdout": "",
+    "allowed_stdout": [
+      "-1\n",
+      "0\n",
+      "1\n"
+    ]
   }
 ]

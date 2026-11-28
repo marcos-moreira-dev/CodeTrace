@@ -33,7 +33,11 @@ for case in cases:
                                check=True, timeout=30)
                 run = subprocess.run(["java", "-Dfile.encoding=UTF-8", "-cp", tmp, case["main"]],
                                      capture_output=True, text=True, encoding="utf-8", timeout=20)
-                assert run.returncode == 0 and run.stdout == stage["stdout"], (case["path"], run.stderr, run.stdout)
+                assert run.stdout == stage["stdout"], (case["path"], run.stderr, run.stdout)
+                if "exception" in stage:
+                    assert run.returncode != 0 and stage["exception"] in run.stderr, (case["path"], run.stderr)
+                else:
+                    assert run.returncode == 0 and not run.stderr, (case["path"], run.stderr)
             assert seen == set(sources), case["path"]
             print("OK etapas binarias", case["section"], case["path"])
             continue
