@@ -1948,5 +1948,142 @@
     "main": "MainTimeout",
     "mode": "R",
     "stdout": "Timeout de lectura\nConexion cerrada\n"
+  },
+  {
+    "path": "12-persistencia-y-gestion-de-datos/01-registros/MainRegistros.java",
+    "sources": [
+      "12-persistencia-y-gestion-de-datos/01-registros/Registro.java",
+      "12-persistencia-y-gestion-de-datos/01-registros/ArchivoRegistros.java",
+      "12-persistencia-y-gestion-de-datos/01-registros/MainRegistros.java"
+    ],
+    "main": "MainRegistros",
+    "mode": "R",
+    "stdout": "Bytes: 16\nID: 102, cantidad: 7\n"
+  },
+  {
+    "path": "12-persistencia-y-gestion-de-datos/02-formatos-texto/MainCsv.java",
+    "sources": [
+      "12-persistencia-y-gestion-de-datos/02-formatos-texto/CsvSimple.java",
+      "12-persistencia-y-gestion-de-datos/02-formatos-texto/MainCsv.java"
+    ],
+    "main": "MainCsv",
+    "mode": "R",
+    "stdout": "pan: 12\nleche: 7\nFila rechazada\n"
+  },
+  {
+    "path": "12-persistencia-y-gestion-de-datos/02-formatos-texto/PropertiesDemo.java",
+    "sources": [
+      "12-persistencia-y-gestion-de-datos/02-formatos-texto/PropertiesDemo.java"
+    ],
+    "main": "PropertiesDemo",
+    "mode": "R",
+    "stdout": "Norte\n20\n"
+  },
+  {
+    "path": "12-persistencia-y-gestion-de-datos/03-indexacion/MainIndice.java",
+    "sources": [
+      "12-persistencia-y-gestion-de-datos/03-indexacion/IndiceArchivo.java",
+      "12-persistencia-y-gestion-de-datos/03-indexacion/MainIndice.java"
+    ],
+    "main": "MainIndice",
+    "mode": "R",
+    "stdout": "102: 7\n999 existe: false\n"
+  },
+  {
+    "path": "12-persistencia-y-gestion-de-datos/04-consultas/FiltrarRegistros.java",
+    "sources": [
+      "12-persistencia-y-gestion-de-datos/04-consultas/FiltrarRegistros.java"
+    ],
+    "main": "FiltrarRegistros",
+    "mode": "T",
+    "stdout": "pan: 12\narroz: 7\n"
+  },
+  {
+    "path": "12-persistencia-y-gestion-de-datos/04-consultas/ProyectarCampos.java",
+    "sources": [
+      "12-persistencia-y-gestion-de-datos/04-consultas/ProyectarCampos.java"
+    ],
+    "main": "ProyectarCampos",
+    "mode": "T",
+    "stdout": "pan\nleche\n"
+  },
+  {
+    "path": "12-persistencia-y-gestion-de-datos/04-consultas/AgruparRegistros.java",
+    "sources": [
+      "12-persistencia-y-gestion-de-datos/04-consultas/AgruparRegistros.java"
+    ],
+    "main": "AgruparRegistros",
+    "mode": "T",
+    "stdout": "pan: 7\nleche: 2\n"
+  },
+  {
+    "path": "12-persistencia-y-gestion-de-datos/05-join/MainJoin.java",
+    "sources": [
+      "12-persistencia-y-gestion-de-datos/05-join/NestedLoopJoin.java",
+      "12-persistencia-y-gestion-de-datos/05-join/HashJoin.java",
+      "12-persistencia-y-gestion-de-datos/05-join/MainJoin.java"
+    ],
+    "main": "MainJoin",
+    "mode": "T",
+    "stdout": "pan -> venta A\npan -> venta B\nleche -> venta C\nIguales: true\n"
+  },
+  {
+    "path": "12-persistencia-y-gestion-de-datos/06-transacciones/MainTransaccion.java",
+    "sources": [
+      "12-persistencia-y-gestion-de-datos/06-transacciones/Cuenta.java",
+      "12-persistencia-y-gestion-de-datos/06-transacciones/TransaccionSimulada.java",
+      "12-persistencia-y-gestion-de-datos/06-transacciones/MainTransaccion.java"
+    ],
+    "main": "MainTransaccion",
+    "mode": "T",
+    "stdout": "700 800\nRollback\n700 800\n"
+  },
+  {
+    "path": "12-persistencia-y-gestion-de-datos/07-aislamiento/LecturaSuciaSimulada.java",
+    "sources": [
+      "12-persistencia-y-gestion-de-datos/07-aislamiento/LecturaSuciaSimulada.java"
+    ],
+    "main": "LecturaSuciaSimulada",
+    "mode": "T",
+    "stdout": "T2 lee: 70\nConfirmado: 100\nLectura sucia: true\n"
+  },
+  {
+    "path": "12-persistencia-y-gestion-de-datos/07-aislamiento/LecturaNoRepetible.java",
+    "sources": [
+      "12-persistencia-y-gestion-de-datos/07-aislamiento/LecturaNoRepetible.java"
+    ],
+    "main": "LecturaNoRepetible",
+    "mode": "T",
+    "stdout": "Primera: 100\nSegunda: 80\n"
+  },
+  {
+    "path": "12-persistencia-y-gestion-de-datos/07-aislamiento/PerdidaActualizacion.java",
+    "sources": [
+      "12-persistencia-y-gestion-de-datos/07-aislamiento/PerdidaActualizacion.java"
+    ],
+    "main": "PerdidaActualizacion",
+    "mode": "T",
+    "stdout": "Esperado: 15\nObservado: 13\n"
+  },
+  {
+    "path": "12-persistencia-y-gestion-de-datos/08-write-ahead-log/MainRecuperacion.java",
+    "sources": [
+      "12-persistencia-y-gestion-de-datos/08-write-ahead-log/EntradaLog.java",
+      "12-persistencia-y-gestion-de-datos/08-write-ahead-log/AlmacenSimulado.java",
+      "12-persistencia-y-gestion-de-datos/08-write-ahead-log/MainRecuperacion.java"
+    ],
+    "main": "MainRecuperacion",
+    "mode": "T",
+    "stdout": "Pan: 15\nLeche: 8\n"
+  },
+  {
+    "path": "12-persistencia-y-gestion-de-datos/09-jdbc-api/MainConsultaSimulada.java",
+    "sources": [
+      "12-persistencia-y-gestion-de-datos/09-jdbc-api/ContratoJdbc.java",
+      "12-persistencia-y-gestion-de-datos/09-jdbc-api/MainConsultaSimulada.java"
+    ],
+    "main": "MainConsultaSimulada",
+    "mode": "T",
+    "stdout": "pan: 12\nNo encontrado\n"
   }
 ]

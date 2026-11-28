@@ -294,31 +294,31 @@ area	unidad	modalidad	archivo	objetivo	estado
 11-redes-y-protocolos-de-comunicacion	24-timeouts	R	ServidorLento.java	Timeout de conexión/lectura y cierre ante fallo.	implementado_pendiente_ci
 11-redes-y-protocolos-de-comunicacion	24-timeouts	R	ClienteTimeout.java	Timeout de conexión/lectura y cierre ante fallo.	implementado_pendiente_ci
 11-redes-y-protocolos-de-comunicacion	24-timeouts	R	MainTimeout.java	Timeout de conexión/lectura y cierre ante fallo.	implementado_pendiente_ci
-12-persistencia-y-gestion-de-datos	01-registros	R	Registro.java	Persistencia de registros de longitud fija con archivos.	planificado
-12-persistencia-y-gestion-de-datos	01-registros	R	ArchivoRegistros.java	Persistencia de registros de longitud fija con archivos.	planificado
-12-persistencia-y-gestion-de-datos	01-registros	R	MainRegistros.java	Persistencia de registros de longitud fija con archivos.	planificado
-12-persistencia-y-gestion-de-datos	02-formatos-texto	R	CsvSimple.java	Formato explícito y delimitadores; CSV de subconjunto documentado.	planificado
-12-persistencia-y-gestion-de-datos	02-formatos-texto	R	MainCsv.java	Formato explícito y delimitadores; CSV de subconjunto documentado.	planificado
-12-persistencia-y-gestion-de-datos	02-formatos-texto	R	PropertiesDemo.java	Formato explícito y delimitadores; CSV de subconjunto documentado.	planificado
-12-persistencia-y-gestion-de-datos	03-indexacion	R	IndiceArchivo.java	Índice clave a offset y búsqueda sin escanear todo el archivo.	planificado
-12-persistencia-y-gestion-de-datos	03-indexacion	R	MainIndice.java	Índice clave a offset y búsqueda sin escanear todo el archivo.	planificado
-12-persistencia-y-gestion-de-datos	04-consultas	T	FiltrarRegistros.java	Selección, proyección, agrupamiento sobre datos en memoria.	planificado
-12-persistencia-y-gestion-de-datos	04-consultas	T	ProyectarCampos.java	Selección, proyección, agrupamiento sobre datos en memoria.	planificado
-12-persistencia-y-gestion-de-datos	04-consultas	T	AgruparRegistros.java	Selección, proyección, agrupamiento sobre datos en memoria.	planificado
-12-persistencia-y-gestion-de-datos	05-join	T	NestedLoopJoin.java	Equivalencia de resultados y costes de unión relacional.	planificado
-12-persistencia-y-gestion-de-datos	05-join	T	HashJoin.java	Equivalencia de resultados y costes de unión relacional.	planificado
-12-persistencia-y-gestion-de-datos	05-join	T	MainJoin.java	Equivalencia de resultados y costes de unión relacional.	planificado
-12-persistencia-y-gestion-de-datos	06-transacciones	T	Cuenta.java	Atomicidad, commit y rollback en modelo didáctico; no motor ACID real.	planificado
-12-persistencia-y-gestion-de-datos	06-transacciones	T	TransaccionSimulada.java	Atomicidad, commit y rollback en modelo didáctico; no motor ACID real.	planificado
-12-persistencia-y-gestion-de-datos	06-transacciones	T	MainTransaccion.java	Atomicidad, commit y rollback en modelo didáctico; no motor ACID real.	planificado
-12-persistencia-y-gestion-de-datos	07-aislamiento	T	LecturaSuciaSimulada.java	Anomalías de transacciones mediante intercalaciones controladas.	planificado
-12-persistencia-y-gestion-de-datos	07-aislamiento	T	LecturaNoRepetible.java	Anomalías de transacciones mediante intercalaciones controladas.	planificado
-12-persistencia-y-gestion-de-datos	07-aislamiento	T	PerdidaActualizacion.java	Anomalías de transacciones mediante intercalaciones controladas.	planificado
-12-persistencia-y-gestion-de-datos	08-write-ahead-log	T	EntradaLog.java	Escritura previa y recuperación simulada.	planificado
-12-persistencia-y-gestion-de-datos	08-write-ahead-log	T	AlmacenSimulado.java	Escritura previa y recuperación simulada.	planificado
-12-persistencia-y-gestion-de-datos	08-write-ahead-log	T	MainRecuperacion.java	Escritura previa y recuperación simulada.	planificado
-12-persistencia-y-gestion-de-datos	09-jdbc-api	T	ContratoJdbc.java	Connection, PreparedStatement y ResultSet como contrato conceptual; no conexión real sin driver, usar dobles explícitos sin fingir una BD.	planificado
-12-persistencia-y-gestion-de-datos	09-jdbc-api	T	MainConsultaSimulada.java	Connection, PreparedStatement y ResultSet como contrato conceptual; no conexión real sin driver, usar dobles explícitos sin fingir una BD.	planificado
+12-persistencia-y-gestion-de-datos	01-registros	R	Registro.java	Persistencia de registros de longitud fija con archivos.	implementado_pendiente_ci
+12-persistencia-y-gestion-de-datos	01-registros	R	ArchivoRegistros.java	Persistencia de registros de longitud fija con archivos.	implementado_pendiente_ci
+12-persistencia-y-gestion-de-datos	01-registros	R	MainRegistros.java	Persistencia de registros de longitud fija con archivos.	implementado_pendiente_ci
+12-persistencia-y-gestion-de-datos	02-formatos-texto	R	CsvSimple.java	Formato explícito y delimitadores; CSV de subconjunto documentado.	implementado_pendiente_ci
+12-persistencia-y-gestion-de-datos	02-formatos-texto	R	MainCsv.java	Formato explícito y delimitadores; CSV de subconjunto documentado.	implementado_pendiente_ci
+12-persistencia-y-gestion-de-datos	02-formatos-texto	R	PropertiesDemo.java	Formato explícito y delimitadores; CSV de subconjunto documentado.	implementado_pendiente_ci
+12-persistencia-y-gestion-de-datos	03-indexacion	R	IndiceArchivo.java	Índice clave a offset y búsqueda sin escanear todo el archivo.	implementado_pendiente_ci
+12-persistencia-y-gestion-de-datos	03-indexacion	R	MainIndice.java	Índice clave a offset y búsqueda sin escanear todo el archivo.	implementado_pendiente_ci
+12-persistencia-y-gestion-de-datos	04-consultas	T	FiltrarRegistros.java	Selección, proyección, agrupamiento sobre datos en memoria.	implementado_pendiente_ci
+12-persistencia-y-gestion-de-datos	04-consultas	T	ProyectarCampos.java	Selección, proyección, agrupamiento sobre datos en memoria.	implementado_pendiente_ci
+12-persistencia-y-gestion-de-datos	04-consultas	T	AgruparRegistros.java	Selección, proyección, agrupamiento sobre datos en memoria.	implementado_pendiente_ci
+12-persistencia-y-gestion-de-datos	05-join	T	NestedLoopJoin.java	Equivalencia de resultados y costes de unión relacional.	implementado_pendiente_ci
+12-persistencia-y-gestion-de-datos	05-join	T	HashJoin.java	Equivalencia de resultados y costes de unión relacional.	implementado_pendiente_ci
+12-persistencia-y-gestion-de-datos	05-join	T	MainJoin.java	Equivalencia de resultados y costes de unión relacional.	implementado_pendiente_ci
+12-persistencia-y-gestion-de-datos	06-transacciones	T	Cuenta.java	Atomicidad, commit y rollback en modelo didáctico; no motor ACID real.	implementado_pendiente_ci
+12-persistencia-y-gestion-de-datos	06-transacciones	T	TransaccionSimulada.java	Atomicidad, commit y rollback en modelo didáctico; no motor ACID real.	implementado_pendiente_ci
+12-persistencia-y-gestion-de-datos	06-transacciones	T	MainTransaccion.java	Atomicidad, commit y rollback en modelo didáctico; no motor ACID real.	implementado_pendiente_ci
+12-persistencia-y-gestion-de-datos	07-aislamiento	T	LecturaSuciaSimulada.java	Anomalías de transacciones mediante intercalaciones controladas.	implementado_pendiente_ci
+12-persistencia-y-gestion-de-datos	07-aislamiento	T	LecturaNoRepetible.java	Anomalías de transacciones mediante intercalaciones controladas.	implementado_pendiente_ci
+12-persistencia-y-gestion-de-datos	07-aislamiento	T	PerdidaActualizacion.java	Anomalías de transacciones mediante intercalaciones controladas.	implementado_pendiente_ci
+12-persistencia-y-gestion-de-datos	08-write-ahead-log	T	EntradaLog.java	Escritura previa y recuperación simulada.	implementado_pendiente_ci
+12-persistencia-y-gestion-de-datos	08-write-ahead-log	T	AlmacenSimulado.java	Escritura previa y recuperación simulada.	implementado_pendiente_ci
+12-persistencia-y-gestion-de-datos	08-write-ahead-log	T	MainRecuperacion.java	Escritura previa y recuperación simulada.	implementado_pendiente_ci
+12-persistencia-y-gestion-de-datos	09-jdbc-api	T	ContratoJdbc.java	Connection, PreparedStatement y ResultSet como contrato conceptual; no conexión real sin driver, usar dobles explícitos sin fingir una BD.	implementado_pendiente_ci
+12-persistencia-y-gestion-de-datos	09-jdbc-api	T	MainConsultaSimulada.java	Connection, PreparedStatement y ResultSet como contrato conceptual; no conexión real sin driver, usar dobles explícitos sin fingir una BD.	implementado_pendiente_ci
 13-criptografia-y-seguridad	01-integridad	R	HashSHA256.java	Huella criptográfica e integridad; hash no equivale a autenticación.	planificado
 13-criptografia-y-seguridad	01-integridad	R	VerificarArchivo.java	Huella criptográfica e integridad; hash no equivale a autenticación.	planificado
 13-criptografia-y-seguridad	02-checksum	R	ChecksumSuma.java	Checksum elemental y sus colisiones; CRC se estudia en 14. No es una función criptográfica.	planificado

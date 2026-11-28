@@ -14,8 +14,9 @@ Plan completo: `JAVA-INTEGRAL-PLAN.md`. Inventario por fuente: `JAVA-INTEGRAL-IN
 - 09: 20 unidades, 47 fuentes; procesos hijos acotados y modelos explícitos de planificación. Verificación Java integral aprobada.
 - 10: 31 unidades, 80 fuentes; hilos, memoria compartida, sincronización, problemas clásicos, modelos de exclusión/deadlock, pools y paralelismo. Verificación Java integral aprobada en b13eb28f.
 - 11: 24 unidades, 64 fuentes; direccionamiento, conmutación, rutas, TCP/UDP, fiabilidad, servidores concurrentes, NIO, HTTP y timeouts. Pendiente CI.
-- 12–20: pendientes.
+- 12: 9 unidades, 25 fuentes; registros, formatos, índice, consultas, joins, modelos de transacciones/aislamiento/WAL y contrato JDBC. Pendiente CI.
+- 13–20: pendientes.
 - Verificador separado: scripts/verificar-java-integral.py, manifiesto scripts/java-integral-casos.json. Compila solo las fuentes declaradas por cliente y compara salida; verifica cobertura de archivos. Los scripts históricos excluyen nuevas áreas de la compilación conjunta.
-- Catálogo v27: 1892 entradas.
+- Catálogo v28: 1917 entradas.
 
 No se publica instalador ni se modifica C o TypeScript en este cambio.

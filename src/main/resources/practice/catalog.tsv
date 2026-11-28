@@ -1,4 +1,4 @@
-# CodeTrace | Biblioteca offline v27 | una entrada por archivo, no por ejercicio
+# CodeTrace | Biblioteca offline v28 | una entrada por archivo, no por ejercicio
 c	01-fundamentos/bits-y-mascaras/bits_y_mascaras.c
 c	01-fundamentos/callbacks-y-funciones/callbacks_y_funciones.c
 c	01-fundamentos/compilacion-y-enlazado/biblioteca-estatica-dinamica/compilar.sh
@@ -1386,6 +1386,31 @@ java21	11-redes-y-protocolos-de-comunicacion/23-protocolos-aplicacion/Solicitud.
 java21	11-redes-y-protocolos-de-comunicacion/24-timeouts/ClienteTimeout.java
 java21	11-redes-y-protocolos-de-comunicacion/24-timeouts/MainTimeout.java
 java21	11-redes-y-protocolos-de-comunicacion/24-timeouts/ServidorLento.java
+java21	12-persistencia-y-gestion-de-datos/01-registros/ArchivoRegistros.java
+java21	12-persistencia-y-gestion-de-datos/01-registros/MainRegistros.java
+java21	12-persistencia-y-gestion-de-datos/01-registros/Registro.java
+java21	12-persistencia-y-gestion-de-datos/02-formatos-texto/CsvSimple.java
+java21	12-persistencia-y-gestion-de-datos/02-formatos-texto/MainCsv.java
+java21	12-persistencia-y-gestion-de-datos/02-formatos-texto/PropertiesDemo.java
+java21	12-persistencia-y-gestion-de-datos/03-indexacion/IndiceArchivo.java
+java21	12-persistencia-y-gestion-de-datos/03-indexacion/MainIndice.java
+java21	12-persistencia-y-gestion-de-datos/04-consultas/AgruparRegistros.java
+java21	12-persistencia-y-gestion-de-datos/04-consultas/FiltrarRegistros.java
+java21	12-persistencia-y-gestion-de-datos/04-consultas/ProyectarCampos.java
+java21	12-persistencia-y-gestion-de-datos/05-join/HashJoin.java
+java21	12-persistencia-y-gestion-de-datos/05-join/MainJoin.java
+java21	12-persistencia-y-gestion-de-datos/05-join/NestedLoopJoin.java
+java21	12-persistencia-y-gestion-de-datos/06-transacciones/Cuenta.java
+java21	12-persistencia-y-gestion-de-datos/06-transacciones/MainTransaccion.java
+java21	12-persistencia-y-gestion-de-datos/06-transacciones/TransaccionSimulada.java
+java21	12-persistencia-y-gestion-de-datos/07-aislamiento/LecturaNoRepetible.java
+java21	12-persistencia-y-gestion-de-datos/07-aislamiento/LecturaSuciaSimulada.java
+java21	12-persistencia-y-gestion-de-datos/07-aislamiento/PerdidaActualizacion.java
+java21	12-persistencia-y-gestion-de-datos/08-write-ahead-log/AlmacenSimulado.java
+java21	12-persistencia-y-gestion-de-datos/08-write-ahead-log/EntradaLog.java
+java21	12-persistencia-y-gestion-de-datos/08-write-ahead-log/MainRecuperacion.java
+java21	12-persistencia-y-gestion-de-datos/09-jdbc-api/ContratoJdbc.java
+java21	12-persistencia-y-gestion-de-datos/09-jdbc-api/MainConsultaSimulada.java
 javascript	01-fundamentos/closures/closures.js
 javascript	01-fundamentos/event-loop/event_loop.js
 javascript	01-fundamentos/funciones/funciones.js
