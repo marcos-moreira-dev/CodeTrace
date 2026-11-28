@@ -10,11 +10,29 @@ cases = json.loads((repo / "scripts/jls21-casos.json").read_text(encoding="utf-8
 covered = set()
 for case in cases:
     source = root / case["path"]
-    sources = sorted(source.parent.rglob("*.java"))
+    unit = root / case["unit"] if "unit" in case else source.parent
+    sources = sorted(unit.rglob("*.java"))
+    assert source in sources and sources, case["path"]
+    for item in sources:
+        text = item.read_text(encoding="utf-8")
+        assert "Referencia: Java SE 21, JLS" in text and "Compilar:" in text, item
+        assert "Salida esperada:" in text, item
+        if "reject" in case:
+            assert "ERROR INTENCIONAL" in text, item
+        else:
+            assert "Ejecutar:" in text, item
     covered.update(s.relative_to(root).as_posix() for s in sources)
     with tempfile.TemporaryDirectory() as tmp:
-        subprocess.run(["javac", "--release", "21", "-encoding", "UTF-8",
-                        "-d", tmp, *map(str, sources)], check=True, timeout=30)
+        compilation = subprocess.run(["javac", "-J-Duser.language=en", "-J-Duser.country=US",
+                        "--release", "21", "-encoding", "UTF-8",
+                        "-d", tmp, *map(str, sources)], capture_output=True,
+                        text=True, encoding="utf-8", timeout=30)
+        if "reject" in case:
+            assert compilation.returncode != 0 and case["reject"] in compilation.stderr, (
+                case["path"], compilation.stderr)
+            print("OK rechazo esperado", case["section"], case["path"])
+            continue
+        assert compilation.returncode == 0, (case["path"], compilation.stderr)
         result = subprocess.run(["java", "-Dfile.encoding=UTF-8", "-cp", tmp,
                                  case["main"], *case["args"]], capture_output=True,
                                 text=True, encoding="utf-8", timeout=20)

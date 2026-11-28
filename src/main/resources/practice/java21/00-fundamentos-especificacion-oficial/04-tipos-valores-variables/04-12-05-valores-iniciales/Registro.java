@@ -1,0 +1,18 @@
+// CodeTrace | Fundamentos - Especificación oficial
+// Referencia: Java SE 21, JLS §4.12.5; ejemplo 4.12.5-1
+// Compilar: javac --release 21 -encoding UTF-8 -d . ValoresIniciales.java Registro.java
+// Ejecutar: java ValoresIniciales
+// Comandos desde la carpeta de la unidad.
+
+class Registro {
+    static int total;
+    int numero;
+    boolean activo;
+    Registro siguiente;
+}
+
+// Salida esperada:
+// 0
+// 0
+// false
+// null

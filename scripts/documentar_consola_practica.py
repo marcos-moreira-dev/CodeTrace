@@ -249,6 +249,10 @@ def main():
     args=ap.parse_args();root=args.root.resolve()
     if not root.is_dir(): raise SystemExit(f'No existe carpeta de biblioteca: {root}')
     sources={p:p.read_text(encoding='utf-8') for p in root.rglob('*') if p.is_file() and p.suffix in EXT}
+    # La JLS tiene un contrato propio de comandos, salidas y errores.
+    # verificar-jls21.py valida todas sus fuentes de forma independiente.
+    sources={p:s for p,s in sources.items()
+             if p.relative_to(root).parts[:2] != ('java21', '00-fundamentos-especificacion-oficial')}
     expected=sum(1 for p,s in sources.items() if MARKERS.search(strip_generated(s,p)))
     cache={}
     if args.outcomes:

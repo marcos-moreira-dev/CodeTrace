@@ -86,5 +86,103 @@
     "main": "ReduccionPrimitivaJls",
     "args": [],
     "stdout": "-21555\n-56\n2147483647\n0\n-Infinity\n0.0\n"
+  },
+  {
+    "path": "03-estructura-lexica/03-10-05-identidad-entre-paquetes/saludos/IdentidadCadenas.java",
+    "unit": "03-estructura-lexica/03-10-05-identidad-entre-paquetes",
+    "section": "3.10.5; ejemplo 3.10.5-1",
+    "main": "saludos.IdentidadCadenas",
+    "args": [],
+    "stdout": "true\ntrue\ntrue\ntrue\nfalse\ntrue\n"
+  },
+  {
+    "path": "03-estructura-lexica/03-10-06-01-comparacion-cadenas/TextoEquivalente.java",
+    "unit": "03-estructura-lexica/03-10-06-01-comparacion-cadenas",
+    "section": "3.10.6; ejemplo 3.10.6-1",
+    "main": "TextoEquivalente",
+    "args": [],
+    "stdout": "inicio\n    dato\nfin\ntrue\n"
+  },
+  {
+    "path": "03-estructura-lexica/03-10-06-03-orden-transformaciones/TransformacionTexto.java",
+    "unit": "03-estructura-lexica/03-10-06-03-orden-transformaciones",
+    "section": "3.10.6; ejemplo 3.10.6-3",
+    "main": "TransformacionTexto",
+    "args": [],
+    "stdout": "xCRLFyCRLF\n"
+  },
+  {
+    "path": "03-estructura-lexica/03-10-06-04-tipo-string/BloqueComoCadena.java",
+    "unit": "03-estructura-lexica/03-10-06-04-tipo-string",
+    "section": "3.10.6; ejemplo 3.10.6-4",
+    "main": "BloqueComoCadena",
+    "args": [],
+    "stdout": "Sol y planeta\nneta\ntrue\n"
+  },
+  {
+    "path": "04-tipos-valores-variables/04-03-01-02-identidad/IdentidadValores.java",
+    "unit": "04-tipos-valores-variables/04-03-01-02-identidad",
+    "section": "4.3.1; ejemplo 4.3.1-2",
+    "main": "IdentidadValores",
+    "args": [],
+    "stdout": "7 9\n18 18\n"
+  },
+  {
+    "path": "04-tipos-valores-variables/04-12-03-clases-de-variables/TiposVariables.java",
+    "unit": "04-tipos-valores-variables/04-12-03-clases-de-variables",
+    "section": "4.12.3; ejemplo 4.12.3-1",
+    "main": "TiposVariables",
+    "args": [],
+    "stdout": "0\ntrue\n0\n"
+  },
+  {
+    "path": "04-tipos-valores-variables/04-12-04-final/ReferenciaFinal.java",
+    "unit": "04-tipos-valores-variables/04-12-04-final",
+    "section": "4.12.4; ejemplo 4.12.4-1",
+    "main": "ReferenciaFinal",
+    "args": [],
+    "stdout": "5\n"
+  },
+  {
+    "path": "04-tipos-valores-variables/04-12-05-valores-iniciales/ValoresIniciales.java",
+    "unit": "04-tipos-valores-variables/04-12-05-valores-iniciales",
+    "section": "4.12.5; ejemplo 4.12.5-1",
+    "main": "ValoresIniciales",
+    "args": [],
+    "stdout": "0\n0\nfalse\nnull\n"
+  },
+  {
+    "path": "05-conversiones-y-contextos/05-01-07-boxing/Empaquetado.java",
+    "unit": "05-conversiones-y-contextos/05-01-07-boxing",
+    "section": "5.1.7",
+    "main": "Empaquetado",
+    "args": [],
+    "stdout": "true\n42\n"
+  },
+  {
+    "path": "05-conversiones-y-contextos/05-01-08-unboxing-null/DesempaquetadoNulo.java",
+    "unit": "05-conversiones-y-contextos/05-01-08-unboxing-null",
+    "section": "5.1.8",
+    "main": "DesempaquetadoNulo",
+    "args": [],
+    "stdout": "15\n",
+    "exception": "NullPointerException"
+  },
+  {
+    "path": "05-conversiones-y-contextos/05-02-constantes/AsignacionConstante.java",
+    "unit": "05-conversiones-y-contextos/05-02-constantes",
+    "section": "5.2",
+    "main": "AsignacionConstante",
+    "args": [],
+    "stdout": "120\n40\n"
+  },
+  {
+    "path": "05-conversiones-y-contextos/05-02-error-reduccion/AsignacionInvalida.java",
+    "unit": "05-conversiones-y-contextos/05-02-error-reduccion",
+    "section": "5.2",
+    "main": "AsignacionInvalida",
+    "args": [],
+    "stdout": "\n",
+    "reject": "possible lossy conversion from int to byte"
   }
 ]
