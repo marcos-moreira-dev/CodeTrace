@@ -234,9 +234,17 @@ def valid_complete_guide(src: str, path: Path) -> bool:
         return False
     if GENERIC.search(footer):
         return False
-    if path.suffix == '.java' and ('javac --release 21' not in footer
-                                   or 'java -cp $out' not in footer):
-        return False
+    if path.suffix == '.java':
+        if 'javac --release 21' not in footer:
+            return False
+        if 'java -cp $out' not in footer:
+            # A reusable class without an entry point has a compile-only guide.
+            # Do not require an impossible launch, and do not accept a missing
+            # launch command for an executable class.
+            if entrypoint(path, stripped) or (
+                'Nota: archivo reutilizable sin entrada; el comando solo verifica la compilación o sintaxis.' not in footer
+            ):
+                return False
     return True
 
 
@@ -272,7 +280,9 @@ def main():
         if state=='pendiente': incomplete.append(str(p.relative_to(root)))
     print(f'CodeTrace: archivos={len(sources)}; bloques originales={expected}; cambios={len(changes)}; estados={dict(stats)}')
     if incomplete: print('Salidas pendientes de verificar:\n'+'\n'.join(incomplete[:120]))
-    if args.check and changes: raise SystemExit(f'FALTAN {len(changes)} archivos con guia de consola.')
+    if args.check and changes:
+        raise SystemExit(f'FALTAN {len(changes)} archivos con guia de consola:\n' +
+                         '\n'.join(str(p.relative_to(root)) for p in changes[:120]))
     # Deliberadamente no se considera éxito una salida textual genérica: se informa.
     if args.check and incomplete: raise SystemExit(f'Salidas concretas pendientes: {len(incomplete)}')
 
