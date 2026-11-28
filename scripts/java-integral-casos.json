@@ -2659,5 +2659,203 @@
     "main": "MainTokenAnillo",
     "mode": "T",
     "stdout": "Nodo 1 antes: false\nNodo 0: true\nNodo 1: true\nNodo 2: true\n"
+  },
+  {
+    "path": "18-pruebas-depuracion-y-rendimiento/01-contratos/PrePostcondiciones.java",
+    "sources": [
+      "18-pruebas-depuracion-y-rendimiento/01-contratos/PrePostcondiciones.java"
+    ],
+    "main": "PrePostcondiciones",
+    "mode": "R",
+    "stdout": "Precio: 750\nEntrada rechazada\n"
+  },
+  {
+    "path": "18-pruebas-depuracion-y-rendimiento/01-contratos/Invariantes.java",
+    "sources": [
+      "18-pruebas-depuracion-y-rendimiento/01-contratos/Invariantes.java"
+    ],
+    "main": "Invariantes",
+    "mode": "R",
+    "stdout": "Retiro rechazado\nStock: 5\n"
+  },
+  {
+    "path": "18-pruebas-depuracion-y-rendimiento/02-pruebas-unitarias/PruebaCalculadora.java",
+    "sources": [
+      "18-pruebas-depuracion-y-rendimiento/02-pruebas-unitarias/Calculadora.java",
+      "18-pruebas-depuracion-y-rendimiento/02-pruebas-unitarias/PruebaCalculadora.java"
+    ],
+    "main": "PruebaCalculadora",
+    "mode": "R",
+    "stdout": "Division por cero comprobada\nPruebas: 3 OK\n"
+  },
+  {
+    "path": "18-pruebas-depuracion-y-rendimiento/03-pruebas-limites/PruebaCasosLimite.java",
+    "sources": [
+      "18-pruebas-depuracion-y-rendimiento/03-pruebas-limites/PruebaCasosLimite.java"
+    ],
+    "main": "PruebaCasosLimite",
+    "mode": "R",
+    "stdout": "Limites: 4 OK\n"
+  },
+  {
+    "path": "18-pruebas-depuracion-y-rendimiento/04-pruebas-propiedades/PruebaPropiedades.java",
+    "sources": [
+      "18-pruebas-depuracion-y-rendimiento/04-pruebas-propiedades/PruebaPropiedades.java"
+    ],
+    "main": "PruebaPropiedades",
+    "mode": "R",
+    "stdout": "Propiedades: 100 casos OK\n"
+  },
+  {
+    "path": "18-pruebas-depuracion-y-rendimiento/05-pruebas-concurrencia/PruebaContador.java",
+    "sources": [
+      "18-pruebas-depuracion-y-rendimiento/05-pruebas-concurrencia/PruebaContador.java"
+    ],
+    "main": "PruebaContador",
+    "mode": "R",
+    "stdout": "Contador: 2000 OK\n"
+  },
+  {
+    "path": "18-pruebas-depuracion-y-rendimiento/05-pruebas-concurrencia/PruebaTimeout.java",
+    "sources": [
+      "18-pruebas-depuracion-y-rendimiento/05-pruebas-concurrencia/PruebaTimeout.java"
+    ],
+    "main": "PruebaTimeout",
+    "mode": "R",
+    "stdout": "Timeout detectado\nPool terminado\n"
+  },
+  {
+    "path": "18-pruebas-depuracion-y-rendimiento/06-trazas/TrazaExcepcion.java",
+    "sources": [
+      "18-pruebas-depuracion-y-rendimiento/06-trazas/TrazaExcepcion.java"
+    ],
+    "main": "TrazaExcepcion",
+    "mode": "R",
+    "stdout": "IllegalStateException\nvalidar\nprocesar\nmain\n"
+  },
+  {
+    "path": "18-pruebas-depuracion-y-rendimiento/06-trazas/CausasExcepcion.java",
+    "sources": [
+      "18-pruebas-depuracion-y-rendimiento/06-trazas/CausasExcepcion.java"
+    ],
+    "main": "CausasExcepcion",
+    "mode": "R",
+    "stdout": "No se pudo cargar\nNumberFormatException\n"
+  },
+  {
+    "path": "18-pruebas-depuracion-y-rendimiento/07-depuracion-jdb/ProgramaDepurable.java",
+    "sources": [
+      "18-pruebas-depuracion-y-rendimiento/07-depuracion-jdb/ProgramaDepurable.java"
+    ],
+    "main": "ProgramaDepurable",
+    "mode": "R",
+    "stdout": "600\n"
+  },
+  {
+    "path": "18-pruebas-depuracion-y-rendimiento/08-registro-eventos/RegistroJul.java",
+    "sources": [
+      "18-pruebas-depuracion-y-rendimiento/08-registro-eventos/RegistroJul.java"
+    ],
+    "main": "RegistroJul",
+    "mode": "R",
+    "stdout": "INFO: Pedido recibido\nWARNING: Stock bajo\n"
+  },
+  {
+    "path": "18-pruebas-depuracion-y-rendimiento/09-medicion-tiempo/MedirNanoTime.java",
+    "sources": [
+      "18-pruebas-depuracion-y-rendimiento/09-medicion-tiempo/MedirNanoTime.java"
+    ],
+    "main": "MedirNanoTime",
+    "mode": "R",
+    "stdout": "Resultado: 5505500\nIntervalo no negativo: true\n"
+  },
+  {
+    "path": "18-pruebas-depuracion-y-rendimiento/09-medicion-tiempo/CompararComplejidad.java",
+    "sources": [
+      "18-pruebas-depuracion-y-rendimiento/09-medicion-tiempo/CompararComplejidad.java"
+    ],
+    "main": "CompararComplejidad",
+    "mode": "R",
+    "stdout": "10: 10 vs 100\n20: 20 vs 400\n"
+  },
+  {
+    "path": "18-pruebas-depuracion-y-rendimiento/10-memoria-jvm/ConsultarHeap.java",
+    "sources": [
+      "18-pruebas-depuracion-y-rendimiento/10-memoria-jvm/ConsultarHeap.java"
+    ],
+    "main": "ConsultarHeap",
+    "mode": "R",
+    "stdout": "Usado no negativo: true\nComprometido cubre uso: true\n"
+  },
+  {
+    "path": "18-pruebas-depuracion-y-rendimiento/10-memoria-jvm/MainRetencion.java",
+    "sources": [
+      "18-pruebas-depuracion-y-rendimiento/10-memoria-jvm/MainRetencion.java"
+    ],
+    "main": "MainRetencion",
+    "mode": "R",
+    "stdout": "Referencias: 4\nReferencias: 0\n"
+  },
+  {
+    "path": "18-pruebas-depuracion-y-rendimiento/11-diagnostico-hilos/ConsultarHilos.java",
+    "sources": [
+      "18-pruebas-depuracion-y-rendimiento/11-diagnostico-hilos/ConsultarHilos.java"
+    ],
+    "main": "ConsultarHilos",
+    "mode": "M",
+    "stdout": "Hilo encontrado: true\nNombre coincide: true\nSin deadlock detectado: true\n"
+  },
+  {
+    "path": "18-pruebas-depuracion-y-rendimiento/11-diagnostico-hilos/DetectarDeadlockSimulado.java",
+    "sources": [
+      "18-pruebas-depuracion-y-rendimiento/11-diagnostico-hilos/DetectarDeadlockSimulado.java"
+    ],
+    "main": "DetectarDeadlockSimulado",
+    "mode": "M",
+    "stdout": "Caso A: true\nCaso B: false\n"
+  },
+  {
+    "path": "18-pruebas-depuracion-y-rendimiento/12-flight-recorder/GrabarJfr.java",
+    "sources": [
+      "18-pruebas-depuracion-y-rendimiento/12-flight-recorder/GrabarJfr.java"
+    ],
+    "main": "GrabarJfr",
+    "mode": "R",
+    "stdout": "Grabacion creada: true\n"
+  },
+  {
+    "path": "18-pruebas-depuracion-y-rendimiento/12-flight-recorder/LeerEventosJfr.java",
+    "sources": [
+      "18-pruebas-depuracion-y-rendimiento/12-flight-recorder/LeerEventosJfr.java"
+    ],
+    "main": "LeerEventosJfr",
+    "mode": "R",
+    "stdout": "Cantidad: 12\nEventos propios: 1\n"
+  },
+  {
+    "path": "18-pruebas-depuracion-y-rendimiento/13-herramientas-jdk/MainDiagnostico.java",
+    "sources": [
+      "18-pruebas-depuracion-y-rendimiento/13-herramientas-jdk/ProcesoInspeccionable.java",
+      "18-pruebas-depuracion-y-rendimiento/13-herramientas-jdk/MainDiagnostico.java"
+    ],
+    "main": "MainDiagnostico",
+    "mode": "P",
+    "stdout": "jcmd: OK\njstack: OK\n",
+    "allowed_stdout": [
+      "jcmd: OK\njstack: OK\n",
+      "jcmd: OK\njstack: No disponible\n",
+      "jcmd: No disponible\njstack: OK\n",
+      "jcmd: No disponible\njstack: No disponible\n"
+    ]
+  },
+  {
+    "path": "18-pruebas-depuracion-y-rendimiento/14-empaquetado/Aplicacion.java",
+    "sources": [
+      "18-pruebas-depuracion-y-rendimiento/14-empaquetado/Aplicacion.java"
+    ],
+    "main": "Aplicacion",
+    "mode": "R",
+    "stdout": "Aplicacion empaquetada\n",
+    "executable_jar": true
   }
 ]

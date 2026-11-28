@@ -47,7 +47,16 @@ def verify(case):
         else:
             checked(["javac", "--release", "21", "-encoding", "UTF-8", "-d", tmp,
                      *map(str, sources)])
-        run = subprocess.run(["java", "-Dfile.encoding=UTF-8", "-cp", classpath, case["main"],
+        command = ["java", "-Dfile.encoding=UTF-8", "-cp", classpath, case["main"]]
+        if case.get("executable_jar"):
+            jar = Path(tmp).parent / (Path(tmp).name + ".jar")
+            # Store the artifact outside the class directory to avoid archiving itself.
+            try:
+                checked(["jar", "--create", "--file", str(jar), "--main-class", case["main"], "-C", tmp, "."])
+                checked(["java", "-Dfile.encoding=UTF-8", "-jar", str(jar)])
+            finally:
+                jar.unlink(missing_ok=True)
+        run = subprocess.run([*command,
                               *case.get("args", [])], cwd=tmp, timeout=20, input=case.get("stdin", ""),
                              capture_output=True, text=True, encoding="utf-8")
         assert run.returncode == 0 and run.stderr == case.get("stderr", "") and run.stdout in case.get("allowed_stdout", [case["stdout"]]), (

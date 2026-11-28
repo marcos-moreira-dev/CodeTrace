@@ -1,4 +1,4 @@
-# CodeTrace | Biblioteca offline v33 | una entrada por archivo, no por ejercicio
+# CodeTrace | Biblioteca offline v34 | una entrada por archivo, no por ejercicio
 c	01-fundamentos/bits-y-mascaras/bits_y_mascaras.c
 c	01-fundamentos/callbacks-y-funciones/callbacks_y_funciones.c
 c	01-fundamentos/compilacion-y-enlazado/biblioteca-estatica-dinamica/compilar.sh
@@ -1506,6 +1506,29 @@ java21	17-sistemas-distribuidos/09-consistencia/LecturaEventual.java
 java21	17-sistemas-distribuidos/09-consistencia/QuorumSimulado.java
 java21	17-sistemas-distribuidos/10-exclusion-distribuida/MainTokenAnillo.java
 java21	17-sistemas-distribuidos/10-exclusion-distribuida/TokenAnillo.java
+java21	18-pruebas-depuracion-y-rendimiento/01-contratos/Invariantes.java
+java21	18-pruebas-depuracion-y-rendimiento/01-contratos/PrePostcondiciones.java
+java21	18-pruebas-depuracion-y-rendimiento/02-pruebas-unitarias/Calculadora.java
+java21	18-pruebas-depuracion-y-rendimiento/02-pruebas-unitarias/PruebaCalculadora.java
+java21	18-pruebas-depuracion-y-rendimiento/03-pruebas-limites/PruebaCasosLimite.java
+java21	18-pruebas-depuracion-y-rendimiento/04-pruebas-propiedades/PruebaPropiedades.java
+java21	18-pruebas-depuracion-y-rendimiento/05-pruebas-concurrencia/PruebaContador.java
+java21	18-pruebas-depuracion-y-rendimiento/05-pruebas-concurrencia/PruebaTimeout.java
+java21	18-pruebas-depuracion-y-rendimiento/06-trazas/CausasExcepcion.java
+java21	18-pruebas-depuracion-y-rendimiento/06-trazas/TrazaExcepcion.java
+java21	18-pruebas-depuracion-y-rendimiento/07-depuracion-jdb/ProgramaDepurable.java
+java21	18-pruebas-depuracion-y-rendimiento/08-registro-eventos/RegistroJul.java
+java21	18-pruebas-depuracion-y-rendimiento/09-medicion-tiempo/CompararComplejidad.java
+java21	18-pruebas-depuracion-y-rendimiento/09-medicion-tiempo/MedirNanoTime.java
+java21	18-pruebas-depuracion-y-rendimiento/10-memoria-jvm/ConsultarHeap.java
+java21	18-pruebas-depuracion-y-rendimiento/10-memoria-jvm/MainRetencion.java
+java21	18-pruebas-depuracion-y-rendimiento/11-diagnostico-hilos/ConsultarHilos.java
+java21	18-pruebas-depuracion-y-rendimiento/11-diagnostico-hilos/DetectarDeadlockSimulado.java
+java21	18-pruebas-depuracion-y-rendimiento/12-flight-recorder/GrabarJfr.java
+java21	18-pruebas-depuracion-y-rendimiento/12-flight-recorder/LeerEventosJfr.java
+java21	18-pruebas-depuracion-y-rendimiento/13-herramientas-jdk/MainDiagnostico.java
+java21	18-pruebas-depuracion-y-rendimiento/13-herramientas-jdk/ProcesoInspeccionable.java
+java21	18-pruebas-depuracion-y-rendimiento/14-empaquetado/Aplicacion.java
 javascript	01-fundamentos/closures/closures.js
 javascript	01-fundamentos/event-loop/event_loop.js
 javascript	01-fundamentos/funciones/funciones.js

@@ -414,29 +414,29 @@ area	unidad	modalidad	archivo	objetivo	estado
 17-sistemas-distribuidos	09-consistencia	T	QuorumSimulado.java	Visibilidad de escrituras, quórums bajo supuestos; no consenso completo.	implementado_pendiente_ci
 17-sistemas-distribuidos	10-exclusion-distribuida	T	TokenAnillo.java	Acceso exclusivo mediante token bajo entrega fiable y sin pérdidas.	implementado_pendiente_ci
 17-sistemas-distribuidos	10-exclusion-distribuida	T	MainTokenAnillo.java	Acceso exclusivo mediante token bajo entrega fiable y sin pérdidas.	implementado_pendiente_ci
-18-pruebas-depuracion-y-rendimiento	01-contratos	R	PrePostcondiciones.java	Validación de entradas, resultados e invariantes.	planificado
-18-pruebas-depuracion-y-rendimiento	01-contratos	R	Invariantes.java	Validación de entradas, resultados e invariantes.	planificado
-18-pruebas-depuracion-y-rendimiento	02-pruebas-unitarias	R	Calculadora.java	Pruebas sin JUnit, AssertionError explícito y código de salida.	planificado
-18-pruebas-depuracion-y-rendimiento	02-pruebas-unitarias	R	PruebaCalculadora.java	Pruebas sin JUnit, AssertionError explícito y código de salida.	planificado
-18-pruebas-depuracion-y-rendimiento	03-pruebas-limites	R	PruebaCasosLimite.java	Vacío, mínimos, máximos, valores inválidos.	planificado
-18-pruebas-depuracion-y-rendimiento	04-pruebas-propiedades	R	PruebaPropiedades.java	Generar casos con semilla fija y comprobar invariantes.	planificado
-18-pruebas-depuracion-y-rendimiento	05-pruebas-concurrencia	R	PruebaContador.java	Coordinación determinista, límite de espera y propagación de fallos.	planificado
-18-pruebas-depuracion-y-rendimiento	05-pruebas-concurrencia	R	PruebaTimeout.java	Coordinación determinista, límite de espera y propagación de fallos.	planificado
-18-pruebas-depuracion-y-rendimiento	06-trazas	R	TrazaExcepcion.java	Stack trace, causas y localización del fallo.	planificado
-18-pruebas-depuracion-y-rendimiento	06-trazas	R	CausasExcepcion.java	Stack trace, causas y localización del fallo.	planificado
-18-pruebas-depuracion-y-rendimiento	07-depuracion-jdb	R	ProgramaDepurable.java	javac -g y jdb: breakpoints, step, next, variables y backtrace; comandos comentados.	planificado
-18-pruebas-depuracion-y-rendimiento	08-registro-eventos	R	RegistroJul.java	java.util.logging y niveles, sin framework.	planificado
-18-pruebas-depuracion-y-rendimiento	09-medicion-tiempo	R	MedirNanoTime.java	Tiempo transcurrido, calentamiento y límites de microbenchmarks.	planificado
-18-pruebas-depuracion-y-rendimiento	09-medicion-tiempo	R	CompararComplejidad.java	Tiempo transcurrido, calentamiento y límites de microbenchmarks.	planificado
-18-pruebas-depuracion-y-rendimiento	10-memoria-jvm	R	ConsultarHeap.java	MemoryMXBean y referencias retenidas; no inferir direcciones reales.	planificado
-18-pruebas-depuracion-y-rendimiento	10-memoria-jvm	R	MainRetencion.java	MemoryMXBean y referencias retenidas; no inferir direcciones reales.	planificado
-18-pruebas-depuracion-y-rendimiento	11-diagnostico-hilos	M	ConsultarHilos.java	ThreadMXBean y modelo de detección; no dejar hilos bloqueados.	planificado
-18-pruebas-depuracion-y-rendimiento	11-diagnostico-hilos	M	DetectarDeadlockSimulado.java	ThreadMXBean y modelo de detección; no dejar hilos bloqueados.	planificado
-18-pruebas-depuracion-y-rendimiento	12-flight-recorder	R	GrabarJfr.java	Grabación acotada y análisis de eventos con JDK Flight Recorder.	planificado
-18-pruebas-depuracion-y-rendimiento	12-flight-recorder	R	LeerEventosJfr.java	Grabación acotada y análisis de eventos con JDK Flight Recorder.	planificado
-18-pruebas-depuracion-y-rendimiento	13-herramientas-jdk	P	ProcesoInspeccionable.java	jcmd/jstack solo sobre una JVM hija propia; disponibilidad y permisos.	planificado
-18-pruebas-depuracion-y-rendimiento	13-herramientas-jdk	P	MainDiagnostico.java	jcmd/jstack solo sobre una JVM hija propia; disponibilidad y permisos.	planificado
-18-pruebas-depuracion-y-rendimiento	14-empaquetado	R	Aplicacion.java	jar, java -jar y comandos de jpackage explicados; instalador no obligatorio para practicar.	planificado
+18-pruebas-depuracion-y-rendimiento	01-contratos	R	PrePostcondiciones.java	Validación de entradas, resultados e invariantes.	implementado_pendiente_ci
+18-pruebas-depuracion-y-rendimiento	01-contratos	R	Invariantes.java	Validación de entradas, resultados e invariantes.	implementado_pendiente_ci
+18-pruebas-depuracion-y-rendimiento	02-pruebas-unitarias	R	Calculadora.java	Pruebas sin JUnit, AssertionError explícito y código de salida.	implementado_pendiente_ci
+18-pruebas-depuracion-y-rendimiento	02-pruebas-unitarias	R	PruebaCalculadora.java	Pruebas sin JUnit, AssertionError explícito y código de salida.	implementado_pendiente_ci
+18-pruebas-depuracion-y-rendimiento	03-pruebas-limites	R	PruebaCasosLimite.java	Vacío, mínimos, máximos, valores inválidos.	implementado_pendiente_ci
+18-pruebas-depuracion-y-rendimiento	04-pruebas-propiedades	R	PruebaPropiedades.java	Generar casos con semilla fija y comprobar invariantes.	implementado_pendiente_ci
+18-pruebas-depuracion-y-rendimiento	05-pruebas-concurrencia	R	PruebaContador.java	Coordinación determinista, límite de espera y propagación de fallos.	implementado_pendiente_ci
+18-pruebas-depuracion-y-rendimiento	05-pruebas-concurrencia	R	PruebaTimeout.java	Coordinación determinista, límite de espera y propagación de fallos.	implementado_pendiente_ci
+18-pruebas-depuracion-y-rendimiento	06-trazas	R	TrazaExcepcion.java	Stack trace, causas y localización del fallo.	implementado_pendiente_ci
+18-pruebas-depuracion-y-rendimiento	06-trazas	R	CausasExcepcion.java	Stack trace, causas y localización del fallo.	implementado_pendiente_ci
+18-pruebas-depuracion-y-rendimiento	07-depuracion-jdb	R	ProgramaDepurable.java	javac -g y jdb: breakpoints, step, next, variables y backtrace; comandos comentados.	implementado_pendiente_ci
+18-pruebas-depuracion-y-rendimiento	08-registro-eventos	R	RegistroJul.java	java.util.logging y niveles, sin framework.	implementado_pendiente_ci
+18-pruebas-depuracion-y-rendimiento	09-medicion-tiempo	R	MedirNanoTime.java	Tiempo transcurrido, calentamiento y límites de microbenchmarks.	implementado_pendiente_ci
+18-pruebas-depuracion-y-rendimiento	09-medicion-tiempo	R	CompararComplejidad.java	Tiempo transcurrido, calentamiento y límites de microbenchmarks.	implementado_pendiente_ci
+18-pruebas-depuracion-y-rendimiento	10-memoria-jvm	R	ConsultarHeap.java	MemoryMXBean y referencias retenidas; no inferir direcciones reales.	implementado_pendiente_ci
+18-pruebas-depuracion-y-rendimiento	10-memoria-jvm	R	MainRetencion.java	MemoryMXBean y referencias retenidas; no inferir direcciones reales.	implementado_pendiente_ci
+18-pruebas-depuracion-y-rendimiento	11-diagnostico-hilos	M	ConsultarHilos.java	ThreadMXBean y modelo de detección; no dejar hilos bloqueados.	implementado_pendiente_ci
+18-pruebas-depuracion-y-rendimiento	11-diagnostico-hilos	M	DetectarDeadlockSimulado.java	ThreadMXBean y modelo de detección; no dejar hilos bloqueados.	implementado_pendiente_ci
+18-pruebas-depuracion-y-rendimiento	12-flight-recorder	R	GrabarJfr.java	Grabación acotada y análisis de eventos con JDK Flight Recorder.	implementado_pendiente_ci
+18-pruebas-depuracion-y-rendimiento	12-flight-recorder	R	LeerEventosJfr.java	Grabación acotada y análisis de eventos con JDK Flight Recorder.	implementado_pendiente_ci
+18-pruebas-depuracion-y-rendimiento	13-herramientas-jdk	P	ProcesoInspeccionable.java	jcmd/jstack solo sobre una JVM hija propia; disponibilidad y permisos.	implementado_pendiente_ci
+18-pruebas-depuracion-y-rendimiento	13-herramientas-jdk	P	MainDiagnostico.java	jcmd/jstack solo sobre una JVM hija propia; disponibilidad y permisos.	implementado_pendiente_ci
+18-pruebas-depuracion-y-rendimiento	14-empaquetado	R	Aplicacion.java	jar, java -jar y comandos de jpackage explicados; instalador no obligatorio para practicar.	implementado_pendiente_ci
 19-inteligencia-artificial-fundamental	01-comparacion-de-patrones	R	CompararMatrices.java	Comparar dos matrices binarias 5x5 mediante diferencias de píxeles; devolver distancia exacta.	planificado
 19-inteligencia-artificial-fundamental	02-reconocimiento-de-digitos	R	ReconocerDigito.java	Clasificar una matriz pequeña por plantillas 0–9; probar coincidencia y ruido acotado; no confundir con OCR general.	planificado
 19-inteligencia-artificial-fundamental	03-distancias	R	DistanciaManhattan.java	Calcular distancia Manhattan con bucle; Euclidiana ya en 06/05. Comparar con un caso conocido.	planificado
