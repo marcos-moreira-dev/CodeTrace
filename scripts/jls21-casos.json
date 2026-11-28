@@ -2565,5 +2565,203 @@
     "main": "EjecucionLambda",
     "args": [],
     "stdout": "creada\ncuerpo\ncuerpo\n"
+  },
+  {
+    "path": "03-estructura-lexica/03-10-06-02-variante-comillas-delimitador/ComillasBloque.java",
+    "unit": "03-estructura-lexica/03-10-06-02-variante-comillas-delimitador",
+    "section": "3.10.6; ejemplo 3.10.6-2",
+    "main": "ComillasBloque",
+    "args": [],
+    "stdout": "Ella dijo: \"hola\"\ntrue\n"
+  },
+  {
+    "path": "03-estructura-lexica/03-10-06-02-variante-comillas-error/ComillasInvalidas.java",
+    "unit": "03-estructura-lexica/03-10-06-02-variante-comillas-error",
+    "section": "3.10.6; ejemplo 3.10.6-2",
+    "main": "ComillasInvalidas",
+    "args": [],
+    "stdout": "",
+    "reject": "unclosed string literal"
+  },
+  {
+    "path": "06-nombres/06-05-06-02-02-variante-tipo-generico-static/CampoGenerico.java",
+    "unit": "06-nombres/06-05-06-02-02-variante-tipo-generico-static",
+    "section": "6.5.6.2; ejemplo 6.5.6.2-2",
+    "main": "CampoGenerico",
+    "args": [],
+    "stdout": "5 5\n"
+  },
+  {
+    "path": "06-nombres/06-05-06-02-02-variante-parametrizacion-static-error/CampoParametrizado.java",
+    "unit": "06-nombres/06-05-06-02-02-variante-parametrizacion-static-error",
+    "section": "6.5.6.2; ejemplo 6.5.6.2-2",
+    "main": "CampoParametrizado",
+    "args": [],
+    "stdout": "",
+    "reject": "illegal start of type"
+  },
+  {
+    "path": "06-nombres/06-05-07-01-01-variante-busqueda-metodo-exterior/BusquedaExterior.java",
+    "unit": "06-nombres/06-05-07-01-01-variante-busqueda-metodo-exterior",
+    "section": "6.5.7.1; ejemplo 6.5.7.1-1",
+    "main": "BusquedaExterior",
+    "args": [],
+    "stdout": "3\ninterior\n"
+  },
+  {
+    "path": "06-nombres/06-05-07-01-01-variante-busqueda-metodo-error/BusquedaNoRetrocede.java",
+    "unit": "06-nombres/06-05-07-01-01-variante-busqueda-metodo-error",
+    "section": "6.5.7.1; ejemplo 6.5.7.1-1",
+    "main": "BusquedaNoRetrocede",
+    "args": [],
+    "stdout": "",
+    "reject": "int cannot be converted to String"
+  },
+  {
+    "path": "08-clases/08-03-01-04-01-variante-volatile-lecturas-separadas/LecturasVolatile.java",
+    "unit": "08-clases/08-03-01-04-01-variante-volatile-lecturas-separadas",
+    "section": "8.3.1.4; ejemplo 8.3.1.4-1",
+    "main": "LecturasVolatile",
+    "args": [],
+    "stdout": "0 1\n1 1\n"
+  },
+  {
+    "path": "08-clases/08-03-01-04-01-variante-lectura-sincronizada/LecturaSincronizada.java",
+    "unit": "08-clases/08-03-01-04-01-variante-lectura-sincronizada",
+    "section": "8.3.1.4; ejemplo 8.3.1.4-1",
+    "main": "LecturaSincronizada",
+    "args": [],
+    "stdout": "true\n1000 1000\n"
+  },
+  {
+    "path": "09-interfaces/09-08-01-variante-metodo-object/FuncionalConEquals.java",
+    "unit": "09-interfaces/09-08-01-variante-metodo-object",
+    "section": "9.8; ejemplo 9.8-1",
+    "main": "FuncionalConEquals",
+    "args": [],
+    "stdout": "true\n"
+  },
+  {
+    "path": "09-interfaces/09-08-01-variante-solo-object-error/SoloEquals.java",
+    "unit": "09-interfaces/09-08-01-variante-solo-object-error",
+    "section": "9.8; ejemplo 9.8-1",
+    "main": "SoloEquals",
+    "args": [],
+    "stdout": "",
+    "reject": "no abstract method found"
+  },
+  {
+    "path": "09-interfaces/09-08-01-variante-clone-no-publico-error/ClonarYMedir.java",
+    "unit": "09-interfaces/09-08-01-variante-clone-no-publico-error",
+    "section": "9.8; ejemplo 9.8-1",
+    "main": "ClonarYMedir",
+    "args": [],
+    "stdout": "",
+    "reject": "multiple non-overriding abstract methods"
+  },
+  {
+    "path": "09-interfaces/09-08-02-variante-borrado-conflicto/BorradoInterfaz.java",
+    "unit": "09-interfaces/09-08-02-variante-borrado-conflicto",
+    "section": "9.8; ejemplo 9.8-2",
+    "main": "BorradoInterfaz",
+    "args": [],
+    "stdout": "",
+    "reject": "name clash"
+  },
+  {
+    "path": "09-interfaces/09-08-02-variante-retorno-incompatible/RetornosInterfaz.java",
+    "unit": "09-interfaces/09-08-02-variante-retorno-incompatible",
+    "section": "9.8; ejemplo 9.8-2",
+    "main": "RetornosInterfaz",
+    "args": [],
+    "stdout": "",
+    "reject": "incompatible return types"
+  },
+  {
+    "path": "09-interfaces/09-08-02-variante-parametrizacion-unifica/ContratosUnificados.java",
+    "unit": "09-interfaces/09-08-02-variante-parametrizacion-unifica",
+    "section": "9.8; ejemplo 9.8-2",
+    "main": "ContratosUnificados",
+    "args": [],
+    "stdout": "6\n"
+  },
+  {
+    "path": "09-interfaces/09-08-03-variante-retornos-genericos-error/RetornosGenericos.java",
+    "unit": "09-interfaces/09-08-03-variante-retornos-genericos-error",
+    "section": "9.8; ejemplo 9.8-3",
+    "main": "RetornosGenericos",
+    "args": [],
+    "stdout": "",
+    "reject": "incompatible"
+  },
+  {
+    "path": "11-excepciones/11-02-03-01-variante-captura-subtipo/CapturaSubtipo.java",
+    "unit": "11-excepciones/11-02-03-01-variante-captura-subtipo",
+    "section": "11.2.3; ejemplo 11.2.3-1",
+    "main": "CapturaSubtipo",
+    "args": [],
+    "stdout": "superclase primero\nsubclase archivo\n"
+  },
+  {
+    "path": "14-bloques-sentencias-patrones/14-04-01-variante-var-multiples/VarMultiples.java",
+    "unit": "14-bloques-sentencias-patrones/14-04-01-variante-var-multiples",
+    "section": "14.4; ejemplo 14.4-1",
+    "main": "VarMultiples",
+    "args": [],
+    "stdout": "",
+    "reject": "'var' is not allowed in a compound declaration"
+  },
+  {
+    "path": "14-bloques-sentencias-patrones/14-04-01-variante-var-arreglo/VarArreglo.java",
+    "unit": "14-bloques-sentencias-patrones/14-04-01-variante-var-arreglo",
+    "section": "14.4; ejemplo 14.4-1",
+    "main": "VarArreglo",
+    "args": [],
+    "stdout": "",
+    "reject": "'var' is not allowed as an element type of an array"
+  },
+  {
+    "path": "14-bloques-sentencias-patrones/14-04-01-variante-var-inicializador-arreglo/VarLiteralArreglo.java",
+    "unit": "14-bloques-sentencias-patrones/14-04-01-variante-var-inicializador-arreglo",
+    "section": "14.4; ejemplo 14.4-1",
+    "main": "VarLiteralArreglo",
+    "args": [],
+    "stdout": "",
+    "reject": "array initializer needs an explicit target-type"
+  },
+  {
+    "path": "14-bloques-sentencias-patrones/14-04-01-variante-var-autorreferencia/VarAutorreferencia.java",
+    "unit": "14-bloques-sentencias-patrones/14-04-01-variante-var-autorreferencia",
+    "section": "14.4; ejemplo 14.4-1",
+    "main": "VarAutorreferencia",
+    "args": [],
+    "stdout": "",
+    "reject": "cannot use 'var' on self-referencing variable"
+  },
+  {
+    "path": "15-expresiones/15-12-02-01-variante-aplicabilidad-ampliacion/AplicabilidadValida.java",
+    "unit": "15-expresiones/15-12-02-01-variante-aplicabilidad-ampliacion",
+    "section": "15.12.2; ejemplo 15.12.2-1",
+    "main": "AplicabilidadValida",
+    "args": [],
+    "stdout": "2\n6\n"
+  },
+  {
+    "path": "15-expresiones/15-12-02-01-variante-invocacion-byte-error/ArgumentoByte.java",
+    "unit": "15-expresiones/15-12-02-01-variante-invocacion-byte-error",
+    "section": "15.12.2; ejemplo 15.12.2-1",
+    "main": "ArgumentoByte",
+    "args": [],
+    "stdout": "",
+    "reject": "possible lossy conversion from int to byte"
+  },
+  {
+    "path": "16-asignacion-definida/16-03-variante-final-rutas-independientes/FinalNoDemostrado.java",
+    "unit": "16-asignacion-definida/16-03-variante-final-rutas-independientes",
+    "section": "16; ejemplo 16-3",
+    "main": "FinalNoDemostrado",
+    "args": [],
+    "stdout": "",
+    "reject": "variable n might already have been assigned"
   }
 ]

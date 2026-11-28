@@ -1,7 +1,7 @@
 ejemplo	adaptaciones	estado
 3.10.5-1	03-estructura-lexica/03-10-05-identidad-entre-paquetes/saludos/IdentidadCadenas.java	adaptacion_inicial
 3.10.6-1	03-estructura-lexica/03-10-06-01-comparacion-cadenas/TextoEquivalente.java	adaptacion_inicial
-3.10.6-2	03-estructura-lexica/03-10-06-02-escapes-en-bloques/EscapeBloque.java	adaptacion_inicial
+3.10.6-2	03-estructura-lexica/03-10-06-02-escapes-en-bloques/EscapeBloque.java;03-estructura-lexica/03-10-06-02-variante-comillas-delimitador/ComillasBloque.java;03-estructura-lexica/03-10-06-02-variante-comillas-error/ComillasInvalidas.java	adaptacion_inicial
 3.10.6-3	03-estructura-lexica/03-10-06-03-orden-transformaciones/TransformacionTexto.java	adaptacion_inicial
 3.10.6-4	03-estructura-lexica/03-10-06-04-tipo-string/BloqueComoCadena.java	adaptacion_inicial
 4.2.2-1	04-tipos-valores-variables/04-02-02-operaciones-enteras/OperacionesEnterasJls.java	adaptacion_inicial
@@ -47,8 +47,8 @@ ejemplo	adaptaciones	estado
 6.5.6.1-2	06-nombres/06-05-06-01-02-instancia-en-static/InstanciaInvalida.java	adaptacion_inicial
 6.5.6.1-3	06-nombres/06-05-06-01-03-captura-parametro/CapturaParametro.java	adaptacion_inicial
 6.5.6.2-1	06-nombres/06-05-06-02-01-expresion-calificada-invalida/Punto.java	adaptacion_inicial
-6.5.6.2-2	06-nombres/06-05-06-02-02-calificar-campo-estatico/CalificarCampo.java	adaptacion_inicial
-6.5.7.1-1	06-nombres/06-05-07-01-01-metodo-nombre-simple/NombreMetodo.java	adaptacion_inicial
+6.5.6.2-2	06-nombres/06-05-06-02-02-calificar-campo-estatico/CalificarCampo.java;06-nombres/06-05-06-02-02-variante-tipo-generico-static/CampoGenerico.java;06-nombres/06-05-06-02-02-variante-parametrizacion-static-error/CampoParametrizado.java	adaptacion_inicial
+6.5.7.1-1	06-nombres/06-05-07-01-01-metodo-nombre-simple/NombreMetodo.java;06-nombres/06-05-07-01-01-variante-busqueda-metodo-exterior/BusquedaExterior.java;06-nombres/06-05-07-01-01-variante-busqueda-metodo-error/BusquedaNoRetrocede.java	adaptacion_inicial
 6.6-1	06-nombres/06-06-01-control-acceso/puntos/Punto.java	adaptacion_inicial
 6.6-2	06-nombres/06-06-02-miembros-publicos/puntos/Punto.java	adaptacion_inicial
 6.6-3	06-nombres/06-06-03-clase-no-publica/puntos/Punto.java	adaptacion_inicial
@@ -91,7 +91,7 @@ ejemplo	adaptaciones	estado
 8.3.1.1-2	08-clases/08-03-01-01-02-ocultar-campo-estatico/BaseEstatica.java	adaptacion_inicial
 8.3.1.1-3	08-clases/08-03-01-01-03-ocultar-campo-instancia/BaseInstancia.java	adaptacion_inicial
 8.3.1.3-1	08-clases/08-03-01-03-01-persistencia-transient/DatosPersistentes.java	adaptacion_inicial
-8.3.1.4-1	08-clases/08-03-01-04-01-campos-volatile/CamposVolatile.java	adaptacion_inicial
+8.3.1.4-1	08-clases/08-03-01-04-01-campos-volatile/CamposVolatile.java;08-clases/08-03-01-04-01-variante-volatile-lecturas-separadas/LecturasVolatile.java;08-clases/08-03-01-04-01-variante-lectura-sincronizada/LecturaSincronizada.java	adaptacion_inicial
 8.3.2-1	08-clases/08-03-02-01-inicializar-campos/Coordenada.java	adaptacion_inicial
 8.3.2-2	08-clases/08-03-02-02-referencia-estatica-posterior/ReferenciaPosterior.java	adaptacion_inicial
 8.3.3-1	08-clases/08-03-03-01-referencia-adelantada-invalida/CampoAdelantado.java	adaptacion_inicial
@@ -139,9 +139,9 @@ ejemplo	adaptaciones	estado
 9.7.1-1	09-interfaces/09-07-01-01-anotacion-normal/Revision.java	adaptacion_inicial
 9.7.2-1	09-interfaces/09-07-02-01-anotacion-marcadora/Preliminar.java	adaptacion_inicial
 9.7.3-1	09-interfaces/09-07-03-01-anotacion-value/Etiqueta.java	adaptacion_inicial
-9.8-1	09-interfaces/09-08-01-interfaz-funcional/InterfazFuncional.java	adaptacion_inicial
-9.8-2	09-interfaces/09-08-02-interfaces-funcionales-erasure/PrimeraFuncion.java	adaptacion_inicial
-9.8-3	09-interfaces/09-08-03-interfaz-funcional-generica/Base.java	adaptacion_inicial
+9.8-1	09-interfaces/09-08-01-interfaz-funcional/InterfazFuncional.java;09-interfaces/09-08-01-variante-metodo-object/FuncionalConEquals.java;09-interfaces/09-08-01-variante-solo-object-error/SoloEquals.java;09-interfaces/09-08-01-variante-clone-no-publico-error/ClonarYMedir.java	adaptacion_inicial
+9.8-2	09-interfaces/09-08-02-interfaces-funcionales-erasure/PrimeraFuncion.java;09-interfaces/09-08-02-variante-borrado-conflicto/BorradoInterfaz.java;09-interfaces/09-08-02-variante-retorno-incompatible/RetornosInterfaz.java;09-interfaces/09-08-02-variante-parametrizacion-unifica/ContratosUnificados.java	adaptacion_inicial
+9.8-3	09-interfaces/09-08-03-interfaz-funcional-generica/Base.java;09-interfaces/09-08-03-variante-retornos-genericos-error/RetornosGenericos.java	adaptacion_inicial
 9.9-1	09-interfaces/09-09-01-throws-tipo-funcion/OperacionIO.java	adaptacion_inicial
 9.9-2	09-interfaces/09-09-02-tipo-funcion-generico/FuncionA.java	adaptacion_inicial
 10.2-1	10-arreglos/10-02-01-declarar-arreglos/DeclararArreglos.java	adaptacion_inicial
@@ -153,7 +153,7 @@ ejemplo	adaptaciones	estado
 10.7-2	10-arreglos/10-07-02-subarreglos-compartidos/ClonarMatriz.java	adaptacion_inicial
 10.8-1	10-arreglos/10-08-01-objeto-class-arreglo/ObjetoClassArreglo.java	adaptacion_inicial
 10.8-2	10-arreglos/10-08-02-clases-arreglos/ClaseArreglos.java	adaptacion_inicial
-11.2.3-1	11-excepciones/11-02-03-01-catch-checked/CapturaCheckedInvalida.java	adaptacion_inicial
+11.2.3-1	11-excepciones/11-02-03-01-catch-checked/CapturaCheckedInvalida.java;11-excepciones/11-02-03-01-variante-captura-subtipo/CapturaSubtipo.java	adaptacion_inicial
 11.3-1	11-excepciones/11-03-01-lanzar-capturar/LanzarCapturar.java	adaptacion_inicial
 12.4.1-1	12-ejecucion/12-04-01-01-orden-inicializacion/OrdenInicializacion.java	adaptacion_inicial
 12.4.1-2	12-ejecucion/12-04-01-02-inicializar-clase-declarante/Declarante.java	adaptacion_inicial
@@ -173,7 +173,7 @@ ejemplo	adaptaciones	estado
 13.5.4-1	13-compatibilidad-binaria/13-05-04-01-eliminar-metodo-interfaz/v1/Servicio.java	adaptacion_inicial
 13.5.7-1	13-compatibilidad-binaria/13-05-07-01-conflicto-nuevo-default/Original.java	adaptacion_inicial
 14.3-1	14-bloques-sentencias-patrones/14-03-01-clase-local-ciclica/LocalCiclica.java	adaptacion_inicial
-14.4-1	14-bloques-sentencias-patrones/14-04-01-var-sin-inicializar/VarInvalida.java	adaptacion_inicial
+14.4-1	14-bloques-sentencias-patrones/14-04-01-var-sin-inicializar/VarInvalida.java;14-bloques-sentencias-patrones/14-04-01-variante-var-multiples/VarMultiples.java;14-bloques-sentencias-patrones/14-04-01-variante-var-arreglo/VarArreglo.java;14-bloques-sentencias-patrones/14-04-01-variante-var-inicializador-arreglo/VarLiteralArreglo.java;14-bloques-sentencias-patrones/14-04-01-variante-var-autorreferencia/VarAutorreferencia.java	adaptacion_inicial
 14.4.1-1	14-bloques-sentencias-patrones/14-04-01-01-tipo-inferido-var/TipoInferidoVar.java	adaptacion_inicial
 14.7-1	14-bloques-sentencias-patrones/14-07-01-etiqueta-y-variable/EtiquetaVariable.java	adaptacion_inicial
 14.11.3-1	14-bloques-sentencias-patrones/14-11-03-01-switch-caida/SwitchCaida.java	adaptacion_inicial
@@ -204,7 +204,7 @@ ejemplo	adaptaciones	estado
 15.11.1-1	15-expresiones/15-11-01-01-seleccion-campo-estatica/Base.java	adaptacion_inicial
 15.11.1-2	15-expresiones/15-11-01-02-campo-static-null/CampoStaticNull.java	adaptacion_inicial
 15.11.2-1	15-expresiones/15-11-02-01-super-campos/NivelI.java	adaptacion_inicial
-15.12.2-1	15-expresiones/15-12-02-01-acceso-y-aplicabilidad/Doble.java	adaptacion_inicial
+15.12.2-1	15-expresiones/15-12-02-01-acceso-y-aplicabilidad/Doble.java;15-expresiones/15-12-02-01-variante-aplicabilidad-ampliacion/AplicabilidadValida.java;15-expresiones/15-12-02-01-variante-invocacion-byte-error/ArgumentoByte.java	adaptacion_inicial
 15.12.2-2	15-expresiones/15-12-02-02-retorno-no-selecciona/Figura.java	adaptacion_inicial
 15.12.2-3	15-expresiones/15-12-02-03-sobrecarga-en-binario/v1/Servicio.java	adaptacion_inicial
 15.12.4.1-1	15-expresiones/15-12-04-01-01-receptor-static-null/ReceptorStatic.java	adaptacion_inicial
@@ -223,7 +223,7 @@ ejemplo	adaptaciones	estado
 15.29-1	15-expresiones/15-29-01-expresiones-constantes/ConstantesCompilacion.java	adaptacion_inicial
 16-1	16-asignacion-definida/16-01-asignacion-definida/AsignacionDefinida.java	adaptacion_inicial
 16-2	16-asignacion-definida/16-02-asignacion-no-garantizada/AsignacionNoGarantizada.java	adaptacion_inicial
-16-3	16-asignacion-definida/16-03-final-ramas/FinalRamas.java	adaptacion_inicial
+16-3	16-asignacion-definida/16-03-final-ramas/FinalRamas.java;16-asignacion-definida/16-03-variante-final-rutas-independientes/FinalNoDemostrado.java	adaptacion_inicial
 17.4-1	17-hilos-y-bloqueos/17-04-01-reordenamiento-carrera/ReordenamientoCarrera.java	adaptacion_inicial
 17.4.5-1	17-hilos-y-bloqueos/17-04-05-01-happens-before/ConsistenciaHappensBefore.java	adaptacion_inicial
 17.4.8-1	17-hilos-y-bloqueos/17-04-08-01-causalidad/Causalidad.java	adaptacion_inicial

@@ -136,7 +136,7 @@ class BuiltInLibraryTest {
     void allFourCurriculumPurposesAndDocumentedJavaClientsArePresent() throws Exception {
         var library = new BuiltInLibrary(temp.resolve("curriculum"));
         assertEquals("v18", BuiltInLibrary.CATALOG_VERSION);
-        assertEquals(1558, library.packs().stream().mapToInt(library::size).sum());
+        assertEquals(1581, library.packs().stream().mapToInt(library::size).sum());
         for (var pack : library.packs()) {
             var entries = library.entries(pack);
             assertTrue(entries.stream().allMatch(x -> x.split("/").length >= 3
@@ -270,7 +270,7 @@ class BuiltInLibraryTest {
                 "03-algoritmos/euclides/euclides.asm"));
         assertTrue(library.entries(all.get("java21")).contains(
                 "03-algoritmos/dijkstra/Dijkstra.java"));
-        assertEquals(1558, library.packs().stream().mapToInt(library::size).sum());
+        assertEquals(1581, library.packs().stream().mapToInt(library::size).sum());
     }
 
 }

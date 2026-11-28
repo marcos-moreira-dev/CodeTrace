@@ -301,3 +301,9 @@ Los 464 archivos Java de esta biblioteca tienen una explicación directa del con
 | 15.27.2; suplemento | 15-expresiones/15-27-02-suplemento-captura-lambda-error/CapturaLambdaInvalida.java | Implementado; pendiente CI |
 | 15.27.3; suplemento | 15-expresiones/15-27-03-suplemento-tipo-objetivo-lambda/TipoObjetivoLambda.java | Implementado; pendiente CI |
 | 15.27.4; suplemento | 15-expresiones/15-27-04-suplemento-lambda-ejecucion-diferida/EjecucionLambda.java | Implementado; pendiente CI |
+
+## Auditoría comparativa: variantes omitidas
+
+Se contrastaron los 233 títulos numerados con el inventario y se releyeron casos seleccionados del PDF. Se incorporan variantes que faltaban en la primera adaptación: comillas de bloques de texto, acceso a miembros static genéricos, búsqueda de métodos por nombre simple, lecturas volatile, interfaces funcionales, excepciones checked, restricciones de var, aplicabilidad y asignación final. La prueba de volatile fuerza una intercalación mediante barreras para mostrar la diferencia entre valores leídos y estado final; no pretende probar un reordenamiento por sí sola.
+
+23 archivos adicionales, 303 unidades y 544 fuentes nuevas. La revisión comparativa aún no certifica cada fragmento no numerado ni cada variante del PDF. Pendiente CI.
