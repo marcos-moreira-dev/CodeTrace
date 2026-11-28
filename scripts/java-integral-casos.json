@@ -860,5 +860,269 @@
     "main": "ZipArchivos",
     "mode": "R",
     "stdout": "pan\n"
+  },
+  {
+    "path": "09-sistemas-operativos-y-procesos/01-capas-sistema/EntornoSistema.java",
+    "sources": [
+      "09-sistemas-operativos-y-procesos/01-capas-sistema/EntornoSistema.java"
+    ],
+    "main": "EntornoSistema",
+    "mode": "R",
+    "stdout": "SO identificado: true\nArquitectura identificada: true\nJava 21 o superior: true\n"
+  },
+  {
+    "path": "09-sistemas-operativos-y-procesos/02-argumentos-consola/OpcionesCortas.java",
+    "sources": [
+      "09-sistemas-operativos-y-procesos/02-argumentos-consola/OpcionesCortas.java"
+    ],
+    "main": "OpcionesCortas",
+    "mode": "R",
+    "stdout": "Detallado: true\nCantidad: 3\n",
+    "args": [
+      "-v",
+      "-n",
+      "3"
+    ]
+  },
+  {
+    "path": "09-sistemas-operativos-y-procesos/02-argumentos-consola/OpcionesLargas.java",
+    "sources": [
+      "09-sistemas-operativos-y-procesos/02-argumentos-consola/OpcionesLargas.java"
+    ],
+    "main": "OpcionesLargas",
+    "mode": "R",
+    "stdout": "Archivo: ventas.txt\nResumen: true\n",
+    "args": [
+      "--archivo=ventas.txt",
+      "--resumen"
+    ]
+  },
+  {
+    "path": "09-sistemas-operativos-y-procesos/03-entorno/VariablesEntorno.java",
+    "sources": [
+      "09-sistemas-operativos-y-procesos/03-entorno/VariablesEntorno.java"
+    ],
+    "main": "VariablesEntorno",
+    "mode": "R",
+    "stdout": "Variable disponible: false\n",
+    "allowed_stdout": [
+      "Variable disponible: false\n",
+      "Variable disponible: true\n"
+    ]
+  },
+  {
+    "path": "09-sistemas-operativos-y-procesos/03-entorno/DirectorioTrabajo.java",
+    "sources": [
+      "09-sistemas-operativos-y-procesos/03-entorno/DirectorioTrabajo.java"
+    ],
+    "main": "DirectorioTrabajo",
+    "mode": "R",
+    "stdout": "Mismo padre: true\n"
+  },
+  {
+    "path": "09-sistemas-operativos-y-procesos/04-identidad-proceso/ProcesoActual.java",
+    "sources": [
+      "09-sistemas-operativos-y-procesos/04-identidad-proceso/ProcesoActual.java"
+    ],
+    "main": "ProcesoActual",
+    "mode": "R",
+    "stdout": "PID valido: true\nVivo: true\n"
+  },
+  {
+    "path": "09-sistemas-operativos-y-procesos/04-identidad-proceso/ProcesoPadre.java",
+    "sources": [
+      "09-sistemas-operativos-y-procesos/04-identidad-proceso/ProcesoPadre.java"
+    ],
+    "main": "ProcesoPadre",
+    "mode": "R",
+    "stdout": "Padre distinto: true\n",
+    "allowed_stdout": [
+      "Padre distinto: true\n",
+      "Padre no disponible\n"
+    ]
+  },
+  {
+    "path": "09-sistemas-operativos-y-procesos/05-crear-proceso/Padre.java",
+    "sources": [
+      "09-sistemas-operativos-y-procesos/05-crear-proceso/Hijo.java",
+      "09-sistemas-operativos-y-procesos/05-crear-proceso/Padre.java"
+    ],
+    "main": "Padre",
+    "mode": "R",
+    "stdout": "Hola desde el hijo\nHijo finalizado\n"
+  },
+  {
+    "path": "09-sistemas-operativos-y-procesos/06-aislamiento-procesos/Padre.java",
+    "sources": [
+      "09-sistemas-operativos-y-procesos/06-aislamiento-procesos/Hijo.java",
+      "09-sistemas-operativos-y-procesos/06-aislamiento-procesos/Padre.java"
+    ],
+    "main": "Padre",
+    "mode": "R",
+    "stdout": "Hijo: 15\nPadre: 10\n"
+  },
+  {
+    "path": "09-sistemas-operativos-y-procesos/07-esperar-proceso/Padre.java",
+    "sources": [
+      "09-sistemas-operativos-y-procesos/07-esperar-proceso/Hijo.java",
+      "09-sistemas-operativos-y-procesos/07-esperar-proceso/Padre.java"
+    ],
+    "main": "Padre",
+    "mode": "R",
+    "stdout": "Codigo: 7\n"
+  },
+  {
+    "path": "09-sistemas-operativos-y-procesos/08-varios-hijos/Padre.java",
+    "sources": [
+      "09-sistemas-operativos-y-procesos/08-varios-hijos/Hijo.java",
+      "09-sistemas-operativos-y-procesos/08-varios-hijos/Padre.java"
+    ],
+    "main": "Padre",
+    "mode": "R",
+    "stdout": "1 -> 1\n2 -> 4\n3 -> 9\n"
+  },
+  {
+    "path": "09-sistemas-operativos-y-procesos/11-estados-procesos/EstadosProceso.java",
+    "sources": [
+      "09-sistemas-operativos-y-procesos/11-estados-procesos/EstadosProceso.java"
+    ],
+    "main": "EstadosProceso",
+    "mode": "T",
+    "stdout": "LISTO\nEJECUCION\nBLOQUEADO\nLISTO\nEJECUCION\nTERMINADO\n"
+  },
+  {
+    "path": "09-sistemas-operativos-y-procesos/11-estados-procesos/CambioContexto.java",
+    "sources": [
+      "09-sistemas-operativos-y-procesos/11-estados-procesos/CambioContexto.java"
+    ],
+    "main": "CambioContexto",
+    "mode": "T",
+    "stdout": "P0: 1\nP1: 1\nP0: 2\nP1: 2\n"
+  },
+  {
+    "path": "09-sistemas-operativos-y-procesos/13-redireccion/Padre.java",
+    "sources": [
+      "09-sistemas-operativos-y-procesos/13-redireccion/Hijo.java",
+      "09-sistemas-operativos-y-procesos/13-redireccion/Padre.java"
+    ],
+    "main": "Padre",
+    "mode": "R",
+    "stdout": "16\nProcesado\n"
+  },
+  {
+    "path": "09-sistemas-operativos-y-procesos/14-pipeline/MainPipeline.java",
+    "sources": [
+      "09-sistemas-operativos-y-procesos/14-pipeline/Generador.java",
+      "09-sistemas-operativos-y-procesos/14-pipeline/Filtro.java",
+      "09-sistemas-operativos-y-procesos/14-pipeline/Consumidor.java",
+      "09-sistemas-operativos-y-procesos/14-pipeline/MainPipeline.java"
+    ],
+    "main": "MainPipeline",
+    "mode": "R",
+    "stdout": "Suma: 6\n"
+  },
+  {
+    "path": "09-sistemas-operativos-y-procesos/15-comunicacion-pipes/Padre.java",
+    "sources": [
+      "09-sistemas-operativos-y-procesos/15-comunicacion-pipes/Hijo.java",
+      "09-sistemas-operativos-y-procesos/15-comunicacion-pipes/Padre.java"
+    ],
+    "main": "Padre",
+    "mode": "R",
+    "stdout": "Respuesta: 15\n"
+  },
+  {
+    "path": "09-sistemas-operativos-y-procesos/16-timeout-proceso/Padre.java",
+    "sources": [
+      "09-sistemas-operativos-y-procesos/16-timeout-proceso/Hijo.java",
+      "09-sistemas-operativos-y-procesos/16-timeout-proceso/Padre.java"
+    ],
+    "main": "Padre",
+    "mode": "R",
+    "stdout": "Tiempo agotado\nHijo vivo: false\n"
+  },
+  {
+    "path": "09-sistemas-operativos-y-procesos/17-notificacion-eventos/Temporizador.java",
+    "sources": [
+      "09-sistemas-operativos-y-procesos/17-notificacion-eventos/Temporizador.java"
+    ],
+    "main": "Temporizador",
+    "mode": "R",
+    "stdout": "Evento recibido\n"
+  },
+  {
+    "path": "09-sistemas-operativos-y-procesos/17-notificacion-eventos/CancelacionCooperativa.java",
+    "sources": [
+      "09-sistemas-operativos-y-procesos/17-notificacion-eventos/CancelacionCooperativa.java"
+    ],
+    "main": "CancelacionCooperativa",
+    "mode": "R",
+    "stdout": "Cancelacion recibida\nVivo: false\n"
+  },
+  {
+    "path": "09-sistemas-operativos-y-procesos/19-terminacion-jvm/Padre.java",
+    "sources": [
+      "09-sistemas-operativos-y-procesos/19-terminacion-jvm/HijoConShutdownHook.java",
+      "09-sistemas-operativos-y-procesos/19-terminacion-jvm/Padre.java"
+    ],
+    "main": "Padre",
+    "mode": "R",
+    "stdout": "Trabajo completo\nLiberar recursos\n"
+  },
+  {
+    "path": "09-sistemas-operativos-y-procesos/20-servicio-segundo-plano/MainServicio.java",
+    "sources": [
+      "09-sistemas-operativos-y-procesos/20-servicio-segundo-plano/ServicioTemporal.java",
+      "09-sistemas-operativos-y-procesos/20-servicio-segundo-plano/MainServicio.java"
+    ],
+    "main": "MainServicio",
+    "mode": "R",
+    "stdout": "Servicio activo\nServicio cerrado\n"
+  },
+  {
+    "path": "09-sistemas-operativos-y-procesos/21-planificacion-fcfs/MainFCFS.java",
+    "sources": [
+      "09-sistemas-operativos-y-procesos/21-planificacion-fcfs/ProcesoSimulado.java",
+      "09-sistemas-operativos-y-procesos/21-planificacion-fcfs/FCFS.java",
+      "09-sistemas-operativos-y-procesos/21-planificacion-fcfs/MainFCFS.java"
+    ],
+    "main": "MainFCFS",
+    "mode": "T",
+    "stdout": "A espera=0 retorno=4\nB espera=3 retorno=5\nC espera=0 retorno=1\n"
+  },
+  {
+    "path": "09-sistemas-operativos-y-procesos/22-planificacion-sjf-srtf/MainPlanificacion.java",
+    "sources": [
+      "09-sistemas-operativos-y-procesos/22-planificacion-sjf-srtf/ProcesoSimulado.java",
+      "09-sistemas-operativos-y-procesos/22-planificacion-sjf-srtf/SJF.java",
+      "09-sistemas-operativos-y-procesos/22-planificacion-sjf-srtf/SRTF.java",
+      "09-sistemas-operativos-y-procesos/22-planificacion-sjf-srtf/MainPlanificacion.java"
+    ],
+    "main": "MainPlanificacion",
+    "mode": "T",
+    "stdout": "SJF: AAAACBB\nSRTF: ABBCAAA\n"
+  },
+  {
+    "path": "09-sistemas-operativos-y-procesos/23-planificacion-round-robin/MainRoundRobin.java",
+    "sources": [
+      "09-sistemas-operativos-y-procesos/23-planificacion-round-robin/ProcesoSimulado.java",
+      "09-sistemas-operativos-y-procesos/23-planificacion-round-robin/RoundRobin.java",
+      "09-sistemas-operativos-y-procesos/23-planificacion-round-robin/MainRoundRobin.java"
+    ],
+    "main": "MainRoundRobin",
+    "mode": "T",
+    "stdout": "AABBCAABA\n"
+  },
+  {
+    "path": "09-sistemas-operativos-y-procesos/24-planificacion-prioridades/MainPrioridades.java",
+    "sources": [
+      "09-sistemas-operativos-y-procesos/24-planificacion-prioridades/ProcesoSimulado.java",
+      "09-sistemas-operativos-y-procesos/24-planificacion-prioridades/Prioridades.java",
+      "09-sistemas-operativos-y-procesos/24-planificacion-prioridades/Aging.java",
+      "09-sistemas-operativos-y-procesos/24-planificacion-prioridades/MainPrioridades.java"
+    ],
+    "main": "MainPrioridades",
+    "mode": "T",
+    "stdout": "Fija: ACB\nAging: ABC\n"
   }
 ]

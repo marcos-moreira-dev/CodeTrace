@@ -8,11 +8,12 @@ Plan completo: `JAVA-INTEGRAL-PLAN.md`. Inventario por fuente: `JAVA-INTEGRAL-IN
 
 ## Avance
 
-- 06: 9 unidades, 20 clientes implementados. Pruebas pendientes de CI.
-- 07: 18 unidades, 44 fuentes implementadas (33 clientes ejecutables); modelos explícitos para memoria y reemplazo de páginas. Pruebas pendientes de CI.
-- 08: 20 unidades, 40 fuentes (38 clientes ejecutables); archivos temporales propios, variantes dependientes del sistema y canales estándar. Pruebas pendientes de CI.
-- 09–20: pendientes.
+- 06: 9 unidades, 20 clientes implementados; CI aprobada en 32ad8838.
+- 07: 18 unidades, 44 fuentes implementadas (33 clientes ejecutables); modelos explícitos para memoria y reemplazo de páginas. CI aprobada en 32ad8838.
+- 08: 20 unidades, 40 fuentes (38 clientes ejecutables); archivos temporales propios, variantes dependientes del sistema y canales estándar. Verificación Java integral aprobada en c75d0385; pruebas generales fallaron por recuentos desactualizados, corregidos aquí.
+- 09: 20 unidades, 47 fuentes; procesos hijos acotados y modelos explícitos de planificación. Pendiente CI.
+- 10–20: pendientes.
 - Verificador separado: scripts/verificar-java-integral.py, manifiesto scripts/java-integral-casos.json. Compila solo las fuentes declaradas por cliente y compara salida; verifica cobertura de archivos. Los scripts históricos excluyen nuevas áreas de la compilación conjunta.
-- Catálogo v22: 1701 entradas.
+- Catálogo v23: 1748 entradas.
 
 No se publica instalador ni se modifica C o TypeScript en este cambio.
