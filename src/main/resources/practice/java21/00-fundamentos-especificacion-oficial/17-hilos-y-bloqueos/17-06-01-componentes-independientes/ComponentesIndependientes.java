@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §17.6; ejemplo 17.6-1
+// Tema:
+// Los componentes de arreglos y campos distintos son variables separadas. Escribir uno no debe
+// sobrescribir los bits correspondientes a otro, aunque estén próximos en memoria.
 // Compilar: javac --release 21 -encoding UTF-8 -d . ComponentesIndependientes.java
 // Ejecutar: java ComponentesIndependientes
 // Comandos desde la carpeta de la unidad.

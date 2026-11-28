@@ -1,12 +1,8 @@
-// CodeTrace | Fundamentos - Especificacion oficial
-// Referencia: Java SE 21, JLS §3.10.2
+// Tema:
+// Un literal flotante es double salvo que lleve f o F. e indica un exponente decimal; p
+// expresa un exponente binario en notación hexadecimal.
 // Compilar: javac --release 21 -encoding UTF-8 LiteralesFlotantesJls.java
 // Ejecutar: java LiteralesFlotantesJls
-// Tema JLS:
-// Un literal de punto flotante es double salvo que lleve f o F. e indica un exponente
-// decimal y p uno binario en la notación hexadecimal. El tipo determina la precisión con
-// que se representa el valor.
-// El sufijo f selecciona float; sin sufijo, un literal flotante es double.
 
 public class LiteralesFlotantesJls {
     public static void main(String[] args) {

@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §15.18.1; ejemplo 15.18.1-2
+// Tema:
+// Las expresiones condicionales pueden producir fragmentos de String que se concatenan con
+// números y objetos. La conversión a texto ocurre al aplicar el operador + con String.
 // Compilar: javac --release 21 -encoding UTF-8 -d . ContarObjetos.java
 // Ejecutar: java ContarObjetos
 // Comandos desde la carpeta de la unidad.

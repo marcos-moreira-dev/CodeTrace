@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §14.3; ejemplo 14.3-1
+// Tema:
+// El alcance de una declaración de clase local incluye su propio cuerpo y encabezado
+// pertinente. Si el nombre de la superclase se resuelve a ella misma, la herencia es circular.
 // Compilar: javac --release 21 -encoding UTF-8 -d . LocalCiclica.java
 // ERROR INTENCIONAL de compilación. No ejecutar.
 // Comandos desde la carpeta de la unidad.

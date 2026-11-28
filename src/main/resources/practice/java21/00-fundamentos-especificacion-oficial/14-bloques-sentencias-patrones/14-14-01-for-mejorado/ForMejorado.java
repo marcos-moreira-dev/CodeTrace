@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §14.14; ejemplo 14.14-1
+// Tema:
+// El for mejorado recorre los elementos de un arreglo o de un Iterable sin gestionar
+// explícitamente un índice o iterador.
 // Compilar: javac --release 21 -encoding UTF-8 -d . ForMejorado.java
 // Ejecutar: java ForMejorado
 // Comandos desde la carpeta de la unidad.

@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §14.11.3; ejemplo 14.11.3-1
+// Tema:
+// En el switch tradicional con etiquetas case y dos puntos, la ejecución puede continuar en el
+// caso siguiente si no encuentra un break u otra salida abrupta.
 // Compilar: javac --release 21 -encoding UTF-8 -d . SwitchCaida.java
 // Ejecutar: java SwitchCaida
 // Comandos desde la carpeta de la unidad.

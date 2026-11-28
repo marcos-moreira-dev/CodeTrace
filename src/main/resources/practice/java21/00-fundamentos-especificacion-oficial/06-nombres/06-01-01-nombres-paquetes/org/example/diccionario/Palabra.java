@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §6.1; ejemplo 6.1-1
+// Tema:
+// Los nombres de paquete suelen seguir un dominio invertido para reducir colisiones. El nombre
+// completo distingue tipos que podrían tener el mismo nombre simple.
 // Compilar: javac --release 21 -encoding UTF-8 -d . org/example/diccionario/Palabra.java
 // Ejecutar: java org.example.diccionario.Palabra
 // Comandos desde la carpeta de la unidad.

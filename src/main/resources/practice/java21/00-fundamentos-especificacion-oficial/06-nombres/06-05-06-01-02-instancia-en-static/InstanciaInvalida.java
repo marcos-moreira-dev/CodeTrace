@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §6.5.6.1; ejemplo 6.5.6.1-2
+// Tema:
+// Un método static no dispone de una referencia this. Para utilizar un campo de instancia
+// necesita una referencia explícita a un objeto.
 // Compilar: javac --release 21 -encoding UTF-8 -d . InstanciaInvalida.java
 // ERROR INTENCIONAL de compilación. No ejecutar.
 // Comandos desde la carpeta de la unidad.

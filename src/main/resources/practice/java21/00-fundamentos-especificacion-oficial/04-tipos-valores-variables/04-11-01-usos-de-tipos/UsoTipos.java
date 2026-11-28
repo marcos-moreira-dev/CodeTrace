@@ -1,5 +1,7 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §4.11; ejemplo 4.11-1
+// Tema:
+// Los tipos aparecen en declaraciones de campos, parámetros, retornos, variables locales,
+// límites genéricos y casts. Cada posición determina los valores permitidos o la conversión
+// aplicada.
 // Compilar: javac --release 21 -encoding UTF-8 -d . UsoTipos.java
 // Ejecutar: java UsoTipos
 // Comandos desde la carpeta de la unidad.

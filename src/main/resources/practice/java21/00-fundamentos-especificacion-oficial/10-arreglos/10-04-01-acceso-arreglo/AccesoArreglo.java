@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §10.4; ejemplo 10.4-1
+// Tema:
+// Los índices válidos de un arreglo van desde cero hasta length-1. El acceso fuera de ese
+// intervalo provoca ArrayIndexOutOfBoundsException.
 // Compilar: javac --release 21 -encoding UTF-8 -d . AccesoArreglo.java
 // Ejecutar: java AccesoArreglo
 // Comandos desde la carpeta de la unidad.

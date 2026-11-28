@@ -1,5 +1,7 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §17.4; ejemplo 17.4-1
+// Tema:
+// Sin sincronización, las lecturas y escrituras compartidas pueden observarse en órdenes que
+// no coinciden con una intuición secuencial. Una ejecución concreta no garantiza mostrar todos
+// los resultados permitidos.
 // Compilar: javac --release 21 -encoding UTF-8 -d . ReordenamientoCarrera.java
 // Ejecutar: java ReordenamientoCarrera
 // Comandos desde la carpeta de la unidad.

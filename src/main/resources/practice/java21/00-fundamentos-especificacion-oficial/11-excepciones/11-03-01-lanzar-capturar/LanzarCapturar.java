@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §11.3; ejemplo 11.3-1
+// Tema:
+// Una excepción interrumpe el flujo normal y se propaga hasta un catch compatible. Después de
+// manejarla, la ejecución puede continuar tras el bloque try-catch.
 // Compilar: javac --release 21 -encoding UTF-8 -d . LanzarCapturar.java
 // Ejecutar: java LanzarCapturar
 // Comandos desde la carpeta de la unidad.

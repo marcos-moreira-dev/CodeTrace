@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §3.10.6; ejemplo 3.10.6-2
+// Tema:
+// El escape de espacio explícito preserva espacios finales; una barra invertida seguida de un
+// fin de línea suprime ese salto dentro del bloque de texto.
 // Compilar: javac --release 21 -encoding UTF-8 -d . EscapeBloque.java
 // Ejecutar: java EscapeBloque
 // Comandos desde la carpeta de la unidad.

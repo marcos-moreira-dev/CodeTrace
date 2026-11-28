@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §9.7.2; ejemplo 9.7.2-1
+// Tema:
+// Una anotación sin elementos actúa como marcador. Con retención RUNTIME puede consultarse
+// mediante reflexión; sin ella, no necesariamente está disponible en ejecución.
 // Compilar: javac --release 21 -encoding UTF-8 -d . Preliminar.java AnotacionMarca.java
 // Ejecutar: java AnotacionMarca
 // Comandos desde la carpeta de la unidad.

@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §9.6.1; ejemplo 9.6.1-1
+// Tema:
+// Una interfaz de anotación se declara con @interface. Sus elementos definen los nombres y
+// tipos de los valores que pueden especificarse al aplicar la anotación.
 // Compilar: javac --release 21 -encoding UTF-8 -d . Ficha.java AnotacionDeclarada.java
 // Ejecutar: java AnotacionDeclarada
 // Comandos desde la carpeta de la unidad.

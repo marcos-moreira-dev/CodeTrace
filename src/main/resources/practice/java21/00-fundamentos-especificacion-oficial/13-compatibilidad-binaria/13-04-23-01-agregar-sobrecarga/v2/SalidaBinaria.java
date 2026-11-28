@@ -1,5 +1,7 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §13.4.23; ejemplo 13.4.23-1
+// Tema:
+// Una sobrecarga agregada después de compilar un cliente no modifica la firma elegida por el
+// compilador anterior. Al recompilar, la resolución puede seleccionar la nueva sobrecarga.
+// Esta versión sustituye a la inicial sin recompilar primero el cliente.
 // Compilar: seguir las tres etapas indicadas al final.
 // Ejecutar: java -cp salida ClienteBinario
 // Comandos desde la carpeta de la unidad.

@@ -1,5 +1,7 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §13.4.4; ejemplo 13.4.4-2
+// Tema:
+// Cambiar la jerarquía de dos excepciones puede conservar el cliente ya compilado, pero
+// impedir recompilar un multi-catch que ahora contiene alternativas relacionadas por herencia.
+// Esta es la versión inicial; se compila junto al cliente antes de sustituirla.
 // Compilar: seguir las etapas al final
 // Ejecutar: java -cp salida Cliente
 // Comandos desde la carpeta de la unidad.

@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §15.7.1; ejemplo 15.7.1-2
+// Tema:
+// La evaluación de una operación conserva el valor previamente obtenido de su operando
+// izquierdo. Una reasignación durante la evaluación derecha no modifica ese valor guardado.
 // Compilar: javac --release 21 -encoding UTF-8 -d . OperandoGuardado.java
 // Ejecutar: java OperandoGuardado
 // Comandos desde la carpeta de la unidad.

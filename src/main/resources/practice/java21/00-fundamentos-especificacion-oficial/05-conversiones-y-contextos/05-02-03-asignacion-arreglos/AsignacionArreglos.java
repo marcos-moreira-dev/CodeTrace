@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §5.2; ejemplo 5.2-3
+// Tema:
+// Los arreglos de referencia son covariantes: String[] es subtipo de Object[]. El arreglo
+// conserva su tipo real y la JVM comprueba las escrituras.
 // Compilar: javac --release 21 -encoding UTF-8 -d . AsignacionArreglos.java
 // Ejecutar: java AsignacionArreglos
 // Comandos desde la carpeta de la unidad.

@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §14.15; ejemplo 14.15-1
+// Tema:
+// break con una etiqueta termina la sentencia etiquetada correspondiente. Permite salir de una
+// búsqueda interna y continuar después de su bloque.
 // Compilar: javac --release 21 -encoding UTF-8 -d . QuitarAristasBreak.java
 // Ejecutar: java QuitarAristasBreak
 // Comandos desde la carpeta de la unidad.

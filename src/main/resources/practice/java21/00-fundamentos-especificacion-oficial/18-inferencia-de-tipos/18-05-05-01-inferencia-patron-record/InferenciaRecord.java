@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §18.5.5; ejemplo 18.5.5-1
+// Tema:
+// Un patrón record puede inferir los argumentos genéricos a partir del tipo de la expresión
+// examinada. Los componentes extraídos reciben tipos adecuados sin declararlos explícitamente.
 // Compilar: javac --release 21 -encoding UTF-8 -d . Transformador.java InferenciaRecord.java
 // Ejecutar: java InferenciaRecord
 // Comandos desde la carpeta de la unidad.

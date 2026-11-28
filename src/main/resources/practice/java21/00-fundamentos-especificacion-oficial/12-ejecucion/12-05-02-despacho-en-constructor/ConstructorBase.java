@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §12.5; ejemplo 12.5-2
+// Tema:
+// Una llamada a un método sobrescrito durante la construcción puede alcanzar la implementación
+// de la subclase antes de que sus campos hayan recibido sus inicializadores.
 // Compilar: javac --release 21 -encoding UTF-8 -d . ConstructorBase.java DespachoConstructor.java
 // Ejecutar: java DespachoConstructor
 // Comandos desde la carpeta de la unidad.

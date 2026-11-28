@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §15.10.4; ejemplo 15.10.4-1
+// Tema:
+// En un acceso a arreglo se evalúa primero la referencia al arreglo y después el índice.
+// Reasignar la variable durante el índice no modifica la referencia ya guardada.
 // Compilar: javac --release 21 -encoding UTF-8 -d . ReferenciaAntesIndice.java
 // Ejecutar: java ReferenciaAntesIndice
 // Comandos desde la carpeta de la unidad.

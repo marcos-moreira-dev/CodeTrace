@@ -1,5 +1,7 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §15.11.1; ejemplo 15.11.1-2
+// Tema:
+// Un acceso a un campo static mediante una expresión evalúa esa expresión, pero no necesita
+// una instancia. Que el resultado de la expresión sea null no provoca por sí solo
+// NullPointerException.
 // Compilar: javac --release 21 -encoding UTF-8 -d . CampoStaticNull.java
 // Ejecutar: java CampoStaticNull
 // Comandos desde la carpeta de la unidad.

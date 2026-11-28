@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §14.19; ejemplo 14.19-1
+// Tema:
+// Un monitor Java es reentrante: el mismo hilo puede adquirirlo varias veces. Cada salida del
+// bloque synchronized libera una adquisición.
 // Compilar: javac --release 21 -encoding UTF-8 -d . MonitorReentrante.java
 // Ejecutar: java MonitorReentrante
 // Comandos desde la carpeta de la unidad.

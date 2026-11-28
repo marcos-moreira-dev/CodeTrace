@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §5.1.8
+// Tema:
+// Unboxing extrae el primitivo de un envoltorio. Si la referencia es null no existe un objeto
+// del que extraer el valor y se lanza NullPointerException.
 // Compilar: javac --release 21 -encoding UTF-8 -d . DesempaquetadoNulo.java
 // Ejecutar: java DesempaquetadoNulo
 // Comandos desde la carpeta de la unidad.

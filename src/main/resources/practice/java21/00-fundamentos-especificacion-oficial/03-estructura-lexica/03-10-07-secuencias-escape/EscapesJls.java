@@ -1,5 +1,7 @@
-// CodeTrace | Fundamentos - Especificacion oficial
-// Referencia: Java SE 21, JLS §3.10.7
+// Tema:
+// La barra invertida introduce caracteres especiales como tabulaciones, comillas o barras
+// literales. El texto escrito en el archivo fuente no siempre coincide con los caracteres
+// almacenados.
 // Compilar: javac --release 21 -encoding UTF-8 EscapesJls.java
 // Ejecutar: java EscapesJls
 // Las secuencias de escape representan caracteres especiales dentro de literales.

@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §8.3.2; ejemplo 8.3.2-2
+// Tema:
+// Un inicializador de instancia puede leer un campo static que aparece después en el código.
+// La inicialización de clase ocurre antes de construir instancias.
 // Compilar: javac --release 21 -encoding UTF-8 -d . ReferenciaPosterior.java
 // Ejecutar: java ReferenciaPosterior
 // Comandos desde la carpeta de la unidad.

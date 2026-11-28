@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §8.3.1.3; ejemplo 8.3.1.3-1
+// Tema:
+// transient excluye un campo de la serialización predeterminada de objetos. Al deserializar,
+// ese campo recibe su valor predeterminado si no se restaura explícitamente.
 // Compilar: javac --release 21 -encoding UTF-8 -d . DatosPersistentes.java PersistenciaTransient.java
 // Ejecutar: java PersistenciaTransient
 // Comandos desde la carpeta de la unidad.

@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §15.17.3; ejemplo 15.17.3-1
+// Tema:
+// El operador % calcula el resto de la división entera. El signo del resto no nulo coincide
+// con el del dividendo, no necesariamente con el divisor.
 // Compilar: javac --release 21 -encoding UTF-8 -d . RestoEntero.java
 // Ejecutar: java RestoEntero
 // Comandos desde la carpeta de la unidad.

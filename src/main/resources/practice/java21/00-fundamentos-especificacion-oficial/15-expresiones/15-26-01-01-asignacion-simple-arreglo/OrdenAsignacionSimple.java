@@ -1,5 +1,7 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §15.26.1; ejemplo 15.26.1-1
+// Tema:
+// En una asignación simple a un componente se evalúan referencia, índice y lado derecho antes
+// de ciertas comprobaciones de almacenamiento. El lado derecho puede ejecutarse antes del
+// fallo por null o índice inválido.
 // Compilar: javac --release 21 -encoding UTF-8 -d . OrdenAsignacionSimple.java
 // Ejecutar: java OrdenAsignacionSimple
 // Comandos desde la carpeta de la unidad.

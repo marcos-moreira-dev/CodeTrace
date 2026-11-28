@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §8.2; ejemplo 8.2-4
+// Tema:
+// Un campo private sigue perteneciendo a la clase que lo declara. Una subclase puede invocar
+// un método accesible que lo modifica, pero no acceder a él directamente.
 // Compilar: javac --release 21 -encoding UTF-8 -d . Punto.java Punto3D.java
 // ERROR INTENCIONAL de compilación. No ejecutar.
 // Comandos desde la carpeta de la unidad.

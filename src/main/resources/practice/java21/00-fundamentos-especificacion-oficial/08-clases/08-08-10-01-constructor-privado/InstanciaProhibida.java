@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §8.8.10; ejemplo 8.8.10-1
+// Tema:
+// Un constructor private impide crear instancias directamente desde clases ajenas. La propia
+// clase puede controlar cómo se construyen sus objetos.
 // Compilar: javac --release 21 -encoding UTF-8 -d . SoloClase.java InstanciaProhibida.java
 // ERROR INTENCIONAL de compilación. No ejecutar.
 // Comandos desde la carpeta de la unidad.

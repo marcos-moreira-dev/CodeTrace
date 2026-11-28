@@ -15,7 +15,8 @@ for case in cases:
     assert source in sources and sources, case["path"]
     for item in sources:
         text = item.read_text(encoding="utf-8")
-        assert "Referencia: Java SE 21, JLS" in text and "Compilar:" in text, item
+        assert text.startswith("// Tema:\n") and "Compilar:" in text, item
+        assert "Referencia: Java SE 21" not in text and "Tema JLS:" not in text, item
         assert "Salida esperada:" in text, item
         if "reject" in case:
             assert "ERROR INTENCIONAL" in text, item

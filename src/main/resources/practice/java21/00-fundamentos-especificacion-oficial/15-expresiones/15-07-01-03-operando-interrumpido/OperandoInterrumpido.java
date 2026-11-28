@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §15.7.1; ejemplo 15.7.1-3
+// Tema:
+// Si la evaluación del operando izquierdo termina abruptamente con una excepción, el operando
+// derecho no se evalúa.
 // Compilar: javac --release 21 -encoding UTF-8 -d . OperandoInterrumpido.java
 // Ejecutar: java OperandoInterrumpido
 // Comandos desde la carpeta de la unidad.

@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §6.6; ejemplo 6.6-2
+// Tema:
+// Una clase y sus miembros public son accesibles desde otros paquetes cuando el tipo es
+// accesible. Los detalles sin modificador siguen restringidos al paquete.
 // Compilar: javac --release 21 -encoding UTF-8 -d . puntos/Punto.java usuario/Contar.java
 // Ejecutar: java usuario.Contar
 // Comandos desde la carpeta de la unidad.

@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §15.26.2; ejemplo 15.26.2-1
+// Tema:
+// Una asignación compuesta necesita leer el componente antes de evaluar el lado derecho. Por
+// ello comprueba null y límites antes de los efectos del operando derecho.
 // Compilar: javac --release 21 -encoding UTF-8 -d . OrdenAsignacionCompuesta.java
 // Ejecutar: java OrdenAsignacionCompuesta
 // Comandos desde la carpeta de la unidad.

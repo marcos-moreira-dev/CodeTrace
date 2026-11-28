@@ -1,5 +1,7 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §17.4.8; ejemplo 17.4.8-1
+// Tema:
+// Las reglas de causalidad impiden justificar valores únicamente mediante un ciclo de lecturas
+// y escrituras que depende de esos mismos valores. La ejecución no debe inventar un valor sin
+// origen válido.
 // Compilar: javac --release 21 -encoding UTF-8 -d . Causalidad.java
 // Ejecutar: java Causalidad
 // Comandos desde la carpeta de la unidad.

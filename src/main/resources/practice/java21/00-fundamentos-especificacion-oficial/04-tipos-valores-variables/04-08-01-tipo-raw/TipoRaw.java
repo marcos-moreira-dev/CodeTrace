@@ -1,5 +1,7 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §4.8; ejemplo 4.8-1
+// Tema:
+// Un tipo raw omite los argumentos genéricos. Permite ciertas operaciones unchecked y puede
+// contaminar una colección parametrizada; una lectura posterior puede provocar
+// ClassCastException.
 // Compilar: javac --release 21 -encoding UTF-8 -d . TipoRaw.java
 // Ejecutar: java TipoRaw
 // Comandos desde la carpeta de la unidad.

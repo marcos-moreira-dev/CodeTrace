@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §6.5.6.2; ejemplo 6.5.6.2-2
+// Tema:
+// Un campo static puede seleccionarse mediante el nombre de su clase. No hace falta construir
+// una instancia para acceder a ese campo compartido.
 // Compilar: javac --release 21 -encoding UTF-8 -d . CalificarCampo.java
 // Ejecutar: java CalificarCampo
 // Comandos desde la carpeta de la unidad.

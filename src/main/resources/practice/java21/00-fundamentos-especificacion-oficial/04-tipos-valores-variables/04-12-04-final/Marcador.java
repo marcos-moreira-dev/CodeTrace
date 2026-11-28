@@ -1,10 +1,9 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §4.12.4; ejemplo 4.12.4-1
+// Tema:
+// final impide reasignar una variable una vez asignada. Si contiene una referencia, los campos
+// del objeto referenciado aún pueden cambiar: la restricción no convierte al objeto en
+// inmutable.
 // Compilar: javac --release 21 -encoding UTF-8 -d . ReferenciaFinal.java Marcador.java
 // Ejecutar: java ReferenciaFinal
-// Tema JLS:
-// Este objeto tiene estado mutable. Aunque una variable final apunte a él, su campo puntos
-// sigue siendo modificable; la restricción final pertenece a la variable de referencia.
 // Comandos desde la carpeta de la unidad.
 
 class Marcador {

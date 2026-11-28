@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §9.9; ejemplo 9.9-1
+// Tema:
+// Al combinar métodos abstractos con distintas cláusulas throws, el tipo funcional solo
+// permite las excepciones checked compatibles con todos los contratos heredados.
 // Compilar: javac --release 21 -encoding UTF-8 -d . OperacionIO.java OperacionEOF.java OperacionComun.java TipoFuncion.java
 // Ejecutar: java TipoFuncion
 // Comandos desde la carpeta de la unidad.

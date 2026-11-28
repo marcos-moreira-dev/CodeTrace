@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §15.8.3; ejemplo 15.8.3-1
+// Tema:
+// this identifica el objeto receptor del método de instancia. Comparar this con otra
+// referencia permite comprobar primero si ambas representan el mismo objeto.
 // Compilar: javac --release 21 -encoding UTF-8 -d . VectorIdentidad.java
 // Ejecutar: java VectorIdentidad
 // Comandos desde la carpeta de la unidad.

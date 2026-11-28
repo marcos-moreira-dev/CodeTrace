@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §14.16; ejemplo 14.16-1
+// Tema:
+// continue con una etiqueta salta a la siguiente iteración del bucle etiquetado. Es diferente
+// de break, que termina la sentencia.
 // Compilar: javac --release 21 -encoding UTF-8 -d . QuitarAristasContinue.java
 // Ejecutar: java QuitarAristasContinue
 // Comandos desde la carpeta de la unidad.

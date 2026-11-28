@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §15.12.2; ejemplo 15.12.2-1
+// Tema:
+// La resolución de una invocación considera los métodos accesibles y aplicables a sus
+// argumentos. Un método private de otra clase no puede invocarse directamente.
 // Compilar: javac --release 21 -encoding UTF-8 -d . Doble.java Aplicabilidad.java
 // ERROR INTENCIONAL de compilación. No ejecutar.
 // Comandos desde la carpeta de la unidad.

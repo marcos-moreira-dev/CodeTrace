@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §15.12.4.1; ejemplo 15.12.4.1-1
+// Tema:
+// Una llamada static puede evaluar una expresión receptora sin necesitar el objeto resultante.
+// El método se selecciona por el tipo y no falla solo porque la expresión produzca null.
 // Compilar: javac --release 21 -encoding UTF-8 -d . ReceptorStatic.java
 // Ejecutar: java ReceptorStatic
 // Comandos desde la carpeta de la unidad.

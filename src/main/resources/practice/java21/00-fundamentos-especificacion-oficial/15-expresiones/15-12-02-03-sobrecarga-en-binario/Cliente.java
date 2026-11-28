@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §15.12.2; ejemplo 15.12.2-3
+// Tema:
+// El cliente compilado conserva la firma seleccionada originalmente. Agregar una sobrecarga
+// más específica solo afecta a la selección cuando se recompila el cliente.
 // Compilar: seguir las etapas al final, desde la unidad.
 // Ejecutar: java -cp salida Cliente
 // Comandos desde la carpeta de la unidad.

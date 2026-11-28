@@ -1,5 +1,7 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §13.4.9; ejemplo 13.4.9-1
+// Tema:
+// Si un campo antes modificable se vuelve final, un cliente que conserva una instrucción de
+// escritura compilada anteriormente puede fallar en ejecución con IllegalAccessError.
+// Esta versión sustituye a la inicial sin recompilar primero el cliente.
 // Compilar: seguir las etapas al final, desde la unidad.
 // Ejecutar: java -cp salida Cliente
 // Comandos desde la carpeta de la unidad.

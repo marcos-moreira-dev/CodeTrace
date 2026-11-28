@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §15.7.4; ejemplo 15.7.4-1
+// Tema:
+// Los argumentos de una invocación se evalúan de izquierda a derecha. Cada argumento conserva
+// el valor calculado aunque uno posterior cambie una variable.
 // Compilar: javac --release 21 -encoding UTF-8 -d . OrdenArgumentos.java
 // Ejecutar: java OrdenArgumentos
 // Comandos desde la carpeta de la unidad.

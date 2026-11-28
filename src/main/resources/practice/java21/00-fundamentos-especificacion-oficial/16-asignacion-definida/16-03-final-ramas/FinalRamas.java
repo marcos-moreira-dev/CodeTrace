@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §16; ejemplo 16-3
+// Tema:
+// Una variable final sin inicializador puede asignarse en ramas mutuamente excluyentes,
+// siempre que en cada ruta se asigne como máximo una vez antes de utilizarse.
 // Compilar: javac --release 21 -encoding UTF-8 -d . FinalRamas.java
 // Ejecutar: java FinalRamas
 // Comandos desde la carpeta de la unidad.

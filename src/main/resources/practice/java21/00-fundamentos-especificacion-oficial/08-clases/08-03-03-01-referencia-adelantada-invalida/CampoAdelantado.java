@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §8.3.3; ejemplo 8.3.3-1
+// Tema:
+// Un inicializador de campo de instancia no puede leer por nombre simple otro campo de
+// instancia declarado posteriormente en ese contexto.
 // Compilar: javac --release 21 -encoding UTF-8 -d . CampoAdelantado.java
 // ERROR INTENCIONAL de compilación. No ejecutar.
 // Comandos desde la carpeta de la unidad.

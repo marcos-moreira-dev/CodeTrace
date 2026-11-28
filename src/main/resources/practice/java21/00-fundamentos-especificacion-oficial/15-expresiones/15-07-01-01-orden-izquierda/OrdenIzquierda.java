@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §15.7.1; ejemplo 15.7.1-1
+// Tema:
+// Java evalúa los operandos de izquierda a derecha. El valor obtenido del operando izquierdo
+// se conserva aunque el derecho cambie la variable.
 // Compilar: javac --release 21 -encoding UTF-8 -d . OrdenIzquierda.java
 // Ejecutar: java OrdenIzquierda
 // Comandos desde la carpeta de la unidad.

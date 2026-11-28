@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §6.5.7.1; ejemplo 6.5.7.1-1
+// Tema:
+// La resolución de un nombre simple de método depende de las declaraciones visibles.
+// Calificarlo con la clase exterior permite seleccionar explícitamente otro método.
 // Compilar: javac --release 21 -encoding UTF-8 -d . NombreMetodo.java
 // Ejecutar: java NombreMetodo
 // Comandos desde la carpeta de la unidad.

@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §10.7; ejemplo 10.7-2
+// Tema:
+// Clonar un arreglo multidimensional realiza una copia superficial. El arreglo exterior cambia
+// de identidad, pero los subarreglos referenciados pueden seguir compartidos.
 // Compilar: javac --release 21 -encoding UTF-8 -d . ClonarMatriz.java
 // Ejecutar: java ClonarMatriz
 // Comandos desde la carpeta de la unidad.

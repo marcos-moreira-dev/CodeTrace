@@ -1,5 +1,7 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §4.5.1; ejemplo 4.5.1-2
+// Tema:
+// ? extends Number permite recibir listas de Number o de sus subtipos. Se pueden leer
+// elementos como Number, pero no insertar números de un tipo concreto sin conocer el tipo
+// exacto de la lista.
 // Compilar: javac --release 21 -encoding UTF-8 -d . ComodinAcotado.java
 // Ejecutar: java ComodinAcotado
 // Comandos desde la carpeta de la unidad.

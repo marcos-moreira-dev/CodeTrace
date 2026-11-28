@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §8.9.3; ejemplo 8.9.3-2
+// Tema:
+// Un switch sobre un enum selecciona según la constante. Las etiquetas pueden utilizar los
+// nombres simples de las constantes del tipo seleccionado.
 // Compilar: javac --release 21 -encoding UTF-8 -d . Semaforo.java SwitchEnum.java
 // Ejecutar: java SwitchEnum
 // Comandos desde la carpeta de la unidad.

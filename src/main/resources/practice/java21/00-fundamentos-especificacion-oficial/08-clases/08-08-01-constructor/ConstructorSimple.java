@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §8.8; ejemplo 8.8-1
+// Tema:
+// Un constructor inicializa la nueva instancia y no declara tipo de retorno. this distingue
+// los campos de los parámetros que tienen el mismo nombre.
 // Compilar: javac --release 21 -encoding UTF-8 -d . ConstructorSimple.java
 // Ejecutar: java ConstructorSimple
 // Comandos desde la carpeta de la unidad.

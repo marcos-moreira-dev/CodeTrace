@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §8.4.3.1; ejemplo 8.4.3.1-2
+// Tema:
+// Una subclase abstracta puede volver abstracto un método concreto heredado, obligando a las
+// clases concretas posteriores a definir una nueva implementación.
 // Compilar: javac --release 21 -encoding UTF-8 -d . BaseConcreta.java Obligatoria.java AbstractoConcreto.java
 // Ejecutar: java AbstractoConcreto
 // Comandos desde la carpeta de la unidad.

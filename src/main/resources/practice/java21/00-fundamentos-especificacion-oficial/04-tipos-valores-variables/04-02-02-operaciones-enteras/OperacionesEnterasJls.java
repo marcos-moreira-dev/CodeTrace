@@ -1,13 +1,9 @@
-// CodeTrace | Fundamentos - Especificacion oficial
-// Referencia: Java SE 21, JLS §4.2.2; ejemplo 4.2.2-1
+// Tema:
+// Una multiplicación de operandos int se calcula como int y puede desbordarse. Convertir un
+// operando a long antes de multiplicar cambia el tipo de la operación. Dividir un entero por
+// cero provoca ArithmeticException.
 // Compilar: javac --release 21 -encoding UTF-8 OperacionesEnterasJls.java
 // Ejecutar: java OperacionesEnterasJls
-// Tema JLS:
-// La multiplicación se evalúa según el tipo promovido de sus operandos. Si son int, el
-// resultado puede desbordarse antes de asignarlo a long. Convertir un operando a long antes
-// de multiplicar cambia el tipo de la operación. La división entera por cero provoca
-// ArithmeticException.
-// La multiplicación int puede desbordarse; long permite representar este producto. La división por cero entero lanza una excepción.
 
 public class OperacionesEnterasJls {
     public static void main(String[] args) {

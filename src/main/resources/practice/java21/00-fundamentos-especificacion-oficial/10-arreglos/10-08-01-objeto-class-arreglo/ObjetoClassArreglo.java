@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §10.8; ejemplo 10.8-1
+// Tema:
+// Cada tipo de arreglo tiene un objeto Class. Su superclase es Object e implementa Cloneable y
+// Serializable.
 // Compilar: javac --release 21 -encoding UTF-8 -d . ObjetoClassArreglo.java
 // Ejecutar: java ObjetoClassArreglo
 // Comandos desde la carpeta de la unidad.

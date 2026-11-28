@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §10.7; ejemplo 10.7-1
+// Tema:
+// clone() de un arreglo crea otro arreglo del mismo tipo y longitud. En un arreglo primitivo,
+// los valores se copian y luego pueden modificarse de forma independiente.
 // Compilar: javac --release 21 -encoding UTF-8 -d . ClonarArreglo.java
 // Ejecutar: java ClonarArreglo
 // Comandos desde la carpeta de la unidad.

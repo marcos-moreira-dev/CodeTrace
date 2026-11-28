@@ -1,5 +1,7 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §5.5; ejemplo 5.5-1
+// Tema:
+// Un cast de referencia comprueba que el objeto real satisface la clase o interfaz destino.
+// Las referencias convertidas siguen apuntando al mismo objeto; una conversión incompatible
+// lanza ClassCastException.
 // Compilar: javac --release 21 -encoding UTF-8 -d . PuntoPlano.java Coloreable.java PuntoColor.java CastReferencias.java
 // Ejecutar: java CastReferencias
 // Comandos desde la carpeta de la unidad.

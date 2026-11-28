@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §14.4; ejemplo 14.4-1
+// Tema:
+// Una declaración local con var necesita un inicializador que permita inferir su tipo. Una
+// declaración sin inicializador debe rechazarse.
 // Compilar: javac --release 21 -encoding UTF-8 -d . VarInvalida.java
 // ERROR INTENCIONAL de compilación. No ejecutar.
 // Comandos desde la carpeta de la unidad.

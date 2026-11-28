@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §15.29; ejemplo 15.29-1
+// Tema:
+// Una expresión constante puede evaluarse al compilar y participar en conversiones especiales.
+// Las concatenaciones constantes String comparten la representación internada.
 // Compilar: javac --release 21 -encoding UTF-8 -d . ConstantesCompilacion.java
 // Ejecutar: java ConstantesCompilacion
 // Comandos desde la carpeta de la unidad.

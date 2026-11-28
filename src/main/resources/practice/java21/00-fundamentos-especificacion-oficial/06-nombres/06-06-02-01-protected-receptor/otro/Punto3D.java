@@ -1,5 +1,7 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §6.6.2; ejemplo 6.6.2-1
+// Tema:
+// Fuera del paquete, una subclase puede acceder al miembro protected heredado mediante una
+// referencia cuyo tipo sea esa subclase o un subtipo suyo, no mediante cualquier referencia a
+// la superclase.
 // Compilar: javac --release 21 -encoding UTF-8 -d . base/Punto.java otro/Punto3D.java
 // ERROR INTENCIONAL de compilación. No ejecutar.
 // Comandos desde la carpeta de la unidad.

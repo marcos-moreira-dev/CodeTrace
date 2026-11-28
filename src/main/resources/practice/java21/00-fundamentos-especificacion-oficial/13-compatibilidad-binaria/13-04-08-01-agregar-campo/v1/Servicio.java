@@ -1,5 +1,8 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §13.4.8; ejemplo 13.4.8-1
+// Tema:
+// Agregar un campo que oculta otro heredado no cambia necesariamente el campo que seleccionaba
+// un cliente previamente compilado. La referencia binaria conserva el tipo y descriptor
+// originales.
+// Esta es la versión inicial; se compila junto al cliente antes de sustituirla.
 // Compilar: seguir las etapas al final, desde la unidad.
 // Ejecutar: java -cp salida Cliente
 // Comandos desde la carpeta de la unidad.

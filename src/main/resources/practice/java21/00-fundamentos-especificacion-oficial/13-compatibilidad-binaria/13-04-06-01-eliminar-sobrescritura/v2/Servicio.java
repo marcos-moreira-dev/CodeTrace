@@ -1,5 +1,7 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §13.4.6; ejemplo 13.4.6-1
+// Tema:
+// Eliminar una sobrescritura puede hacer que un cliente ya compilado invoque la implementación
+// heredada, sin necesidad de recompilar la llamada.
+// Esta versión sustituye a la inicial sin recompilar primero el cliente.
 // Compilar: seguir las etapas al final, desde la unidad.
 // Ejecutar: java -cp salida Cliente
 // Comandos desde la carpeta de la unidad.

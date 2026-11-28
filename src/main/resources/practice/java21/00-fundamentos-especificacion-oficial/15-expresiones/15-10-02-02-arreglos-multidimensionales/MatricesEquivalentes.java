@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §15.10.2; ejemplo 15.10.2-2
+// Tema:
+// Un arreglo multidimensional es un arreglo de referencias a otros arreglos. Puede crearse de
+// una vez o reservando sus subarreglos por separado.
 // Compilar: javac --release 21 -encoding UTF-8 -d . MatricesEquivalentes.java
 // Ejecutar: java MatricesEquivalentes
 // Comandos desde la carpeta de la unidad.

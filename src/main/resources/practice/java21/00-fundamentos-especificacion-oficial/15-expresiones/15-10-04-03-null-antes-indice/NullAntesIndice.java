@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §15.10.4; ejemplo 15.10.4-3
+// Tema:
+// En un acceso a arreglo, la expresión de índice se evalúa antes de comprobar si la referencia
+// obtenida es null. Por ello sus efectos pueden ocurrir antes de NullPointerException.
 // Compilar: javac --release 21 -encoding UTF-8 -d . NullAntesIndice.java
 // Ejecutar: java NullAntesIndice
 // Comandos desde la carpeta de la unidad.

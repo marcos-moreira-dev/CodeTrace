@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §8.1.4; ejemplo 8.1.4-2
+// Tema:
+// Una clase derivada es subtipo de su superclase directa y de los antecesores de esta.
+// instanceof comprueba esa relación sobre la instancia real.
 // Compilar: javac --release 21 -encoding UTF-8 -d . Antepasado.java Intermedio.java Descendiente.java Jerarquia.java
 // Ejecutar: java Jerarquia
 // Comandos desde la carpeta de la unidad.

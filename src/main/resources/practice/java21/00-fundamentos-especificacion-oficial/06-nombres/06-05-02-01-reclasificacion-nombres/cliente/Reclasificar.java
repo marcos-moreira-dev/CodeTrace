@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §6.5.2; ejemplo 6.5.2-1
+// Tema:
+// Un nombre calificado se interpreta por segmentos. Un segmento puede identificar un paquete,
+// otro un tipo y los siguientes campos o expresiones.
 // Compilar: javac --release 21 -encoding UTF-8 -d . biblioteca/Sonido.java cliente/Reclasificar.java
 // Ejecutar: java cliente.Reclasificar
 // Comandos desde la carpeta de la unidad.

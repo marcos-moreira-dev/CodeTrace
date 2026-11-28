@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §10.5; ejemplo 10.5-1
+// Tema:
+// Aunque un arreglo de Integer pueda referenciarse como Number[], solo admite componentes
+// compatibles con Integer. La comprobación en ejecución evita una escritura inválida.
 // Compilar: javac --release 21 -encoding UTF-8 -d . AlmacenamientoArreglo.java
 // Ejecutar: java AlmacenamientoArreglo
 // Comandos desde la carpeta de la unidad.

@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §8.3.2; ejemplo 8.3.2-1
+// Tema:
+// Los inicializadores de campos se ejecutan durante la inicialización de la clase o la
+// construcción de la instancia, según sean static o de instancia.
 // Compilar: javac --release 21 -encoding UTF-8 -d . Coordenada.java InicializarCampos.java
 // Ejecutar: java InicializarCampos
 // Comandos desde la carpeta de la unidad.

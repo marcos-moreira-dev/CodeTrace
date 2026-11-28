@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §8.9.3; ejemplo 8.9.3-3
+// Tema:
+// Una constante enum puede tener un cuerpo propio y sobrescribir métodos. Todas las constantes
+// siguen siendo instancias del mismo tipo enumerado.
 // Compilar: javac --release 21 -encoding UTF-8 -d . CalculoEnum.java
 // Ejecutar: java CalculoEnum
 // Comandos desde la carpeta de la unidad.

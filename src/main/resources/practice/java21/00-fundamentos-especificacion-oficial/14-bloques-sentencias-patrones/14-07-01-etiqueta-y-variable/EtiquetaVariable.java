@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §14.7; ejemplo 14.7-1
+// Tema:
+// Una etiqueta y una variable pueden compartir nombre porque pertenecen a categorías de
+// nombres diferentes. break con etiqueta sale de la sentencia etiquetada.
 // Compilar: javac --release 21 -encoding UTF-8 -d . EtiquetaVariable.java
 // Ejecutar: java EtiquetaVariable
 // Comandos desde la carpeta de la unidad.

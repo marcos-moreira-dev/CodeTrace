@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §6.5.5.1; ejemplo 6.5.5.1-1
+// Tema:
+// Un parámetro de tipo es un nombre válido dentro del alcance de su declaración genérica. El
+// tipo concreto se establece mediante los argumentos de tipo.
 // Compilar: javac --release 21 -encoding UTF-8 -d . ReferenciaTipo.java
 // Ejecutar: java ReferenciaTipo
 // Comandos desde la carpeta de la unidad.

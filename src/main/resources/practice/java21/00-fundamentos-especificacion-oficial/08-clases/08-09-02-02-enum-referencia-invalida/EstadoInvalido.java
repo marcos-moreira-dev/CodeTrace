@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §8.9.2; ejemplo 8.9.2-2
+// Tema:
+// El constructor de un enum no puede acceder directamente a determinados campos static no
+// constantes del mismo enum, pues las constantes se crean antes de inicializar esos campos.
 // Compilar: javac --release 21 -encoding UTF-8 -d . EstadoInvalido.java
 // ERROR INTENCIONAL de compilación. No ejecutar.
 // Comandos desde la carpeta de la unidad.

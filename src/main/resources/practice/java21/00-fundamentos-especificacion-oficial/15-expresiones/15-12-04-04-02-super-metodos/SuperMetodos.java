@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §15.12.4.4; ejemplo 15.12.4.4-2
+// Tema:
+// super permite invocar la implementación de la superclase directa. Un cast a un supertipo no
+// elimina el despacho dinámico de una invocación normal.
 // Compilar: javac --release 21 -encoding UTF-8 -d . Nivel1.java Nivel2.java SuperMetodos.java
 // Ejecutar: java SuperMetodos
 // Comandos desde la carpeta de la unidad.

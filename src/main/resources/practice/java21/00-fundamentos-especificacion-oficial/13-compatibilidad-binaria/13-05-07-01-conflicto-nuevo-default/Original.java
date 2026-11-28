@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §13.5.7; ejemplo 13.5.7-1
+// Tema:
+// Agregar un método default a una interfaz puede crear un conflicto entre implementaciones
+// heredadas por una clase antigua, causando un error de enlace.
 // Compilar: seguir las etapas al final, desde la unidad.
 // Ejecutar: java -cp salida Cliente
 // Comandos desde la carpeta de la unidad.

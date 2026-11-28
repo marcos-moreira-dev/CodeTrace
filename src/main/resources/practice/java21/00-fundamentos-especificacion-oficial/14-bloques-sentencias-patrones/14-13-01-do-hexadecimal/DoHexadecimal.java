@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §14.13; ejemplo 14.13-1
+// Tema:
+// do-while ejecuta el cuerpo al menos una vez antes de comprobar la condición. Esto permite
+// producir un dígito incluso cuando el valor inicial es cero.
 // Compilar: javac --release 21 -encoding UTF-8 -d . DoHexadecimal.java
 // Ejecutar: java DoHexadecimal
 // Comandos desde la carpeta de la unidad.

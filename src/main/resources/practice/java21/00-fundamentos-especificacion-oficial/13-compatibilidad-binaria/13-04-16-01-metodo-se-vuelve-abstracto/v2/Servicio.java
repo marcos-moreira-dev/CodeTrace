@@ -1,5 +1,7 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §13.4.16; ejemplo 13.4.16-1
+// Tema:
+// Convertir un método concreto en abstracto puede impedir que un cliente anterior encuentre
+// una implementación al invocarlo, causando AbstractMethodError.
+// Esta versión sustituye a la inicial sin recompilar primero el cliente.
 // Compilar: seguir las etapas al final, desde la unidad.
 // Ejecutar: java -cp salida Cliente
 // Comandos desde la carpeta de la unidad.

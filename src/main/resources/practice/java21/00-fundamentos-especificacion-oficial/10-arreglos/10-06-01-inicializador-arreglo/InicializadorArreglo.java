@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §10.6; ejemplo 10.6-1
+// Tema:
+// Un inicializador de arreglo enumera los valores iniciales de sus componentes. La cantidad de
+// elementos determina su longitud y se admite una coma final.
 // Compilar: javac --release 21 -encoding UTF-8 -d . InicializadorArreglo.java
 // Ejecutar: java InicializadorArreglo
 // Comandos desde la carpeta de la unidad.

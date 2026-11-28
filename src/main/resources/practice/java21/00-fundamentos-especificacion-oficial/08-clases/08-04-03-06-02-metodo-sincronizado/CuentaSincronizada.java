@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §8.4.3.6; ejemplo 8.4.3.6-2
+// Tema:
+// La sincronización de instancia impide que dos hilos ejecuten simultáneamente la sección
+// protegida sobre el mismo objeto. Así se protege el incremento compuesto.
 // Compilar: javac --release 21 -encoding UTF-8 -d . CuentaSincronizada.java
 // Ejecutar: java CuentaSincronizada
 // Comandos desde la carpeta de la unidad.

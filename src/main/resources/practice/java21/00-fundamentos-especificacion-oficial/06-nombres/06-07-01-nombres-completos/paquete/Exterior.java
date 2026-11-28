@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §6.7; ejemplo 6.7-1
+// Tema:
+// El nombre calificado incluye el paquete y, para un tipo miembro, el tipo exterior. El nombre
+// canónico identifica una declaración sin depender de una importación.
 // Compilar: javac --release 21 -encoding UTF-8 -d . paquete/Exterior.java NombresCompletos.java
 // Ejecutar: java NombresCompletos
 // Comandos desde la carpeta de la unidad.

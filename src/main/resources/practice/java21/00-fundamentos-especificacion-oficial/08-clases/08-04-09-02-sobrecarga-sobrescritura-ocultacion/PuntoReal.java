@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §8.4.9; ejemplo 8.4.9-2
+// Tema:
+// La sobrecarga se resuelve al compilar; la sobrescritura de instancia se despacha en
+// ejecución. Los campos se seleccionan por el tipo estático y pueden quedar ocultos.
 // Compilar: javac --release 21 -encoding UTF-8 -d . Punto.java PuntoReal.java
 // Ejecutar: java PuntoReal
 // Comandos desde la carpeta de la unidad.

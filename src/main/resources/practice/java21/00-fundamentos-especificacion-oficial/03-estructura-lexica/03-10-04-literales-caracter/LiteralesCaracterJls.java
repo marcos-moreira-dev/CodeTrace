@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificacion oficial
-// Referencia: Java SE 21, JLS §3.10.4
+// Tema:
+// char representa una unidad de código UTF-16. Las comillas simples delimitan el literal y los
+// escapes Unicode se traducen antes de analizar los tokens.
 // Compilar: javac --release 21 -encoding UTF-8 LiteralesCaracterJls.java
 // Ejecutar: java LiteralesCaracterJls
 // char representa una unidad UTF-16; se escribe entre comillas simples.

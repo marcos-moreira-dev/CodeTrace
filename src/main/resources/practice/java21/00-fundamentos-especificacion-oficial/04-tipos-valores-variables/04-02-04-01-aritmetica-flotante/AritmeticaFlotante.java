@@ -1,5 +1,7 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §4.2.4; ejemplo 4.2.4-1
+// Tema:
+// Los tipos flotantes admiten infinitos, NaN, valores subnormales y ceros con signo. El
+// redondeo binario puede producir resultados diferentes de los decimales exactos; el
+// desbordamiento flotante no lanza ArithmeticException.
 // Compilar: javac --release 21 -encoding UTF-8 -d . AritmeticaFlotante.java
 // Ejecutar: java AritmeticaFlotante
 // Comandos desde la carpeta de la unidad.

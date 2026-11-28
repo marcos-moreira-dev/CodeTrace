@@ -1,5 +1,5 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §15.10.4; ejemplo 15.10.4-2
+// Tema:
+// Si evaluar la referencia al arreglo lanza una excepción, el índice no llega a evaluarse.
 // Compilar: javac --release 21 -encoding UTF-8 -d . ReferenciaFallida.java
 // Ejecutar: java ReferenciaFallida
 // Comandos desde la carpeta de la unidad.

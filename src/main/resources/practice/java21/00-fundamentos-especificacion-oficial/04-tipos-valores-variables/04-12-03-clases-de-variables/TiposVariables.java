@@ -1,5 +1,7 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §4.12.3; ejemplo 4.12.3-1
+// Tema:
+// Un campo static pertenece a la clase, un campo de instancia a cada objeto, y un componente
+// de arreglo a una posición. Los parámetros reciben argumentos y las variables locales o de
+// patrón tienen un alcance determinado.
 // Compilar: javac --release 21 -encoding UTF-8 -d . TiposVariables.java Sensor.java
 // Ejecutar: java TiposVariables
 // Comandos desde la carpeta de la unidad.

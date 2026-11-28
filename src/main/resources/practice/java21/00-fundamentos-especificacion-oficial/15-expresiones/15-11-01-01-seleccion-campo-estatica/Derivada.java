@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §15.11.1; ejemplo 15.11.1-1
+// Tema:
+// El acceso a un campo de instancia se resuelve según el tipo estático de la expresión
+// receptora. Cambiar el objeto real no cambia qué declaración de campo se selecciona.
 // Compilar: javac --release 21 -encoding UTF-8 -d . Base.java Derivada.java SeleccionCampo.java
 // Ejecutar: java SeleccionCampo
 // Comandos desde la carpeta de la unidad.

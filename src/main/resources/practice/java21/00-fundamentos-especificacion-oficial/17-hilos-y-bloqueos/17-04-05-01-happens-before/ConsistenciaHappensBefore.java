@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §17.4.5; ejemplo 17.4.5-1
+// Tema:
+// La relación happens-before establece garantías de visibilidad entre acciones ordenadas. Sin
+// una relación apropiada entre hilos, una lectura puede observar un valor anterior permitido.
 // Compilar: javac --release 21 -encoding UTF-8 -d . ConsistenciaHappensBefore.java
 // Ejecutar: java ConsistenciaHappensBefore
 // Comandos desde la carpeta de la unidad.

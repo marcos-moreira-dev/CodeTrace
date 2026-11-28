@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §15.18.1; ejemplo 15.18.1-1
+// Tema:
+// El operador + se asocia de izquierda a derecha. Una operación con un String concatena; una
+// suma entre números anterior a ese punto se realiza numéricamente.
 // Compilar: javac --release 21 -encoding UTF-8 -d . Concatenacion.java
 // Ejecutar: java Concatenacion
 // Comandos desde la carpeta de la unidad.

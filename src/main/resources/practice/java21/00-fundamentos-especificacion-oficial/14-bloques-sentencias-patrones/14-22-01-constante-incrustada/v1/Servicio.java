@@ -1,5 +1,7 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §14.22; ejemplo 14.22-1
+// Tema:
+// Las constantes de compilación pueden quedar incrustadas en el bytecode del cliente.
+// Reemplazar la clase que las declara no cambia el valor del cliente sin recompilarlo.
+// Esta es la versión inicial; se compila junto al cliente antes de sustituirla.
 // Compilar: seguir las etapas al final, desde la unidad.
 // Ejecutar: java -cp salida Cliente
 // Comandos desde la carpeta de la unidad.

@@ -1,5 +1,7 @@
-// CodeTrace | Fundamentos - Especificacion oficial
-// Referencia: Java SE 21, JLS §3.10.6
+// Tema:
+// Un bloque de texto produce un String. Se normalizan los finales de línea, se elimina la
+// sangría incidental y finalmente se interpretan los escapes. La posición del delimitador de
+// cierre influye en la sangría y el salto final.
 // Compilar: javac --release 21 -encoding UTF-8 BloqueTextoJls.java
 // Ejecutar: java BloqueTextoJls
 // El bloque de texto elimina la sangría incidental y conserva saltos de línea.

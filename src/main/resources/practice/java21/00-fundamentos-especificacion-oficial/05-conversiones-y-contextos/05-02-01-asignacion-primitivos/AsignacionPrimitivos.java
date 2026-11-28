@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §5.2; ejemplo 5.2-1
+// Tema:
+// La asignación admite ampliaciones primitivas implícitas. Las reducciones explícitas a byte
+// conservan los ocho bits inferiores y pueden cambiar el valor o el signo.
 // Compilar: javac --release 21 -encoding UTF-8 -d . AsignacionPrimitivos.java
 // Ejecutar: java AsignacionPrimitivos
 // Comandos desde la carpeta de la unidad.

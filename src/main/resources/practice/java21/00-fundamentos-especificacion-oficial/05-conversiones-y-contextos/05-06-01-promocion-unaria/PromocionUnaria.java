@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §5.6; ejemplo 5.6-1
+// Tema:
+// Los operandos byte, short y char se promocionan a int en operaciones unarias como negación y
+// complemento. Los desplazamientos también promocionan cada operando por separado.
 // Compilar: javac --release 21 -encoding UTF-8 -d . PromocionUnaria.java
 // Ejecutar: java PromocionUnaria
 // Comandos desde la carpeta de la unidad.

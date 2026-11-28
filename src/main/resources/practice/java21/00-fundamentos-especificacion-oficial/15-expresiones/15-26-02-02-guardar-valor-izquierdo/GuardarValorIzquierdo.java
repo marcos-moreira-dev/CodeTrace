@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §15.26.2; ejemplo 15.26.2-2
+// Tema:
+// Una asignación compuesta evalúa el destino una sola vez y conserva su valor inicial. Las
+// modificaciones durante el lado derecho no cambian ese valor guardado.
 // Compilar: javac --release 21 -encoding UTF-8 -d . GuardarValorIzquierdo.java
 // Ejecutar: java GuardarValorIzquierdo
 // Comandos desde la carpeta de la unidad.

@@ -1,12 +1,8 @@
-// CodeTrace | Fundamentos - Especificacion oficial
-// Referencia: Java SE 21, JLS §5.1.3; ejemplo 5.1.3-2
+// Tema:
+// Reducir entre enteros descarta bits superiores. Al convertir flotantes a int o long se
+// trunca hacia cero, se satura fuera de rango y NaN se convierte en cero.
 // Compilar: javac --release 21 -encoding UTF-8 ReduccionPrimitivaJls.java
 // Ejecutar: java ReduccionPrimitivaJls
-// Tema JLS:
-// La reducción entre enteros conserva los bits inferiores. Al convertir un valor flotante a
-// int o long se trunca hacia cero; fuera del rango se satura y NaN se convierte en cero.
-// Reducir double a float también puede producir infinito o cero.
-// Una reducción puede perder bits, truncar o saturar según los tipos involucrados.
 
 public class ReduccionPrimitivaJls {
     public static void main(String[] args) {

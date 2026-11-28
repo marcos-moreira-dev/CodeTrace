@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §8.1.2; ejemplo 8.1.2-2
+// Tema:
+// Una clase interna no estática puede utilizar el parámetro de tipo de su instancia exterior y
+// declarar parámetros propios. El tipo completo conserva ambos argumentos.
 // Compilar: javac --release 21 -encoding UTF-8 -d . CajaExterior.java GenericasAnidadas.java
 // Ejecutar: java GenericasAnidadas
 // Comandos desde la carpeta de la unidad.

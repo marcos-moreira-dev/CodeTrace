@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificacion oficial
-// Referencia: Java SE 21, JLS §3.10.8
+// Tema:
+// null es una referencia que no apunta a ningún objeto. Puede asignarse a tipos de referencia,
+// pero no a primitivos. Acceder a un miembro de instancia mediante null provoca una excepción.
 // Compilar: javac --release 21 -encoding UTF-8 LiteralNullJls.java
 // Ejecutar: java LiteralNullJls
 // null representa la ausencia de una referencia a un objeto.

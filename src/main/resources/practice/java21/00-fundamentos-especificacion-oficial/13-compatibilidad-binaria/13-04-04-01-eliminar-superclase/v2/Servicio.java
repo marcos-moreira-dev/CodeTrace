@@ -1,5 +1,7 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §13.4.4; ejemplo 13.4.4-1
+// Tema:
+// Un cliente compilado suponiendo una relación de herencia puede dejar de ser verificable si
+// se reemplaza la clase por una versión que elimina su superclase.
+// Esta versión sustituye a la inicial sin recompilar primero el cliente.
 // Compilar: seguir las etapas al final, desde la unidad.
 // Ejecutar: java -cp salida Cliente
 // Comandos desde la carpeta de la unidad.

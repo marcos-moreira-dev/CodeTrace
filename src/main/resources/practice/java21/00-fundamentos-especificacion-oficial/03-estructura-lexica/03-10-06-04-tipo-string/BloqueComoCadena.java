@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §3.10.6; ejemplo 3.10.6-4
+// Tema:
+// Un bloque de texto es una expresión String. Admite concatenación e invocaciones de métodos,
+// y puede formar parte de una expresión constante internada.
 // Compilar: javac --release 21 -encoding UTF-8 -d . BloqueComoCadena.java
 // Ejecutar: java BloqueComoCadena
 // Comandos desde la carpeta de la unidad.

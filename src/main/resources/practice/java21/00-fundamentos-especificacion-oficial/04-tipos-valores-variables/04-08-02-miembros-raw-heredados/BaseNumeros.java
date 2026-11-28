@@ -1,5 +1,7 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §4.8; ejemplo 4.8-2
+// Tema:
+// Los miembros de instancia declarados en una clase genérica sufren borrado al usarla como
+// raw. Los miembros heredados de una superclase no genérica y los miembros static conservan
+// sus tipos.
 // Compilar: javac --release 21 -encoding UTF-8 -d . BaseNumeros.java MiembrosRaw.java
 // Ejecutar: java MiembrosRaw
 // Comandos desde la carpeta de la unidad.

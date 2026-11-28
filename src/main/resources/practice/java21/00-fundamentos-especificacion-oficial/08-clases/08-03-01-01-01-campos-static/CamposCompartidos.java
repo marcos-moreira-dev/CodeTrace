@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §8.3.1.1; ejemplo 8.3.1.1-1
+// Tema:
+// Un campo static pertenece a la clase y se comparte entre todas sus instancias. Un campo de
+// instancia tiene una copia independiente en cada objeto.
 // Compilar: javac --release 21 -encoding UTF-8 -d . CamposCompartidos.java
 // Ejecutar: java CamposCompartidos
 // Comandos desde la carpeta de la unidad.

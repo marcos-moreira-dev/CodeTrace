@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §8.4.9; ejemplo 8.4.9-1
+// Tema:
+// La sobrecarga declara métodos del mismo nombre con diferentes listas de parámetros. El
+// compilador elige la firma aplicable usando los tipos de los argumentos.
 // Compilar: javac --release 21 -encoding UTF-8 -d . SobrecargaMetodos.java
 // Ejecutar: java SobrecargaMetodos
 // Comandos desde la carpeta de la unidad.

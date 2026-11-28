@@ -1,5 +1,7 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §8.3.1.4; ejemplo 8.3.1.4-1
+// Tema:
+// volatile proporciona garantías de visibilidad y orden entre accesos a ese campo. No
+// convierte operaciones compuestas como incremento en operaciones atómicas ni agrupa dos
+// campos en una transacción.
 // Compilar: javac --release 21 -encoding UTF-8 -d . CamposVolatile.java
 // Ejecutar: java CamposVolatile
 // Comandos desde la carpeta de la unidad.

@@ -1,5 +1,7 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §15.20.2; ejemplo 15.20.2-1
+// Tema:
+// El compilador exige que el tipo de la expresión sea compatible con el tipo probado por
+// instanceof. Una relación imposible entre dos clases puede rechazarse sin ejecutar el
+// programa.
 // Compilar: javac --release 21 -encoding UTF-8 -d . Estrella.java Mineral.java ComparacionInvalida.java
 // ERROR INTENCIONAL de compilación. No ejecutar.
 // Comandos desde la carpeta de la unidad.

@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §6.5.6.1; ejemplo 6.5.6.1-3
+// Tema:
+// Una clase local puede capturar un parámetro efectivamente final en su contexto de instancia.
+// Un contexto static de esa clase no dispone de la misma instancia de captura.
 // Compilar: javac --release 21 -encoding UTF-8 -d . CapturaParametro.java
 // ERROR INTENCIONAL de compilación. No ejecutar.
 // Comandos desde la carpeta de la unidad.

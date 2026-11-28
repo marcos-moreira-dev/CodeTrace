@@ -1,5 +1,7 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §8.9.3; ejemplo 8.9.3-4
+// Tema:
+// Dos enumeraciones representan conjuntos finitos de valores independientes. El producto de
+// ambos conjuntos permite crear todas las combinaciones; el orden de declaración determina el
+// orden natural del enum.
 // Compilar: javac --release 21 -encoding UTF-8 -d . Carta.java Baraja.java
 // Ejecutar: java Baraja
 // Comandos desde la carpeta de la unidad.

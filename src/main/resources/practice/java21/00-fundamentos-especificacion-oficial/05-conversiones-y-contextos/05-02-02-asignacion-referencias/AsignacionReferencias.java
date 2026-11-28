@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §5.2; ejemplo 5.2-2
+// Tema:
+// Un String puede asignarse a Object o CharSequence porque es subtipo de ambos. Las variables
+// siguen apuntando al mismo objeto; el tipo declarado limita qué miembros pueden usarse.
 // Compilar: javac --release 21 -encoding UTF-8 -d . AsignacionReferencias.java
 // Ejecutar: java AsignacionReferencias
 // Comandos desde la carpeta de la unidad.

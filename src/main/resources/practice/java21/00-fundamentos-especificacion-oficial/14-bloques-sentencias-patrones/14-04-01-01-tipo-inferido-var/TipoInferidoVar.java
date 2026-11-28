@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §14.4.1; ejemplo 14.4.1-1
+// Tema:
+// var permite inferir el tipo estático de una variable local a partir de su inicializador. No
+// significa que la variable cambie dinámicamente de tipo.
 // Compilar: javac --release 21 -encoding UTF-8 -d . TipoInferidoVar.java
 // Ejecutar: java TipoInferidoVar
 // Comandos desde la carpeta de la unidad.

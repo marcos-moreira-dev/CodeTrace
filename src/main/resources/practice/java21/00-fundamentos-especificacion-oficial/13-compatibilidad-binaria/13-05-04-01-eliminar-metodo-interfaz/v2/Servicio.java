@@ -1,5 +1,7 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §13.5.4; ejemplo 13.5.4-1
+// Tema:
+// Eliminar un método de una interfaz puede causar NoSuchMethodError en un cliente compilado
+// que todavía contiene una referencia a ese método.
+// Esta versión sustituye a la inicial sin recompilar primero el cliente.
 // Compilar: seguir las etapas al final, desde la unidad.
 // Ejecutar: java -cp salida Cliente
 // Comandos desde la carpeta de la unidad.

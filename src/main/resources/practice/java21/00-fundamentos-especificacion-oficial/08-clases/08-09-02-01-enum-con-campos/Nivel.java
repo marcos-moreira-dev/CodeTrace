@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §8.9.2; ejemplo 8.9.2-1
+// Tema:
+// Cada constante enum es una instancia del tipo enumerado. Puede recibir argumentos de
+// constructor y almacenar campos que describen su valor.
 // Compilar: javac --release 21 -encoding UTF-8 -d . Nivel.java EnumCampos.java
 // Ejecutar: java EnumCampos
 // Comandos desde la carpeta de la unidad.

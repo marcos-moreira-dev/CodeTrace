@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §15.10.2; ejemplo 15.10.2-1
+// Tema:
+// Las expresiones de dimensiones de un arreglo se evalúan de izquierda a derecha antes de
+// crear el arreglo. Un cambio de variable posterior no altera una dimensión ya evaluada.
 // Compilar: javac --release 21 -encoding UTF-8 -d . EvaluarDimensiones.java
 // Ejecutar: java EvaluarDimensiones
 // Comandos desde la carpeta de la unidad.

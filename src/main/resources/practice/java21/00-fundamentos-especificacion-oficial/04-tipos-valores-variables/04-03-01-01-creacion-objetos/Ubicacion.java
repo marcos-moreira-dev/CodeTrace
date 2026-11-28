@@ -1,5 +1,7 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §4.3.1; ejemplo 4.3.1-1
+// Tema:
+// new crea una instancia y ejecuta su constructor. La inicialización de campos estáticos, los
+// inicializadores de arreglo y la reflexión también pueden producir objetos; cada creación
+// genera una instancia distinta.
 // Compilar: javac --release 21 -encoding UTF-8 -d . CreacionObjetos.java Ubicacion.java
 // Ejecutar: java CreacionObjetos
 // Comandos desde la carpeta de la unidad.

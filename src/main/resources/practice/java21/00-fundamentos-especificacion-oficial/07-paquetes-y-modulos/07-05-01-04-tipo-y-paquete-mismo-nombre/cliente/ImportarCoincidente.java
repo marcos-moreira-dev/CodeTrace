@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §7.5.1; ejemplo 7.5.1-4
+// Tema:
+// Un segmento de nombre puede identificar un paquete en un contexto y un tipo en otro. Las
+// declaraciones import permiten resolver nombres calificados según su posición.
 // Compilar: javac --release 21 -encoding UTF-8 -d . Vector/Objeto.java cliente/ImportarCoincidente.java
 // Ejecutar: java cliente.ImportarCoincidente
 // Comandos desde la carpeta de la unidad.

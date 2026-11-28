@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §8.4.6; ejemplo 8.4.6-1
+// Tema:
+// Una cláusula throws puede utilizar una variable de tipo acotada por Throwable. El argumento
+// de tipo permite determinar qué excepción debe manejar el cliente.
 // Compilar: javac --release 21 -encoding UTF-8 -d . ExcepcionGenerica.java
 // Ejecutar: java ExcepcionGenerica
 // Comandos desde la carpeta de la unidad.

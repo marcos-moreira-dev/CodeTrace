@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §15.12.4.4; ejemplo 15.12.4.4-1
+// Tema:
+// La invocación de un método de instancia sobrescrito selecciona la implementación de la clase
+// real. Una llamada heredada puede terminar invocando un método de la subclase.
 // Compilar: javac --release 21 -encoding UTF-8 -d . Posicion.java PosicionColor.java DespachoDinamico.java
 // Ejecutar: java DespachoDinamico
 // Comandos desde la carpeta de la unidad.

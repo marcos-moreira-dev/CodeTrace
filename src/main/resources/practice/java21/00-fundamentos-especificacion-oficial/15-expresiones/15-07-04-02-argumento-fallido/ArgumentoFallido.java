@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §15.7.4; ejemplo 15.7.4-2
+// Tema:
+// Cuando evaluar un argumento termina abruptamente, los argumentos posteriores no se evalúan y
+// la invocación no se completa.
 // Compilar: javac --release 21 -encoding UTF-8 -d . ArgumentoFallido.java
 // Ejecutar: java ArgumentoFallido
 // Comandos desde la carpeta de la unidad.

@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §8.2; ejemplo 8.2-2
+// Tema:
+// Los miembros sin modificador están disponibles dentro de su paquete. Cambiar de paquete en
+// una subclase restringe el acceso a esos miembros.
 // Compilar: javac --release 21 -encoding UTF-8 -d . puntos/Punto.java puntos/Punto3D.java otro/Punto4D.java
 // ERROR INTENCIONAL de compilación. No ejecutar.
 // Comandos desde la carpeta de la unidad.

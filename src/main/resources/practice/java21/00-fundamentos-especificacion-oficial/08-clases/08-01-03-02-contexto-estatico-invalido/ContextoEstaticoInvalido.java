@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §8.1.3; ejemplo 8.1.3-2
+// Tema:
+// Un contexto static carece de instancia exterior implícita. Una clase local puede capturar
+// variables efectivamente finales, pero eso no crea una referencia this exterior.
 // Compilar: javac --release 21 -encoding UTF-8 -d . ContextoEstaticoInvalido.java
 // ERROR INTENCIONAL de compilación. No ejecutar.
 // Comandos desde la carpeta de la unidad.

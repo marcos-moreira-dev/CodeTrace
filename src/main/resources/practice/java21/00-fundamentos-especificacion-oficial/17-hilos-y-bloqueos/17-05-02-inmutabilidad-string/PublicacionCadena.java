@@ -1,5 +1,7 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §17.5; ejemplo 17.5-2
+// Tema:
+// String es inmutable. Si un hilo obtiene una referencia a una cadena correctamente
+// construida, el contenido no puede cambiar por mutación de esa cadena, aunque la publicación
+// de la referencia no esté sincronizada.
 // Compilar: javac --release 21 -encoding UTF-8 -d . PublicacionCadena.java
 // Ejecutar: java PublicacionCadena
 // Comandos desde la carpeta de la unidad.

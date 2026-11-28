@@ -1,5 +1,7 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §5.0; ejemplo 5.0-2
+// Tema:
+// El contexto determina qué conversiones se permiten. Una asignación admite ciertas
+// ampliaciones implícitas, un cast permite reducciones y los operadores promocionan los
+// operandos.
 // Compilar: javac --release 21 -encoding UTF-8 -d . ContextosConversion.java
 // Ejecutar: java ContextosConversion
 // Comandos desde la carpeta de la unidad.

@@ -256,3 +256,7 @@ Ejemplos originales basados en la [JLS SE 21](https://docs.oracle.com/javase/spe
 Pendientes: revisión de fidelidad y casos secundarios, inventariar fragmentos no numerados, validar el cambio de carpeta anterior y publicar. Los casos de memoria ejecutan una JVM separada con heap de 16 MiB. Los módulos se compilan con module-source-path. No se incluye el PDF.
 
 La carpeta anterior se renombró a `01-fundamentos-en-accion/` conservando el mismo árbol Git (28 archivos). Se creó una versión de caché v17; el contenido anterior no se elimina.
+
+## Comentarios de estudio
+
+Los 464 archivos Java de esta biblioteca tienen una explicación directa del concepto de su unidad. Se eliminaron las cabeceras con referencias documentales; la correspondencia con la especificación se conserva únicamente en el inventario y manifiesto externos. Los comandos y las salidas esperadas se conservan. El verificador comprueba la presencia de la explicación y la ausencia de las antiguas cabeceras. La validación completa del último commit sigue pendiente.

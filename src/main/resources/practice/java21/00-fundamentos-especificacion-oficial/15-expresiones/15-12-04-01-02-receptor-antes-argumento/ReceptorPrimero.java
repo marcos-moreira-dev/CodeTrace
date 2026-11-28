@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §15.12.4.1; ejemplo 15.12.4.1-2
+// Tema:
+// El receptor de una llamada se evalúa antes de sus argumentos. Reasignar la variable del
+// receptor al calcular un argumento no cambia el receptor ya seleccionado.
 // Compilar: javac --release 21 -encoding UTF-8 -d . ReceptorPrimero.java
 // Ejecutar: java ReceptorPrimero
 // Comandos desde la carpeta de la unidad.

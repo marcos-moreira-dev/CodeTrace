@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §5.6; ejemplo 5.6-2
+// Tema:
+// La promoción numérica binaria selecciona un tipo común: double, float, long o int, en ese
+// orden de prioridad. La operación se realiza con los valores ya convertidos.
 // Compilar: javac --release 21 -encoding UTF-8 -d . PromocionBinaria.java
 // Ejecutar: java PromocionBinaria
 // Comandos desde la carpeta de la unidad.

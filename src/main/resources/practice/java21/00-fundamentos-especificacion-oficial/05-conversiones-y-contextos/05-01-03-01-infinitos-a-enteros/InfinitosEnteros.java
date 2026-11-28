@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §5.1.3; ejemplo 5.1.3-1
+// Tema:
+// Al convertir infinito a int o long se obtiene el extremo representable. Para byte, short y
+// char se pasa por int y se retienen los bits inferiores.
 // Compilar: javac --release 21 -encoding UTF-8 -d . InfinitosEnteros.java
 // Ejecutar: java InfinitosEnteros
 // Comandos desde la carpeta de la unidad.

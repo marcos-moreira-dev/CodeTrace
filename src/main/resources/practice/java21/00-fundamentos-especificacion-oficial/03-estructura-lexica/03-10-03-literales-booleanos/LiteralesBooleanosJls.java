@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificacion oficial
-// Referencia: Java SE 21, JLS §3.10.3
+// Tema:
+// boolean tiene únicamente dos valores, true y false. Java no convierte automáticamente
+// enteros en valores booleanos.
 // Compilar: javac --release 21 -encoding UTF-8 LiteralesBooleanosJls.java
 // Ejecutar: java LiteralesBooleanosJls
 // boolean tiene dos valores literales: true y false.

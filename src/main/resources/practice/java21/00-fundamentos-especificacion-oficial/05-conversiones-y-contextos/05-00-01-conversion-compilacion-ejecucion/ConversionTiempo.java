@@ -1,5 +1,7 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §5.0; ejemplo 5.0-1
+// Tema:
+// Las ampliaciones de referencia no crean objetos nuevos; las reducciones pueden necesitar
+// comprobaciones en ejecución. Las conversiones numéricas modifican la representación de un
+// valor.
 // Compilar: javac --release 21 -encoding UTF-8 -d . ConversionTiempo.java
 // Ejecutar: java ConversionTiempo
 // Comandos desde la carpeta de la unidad.

@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §11.2.3; ejemplo 11.2.3-1
+// Tema:
+// Un catch para una excepción checked específica debe corresponder a una excepción que el
+// bloque try pueda lanzar según el análisis del compilador.
 // Compilar: javac --release 21 -encoding UTF-8 -d . CapturaCheckedInvalida.java
 // ERROR INTENCIONAL de compilación. No ejecutar.
 // Comandos desde la carpeta de la unidad.

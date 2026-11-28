@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §8.4.8.4; ejemplo 8.4.8.4-1
+// Tema:
+// Al parametrizar una superclase, dos métodos distintos pueden adquirir firmas equivalentes.
+// Una subclase no puede heredar implementaciones incompatibles de esas firmas.
 // Compilar: javac --release 21 -encoding UTF-8 -d . Generica.java Conflicto.java
 // ERROR INTENCIONAL de compilación. No ejecutar.
 // Comandos desde la carpeta de la unidad.

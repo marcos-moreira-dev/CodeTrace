@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §3.10.6; ejemplo 3.10.6-1
+// Tema:
+// Un bloque de texto y una cadena ordinaria pueden representar exactamente los mismos
+// caracteres. equals compara ese contenido, incluidos espacios y saltos de línea.
 // Compilar: javac --release 21 -encoding UTF-8 -d . TextoEquivalente.java
 // Ejecutar: java TextoEquivalente
 // Comandos desde la carpeta de la unidad.

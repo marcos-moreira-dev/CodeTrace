@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §4.5.1; ejemplo 4.5.1-1
+// Tema:
+// List<?> representa una lista cuyo tipo de elemento se desconoce. Es seguro leer elementos
+// como Object, pero no insertar un valor de un tipo arbitrario.
 // Compilar: javac --release 21 -encoding UTF-8 -d . ComodinLibre.java
 // Ejecutar: java ComodinLibre
 // Comandos desde la carpeta de la unidad.

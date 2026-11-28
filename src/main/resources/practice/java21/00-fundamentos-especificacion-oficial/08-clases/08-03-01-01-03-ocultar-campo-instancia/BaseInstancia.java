@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §8.3.1.1; ejemplo 8.3.1.1-3
+// Tema:
+// Los campos de instancia también se ocultan en lugar de sobrescribirse. El tipo estático de
+// la referencia y super determinan cuál de los campos se lee.
 // Compilar: javac --release 21 -encoding UTF-8 -d . BaseInstancia.java OcultarInstancia.java
 // Ejecutar: java OcultarInstancia
 // Comandos desde la carpeta de la unidad.

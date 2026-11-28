@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §10.8; ejemplo 10.8-2
+// Tema:
+// La clase de un arreglo depende de su tipo de componente y número de dimensiones, no de su
+// longitud. getComponentType permite consultar el tipo de componente.
 // Compilar: javac --release 21 -encoding UTF-8 -d . ClaseArreglos.java
 // Ejecutar: java ClaseArreglos
 // Comandos desde la carpeta de la unidad.

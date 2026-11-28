@@ -1,11 +1,9 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §4.3.1; ejemplo 4.3.1-2
+// Tema:
+// Asignar un primitivo copia su valor; asignar una referencia copia la referencia y no el
+// objeto. Dos variables que apuntan a la misma instancia observan las modificaciones de sus
+// campos.
 // Compilar: javac --release 21 -encoding UTF-8 -d . IdentidadValores.java Medicion.java
 // Ejecutar: java IdentidadValores
-// Tema JLS:
-// Asignar un primitivo copia su valor; asignar una referencia copia la referencia, no el
-// objeto. primera y segunda apuntan a una sola instancia, por lo que ambas observan el
-// cambio de valor.
 // Comandos desde la carpeta de la unidad.
 
 public class IdentidadValores {

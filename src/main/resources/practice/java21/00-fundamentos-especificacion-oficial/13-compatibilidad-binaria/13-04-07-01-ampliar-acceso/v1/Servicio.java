@@ -1,5 +1,7 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §13.4.7; ejemplo 13.4.7-1
+// Tema:
+// Ampliar el acceso de un método puede conservar la compatibilidad de binarios anteriores
+// aunque una nueva compilación exija revisar los modificadores de una sobrescritura.
+// Esta es la versión inicial; se compila junto al cliente antes de sustituirla.
 // Compilar: seguir las etapas al final, desde la unidad.
 // Ejecutar: java -cp salida Cliente
 // Comandos desde la carpeta de la unidad.

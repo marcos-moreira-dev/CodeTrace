@@ -1,5 +1,7 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §15.9.4; ejemplo 15.9.4-1
+// Tema:
+// La creación de una instancia reserva memoria antes de evaluar los argumentos del
+// constructor. Si no hay memoria suficiente, esos argumentos pueden no llegar a evaluarse.
+// Ejecutar solo con el límite de heap indicado.
 // Compilar: javac --release 21 -encoding UTF-8 -d . Nodo.java MemoriaObjeto.java
 // Ejecutar: java -Xmx16m -Xint MemoriaObjeto
 // Comandos desde la carpeta de la unidad.

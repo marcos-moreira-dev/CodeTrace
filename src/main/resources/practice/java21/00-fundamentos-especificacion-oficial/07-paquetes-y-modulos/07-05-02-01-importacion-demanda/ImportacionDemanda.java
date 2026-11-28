@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §7.5.2; ejemplo 7.5.2-1
+// Tema:
+// import paquete.* permite resolver los nombres simples de tipos accesibles del paquete. No
+// importa recursivamente los tipos de subpaquetes.
 // Compilar: javac --release 21 -encoding UTF-8 -d . ImportacionDemanda.java
 // Ejecutar: java ImportacionDemanda
 // Comandos desde la carpeta de la unidad.

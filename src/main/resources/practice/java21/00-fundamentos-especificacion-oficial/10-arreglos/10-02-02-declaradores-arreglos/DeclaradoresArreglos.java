@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §10.2; ejemplo 10.2-2
+// Tema:
+// Los corchetes pueden aparecer junto al tipo o al declarador. En una declaración múltiple,
+// los corchetes de cada declarador determinan sus dimensiones adicionales.
 // Compilar: javac --release 21 -encoding UTF-8 -d . DeclaradoresArreglos.java
 // Ejecutar: java DeclaradoresArreglos
 // Comandos desde la carpeta de la unidad.

@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificacion oficial
-// Referencia: Java SE 21, JLS §1.2
+// Tema:
+// main recibe los argumentos de la línea de comandos en args, sin incluir el nombre de la
+// clase. args.length cuenta los argumentos y args[i] accede a uno por su posición.
 // Compilar: javac --release 21 -encoding UTF-8 ArgumentosJls.java
 // Ejecutar: java ArgumentosJls Java 21
 // Los argumentos de main llegan como un arreglo de cadenas.

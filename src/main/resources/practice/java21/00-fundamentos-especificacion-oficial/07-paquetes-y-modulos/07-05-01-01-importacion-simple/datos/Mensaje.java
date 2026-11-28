@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §7.5.1; ejemplo 7.5.1-1
+// Tema:
+// import permite usar el nombre simple de un tipo accesible declarado en otro paquete. No
+// copia el código ni importa automáticamente todos los miembros del tipo.
 // Compilar: javac --release 21 -encoding UTF-8 -d . app/ImportacionSimple.java datos/Mensaje.java
 // Ejecutar: java app.ImportacionSimple
 // Comandos desde la carpeta de la unidad.

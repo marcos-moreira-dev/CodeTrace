@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §6.4; ejemplo 6.4-1
+// Tema:
+// No se puede redeclarar una variable local con el mismo nombre dentro de un alcance local
+// superpuesto. El compilador rechaza la segunda declaración.
 // Compilar: javac --release 21 -encoding UTF-8 -d . SombreadoInvalido.java
 // ERROR INTENCIONAL de compilación. No ejecutar.
 // Comandos desde la carpeta de la unidad.

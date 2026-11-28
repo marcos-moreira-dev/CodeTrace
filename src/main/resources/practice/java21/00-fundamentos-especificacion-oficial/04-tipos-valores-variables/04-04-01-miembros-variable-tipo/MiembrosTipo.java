@@ -1,5 +1,7 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §4.4; ejemplo 4.4-1
+// Tema:
+// Una variable de tipo puede tener varios límites superiores con &. El compilador permite
+// utilizar los miembros de todos los límites porque cualquier argumento de tipo debe
+// satisfacerlos.
 // Compilar: javac --release 21 -encoding UTF-8 -d . MiembrosTipo.java
 // Ejecutar: java MiembrosTipo
 // Comandos desde la carpeta de la unidad.

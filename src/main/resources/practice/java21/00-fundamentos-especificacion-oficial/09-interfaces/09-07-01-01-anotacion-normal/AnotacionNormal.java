@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §9.7.1; ejemplo 9.7.1-1
+// Tema:
+// Una anotación normal proporciona pares nombre-valor. Los elementos sin default son
+// obligatorios y los restantes pueden omitirse.
 // Compilar: javac --release 21 -encoding UTF-8 -d . Revision.java AnotacionNormal.java
 // Ejecutar: java AnotacionNormal
 // Comandos desde la carpeta de la unidad.

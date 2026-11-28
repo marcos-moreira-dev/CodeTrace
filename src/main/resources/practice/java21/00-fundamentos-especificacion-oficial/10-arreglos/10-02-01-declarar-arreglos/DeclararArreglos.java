@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §10.2; ejemplo 10.2-1
+// Tema:
+// Una declaración de arreglo especifica su tipo de componente y dimensiones. Declarar una
+// referencia no crea el arreglo; new reserva sus componentes.
 // Compilar: javac --release 21 -encoding UTF-8 -d . DeclararArreglos.java
 // Ejecutar: java DeclararArreglos
 // Comandos desde la carpeta de la unidad.

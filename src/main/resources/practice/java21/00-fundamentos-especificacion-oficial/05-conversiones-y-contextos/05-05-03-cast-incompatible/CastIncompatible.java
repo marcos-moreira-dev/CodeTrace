@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §5.5; ejemplo 5.5-3
+// Tema:
+// Un cast puede ser legal al compilar pero fallar al ejecutar. La JVM comprueba el tipo real
+// del objeto antes de permitir la conversión.
 // Compilar: javac --release 21 -encoding UTF-8 -d . CastIncompatible.java
 // Ejecutar: java CastIncompatible
 // Comandos desde la carpeta de la unidad.

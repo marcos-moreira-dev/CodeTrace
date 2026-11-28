@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §8.3; ejemplo 8.3-1
+// Tema:
+// Heredar campos distintos con el mismo nombre puede hacer ambiguo un nombre simple.
+// Calificarlo con el tipo que declara el campo permite seleccionar el deseado.
 // Compilar: javac --release 21 -encoding UTF-8 -d . CampoBase.java CampoContrato.java CampoAmbiguo.java
 // ERROR INTENCIONAL de compilación. No ejecutar.
 // Comandos desde la carpeta de la unidad.

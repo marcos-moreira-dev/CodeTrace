@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §6.5.6.2; ejemplo 6.5.6.2-1
+// Tema:
+// El acceso mediante punto exige que el nombre de la izquierda permita seleccionar el miembro
+// solicitado. Un int no es una referencia y un campo no se invoca como método.
 // Compilar: javac --release 21 -encoding UTF-8 -d . Punto.java ExpresionCalificada.java
 // ERROR INTENCIONAL de compilación. No ejecutar.
 // Comandos desde la carpeta de la unidad.

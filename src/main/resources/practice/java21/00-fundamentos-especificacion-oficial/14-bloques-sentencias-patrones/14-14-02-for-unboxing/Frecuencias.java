@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §14.14; ejemplo 14.14-2
+// Tema:
+// El for mejorado puede convertir cada elemento de un Iterable a una variable primitiva
+// mediante unboxing. El tipo de la variable determina las conversiones necesarias.
 // Compilar: javac --release 21 -encoding UTF-8 -d . Frecuencias.java
 // Ejecutar: java Frecuencias
 // Comandos desde la carpeta de la unidad.

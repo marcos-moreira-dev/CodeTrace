@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §6.3; ejemplo 6.3-2
+// Tema:
+// Una variable local no tiene valor predeterminado. Su inicializador no puede leerla antes de
+// que esté definitivamente asignada.
 // Compilar: javac --release 21 -encoding UTF-8 -d . AlcanceLocalInvalido.java
 // ERROR INTENCIONAL de compilación. No ejecutar.
 // Comandos desde la carpeta de la unidad.

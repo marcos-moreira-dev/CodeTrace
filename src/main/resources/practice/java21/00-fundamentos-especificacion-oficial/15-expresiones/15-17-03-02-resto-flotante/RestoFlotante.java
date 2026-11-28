@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §15.17.3; ejemplo 15.17.3-2
+// Tema:
+// El resto flotante se calcula a partir de un cociente truncado hacia cero. El signo del resto
+// no nulo sigue al dividendo.
 // Compilar: javac --release 21 -encoding UTF-8 -d . RestoFlotante.java
 // Ejecutar: java RestoFlotante
 // Comandos desde la carpeta de la unidad.

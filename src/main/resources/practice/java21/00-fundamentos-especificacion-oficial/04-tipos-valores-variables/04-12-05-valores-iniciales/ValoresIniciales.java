@@ -1,11 +1,8 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §4.12.5; ejemplo 4.12.5-1
+// Tema:
+// Los campos y componentes de arreglo reciben valores predeterminados: cero, false o null
+// según su tipo. Las variables locales deben asignarse antes de leerse.
 // Compilar: javac --release 21 -encoding UTF-8 -d . ValoresIniciales.java Registro.java
 // Ejecutar: java ValoresIniciales
-// Tema JLS:
-// Los campos de clase, los de instancia y los elementos de arreglos reciben valores
-// predeterminados. Los números parten de cero, boolean de false y las referencias de null.
-// Las variables locales deben asignarse antes de leerse.
 // Comandos desde la carpeta de la unidad.
 
 public class ValoresIniciales {

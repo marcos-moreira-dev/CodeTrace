@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §8.8.9; ejemplo 8.8.9-2
+// Tema:
+// La accesibilidad de un tipo no garantiza la de su constructor. El constructor protected de
+// una clase interna puede estar fuera del alcance de un cliente de otro paquete.
 // Compilar: javac --release 21 -encoding UTF-8 -d . base/Exterior.java otro/Derivada.java
 // ERROR INTENCIONAL de compilación. No ejecutar.
 // Comandos desde la carpeta de la unidad.

@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §6.4.1; ejemplo 6.4.1-1
+// Tema:
+// Una variable local puede ocultar un campo del mismo nombre. El nombre simple elige la local;
+// this permite seleccionar el campo de la instancia.
 // Compilar: javac --release 21 -encoding UTF-8 -d . SombreadoCampo.java
 // Ejecutar: java SombreadoCampo
 // Comandos desde la carpeta de la unidad.

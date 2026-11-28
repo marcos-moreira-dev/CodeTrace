@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §14.21; ejemplo 14.21-1
+// Tema:
+// En una expresión switch, yield entrega el valor de un bloque case al switch. No equivale a
+// return del método exterior.
 // Compilar: javac --release 21 -encoding UTF-8 -d . YieldSwitch.java
 // Ejecutar: java YieldSwitch
 // Comandos desde la carpeta de la unidad.

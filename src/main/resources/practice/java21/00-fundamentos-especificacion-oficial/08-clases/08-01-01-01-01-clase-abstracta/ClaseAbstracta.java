@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §8.1.1.1; ejemplo 8.1.1.1-1
+// Tema:
+// Una clase abstracta no se instancia directamente. Puede declarar métodos abstractos que una
+// subclase concreta debe implementar para poder crear objetos.
 // Compilar: javac --release 21 -encoding UTF-8 -d . ClaseAbstracta.java Figura.java Cuadrado.java
 // Ejecutar: java ClaseAbstracta
 // Comandos desde la carpeta de la unidad.

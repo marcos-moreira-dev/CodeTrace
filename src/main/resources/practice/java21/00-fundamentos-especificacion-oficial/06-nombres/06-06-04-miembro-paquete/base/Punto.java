@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §6.6; ejemplo 6.6-4
+// Tema:
+// Un miembro sin modificador de acceso está restringido al mismo paquete. Una subclase de otro
+// paquete no obtiene acceso por el mero hecho de heredar.
 // Compilar: javac --release 21 -encoding UTF-8 -d . base/Punto.java otro/Derivado.java
 // ERROR INTENCIONAL de compilación. No ejecutar.
 // Comandos desde la carpeta de la unidad.

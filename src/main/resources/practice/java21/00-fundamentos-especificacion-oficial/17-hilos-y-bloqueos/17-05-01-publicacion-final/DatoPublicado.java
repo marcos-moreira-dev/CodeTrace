@@ -1,5 +1,7 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §17.5; ejemplo 17.5-1
+// Tema:
+// Un campo final de un objeto correctamente construido tiene garantías especiales de
+// visibilidad si otro hilo llega a observar la referencia. Otros campos no disfrutan
+// automáticamente de esa garantía.
 // Compilar: javac --release 21 -encoding UTF-8 -d . DatoPublicado.java PublicacionFinal.java
 // Ejecutar: java PublicacionFinal
 // Comandos desde la carpeta de la unidad.

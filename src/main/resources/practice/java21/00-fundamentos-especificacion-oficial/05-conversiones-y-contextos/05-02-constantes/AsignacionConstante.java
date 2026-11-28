@@ -1,5 +1,6 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §5.2
+// Tema:
+// Una constante entera puede asignarse implícitamente a byte si su valor cabe en el rango. No
+// es una conversión general de cualquier int.
 // Compilar: javac --release 21 -encoding UTF-8 -d . AsignacionConstante.java
 // Ejecutar: java AsignacionConstante
 // Comandos desde la carpeta de la unidad.

@@ -1,5 +1,7 @@
-// CodeTrace | Fundamentos - Especificación oficial
-// Referencia: Java SE 21, JLS §15.12.2; ejemplo 15.12.2-2
+// Tema:
+// La sobrecarga se resuelve según los parámetros aplicables, no según el tipo de retorno que
+// el cliente desea recibir. Una asignación incompatible puede fallar después de seleccionar el
+// método.
 // Compilar: javac --release 21 -encoding UTF-8 -d . Figura.java Circulo.java RetornoNoSelecciona.java
 // ERROR INTENCIONAL de compilación. No ejecutar.
 // Comandos desde la carpeta de la unidad.
