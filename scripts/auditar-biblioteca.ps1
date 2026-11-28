@@ -58,7 +58,13 @@ foreach ($linea in (Get-Content -LiteralPath $catalogo -Encoding UTF8)) {
         throw "Archivo inexistente: $destino"
     }
     $cabecera = (Get-Content -LiteralPath $destino -Encoding UTF8 -TotalCount 12) -join [Environment]::NewLine
-    if ($cabecera -notmatch '(?i)codetrace' -or
+    if ($paquete -eq 'java21' -and $ruta.StartsWith('00-fundamentos-especificacion-oficial/')) {
+        $contenido = Get-Content -LiteralPath $destino -Encoding UTF8 -Raw
+        if ($contenido -notmatch '^// Tema:' -or $contenido -notmatch 'Compilar:' -or
+            $contenido -notmatch 'Salida esperada:' -or $contenido -match 'Referencia: Java SE 21|Tema JLS:') {
+            throw "Falta explicación o comando, o contiene referencia bibliográfica: $identificador"
+        }
+    } elseif ($cabecera -notmatch '(?i)codetrace' -or
         $cabecera -notmatch '(?i)(referencia|kotlin 2\.2)' -or
         $cabecera -notmatch '(?i)(compilar|comprobar|ejecutar|verificar|tipos/sintaxis)') {
         throw "Falta versión/comando de práctica: $identificador"

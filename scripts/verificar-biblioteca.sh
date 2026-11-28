@@ -33,6 +33,11 @@ actual={str(x.relative_to(root)).replace("\\","/") for x in root.rglob("*")
 declared={p+"/"+path for p,path in items}
 assert actual==declared, (actual-declared,declared-actual)
 for pack,path in items:
+    if pack=="java21" and path.startswith("00-fundamentos-especificacion-oficial/"):
+        text=(root/pack/path).read_text(encoding="utf-8")
+        assert text.startswith("// Tema:\n") and "Compilar:" in text and "Salida esperada:" in text, (pack,path)
+        assert "Referencia: Java SE 21" not in text and "Tema JLS:" not in text, (pack,path)
+        continue
     lines=(root/pack/path).read_text(encoding="utf-8").splitlines()[:12]
     head="\n".join(lines).lower()
     assert "codetrace" in head, (pack,path)

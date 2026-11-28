@@ -112,6 +112,13 @@ class BuiltInLibraryTest {
             Path root = library.open(pack);
             for (String relative : library.entries(pack)) {
                 String text = Files.readString(root.resolve(relative));
+                if (pack.id().equals("java21")
+                        && relative.startsWith("00-fundamentos-especificacion-oficial/")) {
+                    assertTrue(text.startsWith("// Tema:\n"), relative);
+                    assertTrue(text.contains("Compilar:") && text.contains("Salida esperada:"), relative);
+                    assertFalse(text.contains("Referencia: Java SE 21") || text.contains("Tema JLS:"), relative);
+                    continue;
+                }
                 String firstLines = text.lines().limit(10)
                         .collect(Collectors.joining("\n")).toLowerCase(java.util.Locale.ROOT);
                 assertTrue(firstLines.contains("codetrace"), pack.id() + "/" + relative);
