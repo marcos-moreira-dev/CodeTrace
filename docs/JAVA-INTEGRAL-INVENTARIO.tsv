@@ -190,46 +190,46 @@ area	unidad	modalidad	archivo	objetivo	estado
 10-concurrencia-y-paralelismo	15-lectores-escritores-02	R	MainPrioridadEscritores.java	Restringir entrada de lectores nuevos si esperan escritores; no prometer equidad absoluta.	implementado_pendiente_ci
 10-concurrencia-y-paralelismo	16-lectores-escritores-03	R	RecursoCompartido.java	ReentrantReadWriteLock(true); política aproximadamente por llegada, no FIFO absoluta.	implementado_pendiente_ci
 10-concurrencia-y-paralelismo	16-lectores-escritores-03	R	MainLectoresEscritoresEquitativo.java	ReentrantReadWriteLock(true); política aproximadamente por llegada, no FIFO absoluta.	implementado_pendiente_ci
-10-concurrencia-y-paralelismo	17-filosofos-comensales	R	Mesa.java	Recursos compartidos, orden total o árbitro y finalización acotada.	planificado
-10-concurrencia-y-paralelismo	17-filosofos-comensales	R	Filosofo.java	Recursos compartidos, orden total o árbitro y finalización acotada.	planificado
-10-concurrencia-y-paralelismo	17-filosofos-comensales	R	MainFilosofos.java	Recursos compartidos, orden total o árbitro y finalización acotada.	planificado
-10-concurrencia-y-paralelismo	18-barbero-dormilon	R	Barberia.java	Cola limitada, espera y señalización; cierre de servicio.	planificado
-10-concurrencia-y-paralelismo	18-barbero-dormilon	R	Barbero.java	Cola limitada, espera y señalización; cierre de servicio.	planificado
-10-concurrencia-y-paralelismo	18-barbero-dormilon	R	Cliente.java	Cola limitada, espera y señalización; cierre de servicio.	planificado
-10-concurrencia-y-paralelismo	18-barbero-dormilon	R	MainBarberia.java	Cola limitada, espera y señalización; cierre de servicio.	planificado
-10-concurrencia-y-paralelismo	19-fumadores-cigarrillos	R	MesaIngredientes.java	Sincronización condicional y semáforos; problema clásico abstracto.	planificado
-10-concurrencia-y-paralelismo	19-fumadores-cigarrillos	R	Agente.java	Sincronización condicional y semáforos; problema clásico abstracto.	planificado
-10-concurrencia-y-paralelismo	19-fumadores-cigarrillos	R	Fumador.java	Sincronización condicional y semáforos; problema clásico abstracto.	planificado
-10-concurrencia-y-paralelismo	19-fumadores-cigarrillos	R	MainFumadores.java	Sincronización condicional y semáforos; problema clásico abstracto.	planificado
-10-concurrencia-y-paralelismo	20-peterson	T	PetersonSimulado.java	Exclusión mutua de dos participantes bajo memoria secuencialmente consistente; no usar campos plain como implementación correcta Java.	planificado
-10-concurrencia-y-paralelismo	20-peterson	T	MainPeterson.java	Exclusión mutua de dos participantes bajo memoria secuencialmente consistente; no usar campos plain como implementación correcta Java.	planificado
-10-concurrencia-y-paralelismo	21-panaderia-lamport	T	PanaderiaSimulada.java	Tickets y orden lexicográfico con supuestos de memoria explícitos.	planificado
-10-concurrencia-y-paralelismo	21-panaderia-lamport	T	MainPanaderia.java	Tickets y orden lexicográfico con supuestos de memoria explícitos.	planificado
-10-concurrencia-y-paralelismo	22-progress-graphs	T	Intercalacion.java	Enumerar trayectorias, zonas inseguras y estados alcanzables para un modelo discreto.	planificado
-10-concurrencia-y-paralelismo	22-progress-graphs	T	GrafoProgreso.java	Enumerar trayectorias, zonas inseguras y estados alcanzables para un modelo discreto.	planificado
-10-concurrencia-y-paralelismo	22-progress-graphs	T	MainGrafoProgreso.java	Enumerar trayectorias, zonas inseguras y estados alcanzables para un modelo discreto.	planificado
-10-concurrencia-y-paralelismo	23-deadlock-modelo	T	EstadoBloqueos.java	Espera circular sin colgar la JVM.	planificado
-10-concurrencia-y-paralelismo	23-deadlock-modelo	T	MainDeadlock.java	Espera circular sin colgar la JVM.	planificado
-10-concurrencia-y-paralelismo	24-deadlock-prevencion	R	OrdenGlobalLocks.java	Orden único de adquisición y recuperación mediante timeout.	planificado
-10-concurrencia-y-paralelismo	24-deadlock-prevencion	R	RecuperacionTryLock.java	Orden único de adquisición y recuperación mediante timeout.	planificado
-10-concurrencia-y-paralelismo	25-banquero	T	Banquero.java	Estado seguro, recursos disponibles, asignación y necesidad.	planificado
-10-concurrencia-y-paralelismo	25-banquero	T	MainBanquero.java	Estado seguro, recursos disponibles, asignación y necesidad.	planificado
-10-concurrencia-y-paralelismo	26-inanicion-equidad	M	ModeloInanicion.java	Distinguir posibilidad de inanición de una política equitativa aproximada.	planificado
-10-concurrencia-y-paralelismo	26-inanicion-equidad	M	SemaforoEquitativo.java	Distinguir posibilidad de inanición de una política equitativa aproximada.	planificado
-10-concurrencia-y-paralelismo	27-coordinacion	R	CountDownLatchDemo.java	Coordinación de fases y llegada de tareas.	planificado
-10-concurrencia-y-paralelismo	27-coordinacion	R	CyclicBarrierDemo.java	Coordinación de fases y llegada de tareas.	planificado
-10-concurrencia-y-paralelismo	27-coordinacion	R	PhaserDemo.java	Coordinación de fases y llegada de tareas.	planificado
-10-concurrencia-y-paralelismo	28-pools	R	PoolFijo.java	ExecutorService, ThreadPoolExecutor, cola y política de rechazo.	planificado
-10-concurrencia-y-paralelismo	28-pools	R	PoolColaAcotada.java	ExecutorService, ThreadPoolExecutor, cola y política de rechazo.	planificado
-10-concurrencia-y-paralelismo	28-pools	R	MainPrethreading.java	ExecutorService, ThreadPoolExecutor, cola y política de rechazo.	planificado
-10-concurrencia-y-paralelismo	29-tareas-asincronas	R	CallableFuture.java	Resultados, composición, excepciones y cancelación.	planificado
-10-concurrencia-y-paralelismo	29-tareas-asincronas	R	CompletableFutureDemo.java	Resultados, composición, excepciones y cancelación.	planificado
-10-concurrencia-y-paralelismo	29-tareas-asincronas	R	CancelarTarea.java	Resultados, composición, excepciones y cancelación.	planificado
-10-concurrencia-y-paralelismo	30-paralelismo	R	SumaSecuencialParalela.java	Dividir y combinar; comparación correcta de resultados.	planificado
-10-concurrencia-y-paralelismo	30-paralelismo	R	ForkJoinSuma.java	Dividir y combinar; comparación correcta de resultados.	planificado
-10-concurrencia-y-paralelismo	31-hilos-virtuales	R	CompararHilosBloqueantes.java	Comparar resultado de un lote acotado de tareas bloqueantes con hilos de plataforma y virtuales; sin prometer aceleración ni repetir ConcurrenciaVirtual.java.	planificado
-10-concurrencia-y-paralelismo	32-colecciones-concurrentes	R	ConcurrentHashMapDemo.java	Operaciones thread-safe y acciones compuestas.	planificado
-10-concurrencia-y-paralelismo	32-colecciones-concurrentes	R	ConcurrentLinkedQueueDemo.java	Operaciones thread-safe y acciones compuestas.	planificado
+10-concurrencia-y-paralelismo	17-filosofos-comensales	R	Mesa.java	Recursos compartidos, orden total o árbitro y finalización acotada.	implementado_pendiente_ci
+10-concurrencia-y-paralelismo	17-filosofos-comensales	R	Filosofo.java	Recursos compartidos, orden total o árbitro y finalización acotada.	implementado_pendiente_ci
+10-concurrencia-y-paralelismo	17-filosofos-comensales	R	MainFilosofos.java	Recursos compartidos, orden total o árbitro y finalización acotada.	implementado_pendiente_ci
+10-concurrencia-y-paralelismo	18-barbero-dormilon	R	Barberia.java	Cola limitada, espera y señalización; cierre de servicio.	implementado_pendiente_ci
+10-concurrencia-y-paralelismo	18-barbero-dormilon	R	Barbero.java	Cola limitada, espera y señalización; cierre de servicio.	implementado_pendiente_ci
+10-concurrencia-y-paralelismo	18-barbero-dormilon	R	Cliente.java	Cola limitada, espera y señalización; cierre de servicio.	implementado_pendiente_ci
+10-concurrencia-y-paralelismo	18-barbero-dormilon	R	MainBarberia.java	Cola limitada, espera y señalización; cierre de servicio.	implementado_pendiente_ci
+10-concurrencia-y-paralelismo	19-fumadores-cigarrillos	R	MesaIngredientes.java	Sincronización condicional y semáforos; problema clásico abstracto.	implementado_pendiente_ci
+10-concurrencia-y-paralelismo	19-fumadores-cigarrillos	R	Agente.java	Sincronización condicional y semáforos; problema clásico abstracto.	implementado_pendiente_ci
+10-concurrencia-y-paralelismo	19-fumadores-cigarrillos	R	Fumador.java	Sincronización condicional y semáforos; problema clásico abstracto.	implementado_pendiente_ci
+10-concurrencia-y-paralelismo	19-fumadores-cigarrillos	R	MainFumadores.java	Sincronización condicional y semáforos; problema clásico abstracto.	implementado_pendiente_ci
+10-concurrencia-y-paralelismo	20-peterson	T	PetersonSimulado.java	Exclusión mutua de dos participantes bajo memoria secuencialmente consistente; no usar campos plain como implementación correcta Java.	implementado_pendiente_ci
+10-concurrencia-y-paralelismo	20-peterson	T	MainPeterson.java	Exclusión mutua de dos participantes bajo memoria secuencialmente consistente; no usar campos plain como implementación correcta Java.	implementado_pendiente_ci
+10-concurrencia-y-paralelismo	21-panaderia-lamport	T	PanaderiaSimulada.java	Tickets y orden lexicográfico con supuestos de memoria explícitos.	implementado_pendiente_ci
+10-concurrencia-y-paralelismo	21-panaderia-lamport	T	MainPanaderia.java	Tickets y orden lexicográfico con supuestos de memoria explícitos.	implementado_pendiente_ci
+10-concurrencia-y-paralelismo	22-progress-graphs	T	Intercalacion.java	Enumerar trayectorias, zonas inseguras y estados alcanzables para un modelo discreto.	implementado_pendiente_ci
+10-concurrencia-y-paralelismo	22-progress-graphs	T	GrafoProgreso.java	Enumerar trayectorias, zonas inseguras y estados alcanzables para un modelo discreto.	implementado_pendiente_ci
+10-concurrencia-y-paralelismo	22-progress-graphs	T	MainGrafoProgreso.java	Enumerar trayectorias, zonas inseguras y estados alcanzables para un modelo discreto.	implementado_pendiente_ci
+10-concurrencia-y-paralelismo	23-deadlock-modelo	T	EstadoBloqueos.java	Espera circular sin colgar la JVM.	implementado_pendiente_ci
+10-concurrencia-y-paralelismo	23-deadlock-modelo	T	MainDeadlock.java	Espera circular sin colgar la JVM.	implementado_pendiente_ci
+10-concurrencia-y-paralelismo	24-deadlock-prevencion	R	OrdenGlobalLocks.java	Orden único de adquisición y recuperación mediante timeout.	implementado_pendiente_ci
+10-concurrencia-y-paralelismo	24-deadlock-prevencion	R	RecuperacionTryLock.java	Orden único de adquisición y recuperación mediante timeout.	implementado_pendiente_ci
+10-concurrencia-y-paralelismo	25-banquero	T	Banquero.java	Estado seguro, recursos disponibles, asignación y necesidad.	implementado_pendiente_ci
+10-concurrencia-y-paralelismo	25-banquero	T	MainBanquero.java	Estado seguro, recursos disponibles, asignación y necesidad.	implementado_pendiente_ci
+10-concurrencia-y-paralelismo	26-inanicion-equidad	M	ModeloInanicion.java	Distinguir posibilidad de inanición de una política equitativa aproximada.	implementado_pendiente_ci
+10-concurrencia-y-paralelismo	26-inanicion-equidad	M	SemaforoEquitativo.java	Distinguir posibilidad de inanición de una política equitativa aproximada.	implementado_pendiente_ci
+10-concurrencia-y-paralelismo	27-coordinacion	R	CountDownLatchDemo.java	Coordinación de fases y llegada de tareas.	implementado_pendiente_ci
+10-concurrencia-y-paralelismo	27-coordinacion	R	CyclicBarrierDemo.java	Coordinación de fases y llegada de tareas.	implementado_pendiente_ci
+10-concurrencia-y-paralelismo	27-coordinacion	R	PhaserDemo.java	Coordinación de fases y llegada de tareas.	implementado_pendiente_ci
+10-concurrencia-y-paralelismo	28-pools	R	PoolFijo.java	ExecutorService, ThreadPoolExecutor, cola y política de rechazo.	implementado_pendiente_ci
+10-concurrencia-y-paralelismo	28-pools	R	PoolColaAcotada.java	ExecutorService, ThreadPoolExecutor, cola y política de rechazo.	implementado_pendiente_ci
+10-concurrencia-y-paralelismo	28-pools	R	MainPrethreading.java	ExecutorService, ThreadPoolExecutor, cola y política de rechazo.	implementado_pendiente_ci
+10-concurrencia-y-paralelismo	29-tareas-asincronas	R	CallableFuture.java	Resultados, composición, excepciones y cancelación.	implementado_pendiente_ci
+10-concurrencia-y-paralelismo	29-tareas-asincronas	R	CompletableFutureDemo.java	Resultados, composición, excepciones y cancelación.	implementado_pendiente_ci
+10-concurrencia-y-paralelismo	29-tareas-asincronas	R	CancelarTarea.java	Resultados, composición, excepciones y cancelación.	implementado_pendiente_ci
+10-concurrencia-y-paralelismo	30-paralelismo	R	SumaSecuencialParalela.java	Dividir y combinar; comparación correcta de resultados.	implementado_pendiente_ci
+10-concurrencia-y-paralelismo	30-paralelismo	R	ForkJoinSuma.java	Dividir y combinar; comparación correcta de resultados.	implementado_pendiente_ci
+10-concurrencia-y-paralelismo	31-hilos-virtuales	R	CompararHilosBloqueantes.java	Comparar resultado de un lote acotado de tareas bloqueantes con hilos de plataforma y virtuales; sin prometer aceleración ni repetir ConcurrenciaVirtual.java.	implementado_pendiente_ci
+10-concurrencia-y-paralelismo	32-colecciones-concurrentes	R	ConcurrentHashMapDemo.java	Operaciones thread-safe y acciones compuestas.	implementado_pendiente_ci
+10-concurrencia-y-paralelismo	32-colecciones-concurrentes	R	ConcurrentLinkedQueueDemo.java	Operaciones thread-safe y acciones compuestas.	implementado_pendiente_ci
 11-redes-y-protocolos-de-comunicacion	01-modelo-cliente-servidor	T	Cliente.java	Roles, petición, procesamiento y respuesta sin red todavía.	planificado
 11-redes-y-protocolos-de-comunicacion	01-modelo-cliente-servidor	T	Servidor.java	Roles, petición, procesamiento y respuesta sin red todavía.	planificado
 11-redes-y-protocolos-de-comunicacion	01-modelo-cliente-servidor	T	MainClienteServidor.java	Roles, petición, procesamiento y respuesta sin red todavía.	planificado

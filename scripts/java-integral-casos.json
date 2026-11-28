@@ -1388,5 +1388,253 @@
     "main": "MainLectoresEscritoresEquitativo",
     "mode": "R",
     "stdout": "Valor final: 2\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/17-filosofos-comensales/MainFilosofos.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/17-filosofos-comensales/Mesa.java",
+      "10-concurrencia-y-paralelismo/17-filosofos-comensales/Filosofo.java",
+      "10-concurrencia-y-paralelismo/17-filosofos-comensales/MainFilosofos.java"
+    ],
+    "main": "MainFilosofos",
+    "mode": "R",
+    "stdout": "Comidas: 5\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/18-barbero-dormilon/MainBarberia.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/18-barbero-dormilon/Barberia.java",
+      "10-concurrencia-y-paralelismo/18-barbero-dormilon/Barbero.java",
+      "10-concurrencia-y-paralelismo/18-barbero-dormilon/Cliente.java",
+      "10-concurrencia-y-paralelismo/18-barbero-dormilon/MainBarberia.java"
+    ],
+    "main": "MainBarberia",
+    "mode": "R",
+    "stdout": "Cliente 1: true\nCliente 2: true\nCliente 3: false\nAtendidos: 2\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/19-fumadores-cigarrillos/MainFumadores.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/19-fumadores-cigarrillos/MesaIngredientes.java",
+      "10-concurrencia-y-paralelismo/19-fumadores-cigarrillos/Agente.java",
+      "10-concurrencia-y-paralelismo/19-fumadores-cigarrillos/Fumador.java",
+      "10-concurrencia-y-paralelismo/19-fumadores-cigarrillos/MainFumadores.java"
+    ],
+    "main": "MainFumadores",
+    "mode": "R",
+    "stdout": "Turnos completados: 3\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/20-peterson/MainPeterson.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/20-peterson/PetersonSimulado.java",
+      "10-concurrencia-y-paralelismo/20-peterson/MainPeterson.java"
+    ],
+    "main": "MainPeterson",
+    "mode": "T",
+    "stdout": "Exclusion mutua en el modelo: true\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/21-panaderia-lamport/MainPanaderia.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/21-panaderia-lamport/PanaderiaSimulada.java",
+      "10-concurrencia-y-paralelismo/21-panaderia-lamport/MainPanaderia.java"
+    ],
+    "main": "MainPanaderia",
+    "mode": "T",
+    "stdout": "Entra: 0\nEntra: 1\nEntra: 2\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/22-progress-graphs/MainGrafoProgreso.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/22-progress-graphs/Intercalacion.java",
+      "10-concurrencia-y-paralelismo/22-progress-graphs/GrafoProgreso.java",
+      "10-concurrencia-y-paralelismo/22-progress-graphs/MainGrafoProgreso.java"
+    ],
+    "main": "MainGrafoProgreso",
+    "mode": "T",
+    "stdout": "Seguras: 2\nInseguras: 4\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/23-deadlock-modelo/MainDeadlock.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/23-deadlock-modelo/EstadoBloqueos.java",
+      "10-concurrencia-y-paralelismo/23-deadlock-modelo/MainDeadlock.java"
+    ],
+    "main": "MainDeadlock",
+    "mode": "T",
+    "stdout": "Ciclo: true\nCiclo: false\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/24-deadlock-prevencion/OrdenGlobalLocks.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/24-deadlock-prevencion/OrdenGlobalLocks.java"
+    ],
+    "main": "OrdenGlobalLocks",
+    "mode": "R",
+    "stdout": "Completados: 2\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/24-deadlock-prevencion/RecuperacionTryLock.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/24-deadlock-prevencion/RecuperacionTryLock.java"
+    ],
+    "main": "RecuperacionTryLock",
+    "mode": "R",
+    "stdout": "Operacion: false\nPrimer recurso libre: true\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/25-banquero/MainBanquero.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/25-banquero/Banquero.java",
+      "10-concurrencia-y-paralelismo/25-banquero/MainBanquero.java"
+    ],
+    "main": "MainBanquero",
+    "mode": "T",
+    "stdout": "Seguro: true\nSeguro: false\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/26-inanicion-equidad/ModeloInanicion.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/26-inanicion-equidad/ModeloInanicion.java"
+    ],
+    "main": "ModeloInanicion",
+    "mode": "M",
+    "stdout": "Atiende alta\nAtiende alta\nAtiende alta\nAtiende alta\nAtiende alta\nEspera baja: 5\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/26-inanicion-equidad/SemaforoEquitativo.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/26-inanicion-equidad/SemaforoEquitativo.java"
+    ],
+    "main": "SemaforoEquitativo",
+    "mode": "M",
+    "stdout": "Equitativo: true\nAtendidos: 3\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/27-coordinacion/CountDownLatchDemo.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/27-coordinacion/CountDownLatchDemo.java"
+    ],
+    "main": "CountDownLatchDemo",
+    "mode": "R",
+    "stdout": "10\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/27-coordinacion/CyclicBarrierDemo.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/27-coordinacion/CyclicBarrierDemo.java"
+    ],
+    "main": "CyclicBarrierDemo",
+    "mode": "R",
+    "stdout": "Fases: 2\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/27-coordinacion/PhaserDemo.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/27-coordinacion/PhaserDemo.java"
+    ],
+    "main": "PhaserDemo",
+    "mode": "R",
+    "stdout": "Fase: 1\nRegistrados: 1\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/28-pools/PoolFijo.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/28-pools/PoolFijo.java"
+    ],
+    "main": "PoolFijo",
+    "mode": "R",
+    "stdout": "13\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/28-pools/PoolColaAcotada.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/28-pools/PoolColaAcotada.java"
+    ],
+    "main": "PoolColaAcotada",
+    "mode": "R",
+    "stdout": "Tarea rechazada\n7\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/28-pools/MainPrethreading.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/28-pools/MainPrethreading.java"
+    ],
+    "main": "MainPrethreading",
+    "mode": "R",
+    "stdout": "Precreados: 2\nSolicitud A\nSolicitud B\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/29-tareas-asincronas/CallableFuture.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/29-tareas-asincronas/CallableFuture.java"
+    ],
+    "main": "CallableFuture",
+    "mode": "R",
+    "stdout": "42\nIllegalArgumentException\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/29-tareas-asincronas/CompletableFutureDemo.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/29-tareas-asincronas/CompletableFutureDemo.java"
+    ],
+    "main": "CompletableFutureDemo",
+    "mode": "R",
+    "stdout": "10\n0\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/29-tareas-asincronas/CancelarTarea.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/29-tareas-asincronas/CancelarTarea.java"
+    ],
+    "main": "CancelarTarea",
+    "mode": "R",
+    "stdout": "Cancelada: true\nTermino: true\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/30-paralelismo/SumaSecuencialParalela.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/30-paralelismo/SumaSecuencialParalela.java"
+    ],
+    "main": "SumaSecuencialParalela",
+    "mode": "R",
+    "stdout": "Secuencial: 21\nParalelo: 21\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/30-paralelismo/ForkJoinSuma.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/30-paralelismo/ForkJoinSuma.java"
+    ],
+    "main": "ForkJoinSuma",
+    "mode": "R",
+    "stdout": "21\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/31-hilos-virtuales/CompararHilosBloqueantes.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/31-hilos-virtuales/CompararHilosBloqueantes.java"
+    ],
+    "main": "CompararHilosBloqueantes",
+    "mode": "R",
+    "stdout": "Plataforma: 10\nVirtual: 10\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/32-colecciones-concurrentes/ConcurrentHashMapDemo.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/32-colecciones-concurrentes/ConcurrentHashMapDemo.java"
+    ],
+    "main": "ConcurrentHashMapDemo",
+    "mode": "R",
+    "stdout": "1000\n"
+  },
+  {
+    "path": "10-concurrencia-y-paralelismo/32-colecciones-concurrentes/ConcurrentLinkedQueueDemo.java",
+    "sources": [
+      "10-concurrencia-y-paralelismo/32-colecciones-concurrentes/ConcurrentLinkedQueueDemo.java"
+    ],
+    "main": "ConcurrentLinkedQueueDemo",
+    "mode": "R",
+    "stdout": "Suma: 10\nVacia: true\n"
   }
 ]
