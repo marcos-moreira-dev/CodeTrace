@@ -14,7 +14,9 @@ public class ContratosUnificados {
     interface Enteros extends Doble<Integer, Integer> {}
     public static void main(String[] args) {
         Enteros e = n -> System.out.println(n + 1);
-        e.mostrar(5);
+        // La vista con comodín elimina la ambigüedad de las dos sobrecargas.
+        Doble<Integer, ?> vista = e;
+        vista.mostrar(5);
     }
 }
 

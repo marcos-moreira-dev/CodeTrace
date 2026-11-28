@@ -12,4 +12,4 @@ class CampoParametrizado<T> {
 }
 
 // Salida esperada:
-// Error: illegal start of type
+// Error: not a statement

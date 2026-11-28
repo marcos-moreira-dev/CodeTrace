@@ -9,4 +9,4 @@ interface Larga { long medir(); }
 interface RetornosInterfaz extends Entera, Larga {}
 
 // Salida esperada:
-// Error: incompatible return types
+// Error: unrelated return types

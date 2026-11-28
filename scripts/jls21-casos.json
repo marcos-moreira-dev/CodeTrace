@@ -2598,7 +2598,7 @@
     "main": "CampoParametrizado",
     "args": [],
     "stdout": "",
-    "reject": "illegal start of type"
+    "reject": "not a statement"
   },
   {
     "path": "06-nombres/06-05-07-01-01-variante-busqueda-metodo-exterior/BusquedaExterior.java",
@@ -2675,7 +2675,7 @@
     "main": "RetornosInterfaz",
     "args": [],
     "stdout": "",
-    "reject": "incompatible return types"
+    "reject": "unrelated return types"
   },
   {
     "path": "09-interfaces/09-08-02-variante-parametrizacion-unifica/ContratosUnificados.java",
@@ -2692,7 +2692,7 @@
     "main": "RetornosGenericos",
     "args": [],
     "stdout": "",
-    "reject": "incompatible"
+    "reject": "not compatible"
   },
   {
     "path": "11-excepciones/11-02-03-01-variante-captura-subtipo/CapturaSubtipo.java",

@@ -13,4 +13,4 @@ class RetornosGenericos {
 }
 
 // Salida esperada:
-// Error: incompatible
+// Error: not compatible
